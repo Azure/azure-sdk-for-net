@@ -9,8 +9,8 @@ Azure Load Testing provides client library in .NET to the user by which they can
 Various documentation is available to help you get started
 
 <!-- - [Source code][source_code] -->
-- [API reference documentation][api_reference_doc]
-- [Product Documentation][product_documentation]
+- [API reference documentation](https://docs.microsoft.com/rest/api/loadtesting/)
+- [Product Documentation](https://azure.microsoft.com/services/load-testing/)
 
 ## Getting started
 
@@ -29,13 +29,13 @@ You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) 
 
 ### Authenticate the client
 
-To use an [Azure Active Directory (AAD) token credential](authenticate_with_token),
+To use an [Azure Active Directory (AAD) token credential](https://learn.microsoft.com/aspnet/core/security/authentication/identity),
 provide an instance of the desired credential type obtained from the
-[azure-identity](azure_identity_credentials) library.
+[azure-identity][azure_identity_credentials] library.
 
-To authenticate with AAD, you must first use [nuget](nuget) install [`azure-identity`](azure_identity_nuget)
+To authenticate with AAD, you must first use [nuget][nuget] install [`azure-identity`][azure_identity_nuget]
 
-After setup, you can choose which type of [credential](azure_identity_credentials) from Azure.Identity to use.
+After setup, you can choose which type of [credential][azure_identity_credentials] from Azure.Identity to use.
 
 As an example, sign in via the Azure CLI `az login` command and [DefaultAzureCredential](https://learn.microsoft.com/python/api/azure-identity/azure.identity.defaultazurecredential?view=azure-python) will authenticate as that user.
 
@@ -101,6 +101,14 @@ More about it is coming soon...
 
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
+## Next steps
+
+Get started with our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples).
+
+## Contributing
+
+This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
 [Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
@@ -112,15 +120,6 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-## Next steps
-
-Get started with our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples).
-
-## Contributing
-
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
-
-<!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
