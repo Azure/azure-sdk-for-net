@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +21,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// BackupInstance Resource
     /// </remarks>
-    public partial class BackupInstanceResource : DppResource
+    public partial class BackupInstanceResource : DppProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the BackupInstanceResource class.
@@ -32,15 +34,16 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <summary>
         /// Initializes a new instance of the BackupInstanceResource class.
         /// </summary>
-        /// <param name="id">Resource Id represents the complete path to the
+        /// <param name="id">Proxy Resource Id represents the complete path to
+        /// the resource.</param>
+        /// <param name="name">Proxy Resource name associated with the
         /// resource.</param>
-        /// <param name="name">Resource name associated with the
-        /// resource.</param>
-        /// <param name="type">Resource type represents the complete path of
-        /// the form Namespace/ResourceType/ResourceType/...</param>
+        /// <param name="type">Proxy Resource type represents the complete path
+        /// of the form Namespace/ResourceType/ResourceType/...</param>
+        /// <param name="tags">Proxy Resource tags.</param>
         /// <param name="properties">BackupInstanceResource properties</param>
-        public BackupInstanceResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), BackupInstance properties = default(BackupInstance))
-            : base(id, name, type, systemData)
+        public BackupInstanceResource(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), BackupInstance properties = default(BackupInstance))
+            : base(id, name, type, tags, systemData)
         {
             Properties = properties;
             CustomInit();

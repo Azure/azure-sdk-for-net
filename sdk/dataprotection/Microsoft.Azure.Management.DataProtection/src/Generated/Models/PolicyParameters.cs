@@ -33,9 +33,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         /// <param name="dataStoreParametersList">Gets or sets the DataStore
         /// Parameters</param>
-        public PolicyParameters(IList<DataStoreParameters> dataStoreParametersList = default(IList<DataStoreParameters>))
+        /// <param name="backupDatasourceParametersList">Gets or sets the
+        /// Backup Data Source Parameters</param>
+        public PolicyParameters(IList<DataStoreParameters> dataStoreParametersList = default(IList<DataStoreParameters>), IList<BackupDatasourceParameters> backupDatasourceParametersList = default(IList<BackupDatasourceParameters>))
         {
             DataStoreParametersList = dataStoreParametersList;
+            BackupDatasourceParametersList = backupDatasourceParametersList;
             CustomInit();
         }
 
@@ -49,6 +52,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "dataStoreParametersList")]
         public IList<DataStoreParameters> DataStoreParametersList { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Backup Data Source Parameters
+        /// </summary>
+        [JsonProperty(PropertyName = "backupDatasourceParametersList")]
+        public IList<BackupDatasourceParameters> BackupDatasourceParametersList { get; set; }
 
     }
 }

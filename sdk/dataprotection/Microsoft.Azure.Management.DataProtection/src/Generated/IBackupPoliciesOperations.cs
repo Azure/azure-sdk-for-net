@@ -26,11 +26,11 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <summary>
         /// Returns list of backup policies belonging to a backup vault
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,18 +47,18 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<BaseBackupPolicyResource>>> ListWithHttpMessagesAsync(string vaultName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BaseBackupPolicyResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a backup policy belonging to a backup vault
         /// </summary>
         /// <remarks>
         /// Gets a backup policy belonging to a backup vault
         /// </remarks>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupPolicyName'>
         /// </param>
@@ -77,15 +77,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BaseBackupPolicyResource>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BaseBackupPolicyResource>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or Updates a backup policy belonging to a backup vault
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupPolicyName'>
         /// Name of the policy
@@ -108,15 +108,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BaseBackupPolicyResource>> CreateOrUpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupPolicyName, BaseBackupPolicyResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BaseBackupPolicyResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupPolicyName, BaseBackupPolicyResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a backup policy belonging to a backup vault
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupPolicyName'>
         /// </param>
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns list of backup policies belonging to a backup vault
         /// </summary>

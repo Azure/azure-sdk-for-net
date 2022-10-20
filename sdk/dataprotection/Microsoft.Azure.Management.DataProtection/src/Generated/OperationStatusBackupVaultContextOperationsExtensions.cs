@@ -17,10 +17,13 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for BackupVaultOperationResultsOperations.
+    /// Extension methods for OperationStatusBackupVaultContextOperations.
     /// </summary>
-    public static partial class BackupVaultOperationResultsOperationsExtensions
+    public static partial class OperationStatusBackupVaultContextOperationsExtensions
     {
+            /// <summary>
+            /// Gets the operation status for an operation over a BackupVault's context.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -32,11 +35,14 @@ namespace Microsoft.Azure.Management.DataProtection
             /// </param>
             /// <param name='operationId'>
             /// </param>
-            public static BackupVaultResource Get(this IBackupVaultOperationResultsOperations operations, string resourceGroupName, string vaultName, string operationId)
+            public static OperationResource Get(this IOperationStatusBackupVaultContextOperations operations, string resourceGroupName, string vaultName, string operationId)
             {
                 return operations.GetAsync(resourceGroupName, vaultName, operationId).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets the operation status for an operation over a BackupVault's context.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -51,7 +57,7 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupVaultResource> GetAsync(this IBackupVaultOperationResultsOperations operations, string resourceGroupName, string vaultName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationResource> GetAsync(this IOperationStatusBackupVaultContextOperations operations, string resourceGroupName, string vaultName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vaultName, operationId, null, cancellationToken).ConfigureAwait(false))
                 {

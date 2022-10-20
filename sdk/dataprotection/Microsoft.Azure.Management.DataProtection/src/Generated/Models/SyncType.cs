@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.DataProtection.Models
 {
 
     /// <summary>
-    /// Defines values for StorageSettingTypes.
+    /// Defines values for SyncType.
     /// </summary>
-    public static class StorageSettingTypes
+    public static class SyncType
     {
-        public const string GeoRedundant = "GeoRedundant";
-        public const string LocallyRedundant = "LocallyRedundant";
-        public const string ZoneRedundant = "ZoneRedundant";
+        public const string Default = "Default";
+        public const string ForceResync = "ForceResync";
     }
 }

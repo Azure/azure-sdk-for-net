@@ -39,10 +39,13 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="sourceDataStoreType">Gets or sets the type of the
         /// source data store. Possible values include: 'ArchiveStore',
         /// 'SnapshotStore', 'VaultStore'</param>
-        public AzureBackupRestoreRequest(RestoreTargetInfoBase restoreTargetInfo, string sourceDataStoreType)
+        /// <param name="sourceResourceId">Fully qualified Azure Resource
+        /// Manager ID of the datasource which is being recovered.</param>
+        public AzureBackupRestoreRequest(RestoreTargetInfoBase restoreTargetInfo, string sourceDataStoreType, string sourceResourceId = default(string))
         {
             RestoreTargetInfo = restoreTargetInfo;
             SourceDataStoreType = sourceDataStoreType;
+            SourceResourceId = sourceResourceId;
             CustomInit();
         }
 
@@ -63,6 +66,13 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "sourceDataStoreType")]
         public string SourceDataStoreType { get; set; }
+
+        /// <summary>
+        /// Gets or sets fully qualified Azure Resource Manager ID of the
+        /// datasource which is being recovered.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceResourceId")]
+        public string SourceResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.

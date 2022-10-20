@@ -26,11 +26,11 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <summary>
         /// Gets a backup instances belonging to a backup vault
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,15 +47,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<BackupInstanceResource>>> ListWithHttpMessagesAsync(string vaultName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BackupInstanceResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a backup instance with name in a backup vault
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -75,15 +75,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupInstanceResource>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupInstanceResource>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a backup instance in a backup vault
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -106,15 +106,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupInstanceResource>> CreateOrUpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, BackupInstanceResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupInstanceResource,BackupInstancesCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a backup instance in a backup vault
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -131,15 +131,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<BackupInstancesDeleteHeaders>> DeleteWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<BackupInstancesDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Trigger adhoc backup
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -163,15 +163,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesAdhocBackupHeaders>> AdhocBackupWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesAdhocBackupHeaders>> AdhocBackupWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Validate whether adhoc backup will be successful or not
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstance'>
         /// </param>
@@ -190,7 +190,36 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForBackupHeaders>> ValidateForBackupWithHttpMessagesAsync(string vaultName, string resourceGroupName, BackupInstance backupInstance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForBackupHeaders>> ValidateForBackupWithHttpMessagesAsync(string resourceGroupName, string vaultName, BackupInstance backupInstance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get result of backup instance creation operation
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='operationId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BackupInstanceResource>> GetBackupInstanceOperationResultWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// rehydrate recovery point for restore for a BackupInstance
         /// </summary>
@@ -221,11 +250,11 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <summary>
         /// Triggers restore for a BackupInstance
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -248,15 +277,144 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesTriggerRestoreHeaders>> TriggerRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesTriggerRestoreHeaders>> TriggerRestoreWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Validates if Restore can be triggered for a DataSource
+        /// This operation will resume backups for backup instance
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
         /// <param name='vaultName'>
         /// The name of the backup vault.
         /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesResumeBackupsHeaders>> ResumeBackupsWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This operation will resume protection for a stopped backup instance
+        /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesResumeProtectionHeaders>> ResumeProtectionWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This operation will stop protection of a backup instance and data
+        /// will be held forever
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesStopProtectionHeaders>> StopProtectionWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This operation will stop backup for a backup instance and retains
+        /// the backup data as per the policy (except latest Recovery point,
+        /// which will be retained forever)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesSuspendBackupsHeaders>> SuspendBackupsWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Sync backup instance again in case of failure
+        /// This action will retry last failed operation and will bring backup
+        /// instance to valid state
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='syncType'>
+        /// Field indicating sync type e.g. to sync only in case of failure or
+        /// in all cases. Possible values include: 'Default', 'ForceResync'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesSyncBackupInstanceHeaders>> SyncBackupInstanceWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, string syncType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Validates if Restore can be triggered for a DataSource
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -279,15 +437,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders>> ValidateForRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders>> ValidateForRestoreWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a backup instance in a backup vault
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -310,15 +468,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupInstanceResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, BackupInstanceResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupInstanceResource,BackupInstancesCreateOrUpdateHeaders>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a backup instance in a backup vault
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -335,15 +493,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<BackupInstancesDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<BackupInstancesDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Trigger adhoc backup
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -367,15 +525,15 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesAdhocBackupHeaders>> BeginAdhocBackupWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesAdhocBackupHeaders>> BeginAdhocBackupWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Validate whether adhoc backup will be successful or not
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstance'>
         /// </param>
@@ -394,7 +552,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForBackupHeaders>> BeginValidateForBackupWithHttpMessagesAsync(string vaultName, string resourceGroupName, BackupInstance backupInstance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForBackupHeaders>> BeginValidateForBackupWithHttpMessagesAsync(string resourceGroupName, string vaultName, BackupInstance backupInstance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// rehydrate recovery point for restore for a BackupInstance
         /// </summary>
@@ -425,11 +583,11 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <summary>
         /// Triggers restore for a BackupInstance
         /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -452,15 +610,144 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesTriggerRestoreHeaders>> BeginTriggerRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesTriggerRestoreHeaders>> BeginTriggerRestoreWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Validates if Restore can be triggered for a DataSource
+        /// This operation will resume backups for backup instance
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
         /// <param name='vaultName'>
         /// The name of the backup vault.
         /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesResumeBackupsHeaders>> BeginResumeBackupsWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This operation will resume protection for a stopped backup instance
+        /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesResumeProtectionHeaders>> BeginResumeProtectionWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This operation will stop protection of a backup instance and data
+        /// will be held forever
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesStopProtectionHeaders>> BeginStopProtectionWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This operation will stop backup for a backup instance and retains
+        /// the backup data as per the policy (except latest Recovery point,
+        /// which will be retained forever)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesSuspendBackupsHeaders>> BeginSuspendBackupsWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Sync backup instance again in case of failure
+        /// This action will retry last failed operation and will bring backup
+        /// instance to valid state
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// </param>
+        /// <param name='syncType'>
+        /// Field indicating sync type e.g. to sync only in case of failure or
+        /// in all cases. Possible values include: 'Default', 'ForceResync'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<BackupInstancesSyncBackupInstanceHeaders>> BeginSyncBackupInstanceWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, string syncType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Validates if Restore can be triggered for a DataSource
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -483,7 +770,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders>> BeginValidateForRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders>> BeginValidateForRestoreWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a backup instances belonging to a backup vault
         /// </summary>

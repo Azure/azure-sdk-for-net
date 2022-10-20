@@ -90,6 +90,16 @@ namespace Microsoft.Azure.Management.DataProtection
         public virtual IOperationStatusOperations OperationStatus { get; private set; }
 
         /// <summary>
+        /// Gets the IOperationStatusBackupVaultContextOperations.
+        /// </summary>
+        public virtual IOperationStatusBackupVaultContextOperations OperationStatusBackupVaultContext { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationStatusResourceGroupContextOperations.
+        /// </summary>
+        public virtual IOperationStatusResourceGroupContextOperations OperationStatusResourceGroupContext { get; private set; }
+
+        /// <summary>
         /// Gets the IBackupVaultOperationResultsOperations.
         /// </summary>
         public virtual IBackupVaultOperationResultsOperations BackupVaultOperationResults { get; private set; }
@@ -388,6 +398,8 @@ namespace Microsoft.Azure.Management.DataProtection
             BackupVaults = new BackupVaultsOperations(this);
             OperationResult = new OperationResultOperations(this);
             OperationStatus = new OperationStatusOperations(this);
+            OperationStatusBackupVaultContext = new OperationStatusBackupVaultContextOperations(this);
+            OperationStatusResourceGroupContext = new OperationStatusResourceGroupContextOperations(this);
             BackupVaultOperationResults = new BackupVaultOperationResultsOperations(this);
             DataProtection = new DataProtectionOperations(this);
             DataProtectionOperations = new DataProtectionOperationsOperations(this);
@@ -400,7 +412,7 @@ namespace Microsoft.Azure.Management.DataProtection
             ExportJobsOperationResult = new ExportJobsOperationResultOperations(this);
             ResourceGuards = new ResourceGuardsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-07-01";
+            ApiVersion = "2022-10-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -449,6 +461,8 @@ namespace Microsoft.Azure.Management.DataProtection
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BackupCriteria>("objectType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataStoreParameters>("objectType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataStoreParameters>("objectType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BackupDatasourceParameters>("objectType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BackupDatasourceParameters>("objectType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BasePolicyRule>("objectType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BasePolicyRule>("objectType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BaseBackupPolicy>("objectType"));

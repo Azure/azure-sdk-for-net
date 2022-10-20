@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.DataProtection.Models
 {
 
     /// <summary>
-    /// Defines values for StorageSettingTypes.
+    /// Defines values for ExistingResourcePolicy.
     /// </summary>
-    public static class StorageSettingTypes
+    public static class ExistingResourcePolicy
     {
-        public const string GeoRedundant = "GeoRedundant";
-        public const string LocallyRedundant = "LocallyRedundant";
-        public const string ZoneRedundant = "ZoneRedundant";
+        public const string Skip = "Skip";
+        public const string Patch = "Patch";
     }
 }

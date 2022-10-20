@@ -24,11 +24,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -36,19 +36,19 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static AzureBackupFindRestorableTimeRangesResponseResource Find(this IRestorableTimeRangesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters)
+            public static AzureBackupFindRestorableTimeRangesResponseResource Find(this IRestorableTimeRangesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters)
             {
-                return operations.FindAsync(vaultName, resourceGroupName, backupInstanceName, parameters).GetAwaiter().GetResult();
+                return operations.FindAsync(resourceGroupName, vaultName, backupInstanceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AzureBackupFindRestorableTimeRangesResponseResource> FindAsync(this IRestorableTimeRangesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AzureBackupFindRestorableTimeRangesResponseResource> FindAsync(this IRestorableTimeRangesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.FindWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.FindWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

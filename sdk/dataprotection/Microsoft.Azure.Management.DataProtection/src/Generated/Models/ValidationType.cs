@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.DataProtection.Models
 {
 
     /// <summary>
-    /// Defines values for StorageSettingTypes.
+    /// Defines values for ValidationType.
     /// </summary>
-    public static class StorageSettingTypes
+    public static class ValidationType
     {
-        public const string GeoRedundant = "GeoRedundant";
-        public const string LocallyRedundant = "LocallyRedundant";
-        public const string ZoneRedundant = "ZoneRedundant";
+        public const string ShallowValidation = "ShallowValidation";
+        public const string DeepValidation = "DeepValidation";
     }
 }

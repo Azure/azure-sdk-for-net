@@ -19,10 +19,14 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BackupVaultOperationResultsOperations operations.
+    /// OperationStatusBackupVaultContextOperations operations.
     /// </summary>
-    public partial interface IBackupVaultOperationResultsOperations
+    public partial interface IOperationStatusBackupVaultContextOperations
     {
+        /// <summary>
+        /// Gets the operation status for an operation over a BackupVault's
+        /// context.
+        /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
         /// </param>
@@ -46,6 +50,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupVaultResource,BackupVaultOperationResultsGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationResource>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

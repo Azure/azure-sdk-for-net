@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// RestorableTimeRangesOperations operations.
+    /// OperationStatusBackupVaultContextOperations operations.
     /// </summary>
-    internal partial class RestorableTimeRangesOperations : IServiceOperations<DataProtectionClient>, IRestorableTimeRangesOperations
+    internal partial class OperationStatusBackupVaultContextOperations : IServiceOperations<DataProtectionClient>, IOperationStatusBackupVaultContextOperations
     {
         /// <summary>
-        /// Initializes a new instance of the RestorableTimeRangesOperations class.
+        /// Initializes a new instance of the OperationStatusBackupVaultContextOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal RestorableTimeRangesOperations(DataProtectionClient client)
+        internal OperationStatusBackupVaultContextOperations(DataProtectionClient client)
         {
             if (client == null)
             {
@@ -50,17 +50,16 @@ namespace Microsoft.Azure.Management.DataProtection
         /// </summary>
         public DataProtectionClient Client { get; private set; }
 
+        /// <summary>
+        /// Gets the operation status for an operation over a BackupVault's context.
+        /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the backup vault.
         /// </param>
-        /// <param name='backupInstanceName'>
-        /// The name of the backup instance
-        /// </param>
-        /// <param name='parameters'>
-        /// Request body for operation
+        /// <param name='operationId'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,12 +82,8 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AzureBackupFindRestorableTimeRangesResponseResource>> FindWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationResource>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -101,17 +96,13 @@ namespace Microsoft.Azure.Management.DataProtection
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
             }
-            if (backupInstanceName == null)
+            if (operationId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backupInstanceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
-            if (parameters == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (parameters != null)
-            {
-                parameters.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -122,18 +113,17 @@ namespace Microsoft.Azure.Management.DataProtection
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vaultName", vaultName);
-                tracingParameters.Add("backupInstanceName", backupInstanceName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("operationId", operationId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Find", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/findRestorableTimeRanges").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/operationStatus/{operationId}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
-            _url = _url.Replace("{backupInstanceName}", System.Uri.EscapeDataString(backupInstanceName));
+            _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(operationId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -146,7 +136,7 @@ namespace Microsoft.Azure.Management.DataProtection
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -177,12 +167,6 @@ namespace Microsoft.Azure.Management.DataProtection
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -238,7 +222,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AzureBackupFindRestorableTimeRangesResponseResource>();
+            var _result = new AzureOperationResponse<OperationResource>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -251,7 +235,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AzureBackupFindRestorableTimeRangesResponseResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationResource>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

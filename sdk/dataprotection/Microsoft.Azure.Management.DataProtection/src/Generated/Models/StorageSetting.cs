@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// Possible values include: 'ArchiveStore', 'SnapshotStore',
         /// 'VaultStore'</param>
         /// <param name="type">Gets or sets the type. Possible values include:
-        /// 'GeoRedundant', 'LocallyRedundant'</param>
+        /// 'GeoRedundant', 'LocallyRedundant', 'ZoneRedundant'</param>
         public StorageSetting(string datastoreType = default(string), string type = default(string))
         {
             DatastoreType = datastoreType;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
 
         /// <summary>
         /// Gets or sets the type. Possible values include: 'GeoRedundant',
-        /// 'LocallyRedundant'
+        /// 'LocallyRedundant', 'ZoneRedundant'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

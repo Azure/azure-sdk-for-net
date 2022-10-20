@@ -27,15 +27,15 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
             /// </param>
-            public static IPage<BackupInstanceResource> List(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName)
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            public static IPage<BackupInstanceResource> List(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName)
             {
-                return operations.ListAsync(vaultName, resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, vaultName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,18 +44,18 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<BackupInstanceResource>> ListAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<BackupInstanceResource>> ListAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(vaultName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, vaultName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -67,18 +67,18 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
             /// </param>
-            public static BackupInstanceResource Get(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName)
+            public static BackupInstanceResource Get(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
             {
-                return operations.GetAsync(vaultName, resourceGroupName, backupInstanceName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -87,11 +87,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -99,9 +99,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupInstanceResource> GetAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupInstanceResource> GetAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -113,11 +113,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -125,9 +125,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static BackupInstanceResource CreateOrUpdate(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, BackupInstanceResource parameters)
+            public static BackupInstanceResource CreateOrUpdate(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceResource parameters)
             {
-                return operations.CreateOrUpdateAsync(vaultName, resourceGroupName, backupInstanceName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, vaultName, backupInstanceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -136,11 +136,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -151,9 +151,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupInstanceResource> CreateOrUpdateAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, BackupInstanceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupInstanceResource> CreateOrUpdateAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -165,18 +165,18 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
             /// </param>
-            public static BackupInstancesDeleteHeaders Delete(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName)
+            public static BackupInstancesDeleteHeaders Delete(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
             {
-                return operations.DeleteAsync(vaultName, resourceGroupName, backupInstanceName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -185,11 +185,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -197,9 +197,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupInstancesDeleteHeaders> DeleteAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupInstancesDeleteHeaders> DeleteAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -211,11 +211,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -223,9 +223,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='backupRuleOptions'>
             /// Name for the Rule of the Policy which needs to be applied for this backup
             /// </param>
-            public static OperationJobExtendedInfo AdhocBackup(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions)
+            public static OperationJobExtendedInfo AdhocBackup(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions)
             {
-                return operations.AdhocBackupAsync(vaultName, resourceGroupName, backupInstanceName, backupRuleOptions).GetAwaiter().GetResult();
+                return operations.AdhocBackupAsync(resourceGroupName, vaultName, backupInstanceName, backupRuleOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -234,11 +234,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -249,9 +249,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> AdhocBackupAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> AdhocBackupAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AdhocBackupWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, backupRuleOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AdhocBackupWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, backupRuleOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -263,17 +263,17 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
             /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
             /// <param name='backupInstance'>
             /// </param>
-            public static OperationJobExtendedInfo ValidateForBackup(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, BackupInstance backupInstance)
+            public static OperationJobExtendedInfo ValidateForBackup(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, BackupInstance backupInstance)
             {
-                return operations.ValidateForBackupAsync(vaultName, resourceGroupName, backupInstance).GetAwaiter().GetResult();
+                return operations.ValidateForBackupAsync(resourceGroupName, vaultName, backupInstance).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -282,20 +282,68 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstance'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> ValidateForBackupAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, BackupInstance backupInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> ValidateForBackupAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, BackupInstance backupInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ValidateForBackupWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstance, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ValidateForBackupWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstance, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get result of backup instance creation operation
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='operationId'>
+            /// </param>
+            public static BackupInstanceResource GetBackupInstanceOperationResult(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, string operationId)
+            {
+                return operations.GetBackupInstanceOperationResultAsync(resourceGroupName, vaultName, backupInstanceName, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get result of backup instance creation operation
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='operationId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstanceResource> GetBackupInstanceOperationResultAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBackupInstanceOperationResultWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, operationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -357,11 +405,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -369,9 +417,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static OperationJobExtendedInfo TriggerRestore(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest parameters)
+            public static OperationJobExtendedInfo TriggerRestore(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest parameters)
             {
-                return operations.TriggerRestoreAsync(vaultName, resourceGroupName, backupInstanceName, parameters).GetAwaiter().GetResult();
+                return operations.TriggerRestoreAsync(resourceGroupName, vaultName, backupInstanceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -380,11 +428,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -395,11 +443,249 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> TriggerRestoreAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> TriggerRestoreAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TriggerRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TriggerRestoreWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This operation will resume backups for backup instance
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            public static BackupInstancesResumeBackupsHeaders ResumeBackups(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
+            {
+                return operations.ResumeBackupsAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation will resume backups for backup instance
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesResumeBackupsHeaders> ResumeBackupsAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResumeBackupsWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// This operation will resume protection for a stopped backup instance
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            public static BackupInstancesResumeProtectionHeaders ResumeProtection(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
+            {
+                return operations.ResumeProtectionAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation will resume protection for a stopped backup instance
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesResumeProtectionHeaders> ResumeProtectionAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResumeProtectionWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// This operation will stop protection of a backup instance and data will be
+            /// held forever
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            public static BackupInstancesStopProtectionHeaders StopProtection(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
+            {
+                return operations.StopProtectionAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation will stop protection of a backup instance and data will be
+            /// held forever
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesStopProtectionHeaders> StopProtectionAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StopProtectionWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// This operation will stop backup for a backup instance and retains the
+            /// backup data as per the policy (except latest Recovery point, which will be
+            /// retained forever)
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            public static BackupInstancesSuspendBackupsHeaders SuspendBackups(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
+            {
+                return operations.SuspendBackupsAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation will stop backup for a backup instance and retains the
+            /// backup data as per the policy (except latest Recovery point, which will be
+            /// retained forever)
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesSuspendBackupsHeaders> SuspendBackupsAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SuspendBackupsWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Sync backup instance again in case of failure
+            /// This action will retry last failed operation and will bring backup instance
+            /// to valid state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='syncType'>
+            /// Field indicating sync type e.g. to sync only in case of failure or in all
+            /// cases. Possible values include: 'Default', 'ForceResync'
+            /// </param>
+            public static BackupInstancesSyncBackupInstanceHeaders SyncBackupInstance(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, string syncType = default(string))
+            {
+                return operations.SyncBackupInstanceAsync(resourceGroupName, vaultName, backupInstanceName, syncType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sync backup instance again in case of failure
+            /// This action will retry last failed operation and will bring backup instance
+            /// to valid state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='syncType'>
+            /// Field indicating sync type e.g. to sync only in case of failure or in all
+            /// cases. Possible values include: 'Default', 'ForceResync'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesSyncBackupInstanceHeaders> SyncBackupInstanceAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, string syncType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SyncBackupInstanceWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, syncType, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
                 }
             }
 
@@ -409,11 +695,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -421,9 +707,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='restoreRequestObject'>
             /// Gets or sets the restore request object.
             /// </param>
-            public static OperationJobExtendedInfo ValidateForRestore(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject)
+            public static OperationJobExtendedInfo ValidateForRestore(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject)
             {
-                return operations.ValidateForRestoreAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject).GetAwaiter().GetResult();
+                return operations.ValidateForRestoreAsync(resourceGroupName, vaultName, backupInstanceName, restoreRequestObject).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -432,11 +718,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -447,9 +733,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> ValidateForRestoreAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> ValidateForRestoreAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ValidateForRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ValidateForRestoreWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, restoreRequestObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -461,11 +747,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -473,9 +759,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static BackupInstanceResource BeginCreateOrUpdate(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, BackupInstanceResource parameters)
+            public static BackupInstanceResource BeginCreateOrUpdate(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceResource parameters)
             {
-                return operations.BeginCreateOrUpdateAsync(vaultName, resourceGroupName, backupInstanceName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, vaultName, backupInstanceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -484,11 +770,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -499,9 +785,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupInstanceResource> BeginCreateOrUpdateAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, BackupInstanceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupInstanceResource> BeginCreateOrUpdateAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -513,18 +799,18 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
             /// </param>
-            public static BackupInstancesDeleteHeaders BeginDelete(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName)
+            public static BackupInstancesDeleteHeaders BeginDelete(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
             {
-                return operations.BeginDeleteAsync(vaultName, resourceGroupName, backupInstanceName).GetAwaiter().GetResult();
+                return operations.BeginDeleteAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -533,11 +819,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -545,9 +831,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupInstancesDeleteHeaders> BeginDeleteAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupInstancesDeleteHeaders> BeginDeleteAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -559,11 +845,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -571,9 +857,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='backupRuleOptions'>
             /// Name for the Rule of the Policy which needs to be applied for this backup
             /// </param>
-            public static OperationJobExtendedInfo BeginAdhocBackup(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions)
+            public static OperationJobExtendedInfo BeginAdhocBackup(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions)
             {
-                return operations.BeginAdhocBackupAsync(vaultName, resourceGroupName, backupInstanceName, backupRuleOptions).GetAwaiter().GetResult();
+                return operations.BeginAdhocBackupAsync(resourceGroupName, vaultName, backupInstanceName, backupRuleOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -582,11 +868,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -597,9 +883,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> BeginAdhocBackupAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> BeginAdhocBackupAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AdHocBackupRuleOptions backupRuleOptions, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginAdhocBackupWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, backupRuleOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginAdhocBackupWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, backupRuleOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -611,17 +897,17 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
             /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
             /// <param name='backupInstance'>
             /// </param>
-            public static OperationJobExtendedInfo BeginValidateForBackup(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, BackupInstance backupInstance)
+            public static OperationJobExtendedInfo BeginValidateForBackup(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, BackupInstance backupInstance)
             {
-                return operations.BeginValidateForBackupAsync(vaultName, resourceGroupName, backupInstance).GetAwaiter().GetResult();
+                return operations.BeginValidateForBackupAsync(resourceGroupName, vaultName, backupInstance).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -630,20 +916,20 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstance'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> BeginValidateForBackupAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, BackupInstance backupInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> BeginValidateForBackupAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, BackupInstance backupInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginValidateForBackupWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstance, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginValidateForBackupWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstance, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -705,11 +991,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -717,9 +1003,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static OperationJobExtendedInfo BeginTriggerRestore(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest parameters)
+            public static OperationJobExtendedInfo BeginTriggerRestore(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest parameters)
             {
-                return operations.BeginTriggerRestoreAsync(vaultName, resourceGroupName, backupInstanceName, parameters).GetAwaiter().GetResult();
+                return operations.BeginTriggerRestoreAsync(resourceGroupName, vaultName, backupInstanceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -728,11 +1014,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -743,11 +1029,249 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> BeginTriggerRestoreAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> BeginTriggerRestoreAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginTriggerRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginTriggerRestoreWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This operation will resume backups for backup instance
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            public static BackupInstancesResumeBackupsHeaders BeginResumeBackups(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
+            {
+                return operations.BeginResumeBackupsAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation will resume backups for backup instance
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesResumeBackupsHeaders> BeginResumeBackupsAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginResumeBackupsWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// This operation will resume protection for a stopped backup instance
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            public static BackupInstancesResumeProtectionHeaders BeginResumeProtection(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
+            {
+                return operations.BeginResumeProtectionAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation will resume protection for a stopped backup instance
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesResumeProtectionHeaders> BeginResumeProtectionAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginResumeProtectionWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// This operation will stop protection of a backup instance and data will be
+            /// held forever
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            public static BackupInstancesStopProtectionHeaders BeginStopProtection(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
+            {
+                return operations.BeginStopProtectionAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation will stop protection of a backup instance and data will be
+            /// held forever
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesStopProtectionHeaders> BeginStopProtectionAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStopProtectionWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// This operation will stop backup for a backup instance and retains the
+            /// backup data as per the policy (except latest Recovery point, which will be
+            /// retained forever)
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            public static BackupInstancesSuspendBackupsHeaders BeginSuspendBackups(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName)
+            {
+                return operations.BeginSuspendBackupsAsync(resourceGroupName, vaultName, backupInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation will stop backup for a backup instance and retains the
+            /// backup data as per the policy (except latest Recovery point, which will be
+            /// retained forever)
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesSuspendBackupsHeaders> BeginSuspendBackupsAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginSuspendBackupsWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Sync backup instance again in case of failure
+            /// This action will retry last failed operation and will bring backup instance
+            /// to valid state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='syncType'>
+            /// Field indicating sync type e.g. to sync only in case of failure or in all
+            /// cases. Possible values include: 'Default', 'ForceResync'
+            /// </param>
+            public static BackupInstancesSyncBackupInstanceHeaders BeginSyncBackupInstance(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, string syncType = default(string))
+            {
+                return operations.BeginSyncBackupInstanceAsync(resourceGroupName, vaultName, backupInstanceName, syncType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sync backup instance again in case of failure
+            /// This action will retry last failed operation and will bring backup instance
+            /// to valid state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// </param>
+            /// <param name='syncType'>
+            /// Field indicating sync type e.g. to sync only in case of failure or in all
+            /// cases. Possible values include: 'Default', 'ForceResync'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInstancesSyncBackupInstanceHeaders> BeginSyncBackupInstanceAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, string syncType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginSyncBackupInstanceWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, syncType, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
                 }
             }
 
@@ -757,11 +1281,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -769,9 +1293,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='restoreRequestObject'>
             /// Gets or sets the restore request object.
             /// </param>
-            public static OperationJobExtendedInfo BeginValidateForRestore(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject)
+            public static OperationJobExtendedInfo BeginValidateForRestore(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject)
             {
-                return operations.BeginValidateForRestoreAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject).GetAwaiter().GetResult();
+                return operations.BeginValidateForRestoreAsync(resourceGroupName, vaultName, backupInstanceName, restoreRequestObject).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -780,11 +1304,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
@@ -795,9 +1319,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> BeginValidateForRestoreAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> BeginValidateForRestoreAsync(this IBackupInstancesOperations operations, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginValidateForRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginValidateForRestoreWithHttpMessagesAsync(resourceGroupName, vaultName, backupInstanceName, restoreRequestObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

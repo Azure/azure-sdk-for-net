@@ -85,6 +85,16 @@ namespace Microsoft.Azure.Management.DataProtection
         IOperationStatusOperations OperationStatus { get; }
 
         /// <summary>
+        /// Gets the IOperationStatusBackupVaultContextOperations.
+        /// </summary>
+        IOperationStatusBackupVaultContextOperations OperationStatusBackupVaultContext { get; }
+
+        /// <summary>
+        /// Gets the IOperationStatusResourceGroupContextOperations.
+        /// </summary>
+        IOperationStatusResourceGroupContextOperations OperationStatusResourceGroupContext { get; }
+
+        /// <summary>
         /// Gets the IBackupVaultOperationResultsOperations.
         /// </summary>
         IBackupVaultOperationResultsOperations BackupVaultOperationResults { get; }
