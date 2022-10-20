@@ -194,6 +194,7 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobUriBuilder
     {
+        public BlobUriBuilder(string accountName) { }
         public BlobUriBuilder(System.Uri uri) { }
         public BlobUriBuilder(System.Uri uri, bool trimBlobNameSlashes) { }
         public string AccountName { get { throw null; } set { } }
