@@ -106,8 +106,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _acrAuthClient = authenticationClient ?? new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
             string defaultScope = options.Audience + "/.default";
-            _pipeline = HttpPipelineBuilder.Build(options,
-                new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
             _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
@@ -534,20 +533,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                // TODO: cache the policy
-                var policy = new ContainerRegistryBlobLocationPolicy();
-                var context = new RequestContext() { CancellationToken = cancellationToken };
-                context.FollowRedirects = false;
-                context.AddPolicy(policy, HttpPipelinePosition.PerRetry);
+                var context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                    FollowRedirects = false
+                };
 
                 Response response = _blobRestClient.GetBlob(_repositoryName, digest, context);
 
-                NullableResponse<Uri> result = policy.Uri != null ?
-                    Response.FromValue(policy.Uri, response) :
+                return (response.Status == 307 && response.Headers.TryGetValue("Location", out string value)) ?
+                    Response.FromValue(new Uri(value), response) :
                     new NoValueResponse<Uri>(response);
-
-                // Currently quite inefficient because we follow the redirect...  Can we just return when we get the 307?
-                return result;
             }
             catch (Exception e)
             {
@@ -571,20 +567,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                // TODO: cache it.
-                var policy = new ContainerRegistryBlobLocationPolicy();
-                var context = new RequestContext() { CancellationToken = cancellationToken };
-                context.FollowRedirects = false;
-                context.AddPolicy(policy, HttpPipelinePosition.PerRetry);
+                var context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                    FollowRedirects = false
+                };
 
                 Response response = await _blobRestClient.GetBlobAsync(_repositoryName, digest, context).ConfigureAwait(false);
 
-                NullableResponse<Uri> result = policy.Uri != null ?
-                    Response.FromValue(policy.Uri, response) :
+                return (response.Status == 307 && response.Headers.TryGetValue("Location", out string value)) ?
+                    Response.FromValue(new Uri(value), response) :
                     new NoValueResponse<Uri>(response);
-
-                // Currently quite inefficient because we follow the redirect...  Can we just return when we get the 307?
-                return result;
             }
             catch (Exception e)
             {
