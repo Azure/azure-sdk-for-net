@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+## 12.14.1 (2022-10-20)
+- Fixed bug were BlobBaseClient constructor taking a URI and BlobClientOptions would ignore BlobClientOptions.TrimBlobNameSlashes.
+
 ## 12.14.0 (2022-10-12)
 - Includes all features from 12.14.0-beta.1.
 - Added support for leading and trailing '/' characters in blob names when constructing URIs via builder.

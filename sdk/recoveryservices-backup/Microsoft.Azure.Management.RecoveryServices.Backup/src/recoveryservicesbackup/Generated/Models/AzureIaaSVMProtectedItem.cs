@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'</param>
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase',
+        /// 'SAPHanaDBInstance'</param>
         /// <param name="containerName">Unique name of container</param>
         /// <param name="sourceResourceId">ARM ID of the resource to be backed
         /// up.</param>
@@ -69,6 +70,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// is protected in archive</param>
         /// <param name="policyName">Name of the policy used for
         /// protection</param>
+        /// <param name="softDeleteRetentionPeriod">Soft delete retention
+        /// period in days</param>
         /// <param name="friendlyName">Friendly name of the VM represented by
         /// this backup item.</param>
         /// <param name="virtualMachineId">Fully qualified ARM ID of the
@@ -92,8 +95,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// item.</param>
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
-        public AzureIaaSVMProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string), string friendlyName = default(string), string virtualMachineId = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), IList<AzureIaaSVMHealthDetails> healthDetails = default(IList<AzureIaaSVMHealthDetails>), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), string protectedItemDataId = default(string), AzureIaaSVMProtectedItemExtendedInfo extendedInfo = default(AzureIaaSVMProtectedItemExtendedInfo), ExtendedProperties extendedProperties = default(ExtendedProperties))
-            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName)
+        public AzureIaaSVMProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string), int? softDeleteRetentionPeriod = default(int?), string friendlyName = default(string), string virtualMachineId = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), IList<AzureIaaSVMHealthDetails> healthDetails = default(IList<AzureIaaSVMHealthDetails>), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), string protectedItemDataId = default(string), AzureIaaSVMProtectedItemExtendedInfo extendedInfo = default(AzureIaaSVMProtectedItemExtendedInfo), ExtendedProperties extendedProperties = default(ExtendedProperties))
+            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
         {
             FriendlyName = friendlyName;
             VirtualMachineId = virtualMachineId;
@@ -116,18 +119,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets friendly name of the VM represented by this backup
-        /// item.
+        /// Gets friendly name of the VM represented by this backup item.
         /// </summary>
         [JsonProperty(PropertyName = "friendlyName")]
-        public string FriendlyName { get; set; }
+        public string FriendlyName { get; private set; }
 
         /// <summary>
-        /// Gets or sets fully qualified ARM ID of the virtual machine
-        /// represented by this item.
+        /// Gets fully qualified ARM ID of the virtual machine represented by
+        /// this item.
         /// </summary>
         [JsonProperty(PropertyName = "virtualMachineId")]
-        public string VirtualMachineId { get; set; }
+        public string VirtualMachineId { get; private set; }
 
         /// <summary>
         /// Gets or sets backup status of this backup item.
@@ -144,11 +146,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string ProtectionState { get; set; }
 
         /// <summary>
-        /// Gets or sets health status of protected item. Possible values
-        /// include: 'Passed', 'ActionRequired', 'ActionSuggested', 'Invalid'
+        /// Gets health status of protected item. Possible values include:
+        /// 'Passed', 'ActionRequired', 'ActionSuggested', 'Invalid'
         /// </summary>
         [JsonProperty(PropertyName = "healthStatus")]
-        public string HealthStatus { get; set; }
+        public string HealthStatus { get; private set; }
 
         /// <summary>
         /// Gets or sets health details on this backup item.
@@ -169,17 +171,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string LastBackupStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets timestamp of the last backup operation on this backup
-        /// item.
+        /// Gets timestamp of the last backup operation on this backup item.
         /// </summary>
         [JsonProperty(PropertyName = "lastBackupTime")]
-        public System.DateTime? LastBackupTime { get; set; }
+        public System.DateTime? LastBackupTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets data ID of the protected item.
+        /// Gets data ID of the protected item.
         /// </summary>
         [JsonProperty(PropertyName = "protectedItemDataId")]
-        public string ProtectedItemDataId { get; set; }
+        public string ProtectedItemDataId { get; private set; }
 
         /// <summary>
         /// Gets or sets additional information for this backup item.

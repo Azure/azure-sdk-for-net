@@ -12,7 +12,7 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CreateCallRequest. </summary>
+    /// <summary> The request payload for creating the call. </summary>
     internal partial class CreateCallRequestInternal
     {
         /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>

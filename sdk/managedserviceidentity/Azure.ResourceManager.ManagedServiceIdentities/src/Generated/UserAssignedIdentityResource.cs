@@ -89,6 +89,43 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of FederatedIdentityCredentialResources in the UserAssignedIdentity. </summary>
+        /// <returns> An object representing collection of FederatedIdentityCredentialResources and their operations over a FederatedIdentityCredentialResource. </returns>
+        public virtual FederatedIdentityCredentialCollection GetFederatedIdentityCredentials()
+        {
+            return GetCachedClient(Client => new FederatedIdentityCredentialCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the federated identity credential.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}
+        /// Operation Id: FederatedIdentityCredentials_Get
+        /// </summary>
+        /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FederatedIdentityCredentialResource>> GetFederatedIdentityCredentialAsync(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetFederatedIdentityCredentials().GetAsync(federatedIdentityCredentialResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the federated identity credential.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}
+        /// Operation Id: FederatedIdentityCredentials_Get
+        /// </summary>
+        /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FederatedIdentityCredentialResource> GetFederatedIdentityCredential(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
+        {
+            return GetFederatedIdentityCredentials().Get(federatedIdentityCredentialResourceName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets the identity.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}
@@ -239,6 +276,100 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists the associated resources for this identity.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/listAssociatedResources
+        /// Operation Id: UserAssignedIdentities_ListAssociatedResources
+        /// </summary>
+        /// <param name="filter"> OData filter expression to apply to the query. </param>
+        /// <param name="orderby"> OData orderBy expression to apply to the query. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IdentityAssociatedResourceData> GetAssociatedResourcesAsync(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<IdentityAssociatedResourceData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = await _userAssignedIdentityRestClient.ListAssociatedResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<IdentityAssociatedResourceData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = await _userAssignedIdentityRestClient.ListAssociatedResourcesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists the associated resources for this identity.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/listAssociatedResources
+        /// Operation Id: UserAssignedIdentities_ListAssociatedResources
+        /// </summary>
+        /// <param name="filter"> OData filter expression to apply to the query. </param>
+        /// <param name="orderby"> OData orderBy expression to apply to the query. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IdentityAssociatedResourceData> GetAssociatedResources(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        {
+            Page<IdentityAssociatedResourceData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = _userAssignedIdentityRestClient.ListAssociatedResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<IdentityAssociatedResourceData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = _userAssignedIdentityRestClient.ListAssociatedResourcesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
