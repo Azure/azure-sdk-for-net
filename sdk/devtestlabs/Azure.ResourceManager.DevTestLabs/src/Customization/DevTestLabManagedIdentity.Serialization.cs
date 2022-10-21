@@ -11,7 +11,6 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     // This customization is here to override the serialization and deserialization for `ManagedIdentityType`
-    [CodeGenSuppress("Write", typeof(Utf8JsonWriter))]
     public partial class DevTestLabManagedIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
