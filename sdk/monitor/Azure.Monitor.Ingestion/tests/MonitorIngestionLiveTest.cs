@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -78,11 +78,12 @@ namespace Azure.Monitor.Ingestion.Tests
             });
 
             // Make the request
-            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
 
             // Check the response
-            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.IsEmpty(response.Value.Errors);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
         }
 
         private static List<Object> GenerateEntries(int numEntries, DateTime recordingNow)
@@ -110,8 +111,9 @@ namespace Azure.Monitor.Ingestion.Tests
            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
-            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.IsEmpty(response.Value.Errors);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
         }
 
         [LiveOnly]
@@ -125,8 +127,9 @@ namespace Azure.Monitor.Ingestion.Tests
             var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(1000, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
-            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.IsEmpty(response.Value.Errors);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
         }
 
         [AsyncOnly]
@@ -145,8 +148,9 @@ namespace Azure.Monitor.Ingestion.Tests
             var response = await tasks;
 
             // Check the response
-            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.IsEmpty(response.Value.Errors);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
         }
 
         [SyncOnly]
@@ -160,8 +164,9 @@ namespace Azure.Monitor.Ingestion.Tests
             var response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(50, Recording.Now.DateTime));
 
             // Check the response
-            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.IsEmpty(response.Value.Errors);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
         }
 
         [Test]

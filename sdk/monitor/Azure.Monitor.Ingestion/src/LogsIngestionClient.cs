@@ -186,9 +186,11 @@ namespace Azure.Monitor.Ingestion
             var exceptions = new List<Exception>();
 
             scope.Start();
+            int batchCount = 0; // Keep track of the number of batches as they are uploaded
             // Partition the stream into individual blocks
-            foreach (BatchedLogs<T> batch in Batch(logs, options)) //TODO: check if we should throw early for sync case? as soon as we find exception
+            foreach (BatchedLogs<T> batch in Batch(logs, options))
             {
+                batchCount++;
                 try
                 {
                     // Because we are uploading in sequence, wait for each batch to upload before starting the next batch
@@ -196,7 +198,7 @@ namespace Azure.Monitor.Ingestion
                         batch,
                         ruleId,
                         streamName,
-                        false,
+                        async: false,
                         cancellationToken).EnsureCompleted();
                 }
                 catch (Exception ex)
@@ -207,7 +209,7 @@ namespace Azure.Monitor.Ingestion
             }
             if (exceptions.Count > 0)
             {
-                throw new AggregateException(exceptions);
+                throw new AggregateException($"{exceptions.Count} out of the {batchCount} batches uploaded have failed. Please check the InnerExceptions for more details.", exceptions);
             }
 
             // If no exceptions return response
@@ -259,8 +261,11 @@ namespace Azure.Monitor.Ingestion
             // always be smaller than or equal to MaxWorkerCount
             List<Task<Response>> runningTasks = new();
             // Partition the stream into individual blocks
+            int batchCount = 0; // Keep track of the number of batches as they are uploaded
+
             foreach (BatchedLogs<T> batch in Batch(logs, options))
             {
+                batchCount++;
                 try
                 {
                     // Start staging the next batch (but don't await the Task!)
@@ -268,7 +273,7 @@ namespace Azure.Monitor.Ingestion
                         batch,
                         ruleId,
                         streamName,
-                        true,
+                        async: true,
                         cancellationToken);
 
                     // Add the block to our task and commit lists
@@ -305,11 +310,11 @@ namespace Azure.Monitor.Ingestion
 
             if (exceptions.Count > 0)
             {
-                throw new AggregateException(exceptions);
+                throw new AggregateException($"{exceptions.Count} out of the {batchCount} batches uploaded have failed. Please check the InnerExceptions for more details.", exceptions);
             }
 
             // If no exceptions return response
-            return response; //204 - return response of last batch (would include header) or create a blank response with success?
+            return response; //204 - return response of last batch (would include header)
         }
 
         private async Task<Response> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)

@@ -2,8 +2,8 @@
   "Entries": [],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "INGESTION_DATA_COLLECTION_ENDPOINT": "https://98c96978-a857-58f1-a299-7d216d4b043a-p2j8.westus-1.ingest.monitor.azure.com",
-    "INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID": "dcr-37a02bb9a8ba4f97a80716652c78e678",
+    "INGESTION_DATA_COLLECTION_ENDPOINT": "https://86923540-75e9-5143-84b6-7535316a68dc-lipn.westus-1.ingest.monitor.azure.com",
+    "INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID": "dcr-ba536bf3cee94b1db8d04b30ee3f2e80",
     "INGESTION_STREAM_NAME": "Custom-MyTableRawData"
   }
 }
