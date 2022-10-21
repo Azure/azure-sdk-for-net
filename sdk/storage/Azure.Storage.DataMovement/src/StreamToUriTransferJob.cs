@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Azure.Storage.DataMovement.Models;
 using System.Buffers;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement
 {
@@ -90,7 +91,7 @@ namespace Azure.Storage.DataMovement
             if (_isSingleResource)
             {
                 // Single resource transfer, we can skip to chunking the job.
-                yield return new StreamToUriJobPart(
+                StreamToUriJobPart part = new StreamToUriJobPart(
                     dataTransfer: _dataTransfer,
                     sourceResource: _sourceResource,
                     destinationResource: _destinationResource,
@@ -101,6 +102,8 @@ namespace Azure.Storage.DataMovement
                     uploadPool: _arrayPool,
                     events: _events,
                     cancellationTokenSource: _cancellationTokenSource);
+                _jobParts.Add(part);
+                yield return part;
             }
             else
             {
@@ -110,7 +113,7 @@ namespace Azure.Storage.DataMovement
                         cancellationToken:_cancellationTokenSource.Token).ConfigureAwait(false))
                 {
                     // Pass each storage resource found in each list call
-                    yield return new StreamToUriJobPart(
+                    StreamToUriJobPart part = new StreamToUriJobPart(
                         dataTransfer: _dataTransfer,
                         sourceResource: resource,
                         destinationResource: _destinationResourceContainer.GetStorageResource(resource.GetPath()),
@@ -121,7 +124,22 @@ namespace Azure.Storage.DataMovement
                         uploadPool: _arrayPool,
                         events: _events,
                         cancellationTokenSource: _cancellationTokenSource);
+                    _jobParts.Add(part);
+                    yield return part;
                 }
+            }
+            if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
+            {
+                await _events.InvokeTransferStatus(
+                    new TransferStatusEventArgs(
+                        transferId: _dataTransfer.Id,
+                        transferStatus: StorageTransferStatus.Completed,
+                        isRunningSynchronously: true,
+                        cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
+            }
+            else
+            {
+                // Add event to keep track to make sure we update the main transfer status.
             }
         }
     }

@@ -74,6 +74,11 @@ namespace Azure.Storage.DataMovement
         internal long _initialTransferSize { get; set; }
 
         /// <summary>
+        /// Status of each Job part
+        /// </summary>
+        public StorageTransferStatus JobPartStatus { get; set; }
+
+        /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
         public ArrayPool<byte> UploadArrayPool => _arrayPool;
@@ -93,6 +98,7 @@ namespace Azure.Storage.DataMovement
             TransferEventsInternal events,
             CancellationTokenSource cancellationToken)
         {
+            JobPartStatus = StorageTransferStatus.Queued;
             _dataTransfer = dataTransfer;
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
@@ -116,13 +122,13 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job chunks</returns>
         public abstract Task ProcessPartToChunkAsync();
 
-        internal void TriggerCancellation()
+        internal async Task TriggerCancellation()
         {
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
             }
-            _dataTransfer._state.SetTransferStatus(StorageTransferStatus.Completed);
+            await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
             _dataTransfer._state.ResetTransferredBytes();
         }
 
@@ -132,12 +138,15 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferStatus"></param>
         internal async Task OnTransferStatusChanged(StorageTransferStatus transferStatus)
         {
-            _dataTransfer._state.SetTransferStatus(transferStatus);
-            await _events.InvokeTransferStatus(new TransferStatusEventArgs(
-                _dataTransfer.Id,
-                transferStatus,
-                false,
-                _cancellationTokenSource.Token)).ConfigureAwait(false);
+            if (JobPartStatus != transferStatus)
+            {
+                JobPartStatus = transferStatus;
+                await _events.InvokeTransferStatus(new TransferStatusEventArgs(
+                    _dataTransfer.Id,
+                    transferStatus,
+                    false,
+                    _cancellationTokenSource.Token)).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -162,9 +171,9 @@ namespace Azure.Storage.DataMovement
                 false,
                 _cancellationTokenSource.Token)).ConfigureAwait(false);
             // Trigger job cancellation if the failed handler is enabled
-            if (_errorHandling == ErrorHandlingOptions.PauseOnAllFailures)
+            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures)
             {
-                TriggerCancellation();
+                await TriggerCancellation().ConfigureAwait(false);
             }
         }
     }

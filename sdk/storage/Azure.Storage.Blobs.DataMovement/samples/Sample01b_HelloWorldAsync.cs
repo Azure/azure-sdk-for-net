@@ -56,30 +56,24 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
             await container.CreateIfNotExistsAsync();
-
-            // Make a service request to verify we've successfully authenticated
             try
             {
+                // Get a reference to a source local file
+                StorageResource sourceResource = new LocalFileStorageResource(originalPath);
+
                 // Get a reference to a destination blobs
                 BlockBlobClient destinationBlob = container.GetBlockBlobClient(Randomize("sample-blob"));
-                BlockBlobClient destinationBlob2 = container.GetBlockBlobClient(Randomize("sample-blob"));
+                StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
 
                 // Upload file data
-                TransferManagerOptions options = new TransferManagerOptions();
+                TransferManagerOptions options = new TransferManagerOptions()
+                {
+                    MaximumConcurrency = 16
+                };
                 TransferManager dataController = new TransferManager(options);
 
                 // Create simple transfer single blob upload job
-                StorageResource sourceResource = new LocalFileStorageResource(originalPath);
-                StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
-                DataTransfer jobId = await dataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
-
-                // Add another transfer job.
-                StorageResource destinationResource2 = new BlockBlobStorageResource(destinationBlob2);
-
-                Progress<long> blob2Progress = new Progress<long>();
-                await dataController.StartTransferAsync(
-                    sourceResource,
-                    destinationResource2).ConfigureAwait(false);
+                DataTransfer dataTransfer = await dataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
             }
             finally
             {
@@ -120,10 +114,8 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
             // Create a client that can authenticate with a connection string
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
-
             await container.CreateIfNotExistsAsync();
 
-            // Make a service request to verify we've successfully authenticated
             try
             {
                 // Get a reference to a source blobs and upload sample content to download
@@ -136,17 +128,19 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                     await sourceBlob2.UploadAsync(stream);
                 }
 
-                // Create Blob Data Controller with concurrency limited to 4
+                // Create Blob Data Controller to skip through all failures
                 TransferManagerOptions options = new TransferManagerOptions()
                 {
-                    MaximumConcurrency = 4
+                    ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
                 };
                 TransferManager dataController = new TransferManager(options);
 
                 // Simple Download Single Blob Job
                 StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
-                await dataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
+                await dataController.StartTransferAsync(
+                    sourceResource,
+                    destinationResource).ConfigureAwait(false);
 
                 StorageResource sourceResource2 = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource2 = new LocalFileStorageResource(downloadPath2);
@@ -174,7 +168,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
         /// permissions.
         /// </summary>
         [Test]
-        public async Task UploadDirectory_EventHandler_SasAsync()
+        public async Task UploadDirectory_SasAsync()
         {
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string sourcePath = CreateSampleDirectoryTree();
@@ -217,37 +211,121 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
             // Make a service request to verify we've successfully authenticated
             try
             {
-                // Get a reference to a destination blobs
+                // Get a storage resource reference to a local directory
+                StorageResourceContainer localDirectory = new LocalDirectoryStorageResourceContainer(sourcePath);
+                // Get a storage resource to a destination blob directory
                 StorageResourceContainer directoryDestination = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
-                StorageResourceContainer directoryDestination2 = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
 
                 // Create BlobDataController with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions uploadOptions = new ContainerTransferOptions();
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-                uploadOptions.TransferFailedEventHandler += async (TransferFailedEventArgs args) =>
+                TransferManager transferManager = new TransferManager(options);
+
+                // Create simple transfer directory upload job which uploads the directory and the contents of that directory
+                DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
+                    localDirectory,
+                    directoryDestination,
+                    uploadOptions).ConfigureAwait(false);
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Use a shared access signature to access  a Storage Account and upload a directory.
+        ///
+        /// A shared access signature (SAS) is a URI that grants restricted
+        /// access rights to Azure Storage resources. You can provide a shared
+        /// access signature to clients who should not be trusted with your
+        /// storage account key but to whom you wish to delegate access to
+        /// certain storage account resources. By distributing a shared access
+        /// signature URI to these clients, you can grant them access to a
+        /// resource for a specified period of time, with a specified set of
+        /// permissions.
+        /// </summary>
+        [Test]
+        public async Task UploadDirectory_EventHandler_SasAsync()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string sourcePath = CreateSampleDirectoryTree();
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string sourcePath2 = CreateSampleDirectoryTree();
+
+            string logFile = Path.GetTempFileName();
+
+            // Create a service level SAS that only allows reading from service
+            // level APIs
+            AccountSasBuilder sas = new AccountSasBuilder
+            {
+                // Allow access to blobs
+                Services = AccountSasServices.Blobs,
+
+                // Allow access to the service level APIs
+                ResourceTypes = AccountSasResourceTypes.Service,
+
+                // Access expires in 1 hour!
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+            };
+            // Allow read access
+            sas.SetPermissions(AccountSasPermissions.Read);
+
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
+
+            // Build a SAS URI
+            UriBuilder sasUri = new UriBuilder(StorageAccountBlobUri);
+            sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
+
+            // Create a client that can authenticate with the SAS URI
+            BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
+
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
+            await container.CreateIfNotExistsAsync();
+
+            // Make a service request to verify we've successfully authenticated
+            try
+            {
+                // Create BlobDataController with event handler in Options bag
+                TransferManagerOptions options = new TransferManagerOptions();
+                ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
+                containerTransferOptions.TransferStatusEventHandler += (TransferStatusEventArgs args) =>
                 {
-                    //await LogFailedFileAsync(args.SourcePath, args.DestinationBlobClient.Uri, args.Exception.Message);
+                    if (args.StorageTransferStatus == StorageTransferStatus.Completed)
+                    {
+                        // Customers like logging their own exceptions in their production environments.
+                        using (StreamWriter logStream = File.AppendText(logFile))
+                        {
+                            logStream.WriteLine($"Our transfer has completed!");
+                        }
+                    }
+                    return Task.CompletedTask;
                 };
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+                containerTransferOptions.TransferFailedEventHandler += (TransferFailedEventArgs args) =>
+                {
+                    // Customers like logging their own exceptions in their production environments.
+                    using (StreamWriter logStream = File.AppendText(logFile))
+                    {
+                        // Specifying specific resources that failed, since its a directory transfer
+                        // maybe only one file failed out of many
+                        logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
+                            $"Source Resource: {args.SourceResource.GetPath()}, +" +
+                            $"Destination Resource: {args.DestinationResource.GetPath()}," +
+                            $"Exception Message: {args.Exception.Message}");
+                    }
+                    return Task.CompletedTask;
+                };
                 TransferManager transferManager = new TransferManager(options);
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
                     new LocalDirectoryStorageResourceContainer(sourcePath),
-                    directoryDestination).ConfigureAwait(false);
-
-                // Create simple transfer directory upload job which the contents of that directory
-                DataTransfer uploadDirectoryJobId2 = await transferManager.StartTransferAsync(
-                    new LocalDirectoryStorageResourceContainer(sourcePath2),
-                    directoryDestination,
-                    uploadOptions).ConfigureAwait(false);
-
-                // Create transfer directory upload job where we specify a progress handler and concurrency
-                DataTransfer uploadDirectoryJobId3 = await transferManager.StartTransferAsync(
-                    new LocalDirectoryStorageResourceContainer(sourcePath2),
-                    directoryDestination2,
-                    uploadOptions).ConfigureAwait(false);
+                    new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"))).ConfigureAwait(false);
             }
             finally
             {
@@ -382,7 +460,11 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 TransferManager transferManager = new TransferManager(default);
 
                 // Create simple transfer single blob upload job
-                DataTransfer job = await transferManager.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
+                DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
+
+                // Generous 10 second wait for our transfer to finish
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(10000);
+                await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
             }
             finally
             {
@@ -537,7 +619,6 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Create Blob Transfer Manager
                 TransferManager transferManager = new TransferManager(default);
 
-                CancellationTokenSource cts = new CancellationTokenSource();
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
@@ -546,12 +627,13 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                     if (args.Exception.Message == "Permissions Denied")
                     {
                         Console.WriteLine("Permissions denied, some users may either choose to do two things");
-                        // Option 1: Cancel the entire job, resolve error and then resume job later by adding each directory manually
-                        cts.Cancel();
+                        // Option 1: Cancel the all transfers, resolve error and then resume job later by adding each directory manually
                         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                         {
                             await transferManager.TryPauseAllTransfersAsync();
                         }
+                        // Option 2: Cancel the job in question
+                        await transferManager.TryPauseTransferAsync(args.TransferId);
                     }
                     // Remove stub
                     await Task.CompletedTask;
@@ -559,6 +641,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 DataTransfer jobProperties = await transferManager.StartTransferAsync(
                     sourceDirectory2,
                     destinationDirectory2).ConfigureAwait(false);
+                jobProperties.EnsureCompleted();
             }
             finally
             {
@@ -666,6 +749,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
         {
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string originalPath = CreateTempFile(SampleFileContent);
+            string checkpointerFolderPath = CreateTempDirectoryPath();
 
             // Get a temporary path on disk where we can download the file
             string downloadPath = CreateTempDirectoryPath();
@@ -721,45 +805,39 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 await container.UploadBlobAsync($"{sourceDirectoryName3}/tenth", File.OpenRead(originalPath));
                 await container.UploadBlobAsync($"{sourceDirectoryName3}/eleventh", File.OpenRead(originalPath));
 
-                // Set configurations up to continue to on storage failures
-                // but not on local filesystem errors
+                // Set configurations to take in checkpointing information
                 TransferManagerOptions options = new TransferManagerOptions()
                 {
-                    MaximumConcurrency = 4,
+                    Checkpointer = new LocalTransferCheckpointer(checkpointerFolderPath)
                 };
 
                 // Create Blob Transfer Manager
                 TransferManager transferManager = new TransferManager(options);
 
-                CancellationTokenSource cts = new CancellationTokenSource();
-
-                List<string> failedDirectories = new List<string>();
-                // Create transfer single blob upload job with transfer options concurrency specified
-                // i.e. it's a bigger blob so it maybe need more help uploading fast
-                ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
-                DataTransfer dataTransfer1 = await transferManager.StartTransferAsync(
+                // Create transfers
+                DataTransfer transferInfo1 = await transferManager.StartTransferAsync(
                     sourceDirectory1,
-                    destinationDirectory1,
-                    downloadOptions).ConfigureAwait(false);
-                DataTransfer jobProperties2 = await transferManager.StartTransferAsync(
+                    destinationDirectory1).ConfigureAwait(false);
+                DataTransfer transferInfo2 = await transferManager.StartTransferAsync(
                     sourceDirectory2,
-                    destinationDirectory2,
-                    downloadOptions).ConfigureAwait(false);
-                DataTransfer jobProperties3 = await transferManager.StartTransferAsync(
+                    destinationDirectory2).ConfigureAwait(false);
+                DataTransfer transferInfo3 = await transferManager.StartTransferAsync(
                     sourceDirectory3,
-                    destinationDirectory3,
-                    downloadOptions).ConfigureAwait(false);
+                    destinationDirectory3).ConfigureAwait(false);
 
                 // Something else happens in the CX which causes them to pause all jobs the CX is using
                 // like an interrupt or something
-                await transferManager.TryPauseTransferAsync(jobProperties2.Id);
+                await transferManager.TryPauseTransferAsync(transferInfo2.Id);
 
+                // Create resume options
                 ContainerTransferOptions resumeOptions = new ContainerTransferOptions()
                 {
-                    ResumeFromCheckpointId = jobProperties2.Id,
+                    ResumeFromCheckpointId = transferInfo2.Id,
                 };
 
                 //  When they decide to allow the transferManager to resume
+                // Resume the transfer by re-providing the storage resources (with the credentials)
+                // (or updated credentials) and the options bag with the resume options.
                 await transferManager.StartTransferAsync(
                     sourceDirectory2,
                     destinationDirectory2,
@@ -772,7 +850,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
         }
 
         [Test]
-        public async Task PauseAndResumeFailedJobs()
+        public async Task PauseAllJobsResumeOneJob()
         {
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string originalPath = CreateTempFile(SampleFileContent);
@@ -881,6 +959,136 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
             finally
             {
                 await container.DeleteIfExistsAsync();
+            }
+        }
+
+        public struct StoredCredentials
+        {
+            public StorageResourceContainer SourceContainer { get; set; }
+            public StorageResourceContainer DestinationContainer { get; set; }
+
+            public StoredCredentials(
+                StorageResourceContainer sourceContainer,
+                StorageResourceContainer destinationContainer)
+            {
+                SourceContainer = sourceContainer;
+                DestinationContainer = destinationContainer;
+            }
+        }
+
+        [Test]
+        public async Task ResumeFromStoppedJobs()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempDirectoryPath();
+            string downloadPath2 = CreateTempDirectoryPath();
+            string checkpointerPath = CreateTempDirectoryPath();
+
+            // Get a Storage account name, shared key, and endpoint Uri.
+            //
+            // You can obtain both from the Azure Portal by clicking Access
+            // Keys under Settings in the Portal Storage account blade.
+            //
+            // You can also get access to your account keys from the Azure CLI
+            // with:
+            //
+            //     az storage account keys list --account-name <account_name> --resource-group <resource_group>
+            //
+            string accountName = StorageAccountName;
+            string accountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            // Create a SharedKeyCredential that we can use to authenticate
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
+
+            // Create a client that can authenticate with a connection string
+            BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
+            BlobContainerClient container1 = service.GetBlobContainerClient(Randomize("sample-container"));
+            BlobContainerClient container2 = service.GetBlobContainerClient(Randomize("sample-container1"));
+            BlobContainerClient container3 = service.GetBlobContainerClient(Randomize("sample-container2"));
+
+            await container1.CreateIfNotExistsAsync();
+            await container2.CreateIfNotExistsAsync();
+            await container3.CreateIfNotExistsAsync();
+
+            // Make a service request to verify we've successfully authenticated
+            try
+            {
+                string sourceDirectoryName = Randomize("sample-blob-directory");
+                string sourceDirectoryName2 = Randomize("sample-blob-directory");
+                string sourceDirectoryName3 = Randomize("sample-blob-directory");
+
+                // Set configurations to grab the checkpointer from the designated place
+                // in the environment where the checkpointer is stored.
+                LocalTransferCheckpointer checkpointer = new LocalTransferCheckpointer(checkpointerPath);
+                TransferManagerOptions options = new TransferManagerOptions()
+                {
+                    Checkpointer = checkpointer
+                };
+
+                // Create Blob Transfer Manager
+                TransferManager dataController = new TransferManager(options);
+
+                // Get a reference to a source blobs and upload sample content to download
+                StorageResourceContainer sourceDirectory1 = new BlobDirectoryStorageResourceContainer(container1, sourceDirectoryName);
+                StorageResourceContainer sourceDirectory2 = new BlobDirectoryStorageResourceContainer(container2, sourceDirectoryName2);
+
+                // Create destination paths
+                StorageResourceContainer destinationDirectory1 = new LocalDirectoryStorageResourceContainer(downloadPath);
+                StorageResourceContainer destinationDirectory2 = new LocalDirectoryStorageResourceContainer(downloadPath2);
+
+                Dictionary<string, StoredCredentials> storedCredentials = new Dictionary<string, StoredCredentials>();
+                DataTransfer dataTransferInfo = await dataController.StartTransferAsync(
+                    sourceDirectory1,
+                    destinationDirectory1).ConfigureAwait(false);
+                DataTransfer dataTransferInfo2 = await dataController.StartTransferAsync(
+                    sourceDirectory2,
+                    destinationDirectory2).ConfigureAwait(false);
+
+                storedCredentials.Add(dataTransferInfo.Id, new StoredCredentials(sourceDirectory1, destinationDirectory1));
+                storedCredentials.Add(dataTransferInfo2.Id, new StoredCredentials(sourceDirectory2, destinationDirectory2));
+
+                //-----------------Someone trips over the plug!---------------------------
+
+                // Set configurations to grab the checkpointer from the designated place
+                // in the environment where the checkpointer is stored.
+                LocalTransferCheckpointer localCheckpointer = new LocalTransferCheckpointer(checkpointerPath);
+                TransferManagerOptions options2 = new TransferManagerOptions()
+                {
+                    Checkpointer = localCheckpointer
+                };
+                List<string> savedTransfers = await checkpointer.ListStoredTransfersAsync().ConfigureAwait(false);
+
+                // Create Blob Transfer Manager
+                TransferManager transferManagerResume = new TransferManager(options2);
+
+                for (int i = 0; i < savedTransfers.Count; i++)
+                {
+                    // If we have the credentials saved
+                    if (storedCredentials.TryGetValue(savedTransfers[i], out StoredCredentials credentials))
+                    {
+                        ContainerTransferOptions resumeOptions = new ContainerTransferOptions()
+                        {
+                            // Specify job id to resume from.
+                            ResumeFromCheckpointId = savedTransfers[i]
+                        };
+                        // We need to reprovide the crendentials / resources because we do not
+                        // store the credentials for the customers. Customers should manage
+                        // their storage credentials)
+                        await transferManagerResume.StartTransferAsync(
+                            credentials.SourceContainer,
+                            credentials.DestinationContainer,
+                            resumeOptions);
+                    }
+                }
+            }
+            finally
+            {
+                await container1.DeleteIfExistsAsync();
+                await container2.DeleteIfExistsAsync();
             }
         }
     }

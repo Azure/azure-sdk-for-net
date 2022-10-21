@@ -260,7 +260,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        public async Task ScheduleDownload()
+        public async Task StartTransfer_BlockBlobToLocal()
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
@@ -279,7 +279,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 400)]
         [TestCase(Constants.GB, 800)]
-        public async Task ScheduleDownload_Progress(long size, int waitTimeInSec)
+        public async Task StartTransfer_BlockBlobToLocal_Progress(long size, int waitTimeInSec)
         {
             AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
@@ -299,7 +299,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        public async Task ScheduleDownload_EventHandler()
+        public async Task StartTransfer_BlockBlobToLocal_EventHandler()
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
@@ -343,7 +343,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 200)]
         [TestCase(Constants.GB, 1000)]
-        public async Task ScheduleDownload_BlobSize(long size, int waitTimeInSec)
+        public async Task StartTransfer_BlockBlobToLocal_BlobSize(long size, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
@@ -387,7 +387,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(2, 257 * Constants.MB, 400)]
         [TestCase(6, 257 * Constants.MB, 600)]
         [TestCase(2, Constants.GB, 2000)]
-        public async Task ScheduleDownload_Multiple(int blobCount, long size, int waitTimeInSec)
+        public async Task StartTransfer_BlockBlobToLocal_Multiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
@@ -406,7 +406,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(2, 257 * Constants.MB, 400)]
         [TestCase(6, 257 * Constants.MB, 400)]
         [TestCase(2, Constants.GB, 1000)]
-        public async Task ScheduleDownload_Concurrency(int concurrency, int size, int waitTimeInSec)
+        public async Task StartTransfer_BlockBlobToLocal_Concurrency(int concurrency, int size, int waitTimeInSec)
         {
             AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
 

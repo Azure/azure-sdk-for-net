@@ -100,6 +100,8 @@ namespace Azure.Storage.DataMovement
         public ArrayPool<byte> UploadArrayPool => _arrayPool;
         internal ArrayPool<byte> _arrayPool;
 
+        public List<JobPartInternal> _jobParts;
+
         /// <summary>
         /// Constructor for mocking
         /// </summary>
@@ -138,6 +140,9 @@ namespace Azure.Storage.DataMovement
 
             _cancellationTokenSource = new CancellationTokenSource();
             _arrayPool = arrayPool;
+            _jobParts = new List<JobPartInternal>();
+
+            // Create event handler transfer status based on the part
         }
 
         /// <summary>

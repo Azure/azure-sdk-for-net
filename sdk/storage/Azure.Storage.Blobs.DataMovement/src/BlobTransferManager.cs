@@ -226,7 +226,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 sourceLocalPath,
                 destinationClient,
                 uploadOptions,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
                 QueueJobChunkAsync);
             await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId, transferJob);
@@ -256,7 +256,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 sourceClient,
                 destinationLocalPath,
                 options,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
                 QueueJobChunkAsync);
             await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId, transferJob);
@@ -297,7 +297,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 overwrite,
                 destinationClient,
                 options,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
                 QueueJobChunkAsync);
                 await QueueJobAsync(transferJob).ConfigureAwait(false);
 
@@ -359,7 +359,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 sourceClient,
                 destinationLocalPath,
                 options,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
                 QueueJobChunkAsync);
             _jobDictionary.Add(transferId, transferJob);
             await QueueJobAsync(transferJob).ConfigureAwait(false);
@@ -406,7 +406,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 destinationClient,
                 copyMethod,
                 copyOptions,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
                 QueueJobChunkAsync);
             _jobDictionary.Add(transferId, transferJob);
             await QueueJobAsync(transferJob).ConfigureAwait(false);
@@ -443,7 +443,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 destinationClient,
                 copyMethod,
                 copyOptions,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
                 QueueJobChunkAsync);
                 await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId , transferJob);

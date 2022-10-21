@@ -13,6 +13,11 @@ namespace Azure.Storage.Blobs.DataMovement
     public class BlockBlobStorageResourceOptions
     {
         /// <summary>
+        /// When calling <see cref="BlockBlobStorageResource.ConsumeUri(Uri)"/>
+        /// </summary>
+        public BlockBlobStorageResourceServiceCopyOptions CopyOptions { get; internal set; }
+
+        /// <summary>
         /// When calling <see cref="BlockBlobStorageResource.ConsumeReadableStream(System.IO.Stream, System.Threading.CancellationToken)"/>,
         /// <see cref="BlockBlobStorageResource.ConsumePartialReadableStream(long, long, System.IO.Stream, Storage.DataMovement.Models.ConsumePartialReadableStreamOptions, System.Threading.CancellationToken)"/>,
         /// and <see cref="BlockBlobStorageResource.CommitBlockList(IEnumerable{string}, System.Threading.CancellationToken)"/>.

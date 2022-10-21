@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
     public enum StorageResourceCreateMode
     {
         /// <summary>
-        /// Overwrites the file if it already exists. No error will be thrown.
+        /// Default. Overwrites the file if it already exists. No error will be thrown.
         /// </summary>
         Overwrite = default,
 

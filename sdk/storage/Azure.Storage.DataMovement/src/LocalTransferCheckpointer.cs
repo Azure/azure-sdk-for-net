@@ -64,7 +64,16 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override Task<bool> TryRemoveTransfer(string id)
+        public override Task<bool> TryRemoveStoredTransfer(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Lists all the transfers contained in the checkpointer.
+        /// </summary>
+        /// <returns></returns>
+        public override Task<List<string>> ListStoredTransfersAsync()
         {
             throw new NotImplementedException();
         }

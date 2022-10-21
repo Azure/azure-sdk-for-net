@@ -71,7 +71,7 @@ namespace Azure.Storage.Blobs.DataMovement
         internal protected BlobTransferJobInternal(
             string transferId,
             string planFolderPath = default,
-            ErrorHandlingOptions errorHandling = ErrorHandlingOptions.PauseOnAllFailures,
+            ErrorHandlingOptions errorHandling = ErrorHandlingOptions.StopOnAllFailures,
             QueueChunkTaskInternal queueChunkTask = null)
         {
             _transferStatus = (long)StorageTransferStatus.Queued;

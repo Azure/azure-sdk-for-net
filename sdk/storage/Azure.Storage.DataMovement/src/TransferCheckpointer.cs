@@ -40,6 +40,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public abstract Task<bool> TryRemoveTransfer(string id);
+        public abstract Task<bool> TryRemoveStoredTransfer(string id);
+
+        /// <summary>
+        /// Lists all the transfers contained in the checkpointer.
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task<List<string>> ListStoredTransfersAsync();
     }
 }

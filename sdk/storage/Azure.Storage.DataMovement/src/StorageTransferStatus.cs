@@ -23,13 +23,18 @@ namespace Azure.Storage.DataMovement
         InProgress = 1,
 
         /// <summary>
-        /// Paused jobs
+        /// Paused jobs. When transfer is paused (e.g. see <see cref="TransferManager.TryPauseTransferAsync(string)"/>) during the transfer
+        /// this will be the value.
+        ///
+        /// This status is a resumable state, only
+        /// transfers that failed will be retried when <see cref="TransferManager.StartTransferAsync(StorageResource, StorageResource, Models.SingleTransferOptions)"/>
+        /// with the respective transfer id to resume.
         /// </summary>
         Paused = 2,
 
         /// <summary>
         /// The Job has completed.
         /// </summary>
-        Completed = 3
+        Completed = 3,
     };
 }

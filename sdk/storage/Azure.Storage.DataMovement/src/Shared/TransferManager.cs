@@ -215,7 +215,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Attempts to pause the transfer of the respective id.
+        /// Attempts to all the ongoing transfers.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
@@ -277,7 +277,7 @@ namespace Azure.Storage.DataMovement
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
                         CheckPointFolderPath: Options?.Checkpointer,
-                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
                         arrayPool: _arrayPool);
                     // Queue Job
                     await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
@@ -345,7 +345,7 @@ namespace Azure.Storage.DataMovement
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
                         checkpointer:Options?.Checkpointer,
-                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
                         arrayPool: _arrayPool);
                     // Queue Job
                     await QueueJobAsync(transferJobInternal).ConfigureAwait(false);

@@ -84,7 +84,7 @@ namespace Azure.Storage.DataMovement
             catch
             {
                 // TODO: logging when given the event handler
-                TriggerCancellation();
+                await TriggerCancellation().ConfigureAwait(false);
                 return;
             }
 
@@ -114,9 +114,9 @@ namespace Azure.Storage.DataMovement
                     }
 
                     // If we cannot upload in one shot, initiate the parallel block uploader
-                    List<(long Offset, long Length)> commitBlockList = await QueueStageBlockRequests(
-                        blockSize,
-                        fileLength.Value).ConfigureAwait(false);
+                    List<(long Offset, long Length)> commitBlockList = GetCommitBlockList(blockSize, fileLength.Value);
+
+                    await QueueStageBlockRequests(commitBlockList).ConfigureAwait(false);
 
                     if (RequiresCommitListType.RequiresCommitListCall == _sourceResource.CanCommitBlockListType())
                     {
@@ -138,7 +138,7 @@ namespace Azure.Storage.DataMovement
             else
             {
                 // TODO: logging when given the event handler
-                TriggerCancellation();
+                await TriggerCancellation().ConfigureAwait(false);
             }
         }
 
@@ -227,18 +227,16 @@ namespace Azure.Storage.DataMovement
             catch (OperationCanceledException)
             {
                 // Job was cancelled
-                TriggerCancellation();
+                await TriggerCancellation().ConfigureAwait(false);
             }
             catch (Exception)
             {
-                TriggerCancellation();
+                await TriggerCancellation().ConfigureAwait(false);
                 throw;
             }
         }
 
-        private async Task<List<(long Offset, long Size)>> QueueStageBlockRequests(
-            long blockSize,
-            long fileLength)
+        private static List<(long Offset, long Size)> GetCommitBlockList(long blockSize, long fileLength)
         {
             // The list tracking blocks IDs we're going to commit
             List<(long Offset, long Size)> partitions = new List<(long, long)>();
@@ -250,14 +248,21 @@ namespace Azure.Storage.DataMovement
                     * contents; We need to record the partition data first before consuming the stream
                     * asynchronously. */
                 partitions.Add(block);
+            }
+            return partitions;
+        }
 
+        private async Task QueueStageBlockRequests(List<(long Offset, long Size)> commitBlockList)
+        {
+            // Partition the stream into individual blocks
+            foreach ((long Offset, long Length) block in commitBlockList)
+            {
                 // Queue paritioned block task
                 await QueueChunk(async () =>
                     await StageBlockInternal(
                         block.Offset,
                         block.Length).ConfigureAwait(false)).ConfigureAwait(false);
             }
-            return partitions;
         }
 
         /// <summary>
