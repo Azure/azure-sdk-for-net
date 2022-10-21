@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -217,6 +218,20 @@ namespace Azure.Core.Tests
             var cast = (SampleModel)json;
 
             Assert.AreEqual(model, cast);
+        }
+
+        [Test]
+        public void CanCastToTypesYouDontOwn()
+        {
+            var now = DateTimeOffset.Now;
+
+            // "O" is the only format supported by default JsonSerializer:
+            // https://learn.microsoft.com/dotnet/standard/datetime/system-text-json-support
+            dynamic nowJson = JsonData.Parse($"\"{now.ToString("O", CultureInfo.InvariantCulture)}\"");
+
+            var cast = (DateTimeOffset)nowJson;
+
+            Assert.AreEqual(now, cast);
         }
 
         [Test]
