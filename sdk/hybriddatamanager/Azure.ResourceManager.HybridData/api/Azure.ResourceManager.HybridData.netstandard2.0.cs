@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.HybridData
         public virtual Azure.Response<Azure.ResourceManager.HybridData.DataStoreTypeResource> GetDataStoreType(string dataStoreTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.DataStoreTypeResource>> GetDataStoreTypeAsync(string dataStoreTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridData.DataStoreTypeCollection GetDataStoreTypes() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.JobDefinitionResource> GetJobDefinitions(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.JobDefinitionResource> GetJobDefinitionsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.JobResource> GetJobs(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.JobResource> GetJobsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridData.PublicKeyResource> GetPublicKey(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.PublicKeyResource>> GetPublicKeyAsync(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridData.PublicKeyCollection GetPublicKeys() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource> GetHybridDataPublicKey(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource>> GetHybridDataPublicKeyAsync(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridData.HybridDataPublicKeyCollection GetHybridDataPublicKeys() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> GetJobDefinitions(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> GetJobDefinitionsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.HybridDataJobResource> GetJobs(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.HybridDataJobResource> GetJobsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridData.DataManagerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.DataManagerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridData.DataManagerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.HybridData
     }
     public partial class DataServiceData : Azure.ResourceManager.Models.ResourceData
     {
-        public DataServiceData(Azure.ResourceManager.HybridData.Models.State state) { }
-        public Azure.ResourceManager.HybridData.Models.State State { get { throw null; } set { } }
+        public DataServiceData(Azure.ResourceManager.HybridData.Models.HybridDataState state) { }
+        public Azure.ResourceManager.HybridData.Models.HybridDataState State { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SupportedDataSinkTypes { get { throw null; } }
         public System.Collections.Generic.IList<string> SupportedDataSourceTypes { get { throw null; } }
     }
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.HybridData
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridData.DataServiceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.DataServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridData.JobDefinitionResource> GetJobDefinition(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.JobDefinitionResource>> GetJobDefinitionAsync(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridData.JobDefinitionCollection GetJobDefinitions() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.JobResource> GetJobs(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.JobResource> GetJobsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> GetHybridDataJobDefinition(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource>> GetHybridDataJobDefinitionAsync(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridData.HybridDataJobDefinitionCollection GetHybridDataJobDefinitions() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.HybridDataJobResource> GetJobs(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.HybridDataJobResource> GetJobsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataStoreCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.DataStoreResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.DataStoreResource>, System.Collections.IEnumerable
     {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.HybridData
     }
     public partial class DataStoreData : Azure.ResourceManager.Models.ResourceData
     {
-        public DataStoreData(Azure.ResourceManager.HybridData.Models.State state, string dataStoreTypeId) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.CustomerSecret> CustomerSecrets { get { throw null; } }
-        public string DataStoreTypeId { get { throw null; } set { } }
+        public DataStoreData(Azure.ResourceManager.HybridData.Models.HybridDataState state, Azure.Core.ResourceIdentifier dataStoreTypeId) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.HybridDataCustomerSecret> CustomerSecrets { get { throw null; } }
+        public Azure.Core.ResourceIdentifier DataStoreTypeId { get { throw null; } set { } }
         public System.BinaryData ExtendedProperties { get { throw null; } set { } }
-        public string RepositoryId { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.State State { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RepositoryId { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.HybridDataState State { get { throw null; } set { } }
     }
     public partial class DataStoreResource : Azure.ResourceManager.ArmResource
     {
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.HybridData
     }
     public partial class DataStoreTypeData : Azure.ResourceManager.Models.ResourceData
     {
-        public DataStoreTypeData(Azure.ResourceManager.HybridData.Models.State state) { }
-        public string RepositoryType { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.State State { get { throw null; } set { } }
+        public DataStoreTypeData(Azure.ResourceManager.HybridData.Models.HybridDataState state) { }
+        public Azure.Core.ResourceType? RepositoryType { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.HybridDataState State { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SupportedDataServicesAsSink { get { throw null; } }
         public System.Collections.Generic.IList<string> SupportedDataServicesAsSource { get { throw null; } }
     }
@@ -172,187 +172,220 @@ namespace Azure.ResourceManager.HybridData
         public static Azure.ResourceManager.HybridData.DataServiceResource GetDataServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridData.DataStoreResource GetDataStoreResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridData.DataStoreTypeResource GetDataStoreTypeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HybridData.JobDefinitionResource GetJobDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HybridData.JobResource GetJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HybridData.PublicKeyResource GetPublicKeyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource GetHybridDataJobDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HybridData.HybridDataJobResource GetHybridDataJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HybridData.HybridDataPublicKeyResource GetHybridDataPublicKeyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class JobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.JobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.JobResource>, System.Collections.IEnumerable
+    public partial class HybridDataJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.HybridDataJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.HybridDataJobResource>, System.Collections.IEnumerable
     {
-        protected JobCollection() { }
+        protected HybridDataJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridData.JobResource> Get(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.JobResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.JobResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.JobResource>> GetAsync(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridData.JobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.JobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridData.JobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.JobResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobResource> Get(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.HybridDataJobResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.HybridDataJobResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobResource>> GetAsync(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridData.HybridDataJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.HybridDataJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridData.HybridDataJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.HybridDataJobResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class JobData : Azure.ResourceManager.Models.ResourceData
+    public partial class HybridDataJobData : Azure.ResourceManager.Models.ResourceData
     {
-        public JobData(Azure.ResourceManager.HybridData.Models.JobStatus status, System.DateTimeOffset startOn, Azure.ResourceManager.HybridData.Models.IsJobCancellable isCancellable) { }
+        public HybridDataJobData(Azure.ResourceManager.HybridData.Models.HybridDataJobStatus status, System.DateTimeOffset startOn, Azure.ResourceManager.HybridData.Models.JobCancellationSetting isCancellable) { }
         public long? BytesProcessed { get { throw null; } set { } }
         public string DataSinkName { get { throw null; } set { } }
         public string DataSourceName { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.JobDetails Details { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.HybridDataJobDetails Details { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.Error Error { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.IsJobCancellable IsCancellable { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.HybridDataJobTopLevelError Error { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.JobCancellationSetting IsCancellable { get { throw null; } set { } }
         public long? ItemsProcessed { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.JobStatus Status { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.HybridDataJobStatus Status { get { throw null; } set { } }
         public long? TotalBytesToProcess { get { throw null; } set { } }
         public long? TotalItemsToProcess { get { throw null; } set { } }
     }
-    public partial class JobDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.JobDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.JobDefinitionResource>, System.Collections.IEnumerable
+    public partial class HybridDataJobDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource>, System.Collections.IEnumerable
     {
-        protected JobDefinitionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridData.JobDefinitionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string jobDefinitionName, Azure.ResourceManager.HybridData.JobDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridData.JobDefinitionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string jobDefinitionName, Azure.ResourceManager.HybridData.JobDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected HybridDataJobDefinitionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string jobDefinitionName, Azure.ResourceManager.HybridData.HybridDataJobDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string jobDefinitionName, Azure.ResourceManager.HybridData.HybridDataJobDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridData.JobDefinitionResource> Get(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.JobDefinitionResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.JobDefinitionResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.JobDefinitionResource>> GetAsync(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridData.JobDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.JobDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridData.JobDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.JobDefinitionResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> Get(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource>> GetAsync(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class JobDefinitionData : Azure.ResourceManager.Models.ResourceData
+    public partial class HybridDataJobDefinitionData : Azure.ResourceManager.Models.ResourceData
     {
-        public JobDefinitionData(string dataSourceId, string dataSinkId, Azure.ResourceManager.HybridData.Models.State state) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.CustomerSecret> CustomerSecrets { get { throw null; } }
+        public HybridDataJobDefinitionData(string dataSourceId, string dataSinkId, Azure.ResourceManager.HybridData.Models.HybridDataState state) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.HybridDataCustomerSecret> CustomerSecrets { get { throw null; } }
         public System.BinaryData DataServiceInput { get { throw null; } set { } }
         public string DataSinkId { get { throw null; } set { } }
         public string DataSourceId { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.RunLocation? RunLocation { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.Schedule> Schedules { get { throw null; } }
-        public Azure.ResourceManager.HybridData.Models.State State { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.UserConfirmation? UserConfirmation { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.HybridDataJobRunLocation? RunLocation { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.HybridDataJobRunSchedule> Schedules { get { throw null; } }
+        public Azure.ResourceManager.HybridData.Models.HybridDataState State { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.UserConfirmationSetting? UserConfirmation { get { throw null; } set { } }
     }
-    public partial class JobDefinitionResource : Azure.ResourceManager.ArmResource
+    public partial class HybridDataJobDefinitionResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected JobDefinitionResource() { }
-        public virtual Azure.ResourceManager.HybridData.JobDefinitionData Data { get { throw null; } }
+        protected HybridDataJobDefinitionResource() { }
+        public virtual Azure.ResourceManager.HybridData.HybridDataJobDefinitionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridData.JobDefinitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.JobDefinitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridData.JobResource> GetJob(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.JobResource>> GetJobAsync(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridData.JobCollection GetJobs() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Run(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridData.Models.RunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RunAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridData.Models.RunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridData.JobDefinitionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridData.JobDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridData.JobDefinitionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridData.JobDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobResource> GetHybridDataJob(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobResource>> GetHybridDataJobAsync(string jobId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridData.HybridDataJobCollection GetHybridDataJobs() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Run(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridData.Models.HybridDataJobRunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RunAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridData.Models.HybridDataJobRunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridData.HybridDataJobDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridData.HybridDataJobDefinitionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridData.HybridDataJobDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class JobResource : Azure.ResourceManager.ArmResource
+    public partial class HybridDataJobResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected JobResource() { }
-        public virtual Azure.ResourceManager.HybridData.JobData Data { get { throw null; } }
+        protected HybridDataJobResource() { }
+        public virtual Azure.ResourceManager.HybridData.HybridDataJobData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.ResourceManager.ArmOperation Cancel(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridData.JobResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.JobResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataJobResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Resume(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResumeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PublicKeyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.PublicKeyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.PublicKeyResource>, System.Collections.IEnumerable
+    public partial class HybridDataPublicKeyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource>, System.Collections.IEnumerable
     {
-        protected PublicKeyCollection() { }
+        protected HybridDataPublicKeyCollection() { }
         public virtual Azure.Response<bool> Exists(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridData.PublicKeyResource> Get(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.PublicKeyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.PublicKeyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.PublicKeyResource>> GetAsync(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridData.PublicKeyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.PublicKeyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridData.PublicKeyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.PublicKeyResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource> Get(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource>> GetAsync(string publicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PublicKeyData : Azure.ResourceManager.Models.ResourceData
+    public partial class HybridDataPublicKeyData : Azure.ResourceManager.Models.ResourceData
     {
-        public PublicKeyData(Azure.ResourceManager.HybridData.Models.Key dataServiceLevel1Key, Azure.ResourceManager.HybridData.Models.Key dataServiceLevel2Key) { }
-        public Azure.ResourceManager.HybridData.Models.Key DataServiceLevel1Key { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.Key DataServiceLevel2Key { get { throw null; } set { } }
+        public HybridDataPublicKeyData(Azure.ResourceManager.HybridData.Models.HybridDataEncryptionKey dataServiceLevel1Key, Azure.ResourceManager.HybridData.Models.HybridDataEncryptionKey dataServiceLevel2Key) { }
+        public Azure.ResourceManager.HybridData.Models.HybridDataEncryptionKey DataServiceLevel1Key { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.HybridDataEncryptionKey DataServiceLevel2Key { get { throw null; } set { } }
     }
-    public partial class PublicKeyResource : Azure.ResourceManager.ArmResource
+    public partial class HybridDataPublicKeyResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected PublicKeyResource() { }
-        public virtual Azure.ResourceManager.HybridData.PublicKeyData Data { get { throw null; } }
+        protected HybridDataPublicKeyResource() { }
+        public virtual Azure.ResourceManager.HybridData.HybridDataPublicKeyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataManagerName, string publicKeyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridData.PublicKeyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.PublicKeyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataPublicKeyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HybridData.Models
 {
-    public partial class CustomerSecret
-    {
-        public CustomerSecret(string keyIdentifier, string keyValue, Azure.ResourceManager.HybridData.Models.SupportedAlgorithm algorithm) { }
-        public Azure.ResourceManager.HybridData.Models.SupportedAlgorithm Algorithm { get { throw null; } set { } }
-        public string KeyIdentifier { get { throw null; } set { } }
-        public string KeyValue { get { throw null; } set { } }
-    }
     public partial class DataManagerPatch
     {
         public DataManagerPatch() { }
         public Azure.ResourceManager.HybridData.Models.HybridDataSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class Error
+    public partial class HybridDataCustomerSecret
     {
-        public Error(string code) { }
-        public string Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
+        public HybridDataCustomerSecret(string keyIdentifier, string keyValue, Azure.ResourceManager.HybridData.Models.SupportedEncryptionAlgorithm algorithm) { }
+        public Azure.ResourceManager.HybridData.Models.SupportedEncryptionAlgorithm Algorithm { get { throw null; } set { } }
+        public string KeyIdentifier { get { throw null; } set { } }
+        public string KeyValue { get { throw null; } set { } }
     }
-    public partial class ErrorDetails
+    public partial class HybridDataEncryptionKey
     {
-        public ErrorDetails() { }
+        public HybridDataEncryptionKey(string keyModulus, string keyExponent, int encryptionChunkSizeInBytes) { }
+        public int EncryptionChunkSizeInBytes { get { throw null; } set { } }
+        public string KeyExponent { get { throw null; } set { } }
+        public string KeyModulus { get { throw null; } set { } }
+    }
+    public partial class HybridDataJobDetails
+    {
+        public HybridDataJobDetails() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.HybridDataJobErrorDetails> ErrorDetails { get { throw null; } }
+        public string ItemDetailsLink { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.HybridDataJobDefinitionData JobDefinition { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.HybridDataJobStage> JobStages { get { throw null; } }
+    }
+    public partial class HybridDataJobErrorDetails
+    {
+        public HybridDataJobErrorDetails() { }
         public int? ErrorCode { get { throw null; } set { } }
         public string ErrorMessage { get { throw null; } set { } }
         public string ExceptionMessage { get { throw null; } set { } }
         public string RecommendedAction { get { throw null; } set { } }
     }
-    public partial class HybridDataSku
+    public partial class HybridDataJobRunContent
     {
-        public HybridDataSku() { }
+        public HybridDataJobRunContent() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.HybridDataCustomerSecret> CustomerSecrets { get { throw null; } }
+        public System.BinaryData DataServiceInput { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.UserConfirmationSetting? UserConfirmation { get { throw null; } set { } }
+    }
+    public enum HybridDataJobRunLocation
+    {
+        None = 0,
+        AustraliaEast = 1,
+        AustraliaSoutheast = 2,
+        BrazilSouth = 3,
+        CanadaCentral = 4,
+        CanadaEast = 5,
+        CentralIndia = 6,
+        CentralUS = 7,
+        EastAsia = 8,
+        EastUS = 9,
+        EastUS2 = 10,
+        JapanEast = 11,
+        JapanWest = 12,
+        KoreaCentral = 13,
+        KoreaSouth = 14,
+        SoutheastAsia = 15,
+        SouthCentralUS = 16,
+        SouthIndia = 17,
+        NorthCentralUS = 18,
+        NorthEurope = 19,
+        UKSouth = 20,
+        UKWest = 21,
+        WestCentralUS = 22,
+        WestEurope = 23,
+        WestIndia = 24,
+        WestUS = 25,
+        WestUS2 = 26,
+    }
+    public partial class HybridDataJobRunSchedule
+    {
+        public HybridDataJobRunSchedule() { }
         public string Name { get { throw null; } set { } }
-        public string Tier { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PolicyList { get { throw null; } }
     }
-    public enum IsJobCancellable
+    public partial class HybridDataJobStage
     {
-        NotCancellable = 0,
-        Cancellable = 1,
-    }
-    public partial class JobDetails
-    {
-        public JobDetails() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.ErrorDetails> ErrorDetails { get { throw null; } }
-        public string ItemDetailsLink { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.JobDefinitionData JobDefinition { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.JobStages> JobStages { get { throw null; } }
-    }
-    public partial class JobStages
-    {
-        public JobStages(Azure.ResourceManager.HybridData.Models.JobStatus stageStatus) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.ErrorDetails> ErrorDetails { get { throw null; } }
+        public HybridDataJobStage(Azure.ResourceManager.HybridData.Models.HybridDataJobStatus stageStatus) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.HybridDataJobErrorDetails> ErrorDetails { get { throw null; } }
         public System.BinaryData JobStageDetails { get { throw null; } set { } }
         public string StageName { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.JobStatus StageStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridData.Models.HybridDataJobStatus StageStatus { get { throw null; } set { } }
     }
-    public enum JobStatus
+    public enum HybridDataJobStatus
     {
         None = 0,
         InProgress = 1,
@@ -363,70 +396,37 @@ namespace Azure.ResourceManager.HybridData.Models
         Cancelling = 6,
         PartiallySucceeded = 7,
     }
-    public partial class Key
+    public partial class HybridDataJobTopLevelError
     {
-        public Key(string keyModulus, string keyExponent, int encryptionChunkSizeInBytes) { }
-        public int EncryptionChunkSizeInBytes { get { throw null; } set { } }
-        public string KeyExponent { get { throw null; } set { } }
-        public string KeyModulus { get { throw null; } set { } }
+        public HybridDataJobTopLevelError(string code) { }
+        public string Code { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
     }
-    public partial class RunContent
+    public partial class HybridDataSku
     {
-        public RunContent() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridData.Models.CustomerSecret> CustomerSecrets { get { throw null; } }
-        public System.BinaryData DataServiceInput { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridData.Models.UserConfirmation? UserConfirmation { get { throw null; } set { } }
-    }
-    public enum RunLocation
-    {
-        None = 0,
-        Australiaeast = 1,
-        Australiasoutheast = 2,
-        Brazilsouth = 3,
-        Canadacentral = 4,
-        Canadaeast = 5,
-        Centralindia = 6,
-        Centralus = 7,
-        Eastasia = 8,
-        Eastus = 9,
-        Eastus2 = 10,
-        Japaneast = 11,
-        Japanwest = 12,
-        Koreacentral = 13,
-        Koreasouth = 14,
-        Southeastasia = 15,
-        Southcentralus = 16,
-        Southindia = 17,
-        Northcentralus = 18,
-        Northeurope = 19,
-        Uksouth = 20,
-        Ukwest = 21,
-        Westcentralus = 22,
-        Westeurope = 23,
-        Westindia = 24,
-        Westus = 25,
-        Westus2 = 26,
-    }
-    public partial class Schedule
-    {
-        public Schedule() { }
+        public HybridDataSku() { }
         public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PolicyList { get { throw null; } }
+        public string Tier { get { throw null; } set { } }
     }
-    public enum State
+    public enum HybridDataState
     {
         Disabled = 0,
         Enabled = 1,
         Supported = 2,
     }
-    public enum SupportedAlgorithm
+    public enum JobCancellationSetting
+    {
+        NotCancellable = 0,
+        Cancellable = 1,
+    }
+    public enum SupportedEncryptionAlgorithm
     {
         None = 0,
-        RSA15 = 1,
-        RSAOaep = 2,
+        Rsa1_5 = 1,
+        Rsa_Oaep = 2,
         PlainText = 3,
     }
-    public enum UserConfirmation
+    public enum UserConfirmationSetting
     {
         NotRequired = 0,
         Required = 1,
