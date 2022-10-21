@@ -34,7 +34,6 @@ namespace Azure.Core
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
             OperationStartTime = DateTimeOffset.UtcNow;
-            ProcessingContext = new ProcessingContext(this);
         }
 
         /// <summary>
@@ -96,7 +95,7 @@ namespace Azure.Core
         /// <summary>
         /// The processing context for the message.
         /// </summary>
-        public ProcessingContext ProcessingContext { get; }
+        public ProcessingContext ProcessingContext => new(this);
 
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {

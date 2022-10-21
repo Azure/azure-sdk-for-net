@@ -49,6 +49,7 @@ namespace Azure.Core
             if (clientOptions != null)
             {
                 Retry = new RetryOptions(clientOptions.Retry);
+                RetryPolicy = clientOptions.RetryPolicy;
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
                 if (clientOptions.Policies != null)
