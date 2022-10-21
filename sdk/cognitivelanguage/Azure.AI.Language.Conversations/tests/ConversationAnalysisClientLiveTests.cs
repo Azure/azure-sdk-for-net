@@ -305,26 +305,26 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation_ConversationPII_TranscriptInput()
         {
-            var transciprtConversationItemOne = new TranscriptConversationItem("1", "speaker", "hi", "hi", "Hi", "hi");
-            transciprtConversationItemOne.WordLevelTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
+            var transcriptConversationItemOne = new TranscriptConversationItem("1", "speaker", "hi", "hi", "Hi", "hi");
+            transcriptConversationItemOne.WordLevelTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
 
-            var transciprtConversationItemTwo = new TranscriptConversationItem("2", "speaker", "jane doe", "jane doe", "Jane doe", "jane doe");
-            transciprtConversationItemTwo.WordLevelTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
-            transciprtConversationItemTwo.WordLevelTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
+            var transcriptConversationItemTwo = new TranscriptConversationItem("2", "speaker", "jane doe", "jane doe", "Jane doe", "jane doe");
+            transcriptConversationItemTwo.WordLevelTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
+            transcriptConversationItemTwo.WordLevelTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
 
-            var transciprtConversationItemThree = new TranscriptConversationItem("3", "agent", "hi jane what's your phone number", "hi jane what's your phone number", "Hi Jane, what's your phone number?", "hi jane what's your phone number");
-            transciprtConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
-            transciprtConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
-            transciprtConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
-            transciprtConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(20000000, 1600000, "your"));
-            transciprtConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
-            transciprtConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
+            var transcriptConversationItemThree = new TranscriptConversationItem("3", "agent", "hi jane what's your phone number", "hi jane what's your phone number", "Hi Jane, what's your phone number?", "hi jane what's your phone number");
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(20000000, 1600000, "your"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
 
             var transcriptConversationItems = new List<TranscriptConversationItem>()
             {
-                transciprtConversationItemOne,
-                transciprtConversationItemTwo,
-                transciprtConversationItemThree,
+                transcriptConversationItemOne,
+                transcriptConversationItemTwo,
+                transcriptConversationItemThree,
             };
 
             var input = new List<TranscriptConversation>()
