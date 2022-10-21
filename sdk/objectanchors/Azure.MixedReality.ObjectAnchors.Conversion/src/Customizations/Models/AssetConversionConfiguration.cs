@@ -21,23 +21,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="scale">Scale of transformation of asset units into meter space.</param>
         /// <param name="disableDetectScaleUnits">Whether or not disable automatic detection of FBX scale units.</param>
         internal AssetConversionConfiguration(System.Numerics.Vector3 gravity, float scale, bool disableDetectScaleUnits)
+            : this(new Vector3(gravity), scale)
         {
             if (gravity == null)
             {
                 throw new ArgumentNullException(nameof(gravity));
             }
 
-            if (!gravity.IsNormalized())
-            {
-                throw new ArgumentException("The value must be normalized.", nameof(gravity));
-            }
-
-            GravityWrapper = new Vector3(gravity);
-            KeyFrameIndexes = new ChangeTrackingList<int>();
-            GroundTruthTrajectoryCameraPoses = new List<TrajectoryPose>();
-            Scale = scale;
             DisableDetectScaleUnits = disableDetectScaleUnits;
-            TestTrajectoryCameraPoses = new List<TrajectoryPose>();
         }
 
         /// <summary>
