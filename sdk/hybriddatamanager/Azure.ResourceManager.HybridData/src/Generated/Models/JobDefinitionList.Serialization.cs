@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridData.Models
     {
         internal static JobDefinitionList DeserializeJobDefinitionList(JsonElement element)
         {
-            Optional<IReadOnlyList<JobDefinitionData>> value = default;
+            Optional<IReadOnlyList<HybridDataJobDefinitionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.HybridData.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobDefinitionData> array = new List<JobDefinitionData>();
+                    List<HybridDataJobDefinitionData> array = new List<HybridDataJobDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobDefinitionData.DeserializeJobDefinitionData(item));
+                        array.Add(HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(item));
                     }
                     value = array;
                     continue;

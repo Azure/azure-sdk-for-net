@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridData
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            State state = default;
+            HybridDataState state = default;
             Optional<IList<string>> supportedDataSinkTypes = default;
             Optional<IList<string>> supportedDataSourceTypes = default;
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridData
                     {
                         if (property0.NameEquals("state"))
                         {
-                            state = property0.Value.GetString().ToState();
+                            state = property0.Value.GetString().ToHybridDataState();
                             continue;
                         }
                         if (property0.NameEquals("supportedDataSinkTypes"))

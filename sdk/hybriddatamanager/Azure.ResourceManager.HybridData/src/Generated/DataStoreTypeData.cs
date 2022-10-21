@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridData
     {
         /// <summary> Initializes a new instance of DataStoreTypeData. </summary>
         /// <param name="state"> State of the data store type. </param>
-        public DataStoreTypeData(State state)
+        public DataStoreTypeData(HybridDataState state)
         {
             State = state;
             SupportedDataServicesAsSink = new ChangeTrackingList<string>();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="state"> State of the data store type. </param>
         /// <param name="supportedDataServicesAsSink"> Supported data services where it can be used as a sink. </param>
         /// <param name="supportedDataServicesAsSource"> Supported data services where it can be used as a source. </param>
-        internal DataStoreTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string repositoryType, State state, IList<string> supportedDataServicesAsSink, IList<string> supportedDataServicesAsSource) : base(id, name, resourceType, systemData)
+        internal DataStoreTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? repositoryType, HybridDataState state, IList<string> supportedDataServicesAsSink, IList<string> supportedDataServicesAsSource) : base(id, name, resourceType, systemData)
         {
             RepositoryType = repositoryType;
             State = state;
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.HybridData
         }
 
         /// <summary> Arm type for the manager resource to which the data source type is associated. This is optional. </summary>
-        public string RepositoryType { get; set; }
+        public ResourceType? RepositoryType { get; set; }
         /// <summary> State of the data store type. </summary>
-        public State State { get; set; }
+        public HybridDataState State { get; set; }
         /// <summary> Supported data services where it can be used as a sink. </summary>
         public IList<string> SupportedDataServicesAsSink { get; }
         /// <summary> Supported data services where it can be used as a source. </summary>

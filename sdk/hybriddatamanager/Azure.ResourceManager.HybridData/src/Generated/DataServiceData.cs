@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridData
     {
         /// <summary> Initializes a new instance of DataServiceData. </summary>
         /// <param name="state"> State of the data service. </param>
-        public DataServiceData(State state)
+        public DataServiceData(HybridDataState state)
         {
             State = state;
             SupportedDataSinkTypes = new ChangeTrackingList<string>();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="state"> State of the data service. </param>
         /// <param name="supportedDataSinkTypes"> Supported data store types which can be used as a sink. </param>
         /// <param name="supportedDataSourceTypes"> Supported data store types which can be used as a source. </param>
-        internal DataServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, State state, IList<string> supportedDataSinkTypes, IList<string> supportedDataSourceTypes) : base(id, name, resourceType, systemData)
+        internal DataServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridDataState state, IList<string> supportedDataSinkTypes, IList<string> supportedDataSourceTypes) : base(id, name, resourceType, systemData)
         {
             State = state;
             SupportedDataSinkTypes = supportedDataSinkTypes;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridData
         }
 
         /// <summary> State of the data service. </summary>
-        public State State { get; set; }
+        public HybridDataState State { get; set; }
         /// <summary> Supported data store types which can be used as a sink. </summary>
         public IList<string> SupportedDataSinkTypes { get; }
         /// <summary> Supported data store types which can be used as a source. </summary>

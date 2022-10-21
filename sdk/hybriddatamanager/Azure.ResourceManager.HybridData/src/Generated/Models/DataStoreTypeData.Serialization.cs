@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridData
             if (Optional.IsDefined(RepositoryType))
             {
                 writer.WritePropertyName("repositoryType");
-                writer.WriteStringValue(RepositoryType);
+                writer.WriteStringValue(RepositoryType.Value);
             }
             writer.WritePropertyName("state");
             writer.WriteStringValue(State.ToSerialString());
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.HybridData
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> repositoryType = default;
-            State state = default;
+            Optional<ResourceType> repositoryType = default;
+            HybridDataState state = default;
             Optional<IList<string>> supportedDataServicesAsSink = default;
             Optional<IList<string>> supportedDataServicesAsSource = default;
             foreach (var property in element.EnumerateObject())
@@ -99,12 +99,17 @@ namespace Azure.ResourceManager.HybridData
                     {
                         if (property0.NameEquals("repositoryType"))
                         {
-                            repositoryType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            repositoryType = new ResourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("state"))
                         {
-                            state = property0.Value.GetString().ToState();
+                            state = property0.Value.GetString().ToHybridDataState();
                             continue;
                         }
                         if (property0.NameEquals("supportedDataServicesAsSink"))
@@ -141,7 +146,7 @@ namespace Azure.ResourceManager.HybridData
                     continue;
                 }
             }
-            return new DataStoreTypeData(id, name, type, systemData.Value, repositoryType.Value, state, Optional.ToList(supportedDataServicesAsSink), Optional.ToList(supportedDataServicesAsSource));
+            return new DataStoreTypeData(id, name, type, systemData.Value, Optional.ToNullable(repositoryType), state, Optional.ToList(supportedDataServicesAsSink), Optional.ToList(supportedDataServicesAsSource));
         }
     }
 }

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HybridData.Models
         /// <summary> Initializes a new instance of PublicKeyList. </summary>
         internal PublicKeyList()
         {
-            Value = new ChangeTrackingList<PublicKeyData>();
+            Value = new ChangeTrackingList<HybridDataPublicKeyData>();
         }
 
         /// <summary> Initializes a new instance of PublicKeyList. </summary>
         /// <param name="value"> List of public keys. </param>
         /// <param name="nextLink"> Link for the next set of public keys. </param>
-        internal PublicKeyList(IReadOnlyList<PublicKeyData> value, string nextLink)
+        internal PublicKeyList(IReadOnlyList<HybridDataPublicKeyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of public keys. </summary>
-        public IReadOnlyList<PublicKeyData> Value { get; }
+        public IReadOnlyList<HybridDataPublicKeyData> Value { get; }
         /// <summary> Link for the next set of public keys. </summary>
         public string NextLink { get; }
     }

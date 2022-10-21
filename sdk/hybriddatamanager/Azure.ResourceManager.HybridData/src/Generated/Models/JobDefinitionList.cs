@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HybridData.Models
         /// <summary> Initializes a new instance of JobDefinitionList. </summary>
         internal JobDefinitionList()
         {
-            Value = new ChangeTrackingList<JobDefinitionData>();
+            Value = new ChangeTrackingList<HybridDataJobDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of JobDefinitionList. </summary>
         /// <param name="value"> List of job definitions. </param>
         /// <param name="nextLink"> Link for the next set of job definitions. </param>
-        internal JobDefinitionList(IReadOnlyList<JobDefinitionData> value, string nextLink)
+        internal JobDefinitionList(IReadOnlyList<HybridDataJobDefinitionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of job definitions. </summary>
-        public IReadOnlyList<JobDefinitionData> Value { get; }
+        public IReadOnlyList<HybridDataJobDefinitionData> Value { get; }
         /// <summary> Link for the next set of job definitions. </summary>
         public string NextLink { get; }
     }

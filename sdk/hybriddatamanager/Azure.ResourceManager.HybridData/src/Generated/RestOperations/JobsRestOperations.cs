@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobData>> GetAsync(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridDataJobData>> GetAsync(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -190,13 +190,13 @@ namespace Azure.ResourceManager.HybridData
             {
                 case 200:
                     {
-                        JobData value = default;
+                        HybridDataJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = HybridDataJobData.DeserializeHybridDataJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobData)null, message.Response);
+                    return Response.FromValue((HybridDataJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobData> Get(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId, string expand = null, CancellationToken cancellationToken = default)
+        public Response<HybridDataJobData> Get(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -228,13 +228,13 @@ namespace Azure.ResourceManager.HybridData
             {
                 case 200:
                     {
-                        JobData value = default;
+                        HybridDataJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = HybridDataJobData.DeserializeHybridDataJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobData)null, message.Response);
+                    return Response.FromValue((HybridDataJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

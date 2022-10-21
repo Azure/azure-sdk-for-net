@@ -140,39 +140,39 @@ namespace Azure.ResourceManager.HybridData
         }
         #endregion
 
-        #region JobDefinitionResource
+        #region HybridDataJobDefinitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="JobDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="JobDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridDataJobDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridDataJobDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="HybridDataJobDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobDefinitionResource" /> object. </returns>
-        public static JobDefinitionResource GetJobDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridDataJobDefinitionResource" /> object. </returns>
+        public static HybridDataJobDefinitionResource GetHybridDataJobDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobDefinitionResource.ValidateResourceId(id);
-                return new JobDefinitionResource(client, id);
+                HybridDataJobDefinitionResource.ValidateResourceId(id);
+                return new HybridDataJobDefinitionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobResource
+        #region HybridDataJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridDataJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridDataJobResource.CreateResourceIdentifier" /> to create a <see cref="HybridDataJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobResource" /> object. </returns>
-        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridDataJobResource" /> object. </returns>
+        public static HybridDataJobResource GetHybridDataJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobResource.ValidateResourceId(id);
-                return new JobResource(client, id);
+                HybridDataJobResource.ValidateResourceId(id);
+                return new HybridDataJobResource(client, id);
             }
             );
         }
@@ -216,20 +216,20 @@ namespace Azure.ResourceManager.HybridData
         }
         #endregion
 
-        #region PublicKeyResource
+        #region HybridDataPublicKeyResource
         /// <summary>
-        /// Gets an object representing a <see cref="PublicKeyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublicKeyResource.CreateResourceIdentifier" /> to create a <see cref="PublicKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridDataPublicKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridDataPublicKeyResource.CreateResourceIdentifier" /> to create a <see cref="HybridDataPublicKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublicKeyResource" /> object. </returns>
-        public static PublicKeyResource GetPublicKeyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridDataPublicKeyResource" /> object. </returns>
+        public static HybridDataPublicKeyResource GetHybridDataPublicKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PublicKeyResource.ValidateResourceId(id);
-                return new PublicKeyResource(client, id);
+                HybridDataPublicKeyResource.ValidateResourceId(id);
+                return new HybridDataPublicKeyResource(client, id);
             }
             );
         }

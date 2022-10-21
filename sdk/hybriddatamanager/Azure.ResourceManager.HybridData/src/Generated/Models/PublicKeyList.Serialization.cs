@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridData.Models
     {
         internal static PublicKeyList DeserializePublicKeyList(JsonElement element)
         {
-            Optional<IReadOnlyList<PublicKeyData>> value = default;
+            Optional<IReadOnlyList<HybridDataPublicKeyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.HybridData.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PublicKeyData> array = new List<PublicKeyData>();
+                    List<HybridDataPublicKeyData> array = new List<HybridDataPublicKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublicKeyData.DeserializePublicKeyData(item));
+                        array.Add(HybridDataPublicKeyData.DeserializeHybridDataPublicKeyData(item));
                     }
                     value = array;
                     continue;

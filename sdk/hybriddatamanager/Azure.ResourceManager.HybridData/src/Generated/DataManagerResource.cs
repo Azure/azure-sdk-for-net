@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.HybridData
 
         private readonly ClientDiagnostics _dataManagerClientDiagnostics;
         private readonly DataManagersRestOperations _dataManagerRestClient;
-        private readonly ClientDiagnostics _jobDefinitionClientDiagnostics;
-        private readonly JobDefinitionsRestOperations _jobDefinitionRestClient;
-        private readonly ClientDiagnostics _jobClientDiagnostics;
-        private readonly JobsRestOperations _jobRestClient;
+        private readonly ClientDiagnostics _hybridDataJobDefinitionJobDefinitionsClientDiagnostics;
+        private readonly JobDefinitionsRestOperations _hybridDataJobDefinitionJobDefinitionsRestClient;
+        private readonly ClientDiagnostics _hybridDataJobJobsClientDiagnostics;
+        private readonly JobsRestOperations _hybridDataJobJobsRestClient;
         private readonly DataManagerData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DataManagerResource"/> class for mocking. </summary>
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.HybridData
             _dataManagerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dataManagerApiVersion);
             _dataManagerRestClient = new DataManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataManagerApiVersion);
-            _jobDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", JobDefinitionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(JobDefinitionResource.ResourceType, out string jobDefinitionApiVersion);
-            _jobDefinitionRestClient = new JobDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobDefinitionApiVersion);
-            _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", JobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(JobResource.ResourceType, out string jobApiVersion);
-            _jobRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobApiVersion);
+            _hybridDataJobDefinitionJobDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", HybridDataJobDefinitionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HybridDataJobDefinitionResource.ResourceType, out string hybridDataJobDefinitionJobDefinitionsApiVersion);
+            _hybridDataJobDefinitionJobDefinitionsRestClient = new JobDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataJobDefinitionJobDefinitionsApiVersion);
+            _hybridDataJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", HybridDataJobResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HybridDataJobResource.ResourceType, out string hybridDataJobJobsApiVersion);
+            _hybridDataJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataJobJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -211,11 +211,11 @@ namespace Azure.ResourceManager.HybridData
             return GetDataStoreTypes().Get(dataStoreTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PublicKeyResources in the DataManager. </summary>
-        /// <returns> An object representing collection of PublicKeyResources and their operations over a PublicKeyResource. </returns>
-        public virtual PublicKeyCollection GetPublicKeys()
+        /// <summary> Gets a collection of HybridDataPublicKeyResources in the DataManager. </summary>
+        /// <returns> An object representing collection of HybridDataPublicKeyResources and their operations over a HybridDataPublicKeyResource. </returns>
+        public virtual HybridDataPublicKeyCollection GetHybridDataPublicKeys()
         {
-            return GetCachedClient(Client => new PublicKeyCollection(Client, Id));
+            return GetCachedClient(Client => new HybridDataPublicKeyCollection(Client, Id));
         }
 
         /// <summary>
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="publicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicKeyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PublicKeyResource>> GetPublicKeyAsync(string publicKeyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataPublicKeyResource>> GetHybridDataPublicKeyAsync(string publicKeyName, CancellationToken cancellationToken = default)
         {
-            return await GetPublicKeys().GetAsync(publicKeyName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridDataPublicKeys().GetAsync(publicKeyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="publicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicKeyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PublicKeyResource> GetPublicKey(string publicKeyName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataPublicKeyResource> GetHybridDataPublicKey(string publicKeyName, CancellationToken cancellationToken = default)
         {
-            return GetPublicKeys().Get(publicKeyName, cancellationToken);
+            return GetHybridDataPublicKeys().Get(publicKeyName, cancellationToken);
         }
 
         /// <summary>
@@ -417,17 +417,17 @@ namespace Azure.ResourceManager.HybridData
         /// </summary>
         /// <param name="filter"> OData Filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobDefinitionResource> GetJobDefinitionsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridDataJobDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridDataJobDefinitionResource> GetJobDefinitionsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<JobDefinitionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HybridDataJobDefinitionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _jobDefinitionClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
+                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = await _jobDefinitionRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridDataJobDefinitionJobDefinitionsRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -435,14 +435,14 @@ namespace Azure.ResourceManager.HybridData
                     throw;
                 }
             }
-            async Task<Page<JobDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HybridDataJobDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _jobDefinitionClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
+                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = await _jobDefinitionRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridDataJobDefinitionJobDefinitionsRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -460,17 +460,17 @@ namespace Azure.ResourceManager.HybridData
         /// </summary>
         /// <param name="filter"> OData Filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobDefinitionResource> GetJobDefinitions(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridDataJobDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridDataJobDefinitionResource> GetJobDefinitions(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<JobDefinitionResource> FirstPageFunc(int? pageSizeHint)
+            Page<HybridDataJobDefinitionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _jobDefinitionClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
+                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = _jobDefinitionRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridDataJobDefinitionJobDefinitionsRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -478,14 +478,14 @@ namespace Azure.ResourceManager.HybridData
                     throw;
                 }
             }
-            Page<JobDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HybridDataJobDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _jobDefinitionClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
+                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = _jobDefinitionRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridDataJobDefinitionJobDefinitionsRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -503,17 +503,17 @@ namespace Azure.ResourceManager.HybridData
         /// </summary>
         /// <param name="filter"> OData Filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobResource> GetJobsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridDataJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridDataJobResource> GetJobsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<JobResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HybridDataJobResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _jobClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
                 scope.Start();
                 try
                 {
-                    var response = await _jobRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridDataJobJobsRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -521,14 +521,14 @@ namespace Azure.ResourceManager.HybridData
                     throw;
                 }
             }
-            async Task<Page<JobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HybridDataJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _jobClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
                 scope.Start();
                 try
                 {
-                    var response = await _jobRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridDataJobJobsRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -546,17 +546,17 @@ namespace Azure.ResourceManager.HybridData
         /// </summary>
         /// <param name="filter"> OData Filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobResource> GetJobs(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridDataJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridDataJobResource> GetJobs(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<JobResource> FirstPageFunc(int? pageSizeHint)
+            Page<HybridDataJobResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _jobClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
                 scope.Start();
                 try
                 {
-                    var response = _jobRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridDataJobJobsRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -564,14 +564,14 @@ namespace Azure.ResourceManager.HybridData
                     throw;
                 }
             }
-            Page<JobResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HybridDataJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _jobClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
                 scope.Start();
                 try
                 {
-                    var response = _jobRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridDataJobJobsRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

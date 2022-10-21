@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridData
 
         private readonly ClientDiagnostics _dataServiceClientDiagnostics;
         private readonly DataServicesRestOperations _dataServiceRestClient;
-        private readonly ClientDiagnostics _jobClientDiagnostics;
-        private readonly JobsRestOperations _jobRestClient;
+        private readonly ClientDiagnostics _hybridDataJobJobsClientDiagnostics;
+        private readonly JobsRestOperations _hybridDataJobJobsRestClient;
         private readonly DataServiceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DataServiceResource"/> class for mocking. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.HybridData
             _dataServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dataServiceApiVersion);
             _dataServiceRestClient = new DataServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataServiceApiVersion);
-            _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", JobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(JobResource.ResourceType, out string jobApiVersion);
-            _jobRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobApiVersion);
+            _hybridDataJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", HybridDataJobResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HybridDataJobResource.ResourceType, out string hybridDataJobJobsApiVersion);
+            _hybridDataJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataJobJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.HybridData
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of JobDefinitionResources in the DataService. </summary>
-        /// <returns> An object representing collection of JobDefinitionResources and their operations over a JobDefinitionResource. </returns>
-        public virtual JobDefinitionCollection GetJobDefinitions()
+        /// <summary> Gets a collection of HybridDataJobDefinitionResources in the DataService. </summary>
+        /// <returns> An object representing collection of HybridDataJobDefinitionResources and their operations over a HybridDataJobDefinitionResource. </returns>
+        public virtual HybridDataJobDefinitionCollection GetHybridDataJobDefinitions()
         {
-            return GetCachedClient(Client => new JobDefinitionCollection(Client, Id));
+            return GetCachedClient(Client => new HybridDataJobDefinitionCollection(Client, Id));
         }
 
         /// <summary>
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<JobDefinitionResource>> GetJobDefinitionAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataJobDefinitionResource>> GetHybridDataJobDefinitionAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await GetJobDefinitions().GetAsync(jobDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridDataJobDefinitions().GetAsync(jobDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<JobDefinitionResource> GetJobDefinition(string jobDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataJobDefinitionResource> GetHybridDataJobDefinition(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetJobDefinitions().Get(jobDefinitionName, cancellationToken);
+            return GetHybridDataJobDefinitions().Get(jobDefinitionName, cancellationToken);
         }
 
         /// <summary>
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.HybridData
         /// </summary>
         /// <param name="filter"> OData Filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobResource> GetJobsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridDataJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridDataJobResource> GetJobsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<JobResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HybridDataJobResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _jobClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
                 scope.Start();
                 try
                 {
-                    var response = await _jobRestClient.ListByDataServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridDataJobJobsRestClient.ListByDataServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.HybridData
                     throw;
                 }
             }
-            async Task<Page<JobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HybridDataJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _jobClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
                 scope.Start();
                 try
                 {
-                    var response = await _jobRestClient.ListByDataServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridDataJobJobsRestClient.ListByDataServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -227,17 +227,17 @@ namespace Azure.ResourceManager.HybridData
         /// </summary>
         /// <param name="filter"> OData Filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobResource> GetJobs(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridDataJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridDataJobResource> GetJobs(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<JobResource> FirstPageFunc(int? pageSizeHint)
+            Page<HybridDataJobResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _jobClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
                 scope.Start();
                 try
                 {
-                    var response = _jobRestClient.ListByDataService(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridDataJobJobsRestClient.ListByDataService(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.HybridData
                     throw;
                 }
             }
-            Page<JobResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HybridDataJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _jobClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
                 scope.Start();
                 try
                 {
-                    var response = _jobRestClient.ListByDataServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridDataJobJobsRestClient.ListByDataServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

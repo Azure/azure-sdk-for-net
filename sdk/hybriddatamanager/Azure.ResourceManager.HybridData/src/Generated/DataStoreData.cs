@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="state"> State of the data source. </param>
         /// <param name="dataStoreTypeId"> The arm id of the data store type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataStoreTypeId"/> is null. </exception>
-        public DataStoreData(State state, string dataStoreTypeId)
+        public DataStoreData(HybridDataState state, ResourceIdentifier dataStoreTypeId)
         {
             if (dataStoreTypeId == null)
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridData
 
             State = state;
             DataStoreTypeId = dataStoreTypeId;
-            CustomerSecrets = new ChangeTrackingList<CustomerSecret>();
+            CustomerSecrets = new ChangeTrackingList<HybridDataCustomerSecret>();
         }
 
         /// <summary> Initializes a new instance of DataStoreData. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="extendedProperties"> A generic json used differently by each data source type. </param>
         /// <param name="dataStoreTypeId"> The arm id of the data store type. </param>
         /// <param name="customerSecrets"> List of customer secrets containing a key identifier and key value. The key identifier is a way for the specific data source to understand the key. Value contains customer secret encrypted by the encryptionKeys. </param>
-        internal DataStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string repositoryId, State state, BinaryData extendedProperties, string dataStoreTypeId, IList<CustomerSecret> customerSecrets) : base(id, name, resourceType, systemData)
+        internal DataStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier repositoryId, HybridDataState state, BinaryData extendedProperties, ResourceIdentifier dataStoreTypeId, IList<HybridDataCustomerSecret> customerSecrets) : base(id, name, resourceType, systemData)
         {
             RepositoryId = repositoryId;
             State = state;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.HybridData
         }
 
         /// <summary> Arm Id for the manager resource to which the data source is associated. This is optional. </summary>
-        public string RepositoryId { get; set; }
+        public ResourceIdentifier RepositoryId { get; set; }
         /// <summary> State of the data source. </summary>
-        public State State { get; set; }
+        public HybridDataState State { get; set; }
         /// <summary>
         /// A generic json used differently by each data source type.
         /// <para>
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.HybridData
         /// </summary>
         public BinaryData ExtendedProperties { get; set; }
         /// <summary> The arm id of the data store type. </summary>
-        public string DataStoreTypeId { get; set; }
+        public ResourceIdentifier DataStoreTypeId { get; set; }
         /// <summary> List of customer secrets containing a key identifier and key value. The key identifier is a way for the specific data source to understand the key. Value contains customer secret encrypted by the encryptionKeys. </summary>
-        public IList<CustomerSecret> CustomerSecrets { get; }
+        public IList<HybridDataCustomerSecret> CustomerSecrets { get; }
     }
 }
