@@ -39,8 +39,7 @@
       }
     },
     "AdditionalTestArguments": [
-        "/p:UseProjectReferenceToAzureClients=false",
-        "/p:UseProjectReferenceToAzureClients=true"
+        "/p:UseProjectReferenceToAzureClients=false"
     ],
     "BuildConfiguration": [
         "Debug",
