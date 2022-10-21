@@ -107,9 +107,9 @@ namespace Azure.Core.Pipeline
                 }
 
                 // If we got a response for this request, trigger OnResponse. We can't assume that an exception being thrown means there was no response
-                // since it's possible a policy later in the pipeline could throw after receiving a response. We need to compare the request/response Ids
-                // to make sure we're not triggering OnResponse for a previous response.
-                if (message.HasResponse && message.Request.ClientRequestId == message.Response.ClientRequestId)
+                // since it's possible a policy later in the pipeline could throw after receiving a response. We need to compare the request/response count
+                // to make sure that the response is for this attempt.
+                if (message.HasResponse && message.ResponseNumber == message.RetryNumber + 1)
                 {
                     if (async)
                     {

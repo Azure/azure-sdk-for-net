@@ -87,6 +87,8 @@ namespace Azure.Core
 
         internal int RetryNumber { get; set; }
 
+        internal int ResponseNumber { get; set; }
+
         internal Exception? LastException { get; set; }
 
         internal DateTimeOffset ProcessingStartTime { get; set; }

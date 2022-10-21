@@ -36,7 +36,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitsSameAmountEveryTime()
         {
-            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 }, exceptionFilter: ex => ex is IOException);
             var policy = new RetryPolicyMock(RetryMode.Fixed, delay: TimeSpan.FromSeconds(3), maxRetries: 3);
             MockTransport mockTransport = CreateMockTransport();
             Task<Response> task = SendGetRequest(mockTransport, policy, responseClassifier);
@@ -58,7 +58,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitsSameAmountBetweenTries_Exceptions()
         {
-            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 }, exceptionFilter: ex => ex is IOException);
             var policy = new RetryPolicyMock(RetryMode.Fixed, delay: TimeSpan.FromSeconds(3), maxRetries: 3);
             MockTransport mockTransport = CreateMockTransport();
             Task<Response> task = SendGetRequest(mockTransport, policy, responseClassifier);
