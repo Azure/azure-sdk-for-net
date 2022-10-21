@@ -763,6 +763,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         public ContainerRegistryImportSource(string sourceImage) { }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportSourceCredentials Credentials { get { throw null; } set { } }
+        public string RegistryAddress { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("RegistryUri is deprecated, use RegistryAddress instead")]
         public System.Uri RegistryUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public string SourceImage { get { throw null; } }
