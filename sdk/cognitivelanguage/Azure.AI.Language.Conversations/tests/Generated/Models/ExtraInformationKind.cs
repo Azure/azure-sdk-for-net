@@ -24,11 +24,14 @@ namespace Azure.AI.Language.Conversations
 
         private const string EntitySubtypeValue = "EntitySubtype";
         private const string ListKeyValue = "ListKey";
+        private const string RegexKeyValue = "RegexKey";
 
         /// <summary> EntitySubtype. </summary>
         public static ExtraInformationKind EntitySubtype { get; } = new ExtraInformationKind(EntitySubtypeValue);
         /// <summary> ListKey. </summary>
         public static ExtraInformationKind ListKey { get; } = new ExtraInformationKind(ListKeyValue);
+        /// <summary> RegexKey. </summary>
+        public static ExtraInformationKind RegexKey { get; } = new ExtraInformationKind(RegexKeyValue);
         /// <summary> Determines if two <see cref="ExtraInformationKind"/> values are the same. </summary>
         public static bool operator ==(ExtraInformationKind left, ExtraInformationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExtraInformationKind"/> values are not the same. </summary>
