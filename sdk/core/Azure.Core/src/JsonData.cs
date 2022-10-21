@@ -74,7 +74,7 @@ namespace Azure
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
         /// </remarks>
-        public JsonData this[int arrayIndex]
+        private JsonData this[int arrayIndex]
         {
             get => GetValueAt(arrayIndex);
         }
@@ -87,7 +87,7 @@ namespace Azure
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
         /// </remarks>
-        public JsonData this[string propertyName]
+        private JsonData this[string propertyName]
         {
             get => GetPropertyValue(propertyName);
         }
@@ -164,7 +164,7 @@ namespace Azure
         /// Returns a stringified version of the JSON for this value.
         /// </summary>
         /// <returns>Returns a stringified version of the JSON for this value.</returns>
-        internal string ToJsonString()
+        private string ToJsonString()
         {
             using var memoryStream = new MemoryStream();
             using (var writer = new Utf8JsonWriter(memoryStream))
@@ -177,7 +177,7 @@ namespace Azure
         /// <summary>
         /// The <see cref="JsonValueKind"/> of the value of this instance.
         /// </summary>
-        internal JsonValueKind Kind
+        private JsonValueKind Kind
         {
             get => _kind;
         }
@@ -186,7 +186,7 @@ namespace Azure
         /// Returns the number of elements in this array.
         /// </summary>
         /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Array"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
-        internal int Length
+        private int Length
         {
             get => EnsureArray().Count;
         }
@@ -195,7 +195,7 @@ namespace Azure
         /// Returns the names of all the properties of this object.
         /// </summary>
         /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Object"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
-        internal IEnumerable<string> Properties
+        private IEnumerable<string> Properties
         {
             get => EnsureObject().Keys;
         }
@@ -204,7 +204,7 @@ namespace Azure
         /// Returns all the elements in this array.
         /// </summary>
         /// <remarks>If<see cref="Kind"/> is not<see cref="JsonValueKind.Array"/> this methods throws <see cref = "InvalidOperationException" />.</remarks>
-        internal IEnumerable<JsonData> Items
+        private IEnumerable<JsonData> Items
         {
             get => EnsureArray();
         }
@@ -463,6 +463,7 @@ namespace Azure
             }
             return (float)value;
         }
+
         private double GetDouble() => EnsureNumberValue().AsDouble();
 
         private bool GetBoolean() => (bool)EnsureValue()!;
@@ -520,7 +521,7 @@ namespace Azure
         /// <param name="propertyName">The name of the property to get</param>
         /// <returns>The value for a given property, or <code>null</code> if no such property exists.</returns>
         /// <remarks>If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.</remarks>
-        internal JsonData? Get(string propertyName)
+        private JsonData? Get(string propertyName)
         {
             if (EnsureObject().TryGetValue(propertyName, out JsonData? value))
             {
@@ -531,7 +532,7 @@ namespace Azure
         }
 
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
-        internal T? To<T>()
+        private T? To<T>()
         {
             return JsonSerializer.Deserialize<T>(ToJsonString(), DefaultJsonSerializerOptions);
         }
@@ -678,10 +679,21 @@ namespace Azure
         {
             private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
             private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
+            private static readonly PropertyInfo ArrayIndexerProperty = typeof(JsonData).GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetIndexParameters().FirstOrDefault()?.ParameterType == typeof(int)).First();
             private static readonly IEnumerable<MethodInfo> CastOperators = typeof(JsonData).GetMethods(BindingFlags.Public | BindingFlags.Static).Where(method => method.Name == "op_Explicit" || method.Name == "op_Implicit")!;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
+            }
+
+            public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
+            {
+                var targetObject = Expression.Convert(Expression, LimitType);
+                var arguments = indexes.Select(i => i.Expression);
+                var indexPropertyCall = Expression.Property(targetObject, ArrayIndexerProperty, arguments);
+
+                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(indexPropertyCall,  restrictions);
             }
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)

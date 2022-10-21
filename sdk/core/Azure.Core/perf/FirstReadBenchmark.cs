@@ -21,7 +21,8 @@ namespace Azure.Core.Perf
         [Benchmark]
         public int ReadJsonData()
         {
-            return (int)JsonData.Parse(_json)["a"]["b"];
+            dynamic value = JsonData.Parse(_json);
+            return (int)value.a.b;
         }
     }
 }

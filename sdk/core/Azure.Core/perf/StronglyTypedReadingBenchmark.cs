@@ -13,7 +13,7 @@ namespace Azure.Core.Perf
         private static string _json = "{\"a\":{\"b\":5}}";
 
         private static JsonElement _element = JsonDocument.Parse(_json).RootElement;
-        private static JsonData _jsonData = JsonData.Parse(_json);
+        private static dynamic _jsonData = JsonData.Parse(_json);
 
         [Benchmark(Baseline = true)]
         public int ReadJsonElement()
@@ -24,7 +24,7 @@ namespace Azure.Core.Perf
         [Benchmark]
         public int ReadJsonData()
         {
-            return (int)_jsonData["a"]["b"];
+            return (int)_jsonData.a.b;
         }
     }
 }

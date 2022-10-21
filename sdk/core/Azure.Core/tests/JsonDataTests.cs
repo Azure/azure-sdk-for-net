@@ -14,14 +14,6 @@ namespace Azure.Core.Tests
     public class JsonDataTests
     {
         [Test]
-        public void CanCreateFromJson()
-        {
-            var jsonData = JsonData.Parse("\"string\"");
-
-            Assert.AreEqual("\"string\"", jsonData.ToJsonString());
-        }
-
-        [Test]
         public void DynamicCanConvertToString() => Assert.AreEqual("string", JsonAsType<string>("\"string\""));
 
         [Test]
@@ -152,6 +144,16 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanAccessArrayValues()
+        {
+            dynamic jsonData = JsonData.Parse("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } , \"array\": [1, 2, 3] }");
+
+            Assert.AreEqual(1, (int)jsonData.array[0]);
+            Assert.AreEqual(2, (int)jsonData.array[1]);
+            Assert.AreEqual(3, (int)jsonData.array[2]);
+        }
+
+        [Test]
         public void FloatUnderflowThrows()
         {
             var json = JsonData.Parse("-34028234663852885981170418348451692544000");
@@ -199,15 +201,6 @@ namespace Azure.Core.Tests
             dynamic jsonData = json;
             Assert.Throws<InvalidOperationException>(() => _ = (int)json);
             Assert.Throws<InvalidOperationException>(() => _ = (int)jsonData);
-        }
-
-        [Test]
-        public void CanRoundtripObjects()
-        {
-            var model = new SampleModel("Hello World", 5);
-            var roundtripped = new JsonData(model).To<SampleModel>();
-
-            Assert.AreEqual(model, roundtripped);
         }
 
         [Test]
@@ -287,28 +280,6 @@ namespace Azure.Core.Tests
             Assert.IsFalse("foo" == new JsonData("bar"));
             Assert.IsTrue(new JsonData("bar") != "foo");
             Assert.IsTrue("foo" != new JsonData("bar"));
-        }
-
-        [Test]
-        public void JsonDataInPOCOsWorks()
-        {
-            JsonData orig = new JsonData(new
-            {
-                property = new JsonData("hello")
-            });
-
-            void validate(JsonData d)
-            {
-                Assert.AreEqual(JsonValueKind.Object, d.Kind);
-                Assert.AreEqual(d.Properties.Count(), 1);
-                Assert.AreEqual(d["property"], "hello");
-            }
-
-            validate(orig);
-
-            JsonData roundTrip = JsonSerializer.Deserialize<JsonData>(JsonSerializer.Serialize(orig, orig.GetType()));
-
-            validate(roundTrip);
         }
 
         private T JsonAsType<T>(string json)
