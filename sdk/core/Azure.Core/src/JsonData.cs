@@ -530,6 +530,12 @@ namespace Azure
             return null;
         }
 
+        /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
+        internal T? To<T>()
+        {
+            return JsonSerializer.Deserialize<T>(ToJsonString(), DefaultJsonSerializerOptions);
+        }
+
         private void WriteTo(Utf8JsonWriter writer)
         {
             switch (_kind)
@@ -670,10 +676,9 @@ namespace Azure
 
         private class MetaObject : DynamicMetaObject
         {
-            // TODO: come back and figure out the right thing to do wrt nullability CS8601
             private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
-
             private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
+            private static readonly IEnumerable<MethodInfo> CastOperators = typeof(JsonData).GetMethods(BindingFlags.Public | BindingFlags.Static).Where(method => method.Name == "op_Explicit" || method.Name == "op_Implicit")!;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
@@ -695,12 +700,28 @@ namespace Azure
                 if (binder.Type == typeof(IEnumerable))
                 {
                     var targetObject = Expression.Convert(Expression, LimitType);
-                    var getPropertyCall = Expression.Call(targetObject, GetDynamicEnumerableMethod);
+                    var convertCall = Expression.Call(targetObject, GetDynamicEnumerableMethod);
 
                     var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                    return new DynamicMetaObject(getPropertyCall, restrictions);
+                    return new DynamicMetaObject(convertCall, restrictions);
                 }
-                return base.BindConvert(binder);
+                else if (IsCastableTo(binder.Type))
+                {
+                    return base.BindConvert(binder);
+                }
+                else
+                {
+                    var targetObject = Expression.Convert(Expression, LimitType);
+                    var convertCall = Expression.Call(targetObject, nameof(To), new Type[] { binder.Type });
+
+                    var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                    return new DynamicMetaObject(convertCall, restrictions);
+                }
+            }
+
+            private static bool IsCastableTo(Type type)
+            {
+                return type.IsAssignableFrom(typeof(JsonData)) || CastOperators.Where(method => method.ReturnType == type).Any();
             }
         }
 
