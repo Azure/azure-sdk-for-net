@@ -33,7 +33,7 @@ namespace Azure.Core
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
-            OperationStartTime = DateTimeOffset.UtcNow;
+            ProcessingStartTime = DateTimeOffset.UtcNow;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.Core
 
         internal Exception? LastException { get; set; }
 
-        internal DateTimeOffset OperationStartTime { get; set; }
+        internal DateTimeOffset ProcessingStartTime { get; set; }
 
         /// <summary>
         /// The processing context for the message.
