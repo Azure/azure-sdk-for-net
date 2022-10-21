@@ -8,9 +8,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
     using Azure.Core.TestFramework;
     using Azure.Monitor.OpenTelemetry.Exporter;
     using Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests.TestFramework;
-
     using global::OpenTelemetry;
-
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
