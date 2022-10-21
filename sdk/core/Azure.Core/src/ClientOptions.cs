@@ -92,9 +92,9 @@ namespace Azure.Core
         public RetryOptions Retry { get; }
 
         /// <summary>
-        /// The policy to use for retries. If a policy is specified, it will be used in place of the <see cref="Retry"/> property.
-        /// If no policy is specified, a default policy respecting the <see cref="Retry"/> property will be used. The <see cref="RetryPolicy"/> type can be
-        /// derived from to introduce a retry policy that does not require implementing the full retry logic. If <see cref="RetryPolicy.Process"/> is overriden or a
+        /// Gets or sets the policy to use for retries. If a policy is specified, it will be used in place of the <see cref="Retry"/> property.
+        /// If no policy is set, a default policy respecting the <see cref="Retry"/> property will be used. The <see cref="RetryPolicy"/> type can be
+        /// derived from to modify the default behavior without needing to fully implement the retry logic. If <see cref="RetryPolicy.Process"/> is overriden or a
         /// custom <see cref="HttpPipelinePolicy"/> is specified, it is the implementer's responsibility to populate the <see cref="HttpMessage.ProcessingContext"/> property.
         /// </summary>
         public HttpPipelinePolicy? RetryPolicy { get; set; }
