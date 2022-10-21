@@ -194,7 +194,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>Whether or not to retry.</returns>
-        protected virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
+        protected internal virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
 
         /// <summary>
         /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
@@ -203,7 +203,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>Whether or not to retry.</returns>
-        protected virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message) => new(ShouldRetryInternal(message));
+        protected internal virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message) => new(ShouldRetryInternal(message));
 
         private bool ShouldRetryInternal(HttpMessage message)
         {
@@ -227,21 +227,21 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
+        protected internal virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
 
         /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
+        protected internal virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
 
         /// <summary>
         /// This method can be overriden to introduce logic before the request is sent. This will run even for the first attempt.
         /// This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected virtual void OnSendingRequest(HttpMessage message)
+        protected internal virtual void OnSendingRequest(HttpMessage message)
         {
         }
 
@@ -250,13 +250,13 @@ namespace Azure.Core.Pipeline
         /// This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
+        protected internal virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
 
         /// <summary>
         /// This method can be overriden to introduce logic that runs after a response is received. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected virtual void OnReceivedResponse(HttpMessage message)
+        protected internal virtual void OnReceivedResponse(HttpMessage message)
         {
         }
 
@@ -264,7 +264,7 @@ namespace Azure.Core.Pipeline
         /// This method can be overriden to introduce logic that runs after a response is received. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected virtual ValueTask OnReceivedResponseAsync(HttpMessage message) => default;
+        protected internal virtual ValueTask OnReceivedResponseAsync(HttpMessage message) => default;
 
         private TimeSpan CalculateNextDelayInternal(HttpMessage message)
         {

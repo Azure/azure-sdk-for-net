@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -60,6 +61,52 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
             Assert.AreEqual(501, response.Status);
+        }
+
+        [Test]
+        public async Task ShouldRetryIsCalledOnlyForErrors()
+        {
+            var mockPolicy = new Mock<RetryPolicy>(new RetryOptions()) { CallBase = true };
+            MockTransport mockTransport = CreateMockTransport();
+            Task<Response> task = SendGetRequest(mockTransport, mockPolicy.Object);
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(500));
+
+            await mockTransport.RequestGate.CycleWithException(new IOException());
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            if (IsAsync)
+            {
+                mockPolicy.Verify(p => p.ShouldRetryAsync(It.IsAny<HttpMessage>()), Times.Exactly(2));
+            }
+            else
+            {
+                mockPolicy.Verify(p => p.ShouldRetry(It.IsAny<HttpMessage>()), Times.Exactly(2));
+            }
+            await task.TimeoutAfterDefault();
+        }
+
+        [Test]
+        public async Task OnResponseIsCalledOnlyWhenResponseExists()
+        {
+            var mockPolicy = new Mock<RetryPolicy>(new RetryOptions()) { CallBase = true };
+            MockTransport mockTransport = CreateMockTransport();
+            Task<Response> task = SendGetRequest(mockTransport, mockPolicy.Object);
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(500));
+
+            await mockTransport.RequestGate.CycleWithException(new IOException());
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            if (IsAsync)
+            {
+                mockPolicy.Verify(p => p.OnReceivedResponseAsync(It.IsAny<HttpMessage>()), Times.Exactly(2));
+            }
+            else
+            {
+                mockPolicy.Verify(p => p.OnReceivedResponse(It.IsAny<HttpMessage>()), Times.Exactly(2));
+            }
+            await task.TimeoutAfterDefault();
         }
 
         [Test]
@@ -313,6 +360,26 @@ namespace Azure.Core.Tests
                     MaxRetries = maxRetries
                 })
             {
+            }
+
+            protected internal override bool ShouldRetry(HttpMessage message)
+            {
+                return base.ShouldRetry(message);
+            }
+
+            protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message)
+            {
+                return base.ShouldRetryAsync(message);
+            }
+
+            protected internal override TimeSpan CalculateNextDelay(HttpMessage message)
+            {
+                return base.CalculateNextDelay(message);
+            }
+
+            protected internal override ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message)
+            {
+                return base.CalculateNextDelayAsync(message);
             }
 
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
