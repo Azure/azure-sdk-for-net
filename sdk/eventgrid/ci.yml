@@ -11,6 +11,8 @@ trigger:
     include:
     - sdk/eventgrid/ci.yml
     - sdk/eventgrid/Azure.Messaging.EventGrid/
+    - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/
+    - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/
 
 pr:
   branches:
@@ -23,6 +25,8 @@ pr:
     include:
     - sdk/eventgrid/ci.yml
     - sdk/eventgrid/Azure.Messaging.EventGrid/
+    - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/
+    - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
