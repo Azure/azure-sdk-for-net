@@ -107,7 +107,8 @@ namespace Azure.Core
         /// method, or who set their own <see cref="HttpPipelinePolicy"/> implementation in the <see cref="ClientOptions.RetryPolicy"/> property.
         /// </summary>
         /// <param name="message">The message that the context is attached to. The underlying values for the <see cref="ProcessingContext"/> are tracked by internal
-        /// properties of <see cref="HttpMessage"/> so that we don't need to worry about maintaining two sources of truth.</param>
+        /// properties of <see cref="HttpMessage"/> so that we don't need to worry about maintaining two sources of truth while still having
+        /// the <see cref="ProcessingContext"/> be lazily allocated.</param>
         internal ProcessingContext(HttpMessage message)
         {
             _message = message;
