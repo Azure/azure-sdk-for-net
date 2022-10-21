@@ -201,6 +201,25 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanRoundtripObjects()
+        {
+            var model = new SampleModel("Hello World", 5);
+            var roundtripped = new JsonData(model).To<SampleModel>();
+
+            Assert.AreEqual(model, roundtripped);
+        }
+
+        [Test]
+        public void CanCastObjects()
+        {
+            var model = new SampleModel("Hello World", 5);
+            dynamic json = new JsonData(model);
+            var cast = (SampleModel)json;
+
+            Assert.AreEqual(model, cast);
+        }
+
+        [Test]
         public void EqualsProvidesValueEqualityPrimitives()
         {
             Assert.AreEqual(new JsonData(1), new JsonData(1));
@@ -255,10 +274,59 @@ namespace Azure.Core.Tests
             Assert.IsTrue("foo" != new JsonData("bar"));
         }
 
+        [Test]
+        public void JsonDataInPOCOsWorks()
+        {
+            JsonData orig = new JsonData(new
+            {
+                property = new JsonData("hello")
+            });
+
+            void validate(JsonData d)
+            {
+                Assert.AreEqual(JsonValueKind.Object, d.Kind);
+                Assert.AreEqual(d.Properties.Count(), 1);
+                Assert.AreEqual(d["property"], "hello");
+            }
+
+            validate(orig);
+
+            JsonData roundTrip = JsonSerializer.Deserialize<JsonData>(JsonSerializer.Serialize(orig, orig.GetType()));
+
+            validate(roundTrip);
+        }
+
         private T JsonAsType<T>(string json)
         {
             dynamic jsonData = JsonData.Parse(json);
             return (T)jsonData;
+        }
+
+#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
+        internal class SampleModel : IEquatable<SampleModel>
+#pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
+        {
+            public SampleModel() { }
+            public string Message { get; set; }
+            public int Number { get; set; }
+            public SampleModel(string message, int number)
+            {
+                Message = message;
+                Number = number;
+            }
+            public override bool Equals(object obj)
+            {
+                SampleModel other = obj as SampleModel;
+                if (other == null)
+                {
+                    return false;
+                }
+                return Equals(other);
+            }
+            public bool Equals(SampleModel obj)
+            {
+                return Message == obj.Message && Number == obj.Number;
+            }
         }
     }
 }
