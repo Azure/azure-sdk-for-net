@@ -52,6 +52,8 @@ namespace Azure.AI.TextAnalytics
         public AnalyzeHealthcareEntitiesAction(Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.HealthcareDocumentType? DocumentType { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.WellKnownFhirVersion? FhirVersion { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
@@ -87,12 +89,15 @@ namespace Azure.AI.TextAnalytics
     {
         public AnalyzeHealthcareEntitiesOptions() { }
         public string DisplayName { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.HealthcareDocumentType? DocumentType { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.WellKnownFhirVersion? FhirVersion { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
         internal AnalyzeHealthcareEntitiesResult() { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntity> Entities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntityRelation> EntityRelations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> FhirBundle { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     public partial class AnalyzeHealthcareEntitiesResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult>
@@ -323,6 +328,31 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthcareDocumentType : System.IEquatable<Azure.AI.TextAnalytics.HealthcareDocumentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthcareDocumentType(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType ClinicalTrial { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType Consult { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType DischargeSummary { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType HistoryAndPhysical { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType Imaging { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType None { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType Pathology { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType ProcedureNote { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType ProgressNote { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.HealthcareDocumentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.HealthcareDocumentType left, Azure.AI.TextAnalytics.HealthcareDocumentType right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.HealthcareDocumentType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.HealthcareDocumentType left, Azure.AI.TextAnalytics.HealthcareDocumentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class HealthcareEntity
     {
         internal HealthcareEntity() { }
@@ -395,6 +425,7 @@ namespace Azure.AI.TextAnalytics
     public partial class HealthcareEntityRelation
     {
         internal HealthcareEntityRelation() { }
+        public double? ConfidenceScore { get { throw null; } }
         public Azure.AI.TextAnalytics.HealthcareEntityRelationType RelationType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntityRelationRole> Roles { get { throw null; } }
     }
@@ -1088,6 +1119,7 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesActionResult AnalyzeHealthcareEntitiesActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntity> healthcareEntities, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelation> entityRelations, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings) { throw null; }
+        public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntity> healthcareEntities, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelation> entityRelations, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings, System.Collections.Generic.IDictionary<string, object> fhirBundle) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResultCollection AnalyzeHealthcareEntitiesResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1126,7 +1158,9 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection ExtractKeyPhrasesResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntity HealthcareEntity(string text, string category, int offset, int length, double confidenceScore) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntityAssertion HealthcareEntityAssertion(Azure.AI.TextAnalytics.EntityConditionality? conditionality = default(Azure.AI.TextAnalytics.EntityConditionality?), Azure.AI.TextAnalytics.EntityCertainty? certainty = default(Azure.AI.TextAnalytics.EntityCertainty?), Azure.AI.TextAnalytics.EntityAssociation? association = default(Azure.AI.TextAnalytics.EntityAssociation?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.HealthcareEntityRelation HealthcareEntityRelation(Azure.AI.TextAnalytics.HealthcareEntityRelationType relationType, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelationRole> roles) { throw null; }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelation HealthcareEntityRelation(Azure.AI.TextAnalytics.HealthcareEntityRelationType relationType, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelationRole> roles, double? confidenceScore) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntityRelationRole HealthcareEntityRelationRole(string text, string category, int offset, int length, double confidenceScore, string entityName) { throw null; }
         public static Azure.AI.TextAnalytics.KeyPhraseCollection KeyPhraseCollection(System.Collections.Generic.IList<string> keyPhrases, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1286,6 +1320,23 @@ namespace Azure.AI.TextAnalytics
         Neutral = 1,
         Negative = 2,
         Mixed = 3,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WellKnownFhirVersion : System.IEquatable<Azure.AI.TextAnalytics.WellKnownFhirVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WellKnownFhirVersion(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.WellKnownFhirVersion V4_0_1 { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.WellKnownFhirVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.WellKnownFhirVersion left, Azure.AI.TextAnalytics.WellKnownFhirVersion right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.WellKnownFhirVersion (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.WellKnownFhirVersion left, Azure.AI.TextAnalytics.WellKnownFhirVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
