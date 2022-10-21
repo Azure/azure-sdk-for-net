@@ -30,7 +30,9 @@ namespace Azure.AI.TextAnalytics
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
             EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
-            FhirBundle = new ReadOnlyDictionary<string, object>(fhirBundle);
+            FhirBundle = (fhirBundle is not null)
+                ? new ReadOnlyDictionary<string, object>(fhirBundle)
+                : new Dictionary<string, object>();
         }
 
         /// <summary>

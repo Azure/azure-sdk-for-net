@@ -133,6 +133,10 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(5, role.Entity.Length);
                 }
             }
+
+            // Check that the FHIR bundle is not null, but empty.
+            Assert.IsNotNull(result1.FhirBundle);
+            Assert.AreEqual(result1.FhirBundle.Count, 0);
         }
 
         [RecordedTest]
@@ -488,33 +492,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Check the FHIR bundle.
             Assert.IsNotNull(resultCollection[0].FhirBundle);
             Assert.Greater(resultCollection[0].FhirBundle.Count, 0);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeHealthcareEntitiesBatchWithoutFhirVersionTest()
-        {
-            TextAnalyticsClient client = GetClient();
-
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
-            {
-                DocumentType = HealthcareDocumentType.DischargeSummary
-            });
-
-            await operation.WaitForCompletionAsync();
-
-            ValidateOperationProperties(operation);
-
-            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
-
-            // Take the first page.
-            var resultCollection = resultInPages.FirstOrDefault();
-            Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
-
-            // Check that the FHIR bundle is empty.
-            Assert.IsNotNull(resultCollection[0].FhirBundle);
-            Assert.AreEqual(resultCollection[0].FhirBundle.Count, 0);
         }
 
         [RecordedTest]
