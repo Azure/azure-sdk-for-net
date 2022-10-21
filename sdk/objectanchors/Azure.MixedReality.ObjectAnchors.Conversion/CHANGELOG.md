@@ -4,7 +4,9 @@
 
 ### Features Added
 
-- Added DisableDetectScaleUnits to AssetConversionOptions
+- Added DisableDetectScaleUnits to AssetConversionOptions. 
+- In version 0.3.2+ we will by default detect and use the scale units in FBX files if it is valid, the property DisableDetectScaleUnits controls if users want that behavior or not.
+- In version below 0.3.2, the property is ignored so that we are compatible with old SDK versions.
 
 ## 0.3.0-beta.5 (2022-09-12)
 
