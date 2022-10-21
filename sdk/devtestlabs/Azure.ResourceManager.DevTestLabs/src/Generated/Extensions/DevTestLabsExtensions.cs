@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
@@ -19,41 +18,6 @@ namespace Azure.ResourceManager.DevTestLabs
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevTestLabs. </summary>
     public static partial class DevTestLabsExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient((client) =>
-            {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// Result of the request to list REST API operations
-        /// Request Path: /providers/Microsoft.DevTestLab/operations
-        /// Operation Id: ProviderOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationMetadata> GetProviderOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetProviderOperationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Result of the request to list REST API operations
-        /// Request Path: /providers/Microsoft.DevTestLab/operations
-        /// Operation Id: ProviderOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationMetadata> GetProviderOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetProviderOperations(cancellationToken);
-        }
-
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient((client) =>

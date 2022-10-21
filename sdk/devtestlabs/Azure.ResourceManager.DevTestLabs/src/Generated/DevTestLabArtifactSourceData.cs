@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: ArtifactSource.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, Uri uri, SourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, EnableStatus? status, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, Uri uri, DevTestLabSourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, DevTestLabEnableStatus? status, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
             Uri = uri;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The artifact source&apos;s type.
         /// Serialized Name: ArtifactSource.properties.sourceType
         /// </summary>
-        public SourceControlType? SourceType { get; set; }
+        public DevTestLabSourceControlType? SourceType { get; set; }
         /// <summary>
         /// The folder containing artifacts.
         /// Serialized Name: ArtifactSource.properties.folderPath
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Indicates if the artifact source is enabled (values: Enabled, Disabled).
         /// Serialized Name: ArtifactSource.properties.status
         /// </summary>
-        public EnableStatus? Status { get; set; }
+        public DevTestLabEnableStatus? Status { get; set; }
         /// <summary>
         /// The artifact source&apos;s creation date.
         /// Serialized Name: ArtifactSource.properties.createdDate

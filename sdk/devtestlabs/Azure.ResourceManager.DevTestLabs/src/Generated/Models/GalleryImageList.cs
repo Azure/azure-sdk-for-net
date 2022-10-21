@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
         internal GalleryImageList()
         {
-            Value = new ChangeTrackingList<GalleryImage>();
+            Value = new ChangeTrackingList<DevTestLabGalleryImage>();
         }
 
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// Link for next set of results.
         /// Serialized Name: GalleryImageList.nextLink
         /// </param>
-        internal GalleryImageList(IReadOnlyList<GalleryImage> value, string nextLink)
+        internal GalleryImageList(IReadOnlyList<DevTestLabGalleryImage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// Results of the list operation.
         /// Serialized Name: GalleryImageList.value
         /// </summary>
-        public IReadOnlyList<GalleryImage> Value { get; }
+        public IReadOnlyList<DevTestLabGalleryImage> Value { get; }
         /// <summary>
         /// Link for next set of results.
         /// Serialized Name: GalleryImageList.nextLink

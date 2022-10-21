@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> Properties for generating a Notification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> NotifyAsync(NotifyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> NotifyAsync(DevTestLabNotificationChannelNotifyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> Properties for generating a Notification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response Notify(NotifyContent content, CancellationToken cancellationToken = default)
+        public virtual Response Notify(DevTestLabNotificationChannelNotifyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

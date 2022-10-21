@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// An environment, which is essentially an ARM template deployment.
     /// Serialized Name: DtlEnvironmentFragment
     /// </summary>
-    public partial class DevTestLabEnvironmentPatch : UpdateResource
+    public partial class DevTestLabEnvironmentPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabEnvironmentPatch. </summary>
         public DevTestLabEnvironmentPatch()

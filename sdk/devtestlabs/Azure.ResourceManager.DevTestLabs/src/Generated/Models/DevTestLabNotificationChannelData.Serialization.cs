@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> emailRecipient = default;
             Optional<string> notificationLocale = default;
             Optional<string> description = default;
-            Optional<IList<Event>> events = default;
+            Optional<IList<DevTestLabNotificationChannelEvent>> events = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
             Optional<string> uniqueIdentifier = default;
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Event> array = new List<Event>();
+                            List<DevTestLabNotificationChannelEvent> array = new List<DevTestLabNotificationChannelEvent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Event.DeserializeEvent(item));
+                                array.Add(DevTestLabNotificationChannelEvent.DeserializeDevTestLabNotificationChannelEvent(item));
                             }
                             events = array;
                             continue;

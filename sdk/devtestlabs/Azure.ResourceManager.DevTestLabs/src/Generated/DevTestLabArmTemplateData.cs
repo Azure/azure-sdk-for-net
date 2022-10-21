@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabArmTemplateData(AzureLocation location) : base(location)
         {
-            ParametersValueFilesInfo = new ChangeTrackingList<ParametersValueFileInfo>();
+            ParametersValueFilesInfo = new ChangeTrackingList<DevTestLabParametersValueFileInfo>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabArmTemplateData. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Whether or not ARM template is enabled for use by lab user.
         /// Serialized Name: ArmTemplate.properties.enabled
         /// </param>
-        internal DevTestLabArmTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string description, string publisher, string icon, BinaryData contents, DateTimeOffset? createdOn, IReadOnlyList<ParametersValueFileInfo> parametersValueFilesInfo, bool? enabled) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabArmTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string description, string publisher, string icon, BinaryData contents, DateTimeOffset? createdOn, IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? enabled) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
             Description = description;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template.
         /// Serialized Name: ArmTemplate.properties.parametersValueFilesInfo
         /// </summary>
-        public IReadOnlyList<ParametersValueFileInfo> ParametersValueFilesInfo { get; }
+        public IReadOnlyList<DevTestLabParametersValueFileInfo> ParametersValueFilesInfo { get; }
         /// <summary>
         /// Whether or not ARM template is enabled for use by lab user.
         /// Serialized Name: ArmTemplate.properties.enabled

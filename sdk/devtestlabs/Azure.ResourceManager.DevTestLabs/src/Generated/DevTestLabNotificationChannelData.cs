@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabNotificationChannelData(AzureLocation location) : base(location)
         {
-            Events = new ChangeTrackingList<Event>();
+            Events = new ChangeTrackingList<DevTestLabNotificationChannelEvent>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabNotificationChannelData. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: NotificationChannel.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabNotificationChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri webHookUri, string emailRecipient, string notificationLocale, string description, IList<Event> events, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabNotificationChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri webHookUri, string emailRecipient, string notificationLocale, string description, IList<DevTestLabNotificationChannelEvent> events, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             WebHookUri = webHookUri;
             EmailRecipient = emailRecipient;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The list of event for which this notification is enabled.
         /// Serialized Name: NotificationChannel.properties.events
         /// </summary>
-        public IList<Event> Events { get; }
+        public IList<DevTestLabNotificationChannelEvent> Events { get; }
         /// <summary>
         /// The creation date of the notification channel.
         /// Serialized Name: NotificationChannel.properties.createdDate

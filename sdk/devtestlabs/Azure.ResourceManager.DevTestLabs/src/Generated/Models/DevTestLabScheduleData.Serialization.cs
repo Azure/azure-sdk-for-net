@@ -86,13 +86,13 @@ namespace Azure.ResourceManager.DevTestLabs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<EnableStatus> status = default;
+            Optional<DevTestLabEnableStatus> status = default;
             Optional<string> taskType = default;
-            Optional<WeekDetails> weeklyRecurrence = default;
+            Optional<DevTestLabWeekDetails> weeklyRecurrence = default;
             Optional<DayDetails> dailyRecurrence = default;
             Optional<HourDetails> hourlyRecurrence = default;
             Optional<string> timeZoneId = default;
-            Optional<NotificationSettings> notificationSettings = default;
+            Optional<DevTestLabNotificationSettings> notificationSettings = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> targetResourceId = default;
             Optional<string> provisioningState = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new EnableStatus(property0.Value.GetString());
+                            status = new DevTestLabEnableStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("taskType"))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            weeklyRecurrence = WeekDetails.DeserializeWeekDetails(property0.Value);
+                            weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dailyRecurrence"))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            notificationSettings = NotificationSettings.DeserializeNotificationSettings(property0.Value);
+                            notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"))

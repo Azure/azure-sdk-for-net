@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DevTestLabs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<EnvironmentDeploymentProperties> deploymentProperties = default;
+            Optional<DevTestLabEnvironmentDeployment> deploymentProperties = default;
             Optional<string> armTemplateDisplayName = default;
             Optional<string> resourceGroupId = default;
             Optional<string> createdByUser = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deploymentProperties = EnvironmentDeploymentProperties.DeserializeEnvironmentDeploymentProperties(property0.Value);
+                            deploymentProperties = DevTestLabEnvironmentDeployment.DeserializeDevTestLabEnvironmentDeployment(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("armTemplateDisplayName"))

@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateNotifyRequest(string subscriptionId, string resourceGroupName, string labName, string name, NotifyContent content)
+        internal HttpMessage CreateNotifyRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelNotifyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> NotifyAsync(string subscriptionId, string resourceGroupName, string labName, string name, NotifyContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> NotifyAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelNotifyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Notify(string subscriptionId, string resourceGroupName, string labName, string name, NotifyContent content, CancellationToken cancellationToken = default)
+        public Response Notify(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelNotifyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

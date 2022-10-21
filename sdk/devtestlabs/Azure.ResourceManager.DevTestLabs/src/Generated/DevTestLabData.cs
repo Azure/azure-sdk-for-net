@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: Lab.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, StorageType? labStorageType, IList<string> mandatoryArtifactsResourceIdsLinux, IList<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, PremiumDataDisk? premiumDataDisks, EnvironmentPermission? environmentPermission, LabAnnouncementProperties announcement, LabSupportProperties support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, DevTestLabStorageType? labStorageType, IList<string> mandatoryArtifactsResourceIdsLinux, IList<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, DevTestLabPremiumDataDisk? premiumDataDisks, DevTestLabEnvironmentPermission? environmentPermission, DevTestLabAnnouncement announcement, DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             DefaultStorageAccount = defaultStorageAccount;
             DefaultPremiumStorageAccount = defaultPremiumStorageAccount;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Type of storage used by the lab. It can be either Premium or Standard. Default is Premium.
         /// Serialized Name: Lab.properties.labStorageType
         /// </summary>
-        public StorageType? LabStorageType { get; set; }
+        public DevTestLabStorageType? LabStorageType { get; set; }
         /// <summary>
         /// The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user.
         /// Serialized Name: Lab.properties.mandatoryArtifactsResourceIdsLinux
@@ -189,22 +189,22 @@ namespace Azure.ResourceManager.DevTestLabs
         /// When its value is &apos;Disabled&apos;, only creation of standard data disks is allowed.
         /// Serialized Name: Lab.properties.premiumDataDisks
         /// </summary>
-        public PremiumDataDisk? PremiumDataDisks { get; set; }
+        public DevTestLabPremiumDataDisk? PremiumDataDisks { get; set; }
         /// <summary>
         /// The access rights to be granted to the user when provisioning an environment
         /// Serialized Name: Lab.properties.environmentPermission
         /// </summary>
-        public EnvironmentPermission? EnvironmentPermission { get; set; }
+        public DevTestLabEnvironmentPermission? EnvironmentPermission { get; set; }
         /// <summary>
         /// The properties of any lab announcement associated with this lab
         /// Serialized Name: Lab.properties.announcement
         /// </summary>
-        public LabAnnouncementProperties Announcement { get; set; }
+        public DevTestLabAnnouncement Announcement { get; set; }
         /// <summary>
         /// The properties of any lab support message associated with this lab
         /// Serialized Name: Lab.properties.support
         /// </summary>
-        public LabSupportProperties Support { get; set; }
+        public DevTestLabSupport Support { get; set; }
         /// <summary>
         /// The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null.
         /// Serialized Name: Lab.properties.vmCreationResourceGroup

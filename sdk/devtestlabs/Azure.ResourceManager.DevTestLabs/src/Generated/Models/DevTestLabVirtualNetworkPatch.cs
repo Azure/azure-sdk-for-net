@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// A virtual network.
     /// Serialized Name: VirtualNetworkFragment
     /// </summary>
-    public partial class DevTestLabVirtualNetworkPatch : UpdateResource
+    public partial class DevTestLabVirtualNetworkPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabVirtualNetworkPatch. </summary>
         public DevTestLabVirtualNetworkPatch()

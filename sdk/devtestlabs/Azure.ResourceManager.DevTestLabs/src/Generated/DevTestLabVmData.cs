@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabVmData(AzureLocation location) : base(location)
         {
-            Artifacts = new ChangeTrackingList<ArtifactInstallProperties>();
-            DataDiskParameters = new ChangeTrackingList<DataDiskProperties>();
-            ScheduleParameters = new ChangeTrackingList<ScheduleCreationParameter>();
+            Artifacts = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();
+            DataDiskParameters = new ChangeTrackingList<DevTestLabDataDiskProperties>();
+            ScheduleParameters = new ChangeTrackingList<DevTestLabScheduleCreationParameter>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabVmData. </summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The lab virtual network identifier of the virtual machine.
         /// Serialized Name: LabVirtualMachine.properties.labVirtualNetworkId
         /// </param>
-        /// <param name="disallowPublicIPAddress">
+        /// <param name="isPublicIPAddressDisallowed">
         /// Indicates whether the virtual machine is to be created without a public IP address.
         /// Serialized Name: LabVirtualMachine.properties.disallowPublicIpAddress
         /// </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: LabVirtualMachine.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<ArtifactInstallProperties> artifacts, ArtifactDeploymentStatusProperties artifactDeploymentStatus, GalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, NetworkInterfaceProperties networkInterface, ApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, VirtualMachineCreationSource? virtualMachineCreationSource, ResourceIdentifier environmentId, IList<DataDiskProperties> dataDiskParameters, IList<ScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? isPublicIPAddressDisallowed, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? virtualMachineCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Notes = notes;
             OwnerObjectId = ownerObjectId;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Fqdn = fqdn;
             LabSubnetName = labSubnetName;
             LabVirtualNetworkId = labVirtualNetworkId;
-            DisallowPublicIPAddress = disallowPublicIPAddress;
+            IsPublicIPAddressDisallowed = isPublicIPAddressDisallowed;
             Artifacts = artifacts;
             ArtifactDeploymentStatus = artifactDeploymentStatus;
             GalleryImageReference = galleryImageReference;
@@ -300,22 +300,22 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Indicates whether the virtual machine is to be created without a public IP address.
         /// Serialized Name: LabVirtualMachine.properties.disallowPublicIpAddress
         /// </summary>
-        public bool? DisallowPublicIPAddress { get; set; }
+        public bool? IsPublicIPAddressDisallowed { get; set; }
         /// <summary>
         /// The artifacts to be installed on the virtual machine.
         /// Serialized Name: LabVirtualMachine.properties.artifacts
         /// </summary>
-        public IList<ArtifactInstallProperties> Artifacts { get; }
+        public IList<DevTestLabArtifactInstallInfo> Artifacts { get; }
         /// <summary>
         /// The artifact deployment status for the virtual machine.
         /// Serialized Name: LabVirtualMachine.properties.artifactDeploymentStatus
         /// </summary>
-        public ArtifactDeploymentStatusProperties ArtifactDeploymentStatus { get; }
+        public DevTestLabArtifactDeploymentStatus ArtifactDeploymentStatus { get; }
         /// <summary>
         /// The Microsoft Azure Marketplace image reference of the virtual machine.
         /// Serialized Name: LabVirtualMachine.properties.galleryImageReference
         /// </summary>
-        public GalleryImageReference GalleryImageReference { get; set; }
+        public DevTestLabGalleryImageReference GalleryImageReference { get; set; }
         /// <summary>
         /// The id of the plan associated with the virtual machine image
         /// Serialized Name: LabVirtualMachine.properties.planId
@@ -330,12 +330,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The network interface properties.
         /// Serialized Name: LabVirtualMachine.properties.networkInterface
         /// </summary>
-        public NetworkInterfaceProperties NetworkInterface { get; set; }
+        public DevTestLabNetworkInterface NetworkInterface { get; set; }
         /// <summary>
         /// The applicable schedule for the virtual machine.
         /// Serialized Name: LabVirtualMachine.properties.applicableSchedule
         /// </summary>
-        public ApplicableSchedule ApplicableSchedule { get; }
+        public DevTestLabApplicableSchedule ApplicableSchedule { get; }
         /// <summary>
         /// The expiration date for VM.
         /// Serialized Name: LabVirtualMachine.properties.expirationDate
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Tells source of creation of lab virtual machine. Output property only.
         /// Serialized Name: LabVirtualMachine.properties.virtualMachineCreationSource
         /// </summary>
-        public VirtualMachineCreationSource? VirtualMachineCreationSource { get; }
+        public DevTestLabVmCreationSource? VirtualMachineCreationSource { get; }
         /// <summary>
         /// The resource ID of the environment that contains this virtual machine, if any.
         /// Serialized Name: LabVirtualMachine.properties.environmentId
@@ -365,12 +365,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// New or existing data disks to attach to the virtual machine after creation
         /// Serialized Name: LabVirtualMachine.properties.dataDiskParameters
         /// </summary>
-        public IList<DataDiskProperties> DataDiskParameters { get; }
+        public IList<DevTestLabDataDiskProperties> DataDiskParameters { get; }
         /// <summary>
         /// Virtual Machine schedules to be created
         /// Serialized Name: LabVirtualMachine.properties.scheduleParameters
         /// </summary>
-        public IList<ScheduleCreationParameter> ScheduleParameters { get; }
+        public IList<DevTestLabScheduleCreationParameter> ScheduleParameters { get; }
         /// <summary>
         /// Last known compute power state captured in DTL
         /// Serialized Name: LabVirtualMachine.properties.lastKnownPowerState

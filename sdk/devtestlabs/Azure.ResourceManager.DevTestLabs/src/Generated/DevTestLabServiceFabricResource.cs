@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: ServiceFabrics_ListApplicableSchedules
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicableSchedule>> GetApplicableSchedulesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabApplicableSchedule>> GetApplicableSchedulesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _devTestLabServiceFabricServiceFabricsClientDiagnostics.CreateScope("DevTestLabServiceFabricResource.GetApplicableSchedules");
             scope.Start();
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: ServiceFabrics_ListApplicableSchedules
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicableSchedule> GetApplicableSchedules(CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabApplicableSchedule> GetApplicableSchedules(CancellationToken cancellationToken = default)
         {
             using var scope = _devTestLabServiceFabricServiceFabricsClientDiagnostics.CreateScope("DevTestLabServiceFabricResource.GetApplicableSchedules");
             scope.Start();

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: Formula.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabFormulaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string author, string osType, DateTimeOffset? createdOn, LabVirtualMachineCreationParameter formulaContent, FormulaPropertiesFromVm vm, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabFormulaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string author, string osType, DateTimeOffset? createdOn, DevTestLabVmCreationContent formulaContent, FormulaPropertiesFromVm vm, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Author = author;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The content of the formula.
         /// Serialized Name: Formula.properties.formulaContent
         /// </summary>
-        public LabVirtualMachineCreationParameter FormulaContent { get; set; }
+        public DevTestLabVmCreationContent FormulaContent { get; set; }
         /// <summary>
         /// Information about a VM from which a formula is to be created.
         /// Serialized Name: Formula.properties.vm

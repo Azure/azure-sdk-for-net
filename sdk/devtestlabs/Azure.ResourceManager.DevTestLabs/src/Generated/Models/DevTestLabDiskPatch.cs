@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// A Disk.
     /// Serialized Name: DiskFragment
     /// </summary>
-    public partial class DevTestLabDiskPatch : UpdateResource
+    public partial class DevTestLabDiskPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabDiskPatch. </summary>
         public DevTestLabDiskPatch()

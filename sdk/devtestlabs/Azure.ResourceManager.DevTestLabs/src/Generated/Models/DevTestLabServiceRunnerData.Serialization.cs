@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabServiceRunnerData DeserializeDevTestLabServiceRunnerData(JsonElement element)
         {
-            Optional<IdentityProperties> identity = default;
+            Optional<DevTestLabManagedIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = IdentityProperties.DeserializeIdentityProperties(property.Value);
+                    identity = DevTestLabManagedIdentity.DeserializeDevTestLabManagedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

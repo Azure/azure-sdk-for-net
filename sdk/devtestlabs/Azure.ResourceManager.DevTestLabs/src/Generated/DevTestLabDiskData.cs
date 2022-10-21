@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: Disk.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageType? diskType, int? diskSizeGiB, string leasedByLabVmId, string diskBlobName, Uri diskUri, string storageAccountId, DateTimeOffset? createdOn, string hostCaching, string managedDiskId, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabStorageType? diskType, int? diskSizeGiB, string leasedByLabVmId, string diskBlobName, Uri diskUri, string storageAccountId, DateTimeOffset? createdOn, string hostCaching, string managedDiskId, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             DiskType = diskType;
             DiskSizeGiB = diskSizeGiB;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The storage type for the disk (i.e. Standard, Premium).
         /// Serialized Name: Disk.properties.diskType
         /// </summary>
-        public StorageType? DiskType { get; set; }
+        public DevTestLabStorageType? DiskType { get; set; }
         /// <summary>
         /// The size of the disk in Gibibytes.
         /// Serialized Name: Disk.properties.diskSizeGiB

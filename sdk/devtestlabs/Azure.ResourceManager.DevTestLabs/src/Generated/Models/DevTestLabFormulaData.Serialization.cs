@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> author = default;
             Optional<string> osType = default;
             Optional<DateTimeOffset> creationDate = default;
-            Optional<LabVirtualMachineCreationParameter> formulaContent = default;
+            Optional<DevTestLabVmCreationContent> formulaContent = default;
             Optional<FormulaPropertiesFromVm> vm = default;
             Optional<string> provisioningState = default;
             Optional<string> uniqueIdentifier = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            formulaContent = LabVirtualMachineCreationParameter.DeserializeLabVirtualMachineCreationParameter(property0.Value);
+                            formulaContent = DevTestLabVmCreationContent.DeserializeDevTestLabVmCreationContent(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vm"))

@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<Uri> uri = default;
-            Optional<SourceControlType> sourceType = default;
+            Optional<DevTestLabSourceControlType> sourceType = default;
             Optional<string> folderPath = default;
             Optional<string> armTemplateFolderPath = default;
             Optional<string> branchRef = default;
             Optional<string> securityToken = default;
-            Optional<EnableStatus> status = default;
+            Optional<DevTestLabEnableStatus> status = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
             Optional<string> uniqueIdentifier = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sourceType = new SourceControlType(property0.Value.GetString());
+                            sourceType = new DevTestLabSourceControlType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("folderPath"))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new EnableStatus(property0.Value.GetString());
+                            status = new DevTestLabEnableStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createdDate"))

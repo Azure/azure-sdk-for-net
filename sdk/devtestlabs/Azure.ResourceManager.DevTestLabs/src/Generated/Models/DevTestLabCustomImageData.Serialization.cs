@@ -96,15 +96,15 @@ namespace Azure.ResourceManager.DevTestLabs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CustomImagePropertiesFromVm> vm = default;
-            Optional<CustomImagePropertiesCustom> vhd = default;
+            Optional<DevTestLabCustomImageVm> vm = default;
+            Optional<DevTestLabCustomImageVhd> vhd = default;
             Optional<string> description = default;
             Optional<string> author = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> managedImageId = default;
             Optional<string> managedSnapshotId = default;
-            Optional<IList<DataDiskStorageTypeInfo>> dataDiskStorageInfo = default;
-            Optional<CustomImagePropertiesFromPlan> customImagePlan = default;
+            Optional<IList<DevTestLabDataDiskStorageTypeInfo>> dataDiskStorageInfo = default;
+            Optional<DevTestLabCustomImagePlan> customImagePlan = default;
             Optional<bool> isPlanAuthorized = default;
             Optional<string> provisioningState = default;
             Optional<string> uniqueIdentifier = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vm = CustomImagePropertiesFromVm.DeserializeCustomImagePropertiesFromVm(property0.Value);
+                            vm = DevTestLabCustomImageVm.DeserializeDevTestLabCustomImageVm(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vhd"))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vhd = CustomImagePropertiesCustom.DeserializeCustomImagePropertiesCustom(property0.Value);
+                            vhd = DevTestLabCustomImageVhd.DeserializeDevTestLabCustomImageVhd(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"))
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DataDiskStorageTypeInfo> array = new List<DataDiskStorageTypeInfo>();
+                            List<DevTestLabDataDiskStorageTypeInfo> array = new List<DevTestLabDataDiskStorageTypeInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataDiskStorageTypeInfo.DeserializeDataDiskStorageTypeInfo(item));
+                                array.Add(DevTestLabDataDiskStorageTypeInfo.DeserializeDevTestLabDataDiskStorageTypeInfo(item));
                             }
                             dataDiskStorageInfo = array;
                             continue;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            customImagePlan = CustomImagePropertiesFromPlan.DeserializeCustomImagePropertiesFromPlan(property0.Value);
+                            customImagePlan = DevTestLabCustomImagePlan.DeserializeDevTestLabCustomImagePlan(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isPlanAuthorized"))

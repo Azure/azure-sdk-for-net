@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// A lab.
     /// Serialized Name: LabFragment
     /// </summary>
-    public partial class DevTestLabPatch : UpdateResource
+    public partial class DevTestLabPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabPatch. </summary>
         public DevTestLabPatch()

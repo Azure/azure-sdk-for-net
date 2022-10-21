@@ -744,19 +744,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: Labs_CreateEnvironment
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="labVirtualMachineCreationParameter"> Properties for creating a virtual machine. </param>
+        /// <param name="content"> Properties for creating a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labVirtualMachineCreationParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateEnvironmentAsync(WaitUntil waitUntil, LabVirtualMachineCreationParameter labVirtualMachineCreationParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> CreateEnvironmentAsync(WaitUntil waitUntil, DevTestLabVmCreationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(labVirtualMachineCreationParameter, nameof(labVirtualMachineCreationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.CreateEnvironment");
             scope.Start();
             try
             {
-                var response = await _devTestLabLabsRestClient.CreateEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabLabsClientDiagnostics, Pipeline, _devTestLabLabsRestClient.CreateCreateEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter).Request, response, OperationFinalStateVia.Location);
+                var response = await _devTestLabLabsRestClient.CreateEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation(_devTestLabLabsClientDiagnostics, Pipeline, _devTestLabLabsRestClient.CreateCreateEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -774,19 +774,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: Labs_CreateEnvironment
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="labVirtualMachineCreationParameter"> Properties for creating a virtual machine. </param>
+        /// <param name="content"> Properties for creating a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labVirtualMachineCreationParameter"/> is null. </exception>
-        public virtual ArmOperation CreateEnvironment(WaitUntil waitUntil, LabVirtualMachineCreationParameter labVirtualMachineCreationParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation CreateEnvironment(WaitUntil waitUntil, DevTestLabVmCreationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(labVirtualMachineCreationParameter, nameof(labVirtualMachineCreationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.CreateEnvironment");
             scope.Start();
             try
             {
-                var response = _devTestLabLabsRestClient.CreateEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabLabsClientDiagnostics, Pipeline, _devTestLabLabsRestClient.CreateCreateEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter).Request, response, OperationFinalStateVia.Location);
+                var response = _devTestLabLabsRestClient.CreateEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new DevTestLabsArmOperation(_devTestLabLabsClientDiagnostics, Pipeline, _devTestLabLabsRestClient.CreateCreateEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> The parameters of the export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ExportResourceUsageAsync(WaitUntil waitUntil, ExportResourceUsageContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ExportResourceUsageAsync(WaitUntil waitUntil, DevTestLabExportResourceUsageContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> The parameters of the export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ExportResourceUsage(WaitUntil waitUntil, ExportResourceUsageContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ExportResourceUsage(WaitUntil waitUntil, DevTestLabExportResourceUsageContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -863,18 +863,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}/generateUploadUri
         /// Operation Id: Labs_GenerateUploadUri
         /// </summary>
-        /// <param name="generateUploadUriParameter"> Properties for generating an upload URI. </param>
+        /// <param name="content"> Properties for generating an upload URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="generateUploadUriParameter"/> is null. </exception>
-        public virtual async Task<Response<GenerateUploadUriResponse>> GenerateUploadUriAsync(GenerateUploadUriParameter generateUploadUriParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DevTestLabGenerateUploadUriResult>> GenerateUploadUriAsync(DevTestLabGenerateUploadUriContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(generateUploadUriParameter, nameof(generateUploadUriParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.GenerateUploadUri");
             scope.Start();
             try
             {
-                var response = await _devTestLabLabsRestClient.GenerateUploadUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, generateUploadUriParameter, cancellationToken).ConfigureAwait(false);
+                var response = await _devTestLabLabsRestClient.GenerateUploadUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -889,18 +889,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}/generateUploadUri
         /// Operation Id: Labs_GenerateUploadUri
         /// </summary>
-        /// <param name="generateUploadUriParameter"> Properties for generating an upload URI. </param>
+        /// <param name="content"> Properties for generating an upload URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="generateUploadUriParameter"/> is null. </exception>
-        public virtual Response<GenerateUploadUriResponse> GenerateUploadUri(GenerateUploadUriParameter generateUploadUriParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DevTestLabGenerateUploadUriResult> GenerateUploadUri(DevTestLabGenerateUploadUriContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(generateUploadUriParameter, nameof(generateUploadUriParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.GenerateUploadUri");
             scope.Start();
             try
             {
-                var response = _devTestLabLabsRestClient.GenerateUploadUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, generateUploadUriParameter, cancellationToken);
+                var response = _devTestLabLabsRestClient.GenerateUploadUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> This represents the payload required to import a virtual machine from a different lab into the current one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ImportVirtualMachineAsync(WaitUntil waitUntil, ImportLabVirtualMachineContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ImportVirtualMachineAsync(WaitUntil waitUntil, DevTestLabImportVirtualMachineContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> This represents the payload required to import a virtual machine from a different lab into the current one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ImportVirtualMachine(WaitUntil waitUntil, ImportLabVirtualMachineContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ImportVirtualMachine(WaitUntil waitUntil, DevTestLabImportVirtualMachineContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1064,10 +1064,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GalleryImage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabGalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<GalleryImage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DevTestLabGalleryImage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _galleryImagesClientDiagnostics.CreateScope("DevTestLabResource.GetGalleryImages");
                 scope.Start();
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     throw;
                 }
             }
-            async Task<Page<GalleryImage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DevTestLabGalleryImage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _galleryImagesClientDiagnostics.CreateScope("DevTestLabResource.GetGalleryImages");
                 scope.Start();
@@ -1110,10 +1110,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GalleryImage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GalleryImage> GetGalleryImages(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevTestLabGalleryImage> GetGalleryImages(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<GalleryImage> FirstPageFunc(int? pageSizeHint)
+            Page<DevTestLabGalleryImage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _galleryImagesClientDiagnostics.CreateScope("DevTestLabResource.GetGalleryImages");
                 scope.Start();
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     throw;
                 }
             }
-            Page<GalleryImage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DevTestLabGalleryImage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _galleryImagesClientDiagnostics.CreateScope("DevTestLabResource.GetGalleryImages");
                 scope.Start();
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EvaluatePoliciesResponse>> EvaluatePoliciesPolicySetAsync(string name, EvaluatePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesPolicySetAsync(string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<EvaluatePoliciesResponse> EvaluatePoliciesPolicySet(string name, EvaluatePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabEvaluatePoliciesResult> EvaluatePoliciesPolicySet(string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));

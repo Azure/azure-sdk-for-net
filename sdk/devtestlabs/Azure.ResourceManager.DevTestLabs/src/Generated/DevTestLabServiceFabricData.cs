@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: ServiceFabric.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabServiceFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string externalServiceFabricId, string environmentId, ApplicableSchedule applicableSchedule, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabServiceFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string externalServiceFabricId, string environmentId, DevTestLabApplicableSchedule applicableSchedule, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             ExternalServiceFabricId = externalServiceFabricId;
             EnvironmentId = environmentId;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The applicable schedule for the virtual machine.
         /// Serialized Name: ServiceFabric.properties.applicableSchedule
         /// </summary>
-        public ApplicableSchedule ApplicableSchedule { get; }
+        public DevTestLabApplicableSchedule ApplicableSchedule { get; }
         /// <summary>
         /// The provisioning status of the resource.
         /// Serialized Name: ServiceFabric.properties.provisioningState

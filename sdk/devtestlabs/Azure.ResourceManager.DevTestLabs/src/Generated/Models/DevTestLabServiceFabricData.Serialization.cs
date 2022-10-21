@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<SystemData> systemData = default;
             Optional<string> externalServiceFabricId = default;
             Optional<string> environmentId = default;
-            Optional<ApplicableSchedule> applicableSchedule = default;
+            Optional<DevTestLabApplicableSchedule> applicableSchedule = default;
             Optional<string> provisioningState = default;
             Optional<string> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            applicableSchedule = ApplicableSchedule.DeserializeApplicableSchedule(property0.Value);
+                            applicableSchedule = DevTestLabApplicableSchedule.DeserializeDevTestLabApplicableSchedule(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

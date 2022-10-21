@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, ScheduleFragment schedule)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, DevTestLabSchedulePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DevTestLabs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(schedule);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -499,18 +499,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the schedule. </param>
-        /// <param name="schedule"> A schedule. </param>
+        /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="schedule"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DevTestLabScheduleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabScheduleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, schedule);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -530,18 +530,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the schedule. </param>
-        /// <param name="schedule"> A schedule. </param>
+        /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="schedule"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DevTestLabScheduleData> Update(string subscriptionId, string resourceGroupName, string name, ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        public Response<DevTestLabScheduleData> Update(string subscriptionId, string resourceGroupName, string name, DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, schedule);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateRetargetRequest(string subscriptionId, string resourceGroupName, string name, RetargetScheduleProperties retargetScheduleProperties)
+        internal HttpMessage CreateRetargetRequest(string subscriptionId, string resourceGroupName, string name, DevTestLabGlobalScheduleRetargetContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -646,9 +646,9 @@ namespace Azure.ResourceManager.DevTestLabs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(retargetScheduleProperties);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -657,18 +657,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the schedule. </param>
-        /// <param name="retargetScheduleProperties"> Properties for retargeting a virtual machine schedule. </param>
+        /// <param name="content"> Properties for retargeting a virtual machine schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="retargetScheduleProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RetargetAsync(string subscriptionId, string resourceGroupName, string name, RetargetScheduleProperties retargetScheduleProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> RetargetAsync(string subscriptionId, string resourceGroupName, string name, DevTestLabGlobalScheduleRetargetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(retargetScheduleProperties, nameof(retargetScheduleProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRetargetRequest(subscriptionId, resourceGroupName, name, retargetScheduleProperties);
+            using var message = CreateRetargetRequest(subscriptionId, resourceGroupName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -684,18 +684,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the schedule. </param>
-        /// <param name="retargetScheduleProperties"> Properties for retargeting a virtual machine schedule. </param>
+        /// <param name="content"> Properties for retargeting a virtual machine schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="retargetScheduleProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Retarget(string subscriptionId, string resourceGroupName, string name, RetargetScheduleProperties retargetScheduleProperties, CancellationToken cancellationToken = default)
+        public Response Retarget(string subscriptionId, string resourceGroupName, string name, DevTestLabGlobalScheduleRetargetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(retargetScheduleProperties, nameof(retargetScheduleProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRetargetRequest(subscriptionId, resourceGroupName, name, retargetScheduleProperties);
+            using var message = CreateRetargetRequest(subscriptionId, resourceGroupName, name, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

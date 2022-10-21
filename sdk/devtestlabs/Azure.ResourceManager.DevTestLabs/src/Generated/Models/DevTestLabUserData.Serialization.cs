@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DevTestLabs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<UserIdentity> identity = default;
-            Optional<UserSecretStore> secretStore = default;
+            Optional<DevTestLabUserIdentity> identity = default;
+            Optional<DevTestLabUserSecretStore> secretStore = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
             Optional<string> uniqueIdentifier = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            identity = UserIdentity.DeserializeUserIdentity(property0.Value);
+                            identity = DevTestLabUserIdentity.DeserializeDevTestLabUserIdentity(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            secretStore = UserSecretStore.DeserializeUserSecretStore(property0.Value);
+                            secretStore = DevTestLabUserSecretStore.DeserializeDevTestLabUserSecretStore(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"))

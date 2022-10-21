@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("labVirtualNetworkId");
                 writer.WriteStringValue(LabVirtualNetworkId);
             }
-            if (Optional.IsDefined(DisallowPublicIPAddress))
+            if (Optional.IsDefined(IsPublicIPAddressDisallowed))
             {
                 writer.WritePropertyName("disallowPublicIpAddress");
-                writer.WriteBooleanValue(DisallowPublicIPAddress.Value);
+                writer.WriteBooleanValue(IsPublicIPAddressDisallowed.Value);
             }
             if (Optional.IsCollectionDefined(Artifacts))
             {
@@ -194,20 +194,20 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> labSubnetName = default;
             Optional<ResourceIdentifier> labVirtualNetworkId = default;
             Optional<bool> disallowPublicIPAddress = default;
-            Optional<IList<ArtifactInstallProperties>> artifacts = default;
-            Optional<ArtifactDeploymentStatusProperties> artifactDeploymentStatus = default;
-            Optional<GalleryImageReference> galleryImageReference = default;
+            Optional<IList<DevTestLabArtifactInstallInfo>> artifacts = default;
+            Optional<DevTestLabArtifactDeploymentStatus> artifactDeploymentStatus = default;
+            Optional<DevTestLabGalleryImageReference> galleryImageReference = default;
             Optional<string> planId = default;
             Optional<ComputeVmProperties> computeVm = default;
-            Optional<NetworkInterfaceProperties> networkInterface = default;
-            Optional<ApplicableSchedule> applicableSchedule = default;
+            Optional<DevTestLabNetworkInterface> networkInterface = default;
+            Optional<DevTestLabApplicableSchedule> applicableSchedule = default;
             Optional<DateTimeOffset> expirationDate = default;
             Optional<bool> allowClaim = default;
             Optional<string> storageType = default;
-            Optional<VirtualMachineCreationSource> virtualMachineCreationSource = default;
+            Optional<DevTestLabVmCreationSource> virtualMachineCreationSource = default;
             Optional<ResourceIdentifier> environmentId = default;
-            Optional<IList<DataDiskProperties>> dataDiskParameters = default;
-            Optional<IList<ScheduleCreationParameter>> scheduleParameters = default;
+            Optional<IList<DevTestLabDataDiskProperties>> dataDiskParameters = default;
+            Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
             Optional<string> lastKnownPowerState = default;
             Optional<string> provisioningState = default;
             Optional<string> uniqueIdentifier = default;
@@ -389,10 +389,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ArtifactInstallProperties> array = new List<ArtifactInstallProperties>();
+                            List<DevTestLabArtifactInstallInfo> array = new List<DevTestLabArtifactInstallInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArtifactInstallProperties.DeserializeArtifactInstallProperties(item));
+                                array.Add(DevTestLabArtifactInstallInfo.DeserializeDevTestLabArtifactInstallInfo(item));
                             }
                             artifacts = array;
                             continue;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            artifactDeploymentStatus = ArtifactDeploymentStatusProperties.DeserializeArtifactDeploymentStatusProperties(property0.Value);
+                            artifactDeploymentStatus = DevTestLabArtifactDeploymentStatus.DeserializeDevTestLabArtifactDeploymentStatus(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("galleryImageReference"))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            galleryImageReference = GalleryImageReference.DeserializeGalleryImageReference(property0.Value);
+                            galleryImageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("planId"))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkInterface = NetworkInterfaceProperties.DeserializeNetworkInterfaceProperties(property0.Value);
+                            networkInterface = DevTestLabNetworkInterface.DeserializeDevTestLabNetworkInterface(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("applicableSchedule"))
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            applicableSchedule = ApplicableSchedule.DeserializeApplicableSchedule(property0.Value);
+                            applicableSchedule = DevTestLabApplicableSchedule.DeserializeDevTestLabApplicableSchedule(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expirationDate"))
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualMachineCreationSource = new VirtualMachineCreationSource(property0.Value.GetString());
+                            virtualMachineCreationSource = new DevTestLabVmCreationSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("environmentId"))
@@ -504,10 +504,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DataDiskProperties> array = new List<DataDiskProperties>();
+                            List<DevTestLabDataDiskProperties> array = new List<DevTestLabDataDiskProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataDiskProperties.DeserializeDataDiskProperties(item));
+                                array.Add(DevTestLabDataDiskProperties.DeserializeDevTestLabDataDiskProperties(item));
                             }
                             dataDiskParameters = array;
                             continue;
@@ -519,10 +519,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ScheduleCreationParameter> array = new List<ScheduleCreationParameter>();
+                            List<DevTestLabScheduleCreationParameter> array = new List<DevTestLabScheduleCreationParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScheduleCreationParameter.DeserializeScheduleCreationParameter(item));
+                                array.Add(DevTestLabScheduleCreationParameter.DeserializeDevTestLabScheduleCreationParameter(item));
                             }
                             scheduleParameters = array;
                             continue;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabCustomImageData(AzureLocation location) : base(location)
         {
-            DataDiskStorageInfo = new ChangeTrackingList<DataDiskStorageTypeInfo>();
+            DataDiskStorageInfo = new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabCustomImageData. </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: CustomImage.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CustomImagePropertiesFromVm vm, CustomImagePropertiesCustom vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IList<DataDiskStorageTypeInfo> dataDiskStorageInfo, CustomImagePropertiesFromPlan customImagePlan, bool? isPlanAuthorized, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Vm = vm;
             Vhd = vhd;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The virtual machine from which the image is to be created.
         /// Serialized Name: CustomImage.properties.vm
         /// </summary>
-        public CustomImagePropertiesFromVm Vm { get; set; }
+        public DevTestLabCustomImageVm Vm { get; set; }
         /// <summary>
         /// The VHD from which the image is to be created.
         /// Serialized Name: CustomImage.properties.vhd
         /// </summary>
-        public CustomImagePropertiesCustom Vhd { get; set; }
+        public DevTestLabCustomImageVhd Vhd { get; set; }
         /// <summary>
         /// The description of the custom image.
         /// Serialized Name: CustomImage.properties.description
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Storage information about the data disks present in the custom image
         /// Serialized Name: CustomImage.properties.dataDiskStorageInfo
         /// </summary>
-        public IList<DataDiskStorageTypeInfo> DataDiskStorageInfo { get; }
+        public IList<DevTestLabDataDiskStorageTypeInfo> DataDiskStorageInfo { get; }
         /// <summary>
         /// Storage information about the plan related to this custom image
         /// Serialized Name: CustomImage.properties.customImagePlan
         /// </summary>
-        public CustomImagePropertiesFromPlan CustomImagePlan { get; set; }
+        public DevTestLabCustomImagePlan CustomImagePlan { get; set; }
         /// <summary>
         /// Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment
         /// Serialized Name: CustomImage.properties.isPlanAuthorized

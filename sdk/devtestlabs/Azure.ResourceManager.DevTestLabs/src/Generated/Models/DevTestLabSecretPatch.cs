@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// A secret.
     /// Serialized Name: SecretFragment
     /// </summary>
-    public partial class DevTestLabSecretPatch : UpdateResource
+    public partial class DevTestLabSecretPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabSecretPatch. </summary>
         public DevTestLabSecretPatch()

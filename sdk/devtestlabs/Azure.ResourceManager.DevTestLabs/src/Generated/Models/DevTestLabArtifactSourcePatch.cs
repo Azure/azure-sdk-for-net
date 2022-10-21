@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// Properties of an artifact source.
     /// Serialized Name: ArtifactSourceFragment
     /// </summary>
-    public partial class DevTestLabArtifactSourcePatch : UpdateResource
+    public partial class DevTestLabArtifactSourcePatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabArtifactSourcePatch. </summary>
         public DevTestLabArtifactSourcePatch()

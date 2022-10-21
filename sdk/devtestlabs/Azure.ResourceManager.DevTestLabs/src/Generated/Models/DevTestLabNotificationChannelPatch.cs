@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// A notification.
     /// Serialized Name: NotificationChannelFragment
     /// </summary>
-    public partial class DevTestLabNotificationChannelPatch : UpdateResource
+    public partial class DevTestLabNotificationChannelPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabNotificationChannelPatch. </summary>
         public DevTestLabNotificationChannelPatch()

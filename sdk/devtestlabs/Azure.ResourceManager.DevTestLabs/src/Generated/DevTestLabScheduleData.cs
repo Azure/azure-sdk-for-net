@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: Schedule.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EnableStatus? status, string taskType, WeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, NotificationSettings notificationSettings, DateTimeOffset? createdOn, string targetResourceId, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, DateTimeOffset? createdOn, string targetResourceId, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Status = status;
             TaskType = taskType;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The status of the schedule (i.e. Enabled, Disabled)
         /// Serialized Name: Schedule.properties.status
         /// </summary>
-        public EnableStatus? Status { get; set; }
+        public DevTestLabEnableStatus? Status { get; set; }
         /// <summary>
         /// The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart).
         /// Serialized Name: Schedule.properties.taskType
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// If the schedule will occur only some days of the week, specify the weekly recurrence.
         /// Serialized Name: Schedule.properties.weeklyRecurrence
         /// </summary>
-        public WeekDetails WeeklyRecurrence { get; set; }
+        public DevTestLabWeekDetails WeeklyRecurrence { get; set; }
         /// <summary>
         /// If the schedule will occur once each day of the week, specify the daily recurrence.
         /// Serialized Name: Schedule.properties.dailyRecurrence
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Notification settings.
         /// Serialized Name: Schedule.properties.notificationSettings
         /// </summary>
-        public NotificationSettings NotificationSettings { get; set; }
+        public DevTestLabNotificationSettings NotificationSettings { get; set; }
         /// <summary>
         /// The creation date of the schedule.
         /// Serialized Name: Schedule.properties.createdDate

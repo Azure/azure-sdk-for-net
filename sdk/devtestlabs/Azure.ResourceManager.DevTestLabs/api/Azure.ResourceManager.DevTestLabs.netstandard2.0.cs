@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string DisplayName { get { throw null; } }
         public bool? Enabled { get { throw null; } }
         public string Icon { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.ParametersValueFileInfo> ParametersValueFilesInfo { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo> ParametersValueFilesInfo { get { throw null; } }
         public string Publisher { get { throw null; } }
     }
     public partial class DevTestLabArmTemplateResource : Azure.ResourceManager.ArmResource
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.ArmTemplateInfo> GenerateArmTemplate(Azure.ResourceManager.DevTestLabs.Models.GenerateArmTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.ArmTemplateInfo>> GenerateArmTemplateAsync(Azure.ResourceManager.DevTestLabs.Models.GenerateArmTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo> GenerateArmTemplate(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo>> GenerateArmTemplateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.DevTestLabs
         public string FolderPath { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string SecurityToken { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.SourceControlType? SourceType { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.EnableStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType? SourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
         public string UniqueIdentifier { get { throw null; } }
         public System.Uri Uri { get { throw null; } set { } }
     }
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.DevTestLabs
         public string CurrencyCode { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public double? EstimatedLabCost { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.LabCostDetailsProperties> LabCostDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails> LabCostDetails { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.LabResourceCostProperties> ResourceCosts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost> ResourceCosts { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.TargetCostProperties TargetCost { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost TargetCost { get { throw null; } set { } }
         public string UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabCostResource : Azure.ResourceManager.ArmResource
@@ -205,16 +205,16 @@ namespace Azure.ResourceManager.DevTestLabs
         public DevTestLabCustomImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Author { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.CustomImagePropertiesFromPlan CustomImagePlan { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DataDiskStorageTypeInfo> DataDiskStorageInfo { get { throw null; } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan CustomImagePlan { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo> DataDiskStorageInfo { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public bool? IsPlanAuthorized { get { throw null; } set { } }
         public string ManagedImageId { get { throw null; } set { } }
         public string ManagedSnapshotId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string UniqueIdentifier { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.CustomImagePropertiesCustom Vhd { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.CustomImagePropertiesFromVm Vm { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd Vhd { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm Vm { get { throw null; } set { } }
     }
     public partial class DevTestLabCustomImageResource : Azure.ResourceManager.ArmResource
     {
@@ -239,23 +239,23 @@ namespace Azure.ResourceManager.DevTestLabs
     public partial class DevTestLabData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DevTestLabData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.DevTestLabs.Models.LabAnnouncementProperties Announcement { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement Announcement { get { throw null; } set { } }
         public string ArtifactsStorageAccount { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DefaultPremiumStorageAccount { get { throw null; } }
         public string DefaultStorageAccount { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission? EnvironmentPermission { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission? EnvironmentPermission { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ExtendedProperties { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.StorageType? LabStorageType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? LabStorageType { get { throw null; } set { } }
         public string LoadBalancerId { get { throw null; } }
         public System.Collections.Generic.IList<string> MandatoryArtifactsResourceIdsLinux { get { throw null; } }
         public System.Collections.Generic.IList<string> MandatoryArtifactsResourceIdsWindows { get { throw null; } }
         public string NetworkSecurityGroupId { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk? PremiumDataDisks { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? PremiumDataDisks { get { throw null; } set { } }
         public string PremiumDataDiskStorageAccount { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string PublicIPId { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.LabSupportProperties Support { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport Support { get { throw null; } set { } }
         public string UniqueIdentifier { get { throw null; } }
         public string VaultName { get { throw null; } }
         public string VmCreationResourceGroup { get { throw null; } }
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DiskBlobName { get { throw null; } set { } }
         public int? DiskSizeGiB { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.StorageType? DiskType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? DiskType { get { throw null; } set { } }
         public System.Uri DiskUri { get { throw null; } set { } }
         public string HostCaching { get { throw null; } set { } }
         public string LeasedByLabVmId { get { throw null; } set { } }
@@ -298,13 +298,13 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Attach(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.AttachDiskProperties attachDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AttachAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.AttachDiskProperties attachDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Attach(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AttachAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string userName, string name) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Detach(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DetachDiskProperties detachDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DetachAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DetachDiskProperties detachDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Detach(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DetachAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public DevTestLabEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ArmTemplateDisplayName { get { throw null; } set { } }
         public string CreatedByUser { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.EnvironmentDeploymentProperties DeploymentProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment DeploymentProperties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string ResourceGroupId { get { throw null; } }
         public string UniqueIdentifier { get { throw null; } }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string Author { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.LabVirtualMachineCreationParameter FormulaContent { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent FormulaContent { get { throw null; } set { } }
         public string LabVmId { get { throw null; } set { } }
         public string OSType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -438,12 +438,12 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Retarget(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.RetargetScheduleProperties retargetScheduleProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RetargetAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.RetargetScheduleProperties retargetScheduleProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Retarget(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RetargetAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.ScheduleFragment schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.ScheduleFragment schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DevTestLabNotificationChannelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>, System.Collections.IEnumerable
     {
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string EmailRecipient { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.Event> Events { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> Events { get { throw null; } }
         public string NotificationLocale { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string UniqueIdentifier { get { throw null; } }
@@ -485,8 +485,8 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Notify(Azure.ResourceManager.DevTestLabs.Models.NotifyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> NotifyAsync(Azure.ResourceManager.DevTestLabs.Models.NotifyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Notify(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> NotifyAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -514,11 +514,11 @@ namespace Azure.ResourceManager.DevTestLabs
         public DevTestLabPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType? EvaluatorType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType? EvaluatorType { get { throw null; } set { } }
         public string FactData { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.PolicyFactName? FactName { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName? FactName { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.PolicyStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus? Status { get { throw null; } set { } }
         public string Threshold { get { throw null; } set { } }
         public string UniqueIdentifier { get { throw null; } }
     }
@@ -552,17 +552,17 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ClaimAnyVm(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ClaimAnyVmAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation CreateEnvironment(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.LabVirtualMachineCreationParameter labVirtualMachineCreationParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateEnvironmentAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.LabVirtualMachineCreationParameter labVirtualMachineCreationParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation CreateEnvironment(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateEnvironmentAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.EvaluatePoliciesResponse> EvaluatePoliciesPolicySet(string name, Azure.ResourceManager.DevTestLabs.Models.EvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.EvaluatePoliciesResponse>> EvaluatePoliciesPolicySetAsync(string name, Azure.ResourceManager.DevTestLabs.Models.EvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ExportResourceUsage(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.ExportResourceUsageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExportResourceUsageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.ExportResourceUsageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.GenerateUploadUriResponse> GenerateUploadUri(Azure.ResourceManager.DevTestLabs.Models.GenerateUploadUriParameter generateUploadUriParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.GenerateUploadUriResponse>> GenerateUploadUriAsync(Azure.ResourceManager.DevTestLabs.Models.GenerateUploadUriParameter generateUploadUriParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult> EvaluatePoliciesPolicySet(string name, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesPolicySetAsync(string name, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ExportResourceUsage(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExportResourceUsageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult> GenerateUploadUri(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult>> GenerateUploadUriAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetDevTestLabArtifactSource(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -598,12 +598,12 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetDevTestLabVm(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> GetDevTestLabVmAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmCollection GetDevTestLabVms() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.GalleryImage> GetGalleryImages(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.GalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImages(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.SubResource> GetVhds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.SubResource> GetVhdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ImportVirtualMachine(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.ImportLabVirtualMachineContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ImportVirtualMachineAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.ImportLabVirtualMachineContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ImportVirtualMachine(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVirtualMachineContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ImportVirtualMachineAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVirtualMachineContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -634,14 +634,14 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DailyRecurrenceTime { get { throw null; } set { } }
         public int? HourlyRecurrenceMinute { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.NotificationSettings NotificationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings NotificationSettings { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.EnableStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
         public string TargetResourceId { get { throw null; } set { } }
         public string TaskType { get { throw null; } set { } }
         public string TimeZoneId { get { throw null; } set { } }
         public string UniqueIdentifier { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.WeekDetails WeeklyRecurrence { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails WeeklyRecurrence { get { throw null; } set { } }
     }
     public partial class DevTestLabScheduleResource : Azure.ResourceManager.ArmResource
     {
@@ -662,8 +662,8 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.ScheduleFragment schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.ScheduleFragment schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DevTestLabSecretCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>, System.Collections.IEnumerable
     {
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.DevTestLabs
     public partial class DevTestLabServiceFabricData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DevTestLabServiceFabricData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.DevTestLabs.Models.ApplicableSchedule ApplicableSchedule { get { throw null; } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule ApplicableSchedule { get { throw null; } }
         public string EnvironmentId { get { throw null; } set { } }
         public string ExternalServiceFabricId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -743,8 +743,8 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.ApplicableSchedule> GetApplicableSchedules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.ApplicableSchedule>> GetApplicableSchedulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule> GetApplicableSchedules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>> GetApplicableSchedulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetDevTestLabServiceFabricSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> GetDevTestLabServiceFabricScheduleAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -794,8 +794,8 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.ScheduleFragment schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.ScheduleFragment schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DevTestLabServiceRunnerCollection : Azure.ResourceManager.ArmCollection
     {
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.DevTestLabs
     public partial class DevTestLabServiceRunnerData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DevTestLabServiceRunnerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.DevTestLabs.Models.IdentityProperties Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity Identity { get { throw null; } set { } }
     }
     public partial class DevTestLabServiceRunnerResource : Azure.ResourceManager.ArmResource
     {
@@ -865,8 +865,6 @@ namespace Azure.ResourceManager.DevTestLabs
         public static Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabVmResource GetDevTestLabVmResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.OperationMetadata> GetProviderOperations(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.OperationMetadata> GetProviderOperationsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DevTestLabUserCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>, System.Collections.IEnumerable
     {
@@ -887,9 +885,9 @@ namespace Azure.ResourceManager.DevTestLabs
     {
         public DevTestLabUserData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.UserIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity Identity { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.UserSecretStore SecretStore { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore SecretStore { get { throw null; } set { } }
         public string UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabUserResource : Azure.ResourceManager.ArmResource
@@ -942,13 +940,13 @@ namespace Azure.ResourceManager.DevTestLabs
     public partial class DevTestLabVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DevTestLabVirtualNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.Subnet> AllowedSubnets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet> AllowedSubnets { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string ExternalProviderResourceId { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.ExternalSubnet> ExternalSubnets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet> ExternalSubnets { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.SubnetOverride> SubnetOverrides { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride> SubnetOverrides { get { throw null; } }
         public string UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabVirtualNetworkResource : Azure.ResourceManager.ArmResource
@@ -990,26 +988,26 @@ namespace Azure.ResourceManager.DevTestLabs
     {
         public DevTestLabVmData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AllowClaim { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.ApplicableSchedule ApplicableSchedule { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.ArtifactDeploymentStatusProperties ArtifactDeploymentStatus { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.ArtifactInstallProperties> Artifacts { get { throw null; } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule ApplicableSchedule { get { throw null; } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus ArtifactDeploymentStatus { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> Artifacts { get { throw null; } }
         public Azure.Core.ResourceIdentifier ComputeId { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties ComputeVm { get { throw null; } }
         public string CreatedByUser { get { throw null; } }
         public string CreatedByUserId { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string CustomImageId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DataDiskProperties> DataDiskParameters { get { throw null; } }
-        public bool? DisallowPublicIPAddress { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties> DataDiskParameters { get { throw null; } }
         public Azure.Core.ResourceIdentifier EnvironmentId { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.GalleryImageReference GalleryImageReference { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference GalleryImageReference { get { throw null; } set { } }
         public bool? IsAuthenticationWithSshKey { get { throw null; } set { } }
+        public bool? IsPublicIPAddressDisallowed { get { throw null; } set { } }
         public string LabSubnetName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LabVirtualNetworkId { get { throw null; } set { } }
         public string LastKnownPowerState { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.NetworkInterfaceProperties NetworkInterface { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface NetworkInterface { get { throw null; } set { } }
         public string Notes { get { throw null; } set { } }
         public string OSType { get { throw null; } }
         public string OwnerObjectId { get { throw null; } set { } }
@@ -1017,13 +1015,13 @@ namespace Azure.ResourceManager.DevTestLabs
         public string Password { get { throw null; } set { } }
         public string PlanId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.ScheduleCreationParameter> ScheduleParameters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter> ScheduleParameters { get { throw null; } }
         public string Size { get { throw null; } set { } }
         public string SshKey { get { throw null; } set { } }
         public string StorageType { get { throw null; } set { } }
         public string UniqueIdentifier { get { throw null; } }
         public string UserName { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource? VirtualMachineCreationSource { get { throw null; } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? VirtualMachineCreationSource { get { throw null; } }
     }
     public partial class DevTestLabVmResource : Azure.ResourceManager.ArmResource
     {
@@ -1031,34 +1029,34 @@ namespace Azure.ResourceManager.DevTestLabs
         protected DevTestLabVmResource() { }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation AddDataDisk(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DataDiskProperties dataDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AddDataDiskAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DataDiskProperties dataDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation AddDataDisk(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties dataDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AddDataDiskAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties dataDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ApplyArtifacts(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.ApplyArtifactsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ApplyArtifactsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.ApplyArtifactsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ApplyArtifacts(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ApplyArtifactsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Claim(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ClaimAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation DetachDataDisk(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DetachDataDiskProperties detachDataDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DetachDataDiskAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DetachDataDiskProperties detachDataDiskProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation DetachDataDisk(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DetachDataDiskAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.ApplicableSchedule> GetApplicableSchedules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.ApplicableSchedule>> GetApplicableSchedulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule> GetApplicableSchedules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>> GetApplicableSchedulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleCollection GetDevTestLabVmSchedules() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.RdpConnection> GetRdpFileContents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.RdpConnection>> GetRdpFileContentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection> GetRdpFileContents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection>> GetRdpFileContentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Redeploy(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RedeployAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Resize(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.ResizeLabVirtualMachineProperties resizeLabVirtualMachineProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResizeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.ResizeLabVirtualMachineProperties resizeLabVirtualMachineProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Resize(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResizeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1108,70 +1106,18 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.ScheduleFragment schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.ScheduleFragment schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class ApplicableSchedule : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class AttachNewDataDiskDetails
     {
-        public ApplicableSchedule(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsShutdown { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsStartup { get { throw null; } set { } }
-    }
-    public partial class ApplyArtifactsContent
-    {
-        public ApplyArtifactsContent() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.ArtifactInstallProperties> Artifacts { get { throw null; } }
-    }
-    public partial class ArmTemplateInfo
-    {
-        internal ArmTemplateInfo() { }
-        public System.BinaryData Parameters { get { throw null; } }
-        public System.BinaryData Template { get { throw null; } }
-    }
-    public partial class ArmTemplateParameterProperties
-    {
-        public ArmTemplateParameterProperties() { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class ArtifactDeploymentStatusProperties
-    {
-        internal ArtifactDeploymentStatusProperties() { }
-        public int? ArtifactsApplied { get { throw null; } }
-        public string DeploymentStatus { get { throw null; } }
-        public int? TotalArtifacts { get { throw null; } }
-    }
-    public partial class ArtifactInstallProperties
-    {
-        public ArtifactInstallProperties() { }
-        public string ArtifactId { get { throw null; } set { } }
-        public string ArtifactTitle { get { throw null; } set { } }
-        public string DeploymentStatusMessage { get { throw null; } set { } }
-        public System.DateTimeOffset? InstallOn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.ArtifactParameterProperties> Parameters { get { throw null; } }
-        public string Status { get { throw null; } set { } }
-        public string VmExtensionStatusMessage { get { throw null; } set { } }
-    }
-    public partial class ArtifactParameterProperties
-    {
-        public ArtifactParameterProperties() { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class AttachDiskProperties
-    {
-        public AttachDiskProperties() { }
-        public string LeasedByLabVmId { get { throw null; } set { } }
-    }
-    public partial class AttachNewDataDiskOptions
-    {
-        public AttachNewDataDiskOptions() { }
+        public AttachNewDataDiskDetails() { }
         public string DiskName { get { throw null; } set { } }
         public int? DiskSizeGiB { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.StorageType? DiskType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? DiskType { get { throw null; } set { } }
     }
     public partial class ComputeDataDisk
     {
@@ -1199,345 +1145,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus> Statuses { get { throw null; } }
         public string VmSize { get { throw null; } }
     }
-    public partial class CostThresholdProperties
+    public partial class DevTestLabAnnouncement
     {
-        public CostThresholdProperties() { }
-        public Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus? DisplayOnChart { get { throw null; } set { } }
-        public string NotificationSent { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus? SendNotificationWhenExceeded { get { throw null; } set { } }
-        public string ThresholdId { get { throw null; } set { } }
-        public double? ThresholdValue { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CostThresholdStatus : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CostThresholdStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus left, Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus left, Azure.ResourceManager.DevTestLabs.Models.CostThresholdStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CostType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.CostType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CostType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.CostType Projected { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.CostType Reported { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.CostType Unavailable { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.CostType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.CostType left, Azure.ResourceManager.DevTestLabs.Models.CostType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.CostType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.CostType left, Azure.ResourceManager.DevTestLabs.Models.CostType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CustomImageOSType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CustomImageOSType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType Linux { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType None { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType left, Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType left, Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CustomImagePropertiesCustom
-    {
-        public CustomImagePropertiesCustom(Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType osType) { }
-        public string ImageName { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.CustomImageOSType OSType { get { throw null; } set { } }
-        public bool? SysPrep { get { throw null; } set { } }
-    }
-    public partial class CustomImagePropertiesFromPlan
-    {
-        public CustomImagePropertiesFromPlan() { }
-        public string Id { get { throw null; } set { } }
-        public string Offer { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-    }
-    public partial class CustomImagePropertiesFromVm
-    {
-        public CustomImagePropertiesFromVm() { }
-        public Azure.ResourceManager.DevTestLabs.Models.LinuxOSState? LinuxOSState { get { throw null; } set { } }
-        public string SourceVmId { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.WindowsOSState? WindowsOSState { get { throw null; } set { } }
-    }
-    public partial class DataDiskProperties
-    {
-        public DataDiskProperties() { }
-        public Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskOptions AttachNewDataDiskOptions { get { throw null; } set { } }
-        public string ExistingLabDiskId { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.HostCachingOption? HostCaching { get { throw null; } set { } }
-    }
-    public partial class DataDiskStorageTypeInfo
-    {
-        public DataDiskStorageTypeInfo() { }
-        public string Lun { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.StorageType? StorageType { get { throw null; } set { } }
-    }
-    public partial class DetachDataDiskProperties
-    {
-        public DetachDataDiskProperties() { }
-        public string ExistingLabDiskId { get { throw null; } set { } }
-    }
-    public partial class DetachDiskProperties
-    {
-        public DetachDiskProperties() { }
-        public string LeasedByLabVmId { get { throw null; } set { } }
-    }
-    public partial class DevTestLabArtifactSourcePatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabArtifactSourcePatch() { }
-    }
-    public partial class DevTestLabCustomImagePatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabCustomImagePatch() { }
-    }
-    public partial class DevTestLabDiskPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabDiskPatch() { }
-    }
-    public partial class DevTestLabEnvironmentPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabEnvironmentPatch() { }
-    }
-    public partial class DevTestLabFormulaPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabFormulaPatch() { }
-    }
-    public partial class DevTestLabNotificationChannelPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabNotificationChannelPatch() { }
-    }
-    public partial class DevTestLabPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabPatch() { }
-    }
-    public partial class DevTestLabPolicyPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabPolicyPatch() { }
-    }
-    public partial class DevTestLabSecretPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabSecretPatch() { }
-    }
-    public partial class DevTestLabServiceFabricPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabServiceFabricPatch() { }
-    }
-    public partial class DevTestLabUserPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabUserPatch() { }
-    }
-    public partial class DevTestLabVirtualNetworkPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabVirtualNetworkPatch() { }
-    }
-    public partial class DevTestLabVmPatch : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public DevTestLabVmPatch() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnableStatus : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.EnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.EnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.EnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.EnableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.EnableStatus left, Azure.ResourceManager.DevTestLabs.Models.EnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.EnableStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.EnableStatus left, Azure.ResourceManager.DevTestLabs.Models.EnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class EnvironmentDeploymentProperties
-    {
-        public EnvironmentDeploymentProperties() { }
-        public string ArmTemplateId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.ArmTemplateParameterProperties> Parameters { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnvironmentPermission : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EnvironmentPermission(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission Contributor { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission Reader { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission left, Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission left, Azure.ResourceManager.DevTestLabs.Models.EnvironmentPermission right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class EvaluatePoliciesContent
-    {
-        public EvaluatePoliciesContent() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.EvaluatePoliciesProperties> Policies { get { throw null; } }
-    }
-    public partial class EvaluatePoliciesProperties
-    {
-        public EvaluatePoliciesProperties() { }
-        public string FactData { get { throw null; } set { } }
-        public string FactName { get { throw null; } set { } }
-        public string UserObjectId { get { throw null; } set { } }
-        public string ValueOffset { get { throw null; } set { } }
-    }
-    public partial class EvaluatePoliciesResponse
-    {
-        internal EvaluatePoliciesResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.PolicySetResult> Results { get { throw null; } }
-    }
-    public partial class Event
-    {
-        public Event() { }
-        public Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType? EventName { get { throw null; } set { } }
-    }
-    public partial class ExportResourceUsageContent
-    {
-        public ExportResourceUsageContent() { }
-        public System.Uri BlobStorageAbsoluteSasUri { get { throw null; } set { } }
-        public System.DateTimeOffset? UsageStartOn { get { throw null; } set { } }
-    }
-    public partial class ExternalSubnet
-    {
-        internal ExternalSubnet() { }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FileUploadOption : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.FileUploadOption>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FileUploadOption(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.FileUploadOption None { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.FileUploadOption UploadFilesAndGenerateSasTokens { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.FileUploadOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.FileUploadOption left, Azure.ResourceManager.DevTestLabs.Models.FileUploadOption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.FileUploadOption (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.FileUploadOption left, Azure.ResourceManager.DevTestLabs.Models.FileUploadOption right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class GalleryImage : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public GalleryImage(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Author { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
-        public string Icon { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.GalleryImageReference ImageReference { get { throw null; } set { } }
-        public bool? IsPlanAuthorized { get { throw null; } set { } }
-        public string PlanId { get { throw null; } set { } }
-    }
-    public partial class GalleryImageReference
-    {
-        public GalleryImageReference() { }
-        public string Offer { get { throw null; } set { } }
-        public string OSType { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public string Sku { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-    }
-    public partial class GenerateArmTemplateContent
-    {
-        public GenerateArmTemplateContent() { }
-        public Azure.ResourceManager.DevTestLabs.Models.FileUploadOption? FileUploadOptions { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.ParameterInfo> Parameters { get { throw null; } }
-        public string VirtualMachineName { get { throw null; } set { } }
-    }
-    public partial class GenerateUploadUriParameter
-    {
-        public GenerateUploadUriParameter() { }
-        public string BlobName { get { throw null; } set { } }
-    }
-    public partial class GenerateUploadUriResponse
-    {
-        internal GenerateUploadUriResponse() { }
-        public System.Uri UploadUri { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HostCachingOption : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.HostCachingOption>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HostCachingOption(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.HostCachingOption None { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.HostCachingOption ReadOnly { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.HostCachingOption ReadWrite { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.HostCachingOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.HostCachingOption left, Azure.ResourceManager.DevTestLabs.Models.HostCachingOption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.HostCachingOption (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.HostCachingOption left, Azure.ResourceManager.DevTestLabs.Models.HostCachingOption right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class IdentityProperties
-    {
-        public IdentityProperties() { }
-        public System.Uri ClientSecretUri { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType? ManagedIdentityType { get { throw null; } set { } }
-        public string PrincipalId { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-    }
-    public partial class ImportLabVirtualMachineContent
-    {
-        public ImportLabVirtualMachineContent() { }
-        public string DestinationVirtualMachineName { get { throw null; } set { } }
-        public string SourceVirtualMachineResourceId { get { throw null; } set { } }
-    }
-    public partial class InboundNatRule
-    {
-        public InboundNatRule() { }
-        public int? BackendPort { get { throw null; } set { } }
-        public int? FrontendPort { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.TransportProtocol? TransportProtocol { get { throw null; } set { } }
-    }
-    public partial class LabAnnouncementProperties
-    {
-        public LabAnnouncementProperties() { }
-        public Azure.ResourceManager.DevTestLabs.Models.EnableStatus? Enabled { get { throw null; } set { } }
+        public DevTestLabAnnouncement() { }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Enabled { get { throw null; } set { } }
         public bool? Expired { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string Markdown { get { throw null; } set { } }
@@ -1545,57 +1156,798 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Title { get { throw null; } set { } }
         public string UniqueIdentifier { get { throw null; } }
     }
-    public partial class LabCostDetailsProperties
+    public partial class DevTestLabApplicableSchedule : Azure.ResourceManager.Models.TrackedResourceData
     {
-        internal LabCostDetailsProperties() { }
+        public DevTestLabApplicableSchedule(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsShutdown { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsStartup { get { throw null; } set { } }
+    }
+    public partial class DevTestLabArmTemplateInfo
+    {
+        internal DevTestLabArmTemplateInfo() { }
+        public System.BinaryData Parameters { get { throw null; } }
+        public System.BinaryData Template { get { throw null; } }
+    }
+    public partial class DevTestLabArmTemplateParameter
+    {
+        public DevTestLabArmTemplateParameter() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    public partial class DevTestLabArtifactDeploymentStatus
+    {
+        internal DevTestLabArtifactDeploymentStatus() { }
+        public int? ArtifactsApplied { get { throw null; } }
+        public string DeploymentStatus { get { throw null; } }
+        public int? TotalArtifacts { get { throw null; } }
+    }
+    public partial class DevTestLabArtifactGenerateArmTemplateContent
+    {
+        public DevTestLabArtifactGenerateArmTemplateContent() { }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption? FileUploadOptions { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter> Parameters { get { throw null; } }
+        public string VirtualMachineName { get { throw null; } set { } }
+    }
+    public partial class DevTestLabArtifactInstallInfo
+    {
+        public DevTestLabArtifactInstallInfo() { }
+        public string ArtifactId { get { throw null; } set { } }
+        public string ArtifactTitle { get { throw null; } set { } }
+        public string DeploymentStatusMessage { get { throw null; } set { } }
+        public System.DateTimeOffset? InstallOn { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter> Parameters { get { throw null; } }
+        public string Status { get { throw null; } set { } }
+        public string VmExtensionStatusMessage { get { throw null; } set { } }
+    }
+    public partial class DevTestLabArtifactParameter
+    {
+        public DevTestLabArtifactParameter() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    public partial class DevTestLabArtifactSourcePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabArtifactSourcePatch() { }
+    }
+    public partial class DevTestLabCostDetails
+    {
+        internal DevTestLabCostDetails() { }
         public double? Cost { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.CostType? CostType { get { throw null; } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType? CostType { get { throw null; } }
         public System.DateTimeOffset? On { get { throw null; } }
     }
-    public partial class LabResourceCostProperties
+    public partial class DevTestLabCostThreshold
     {
-        internal LabResourceCostProperties() { }
+        public DevTestLabCostThreshold() { }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus? DisplayOnChart { get { throw null; } set { } }
+        public string NotificationSent { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus? SendNotificationWhenExceeded { get { throw null; } set { } }
+        public string ThresholdId { get { throw null; } set { } }
+        public double? ThresholdValue { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabCostThresholdStatus : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabCostThresholdStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabCostType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabCostType(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType Projected { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType Reported { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType Unavailable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabCustomImageOSType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabCustomImageOSType(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType Linux { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType None { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabCustomImagePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabCustomImagePatch() { }
+    }
+    public partial class DevTestLabCustomImagePlan
+    {
+        public DevTestLabCustomImagePlan() { }
+        public string Id { get { throw null; } set { } }
+        public string Offer { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+    }
+    public partial class DevTestLabCustomImageVhd
+    {
+        public DevTestLabCustomImageVhd(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType osType) { }
+        public string ImageName { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType OSType { get { throw null; } set { } }
+        public bool? SysPrep { get { throw null; } set { } }
+    }
+    public partial class DevTestLabCustomImageVm
+    {
+        public DevTestLabCustomImageVm() { }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState? LinuxOSState { get { throw null; } set { } }
+        public string SourceVmId { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.WindowsOSState? WindowsOSState { get { throw null; } set { } }
+    }
+    public partial class DevTestLabDataDiskProperties
+    {
+        public DevTestLabDataDiskProperties() { }
+        public Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails AttachNewDataDiskOptions { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ExistingLabDiskId { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption? HostCaching { get { throw null; } set { } }
+    }
+    public partial class DevTestLabDataDiskStorageTypeInfo
+    {
+        public DevTestLabDataDiskStorageTypeInfo() { }
+        public string Lun { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? StorageType { get { throw null; } set { } }
+    }
+    public partial class DevTestLabDiskAttachContent
+    {
+        public DevTestLabDiskAttachContent() { }
+        public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
+    }
+    public partial class DevTestLabDiskDetachContent
+    {
+        public DevTestLabDiskDetachContent() { }
+        public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
+    }
+    public partial class DevTestLabDiskPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabDiskPatch() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabEnableStatus : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabEnvironmentDeployment
+    {
+        public DevTestLabEnvironmentDeployment() { }
+        public Azure.Core.ResourceIdentifier ArmTemplateId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter> Parameters { get { throw null; } }
+    }
+    public partial class DevTestLabEnvironmentPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabEnvironmentPatch() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabEnvironmentPermission : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabEnvironmentPermission(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission Contributor { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission Reader { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabEvaluatePoliciesContent
+    {
+        public DevTestLabEvaluatePoliciesContent() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy> Policies { get { throw null; } }
+    }
+    public partial class DevTestLabEvaluatePoliciesResult
+    {
+        internal DevTestLabEvaluatePoliciesResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult> Results { get { throw null; } }
+    }
+    public partial class DevTestLabEvaluatePolicy
+    {
+        public DevTestLabEvaluatePolicy() { }
+        public string FactData { get { throw null; } set { } }
+        public string FactName { get { throw null; } set { } }
+        public string UserObjectId { get { throw null; } set { } }
+        public string ValueOffset { get { throw null; } set { } }
+    }
+    public partial class DevTestLabExportResourceUsageContent
+    {
+        public DevTestLabExportResourceUsageContent() { }
+        public System.Uri BlobStorageAbsoluteSasUri { get { throw null; } set { } }
+        public System.DateTimeOffset? UsageStartOn { get { throw null; } set { } }
+    }
+    public partial class DevTestLabExternalSubnet
+    {
+        internal DevTestLabExternalSubnet() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabFileUploadOption : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabFileUploadOption(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption None { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption UploadFilesAndGenerateSasTokens { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabFormulaPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabFormulaPatch() { }
+    }
+    public partial class DevTestLabGalleryImage : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public DevTestLabGalleryImage(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public string Author { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string Icon { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference ImageReference { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsPlanAuthorized { get { throw null; } set { } }
+        public string PlanId { get { throw null; } set { } }
+    }
+    public partial class DevTestLabGalleryImageReference
+    {
+        public DevTestLabGalleryImageReference() { }
+        public string Offer { get { throw null; } set { } }
+        public string OSType { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+        public string Sku { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+    }
+    public partial class DevTestLabGenerateUploadUriContent
+    {
+        public DevTestLabGenerateUploadUriContent() { }
+        public string BlobName { get { throw null; } set { } }
+    }
+    public partial class DevTestLabGenerateUploadUriResult
+    {
+        internal DevTestLabGenerateUploadUriResult() { }
+        public System.Uri UploadUri { get { throw null; } }
+    }
+    public partial class DevTestLabGlobalScheduleRetargetContent
+    {
+        public DevTestLabGlobalScheduleRetargetContent() { }
+        public Azure.Core.ResourceIdentifier CurrentResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabHostCachingOption : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabHostCachingOption(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption None { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption ReadOnly { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption ReadWrite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabImportVirtualMachineContent
+    {
+        public DevTestLabImportVirtualMachineContent() { }
+        public string DestinationVirtualMachineName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVirtualMachineResourceId { get { throw null; } set { } }
+    }
+    public partial class DevTestLabInboundNatRule
+    {
+        public DevTestLabInboundNatRule() { }
+        public int? BackendPort { get { throw null; } set { } }
+        public int? FrontendPort { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol? TransportProtocol { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabLinuxOSState : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabLinuxOSState(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState DeprovisionApplied { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState DeprovisionRequested { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState NonDeprovisioned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabManagedIdentity
+    {
+        public DevTestLabManagedIdentity() { }
+        public System.Uri ClientSecretUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentityType ManagedIdentityType { get { throw null; } set { } }
+        public System.Guid? PrincipalId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+    }
+    public partial class DevTestLabNetworkInterface
+    {
+        public DevTestLabNetworkInterface() { }
+        public string DnsName { get { throw null; } set { } }
+        public string PrivateIPAddress { get { throw null; } set { } }
+        public string PublicIPAddress { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
+        public string RdpAuthority { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule> SharedPublicIPAddressInboundNatRules { get { throw null; } }
+        public string SshAuthority { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
+    }
+    public partial class DevTestLabNotificationChannelEvent
+    {
+        public DevTestLabNotificationChannelEvent() { }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType? EventName { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabNotificationChannelEventType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabNotificationChannelEventType(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType AutoShutdown { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType Cost { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabNotificationChannelNotifyContent
+    {
+        public DevTestLabNotificationChannelNotifyContent() { }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType? EventName { get { throw null; } set { } }
+        public string JsonPayload { get { throw null; } set { } }
+    }
+    public partial class DevTestLabNotificationChannelPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabNotificationChannelPatch() { }
+    }
+    public partial class DevTestLabNotificationSettings
+    {
+        public DevTestLabNotificationSettings() { }
+        public string EmailRecipient { get { throw null; } set { } }
+        public string NotificationLocale { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
+        public int? TimeInMinutes { get { throw null; } set { } }
+        public System.Uri WebhookUri { get { throw null; } set { } }
+    }
+    public partial class DevTestLabParameter
+    {
+        public DevTestLabParameter() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    public partial class DevTestLabParametersValueFileInfo
+    {
+        internal DevTestLabParametersValueFileInfo() { }
+        public string FileName { get { throw null; } }
+        public System.BinaryData ParametersValueInfo { get { throw null; } }
+    }
+    public partial class DevTestLabPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabPatch() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabPolicyEvaluatorType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabPolicyEvaluatorType(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType AllowedValuesPolicy { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType MaxValuePolicy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabPolicyFactName : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabPolicyFactName(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName EnvironmentTemplate { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName GalleryImage { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName LabPremiumVmCount { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName LabTargetCost { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName LabVmCount { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName LabVmSize { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName ScheduleEditPermission { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName UserOwnedLabPremiumVmCount { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName UserOwnedLabVmCount { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName UserOwnedLabVmCountInSubnet { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabPolicyPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabPolicyPatch() { }
+    }
+    public partial class DevTestLabPolicySetResult
+    {
+        internal DevTestLabPolicySetResult() { }
+        public bool? HasError { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation> PolicyViolations { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabPolicyStatus : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabPolicyStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabPolicyViolation
+    {
+        internal DevTestLabPolicyViolation() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    public partial class DevTestLabPort
+    {
+        public DevTestLabPort() { }
+        public int? BackendPort { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol? TransportProtocol { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabPremiumDataDisk : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabPremiumDataDisk(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabRdpConnection
+    {
+        internal DevTestLabRdpConnection() { }
+        public string Contents { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabReportingCycleType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabReportingCycleType(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType CalendarMonth { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType Custom { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabResourceCost
+    {
+        internal DevTestLabResourceCost() { }
         public string ExternalResourceId { get { throw null; } }
         public double? ResourceCost { get { throw null; } }
         public string ResourceId { get { throw null; } }
-        public string Resourcename { get { throw null; } }
+        public string ResourceName { get { throw null; } }
         public string ResourceOwner { get { throw null; } }
         public string ResourcePricingTier { get { throw null; } }
         public string ResourceStatus { get { throw null; } }
         public string ResourceType { get { throw null; } }
-        public string ResourceUId { get { throw null; } }
+        public string ResourceUniqueId { get { throw null; } }
     }
-    public partial class LabSupportProperties
+    public partial class DevTestLabResourcePatch
     {
-        public LabSupportProperties() { }
-        public Azure.ResourceManager.DevTestLabs.Models.EnableStatus? Enabled { get { throw null; } set { } }
+        public DevTestLabResourcePatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class DevTestLabScheduleCreationParameter
+    {
+        public DevTestLabScheduleCreationParameter() { }
+        public string DailyRecurrenceTime { get { throw null; } set { } }
+        public int? HourlyRecurrenceMinute { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings NotificationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
+        public string TaskType { get { throw null; } set { } }
+        public string TimeZoneId { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails WeeklyRecurrence { get { throw null; } set { } }
+    }
+    public partial class DevTestLabSchedulePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabSchedulePatch() { }
+    }
+    public partial class DevTestLabSecretPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabSecretPatch() { }
+    }
+    public partial class DevTestLabServiceFabricPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabServiceFabricPatch() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabSourceControlType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabSourceControlType(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType GitHub { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType StorageAccount { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType VsoGit { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabStorageType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabStorageType(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType Premium { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType Standard { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType StandardSSD { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabSubnet
+    {
+        public DevTestLabSubnet() { }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? AllowPublicIP { get { throw null; } set { } }
+        public string LabSubnetName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+    }
+    public partial class DevTestLabSubnetOverride
+    {
+        public DevTestLabSubnetOverride() { }
+        public string LabSubnetName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort> SharedPublicIPAddressAllowedPorts { get { throw null; } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? UseInVmCreationPermission { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? UsePublicIPAddressPermission { get { throw null; } set { } }
+        public string VirtualNetworkPoolName { get { throw null; } set { } }
+    }
+    public partial class DevTestLabSupport
+    {
+        public DevTestLabSupport() { }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Enabled { get { throw null; } set { } }
         public string Markdown { get { throw null; } set { } }
     }
-    public partial class LabVirtualMachineCreationParameter
+    public partial class DevTestLabTargetCost
     {
-        public LabVirtualMachineCreationParameter() { }
+        public DevTestLabTargetCost() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold> CostThresholds { get { throw null; } }
+        public System.DateTimeOffset? CycleEndOn { get { throw null; } set { } }
+        public System.DateTimeOffset? CycleStartOn { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType? CycleType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus? Status { get { throw null; } set { } }
+        public int? Target { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabTargetCostStatus : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabTargetCostStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabTransportProtocol : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabTransportProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol Tcp { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol Udp { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevTestLabUsagePermissionType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevTestLabUsagePermissionType(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType Allow { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType Default { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevTestLabUserIdentity
+    {
+        public DevTestLabUserIdentity() { }
+        public string AppId { get { throw null; } set { } }
+        public string ObjectId { get { throw null; } set { } }
+        public string PrincipalId { get { throw null; } set { } }
+        public string PrincipalName { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+    }
+    public partial class DevTestLabUserPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabUserPatch() { }
+    }
+    public partial class DevTestLabUserSecretStore
+    {
+        public DevTestLabUserSecretStore() { }
+        public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+    }
+    public partial class DevTestLabVirtualNetworkPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
+    {
+        public DevTestLabVirtualNetworkPatch() { }
+    }
+    public partial class DevTestLabVmApplyArtifactsContent
+    {
+        public DevTestLabVmApplyArtifactsContent() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> Artifacts { get { throw null; } }
+    }
+    public partial class DevTestLabVmCreationContent
+    {
+        public DevTestLabVmCreationContent() { }
         public bool? AllowClaim { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.ArtifactInstallProperties> Artifacts { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> Artifacts { get { throw null; } }
         public int? BulkCreationParametersInstanceCount { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string CustomImageId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DataDiskProperties> DataDiskParameters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties> DataDiskParameters { get { throw null; } }
         public bool? DisallowPublicIPAddress { get { throw null; } set { } }
         public string EnvironmentId { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.GalleryImageReference GalleryImageReference { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference GalleryImageReference { get { throw null; } set { } }
         public bool? IsAuthenticationWithSshKey { get { throw null; } set { } }
         public string LabSubnetName { get { throw null; } set { } }
         public string LabVirtualNetworkId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.NetworkInterfaceProperties NetworkInterface { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface NetworkInterface { get { throw null; } set { } }
         public string Notes { get { throw null; } set { } }
         public string OwnerObjectId { get { throw null; } set { } }
         public string OwnerUserPrincipalName { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string PlanId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.ScheduleCreationParameter> ScheduleParameters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter> ScheduleParameters { get { throw null; } }
         public string Size { get { throw null; } set { } }
         public string SshKey { get { throw null; } set { } }
         public string StorageType { get { throw null; } set { } }
@@ -1603,429 +1955,41 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string UserName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LinuxOSState : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.LinuxOSState>
+    public readonly partial struct DevTestLabVmCreationSource : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public LinuxOSState(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.LinuxOSState DeprovisionApplied { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.LinuxOSState DeprovisionRequested { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.LinuxOSState NonDeprovisioned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.LinuxOSState other) { throw null; }
+        public DevTestLabVmCreationSource(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource FromCustomImage { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource FromGalleryImage { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource FromSharedGalleryImage { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.LinuxOSState left, Azure.ResourceManager.DevTestLabs.Models.LinuxOSState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.LinuxOSState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.LinuxOSState left, Azure.ResourceManager.DevTestLabs.Models.LinuxOSState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedIdentityType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType>
+    public partial class DevTestLabVmDetachDataDiskContent
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType left, Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType left, Azure.ResourceManager.DevTestLabs.Models.ManagedIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
+        public DevTestLabVmDetachDataDiskContent() { }
+        public string ExistingLabDiskId { get { throw null; } set { } }
     }
-    public partial class NetworkInterfaceProperties
+    public partial class DevTestLabVmPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
     {
-        public NetworkInterfaceProperties() { }
-        public string DnsName { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
-        public string PublicIPAddress { get { throw null; } set { } }
-        public string PublicIPAddressId { get { throw null; } set { } }
-        public string RdpAuthority { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.InboundNatRule> SharedPublicIPAddressInboundNatRules { get { throw null; } }
-        public string SshAuthority { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
-        public string VirtualNetworkId { get { throw null; } set { } }
+        public DevTestLabVmPatch() { }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NotificationChannelEventType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType>
+    public partial class DevTestLabVmResizeContent
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NotificationChannelEventType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType AutoShutdown { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType Cost { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType left, Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType left, Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class NotificationSettings
-    {
-        public NotificationSettings() { }
-        public string EmailRecipient { get { throw null; } set { } }
-        public string NotificationLocale { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.EnableStatus? Status { get { throw null; } set { } }
-        public int? TimeInMinutes { get { throw null; } set { } }
-        public System.Uri WebhookUri { get { throw null; } set { } }
-    }
-    public partial class NotifyContent
-    {
-        public NotifyContent() { }
-        public Azure.ResourceManager.DevTestLabs.Models.NotificationChannelEventType? EventName { get { throw null; } set { } }
-        public string JsonPayload { get { throw null; } set { } }
-    }
-    public partial class OperationMetadata
-    {
-        internal OperationMetadata() { }
-        public Azure.ResourceManager.DevTestLabs.Models.OperationMetadataDisplay Display { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
-    public partial class OperationMetadataDisplay
-    {
-        internal OperationMetadataDisplay() { }
-        public string Description { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-    }
-    public partial class ParameterInfo
-    {
-        public ParameterInfo() { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class ParametersValueFileInfo
-    {
-        internal ParametersValueFileInfo() { }
-        public string FileName { get { throw null; } }
-        public System.BinaryData ParametersValueInfo { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyEvaluatorType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PolicyEvaluatorType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType AllowedValuesPolicy { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType MaxValuePolicy { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType left, Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType left, Azure.ResourceManager.DevTestLabs.Models.PolicyEvaluatorType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyFactName : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.PolicyFactName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PolicyFactName(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName EnvironmentTemplate { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName GalleryImage { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName LabPremiumVmCount { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName LabTargetCost { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName LabVmCount { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName LabVmSize { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName ScheduleEditPermission { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName UserOwnedLabPremiumVmCount { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName UserOwnedLabVmCount { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyFactName UserOwnedLabVmCountInSubnet { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.PolicyFactName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.PolicyFactName left, Azure.ResourceManager.DevTestLabs.Models.PolicyFactName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.PolicyFactName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.PolicyFactName left, Azure.ResourceManager.DevTestLabs.Models.PolicyFactName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PolicySetResult
-    {
-        internal PolicySetResult() { }
-        public bool? HasError { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.PolicyViolation> PolicyViolations { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyStatus : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.PolicyStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PolicyStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PolicyStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.PolicyStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.PolicyStatus left, Azure.ResourceManager.DevTestLabs.Models.PolicyStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.PolicyStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.PolicyStatus left, Azure.ResourceManager.DevTestLabs.Models.PolicyStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PolicyViolation
-    {
-        internal PolicyViolation() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class Port
-    {
-        public Port() { }
-        public int? BackendPort { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.TransportProtocol? TransportProtocol { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PremiumDataDisk : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PremiumDataDisk(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk left, Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk left, Azure.ResourceManager.DevTestLabs.Models.PremiumDataDisk right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RdpConnection
-    {
-        internal RdpConnection() { }
-        public string Contents { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReportingCycleType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ReportingCycleType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType CalendarMonth { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType Custom { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType left, Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType left, Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ResizeLabVirtualMachineProperties
-    {
-        public ResizeLabVirtualMachineProperties() { }
+        public DevTestLabVmResizeContent() { }
         public string Size { get { throw null; } set { } }
     }
-    public partial class RetargetScheduleProperties
+    public partial class DevTestLabWeekDetails
     {
-        public RetargetScheduleProperties() { }
-        public string CurrentResourceId { get { throw null; } set { } }
-        public string TargetResourceId { get { throw null; } set { } }
-    }
-    public partial class ScheduleCreationParameter
-    {
-        public ScheduleCreationParameter() { }
-        public string DailyRecurrenceTime { get { throw null; } set { } }
-        public int? HourlyRecurrenceMinute { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.NotificationSettings NotificationSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.EnableStatus? Status { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string TargetResourceId { get { throw null; } set { } }
-        public string TaskType { get { throw null; } set { } }
-        public string TimeZoneId { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.WeekDetails WeeklyRecurrence { get { throw null; } set { } }
-    }
-    public partial class ScheduleFragment : Azure.ResourceManager.DevTestLabs.Models.UpdateResource
-    {
-        public ScheduleFragment() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SourceControlType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.SourceControlType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SourceControlType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.SourceControlType GitHub { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.SourceControlType StorageAccount { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.SourceControlType VsoGit { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.SourceControlType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.SourceControlType left, Azure.ResourceManager.DevTestLabs.Models.SourceControlType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.SourceControlType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.SourceControlType left, Azure.ResourceManager.DevTestLabs.Models.SourceControlType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.StorageType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.StorageType Premium { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.StorageType Standard { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.StorageType StandardSSD { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.StorageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.StorageType left, Azure.ResourceManager.DevTestLabs.Models.StorageType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.StorageType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.StorageType left, Azure.ResourceManager.DevTestLabs.Models.StorageType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Subnet
-    {
-        public Subnet() { }
-        public Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType? AllowPublicIP { get { throw null; } set { } }
-        public string LabSubnetName { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
-    }
-    public partial class SubnetOverride
-    {
-        public SubnetOverride() { }
-        public string LabSubnetName { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.Port> SharedPublicIPAddressAllowedPorts { get { throw null; } }
-        public Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType? UseInVmCreationPermission { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType? UsePublicIPAddressPermission { get { throw null; } set { } }
-        public string VirtualNetworkPoolName { get { throw null; } set { } }
-    }
-    public partial class TargetCostProperties
-    {
-        public TargetCostProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.CostThresholdProperties> CostThresholds { get { throw null; } }
-        public System.DateTimeOffset? CycleEndOn { get { throw null; } set { } }
-        public System.DateTimeOffset? CycleStartOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.ReportingCycleType? CycleType { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus? Status { get { throw null; } set { } }
-        public int? Target { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TargetCostStatus : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TargetCostStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus left, Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus left, Azure.ResourceManager.DevTestLabs.Models.TargetCostStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TransportProtocol : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.TransportProtocol>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TransportProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.TransportProtocol Tcp { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.TransportProtocol Udp { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.TransportProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.TransportProtocol left, Azure.ResourceManager.DevTestLabs.Models.TransportProtocol right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.TransportProtocol (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.TransportProtocol left, Azure.ResourceManager.DevTestLabs.Models.TransportProtocol right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class UpdateResource
-    {
-        public UpdateResource() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UsagePermissionType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UsagePermissionType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType Allow { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType Default { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType Deny { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType left, Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType left, Azure.ResourceManager.DevTestLabs.Models.UsagePermissionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class UserIdentity
-    {
-        public UserIdentity() { }
-        public string AppId { get { throw null; } set { } }
-        public string ObjectId { get { throw null; } set { } }
-        public string PrincipalId { get { throw null; } set { } }
-        public string PrincipalName { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-    }
-    public partial class UserSecretStore
-    {
-        public UserSecretStore() { }
-        public string KeyVaultId { get { throw null; } set { } }
-        public System.Uri KeyVaultUri { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VirtualMachineCreationSource : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VirtualMachineCreationSource(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource FromCustomImage { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource FromGalleryImage { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource FromSharedGalleryImage { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource left, Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource left, Azure.ResourceManager.DevTestLabs.Models.VirtualMachineCreationSource right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class WeekDetails
-    {
-        public WeekDetails() { }
+        public DevTestLabWeekDetails() { }
         public string Time { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Weekdays { get { throw null; } }
     }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The identity of the resource.
         /// Serialized Name: ServiceRunner.identity
         /// </param>
-        internal DevTestLabServiceRunnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IdentityProperties identity) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabServiceRunnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
         }
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The identity of the resource.
         /// Serialized Name: ServiceRunner.identity
         /// </summary>
-        public IdentityProperties Identity { get; set; }
+        public DevTestLabManagedIdentity Identity { get; set; }
     }
 }

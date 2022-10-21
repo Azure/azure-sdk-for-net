@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.DevTestLabs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<TargetCostProperties> targetCost = default;
+            Optional<DevTestLabTargetCost> targetCost = default;
             Optional<LabCostSummaryProperties> labCostSummary = default;
-            Optional<IReadOnlyList<LabCostDetailsProperties>> labCostDetails = default;
-            Optional<IReadOnlyList<LabResourceCostProperties>> resourceCosts = default;
+            Optional<IReadOnlyList<DevTestLabCostDetails>> labCostDetails = default;
+            Optional<IReadOnlyList<DevTestLabResourceCost>> resourceCosts = default;
             Optional<string> currencyCode = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            targetCost = TargetCostProperties.DeserializeTargetCostProperties(property0.Value);
+                            targetCost = DevTestLabTargetCost.DeserializeDevTestLabTargetCost(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labCostSummary"))
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LabCostDetailsProperties> array = new List<LabCostDetailsProperties>();
+                            List<DevTestLabCostDetails> array = new List<DevTestLabCostDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LabCostDetailsProperties.DeserializeLabCostDetailsProperties(item));
+                                array.Add(DevTestLabCostDetails.DeserializeDevTestLabCostDetails(item));
                             }
                             labCostDetails = array;
                             continue;
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LabResourceCostProperties> array = new List<LabResourceCostProperties>();
+                            List<DevTestLabResourceCost> array = new List<DevTestLabResourceCost>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LabResourceCostProperties.DeserializeLabResourceCostProperties(item));
+                                array.Add(DevTestLabResourceCost.DeserializeDevTestLabResourceCost(item));
                             }
                             resourceCosts = array;
                             continue;

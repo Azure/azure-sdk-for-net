@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabVirtualNetworkData(AzureLocation location) : base(location)
         {
-            AllowedSubnets = new ChangeTrackingList<Subnet>();
-            ExternalSubnets = new ChangeTrackingList<ExternalSubnet>();
-            SubnetOverrides = new ChangeTrackingList<SubnetOverride>();
+            AllowedSubnets = new ChangeTrackingList<DevTestLabSubnet>();
+            ExternalSubnets = new ChangeTrackingList<DevTestLabExternalSubnet>();
+            SubnetOverrides = new ChangeTrackingList<DevTestLabSubnetOverride>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabVirtualNetworkData. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: VirtualNetwork.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<Subnet> allowedSubnets, string description, string externalProviderResourceId, IReadOnlyList<ExternalSubnet> externalSubnets, IList<SubnetOverride> subnetOverrides, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<DevTestLabSubnet> allowedSubnets, string description, string externalProviderResourceId, IReadOnlyList<DevTestLabExternalSubnet> externalSubnets, IList<DevTestLabSubnetOverride> subnetOverrides, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             AllowedSubnets = allowedSubnets;
             Description = description;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The allowed subnets of the virtual network.
         /// Serialized Name: VirtualNetwork.properties.allowedSubnets
         /// </summary>
-        public IList<Subnet> AllowedSubnets { get; }
+        public IList<DevTestLabSubnet> AllowedSubnets { get; }
         /// <summary>
         /// The description of the virtual network.
         /// Serialized Name: VirtualNetwork.properties.description
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The external subnet properties.
         /// Serialized Name: VirtualNetwork.properties.externalSubnets
         /// </summary>
-        public IReadOnlyList<ExternalSubnet> ExternalSubnets { get; }
+        public IReadOnlyList<DevTestLabExternalSubnet> ExternalSubnets { get; }
         /// <summary>
         /// The subnet overrides of the virtual network.
         /// Serialized Name: VirtualNetwork.properties.subnetOverrides
         /// </summary>
-        public IList<SubnetOverride> SubnetOverrides { get; }
+        public IList<DevTestLabSubnetOverride> SubnetOverrides { get; }
         /// <summary>
         /// The creation date of the virtual network.
         /// Serialized Name: VirtualNetwork.properties.createdDate

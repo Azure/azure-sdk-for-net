@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// Profile of a lab user.
     /// Serialized Name: UserFragment
     /// </summary>
-    public partial class DevTestLabUserPatch : UpdateResource
+    public partial class DevTestLabUserPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabUserPatch. </summary>
         public DevTestLabUserPatch()

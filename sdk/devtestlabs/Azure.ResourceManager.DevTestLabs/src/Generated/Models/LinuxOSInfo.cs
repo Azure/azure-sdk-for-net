@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied).
         /// Serialized Name: LinuxOsInfo.linuxOsState
         /// </param>
-        internal LinuxOSInfo(LinuxOSState? linuxOSState)
+        internal LinuxOSInfo(DevTestLabLinuxOSState? linuxOSState)
         {
             LinuxOSState = linuxOSState;
         }
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied).
         /// Serialized Name: LinuxOsInfo.linuxOsState
         /// </summary>
-        public LinuxOSState? LinuxOSState { get; set; }
+        public DevTestLabLinuxOSState? LinuxOSState { get; set; }
     }
 }

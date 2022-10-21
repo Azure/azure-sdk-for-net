@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabCostData(AzureLocation location) : base(location)
         {
-            LabCostDetails = new ChangeTrackingList<LabCostDetailsProperties>();
-            ResourceCosts = new ChangeTrackingList<LabResourceCostProperties>();
+            LabCostDetails = new ChangeTrackingList<DevTestLabCostDetails>();
+            ResourceCosts = new ChangeTrackingList<DevTestLabResourceCost>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabCostData. </summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: LabCost.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TargetCostProperties targetCost, LabCostSummaryProperties labCostSummary, IReadOnlyList<LabCostDetailsProperties> labCostDetails, IReadOnlyList<LabResourceCostProperties> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabTargetCost targetCost, LabCostSummaryProperties labCostSummary, IReadOnlyList<DevTestLabCostDetails> labCostDetails, IReadOnlyList<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             TargetCost = targetCost;
             LabCostSummary = labCostSummary;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The target cost properties
         /// Serialized Name: LabCost.properties.targetCost
         /// </summary>
-        public TargetCostProperties TargetCost { get; set; }
+        public DevTestLabTargetCost TargetCost { get; set; }
         /// <summary>
         /// The lab cost summary component of the cost data.
         /// Serialized Name: LabCost.properties.labCostSummary
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The lab cost details component of the cost data.
         /// Serialized Name: LabCost.properties.labCostDetails
         /// </summary>
-        public IReadOnlyList<LabCostDetailsProperties> LabCostDetails { get; }
+        public IReadOnlyList<DevTestLabCostDetails> LabCostDetails { get; }
         /// <summary>
         /// The resource cost component of the cost data.
         /// Serialized Name: LabCost.properties.resourceCosts
         /// </summary>
-        public IReadOnlyList<LabResourceCostProperties> ResourceCosts { get; }
+        public IReadOnlyList<DevTestLabResourceCost> ResourceCosts { get; }
         /// <summary>
         /// The currency code of the cost.
         /// Serialized Name: LabCost.properties.currencyCode

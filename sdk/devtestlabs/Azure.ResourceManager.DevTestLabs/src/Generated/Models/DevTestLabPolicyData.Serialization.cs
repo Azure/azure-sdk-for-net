@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<PolicyStatus> status = default;
-            Optional<PolicyFactName> factName = default;
+            Optional<DevTestLabPolicyStatus> status = default;
+            Optional<DevTestLabPolicyFactName> factName = default;
             Optional<string> factData = default;
             Optional<string> threshold = default;
-            Optional<PolicyEvaluatorType> evaluatorType = default;
+            Optional<DevTestLabPolicyEvaluatorType> evaluatorType = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
             Optional<string> uniqueIdentifier = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new PolicyStatus(property0.Value.GetString());
+                            status = new DevTestLabPolicyStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("factName"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            factName = new PolicyFactName(property0.Value.GetString());
+                            factName = new DevTestLabPolicyFactName(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("factData"))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            evaluatorType = new PolicyEvaluatorType(property0.Value.GetString());
+                            evaluatorType = new DevTestLabPolicyEvaluatorType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createdDate"))

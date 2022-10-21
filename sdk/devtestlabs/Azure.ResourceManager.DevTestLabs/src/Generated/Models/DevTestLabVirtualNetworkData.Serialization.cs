@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.DevTestLabs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<Subnet>> allowedSubnets = default;
+            Optional<IList<DevTestLabSubnet>> allowedSubnets = default;
             Optional<string> description = default;
             Optional<string> externalProviderResourceId = default;
-            Optional<IReadOnlyList<ExternalSubnet>> externalSubnets = default;
-            Optional<IList<SubnetOverride>> subnetOverrides = default;
+            Optional<IReadOnlyList<DevTestLabExternalSubnet>> externalSubnets = default;
+            Optional<IList<DevTestLabSubnetOverride>> subnetOverrides = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
             Optional<string> uniqueIdentifier = default;
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Subnet> array = new List<Subnet>();
+                            List<DevTestLabSubnet> array = new List<DevTestLabSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Subnet.DeserializeSubnet(item));
+                                array.Add(DevTestLabSubnet.DeserializeDevTestLabSubnet(item));
                             }
                             allowedSubnets = array;
                             continue;
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ExternalSubnet> array = new List<ExternalSubnet>();
+                            List<DevTestLabExternalSubnet> array = new List<DevTestLabExternalSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExternalSubnet.DeserializeExternalSubnet(item));
+                                array.Add(DevTestLabExternalSubnet.DeserializeDevTestLabExternalSubnet(item));
                             }
                             externalSubnets = array;
                             continue;
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubnetOverride> array = new List<SubnetOverride>();
+                            List<DevTestLabSubnetOverride> array = new List<DevTestLabSubnetOverride>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubnetOverride.DeserializeSubnetOverride(item));
+                                array.Add(DevTestLabSubnetOverride.DeserializeDevTestLabSubnetOverride(item));
                             }
                             subnetOverrides = array;
                             continue;

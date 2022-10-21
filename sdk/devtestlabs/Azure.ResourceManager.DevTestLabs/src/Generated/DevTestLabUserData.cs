@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: User.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserIdentity identity, UserSecretStore secretStore, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabUserIdentity identity, DevTestLabUserSecretStore secretStore, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             SecretStore = secretStore;
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The identity of the user.
         /// Serialized Name: User.properties.identity
         /// </summary>
-        public UserIdentity Identity { get; set; }
+        public DevTestLabUserIdentity Identity { get; set; }
         /// <summary>
         /// The secret store of the user.
         /// Serialized Name: User.properties.secretStore
         /// </summary>
-        public UserSecretStore SecretStore { get; set; }
+        public DevTestLabUserSecretStore SecretStore { get; set; }
         /// <summary>
         /// The creation date of the user profile.
         /// Serialized Name: User.properties.createdDate

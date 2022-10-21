@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevTestLabs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<StorageType> diskType = default;
+            Optional<DevTestLabStorageType> diskType = default;
             Optional<int> diskSizeGiB = default;
             Optional<string> leasedByLabVmId = default;
             Optional<string> diskBlobName = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            diskType = new StorageType(property0.Value.GetString());
+                            diskType = new DevTestLabStorageType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("diskSizeGiB"))

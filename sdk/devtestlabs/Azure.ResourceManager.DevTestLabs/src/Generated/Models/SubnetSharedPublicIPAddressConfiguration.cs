@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>
         public SubnetSharedPublicIPAddressConfiguration()
         {
-            AllowedPorts = new ChangeTrackingList<Port>();
+            AllowedPorts = new ChangeTrackingList<DevTestLabPort>();
         }
 
         /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// Backend ports that virtual machines on this subnet are allowed to expose
         /// Serialized Name: SubnetSharedPublicIpAddressConfiguration.allowedPorts
         /// </param>
-        internal SubnetSharedPublicIPAddressConfiguration(IList<Port> allowedPorts)
+        internal SubnetSharedPublicIPAddressConfiguration(IList<DevTestLabPort> allowedPorts)
         {
             AllowedPorts = allowedPorts;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// Backend ports that virtual machines on this subnet are allowed to expose
         /// Serialized Name: SubnetSharedPublicIpAddressConfiguration.allowedPorts
         /// </summary>
-        public IList<Port> AllowedPorts { get; }
+        public IList<DevTestLabPort> AllowedPorts { get; }
     }
 }

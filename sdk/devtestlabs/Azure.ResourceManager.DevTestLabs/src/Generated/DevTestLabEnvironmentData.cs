@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: DtlEnvironment.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EnvironmentDeploymentProperties deploymentProperties, string armTemplateDisplayName, string resourceGroupId, string createdByUser, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnvironmentDeployment deploymentProperties, string armTemplateDisplayName, string resourceGroupId, string createdByUser, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             DeploymentProperties = deploymentProperties;
             ArmTemplateDisplayName = armTemplateDisplayName;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The deployment properties of the environment.
         /// Serialized Name: DtlEnvironment.properties.deploymentProperties
         /// </summary>
-        public EnvironmentDeploymentProperties DeploymentProperties { get; set; }
+        public DevTestLabEnvironmentDeployment DeploymentProperties { get; set; }
         /// <summary>
         /// The display name of the Azure Resource Manager template that produced the environment.
         /// Serialized Name: DtlEnvironment.properties.armTemplateDisplayName

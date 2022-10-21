@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> artifactsStorageAccount = default;
             Optional<string> premiumDataDiskStorageAccount = default;
             Optional<string> vaultName = default;
-            Optional<StorageType> labStorageType = default;
+            Optional<DevTestLabStorageType> labStorageType = default;
             Optional<IList<string>> mandatoryArtifactsResourceIdsLinux = default;
             Optional<IList<string>> mandatoryArtifactsResourceIdsWindows = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<PremiumDataDisk> premiumDataDisks = default;
-            Optional<EnvironmentPermission> environmentPermission = default;
-            Optional<LabAnnouncementProperties> announcement = default;
-            Optional<LabSupportProperties> support = default;
+            Optional<DevTestLabPremiumDataDisk> premiumDataDisks = default;
+            Optional<DevTestLabEnvironmentPermission> environmentPermission = default;
+            Optional<DevTestLabAnnouncement> announcement = default;
+            Optional<DevTestLabSupport> support = default;
             Optional<string> vmCreationResourceGroup = default;
             Optional<string> publicIPId = default;
             Optional<string> loadBalancerId = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            labStorageType = new StorageType(property0.Value.GetString());
+                            labStorageType = new DevTestLabStorageType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("mandatoryArtifactsResourceIdsLinux"))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            premiumDataDisks = new PremiumDataDisk(property0.Value.GetString());
+                            premiumDataDisks = new DevTestLabPremiumDataDisk(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("environmentPermission"))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            environmentPermission = new EnvironmentPermission(property0.Value.GetString());
+                            environmentPermission = new DevTestLabEnvironmentPermission(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("announcement"))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            announcement = LabAnnouncementProperties.DeserializeLabAnnouncementProperties(property0.Value);
+                            announcement = DevTestLabAnnouncement.DeserializeDevTestLabAnnouncement(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("support"))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            support = LabSupportProperties.DeserializeLabSupportProperties(property0.Value);
+                            support = DevTestLabSupport.DeserializeDevTestLabSupport(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmCreationResourceGroup"))

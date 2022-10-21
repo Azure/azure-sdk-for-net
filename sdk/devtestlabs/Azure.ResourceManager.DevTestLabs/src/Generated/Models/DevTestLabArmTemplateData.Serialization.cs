@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> icon = default;
             Optional<BinaryData> contents = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<IReadOnlyList<ParametersValueFileInfo>> parametersValueFilesInfo = default;
+            Optional<IReadOnlyList<DevTestLabParametersValueFileInfo>> parametersValueFilesInfo = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ParametersValueFileInfo> array = new List<ParametersValueFileInfo>();
+                            List<DevTestLabParametersValueFileInfo> array = new List<DevTestLabParametersValueFileInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParametersValueFileInfo.DeserializeParametersValueFileInfo(item));
+                                array.Add(DevTestLabParametersValueFileInfo.DeserializeDevTestLabParametersValueFileInfo(item));
                             }
                             parametersValueFilesInfo = array;
                             continue;

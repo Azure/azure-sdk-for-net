@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// A Service Fabric.
     /// Serialized Name: ServiceFabricFragment
     /// </summary>
-    public partial class DevTestLabServiceFabricPatch : UpdateResource
+    public partial class DevTestLabServiceFabricPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabServiceFabricPatch. </summary>
         public DevTestLabServiceFabricPatch()

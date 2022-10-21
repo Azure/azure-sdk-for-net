@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> Parameters for generating an ARM template for deploying artifacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ArmTemplateInfo>> GenerateArmTemplateAsync(GenerateArmTemplateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabArmTemplateInfo>> GenerateArmTemplateAsync(DevTestLabArtifactGenerateArmTemplateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> Parameters for generating an ARM template for deploying artifacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ArmTemplateInfo> GenerateArmTemplate(GenerateArmTemplateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabArmTemplateInfo> GenerateArmTemplate(DevTestLabArtifactGenerateArmTemplateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

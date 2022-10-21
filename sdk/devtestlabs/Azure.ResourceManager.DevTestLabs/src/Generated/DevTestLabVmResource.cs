@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="dataDiskProperties"> Request body for adding a new or existing data disk to a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataDiskProperties"/> is null. </exception>
-        public virtual async Task<ArmOperation> AddDataDiskAsync(WaitUntil waitUntil, DataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AddDataDiskAsync(WaitUntil waitUntil, DevTestLabDataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataDiskProperties, nameof(dataDiskProperties));
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="dataDiskProperties"> Request body for adding a new or existing data disk to a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataDiskProperties"/> is null. </exception>
-        public virtual ArmOperation AddDataDisk(WaitUntil waitUntil, DataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AddDataDisk(WaitUntil waitUntil, DevTestLabDataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataDiskProperties, nameof(dataDiskProperties));
 
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> Request body for applying artifacts to a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ApplyArtifactsAsync(WaitUntil waitUntil, ApplyArtifactsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ApplyArtifactsAsync(WaitUntil waitUntil, DevTestLabVmApplyArtifactsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> Request body for applying artifacts to a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ApplyArtifacts(WaitUntil waitUntil, ApplyArtifactsContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ApplyArtifacts(WaitUntil waitUntil, DevTestLabVmApplyArtifactsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -459,19 +459,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: VirtualMachines_DetachDataDisk
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="detachDataDiskProperties"> Request body for detaching data disk from a virtual machine. </param>
+        /// <param name="content"> Request body for detaching data disk from a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detachDataDiskProperties"/> is null. </exception>
-        public virtual async Task<ArmOperation> DetachDataDiskAsync(WaitUntil waitUntil, DetachDataDiskProperties detachDataDiskProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> DetachDataDiskAsync(WaitUntil waitUntil, DevTestLabVmDetachDataDiskContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(detachDataDiskProperties, nameof(detachDataDiskProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.DetachDataDisk");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.DetachDataDiskAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detachDataDiskProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detachDataDiskProperties).Request, response, OperationFinalStateVia.Location);
+                var response = await _devTestLabVmVirtualMachinesRestClient.DetachDataDiskAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -489,19 +489,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: VirtualMachines_DetachDataDisk
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="detachDataDiskProperties"> Request body for detaching data disk from a virtual machine. </param>
+        /// <param name="content"> Request body for detaching data disk from a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detachDataDiskProperties"/> is null. </exception>
-        public virtual ArmOperation DetachDataDisk(WaitUntil waitUntil, DetachDataDiskProperties detachDataDiskProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation DetachDataDisk(WaitUntil waitUntil, DevTestLabVmDetachDataDiskContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(detachDataDiskProperties, nameof(detachDataDiskProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.DetachDataDisk");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.DetachDataDisk(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detachDataDiskProperties, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detachDataDiskProperties).Request, response, OperationFinalStateVia.Location);
+                var response = _devTestLabVmVirtualMachinesRestClient.DetachDataDisk(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: VirtualMachines_GetRdpFileContents
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RdpConnection>> GetRdpFileContentsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabRdpConnection>> GetRdpFileContentsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetRdpFileContents");
             scope.Start();
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: VirtualMachines_GetRdpFileContents
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RdpConnection> GetRdpFileContents(CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabRdpConnection> GetRdpFileContents(CancellationToken cancellationToken = default)
         {
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetRdpFileContents");
             scope.Start();
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: VirtualMachines_ListApplicableSchedules
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicableSchedule>> GetApplicableSchedulesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabApplicableSchedule>> GetApplicableSchedulesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetApplicableSchedules");
             scope.Start();
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: VirtualMachines_ListApplicableSchedules
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicableSchedule> GetApplicableSchedules(CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabApplicableSchedule> GetApplicableSchedules(CancellationToken cancellationToken = default)
         {
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetApplicableSchedules");
             scope.Start();
@@ -659,19 +659,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: VirtualMachines_Resize
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resizeLabVirtualMachineProperties"> Request body for resizing a virtual machine. </param>
+        /// <param name="content"> Request body for resizing a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resizeLabVirtualMachineProperties"/> is null. </exception>
-        public virtual async Task<ArmOperation> ResizeAsync(WaitUntil waitUntil, ResizeLabVirtualMachineProperties resizeLabVirtualMachineProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ResizeAsync(WaitUntil waitUntil, DevTestLabVmResizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resizeLabVirtualMachineProperties, nameof(resizeLabVirtualMachineProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Resize");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.ResizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resizeLabVirtualMachineProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resizeLabVirtualMachineProperties).Request, response, OperationFinalStateVia.Location);
+                var response = await _devTestLabVmVirtualMachinesRestClient.ResizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -689,19 +689,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Operation Id: VirtualMachines_Resize
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resizeLabVirtualMachineProperties"> Request body for resizing a virtual machine. </param>
+        /// <param name="content"> Request body for resizing a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resizeLabVirtualMachineProperties"/> is null. </exception>
-        public virtual ArmOperation Resize(WaitUntil waitUntil, ResizeLabVirtualMachineProperties resizeLabVirtualMachineProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Resize(WaitUntil waitUntil, DevTestLabVmResizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resizeLabVirtualMachineProperties, nameof(resizeLabVirtualMachineProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Resize");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.Resize(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resizeLabVirtualMachineProperties, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resizeLabVirtualMachineProperties).Request, response, OperationFinalStateVia.Location);
+                var response = _devTestLabVmVirtualMachinesRestClient.Resize(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

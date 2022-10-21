@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The unique immutable identifier of a resource (Guid).
         /// Serialized Name: Policy.properties.uniqueIdentifier
         /// </param>
-        internal DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, PolicyStatus? status, PolicyFactName? factName, string factData, string threshold, PolicyEvaluatorType? evaluatorType, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, DevTestLabPolicyStatus? status, DevTestLabPolicyFactName? factName, string factData, string threshold, DevTestLabPolicyEvaluatorType? evaluatorType, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Status = status;
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The status of the policy.
         /// Serialized Name: Policy.properties.status
         /// </summary>
-        public PolicyStatus? Status { get; set; }
+        public DevTestLabPolicyStatus? Status { get; set; }
         /// <summary>
         /// The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc.
         /// Serialized Name: Policy.properties.factName
         /// </summary>
-        public PolicyFactName? FactName { get; set; }
+        public DevTestLabPolicyFactName? FactName { get; set; }
         /// <summary>
         /// The fact data of the policy.
         /// Serialized Name: Policy.properties.factData
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy).
         /// Serialized Name: Policy.properties.evaluatorType
         /// </summary>
-        public PolicyEvaluatorType? EvaluatorType { get; set; }
+        public DevTestLabPolicyEvaluatorType? EvaluatorType { get; set; }
         /// <summary>
         /// The creation date of the policy.
         /// Serialized Name: Policy.properties.createdDate

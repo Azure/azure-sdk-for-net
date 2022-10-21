@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// A Policy.
     /// Serialized Name: PolicyFragment
     /// </summary>
-    public partial class DevTestLabPolicyPatch : UpdateResource
+    public partial class DevTestLabPolicyPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabPolicyPatch. </summary>
         public DevTestLabPolicyPatch()

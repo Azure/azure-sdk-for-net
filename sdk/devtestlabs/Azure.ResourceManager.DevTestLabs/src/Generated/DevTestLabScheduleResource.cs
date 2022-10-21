@@ -195,18 +195,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}
         /// Operation Id: Schedules_Update
         /// </summary>
-        /// <param name="schedule"> A schedule. </param>
+        /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabScheduleResource>> UpdateAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<DevTestLabScheduleResource>> UpdateAsync(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _devTestLabScheduleSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Update");
             scope.Start();
             try
             {
-                var response = await _devTestLabScheduleSchedulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schedule, cancellationToken).ConfigureAwait(false);
+                var response = await _devTestLabScheduleSchedulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -221,18 +221,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}
         /// Operation Id: Schedules_Update
         /// </summary>
-        /// <param name="schedule"> A schedule. </param>
+        /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
-        public virtual Response<DevTestLabScheduleResource> Update(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<DevTestLabScheduleResource> Update(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _devTestLabScheduleSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Update");
             scope.Start();
             try
             {
-                var response = _devTestLabScheduleSchedulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schedule, cancellationToken);
+                var response = _devTestLabScheduleSchedulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ScheduleFragment();
+                    var patch = new DevTestLabSchedulePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ScheduleFragment();
+                    var patch = new DevTestLabSchedulePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ScheduleFragment();
+                    var patch = new DevTestLabSchedulePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ScheduleFragment();
+                    var patch = new DevTestLabSchedulePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ScheduleFragment();
+                    var patch = new DevTestLabSchedulePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ScheduleFragment();
+                    var patch = new DevTestLabSchedulePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
