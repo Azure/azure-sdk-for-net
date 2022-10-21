@@ -3,7 +3,7 @@
 ## 1.0.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added support for an optional `kind` property for `CommunicationIdentifierSerializer`.
+- Optimized the logic for deserializing types derived from the `CommunicationIdentifier`.
 
 ### Breaking Changes
 

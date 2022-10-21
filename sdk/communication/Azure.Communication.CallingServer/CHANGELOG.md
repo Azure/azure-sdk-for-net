@@ -4,7 +4,7 @@
 
 ### Features Added
 - concept of in-call and out-call removed 
-- Added support for an optional `kind` property for `CommunicationIdentifierSerializer`.
+- Optimized the logic for deserializing types derived from the `CommunicationIdentifier`.
 
 ### Breaking Changes
 - CallConnection object removed due to everything now being out-call
