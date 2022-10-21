@@ -69,7 +69,7 @@ var credential = new DefaultAzureCredential();
 var client = new PurviewCatalogClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 
 var response = await client.Types.GetAllTypeDefinitionsAsync();
-var responseDocument = JsonDocument.Parse(response.Content);
+using var responseDocument = JsonDocument.Parse(response.Content);
 Console.WriteLine(responseDocument.RootElement.GetProperty("entityDefs"));
 ```
 

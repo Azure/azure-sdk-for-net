@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes Advanced Audio Codec (AAC) audio encoding settings. </summary>
-    public partial class AacAudio : AudioCommonProperties
+    public partial class AacAudio : MediaAudioBase
     {
         /// <summary> Initializes a new instance of AacAudio. </summary>
         public AacAudio()

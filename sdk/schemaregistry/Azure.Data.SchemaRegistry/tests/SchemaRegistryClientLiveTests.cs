@@ -92,8 +92,31 @@ namespace Azure.Data.SchemaRegistry.Tests
             AssertSchemaProperties(registerProperties, schemaName);
 
             SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Value.Id);
-            AssertSchema(schema, schemaName);
+            AssertSchema(schema, schemaName, SchemaContent);
             AssertPropertiesAreEqual(registerProperties, schema.Properties);
+        }
+
+        [RecordedTest]
+        public async Task CanGetSchemaByVersion()
+        {
+            var client = CreateClient();
+            var schemaName = GenerateSchemaName();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var format = SchemaFormat.Avro;
+
+            var registerPropertiesv1 = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
+            AssertSchemaProperties(registerPropertiesv1, schemaName);
+
+            var registerPropertiesv2 = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent_V2, format);
+            AssertSchemaProperties(registerPropertiesv2, schemaName);
+
+            SchemaRegistrySchema schemav1 = await client.GetSchemaAsync(groupName, schemaName, 1);
+            AssertSchema(schemav1, schemaName, SchemaContent);
+            AssertPropertiesAreEqual(registerPropertiesv1, schemav1.Properties);
+
+            SchemaRegistrySchema schemav2 = await client.GetSchemaAsync(groupName, schemaName, 2);
+            AssertSchema(schemav2, schemaName, SchemaContent_V2);
+            AssertPropertiesAreEqual(registerPropertiesv2, schemav2.Properties);
         }
 
         [RecordedTest]
@@ -144,11 +167,11 @@ namespace Azure.Data.SchemaRegistry.Tests
                     .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
         }
 
-        private void AssertSchema(SchemaRegistrySchema schema, string schemaName)
+        private void AssertSchema(SchemaRegistrySchema schema, string expectedSchemaName, string expectedSchemaContent)
         {
-            AssertSchemaProperties(schema.Properties, schemaName);
+            AssertSchemaProperties(schema.Properties, expectedSchemaName);
             Assert.AreEqual(
-                Regex.Replace(SchemaContent, @"\s+", string.Empty),
+                Regex.Replace(expectedSchemaContent, @"\s+", string.Empty),
                 Regex.Replace(schema.Definition, @"\s+", string.Empty));
         }
 

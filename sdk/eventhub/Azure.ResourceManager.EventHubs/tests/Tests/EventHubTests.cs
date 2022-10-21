@@ -240,6 +240,31 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
                 Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
             }
+
+            var updatePrimaryKey = GenerateRandomKey();
+            EventHubsAccessKeys currentKeys = keys3;
+
+            EventHubsAccessKeys keys4 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.PrimaryKey)
+            {
+                Key = updatePrimaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
+                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+            }
+
+            currentKeys = keys4;
+            var updateSecondaryKey = GenerateRandomKey();
+            EventHubsAccessKeys keys5 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.SecondaryKey)
+            {
+                Key = updateSecondaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
+                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
+            }
         }
     }
 }

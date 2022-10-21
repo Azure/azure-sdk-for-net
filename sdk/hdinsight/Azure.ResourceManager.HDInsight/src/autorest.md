@@ -9,7 +9,6 @@ csharp: true
 library-name: HDInsight
 namespace: Azure.ResourceManager.HDInsight
 require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/hdinsight/resource-manager/readme.md
-tag: package-2021-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -144,8 +143,8 @@ rename-mapping:
   IPConfiguration.properties.primary: IsPrimary
   NameAvailabilityCheckRequestParameters.type: -|resource-type
   NameAvailabilityCheckResult.nameAvailable: IsNameAvailable
-  RuntimeScriptActionDetail.startTime: -|datetime
-  RuntimeScriptActionDetail.endTime: -|datetime
+  RuntimeScriptActionDetail.startTime: -|date-time
+  RuntimeScriptActionDetail.endTime: -|date-time
   DaysOfWeek: HDInsightDayOfWeek
   DiskEncryptionProperties.encryptionAtHost: IsEncryptionAtHostEnabled
   DirectoryType: AuthenticationDirectoryType
@@ -158,6 +157,9 @@ rename-mapping:
   VmSizeProperty.supportedByVirtualMachines: IsSupportedByVirtualMachines
   VmSizeProperty.supportedByWebWorkerRoles: IsSupportedByWebWorkerRoles
   VmSizeCompatibilityFilterV2.computeIsolationSupported: IsComputeIsolationSupported
+  SecurityProfile.ldapsUrls: LdapUris|uri
+  ApplicationProperties.createdDate: CreatedOn|date-time
+  ClusterGetProperties.createdDate: CreatedOn|date-time
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2
@@ -226,7 +228,7 @@ directive:
         }
       };
 # nullable
-  - from: swagger-document
+  - from: cluster.json
     where: $.definitions
     transform: >
       $.StorageAccount.properties.msiResourceId['x-nullable'] = true;

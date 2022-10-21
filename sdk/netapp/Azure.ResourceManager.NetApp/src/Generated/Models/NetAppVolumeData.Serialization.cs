@@ -74,19 +74,24 @@ namespace Azure.ResourceManager.NetApp
                 if (SnapshotId != null)
                 {
                     writer.WritePropertyName("snapshotId");
-                    writer.WriteStringValue(SnapshotId.Value);
+                    writer.WriteStringValue(SnapshotId);
                 }
                 else
                 {
                     writer.WriteNull("snapshotId");
                 }
             }
+            if (Optional.IsDefined(DeleteBaseSnapshot))
+            {
+                writer.WritePropertyName("deleteBaseSnapshot");
+                writer.WriteBooleanValue(DeleteBaseSnapshot.Value);
+            }
             if (Optional.IsDefined(BackupId))
             {
                 if (BackupId != null)
                 {
                     writer.WritePropertyName("backupId");
-                    writer.WriteStringValue(BackupId.Value);
+                    writer.WriteStringValue(BackupId);
                 }
                 else
                 {
@@ -134,6 +139,16 @@ namespace Azure.ResourceManager.NetApp
             {
                 writer.WritePropertyName("smbEncryption");
                 writer.WriteBooleanValue(IsSmbEncryptionEnabled.Value);
+            }
+            if (Optional.IsDefined(SmbAccessBasedEnumeration))
+            {
+                writer.WritePropertyName("smbAccessBasedEnumeration");
+                writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+            }
+            if (Optional.IsDefined(SmbNonBrowsable))
+            {
+                writer.WritePropertyName("smbNonBrowsable");
+                writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
             }
             if (Optional.IsDefined(IsSmbContinuouslyAvailable))
             {
@@ -253,8 +268,9 @@ namespace Azure.ResourceManager.NetApp
             Optional<VolumePropertiesExportPolicy> exportPolicy = default;
             Optional<IList<string>> protocolTypes = default;
             Optional<string> provisioningState = default;
-            Optional<Guid?> snapshotId = default;
-            Optional<Guid?> backupId = default;
+            Optional<string> snapshotId = default;
+            Optional<bool> deleteBaseSnapshot = default;
+            Optional<string> backupId = default;
             Optional<string> baremetalTenantId = default;
             ResourceIdentifier subnetId = default;
             Optional<NetAppNetworkFeature> networkFeatures = default;
@@ -268,6 +284,8 @@ namespace Azure.ResourceManager.NetApp
             Optional<bool> kerberosEnabled = default;
             Optional<NetAppVolumeSecurityStyle> securityStyle = default;
             Optional<bool> smbEncryption = default;
+            Optional<SmbAccessBasedEnumeration> smbAccessBasedEnumeration = default;
+            Optional<SmbNonBrowsable> smbNonBrowsable = default;
             Optional<bool> smbContinuouslyAvailable = default;
             Optional<float> throughputMibps = default;
             Optional<NetAppEncryptionKeySource> encryptionKeySource = default;
@@ -438,7 +456,17 @@ namespace Azure.ResourceManager.NetApp
                                 snapshotId = null;
                                 continue;
                             }
-                            snapshotId = property0.Value.GetGuid();
+                            snapshotId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("deleteBaseSnapshot"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            deleteBaseSnapshot = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("backupId"))
@@ -448,7 +476,7 @@ namespace Azure.ResourceManager.NetApp
                                 backupId = null;
                                 continue;
                             }
-                            backupId = property0.Value.GetGuid();
+                            backupId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("baremetalTenantId"))
@@ -569,6 +597,26 @@ namespace Azure.ResourceManager.NetApp
                                 continue;
                             }
                             smbEncryption = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("smbAccessBasedEnumeration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            smbAccessBasedEnumeration = new SmbAccessBasedEnumeration(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("smbNonBrowsable"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            smbNonBrowsable = new SmbNonBrowsable(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("smbContinuouslyAvailable"))
@@ -785,7 +833,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new NetAppVolumeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, Optional.ToNullable(snapshotId), Optional.ToNullable(backupId), baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(avsDataStore), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes));
+            return new NetAppVolumeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(avsDataStore), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes));
         }
     }
 }

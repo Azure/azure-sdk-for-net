@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(LinkedLmsInstance))
             {
                 writer.WritePropertyName("linkedLmsInstance");
-                writer.WriteStringValue(LinkedLmsInstance);
+                writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -91,14 +92,14 @@ namespace Azure.ResourceManager.LabServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ConnectionProfile> defaultConnectionProfile = default;
-            Optional<AutoShutdownProfile> defaultAutoShutdownProfile = default;
+            Optional<LabConnectionProfile> defaultConnectionProfile = default;
+            Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
             Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<string>> allowedRegions = default;
-            Optional<string> sharedGalleryId = default;
-            Optional<SupportInfo> supportInfo = default;
-            Optional<string> linkedLmsInstance = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<IList<AzureLocation>> allowedRegions = default;
+            Optional<ResourceIdentifier> sharedGalleryId = default;
+            Optional<LabPlanSupportInfo> supportInfo = default;
+            Optional<Uri> linkedLmsInstance = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultConnectionProfile = ConnectionProfile.DeserializeConnectionProfile(property0.Value);
+                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultAutoShutdownProfile"))
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultAutoShutdownProfile = AutoShutdownProfile.DeserializeAutoShutdownProfile(property0.Value);
+                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultNetworkProfile"))
@@ -202,17 +203,22 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<AzureLocation> array = new List<AzureLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new AzureLocation(item.GetString()));
                             }
                             allowedRegions = array;
                             continue;
                         }
                         if (property0.NameEquals("sharedGalleryId"))
                         {
-                            sharedGalleryId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sharedGalleryId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("supportInfo"))
@@ -222,12 +228,17 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            supportInfo = SupportInfo.DeserializeSupportInfo(property0.Value);
+                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linkedLmsInstance"))
                         {
-                            linkedLmsInstance = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                linkedLmsInstance = null;
+                                continue;
+                            }
+                            linkedLmsInstance = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -237,7 +248,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
                     }

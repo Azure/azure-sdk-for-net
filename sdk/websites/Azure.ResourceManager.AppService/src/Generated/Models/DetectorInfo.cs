@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DetectorInfo. </summary>
         public DetectorInfo()
         {
-            SupportTopicList = new ChangeTrackingList<SupportTopic>();
+            SupportTopicList = new ChangeTrackingList<DetectorSupportTopic>();
             AnalysisType = new ChangeTrackingList<string>();
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="analysisType"> Analysis Types for which this detector should apply to. </param>
         /// <param name="detectorType"> Whether this detector is an Analysis Detector or not. </param>
         /// <param name="score"> Defines score of a detector to power ML based matching. </param>
-        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<SupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? detectorType, float? score)
+        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<DetectorSupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? detectorType, float? score)
         {
             Id = id;
             Name = name;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Problem category. This serves for organizing group for detectors. </summary>
         public string Category { get; }
         /// <summary> List of Support Topics for which this detector is enabled. </summary>
-        public IReadOnlyList<SupportTopic> SupportTopicList { get; }
+        public IReadOnlyList<DetectorSupportTopic> SupportTopicList { get; }
         /// <summary> Analysis Types for which this detector should apply to. </summary>
         public IReadOnlyList<string> AnalysisType { get; }
         /// <summary> Whether this detector is an Analysis Detector or not. </summary>

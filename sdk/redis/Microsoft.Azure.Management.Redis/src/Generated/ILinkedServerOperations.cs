@@ -170,6 +170,33 @@ namespace Microsoft.Azure.Management.Redis
         /// </exception>
         Task<AzureOperationResponse<RedisLinkedServerWithProperties>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string name, string linkedServerName, RedisLinkedServerCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Deletes the linked server from a redis cache (requires Premium
+        /// SKU).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the redis cache.
+        /// </param>
+        /// <param name='linkedServerName'>
+        /// The name of the linked server that is being added to the Redis
+        /// cache.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string name, string linkedServerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets the list of linked servers associated with this redis cache
         /// (requires Premium SKU).
         /// </summary>

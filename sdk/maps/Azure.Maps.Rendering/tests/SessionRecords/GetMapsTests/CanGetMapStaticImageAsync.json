@@ -1,0 +1,35 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/map/static/png?api-version=2022-08-01\u0026layer=basic\u0026style=dark\u0026center=10.176%2C25.0524\u0026height=100\u0026width=100\u0026language=en-US",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, image/jpeg, image/png, image/pbf, application/vnd.mapbox-vector-tile",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ee61b02cfa9f9ab1440e1da8eb55866a-96e6d2c6e05054d9-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220912.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "bd7517dc17cfbc40ef729b862fe36c65",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1151",
+        "Content-Type": "image/png",
+        "Date": "Mon, 12 Sep 2022 11:57:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 4546D2822D8549768116D3C6797A6F46 Ref B: TPE30EDGE0607 Ref C: 2022-09-12T11:57:46Z"
+      },
+      "ResponseBody": "iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABHNCSVQICAgIfAhkiAAABDZJREFUeAHtnd1OGzEQRnmLSpVKgRDyQ9gkEELa0gLv/1Bbf14GnGUzbIRSptK5iOz1eL22z3xjDzccLTdPNb84e3AEjDgwxAIgwSIEQAASK0REC9koBIWgEE\u002BVKASFoBAUEkwFAAEIYclTgWfjUA\u002BmHoAAhHBGyAqmAoAAhLDkqcCzcagHUw9AAEI4I2QFUwFAAEJY8lTg2TjUg6kHIAAhnBGygqkAIAAhLHkq8Gwc6sHUAxCAEM4IWcFUABCAEJY8FXg2DvVg6gEIQAhnhKxgKgAIQAhLngo8G4d6MPUABCCEM0JWMBUABCCEJU8Fno1DPZh6AAIQwhkhK5gKAAIQwpKnAs/GoR5MPQABCOGMkBVMBQABCGHJU4Fn41APph6AAIRwRsgKpgKAAISw5KnAs3GoB1MPQABCOCNkBVMBQABCWPJU4Nk41IOpByAAIZwRsoKpACAAISx5KvBsHOrB1HMwINPFpp4u7urq9nd9ufxRD6eLenH3WM9ufj3XH7bayz7yoHF1Wy/WD/lfi4\u002BuVqnvZu9/Mz67/pnnMF//eXlXcxhOl/XF5fVLm\u002Bexns3G1dy9fvvYDgJEIIZpwdrIyXydJptApM1RfTCuEpiHDKVs364/1YNRlTdOG/jl63He2AbmMo8zqdYZ7vlkUV8lyPrmOH1Pfazt\u002BGyUoX87bUptjH1f9bKv3teYKs\u002BT82i\u002BXXa1a21638aVs5R9J/M0hua1ut8b1IGAbJ4X/pg9u7q9TxOc58kNxk2pZ6nH2su6Fqt2/eTJZ6OrPJ5K2U4vZrm0Z5XaAG1mu83GUqmfgFi97GtjWilbl11qOB1eZmA2d5Vdfc1u3\u002BtTHgSIPENepEnKW74PJtnbsxcl75MHamFle1nXxLUYQTpJi1d/baR\u002BCje2qeojm9oU4k7Opw3I5zZB0liai4UVqUjvjWY3rb6No5wMp9kJFGLL8VXXWFqT5qTxbNzcr5iL9bWyDwjrcxAgNrjCjdW3y13tfW5n7Xfbzxqjq60cu7SX9cYRtt/ftm\u002Bvoxyzz3fb/d8\u002BHxSIP/m3k4nQ3w7qz5oLQFIY\u002BqzN7/ouQADyvkeWOYyuyKPZKntxvnKmA1xtZT0fsOkQLs\u002Bssk2XiSYP8nMf3eh0YbALQJcHq61vv13ve\u002B3hFKKrq24vlsMox7Bbla7MTQ6jm9ZrvZ3DNAveP/fRe3YzepNXJOC6yVlC2beft/ldtoBAtnMYbbZdX7UhuuLquayXOYy8Wwor2/rmPiWQMq9QXX81kGOYcxiQ9/p1bbrXFg5IO4dpNqnJJ7TZ2txq1fw5xurtHEbvlG3KVfrkPs23XhNXy3GazU\u002BOkXOTZi4GROWufu\u002BFvi4w4YDYJMvzwNo\u002BVu6TT9g51/edvv1s3N1lWCAf2/zdC44\u002BLkC49v6/3vsv1IVCUAgK8ZSGQlAICkEhwVTgAfkLz6SvUuVbKH0AAAAASUVORK5CYII="
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1812692456"
+  }
+}

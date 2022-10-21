@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(StorageAccountTenantId))
             {
                 writer.WritePropertyName("storageAccountTenantId");
-                writer.WriteStringValue(StorageAccountTenantId);
+                writer.WriteStringValue(StorageAccountTenantId.Value);
             }
             if (Optional.IsDefined(PartnershipId))
             {
@@ -69,9 +70,9 @@ namespace Azure.ResourceManager.StorageSync
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<string> azureFileShareName = default;
-            Optional<string> storageAccountTenantId = default;
+            Optional<Guid> storageAccountTenantId = default;
             Optional<string> partnershipId = default;
             Optional<string> friendlyName = default;
             Optional<string> backupEnabled = default;
@@ -117,7 +118,12 @@ namespace Azure.ResourceManager.StorageSync
                     {
                         if (property0.NameEquals("storageAccountResourceId"))
                         {
-                            storageAccountResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("azureFileShareName"))
@@ -127,7 +133,12 @@ namespace Azure.ResourceManager.StorageSync
                         }
                         if (property0.NameEquals("storageAccountTenantId"))
                         {
-                            storageAccountTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("partnershipId"))
@@ -174,7 +185,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new CloudEndpointData(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, storageAccountTenantId.Value, partnershipId.Value, friendlyName.Value, backupEnabled.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, changeEnumerationStatus.Value);
+            return new CloudEndpointData(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), partnershipId.Value, friendlyName.Value, backupEnabled.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, changeEnumerationStatus.Value);
         }
     }
 }

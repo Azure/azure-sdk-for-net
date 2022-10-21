@@ -71,6 +71,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
+        /// The Uri of the table.
+        /// </summary>
+        public virtual Uri Uri { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> which contains a SAS token.
         /// See <see cref="GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
         /// </summary>
@@ -231,6 +236,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
+            Uri = new Uri(_endpoint, Name);
         }
 
         /// <summary>
@@ -282,6 +288,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
+            Uri = new Uri(_endpoint, Name);
         }
 
         internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
@@ -332,6 +339,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
+            Uri = new Uri(_endpoint, Name);
         }
 
         internal TableClient(
@@ -358,6 +366,7 @@ namespace Azure.Data.Tables
             _batchOperations = new TableRestClient(diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             _version = version;
             Name = table;
+            Uri = new Uri(_endpoint, Name);
             _accountName = accountName;
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
@@ -663,7 +672,10 @@ namespace Azure.Data.Tables
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
             where T : class, ITableEntity, new()
-            => GetEntityInternalAsync<T>(false, partitionKey, rowKey, false, select, cancellationToken).EnsureCompleted();
+        {
+            NullableResponse<T> response = GetEntityInternalAsync<T>(false, partitionKey, rowKey, false, select, cancellationToken).EnsureCompleted();
+            return Response.FromValue(response.Value, response.GetRawResponse());
+        }
 
         /// <summary>
         /// Gets the specified table entity of type <typeparamref name="T"/>.
@@ -676,12 +688,12 @@ namespace Azure.Data.Tables
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual async Task<Response<T>> GetEntityAsync<T>(
-            string partitionKey,
-            string rowKey,
-            IEnumerable<string> select = null,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
-            => await GetEntityInternalAsync<T>(true, partitionKey, rowKey, false, select, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+                where T : class, ITableEntity, new()
+        {
+            NullableResponse<T> response = await GetEntityInternalAsync<T>(true, partitionKey, rowKey, false, select, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value, response.GetRawResponse());
+        }
 
         /// <summary>
         /// Gets the specified table entity of type <typeparamref name="T"/>.
@@ -691,10 +703,12 @@ namespace Azure.Data.Tables
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
         /// <param name="select">Selects which set of entity properties to return in the result set. Pass <c>null</c> to retreive all properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <returns> The <see cref="NullableResponse{T}"/> whose <c>HasValue</c> property will return <c>true</c> if the entity existed, otherwise <c>false</c>.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if an unexpected error occurs.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual Response<T> GetEntityIfExists<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual NullableResponse<T> GetEntityIfExists<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
             where T : class, ITableEntity, new()
             => GetEntityInternalAsync<T>(false, partitionKey, rowKey, true, select, cancellationToken).EnsureCompleted();
 
@@ -706,14 +720,16 @@ namespace Azure.Data.Tables
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
         /// <param name="select">Selects which set of entity properties to return in the result set. Pass <c>null</c> to retreive all properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <returns> The <see cref="NullableResponse{T}"/> whose <c>HasValue</c> property will return <c>true</c> if the entity existed, otherwise <c>false</c>.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual async Task<Response<T>> GetEntityIfExistsAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<NullableResponse<T>> GetEntityIfExistsAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
             where T : class, ITableEntity, new()
             => await GetEntityInternalAsync<T>(true, partitionKey, rowKey, true, select, cancellationToken).ConfigureAwait(false);
 
-        internal virtual async Task<Response<T>> GetEntityInternalAsync<T>(
+        internal virtual async Task<NullableResponse<T>> GetEntityInternalAsync<T>(
             bool async,
             string partitionKey,
             string rowKey,
@@ -771,16 +787,15 @@ namespace Azure.Data.Tables
                     selectArg,
                     filter: null,
                     context);
-                if (!response.IsError)
+                if (response.Status == (int)HttpStatusCode.NotFound)
+                {
+                    return new NoValueResponse<T>(response);
+                }
+                else
                 {
                     var dictionary = SerializationHelpers.ResponseToDictionary(response);
                     var result = dictionary.ToTableEntity<T>();
                     return Response.FromValue(result, response);
-                }
-                else
-                {
-                    var emptyResponse = new T();
-                    return Response.FromValue(emptyResponse, response);
                 }
             }
             catch (Exception ex)
@@ -1279,32 +1294,7 @@ namespace Azure.Data.Tables
             string rowKey,
             ETag ifMatch = default,
             CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(partitionKey, nameof(partitionKey));
-            Argument.AssertNotNull(rowKey, nameof(rowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(DeleteEntity)}");
-            scope.Start();
-            try
-            {
-                var etag = ifMatch == default ? ETag.All.ToString() : ifMatch.ToString();
-                using var message = _tableOperations.CreateDeleteEntityRequest(Name, partitionKey, rowKey, etag, null, _defaultQueryOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-
-                switch (message.Response.Status)
-                {
-                    case 404:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+                => await DeleteEntityInternal(true, partitionKey, rowKey, ifMatch, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes the specified table entity.
@@ -1322,6 +1312,14 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>If the entity exists, the <see cref="Response"/> indicating the result of the operation. If the entity does not exist, <c>null</c></returns>
         public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
+            => DeleteEntityInternal(false, partitionKey, rowKey, ifMatch, cancellationToken).EnsureCompleted();
+
+        internal async Task<Response> DeleteEntityInternal(
+            bool async,
+            string partitionKey,
+            string rowKey,
+            ETag ifMatch = default,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
@@ -1329,18 +1327,34 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
+                if (!TablesCompatSwitches.DisableEscapeSingleQuotesOnDeleteEntity)
+                {
+                    // Escape the values
+                    if (partitionKey.Contains("'"))
+                    {
+                        partitionKey = TableOdataFilter.EscapeStringValue(partitionKey);
+                    }
+                    if (rowKey.Contains("'"))
+                    {
+                        rowKey = TableOdataFilter.EscapeStringValue(rowKey);
+                    }
+                }
                 var etag = ifMatch == default ? ETag.All.ToString() : ifMatch.ToString();
                 using var message = _tableOperations.CreateDeleteEntityRequest(Name, partitionKey, rowKey, etag, null, _defaultQueryOptions);
-                _pipeline.Send(message, cancellationToken);
-
-                switch (message.Response.Status)
+                if (async)
                 {
-                    case 404:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
+                else
+                {
+                    _pipeline.Send(message, cancellationToken);
+                }
+
+                return message.Response.Status switch
+                {
+                    404 or 204 => message.Response,
+                    _ => throw _diagnostics.CreateRequestFailedException(message.Response),
+                };
             }
             catch (Exception ex)
             {

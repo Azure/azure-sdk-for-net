@@ -1,5 +1,21 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2022-10-19)
+
+### Other Changes
+
+- Upgraded API version to 2022-05-01
+
 ## 1.0.0 (2022-09-13)
 
 This is the first stable release of the Azure VMware Solution management library.

@@ -46,7 +46,8 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
                 return;
             }
 
-            var receivedInvitationDocument = JsonDocument.Parse(receivedInvitation).RootElement;
+            using var jsonDocument = JsonDocument.Parse(receivedInvitation);
+            var receivedInvitationDocument = jsonDocument.RootElement;
             var receivedInvitationId = receivedInvitationDocument.GetProperty("name");
 
             var receivedShareData = new

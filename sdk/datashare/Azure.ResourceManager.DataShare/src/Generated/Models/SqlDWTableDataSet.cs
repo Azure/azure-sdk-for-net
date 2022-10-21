@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -12,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A SQL DW table data set. </summary>
-    public partial class SqlDWTableDataSet : DataSetData
+    public partial class SqlDWTableDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of SqlDWTableDataSet. </summary>
         public SqlDWTableDataSet()
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
         /// <param name="sqlServerResourceId"> Resource id of SQL server. </param>
         /// <param name="tableName"> SQL DW table name. </param>
-        internal SqlDWTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string dataSetId, string dataWarehouseName, string schemaName, string sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
+        internal SqlDWTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, string dataWarehouseName, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
         {
             DataSetId = dataSetId;
             DataWarehouseName = dataWarehouseName;
@@ -42,13 +43,13 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> DataWarehouse name of the source data set. </summary>
         public string DataWarehouseName { get; set; }
         /// <summary> Schema of the table. Default value is dbo. </summary>
         public string SchemaName { get; set; }
         /// <summary> Resource id of SQL server. </summary>
-        public string SqlServerResourceId { get; set; }
+        public ResourceIdentifier SqlServerResourceId { get; set; }
         /// <summary> SQL DW table name. </summary>
         public string TableName { get; set; }
     }

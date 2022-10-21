@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> UUID v4 used to identify the Backup. </summary>
-        public Guid? BackupId { get; }
+        public string BackupId { get; }
         /// <summary> The creation date of the backup. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Azure lifecycle management. </summary>

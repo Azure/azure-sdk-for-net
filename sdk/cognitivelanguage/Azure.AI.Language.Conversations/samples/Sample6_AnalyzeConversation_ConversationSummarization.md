@@ -5,7 +5,7 @@ This sample demonstrates how to analyze a conversation with Conversation Summari
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -30,19 +30,22 @@ var data = new
                     {
                         text = "Hello, how can I help you?",
                         id = "1",
-                        participantId = "Agent",
+                        role = "Agent",
+                        participantId = "Agent_1",
                     },
                     new
                     {
                         text = "How to upgrade Office? I am getting error messages the whole day.",
                         id = "2",
-                        participantId = "Customer",
+                        role = "Customer",
+                        participantId = "Customer_1",
                     },
                     new
                     {
                         text = "Press the upgrade button please. Then sign in and follow the instructions.",
                         id = "3",
-                        participantId = "Agent",
+                        role = "Agent",
+                        participantId = "Agent_1",
                     },
                 },
                 id = "1",

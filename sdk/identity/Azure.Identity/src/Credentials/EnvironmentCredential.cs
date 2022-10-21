@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Azure.Identity
 {
@@ -61,9 +63,19 @@ namespace Azure.Identity
             string clientId = EnvironmentVariables.ClientId;
             string clientSecret = EnvironmentVariables.ClientSecret;
             string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
+            string clientCertificatePassword = EnvironmentVariables.ClientCertificatePassword;
             string clientSendCertificateChain = EnvironmentVariables.ClientSendCertificateChain;
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
+
+            // Since the AdditionallyAllowedTenantsCore is internal it cannot be set by the application.
+            // Currently this is only set by the DefaultAzureCredential where it will default to the value
+            // of EnvironmentVariables.AdditionallyAllowedTenants, but can also be altered by the application.
+            // In either case we don't want to alter it.
+            if (_options.AdditionallyAllowedTenantsCore.Count == 0)
+            {
+                _options.AdditionallyAllowedTenantsCore = EnvironmentVariables.AdditionallyAllowedTenants;
+            }
 
             if (!string.IsNullOrEmpty(tenantId) && !string.IsNullOrEmpty(clientId))
             {
@@ -85,9 +97,10 @@ namespace Azure.Identity
                         AuthorityHost = _options.AuthorityHost,
                         IsLoggingPIIEnabled = _options.IsLoggingPIIEnabled,
                         Transport = _options.Transport,
+                        AdditionallyAllowedTenantsCore = new List<string>(_options.AdditionallyAllowedTenantsCore),
                         SendCertificateChain = sendCertificateChain
                     };
-                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificateCredentialOptions, _pipeline, null);
+                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificatePassword, clientCertificateCredentialOptions, _pipeline, null);
                 }
             }
         }

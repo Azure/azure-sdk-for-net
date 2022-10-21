@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> An ADLS Gen 1 file data set. </summary>
-    public partial class AdlsGen1FileDataSet : DataSetData
+    public partial class AdlsGen1FileDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of AdlsGen1FileDataSet. </summary>
         /// <param name="accountName"> The ADLS account name. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="folderPath"> The folder path within the ADLS account. </param>
         /// <param name="resourceGroup"> Resource group of ADLS account. </param>
         /// <param name="subscriptionId"> Subscription id of ADLS account. </param>
-        internal AdlsGen1FileDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string accountName, string dataSetId, string fileName, string folderPath, string resourceGroup, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal AdlsGen1FileDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string accountName, Guid? dataSetId, string fileName, string folderPath, string resourceGroup, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             AccountName = accountName;
             DataSetId = dataSetId;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> The ADLS account name. </summary>
         public string AccountName { get; set; }
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> The file name in the ADLS account. </summary>
         public string FileName { get; set; }
         /// <summary> The folder path within the ADLS account. </summary>

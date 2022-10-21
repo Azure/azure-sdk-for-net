@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 {
     public class InboundEndpointTests : DnsResolverTestBase
     {
-        private DnsResolverResource dnsResolver;
-        private string vnetId;
-        private string subnetId;
+        private DnsResolverResource _dnsResolver;
+        private string _vnetId;
+        private string _subnetId;
 
         public InboundEndpointTests(bool async) : base(async)
         {
@@ -27,26 +27,25 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task CreateDnsResolverCollection()
         {
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
-            var vnetName = Recording.GenerateAssetName("dnsResolver-");
+            var vnetName = Recording.GenerateAssetName("vnet-");
 
-            vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
-            subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/snet-sim2";
+            _vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            _subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
-                Id = new ResourceIdentifier(vnetId)
+                Id = new ResourceIdentifier(_vnetId)
             });
 
-            if (Mode == RecordedTestMode.Record)
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 await CreateVirtualNetworkAsync(vnetName);
-                await CreateSubnetAsync(vnetName);
             }
 
             var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
             var resourceGroup = await subscription.Value.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroup);
 
-            dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
+            _dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
         }
 
         [Test]
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             {
                 new InboundEndpointIPConfiguration(new WritableSubResource
                 {
-                    Id = new ResourceIdentifier(subnetId),
+                    Id = new ResourceIdentifier(_subnetId),
                 },
                 privateIPAddress: null,
                 InboundEndpointIPAllocationMethod.Dynamic)
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
 
             // ACT
-            var inboundEndpoint = await dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
+            var inboundEndpoint = await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             // ASSERT
             Assert.AreEqual(inboundEndpoint.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
@@ -82,17 +81,17 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             {
                 new InboundEndpointIPConfiguration(new WritableSubResource
                 {
-                    Id = new ResourceIdentifier(subnetId),
+                    Id = new ResourceIdentifier(_subnetId),
                 },
                 privateIPAddress: null,
                 InboundEndpointIPAllocationMethod.Dynamic)
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
-            await dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
+            await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             // ACT
-            var retrievedInboundEndpoint = await dnsResolver.GetDnsResolverInboundEndpoints().GetAsync(inboundEndpointName);
+            var retrievedInboundEndpoint = await _dnsResolver.GetDnsResolverInboundEndpoints().GetAsync(inboundEndpointName);
 
             // ASSERT
             Assert.AreEqual(retrievedInboundEndpoint.Value.Data.Name, inboundEndpointName);
@@ -108,14 +107,14 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             {
                 new InboundEndpointIPConfiguration(new WritableSubResource
                 {
-                    Id = new ResourceIdentifier(subnetId),
+                    Id = new ResourceIdentifier(_subnetId),
                 },
                 privateIPAddress: null,
                 InboundEndpointIPAllocationMethod.Dynamic)
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
-            var createdInboundEndpoint = await dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
+            var createdInboundEndpoint = await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
@@ -136,20 +135,20 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             {
                 new InboundEndpointIPConfiguration(new WritableSubResource
                 {
-                    Id = new ResourceIdentifier(subnetId),
+                    Id = new ResourceIdentifier(_subnetId),
                 },
                 privateIPAddress: null,
                 InboundEndpointIPAllocationMethod.Dynamic)
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
-            var createdInboundEndpoint = await dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
+            var createdInboundEndpoint = await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             // ACT
             await createdInboundEndpoint.Value.DeleteAsync(WaitUntil.Completed);
 
             // ASSERT
-            var getInboundEndpointResult = await dnsResolver.GetDnsResolverInboundEndpoints().ExistsAsync(inboundEndpointName);
+            var getInboundEndpointResult = await _dnsResolver.GetDnsResolverInboundEndpoints().ExistsAsync(inboundEndpointName);
             Assert.AreEqual(getInboundEndpointResult.Value, false);
         }
     }
