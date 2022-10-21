@@ -38,7 +38,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public float Scale { get => ConversionConfiguration.Scale; }
 
         /// <summary> Whether or not disable automatic detection of FBX scale units. </summary>
-        public bool? DisableDetectScaleUnits { get => ConversionConfiguration.DisableDetectScaleUnits; }
+        public bool DisableDetectScaleUnits { get => ConversionConfiguration.DisableDetectScaleUnits; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetConversionOptions"/> class.

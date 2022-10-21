@@ -23,9 +23,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal AssetConversionConfiguration(System.Numerics.Vector3 gravity, float scale, bool disableDetectScaleUnits)
             : this(new Vector3(gravity), scale)
         {
-            if (gravity == null)
+            if (!gravity.IsNormalized())
             {
-                throw new ArgumentNullException(nameof(gravity));
+                throw new ArgumentException("The value must be normalized.", nameof(gravity));
             }
 
             DisableDetectScaleUnits = disableDetectScaleUnits;
@@ -57,7 +57,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public float Scale { get; internal set; }
 
         /// <summary> Whether or not disable the scale units in the model metadata. </summary>
-        public bool? DisableDetectScaleUnits { get; internal set; }
+        public bool DisableDetectScaleUnits { get; internal set; }
 
         /// <summary>
         /// Ground truth trajectory.

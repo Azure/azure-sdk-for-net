@@ -27,7 +27,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="disableDetectScaleUnits"> Whether or not disable the scale units in the model metadata. </param>
         /// <param name="supportingPlaneWrapper"> Definition of supporting plane. </param>
         /// <param name="testTrajectoryCameraPoses"> Test Trajectory. </param>
-        internal AssetConversionConfiguration(Vector3 assetDimensionsWrapper, Vector3 boundingBoxCenterWrapper, Vector3 gravityWrapper, IReadOnlyList<int> keyFrameIndexes, IReadOnlyList<TrajectoryPose> groundTruthTrajectoryCameraPoses, Quaternion principalAxisWrapper, float scale, bool? disableDetectScaleUnits, Vector4 supportingPlaneWrapper, IReadOnlyList<TrajectoryPose> testTrajectoryCameraPoses)
+        internal AssetConversionConfiguration(Vector3 assetDimensionsWrapper, Vector3 boundingBoxCenterWrapper, Vector3 gravityWrapper, IReadOnlyList<int> keyFrameIndexes, IReadOnlyList<TrajectoryPose> groundTruthTrajectoryCameraPoses, Quaternion principalAxisWrapper, float scale, bool disableDetectScaleUnits, Vector4 supportingPlaneWrapper, IReadOnlyList<TrajectoryPose> testTrajectoryCameraPoses)
         {
             AssetDimensionsWrapper = assetDimensionsWrapper;
             BoundingBoxCenterWrapper = boundingBoxCenterWrapper;
