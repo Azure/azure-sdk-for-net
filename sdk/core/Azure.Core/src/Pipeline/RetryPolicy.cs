@@ -237,7 +237,7 @@ namespace Azure.Core.Pipeline
         protected internal virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
 
         /// <summary>
-        /// This method can be overriden to introduce logic before the request is sent. This will run even for the first attempt.
+        /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
         /// This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
@@ -253,7 +253,7 @@ namespace Azure.Core.Pipeline
         protected internal virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
 
         /// <summary>
-        /// This method can be overriden to introduce logic that runs after a response is received. This method will only be called for sync methods.
+        /// This method can be overridden to introduce logic that runs after a response is received on each attempt. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         protected internal virtual void OnReceivedResponse(HttpMessage message)
