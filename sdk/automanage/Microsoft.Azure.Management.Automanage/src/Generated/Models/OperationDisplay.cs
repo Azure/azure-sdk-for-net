@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Automanage.Models
     using System.Linq;
 
     /// <summary>
-    /// Provider, Resource, Operation and description values.
+    /// Localized display information for this particular operation.
     /// </summary>
     public partial class OperationDisplay
     {
@@ -29,13 +29,18 @@ namespace Microsoft.Azure.Management.Automanage.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
-        /// <param name="provider">Service provider:
-        /// Microsoft.Automanage</param>
-        /// <param name="resource">Resource on which the operation is
-        /// performed:  For ex. </param>
-        /// <param name="operation">Operation type: Read, write, delete,
-        /// etc.</param>
-        /// <param name="description">Description about operation.</param>
+        /// <param name="provider">The localized friendly form of the resource
+        /// provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft
+        /// Compute".</param>
+        /// <param name="resource">The localized friendly name of the resource
+        /// type related to this operation. E.g. "Virtual Machines" or "Job
+        /// Schedule Collections".</param>
+        /// <param name="operation">The concise, localized friendly name for
+        /// the operation; suitable for dropdowns. E.g. "Create or Update
+        /// Virtual Machine", "Restart Virtual Machine".</param>
+        /// <param name="description">The short, localized friendly description
+        /// of the operation; suitable for tool tips and detailed
+        /// views.</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
@@ -51,28 +56,34 @@ namespace Microsoft.Azure.Management.Automanage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets service provider: Microsoft.Automanage
+        /// Gets the localized friendly form of the resource provider name,
+        /// e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
-        public string Provider { get; set; }
+        public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource on which the operation is performed:  For ex.
+        /// Gets the localized friendly name of the resource type related to
+        /// this operation. E.g. "Virtual Machines" or "Job Schedule
+        /// Collections".
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
-        public string Resource { get; set; }
+        public string Resource { get; private set; }
 
         /// <summary>
-        /// Gets or sets operation type: Read, write, delete, etc.
+        /// Gets the concise, localized friendly name for the operation;
+        /// suitable for dropdowns. E.g. "Create or Update Virtual Machine",
+        /// "Restart Virtual Machine".
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        public string Operation { get; private set; }
 
         /// <summary>
-        /// Gets or sets description about operation.
+        /// Gets the short, localized friendly description of the operation;
+        /// suitable for tool tips and detailed views.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
     }
 }

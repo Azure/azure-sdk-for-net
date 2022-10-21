@@ -12,12 +12,10 @@ namespace Microsoft.Azure.Management.Automanage.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningStatus.
+    /// Defines values for ActionType.
     /// </summary>
-    public static class ProvisioningStatus
+    public static class ActionType
     {
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Created = "Created";
+        public const string Internal = "Internal";
     }
 }

@@ -31,27 +31,16 @@ namespace Microsoft.Azure.Management.Automanage.Models
         /// Initializes a new instance of the
         /// ConfigurationProfileAssignmentProperties class.
         /// </summary>
-        /// <param name="configurationProfile">A value indicating configuration
-        /// profile. Possible values include: 'Azure Best Practices - TestDev',
-        /// 'Azure Best Practices - Prod'</param>
+        /// <param name="configurationProfile">The Automanage
+        /// configurationProfile ARM Resource URI.</param>
         /// <param name="targetId">The target VM resource URI</param>
-        /// <param name="accountId">The Automanage account ARM Resource
-        /// URI</param>
-        /// <param name="configurationProfilePreferenceId">The configuration
-        /// profile custom preferences ARM resource URI</param>
-        /// <param name="provisioningStatus">The state of onboarding, which
-        /// only appears in the response. Possible values include: 'Succeeded',
-        /// 'Failed', 'Created'</param>
-        /// <param name="compliance">The configuration setting for the
-        /// configuration profile.</param>
-        public ConfigurationProfileAssignmentProperties(string configurationProfile = default(string), string targetId = default(string), string accountId = default(string), string configurationProfilePreferenceId = default(string), string provisioningStatus = default(string), ConfigurationProfileAssignmentCompliance compliance = default(ConfigurationProfileAssignmentCompliance))
+        /// <param name="status">The status of onboarding, which only appears
+        /// in the response.</param>
+        public ConfigurationProfileAssignmentProperties(string configurationProfile = default(string), string targetId = default(string), string status = default(string))
         {
             ConfigurationProfile = configurationProfile;
             TargetId = targetId;
-            AccountId = accountId;
-            ConfigurationProfilePreferenceId = configurationProfilePreferenceId;
-            ProvisioningStatus = provisioningStatus;
-            Compliance = compliance;
+            Status = status;
             CustomInit();
         }
 
@@ -61,45 +50,22 @@ namespace Microsoft.Azure.Management.Automanage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a value indicating configuration profile. Possible
-        /// values include: 'Azure Best Practices - TestDev', 'Azure Best
-        /// Practices - Prod'
+        /// Gets or sets the Automanage configurationProfile ARM Resource URI.
         /// </summary>
         [JsonProperty(PropertyName = "configurationProfile")]
         public string ConfigurationProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the target VM resource URI
+        /// Gets the target VM resource URI
         /// </summary>
         [JsonProperty(PropertyName = "targetId")]
-        public string TargetId { get; set; }
+        public string TargetId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Automanage account ARM Resource URI
+        /// Gets the status of onboarding, which only appears in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "accountId")]
-        public string AccountId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the configuration profile custom preferences ARM
-        /// resource URI
-        /// </summary>
-        [JsonProperty(PropertyName = "configurationProfilePreferenceId")]
-        public string ConfigurationProfilePreferenceId { get; set; }
-
-        /// <summary>
-        /// Gets the state of onboarding, which only appears in the response.
-        /// Possible values include: 'Succeeded', 'Failed', 'Created'
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningStatus")]
-        public string ProvisioningStatus { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the configuration setting for the configuration
-        /// profile.
-        /// </summary>
-        [JsonProperty(PropertyName = "compliance")]
-        public ConfigurationProfileAssignmentCompliance Compliance { get; set; }
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }

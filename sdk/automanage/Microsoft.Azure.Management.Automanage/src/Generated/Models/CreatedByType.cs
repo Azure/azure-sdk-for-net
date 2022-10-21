@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.Automanage.Models
 {
 
     /// <summary>
-    /// Defines values for ScanType.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class ScanType
+    public static class CreatedByType
     {
-        public const string Quick = "Quick";
-        public const string Full = "Full";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

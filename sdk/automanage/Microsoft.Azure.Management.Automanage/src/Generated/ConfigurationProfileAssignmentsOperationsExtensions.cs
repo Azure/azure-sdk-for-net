@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// assignment.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='vmName'>
             /// The name of the virtual machine.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// assignment.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='vmName'>
             /// The name of the virtual machine.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfileAssignmentName'>
             /// The configuration profile assignment name.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfileAssignmentName'>
             /// The configuration profile assignment name.
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfileAssignmentName'>
             /// Name of the configuration profile assignment
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfileAssignmentName'>
             /// Name of the configuration profile assignment
@@ -173,7 +173,47 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static IEnumerable<ConfigurationProfileAssignment> ListByVirtualMachines(this IConfigurationProfileAssignmentsOperations operations, string resourceGroupName, string vmName)
+            {
+                return operations.ListByVirtualMachinesAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get list of configuration profile assignments
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<ConfigurationProfileAssignment>> ListByVirtualMachinesAsync(this IConfigurationProfileAssignmentsOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByVirtualMachinesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get list of configuration profile assignments
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IEnumerable<ConfigurationProfileAssignment> List(this IConfigurationProfileAssignmentsOperations operations, string resourceGroupName)
             {
@@ -187,7 +227,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -229,54 +269,80 @@ namespace Microsoft.Azure.Management.Automanage
             }
 
             /// <summary>
-            /// Creates an association between a VM and Automanage configuration profile
+            /// Get list of configuration profile assignments
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='configurationProfileAssignmentName'>
-            /// Name of the configuration profile assignment. Only default is supported.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update configuration profile
-            /// assignment.
-            /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
+            /// <param name='machineName'>
+            /// The name of the Arc machine.
             /// </param>
-            public static ConfigurationProfileAssignment BeginCreateOrUpdate(this IConfigurationProfileAssignmentsOperations operations, string configurationProfileAssignmentName, ConfigurationProfileAssignment parameters, string resourceGroupName, string vmName)
+            public static IEnumerable<ConfigurationProfileAssignment> ListByMachineName(this IConfigurationProfileAssignmentsOperations operations, string resourceGroupName, string machineName)
             {
-                return operations.BeginCreateOrUpdateAsync(configurationProfileAssignmentName, parameters, resourceGroupName, vmName).GetAwaiter().GetResult();
+                return operations.ListByMachineNameAsync(resourceGroupName, machineName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates an association between a VM and Automanage configuration profile
+            /// Get list of configuration profile assignments
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='configurationProfileAssignmentName'>
-            /// Name of the configuration profile assignment. Only default is supported.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update configuration profile
-            /// assignment.
-            /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
+            /// <param name='machineName'>
+            /// The name of the Arc machine.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConfigurationProfileAssignment> BeginCreateOrUpdateAsync(this IConfigurationProfileAssignmentsOperations operations, string configurationProfileAssignmentName, ConfigurationProfileAssignment parameters, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<ConfigurationProfileAssignment>> ListByMachineNameAsync(this IConfigurationProfileAssignmentsOperations operations, string resourceGroupName, string machineName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(configurationProfileAssignmentName, parameters, resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByMachineNameWithHttpMessagesAsync(resourceGroupName, machineName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get list of configuration profile assignments
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Arc machine.
+            /// </param>
+            public static IEnumerable<ConfigurationProfileAssignment> ListByClusterName(this IConfigurationProfileAssignmentsOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.ListByClusterNameAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get list of configuration profile assignments
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Arc machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<ConfigurationProfileAssignment>> ListByClusterNameAsync(this IConfigurationProfileAssignmentsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByClusterNameWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

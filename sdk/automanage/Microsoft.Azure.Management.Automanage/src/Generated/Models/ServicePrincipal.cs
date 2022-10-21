@@ -10,27 +10,27 @@
 
 namespace Microsoft.Azure.Management.Automanage.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Configuration profile assignment is an association between a VM and
-    /// automanage profile configuration.
+    /// The Service Principal Id for the subscription.
     /// </summary>
-    public partial class ConfigurationProfileAssignment : ProxyResource
+    [Rest.Serialization.JsonTransformation]
+    public partial class ServicePrincipal : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the ConfigurationProfileAssignment
-        /// class.
+        /// Initializes a new instance of the ServicePrincipal class.
         /// </summary>
-        public ConfigurationProfileAssignment()
+        public ServicePrincipal()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ConfigurationProfileAssignment
-        /// class.
+        /// Initializes a new instance of the ServicePrincipal class.
         /// </summary>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -38,17 +38,17 @@ namespace Microsoft.Azure.Management.Automanage.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="properties">Properties of the configuration profile
-        /// assignment.</param>
-        /// <param name="managedBy">Azure resource id. Indicates if this
-        /// resource is managed by another Azure resource.</param>
+        /// <param name="servicePrincipalId">The Service Principal Id for the
+        /// subscription.</param>
+        /// <param name="authorizationSet">Returns the contributor RBAC Role
+        /// exist or not for the Service Principal Id.</param>
         /// <param name="systemData">Azure Resource Manager metadata containing
         /// createdBy and modifiedBy information.</param>
-        public ConfigurationProfileAssignment(string id = default(string), string name = default(string), string type = default(string), ConfigurationProfileAssignmentProperties properties = default(ConfigurationProfileAssignmentProperties), string managedBy = default(string), SystemData systemData = default(SystemData))
+        public ServicePrincipal(string id = default(string), string name = default(string), string type = default(string), string servicePrincipalId = default(string), bool? authorizationSet = default(bool?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
-            Properties = properties;
-            ManagedBy = managedBy;
+            ServicePrincipalId = servicePrincipalId;
+            AuthorizationSet = authorizationSet;
             SystemData = systemData;
             CustomInit();
         }
@@ -59,17 +59,17 @@ namespace Microsoft.Azure.Management.Automanage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of the configuration profile assignment.
+        /// Gets the Service Principal Id for the subscription.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public ConfigurationProfileAssignmentProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.servicePrincipalId")]
+        public string ServicePrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets azure resource id. Indicates if this resource is managed by
-        /// another Azure resource.
+        /// Gets returns the contributor RBAC Role exist or not for the Service
+        /// Principal Id.
         /// </summary>
-        [JsonProperty(PropertyName = "managedBy")]
-        public string ManagedBy { get; private set; }
+        [JsonProperty(PropertyName = "properties.authorizationSet")]
+        public bool? AuthorizationSet { get; private set; }
 
         /// <summary>
         /// Gets azure Resource Manager metadata containing createdBy and

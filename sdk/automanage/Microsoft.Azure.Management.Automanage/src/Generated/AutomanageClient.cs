@@ -47,13 +47,12 @@ namespace Microsoft.Azure.Management.Automanage
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Subscription ID which uniquely identify Microsoft Azure subscription. The
-        /// subscription ID forms part of the URI for every service call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -76,9 +75,24 @@ namespace Microsoft.Azure.Management.Automanage
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IAccountsOperations.
+        /// Gets the IBestPracticesOperations.
         /// </summary>
-        public virtual IAccountsOperations Accounts { get; private set; }
+        public virtual IBestPracticesOperations BestPractices { get; private set; }
+
+        /// <summary>
+        /// Gets the IBestPracticesVersionsOperations.
+        /// </summary>
+        public virtual IBestPracticesVersionsOperations BestPracticesVersions { get; private set; }
+
+        /// <summary>
+        /// Gets the IConfigurationProfilesOperations.
+        /// </summary>
+        public virtual IConfigurationProfilesOperations ConfigurationProfiles { get; private set; }
+
+        /// <summary>
+        /// Gets the IConfigurationProfilesVersionsOperations.
+        /// </summary>
+        public virtual IConfigurationProfilesVersionsOperations ConfigurationProfilesVersions { get; private set; }
 
         /// <summary>
         /// Gets the IConfigurationProfileAssignmentsOperations.
@@ -86,14 +100,39 @@ namespace Microsoft.Azure.Management.Automanage
         public virtual IConfigurationProfileAssignmentsOperations ConfigurationProfileAssignments { get; private set; }
 
         /// <summary>
-        /// Gets the IConfigurationProfilePreferencesOperations.
-        /// </summary>
-        public virtual IConfigurationProfilePreferencesOperations ConfigurationProfilePreferences { get; private set; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IReportsOperations.
+        /// </summary>
+        public virtual IReportsOperations Reports { get; private set; }
+
+        /// <summary>
+        /// Gets the IServicePrincipalsOperations.
+        /// </summary>
+        public virtual IServicePrincipalsOperations ServicePrincipals { get; private set; }
+
+        /// <summary>
+        /// Gets the IConfigurationProfileHCRPAssignmentsOperations.
+        /// </summary>
+        public virtual IConfigurationProfileHCRPAssignmentsOperations ConfigurationProfileHCRPAssignments { get; private set; }
+
+        /// <summary>
+        /// Gets the IHCRPReportsOperations.
+        /// </summary>
+        public virtual IHCRPReportsOperations HCRPReports { get; private set; }
+
+        /// <summary>
+        /// Gets the IConfigurationProfileHCIAssignmentsOperations.
+        /// </summary>
+        public virtual IConfigurationProfileHCIAssignmentsOperations ConfigurationProfileHCIAssignments { get; private set; }
+
+        /// <summary>
+        /// Gets the IHCIReportsOperations.
+        /// </summary>
+        public virtual IHCIReportsOperations HCIReports { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AutomanageClient class.
@@ -336,12 +375,20 @@ namespace Microsoft.Azure.Management.Automanage
         /// </summary>
         private void Initialize()
         {
-            Accounts = new AccountsOperations(this);
+            BestPractices = new BestPracticesOperations(this);
+            BestPracticesVersions = new BestPracticesVersionsOperations(this);
+            ConfigurationProfiles = new ConfigurationProfilesOperations(this);
+            ConfigurationProfilesVersions = new ConfigurationProfilesVersionsOperations(this);
             ConfigurationProfileAssignments = new ConfigurationProfileAssignmentsOperations(this);
-            ConfigurationProfilePreferences = new ConfigurationProfilePreferencesOperations(this);
             Operations = new Operations(this);
+            Reports = new ReportsOperations(this);
+            ServicePrincipals = new ServicePrincipalsOperations(this);
+            ConfigurationProfileHCRPAssignments = new ConfigurationProfileHCRPAssignmentsOperations(this);
+            HCRPReports = new HCRPReportsOperations(this);
+            ConfigurationProfileHCIAssignments = new ConfigurationProfileHCIAssignmentsOperations(this);
+            HCIReports = new HCIReportsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-06-30-preview";
+            ApiVersion = "2022-05-04";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

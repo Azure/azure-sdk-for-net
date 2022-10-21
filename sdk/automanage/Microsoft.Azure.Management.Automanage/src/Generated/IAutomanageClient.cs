@@ -41,14 +41,12 @@ namespace Microsoft.Azure.Management.Automanage
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
         /// <summary>
-        /// Subscription ID which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every
-        /// service call.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -72,9 +70,24 @@ namespace Microsoft.Azure.Management.Automanage
 
 
         /// <summary>
-        /// Gets the IAccountsOperations.
+        /// Gets the IBestPracticesOperations.
         /// </summary>
-        IAccountsOperations Accounts { get; }
+        IBestPracticesOperations BestPractices { get; }
+
+        /// <summary>
+        /// Gets the IBestPracticesVersionsOperations.
+        /// </summary>
+        IBestPracticesVersionsOperations BestPracticesVersions { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationProfilesOperations.
+        /// </summary>
+        IConfigurationProfilesOperations ConfigurationProfiles { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationProfilesVersionsOperations.
+        /// </summary>
+        IConfigurationProfilesVersionsOperations ConfigurationProfilesVersions { get; }
 
         /// <summary>
         /// Gets the IConfigurationProfileAssignmentsOperations.
@@ -82,14 +95,39 @@ namespace Microsoft.Azure.Management.Automanage
         IConfigurationProfileAssignmentsOperations ConfigurationProfileAssignments { get; }
 
         /// <summary>
-        /// Gets the IConfigurationProfilePreferencesOperations.
-        /// </summary>
-        IConfigurationProfilePreferencesOperations ConfigurationProfilePreferences { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IReportsOperations.
+        /// </summary>
+        IReportsOperations Reports { get; }
+
+        /// <summary>
+        /// Gets the IServicePrincipalsOperations.
+        /// </summary>
+        IServicePrincipalsOperations ServicePrincipals { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationProfileHCRPAssignmentsOperations.
+        /// </summary>
+        IConfigurationProfileHCRPAssignmentsOperations ConfigurationProfileHCRPAssignments { get; }
+
+        /// <summary>
+        /// Gets the IHCRPReportsOperations.
+        /// </summary>
+        IHCRPReportsOperations HCRPReports { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationProfileHCIAssignmentsOperations.
+        /// </summary>
+        IConfigurationProfileHCIAssignmentsOperations ConfigurationProfileHCIAssignments { get; }
+
+        /// <summary>
+        /// Gets the IHCIReportsOperations.
+        /// </summary>
+        IHCIReportsOperations HCIReports { get; }
 
     }
 }

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// assignment.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Get information about a configuration profile assignment
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='configurationProfileAssignmentName'>
         /// The configuration profile assignment name.
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Delete a configuration profile assignment
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='configurationProfileAssignmentName'>
         /// Name of the configuration profile assignment
@@ -114,7 +114,32 @@ namespace Microsoft.Azure.Management.Automanage
         /// Get list of configuration profile assignments
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='vmName'>
+        /// The name of the virtual machine.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IEnumerable<ConfigurationProfileAssignment>>> ListByVirtualMachinesWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get list of configuration profile assignments
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -153,22 +178,13 @@ namespace Microsoft.Azure.Management.Automanage
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<ConfigurationProfileAssignment>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates an association between a VM and Automanage configuration
-        /// profile
+        /// Get list of configuration profile assignments
         /// </summary>
-        /// <param name='configurationProfileAssignmentName'>
-        /// Name of the configuration profile assignment. Only default is
-        /// supported.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the create or update configuration profile
-        /// assignment.
-        /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine.
+        /// <param name='machineName'>
+        /// The name of the Arc machine.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -185,6 +201,31 @@ namespace Microsoft.Azure.Management.Automanage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ConfigurationProfileAssignment>> BeginCreateOrUpdateWithHttpMessagesAsync(string configurationProfileAssignmentName, ConfigurationProfileAssignment parameters, string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<ConfigurationProfileAssignment>>> ListByMachineNameWithHttpMessagesAsync(string resourceGroupName, string machineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get list of configuration profile assignments
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the Arc machine.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IEnumerable<ConfigurationProfileAssignment>>> ListByClusterNameWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

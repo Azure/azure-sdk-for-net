@@ -10,30 +10,28 @@
 
 namespace Microsoft.Azure.Management.Automanage.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Resource
+    /// Entity Resource
     /// </summary>
     /// <remarks>
-    /// Common fields that are returned in the response for all Azure Resource
-    /// Manager resources
+    /// The resource model definition for an Azure Resource Manager resource
+    /// with an etag.
     /// </remarks>
-    public partial class Resource : IResource
+    public partial class AzureEntityResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
-        public Resource()
+        public AzureEntityResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -41,11 +39,11 @@ namespace Microsoft.Azure.Management.Automanage.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="etag">Resource Etag.</param>
+        public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            Etag = etag;
             CustomInit();
         }
 
@@ -55,25 +53,10 @@ namespace Microsoft.Azure.Management.Automanage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+        /// Gets resource Etag.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the resource
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
     }
 }

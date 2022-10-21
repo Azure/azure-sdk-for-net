@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Automanage.Models
 {
 
     /// <summary>
-    /// Defines values for RunScheduledScan.
+    /// Defines values for Origin.
     /// </summary>
-    public static class RunScheduledScan
+    public static class Origin
     {
-        public const string True = "True";
-        public const string False = "False";
+        public const string User = "user";
+        public const string System = "system";
+        public const string Usersystem = "user,system";
     }
 }

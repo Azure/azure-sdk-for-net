@@ -14,30 +14,27 @@ namespace Microsoft.Azure.Management.Automanage.Models
     using System.Linq;
 
     /// <summary>
-    /// Error response
+    /// Automanage configuration profile properties.
     /// </summary>
-    /// <remarks>
-    /// Common error response for all Azure Resource Manager APIs to return
-    /// error details for failed operations. (This also follows the OData error
-    /// response format.).
-    /// </remarks>
-    public partial class ErrorResponse
+    public partial class ConfigurationProfileProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ConfigurationProfileProperties
+        /// class.
         /// </summary>
-        public ErrorResponse()
+        public ConfigurationProfileProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ConfigurationProfileProperties
+        /// class.
         /// </summary>
-        /// <param name="error">The error object.</param>
-        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
+        /// <param name="configuration">configuration</param>
+        public ConfigurationProfileProperties(object configuration = default(object))
         {
-            Error = error;
+            Configuration = configuration;
             CustomInit();
         }
 
@@ -47,10 +44,13 @@ namespace Microsoft.Azure.Management.Automanage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error object.
+        /// Gets or sets configuration
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorDetail Error { get; set; }
+        /// <remarks>
+        /// configuration dictionary of the configuration profile.
+        /// </remarks>
+        [JsonProperty(PropertyName = "configuration")]
+        public object Configuration { get; set; }
 
     }
 }
