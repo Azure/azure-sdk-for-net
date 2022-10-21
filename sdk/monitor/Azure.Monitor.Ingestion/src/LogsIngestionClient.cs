@@ -187,6 +187,7 @@ namespace Azure.Monitor.Ingestion
 
             scope.Start();
             int batchCount = 0; // Keep track of the number of batches as they are uploaded
+
             // Partition the stream into individual blocks
             foreach (BatchedLogs<T> batch in Batch(logs, options))
             {
@@ -213,7 +214,7 @@ namespace Azure.Monitor.Ingestion
             }
 
             // If no exceptions return response
-            return response; //204 - return response of last batch (would include header) or create a blank response with success?
+            return response; //204 - response of last batch with header
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
@@ -314,7 +315,7 @@ namespace Azure.Monitor.Ingestion
             }
 
             // If no exceptions return response
-            return response; //204 - return response of last batch (would include header)
+            return response; //204 - response of last batch with header
         }
 
         private async Task<Response> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
