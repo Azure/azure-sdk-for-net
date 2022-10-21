@@ -88,9 +88,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
             while (count == 0 && maxTries > 0)
             {
                 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
-                TestEnvironment.WorkspaceId,
-                query,
-                new QueryTimeRange(TimeSpan.FromMinutes(30)));
+                    TestEnvironment.WorkspaceId,
+                    query,
+                    new QueryTimeRange(TimeSpan.FromMinutes(30)));
 
                 table = response.Value.Table;
 
