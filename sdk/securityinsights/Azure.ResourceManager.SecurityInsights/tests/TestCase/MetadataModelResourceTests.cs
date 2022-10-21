@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var resourceGroup = await GetResourceGroupAsync();
             var collection = GetFrontDoorCollectionAsync(resourceGroup);
             var groupName = resourceGroup.Data.Name;
-            var input = ResourceDataHelpers.GetMetadataModelData(groupName, DefaultSubscription.Id);
+            var input = ResourceDataHelpers.GetMetadataModelData(groupName, DefaultSubscription.Id, workspaceName);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, modelName, input);
             return lro.Value;
         }

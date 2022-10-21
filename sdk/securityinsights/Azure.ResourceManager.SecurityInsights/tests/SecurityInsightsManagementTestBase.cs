@@ -5,8 +5,10 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using Azure.ResourceManager.OperationalInsights;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests
 {
@@ -14,7 +16,8 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
     {
         protected ArmClient Client { get; private set; }
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
-        protected string workspaceName => "asi-sdk-tests-ws";
+        protected string groupName;
+        protected string workspaceName = "wait to change";
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected SecurityInsightsManagementTestBase(bool isAsync, RecordedTestMode mode)
@@ -37,6 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            groupName = resourceGroupName;
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
@@ -49,5 +53,18 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
                 });
             return rgOp.Value;
         }
+        #region workspace
+        public static WorkspaceData GetWorkspaceData()
+        {
+            var data = new WorkspaceData(AzureLocation.EastUS)
+            {
+                RetentionInDays = 30,
+                Sku = new OperationalInsights.Models.WorkspaceSku(WorkspaceSkuNameEnum.PerNode),
+                PublicNetworkAccessForIngestion = PublicNetworkAccessType.Enabled,
+                PublicNetworkAccessForQuery = PublicNetworkAccessType.Enabled,
+            };
+            return data;
+        }
+        #endregion
     }
 }

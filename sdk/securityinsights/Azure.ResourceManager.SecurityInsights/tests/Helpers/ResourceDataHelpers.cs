@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         {
             var data = new ActionResponseCreateOrUpdateContent()
             {
-                TriggerUri = new Uri("/subscriptions/9023f5b5-df22-4313-8fbf-b4b75af8a6d9/resourceGroups/asi-sdk-tests-rg/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook"),
+                TriggerUri = new Uri("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme1018/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook"),
                 LogicAppResourceId = "https://prod-21.westus2.logic.azure.com:443/workflows/e26c9f2e051e40eebaba9ed9b065c491/triggers/When_Azure_Sentinel_incident_creation_rule_was_triggered/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_Azure_Sentinel_incident_creation_rule_was_triggered%2Frun&sv=1.0&sig=6sGE8BueGEYWNZ0mY8-JYrse4mTk3obUBib9BF5PciQ"
             };
             return data;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
                     ActionConfiguration = new PlaybookActionProperties()
                     {
                         LogicAppResourceId = "/subscriptions/9023f5b5-df22-4313-8fbf-b4b75af8a6d9/resourceGroups/asi-sdk-tests-rg/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook",
-                        TenantId = Guid.Parse("wait")
+                        TenantId = Guid.Parse("d23e3eef-eed0-428f-a2d5-bc48c268e31d")
                     }
                 }
             };
@@ -219,12 +219,12 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.Icon, data2.Icon);
             Assert.AreEqual(data1.Kind, data2.Kind);
         }
-        public static MetadataModelData GetMetadataModelData(string defaultSubscription, string resourceGroup)
+        public static MetadataModelData GetMetadataModelData(string defaultSubscription, string resourceGroup, string workspaceName)
         {
             var data = new MetadataModelData()
             {
                 Kind = SecurityInsightsKind.AnalyticsRule,
-                ParentId = defaultSubscription + "/resourceGroups/"+ resourceGroup + "/providers/" + "Microsoft.OperationalInsights" + "/workspaces/" + "asi-sdk-tests-ws" + "/providers/Microsoft.SecurityInsights/alertRules/" + Guid.NewGuid().ToString(),
+                ParentId = defaultSubscription + "/resourceGroups/"+ resourceGroup + "/providers/" + "Microsoft.OperationalInsights" + "/workspaces/" + workspaceName + "/providers/Microsoft.SecurityInsights/alertRules/" + Guid.NewGuid().ToString(),
                 ContentId = Guid.NewGuid().ToString(),
             };
             return data;
@@ -346,6 +346,21 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
                 ItemsSearchKey = "ipaddress"
             };
             return data;
+        }
+        #endregion
+
+        #region SentinelOnboardingStateData
+        public static void AssertSentinelOnboardingStateData(SentinelOnboardingStateData data1, SentinelOnboardingStateData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.CustomerManagedKey, data2.CustomerManagedKey);
+        }
+        public static SentinelOnboardingStateData GetSentinelOnboardingStateData()
+        {
+            return new SentinelOnboardingStateData()
+            {
+                CustomerManagedKey = false,
+            };
         }
         #endregion
     }

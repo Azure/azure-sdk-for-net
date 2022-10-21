@@ -8,6 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
+using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.SecurityInsights.Tests.Helpers;
 using NUnit.Framework;
 

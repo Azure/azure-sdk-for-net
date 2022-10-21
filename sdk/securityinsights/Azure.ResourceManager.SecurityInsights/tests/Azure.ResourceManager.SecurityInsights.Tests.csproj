@@ -2,4 +2,8 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.SecurityInsights.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\v-zihewang\Documents\GitHub\mcgallan-azure-sdk-for-net\azure-sdk-for-net\sdk\operationalinsights\Azure.ResourceManager.OperationalInsights\src\Azure.ResourceManager.OperationalInsights.csproj" />
+  </ItemGroup>
 </Project>
