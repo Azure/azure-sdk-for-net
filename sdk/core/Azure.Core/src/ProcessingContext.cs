@@ -13,7 +13,7 @@ namespace Azure.Core
         /// <summary>
         /// The start time of the operation.
         /// </summary>
-        public DateTimeOffset OperationStartTime
+        public DateTimeOffset ProcessingStartTime
         {
             get => _message.OperationStartTime;
             set => _message.OperationStartTime = value;

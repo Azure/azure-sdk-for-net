@@ -452,7 +452,7 @@ namespace Azure.Core
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        public Azure.Core.ProcessingContext ProcessingContext { get { throw null; } set { } }
+        public Azure.Core.ProcessingContext ProcessingContext { get { throw null; } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
@@ -472,11 +472,13 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class ProcessingContext
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProcessingContext
     {
-        public ProcessingContext() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public System.Exception? LastException { get { throw null; } set { } }
-        public System.DateTimeOffset OperationStartTime { get { throw null; } set { } }
+        public System.DateTimeOffset ProcessingStartTime { get { throw null; } set { } }
         public int RetryNumber { get { throw null; } set { } }
     }
     public abstract partial class Request : System.IDisposable
