@@ -362,26 +362,6 @@ namespace Azure.Core.Tests
             {
             }
 
-            protected internal override bool ShouldRetry(HttpMessage message)
-            {
-                return base.ShouldRetry(message);
-            }
-
-            protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message)
-            {
-                return base.ShouldRetryAsync(message);
-            }
-
-            protected internal override TimeSpan CalculateNextDelay(HttpMessage message)
-            {
-                return base.CalculateNextDelay(message);
-            }
-
-            protected internal override ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message)
-            {
-                return base.CalculateNextDelayAsync(message);
-            }
-
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
             internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
