@@ -84,15 +84,19 @@ generate-virtual-operations:
 - ApiDiagnostic_Get
 - ApiDiagnostic_Update
 - ApiDiagnostic_Delete
+- ApiDiagnostic_GetEntityTag
 - Diagnostic_Get
 - Diagnostic_Update
 - Diagnostic_Delete
+- Diagnostic_GetEntityTag
 - Policy_Get
 - Policy_CreateOrUpdate
 - Policy_Delete
+- Policy_GetEntityTag
 - ProductPolicy_Get
 - ProductPolicy_CreateOrUpdate
 - ProductPolicy_Delete
+- ProductPolicy_GetEntityTag
 - Tag_GetByProduct
 - UserSubscription_Get
 - Subscription_Get
@@ -100,9 +104,11 @@ generate-virtual-operations:
 - ApiPolicy_Get
 - ApiPolicy_CreateOrUpdate
 - ApiPolicy_Delete
+- ApiPolicy_GetEntityTag
 - ApiOperationPolicy_Get
 - ApiOperationPolicy_CreateOrUpdate
 - ApiOperationPolicy_Delete
+- ApiOperationPolicy_GetEntityTag
 - Tag_GetByOperation
 - Tag_GetByApi
 

@@ -1,5 +1,15 @@
 namespace Azure.ResourceManager.Billing
 {
+    public abstract partial class BaseBillingPaymentMethodResource : Azure.ResourceManager.ArmResource
+    {
+        protected BaseBillingPaymentMethodResource() { }
+        public virtual Azure.ResourceManager.Billing.BillingPaymentMethodData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public Azure.Response<Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.Response<Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public partial class BillingAccountPaymentMethodCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>, System.Collections.IEnumerable
     {
         protected BillingAccountPaymentMethodCollection() { }
@@ -13,15 +23,15 @@ namespace Azure.ResourceManager.Billing
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BillingAccountPaymentMethodResource : Azure.ResourceManager.ArmResource
+    public partial class BillingAccountPaymentMethodResource : Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected BillingAccountPaymentMethodResource() { }
-        public virtual Azure.ResourceManager.Billing.BillingPaymentMethodData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string paymentMethodName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class BillingExtensions
     {
@@ -101,17 +111,17 @@ namespace Azure.ResourceManager.Billing
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BillingPaymentMethodResource : Azure.ResourceManager.ArmResource
+    public partial class BillingPaymentMethodResource : Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected BillingPaymentMethodResource() { }
-        public virtual Azure.ResourceManager.Billing.BillingPaymentMethodData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string paymentMethodName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BaseBillingPaymentMethodResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BillingSubscriptionAliasCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource>, System.Collections.IEnumerable
     {
