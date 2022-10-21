@@ -9,11 +9,12 @@
     <PackageTags>Microsoft Azure Application Configuration;Data;AppConfig;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;AZC0007;AZC0006</NoWarn>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource> 
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!-- <PackageReference Include="Azure.Core" /> -->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

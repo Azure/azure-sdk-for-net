@@ -79,7 +79,13 @@ function DeployStressTests(
         }
         return $true
     })]
-    [System.IO.FileInfo]$LocalAddonsPath
+    [System.IO.FileInfo]$LocalAddonsPath,
+    [Parameter(Mandatory=$False)][string]$MatrixFileName,
+    [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
+    [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
+    [Parameter(Mandatory=$False)][array]$MatrixFilters,
+    [Parameter(Mandatory=$False)][array]$MatrixReplace,
+    [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters
 ) {
     if ($environment -eq 'pg') {
         if ($clusterGroup -or $subscription) {
@@ -115,9 +121,17 @@ function DeployStressTests(
 
     Run helm repo update
     if ($LASTEXITCODE) { return $LASTEXITCODE }
-
     $deployer = if ($deployId) { $deployId } else { GetUsername }
-    $pkgs = FindStressPackages -directory $searchDirectory -filters $filters -CI:$CI -namespaceOverride $Namespace
+    $pkgs = @(FindStressPackages `
+                -directory $searchDirectory `
+                -filters $filters `
+                -CI:$CI `
+                -namespaceOverride $Namespace `
+                -MatrixSelection $MatrixSelection `
+                -MatrixFileName $MatrixFileName `
+                -MatrixFilters $MatrixFilters `
+                -MatrixReplace $MatrixReplace `
+                -MatrixNonSparseParameters $MatrixNonSparseParameters)
     Write-Host "" "Found $($pkgs.Length) stress test packages:"
     Write-Host $pkgs.Directory ""
     foreach ($pkg in $pkgs) {
@@ -164,59 +178,96 @@ function DeployStressPackage(
         if ($LASTEXITCODE) { return }
     }
 
-    $imageTag = "${registryName}.azurecr.io"
+    $imageTagBase = "${registryName}.azurecr.io"
     if ($repositoryBase) {
-        $imageTag += "/$repositoryBase"
+        $imageTagBase += "/$repositoryBase"
     }
-    $imageTag += "/$($pkg.Namespace)/$($pkg.ReleaseName):${deployId}"
-
-    $dockerFilePath = if ($pkg.Dockerfile) {
-        Join-Path $pkg.Directory $pkg.Dockerfile
-    } else {
-        "$($pkg.Directory)/Dockerfile"
-    }
-    $dockerFilePath = [System.IO.Path]::GetFullPath($dockerFilePath)
-
-    if ($pushImages -and (Test-Path $dockerFilePath)) {
-        Write-Host "Building and pushing stress test docker image '$imageTag'"
-        $dockerFile = Get-ChildItem $dockerFilePath
-        $dockerBuildFolder = if ($pkg.DockerBuildDir) {
-            Join-Path $pkg.Directory $pkg.DockerBuildDir
-        } else {
-            $dockerFile.DirectoryName
-        }
-        $dockerBuildFolder = [System.IO.Path]::GetFullPath($dockerBuildFolder).Trim()
-
-        Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
-        if ($LASTEXITCODE) { return }
-
-        Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
-        Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
-        Write-Host "  docker run -it $imageTag <shell, e.g. 'bash' 'pwsh' 'sh'>" -ForegroundColor DarkBlue
-        Write-Host "To show installed container images:" -ForegroundColor Blue
-        Write-Host "  docker image ls" -ForegroundColor DarkBlue
-        Write-Host "To show running containers:" -ForegroundColor Blue
-        Write-Host "  docker ps" -ForegroundColor DarkBlue
-
-        Run docker push $imageTag
-        if ($LASTEXITCODE) {
-            if ($login) {
-                Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
-            }
-            return
-        }
-    }
+    $imageTagBase += "/$($pkg.Namespace)/$($pkg.ReleaseName)"
 
     Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
     kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
     if ($LASTEXITCODE) {exit $LASTEXITCODE}
 
+    $dockerBuildConfigs = @()
+    
+    $genValFile = Join-Path $pkg.Directory "generatedValues.yaml"
+    $genVal = Get-Content $genValFile -Raw | ConvertFrom-Yaml -Ordered
+    if (Test-Path $genValFile) {
+        $scenarios = $genVal.Scenarios
+        foreach ($scenario in $scenarios) {
+            if ("image" -in $scenario.keys) {
+                $dockerFilePath = Join-Path $pkg.Directory $scenario.image
+            } else {
+                $dockerFilePath = "$($pkg.Directory)/Dockerfile"
+            }
+            $dockerFilePath = [System.IO.Path]::GetFullPath($dockerFilePath).Trim()
+
+            if ("imageBuildDir" -in $scenario.keys) {
+                $dockerBuildDir = Join-Path $pkg.Directory $scenario.imageBuildDir
+            } else {
+                $dockerBuildDir = Split-Path $dockerFilePath
+            }
+            $dockerBuildDir = [System.IO.Path]::GetFullPath($dockerBuildDir).Trim()
+            $dockerBuildConfigs += @{"dockerFilePath"=$dockerFilePath; "dockerBuildDir"=$dockerBuildDir}
+        }
+    }
+    if ($pkg.Dockerfile -or $pkg.DockerBuildDir) {
+        throw "The chart.yaml docker config is depracated, please use the scenarios matrix instead."
+    }
+    
+
+    foreach ($dockerBuildConfig in $dockerBuildConfigs) {
+        $dockerFilePath = $dockerBuildConfig.dockerFilePath
+        $dockerBuildFolder = $dockerBuildConfig.dockerBuildDir
+        if (!(Test-Path $dockerFilePath)) {
+            throw "Invalid dockerfile path, cannot find dockerfile at ${dockerFilePath}"
+        }
+        if (!(Test-Path $dockerBuildFolder)) {
+            throw "Invalid docker build directory, cannot find directory ${dockerBuildFolder}"
+        }
+        $dockerfileName = ($dockerFilePath -split { $_ -in '\', '/' })[-1].ToLower()
+        $imageTag = $imageTagBase + "/${dockerfileName}:${deployId}"
+        if ($pushImages) {
+            Write-Host "Building and pushing stress test docker image '$imageTag'"
+            $dockerFile = Get-ChildItem $dockerFilePath
+
+            Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
+
+            Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
+            Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
+            Write-Host "  docker run -it $imageTag <shell, e.g. 'bash' 'pwsh' 'sh'>" -ForegroundColor DarkBlue
+            Write-Host "To show installed container images:" -ForegroundColor Blue
+            Write-Host "  docker image ls" -ForegroundColor DarkBlue
+            Write-Host "To show running containers:" -ForegroundColor Blue
+            Write-Host "  docker ps" -ForegroundColor DarkBlue
+
+            Run docker push $imageTag
+            if ($LASTEXITCODE) {
+                if ($login) {
+                    Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
+                }
+            }
+        }
+        $genVal.scenarios = foreach ($scenario in $genVal.scenarios) {
+            $dockerPath = Join-Path $pkg.Directory $scenario.image
+            if ("image" -notin $scenario) {
+                $dockerPath = $dockerFilePath
+            }
+            if ([System.IO.Path]::GetFullPath($dockerPath) -eq $dockerFilePath) {
+                $scenario.imageTag = $imageTag
+            }
+            $scenario
+        }
+
+        $genVal | ConvertTo-Yaml | Out-File -FilePath $genValFile
+    }
+
     Write-Host "Installing or upgrading stress test $($pkg.ReleaseName) from $($pkg.Directory)"
     Run helm upgrade $pkg.ReleaseName $pkg.Directory `
         -n $pkg.Namespace `
         --install `
-        --set image=$imageTag `
-        --set stress-test-addons.env=$environment
+        --set stress-test-addons.env=$environment `
+        --values generatedValues.yaml
     if ($LASTEXITCODE) {
         # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'
         # can be the result of cancelled `upgrade` operations (e.g. ctrl-c).

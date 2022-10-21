@@ -1,14 +1,16 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.0-beta.3 (2022-10-21)
 
 ### Bugs Fixed
 
-### Other Changes
+- Deprecate `RegistryUri` property and replace it with `RegistryAddress` in `ContainerRegistryImportSource`.
+
+## 1.0.2 (2022-10-21)
+
+### Bug Fixes
+
+- Deprecate `RegistryUri` property and replace it with `RegistryAddress` in `ContainerRegistryImportSource`.
 
 ## 1.1.0-beta.2 (2022-09-14)
 

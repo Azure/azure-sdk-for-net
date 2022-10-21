@@ -113,6 +113,18 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
+    public abstract partial class NullableResponse<T>
+    {
+        protected NullableResponse() { }
+        public abstract bool HasValue { get; }
+        public abstract T Value { get; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public abstract Azure.Response GetRawResponse();
+        public override string ToString() { throw null; }
+    }
     public abstract partial class Operation
     {
         protected Operation() { }
@@ -239,17 +251,16 @@ namespace Azure
         public string? Message { get { throw null; } }
         public override string ToString() { throw null; }
     }
-    public abstract partial class Response<T>
+    public abstract partial class Response<T> : Azure.NullableResponse<T>
     {
         protected Response() { }
-        public abstract T Value { get; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool HasValue { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public abstract Azure.Response GetRawResponse();
         public static implicit operator T (Azure.Response<T> response) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SyncAsyncEventArgs : System.EventArgs
     {
@@ -554,11 +565,15 @@ namespace Azure.Core
         public string? Host { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public string PathAndQuery { get { throw null; } }
+        protected int PathLength { get { throw null; } }
         public int Port { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
+        protected int QueryLength { get { throw null; } }
         public string? Scheme { get { throw null; } set { } }
+        public void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
         public void AppendPath(string value) { }
         public void AppendPath(string value, bool escape) { }
+        public void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
         public void AppendQuery(string name, string value) { }
         public void AppendQuery(string name, string value, bool escapeValue) { }
         public void Reset(System.Uri value) { }

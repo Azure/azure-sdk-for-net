@@ -12,7 +12,7 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The AddParticipantsRequest. </summary>
+    /// <summary> The request payload for adding participants to the call. </summary>
     internal partial class AddParticipantsRequestInternal
     {
         /// <summary> Initializes a new instance of AddParticipantsRequestInternal. </summary>
@@ -28,7 +28,10 @@ namespace Azure.Communication.CallAutomation
             ParticipantsToAdd = participantsToAdd.ToList();
         }
 
-        /// <summary> The source caller Id that&apos;s shown to the PSTN participant being invited. Required only when inviting a PSTN participant. </summary>
+        /// <summary>
+        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited. 
+        /// Required only when inviting a PSTN participant.
+        /// </summary>
         public PhoneNumberIdentifierModel SourceCallerId { get; set; }
         /// <summary> The participants to invite. </summary>
         public IList<CommunicationIdentifierModel> ParticipantsToAdd { get; }
@@ -37,7 +40,7 @@ namespace Azure.Communication.CallAutomation
         /// The maximum value of this is 180 seconds
         /// </summary>
         public int? InvitationTimeoutInSeconds { get; set; }
-        /// <summary> The operation context. </summary>
+        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
     }
 }

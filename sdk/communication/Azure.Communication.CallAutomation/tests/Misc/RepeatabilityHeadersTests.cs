@@ -49,92 +49,84 @@ namespace Azure.Communication.CallAutomation.Tests.Misc
         }
 
         [Test]
-        public void RepeatablityHeaders_IsSetByDefault_AnswerCallOptions()
+        public void RepeatablityHeaders_IsNotSetByDefault_AnswerCallOptions()
         {
             // arrange
             var options = new AnswerCallOptions("context", new Uri("https://contoso.com/callback"));
 
             // act & assert
-            Assert.IsNotNull(options.RepeatabilityHeaders);
-            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+            Assert.IsNull(options.RepeatabilityHeaders);
         }
 
         [Test]
-        public void RepeatablityHeaders_IsSetByDefault_RedirectCallOptions()
+        public void RepeatablityHeaders_IsNotSetByDefault_RedirectCallOptions()
         {
             // arrange
             var options = new RedirectCallOptions("context", new CommunicationUserIdentifier("user1"));
 
             // act & assert
-            Assert.IsNotNull(options.RepeatabilityHeaders);
-            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+            Assert.IsNull(options.RepeatabilityHeaders);
         }
 
         [Test]
-        public void RepeatablityHeaders_IsSetByDefault_RejectCallOptions()
+        public void RepeatablityHeaders_IsNotSetByDefault_RejectCallOptions()
         {
             // arrange
             var options = new RejectCallOptions("context");
             options.CallRejectReason = CallRejectReason.Busy;
 
             // act & assert
-            Assert.IsNotNull(options.RepeatabilityHeaders);
-            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+            Assert.IsNull(options.RepeatabilityHeaders);
         }
 
         [Test]
-        public void RepeatablityHeaders_IsSetByDefault_CreateCallOptions()
+        public void RepeatablityHeaders_IsNotSetByDefault_CreateCallOptions()
         {
             // arrange
             var options = new CreateCallOptions(new CallSource(new CommunicationUserIdentifier("8:acs:blahblahblah")), new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:acs:lalala") }, new Uri("https://contoso.com/callback"));
 
             // act & assert
-            Assert.IsNotNull(options.RepeatabilityHeaders);
-            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+            Assert.IsNull(options.RepeatabilityHeaders);
         }
 
         [Test]
-        public void RepeatablityHeaders_IsSetByDefault_HangUpOptions()
+        public void RepeatablityHeaders_IsNotSetByDefault_HangUpOptions()
         {
             // arrange
             var options = new HangUpOptions(true);
 
             // act & assert
-            Assert.IsNotNull(options.RepeatabilityHeaders);
-            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+            Assert.IsNull(options.RepeatabilityHeaders);
         }
 
         [Test]
-        public void RepeatablityHeaders_IsSetByDefault_TransferCallOptions()
+        public void RepeatablityHeaders_IsNotSetByDefault_TransferCallOptions()
         {
             // arrange
             var options = new TransferToParticipantOptions(new CommunicationUserIdentifier("8:acs:blahblahblah"));
 
             // act & assert
-            Assert.IsNotNull(options.RepeatabilityHeaders);
-            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+            Assert.IsNull(options.RepeatabilityHeaders);
         }
 
         [Test]
-        public void RepeatablityHeaders_IsSetByDefault_AddParticipantsOptions()
+        public void RepeatablityHeaders_IsNotSetByDefault_AddParticipantsOptions()
         {
             // arrange
             var options = new AddParticipantsOptions(new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:acs:blahblahblah") });
 
             // act & assert
-            Assert.IsNotNull(options.RepeatabilityHeaders);
-            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+            Assert.IsNull(options.RepeatabilityHeaders);
         }
 
         [Test]
-        public void RepeatablityHeaders_IsSetByDefault_RemoveParticipantsOptions()
+        public void RepeatablityHeaders_IsNotSetByDefault_RemoveParticipantsOptions()
         {
             // arrange
             var options = new RemoveParticipantsOptions(new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:acs:blahblahblah") });
 
             // act & assert
-            Assert.IsNotNull(options.RepeatabilityHeaders);
-            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+            Assert.IsNull(options.RepeatabilityHeaders);
         }
 
         [Test]

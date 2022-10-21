@@ -30,12 +30,5 @@ namespace Azure.ResourceManager.Consumption
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
-
-        /// <summary> Gets a collection of BudgetResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of BudgetResources and their operations over a BudgetResource. </returns>
-        public virtual BudgetCollection GetBudgets()
-        {
-            return GetCachedClient(Client => new BudgetCollection(Client, Id));
-        }
     }
 }
