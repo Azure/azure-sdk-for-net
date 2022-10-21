@@ -23,7 +23,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Input Managed Identity Details. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource properties. </summary>
-        public PatchBackupVaultInput Properties { get; set; }
+        internal PatchBackupVaultInput Properties { get; set; }
+        /// <summary> Gets or sets the azure monitor alert alerts for all job failures. </summary>
+        public AlertsState? AzureMonitorAlertAlertsForAllJobFailures
+        {
+            get => Properties is null ? default : Properties.AzureMonitorAlertAlertsForAllJobFailures;
+            set
+            {
+                if (Properties is null)
+                    Properties = new PatchBackupVaultInput();
+                Properties.AzureMonitorAlertAlertsForAllJobFailures = value;
+            }
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

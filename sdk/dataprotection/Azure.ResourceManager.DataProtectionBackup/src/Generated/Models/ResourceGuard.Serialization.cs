@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ResourceGuard DeserializeResourceGuard(JsonElement element)
         {
-            Optional<ResourceGuardProvisioningState> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             Optional<bool> allowAutoApprovals = default;
             Optional<IReadOnlyList<ResourceGuardOperation>> resourceGuardOperations = default;
             Optional<IList<string>> vaultCriticalOperationExclusionList = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ResourceGuardProvisioningState(property.Value.GetString());
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allowAutoApprovals"))

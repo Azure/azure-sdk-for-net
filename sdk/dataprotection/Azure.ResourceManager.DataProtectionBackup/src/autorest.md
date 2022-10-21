@@ -9,6 +9,7 @@ csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
 require: https://github.com/Azure/azure-rest-api-specs/blob/33d5054122e52490eef9925d6cbe801f28b88e18/specification/dataprotection/resource-manager/readme.md
+tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -67,22 +68,17 @@ directive:
   - remove-operation: DataProtectionOperations_List
   - remove-operation: BackupInstances_GetBackupInstanceOperationResult
   - remove-operation: ExportJobsOperationResult_Get
-# Enable the x-ms-skip-url-encoding extension for {resourceId}
-  - from: dataprotection.json
-    where: $.parameters
-    transform: >
-      $.ResourceId['x-ms-skip-url-encoding'] = true;
+# Enable the x-ms-skip-url-encoding extension for {resourceId} (Comment out as this parameter doesn't exist in this stable API version)
+#  - from: dataprotection.json
+#    where: $.parameters
+#    transform: >
+#      $.ResourceId['x-ms-skip-url-encoding'] = true;
 # Work around the issue https://github.com/Azure/autorest.csharp/issues/2740
   - from: dataprotection.json
     where: $.definitions
     transform: >
       delete $.BackupVaultResourceList.allOf;
       $.BackupVaultResourceList.properties.nextLink = {
-          "description": "The uri to fetch the next page of resources. Call ListNext() fetches next page of resources.",
-          "type": "string"
-      };
-      delete $.ResourceGuardProxyBaseResourceList.allOf;
-      $.ResourceGuardProxyBaseResourceList.properties.nextLink = {
           "description": "The uri to fetch the next page of resources. Call ListNext() fetches next page of resources.",
           "type": "string"
       };
@@ -106,14 +102,19 @@ directive:
           "description": "The uri to fetch the next page of resources. Call ListNext() fetches next page of resources.",
           "type": "string"
       };
-      delete $.DeletedBackupInstanceResourceList.allOf;
-      $.DeletedBackupInstanceResourceList.properties.nextLink = {
-          "description": "The uri to fetch the next page of resources. Call ListNext() fetches next page of resources.",
-          "type": "string"
-      };
       delete $.ResourceGuardResourceList.allOf;
       $.ResourceGuardResourceList.properties.nextLink = {
           "description": "The uri to fetch the next page of resources. Call ListNext() fetches next page of resources.",
           "type": "string"
       };
+#      delete $.ResourceGuardProxyBaseResourceList.allOf;
+#      $.ResourceGuardProxyBaseResourceList.properties.nextLink = {
+#          "description": "The uri to fetch the next page of resources. Call ListNext() fetches next page of resources.",
+#          "type": "string"
+#      };
+#      delete $.DeletedBackupInstanceResourceList.allOf;
+#      $.DeletedBackupInstanceResourceList.properties.nextLink = {
+#          "description": "The uri to fetch the next page of resources. Call ListNext() fetches next page of resources.",
+#          "type": "string"
+#      };
 ```

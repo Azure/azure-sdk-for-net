@@ -32,16 +32,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
         /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
-        /// <param name="securitySettings"> Security Settings. </param>
         /// <param name="storageSettings"> Storage Settings. </param>
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
-        internal BackupVault(MonitoringSettings monitoringSettings, ProvisioningState? provisioningState, ResourceMoveState? resourceMoveState, ResourceMoveDetails resourceMoveDetails, SecuritySettings securitySettings, IList<StorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard)
+        internal BackupVault(MonitoringSettings monitoringSettings, ProvisioningState? provisioningState, ResourceMoveState? resourceMoveState, ResourceMoveDetails resourceMoveDetails, IList<StorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
             ResourceMoveState = resourceMoveState;
             ResourceMoveDetails = resourceMoveDetails;
-            SecuritySettings = securitySettings;
             StorageSettings = storageSettings;
             IsVaultProtectedByResourceGuard = isVaultProtectedByResourceGuard;
         }
@@ -66,8 +64,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public ResourceMoveState? ResourceMoveState { get; }
         /// <summary> Resource move details for backup vault. </summary>
         public ResourceMoveDetails ResourceMoveDetails { get; }
-        /// <summary> Security Settings. </summary>
-        public SecuritySettings SecuritySettings { get; set; }
         /// <summary> Storage Settings. </summary>
         public IList<StorageSetting> StorageSettings { get; }
         /// <summary> Is vault protected by resource guard. </summary>

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Backup Vault Contract for Patch Backup Vault API. </summary>
-    public partial class PatchBackupVaultInput
+    internal partial class PatchBackupVaultInput
     {
         /// <summary> Initializes a new instance of PatchBackupVaultInput. </summary>
         public PatchBackupVaultInput()
@@ -28,8 +28,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 MonitoringSettings.AzureMonitorAlertAlertsForAllJobFailures = value;
             }
         }
-
-        /// <summary> Security Settings. </summary>
-        public SecuritySettings SecuritySettings { get; set; }
     }
 }

@@ -142,12 +142,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.BaseBackupPolicyResource> GetBaseBackupPolicyResource(string backupPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.BaseBackupPolicyResource>> GetBaseBackupPolicyResourceAsync(string backupPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataProtectionBackup.BaseBackupPolicyResourceCollection GetBaseBackupPolicyResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource> GetDeletedBackupInstanceResource(string backupInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource>> GetDeletedBackupInstanceResourceAsync(string backupInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResourceCollection GetDeletedBackupInstanceResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> GetResourceGuardProxyBaseResource(string resourceGuardProxyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>> GetResourceGuardProxyBaseResourceAsync(string resourceGuardProxyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceCollection GetResourceGuardProxyBaseResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.BackupVaultResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.BackupVaultResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.BackupVaultResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -231,12 +225,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public static Azure.Pageable<Azure.ResourceManager.DataProtectionBackup.BackupVaultResource> GetBackupVaultResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DataProtectionBackup.BackupVaultResource> GetBackupVaultResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.BaseBackupPolicyResource GetBaseBackupPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource GetDeletedBackupInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardDeleteProtectedItemRequestResource GetResourceGuardDeleteProtectedItemRequestResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardDeleteResourceGuardProxyRequestResource GetResourceGuardDeleteResourceGuardProxyRequestResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardDisableSoftDeleteRequestResource GetResourceGuardDisableSoftDeleteRequestResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardGetBackupSecurityPINRequestResource GetResourceGuardGetBackupSecurityPINRequestResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardResource GetResourceGuardResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardResource> GetResourceGuardResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceGuardsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardResource>> GetResourceGuardResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceGuardsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -245,36 +237,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public static Azure.AsyncPageable<Azure.ResourceManager.DataProtectionBackup.ResourceGuardResource> GetResourceGuardResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardUpdateProtectedItemRequestResource GetResourceGuardUpdateProtectedItemRequestResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardUpdateProtectionPolicyRequestResource GetResourceGuardUpdateProtectionPolicyRequestResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-    }
-    public partial class DeletedBackupInstanceResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DeletedBackupInstanceResource() { }
-        public virtual Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Undelete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UndeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DeletedBackupInstanceResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource>, System.Collections.IEnumerable
-    {
-        protected DeletedBackupInstanceResourceCollection() { }
-        public virtual Azure.Response<bool> Exists(string backupInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string backupInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource> Get(string backupInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource>> GetAsync(string backupInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.DeletedBackupInstanceResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class DeletedBackupInstanceResourceData : Azure.ResourceManager.Models.ResourceData
-    {
-        public DeletedBackupInstanceResourceData() { }
-        public Azure.ResourceManager.DataProtectionBackup.Models.DeletedBackupInstance Properties { get { throw null; } set { } }
     }
     public partial class DppBaseResourceData
     {
@@ -374,42 +336,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardGetBackupSecurityPINRequestResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardGetBackupSecurityPINRequestResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ResourceGuardProxyBaseResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ResourceGuardProxyBaseResource() { }
-        public virtual Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string resourceGuardProxyName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.Models.UnlockDeleteResponse> UnlockDelete(Azure.ResourceManager.DataProtectionBackup.Models.UnlockDeleteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.Models.UnlockDeleteResponse>> UnlockDeleteAsync(Azure.ResourceManager.DataProtectionBackup.Models.UnlockDeleteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ResourceGuardProxyBaseResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>, System.Collections.IEnumerable
-    {
-        protected ResourceGuardProxyBaseResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string resourceGuardProxyName, Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string resourceGuardProxyName, Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string resourceGuardProxyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string resourceGuardProxyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> Get(string resourceGuardProxyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>> GetAsync(string resourceGuardProxyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ResourceGuardProxyBaseResourceData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ResourceGuardProxyBaseResourceData() { }
-        public Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProxyBase Properties { get { throw null; } set { } }
     }
     public partial class ResourceGuardResource : Azure.ResourceManager.ArmResource
     {
@@ -752,7 +678,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public Azure.ResourceManager.DataProtectionBackup.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataProtectionBackup.Models.ResourceMoveDetails ResourceMoveDetails { get { throw null; } }
         public Azure.ResourceManager.DataProtectionBackup.Models.ResourceMoveState? ResourceMoveState { get { throw null; } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.SecuritySettings SecuritySettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.StorageSetting> StorageSettings { get { throw null; } }
     }
     public abstract partial class BaseBackupPolicy
@@ -900,23 +825,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.DayOfWeek left, Azure.ResourceManager.DataProtectionBackup.Models.DayOfWeek right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeletedBackupInstance : Azure.ResourceManager.DataProtectionBackup.Models.BackupInstance
-    {
-        public DeletedBackupInstance(Azure.ResourceManager.DataProtectionBackup.Models.Datasource dataSourceInfo, Azure.ResourceManager.DataProtectionBackup.Models.PolicyInfo policyInfo, string objectType) : base (default(Azure.ResourceManager.DataProtectionBackup.Models.Datasource), default(Azure.ResourceManager.DataProtectionBackup.Models.PolicyInfo), default(string)) { }
-        public Azure.ResourceManager.DataProtectionBackup.Models.DeletionInfo DeletionInfo { get { throw null; } }
-    }
     public abstract partial class DeleteOption
     {
         protected DeleteOption(System.TimeSpan duration) { }
         public System.TimeSpan Duration { get { throw null; } set { } }
-    }
-    public partial class DeletionInfo
-    {
-        internal DeletionInfo() { }
-        public string BillingEndDate { get { throw null; } }
-        public string DeleteActivityId { get { throw null; } }
-        public string DeletionTime { get { throw null; } }
-        public string ScheduledPurgeTime { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FeatureSupportStatus : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.FeatureSupportStatus>
@@ -981,25 +893,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class ImmediateCopyOption : Azure.ResourceManager.DataProtectionBackup.Models.CopyOption
     {
         public ImmediateCopyOption() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ImmutabilityState : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ImmutabilityState(string value) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState Locked { get { throw null; } }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState Unlocked { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState left, Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState left, Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public abstract partial class ItemLevelRestoreCriteria
     {
@@ -1082,17 +975,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         internal OperationJobExtendedInfo() { }
         public string JobId { get { throw null; } }
     }
-    public partial class PatchBackupVaultInput
-    {
-        public PatchBackupVaultInput() { }
-        public Azure.ResourceManager.DataProtectionBackup.Models.AlertsState? AzureMonitorAlertAlertsForAllJobFailures { get { throw null; } set { } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.SecuritySettings SecuritySettings { get { throw null; } set { } }
-    }
     public partial class PatchResourceRequestInput
     {
         public PatchResourceRequestInput() { }
+        public Azure.ResourceManager.DataProtectionBackup.Models.AlertsState? AzureMonitorAlertAlertsForAllJobFailures { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.PatchBackupVaultInput Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class PolicyInfo
@@ -1210,7 +1097,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public ResourceGuard() { }
         public bool? AllowAutoApprovals { get { throw null; } }
         public string Description { get { throw null; } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardOperation> ResourceGuardOperations { get { throw null; } }
         public System.Collections.Generic.IList<string> VaultCriticalOperationExclusionList { get { throw null; } }
     }
@@ -1219,41 +1106,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         internal ResourceGuardOperation() { }
         public string RequestResourceType { get { throw null; } }
         public string VaultCriticalOperation { get { throw null; } }
-    }
-    public partial class ResourceGuardOperationDetail
-    {
-        public ResourceGuardOperationDetail() { }
-        public string DefaultResourceRequest { get { throw null; } set { } }
-        public string VaultCriticalOperation { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceGuardProvisioningState : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceGuardProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState Unknown { get { throw null; } }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState left, Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState left, Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ResourceGuardProxyBase
-    {
-        public ResourceGuardProxyBase() { }
-        public string Description { get { throw null; } set { } }
-        public string LastUpdatedTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardOperationDetail> ResourceGuardOperationDetails { get { throw null; } }
-        public string ResourceGuardResourceId { get { throw null; } set { } }
     }
     public partial class ResourceMoveDetails
     {
@@ -1412,37 +1264,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType left, Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecuritySettings
-    {
-        public SecuritySettings() { }
-        public Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityState? ImmutabilityState { get { throw null; } set { } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteSettings SoftDeleteSettings { get { throw null; } set { } }
-    }
-    public partial class SoftDeleteSettings
-    {
-        public SoftDeleteSettings() { }
-        public double? RetentionDurationInDays { get { throw null; } set { } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState? State { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SoftDeleteState : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SoftDeleteState(string value) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState AlwaysOn { get { throw null; } }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState Off { get { throw null; } }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState On { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState left, Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState left, Azure.ResourceManager.DataProtectionBackup.Models.SoftDeleteState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SourceDataStoreType : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType>
     {
@@ -1594,17 +1415,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public abstract partial class TriggerContext
     {
         protected TriggerContext() { }
-    }
-    public partial class UnlockDeleteContent
-    {
-        public UnlockDeleteContent() { }
-        public System.Collections.Generic.IList<string> ResourceGuardOperationRequests { get { throw null; } }
-        public string ResourceToBeDeleted { get { throw null; } set { } }
-    }
-    public partial class UnlockDeleteResponse
-    {
-        internal UnlockDeleteResponse() { }
-        public string UnlockDeleteExpiryTime { get { throw null; } }
     }
     public partial class ValidateForBackupContent
     {

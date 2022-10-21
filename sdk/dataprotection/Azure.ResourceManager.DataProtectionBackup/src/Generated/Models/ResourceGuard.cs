@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperations"> {readonly} List of operation details those are protected by the ResourceGuard resource. </param>
         /// <param name="vaultCriticalOperationExclusionList"> List of critical operations which are not protected by this resourceGuard. </param>
         /// <param name="description"> Description about the pre-req steps to perform all the critical operations. </param>
-        internal ResourceGuard(ResourceGuardProvisioningState? provisioningState, bool? allowAutoApprovals, IReadOnlyList<ResourceGuardOperation> resourceGuardOperations, IList<string> vaultCriticalOperationExclusionList, string description)
+        internal ResourceGuard(ProvisioningState? provisioningState, bool? allowAutoApprovals, IReadOnlyList<ResourceGuardOperation> resourceGuardOperations, IList<string> vaultCriticalOperationExclusionList, string description)
         {
             ProvisioningState = provisioningState;
             AllowAutoApprovals = allowAutoApprovals;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Provisioning state of the BackupVault resource. </summary>
-        public ResourceGuardProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> This flag indicates whether auto approval is allowed or not. </summary>
         public bool? AllowAutoApprovals { get; }
         /// <summary> {readonly} List of operation details those are protected by the ResourceGuard resource. </summary>
