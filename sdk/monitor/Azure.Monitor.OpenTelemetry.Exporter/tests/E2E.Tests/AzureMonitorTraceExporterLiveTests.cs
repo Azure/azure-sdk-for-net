@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
     using NUnit.Framework;
 
     /// <summary>
-    /// Collection of tests to evaluate the <see cref="AzureMonitorLogExporter"/>.
+    /// Collection of tests to evaluate the <see cref="AzureMonitorTraceExporter"/>.
     /// </summary>
     public class AzureMonitorTraceExporterLiveTests : RecordedTestBase<MonitorExporterTestEnvironment>
     {
