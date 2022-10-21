@@ -5,7 +5,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal AssetConversionConfiguration() { }
         public System.Numerics.Vector3? AssetDimensions { get { throw null; } }
         public System.Numerics.Vector3? BoundingBoxCenter { get { throw null; } }
-        public bool? DisableDetectScaleUnits { get { throw null; } }
+        public bool DisableDetectScaleUnits { get { throw null; } }
         public System.Numerics.Vector3 Gravity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.MixedReality.ObjectAnchors.Conversion.TrajectoryPose> GroundTruthTrajectoryCameraPoses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<int> KeyFrameIndexes { get { throw null; } }
@@ -33,7 +33,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     {
         public AssetConversionOptions(System.Uri inputAssetUri, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, Azure.MixedReality.ObjectAnchors.Conversion.AssetLengthUnit unit, bool disableDetectScaleUnits = false) { }
         public AssetConversionOptions(System.Uri inputAssetUri, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, float assetScale, bool disableDetectScaleUnits = false) { }
-        public bool? DisableDetectScaleUnits { get { throw null; } }
+        public bool DisableDetectScaleUnits { get { throw null; } }
         public System.Numerics.Vector3 Gravity { get { throw null; } }
         public Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType InputAssetFileType { get { throw null; } }
         public System.Uri InputAssetUri { get { throw null; } }
