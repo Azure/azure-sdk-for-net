@@ -33,7 +33,6 @@ namespace Azure.Core
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
-            ProcessingStartTime = DateTimeOffset.UtcNow;
         }
 
         /// <summary>

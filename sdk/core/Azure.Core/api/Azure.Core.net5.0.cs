@@ -478,8 +478,8 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public System.Exception? LastException { get { throw null; } set { } }
-        public System.DateTimeOffset ProcessingStartTime { get { throw null; } set { } }
         public int RetryNumber { get { throw null; } set { } }
+        public System.DateTimeOffset StartTime { get { throw null; } set { } }
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -998,16 +998,16 @@ namespace Azure.Core.Pipeline
     public abstract partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         protected RetryPolicy(Azure.Core.RetryOptions? options = null) { }
-        protected virtual System.TimeSpan CalculateNextDelay(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> CalculateNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual void OnReceivedResponse(Azure.Core.HttpMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask OnReceivedResponseAsync(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual System.TimeSpan CalculateNextDelay(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual System.Threading.Tasks.ValueTask<System.TimeSpan> CalculateNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual void OnReceivedResponse(Azure.Core.HttpMessage message) { }
+        protected internal virtual System.Threading.Tasks.ValueTask OnReceivedResponseAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
+        protected internal virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-        protected virtual bool ShouldRetry(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual bool ShouldRetry(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message) { throw null; }
     }
     public partial class ServerCertificateCustomValidationArgs
     {

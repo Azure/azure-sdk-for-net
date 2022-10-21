@@ -6,14 +6,14 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Contains information related to the processing of the <see cref="HttpMessage"/>.
+    /// Contains information related to the processing of the <see cref="HttpMessage"/> as it traverses the pipeline.
     /// </summary>
     public readonly struct ProcessingContext
     {
         /// <summary>
-        /// The start time of the operation.
+        /// The time that the pipeline processing started for the message.
         /// </summary>
-        public DateTimeOffset ProcessingStartTime
+        public DateTimeOffset StartTime
         {
             get => _message.ProcessingStartTime;
             set => _message.ProcessingStartTime = value;
