@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     {
         private SecurityContactCollection _SecurityContactCollection => DefaultSubscription.GetSecurityContacts();
 
-        public SecurityContactTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public SecurityContactTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

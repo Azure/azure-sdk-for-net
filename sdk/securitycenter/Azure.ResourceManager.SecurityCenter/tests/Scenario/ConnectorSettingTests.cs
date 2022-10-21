@@ -26,7 +26,9 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public void TestSetUp()
         {
         }
-
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
         [RecordedTest]
         [Ignore("System.InvalidOperationException : The requested operation requires an element of type 'Object', but the target element has type 'Array'.")]
         public async Task GetAll()
