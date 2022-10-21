@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added `ConversationsClientOptions.Audience` to set the audience to use for authentication with Azure Active Directory (AAD).
 - Added methods to the `ConversationAuthoringClient` to manage deployment resources:
   - `AssignDeploymentResources` and `AssignDeploymentResourcesAsync`
   - `DeleteDeploymentFromResources` and `DeleteDeploymentFromResourcesAsync`
