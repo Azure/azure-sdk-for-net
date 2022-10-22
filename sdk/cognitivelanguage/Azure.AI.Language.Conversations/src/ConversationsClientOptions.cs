@@ -28,6 +28,12 @@ namespace Azure.AI.Language.Conversations
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
+        /// <summary>
+        /// Gets or sets the audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="ConversationsAudience.AzurePublicCloud" /> will be assumed.</value>
+        public ConversationsAudience? Audience { get; set; }
+
         internal string Version { get; }
 
         /// <summary> Initializes new instance of ConversationsClientOptions. </summary>

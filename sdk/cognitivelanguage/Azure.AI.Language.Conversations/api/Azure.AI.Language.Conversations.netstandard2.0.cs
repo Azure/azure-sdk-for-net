@@ -18,9 +18,29 @@ namespace Azure.AI.Language.Conversations
         public virtual Azure.Response GetAnalyzeConversationJobStatus(System.Guid jobId, bool? showStats = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAnalyzeConversationJobStatusAsync(System.Guid jobId, bool? showStats = default(bool?), Azure.RequestContext context = null) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConversationsAudience : System.IEquatable<Azure.AI.Language.Conversations.ConversationsAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConversationsAudience(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.ConversationsAudience AzureChina { get { throw null; } }
+        public static Azure.AI.Language.Conversations.ConversationsAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.Language.Conversations.ConversationsAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.Language.Conversations.ConversationsAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.Conversations.ConversationsAudience left, Azure.AI.Language.Conversations.ConversationsAudience right) { throw null; }
+        public static implicit operator Azure.AI.Language.Conversations.ConversationsAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.Conversations.ConversationsAudience left, Azure.AI.Language.Conversations.ConversationsAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ConversationsClientOptions : Azure.Core.ClientOptions
     {
         public ConversationsClientOptions(Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2022_10_01_Preview) { }
+        public Azure.AI.Language.Conversations.ConversationsAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2022_05_01 = 1,
