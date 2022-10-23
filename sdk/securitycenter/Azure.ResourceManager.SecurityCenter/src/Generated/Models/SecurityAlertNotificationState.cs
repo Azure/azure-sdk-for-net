@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Whether to send security alerts notifications to the security contact. </summary>
+    /// <summary> Defines if email notifications will be sent about new security alerts. </summary>
     public readonly partial struct SecurityAlertNotificationState : IEquatable<SecurityAlertNotificationState>
     {
         private readonly string _value;

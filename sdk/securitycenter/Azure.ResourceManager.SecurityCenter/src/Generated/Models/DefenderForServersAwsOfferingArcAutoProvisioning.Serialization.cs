@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("cloudRoleArn");
                 writer.WriteStringValue(CloudRoleArn);
             }
-            if (Optional.IsDefined(ServicePrincipalSecretMetadata))
-            {
-                writer.WritePropertyName("servicePrincipalSecretMetadata");
-                writer.WriteObjectValue(ServicePrincipalSecretMetadata);
-            }
             writer.WriteEndObject();
         }
 
@@ -37,7 +32,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Optional<bool> enabled = default;
             Optional<string> cloudRoleArn = default;
-            Optional<DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata> servicePrincipalSecretMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -55,18 +49,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalSecretMetadata"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    servicePrincipalSecretMetadata = DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata.DeserializeDefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata(property.Value);
-                    continue;
-                }
             }
-            return new DefenderForServersAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value, servicePrincipalSecretMetadata.Value);
+            return new DefenderForServersAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value);
         }
     }
 }

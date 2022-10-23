@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("arcAutoProvisioning");
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
+            if (Optional.IsDefined(Rds))
+            {
+                writer.WritePropertyName("rds");
+                writer.WriteObjectValue(Rds);
+            }
             writer.WritePropertyName("offeringType");
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
@@ -28,6 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static DefenderForDatabasesAwsOffering DeserializeDefenderForDatabasesAwsOffering(JsonElement element)
         {
             Optional<DefenderForDatabasesAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
+            Optional<DefenderForDatabasesAwsOfferingRds> rds = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -42,6 +48,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     arcAutoProvisioning = DefenderForDatabasesAwsOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(property.Value);
                     continue;
                 }
+                if (property.NameEquals("rds"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    rds = DefenderForDatabasesAwsOfferingRds.DeserializeDefenderForDatabasesAwsOfferingRds(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("offeringType"))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
@@ -53,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForDatabasesAwsOffering(offeringType, description.Value, arcAutoProvisioning.Value);
+            return new DefenderForDatabasesAwsOffering(offeringType, description.Value, arcAutoProvisioning.Value, rds.Value);
         }
     }
 }

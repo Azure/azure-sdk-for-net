@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
-require: https://github.com/Azure/azure-rest-api-specs/blob/e686ed79e9b0bbc10355fd8d7ba36d1a07e4ba28/specification/security/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f7386016ed8edfdc59d00003c1298afa6966842c/specification/security/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -98,10 +98,8 @@ rename-mapping:
   AdditionalData: SecuritySubAssessmentAdditionalInfo
   GovernanceAssignmentAdditionalData: GovernanceAssignmentAdditionalInfo
   SecuritySubAssessmentAdditionalData: SecuritySubAssessmentAdditionalInfo
-  AlertNotifications: SecurityAlertNotificationState
   AlertPropertiesSupportingEvidence: SecurityAlertSupportingEvidence
   AlertPropertiesSupportingEvidence.type: SecurityAlertSupportingEvidenceType
-  AlertsToAdmins: AlertsToAdminsState
   AlertSyncSettings.properties.enabled: IsEnabled
   AssessmentStatusResponse.firstEvaluationDate: FirstEvaluatedOn
   AssessmentStatusResponse: SecurityAssessmentStatusResult
@@ -113,8 +111,9 @@ rename-mapping:
   DataExportSettings.properties.enabled: IsEnabled
   DefenderFoDatabasesAwsOfferingArcAutoProvisioning: DefenderForDatabasesAwsOfferingArcAutoProvisioning
   DefenderFoDatabasesAwsOfferingArcAutoProvisioning.enabled: IsEnabled
-  DefenderFoDatabasesAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata: DefenderForDatabasesAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata
   DefenderFoDatabasesAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata.expiryDate: ExpireOn
+  DefenderFoDatabasesAwsOfferingRds: DefenderForDatabasesAwsOfferingRds
+  DefenderFoDatabasesAwsOfferingRds.enabled: IsEnabled
   DefenderForContainersAwsOffering.enableContainerVulnerabilityAssessment: IsContainerVulnerabilityAssessmentEnabled
   DefenderForContainersAwsOffering.autoProvisioning: IsAutoProvisioningEnabled
   DefenderForContainersGcpOffering.auditLogsAutoProvisioningFlag: IsAuditLogsAutoProvisioningEnabled
@@ -133,7 +132,7 @@ rename-mapping:
   DefenderForServersGcpOfferingVaAutoProvisioningConfiguration: DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioningConfiguration
   DefenderForServersGcpOffering.vaAutoProvisioning: VulnerabilityAssessmentAutoProvisioning
   EnvironmentData: SecurityConnectorEnvironment
-  AWSEnvironmentData: AwsEnvironment
+  AwsEnvironmentData: AwsEnvironment
   AzureDevOpsScopeEnvironmentData: AzureDevOpsScopeEnvironment
   GcpProjectEnvironmentData: GcpProjectEnvironment
   GithubScopeEnvironmentData: GithubScopeEnvironment
@@ -184,6 +183,8 @@ rename-mapping:
   LogAnalyticsIdentifier.agentId: -|uuid
   AllowedConnectionsResource: AllowedConnection
   WorkspaceSetting: SecurityWorkspaceSetting
+  MinimalSeverity: SecurityAlertMinimalSeverity
+  Roles: SecurityAlertReceivingRole
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -308,6 +309,14 @@ directive:
     where: $.definitions
     transform: >
       $.ResourceIdentifier['x-ms-client-name'] = 'AlertResourceIdentifier';
+  - from: securityContacts.json
+    where: $.definitions.SecurityContactProperties.properties.alertNotifications.properties.state
+    transform: >
+        $['x-ms-enum']['name'] = 'SecurityAlertNotificationState';
+  - from: securityContacts.json
+    where: $.definitions.SecurityContactProperties.properties.notificationsByRole.properties.state
+    transform: >
+        $['x-ms-enum']['name'] = 'SecurityAlertNotificationByRoleState';
   # TODO: temporary remove these operations to mitigate the exception from BuildParameterMapping in Autorest.CSharp
   - remove-operation: InformationProtectionPolicies_Get
   - remove-operation: Tasks_UpdateSubscriptionLevelTaskState

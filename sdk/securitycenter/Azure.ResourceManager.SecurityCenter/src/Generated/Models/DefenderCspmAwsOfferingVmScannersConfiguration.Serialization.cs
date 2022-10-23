@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOfferingVmScannersConfiguration : IUtf8JsonSerializable
+    public partial class DefenderCspmAwsOfferingVmScannersConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static DefenderForServersAwsOfferingVmScannersConfiguration DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(JsonElement element)
+        internal static DefenderCspmAwsOfferingVmScannersConfiguration DeserializeDefenderCspmAwsOfferingVmScannersConfiguration(JsonElement element)
         {
             Optional<string> cloudRoleArn = default;
             Optional<DefenderForServersScanningMode> scanningMode = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForServersAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), Optional.ToDictionary(exclusionTags));
+            return new DefenderCspmAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), Optional.ToDictionary(exclusionTags));
         }
     }
 }

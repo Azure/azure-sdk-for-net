@@ -10,28 +10,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDatabasesAwsOfferingArcAutoProvisioning : IUtf8JsonSerializable
+    public partial class DefenderCspmAwsOfferingVmScanners : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(CloudRoleArn))
+            if (Optional.IsDefined(Configuration))
             {
-                writer.WritePropertyName("cloudRoleArn");
-                writer.WriteStringValue(CloudRoleArn);
+                writer.WritePropertyName("configuration");
+                writer.WriteObjectValue(Configuration);
             }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForDatabasesAwsOfferingArcAutoProvisioning DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(JsonElement element)
+        internal static DefenderCspmAwsOfferingVmScanners DeserializeDefenderCspmAwsOfferingVmScanners(JsonElement element)
         {
             Optional<bool> enabled = default;
-            Optional<string> cloudRoleArn = default;
+            Optional<DefenderCspmAwsOfferingVmScannersConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -44,13 +44,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cloudRoleArn"))
+                if (property.NameEquals("configuration"))
                 {
-                    cloudRoleArn = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    configuration = DefenderCspmAwsOfferingVmScannersConfiguration.DeserializeDefenderCspmAwsOfferingVmScannersConfiguration(property.Value);
                     continue;
                 }
             }
-            return new DefenderForDatabasesAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value);
+            return new DefenderCspmAwsOfferingVmScanners(Optional.ToNullable(enabled), configuration.Value);
         }
     }
 }

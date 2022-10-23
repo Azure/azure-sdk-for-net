@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDatabasesAwsOfferingArcAutoProvisioning : IUtf8JsonSerializable
+    public partial class DefenderForDatabasesAwsOfferingRds : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static DefenderForDatabasesAwsOfferingArcAutoProvisioning DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(JsonElement element)
+        internal static DefenderForDatabasesAwsOfferingRds DeserializeDefenderForDatabasesAwsOfferingRds(JsonElement element)
         {
             Optional<bool> enabled = default;
             Optional<string> cloudRoleArn = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForDatabasesAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value);
+            return new DefenderForDatabasesAwsOfferingRds(Optional.ToNullable(enabled), cloudRoleArn.Value);
         }
     }
 }

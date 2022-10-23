@@ -29,7 +29,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The ARC autoprovisioning configuration. </summary>
-        public DefenderForDatabasesGcpOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
+        internal DefenderForDatabasesGcpOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
+        /// <summary> Is arc auto provisioning enabled. </summary>
+        public bool? IsEnabled
+        {
+            get => ArcAutoProvisioning is null ? default : ArcAutoProvisioning.IsEnabled;
+            set
+            {
+                if (ArcAutoProvisioning is null)
+                    ArcAutoProvisioning = new DefenderForDatabasesGcpOfferingArcAutoProvisioning();
+                ArcAutoProvisioning.IsEnabled = value;
+            }
+        }
+
         /// <summary> The native cloud connection configuration. </summary>
         public DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning DefenderForDatabasesArcAutoProvisioning { get; set; }
     }

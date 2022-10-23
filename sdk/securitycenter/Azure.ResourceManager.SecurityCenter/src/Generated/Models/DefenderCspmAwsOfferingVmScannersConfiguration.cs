@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> configuration for Microsoft Defender for Server VM scanning. </summary>
-    public partial class DefenderForServersAwsOfferingVmScannersConfiguration
+    public partial class DefenderCspmAwsOfferingVmScannersConfiguration
     {
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScannersConfiguration. </summary>
-        public DefenderForServersAwsOfferingVmScannersConfiguration()
+        /// <summary> Initializes a new instance of DefenderCspmAwsOfferingVmScannersConfiguration. </summary>
+        public DefenderCspmAwsOfferingVmScannersConfiguration()
         {
             ExclusionTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScannersConfiguration. </summary>
+        /// <summary> Initializes a new instance of DefenderCspmAwsOfferingVmScannersConfiguration. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="scanningMode"> The scanning mode for the vm scan. </param>
         /// <param name="exclusionTags"> VM tags that indicates that VM should not be scanned. </param>
-        internal DefenderForServersAwsOfferingVmScannersConfiguration(string cloudRoleArn, DefenderForServersScanningMode? scanningMode, IDictionary<string, string> exclusionTags)
+        internal DefenderCspmAwsOfferingVmScannersConfiguration(string cloudRoleArn, DefenderForServersScanningMode? scanningMode, IDictionary<string, string> exclusionTags)
         {
             CloudRoleArn = cloudRoleArn;
             ScanningMode = scanningMode;

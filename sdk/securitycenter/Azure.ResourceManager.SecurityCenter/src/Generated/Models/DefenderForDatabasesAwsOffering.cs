@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
-        internal DefenderForDatabasesAwsOffering(OfferingType offeringType, string description, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning) : base(offeringType, description)
+        /// <param name="rds"> The RDS configuration. </param>
+        internal DefenderForDatabasesAwsOffering(OfferingType offeringType, string description, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForDatabasesAwsOfferingRds rds) : base(offeringType, description)
         {
             ArcAutoProvisioning = arcAutoProvisioning;
+            Rds = rds;
             OfferingType = offeringType;
         }
 
         /// <summary> The ARC autoprovisioning configuration. </summary>
         public DefenderForDatabasesAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
+        /// <summary> The RDS configuration. </summary>
+        public DefenderForDatabasesAwsOfferingRds Rds { get; set; }
     }
 }

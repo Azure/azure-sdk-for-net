@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDatabasesGcpOfferingArcAutoProvisioning : IUtf8JsonSerializable
+    internal partial class DefenderForDatabasesGcpOfferingArcAutoProvisioning : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,18 +20,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Configuration))
-            {
-                writer.WritePropertyName("configuration");
-                writer.WriteObjectValue(Configuration);
-            }
             writer.WriteEndObject();
         }
 
         internal static DefenderForDatabasesGcpOfferingArcAutoProvisioning DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(JsonElement element)
         {
             Optional<bool> enabled = default;
-            Optional<DefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -44,18 +38,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("configuration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    configuration = DefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration(property.Value);
-                    continue;
-                }
             }
-            return new DefenderForDatabasesGcpOfferingArcAutoProvisioning(Optional.ToNullable(enabled), configuration.Value);
+            return new DefenderForDatabasesGcpOfferingArcAutoProvisioning(Optional.ToNullable(enabled));
         }
     }
 }
