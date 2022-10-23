@@ -22,58 +22,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 ## Setting a retry policy
 
-Using `RetryOptions` to configure retry behavior is sufficient for the vast majority of scenarios. For more advanced scenarios, it is possible to create a custom retry policy and set it to the `RetryPolicy` property of client options class. This can be accomplished by implementing a retry policy that derives from the abstract `RetryPolicy` class. The `RetryPolicy` class contains hooks to determine if a request should be retried and how long to wait before retrying. For any methods that are not overriden, the `RetryPolicy` will use the default retry logic defined in the `Retry` property of the client options class.
-
-
-It's also possible to have full control over the retry logic by setting the `RetryPolicy` property to an implementation of `HttpPipelinePolicy` where you would need to implement the retry loop yourself. One use case for this is if you want to implement your own retry policy with Polly. Note that if you replace the `RetryPolicy` with a `HttpPipelinePolicy`, you will need to make sure to update the `HttpMessage.ProcessingContext` that other pipelines may be relying on.
-
-```C# Snippet:PollyPolicy
-internal class PollyPolicy : HttpPipelinePolicy
-{
-    public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-    {
-        Policy.Handle<IOException>()
-            .Or<RequestFailedException>(ex => ex.Status == 0)
-            .OrResult<HttpMessage>(r => r.HasResponse && r.Response.Status >= 400)
-            .WaitAndRetry(
-                new[]
-                {
-                    // some custom retry delay pattern
-                    TimeSpan.FromSeconds(1),
-                    TimeSpan.FromSeconds(2),
-                    TimeSpan.FromSeconds(3)
-                },
-                onRetry: (result, _) =>
-                {
-                    // Since we are overriding the RetryPolicy, it is our responsibility to maintain the ProcessingContext
-                    // that other policies in the pipeline may be depending on.
-                    var context = message.ProcessingContext;
-                    if (result.Exception != null)
-                    {
-                        message.LastException = result.Exception;
-                    }
-                    context.RetryNumber++;
-                }
-            )
-            .Execute(() =>
-            {
-                ProcessNext(message, pipeline);
-                return message;
-            });
-    }
-    // async version omitted for brevity
-}
-```
-
-To set the policy, use the `RetryPolicy` property of client options class.
-```C# Snippet:SetPollyRetryPolicy
-SecretClientOptions options = new SecretClientOptions()
-{
-    RetryPolicy = new PollyPolicy()
-};
-```
-
-If you don't need full control over the retry policy, but you still want to modify some aspect of it beyond what the `RetryOptions` alone is capable of configuring, you can derive from the abstract `RetryPolicy` class. In the following example, we implement a policy that will prevent retries from taking place if the overall processing time has exceeded some threshold. Notice that the policy takes in `RetryOptions` as one of the constructor parameters and passes it to the base constructor. By doing this, we are able to delegate to the base `RetryPolicy` as needed (either by explicitly invoking the base methods, or by not overriding methods that we do not need to customize) which will respect the `RetryOptions`.
+Using `RetryOptions` to configure retry behavior is sufficient for the vast majority of scenarios. For more advanced scenarios, it is possible to create a custom retry policy and set it to the `RetryPolicy` property of client options class. This can be accomplished by implementing a retry policy that derives from the abstract `RetryPolicy` class. The `RetryPolicy` class contains hooks to determine if a request should be retried and how long to wait before retrying. In the following example, we implement a policy that will prevent retries from taking place if the overall processing time has exceeded some threshold. Notice that the policy takes in `RetryOptions` as one of the constructor parameters and passes it to the base constructor. By doing this, we are able to delegate to the base `RetryPolicy` as needed (either by explicitly invoking the base methods, or by not overriding methods that we do not need to customize) which will respect the `RetryOptions`.
 
 ```C# Snippet:GlobalTimeoutRetryPolicy
 internal class GlobalTimeoutRetryPolicy : RetryPolicy
@@ -119,6 +68,54 @@ var retryOptions = new RetryOptions
 SecretClientOptions options = new SecretClientOptions()
 {
     RetryPolicy = new GlobalTimeoutRetryPolicy(retryOptions, timeout: TimeSpan.FromSeconds(30))
+};
+```
+
+It's also possible to have full control over the retry logic by setting the `RetryPolicy` property to an implementation of `HttpPipelinePolicy` where you would need to implement the retry loop yourself. One use case for this is if you want to implement your own retry policy with Polly. Note that if you replace the `RetryPolicy` with a `HttpPipelinePolicy`, you will need to make sure to update the `HttpMessage.ProcessingContext` that other pipeline policies may be relying on.
+
+```C# Snippet:PollyPolicy
+internal class PollyPolicy : HttpPipelinePolicy
+{
+    public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+    {
+        Policy.Handle<IOException>()
+            .Or<RequestFailedException>(ex => ex.Status == 0)
+            .OrResult<HttpMessage>(r => r.HasResponse && r.Response.Status >= 400)
+            .WaitAndRetry(
+                new[]
+                {
+                    // some custom retry delay pattern
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(2),
+                    TimeSpan.FromSeconds(3)
+                },
+                onRetry: (result, _) =>
+                {
+                    // Since we are overriding the RetryPolicy, it is our responsibility to maintain the ProcessingContext
+                    // that other policies in the pipeline may be depending on.
+                    var context = message.ProcessingContext;
+                    if (result.Exception != null)
+                    {
+                        message.LastException = result.Exception;
+                    }
+                    context.RetryNumber++;
+                }
+            )
+            .Execute(() =>
+            {
+                ProcessNext(message, pipeline);
+                return message;
+            });
+    }
+    // async version omitted for brevity
+}
+```
+
+To set the policy, use the `RetryPolicy` property of client options class.
+```C# Snippet:SetPollyRetryPolicy
+SecretClientOptions options = new SecretClientOptions()
+{
+    RetryPolicy = new PollyPolicy()
 };
 ```
 
