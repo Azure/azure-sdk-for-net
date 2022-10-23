@@ -14,38 +14,29 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
     {
         private const string ConnectionsResourceGroupName = "test-clients-rg";
 
-        private KustoDataConnectionCollection _dataConnectionCollection;
-
         public KustoDataConnectionTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
         {
-        }
-
-        [SetUp]
-        public async Task DataConnectionSetup()
-        {
-            var cluster = await GetCluster(ResourceGroup);
-            var database = await GetDatabase(cluster);
-            _dataConnectionCollection = database.GetKustoDataConnections();
         }
 
         [TestCase]
         [RecordedTest]
         public async Task EventHubDataConnectionTests()
         {
-            string eventHubDataConnectionName = Recording.GenerateAssetName("sdkTestEventHubDataConnection");
-
-            ResourceIdentifier eventHubResourceId = new(
-                $"/subscriptions/{SubscriptionId}/resourceGroups/{ConnectionsResourceGroupName}/providers/Microsoft.EventHub/namespaces/testclientsns22/eventhubs/testclientseh");
-            KustoEventHubDataConnection eventHubDataConnectionDataCreate = new()
+            var dataConnectionCollection = Database.GetKustoDataConnections();
+            var eventHubDataConnectionName = Recording.GenerateAssetName("sdkTestEventHubDataConnection");
+            var eventHubResourceId = new ResourceIdentifier(
+                $"/subscriptions/{SubscriptionId}/resourceGroups/{ConnectionsResourceGroupName}/providers/Microsoft.EventHub/namespaces/testclientsns22/eventhubs/testclientseh"
+            );
+            var eventHubDataConnectionDataCreate = new KustoEventHubDataConnection
             {
-                Location = Location,
+                Location = KustoTestUtils.Location,
                 EventHubResourceId = new ResourceIdentifier(eventHubResourceId),
                 ConsumerGroup = "$Default"
             };
-            KustoEventHubDataConnection eventHubDataConnectionDataUpdate = new()
+            var eventHubDataConnectionDataUpdate = new KustoEventHubDataConnection
             {
-                Location = Location,
+                Location = KustoTestUtils.Location,
                 EventHubResourceId = new ResourceIdentifier(eventHubResourceId),
                 ConsumerGroup = "$Default",
                 DataFormat = KustoEventHubDataFormat.Csv,
@@ -53,41 +44,47 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 ManagedIdentityResourceId = Cluster.Id
             };
 
+            Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateEventHubDataConnectionAsync(
+                string eventHubDataConnectionName, KustoEventHubDataConnection eventHubDataConnectionData) =>
+                dataConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubDataConnectionName,
+                    eventHubDataConnectionData);
+
             await CollectionTests(
-                eventHubDataConnectionName, $"{ClusterName}/{DatabaseName}/{eventHubDataConnectionName}",
+                eventHubDataConnectionName,
                 eventHubDataConnectionDataCreate, eventHubDataConnectionDataUpdate,
-                (eventHubDataConnectionName, eventHubDataConnectionData) =>
-                    _dataConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubDataConnectionName,
-                        eventHubDataConnectionData),
-                _dataConnectionCollection.GetAsync,
-                _dataConnectionCollection.GetAllAsync,
-                _dataConnectionCollection.ExistsAsync,
-                ValidateEventHubDataConnection
+                CreateOrUpdateEventHubDataConnectionAsync,
+                dataConnectionCollection.GetAsync,
+                dataConnectionCollection.GetAllAsync,
+                dataConnectionCollection.ExistsAsync,
+                ValidateEventHubDataConnection,
+                databaseChild: true
             );
 
-            KustoDataConnectionResource eventHubDataConnection =
-                (await _dataConnectionCollection.GetAsync(eventHubDataConnectionName)).Value;
-            await DeleteDataConnectionTest(eventHubDataConnection);
+            await DeletionTest(
+                eventHubDataConnectionName,
+                dataConnectionCollection.GetAsync,
+                dataConnectionCollection.ExistsAsync
+            );
         }
 
         [TestCase]
         [RecordedTest]
         public async Task IotHubDataConnectionTests()
         {
-            string iotHubDataConnectionName = Recording.GenerateAssetName("sdkTestIotHubDataConnection");
-
-            ResourceIdentifier iotHubResourceId = new(
+            var dataConnectionCollection = Database.GetKustoDataConnections();
+            var iotHubDataConnectionName = Recording.GenerateAssetName("sdkTestIotHubDataConnection");
+            var iotHubResourceId = new ResourceIdentifier(
                 $"/subscriptions/{SubscriptionId}/resourceGroups/{ConnectionsResourceGroupName}/providers/Microsoft.Devices/IotHubs/test-clients-iot");
-            KustoIotHubDataConnection iotHubDataConnectionDataCreate = new()
+            var iotHubDataConnectionDataCreate = new KustoIotHubDataConnection
             {
-                Location = Location,
+                Location = KustoTestUtils.Location,
                 IotHubResourceId = iotHubResourceId,
                 SharedAccessPolicyName = "registryRead",
                 ConsumerGroup = "$Default"
             };
-            KustoIotHubDataConnection iotHubDataConnectionDataUpdate = new()
+            var iotHubDataConnectionDataUpdate = new KustoIotHubDataConnection
             {
-                Location = Location,
+                Location = KustoTestUtils.Location,
                 IotHubResourceId = iotHubResourceId,
                 SharedAccessPolicyName = "registryRead",
                 ConsumerGroup = "$Default",
@@ -95,46 +92,52 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 DatabaseRouting = KustoDatabaseRouting.Multi
             };
 
+            Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateIotHubDataConnectionAsync(
+                string iotHubDataConnectionName, KustoIotHubDataConnection iotHubDataConnectionData) =>
+                dataConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, iotHubDataConnectionName,
+                    iotHubDataConnectionData);
+
             await CollectionTests(
-                iotHubDataConnectionName, $"{ClusterName}/{DatabaseName}/{iotHubDataConnectionName}",
+                iotHubDataConnectionName,
                 iotHubDataConnectionDataCreate, iotHubDataConnectionDataUpdate,
-                (iotHubDataConnectionName, iotHubDataConnectionData) =>
-                    _dataConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, iotHubDataConnectionName,
-                        iotHubDataConnectionData),
-                _dataConnectionCollection.GetAsync,
-                _dataConnectionCollection.GetAllAsync,
-                _dataConnectionCollection.ExistsAsync,
-                ValidateIotHubDataConnection
+                CreateOrUpdateIotHubDataConnectionAsync,
+                dataConnectionCollection.GetAsync,
+                dataConnectionCollection.GetAllAsync,
+                dataConnectionCollection.ExistsAsync,
+                ValidateIotHubDataConnection,
+                databaseChild: true
             );
 
-            KustoDataConnectionResource iotHubDataConnection =
-                (await _dataConnectionCollection.GetAsync(iotHubDataConnectionName)).Value;
-            await DeleteDataConnectionTest(iotHubDataConnection);
+            await DeletionTest(
+                iotHubDataConnectionName,
+                dataConnectionCollection.GetAsync,
+                dataConnectionCollection.ExistsAsync
+            );
         }
 
         [TestCase]
         [RecordedTest]
         public async Task EventGridDataConnectionTests()
         {
-            string eventGridDataConnectionName = Recording.GenerateAssetName("sdkTestEventGridDataConnection");
-
-            ResourceIdentifier storageAccountResourceId = new(
+            var dataConnectionCollection = Database.GetKustoDataConnections();
+            var eventGridDataConnectionName = Recording.GenerateAssetName("sdkTestEventGridDataConnection");
+            var storageAccountResourceId = new ResourceIdentifier(
                 $"/subscriptions/{SubscriptionId}/resourceGroups/{ConnectionsResourceGroupName}/providers/Microsoft.Storage/storageAccounts/testclients");
-            ResourceIdentifier eventHubResourceId = new(
+            var eventHubResourceId = new ResourceIdentifier(
                 $"/subscriptions/{SubscriptionId}/resourceGroups/{ConnectionsResourceGroupName}/providers/Microsoft.EventHub/namespaces/testclientsns22/eventhubs/testclientseh");
-            ResourceIdentifier clusterResourceId = new(
+            var clusterResourceId = new ResourceIdentifier(
                 $"/subscriptions/{SubscriptionId}/resourceGroups/{ConnectionsResourceGroupName}/providers/Microsoft.Kusto/Clusters/eventgridclienttest");
-            KustoEventGridDataConnection eventGridDataConnectionDataCreate = new KustoEventGridDataConnection
+            var eventGridDataConnectionDataCreate = new KustoEventGridDataConnection()
             {
-                Location = Location,
+                Location = KustoTestUtils.Location,
                 StorageAccountResourceId = storageAccountResourceId,
                 EventHubResourceId = eventHubResourceId,
                 ConsumerGroup = "$Default",
                 TableName = "MyTest"
             };
-            KustoEventGridDataConnection eventGridDataConnectionDataUpdate = new KustoEventGridDataConnection
+            var eventGridDataConnectionDataUpdate = new KustoEventGridDataConnection()
             {
-                Location = Location,
+                Location = KustoTestUtils.Location,
                 StorageAccountResourceId = storageAccountResourceId,
                 EventHubResourceId = eventHubResourceId,
                 ConsumerGroup = "$Default",
@@ -144,30 +147,27 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 ManagedIdentityResourceId = clusterResourceId
             };
 
+            Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateEventGridDataConnectionAsync(
+                string eventGridDataConnectionName, KustoEventGridDataConnection eventGridDataConnectionData) =>
+                dataConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventGridDataConnectionName,
+                    eventGridDataConnectionData);
+
             await CollectionTests(
-                eventGridDataConnectionName, $"{ClusterName}/{DatabaseName}/{eventGridDataConnectionName}",
+                eventGridDataConnectionName,
                 eventGridDataConnectionDataCreate, eventGridDataConnectionDataUpdate,
-                (eventGridDataConnectionName, eventGridDataConnectionData) =>
-                    _dataConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventGridDataConnectionName,
-                        eventGridDataConnectionData),
-                _dataConnectionCollection.GetAsync,
-                _dataConnectionCollection.GetAllAsync,
-                _dataConnectionCollection.ExistsAsync,
-                ValidateEventGridDataConnection
+                CreateOrUpdateEventGridDataConnectionAsync,
+                dataConnectionCollection.GetAsync,
+                dataConnectionCollection.GetAllAsync,
+                dataConnectionCollection.ExistsAsync,
+                ValidateEventGridDataConnection,
+                databaseChild: true
             );
 
-            KustoDataConnectionResource eventGridDataConnection =
-                (await _dataConnectionCollection.GetAsync(eventGridDataConnectionName)).Value;
-            await DeleteDataConnectionTest(eventGridDataConnection);
-        }
-
-        private async Task DeleteDataConnectionTest(KustoDataConnectionResource dataConnection)
-        {
-            bool exists;
-
-            await dataConnection.DeleteAsync(WaitUntil.Completed);
-            exists = await _dataConnectionCollection.ExistsAsync(dataConnection.Data.Name);
-            Assert.IsFalse(exists);
+            await DeletionTest(
+                eventGridDataConnectionName,
+                dataConnectionCollection.GetAsync,
+                dataConnectionCollection.ExistsAsync
+            );
         }
 
         private void ValidateEventHubDataConnection(KustoDataConnectionResource eventHubDataConnection,
@@ -224,7 +224,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             Guid? managedIdentityObjectId = eventGridDataConnectionData.ManagedIdentityResourceId is null
                 ? null
                 : Guid.Parse("a4f74545-0569-49ab-a902-f712fcf2f9e0");
-            Assert.AreEqual(managedIdentityObjectId, ((KustoEventGridDataConnection)eventGridDataConnection.Data).ManagedIdentityObjectId);
+            Assert.AreEqual(managedIdentityObjectId,
+                ((KustoEventGridDataConnection)eventGridDataConnection.Data).ManagedIdentityObjectId);
         }
     }
 }
