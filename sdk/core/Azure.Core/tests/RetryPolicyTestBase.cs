@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Core.Samples;
 using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
@@ -68,16 +69,23 @@ namespace Azure.Core.Tests
         {
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
             MockTransport mockTransport = CreateMockTransport();
-            Task<Response> task = SendGetRequest(mockTransport, policy);
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy });
+            HttpMessage message = pipeline.CreateMessage();
+            Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
             RetryPolicyMock mockPolicy = (RetryPolicyMock) policy;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            Assert.AreEqual(0, message.ProcessingContext.RetryNumber);
             await gate.Cycle();
             Assert.IsTrue(mockPolicy.ShouldRetryCalled);
             mockPolicy.ShouldRetryCalled = false;
 
-            await mockTransport.RequestGate.CycleWithException(new IOException());
+            var exception = new IOException();
+            await mockTransport.RequestGate.CycleWithException(exception);
+            Assert.AreEqual(1, message.ProcessingContext.RetryNumber);
             await gate.Cycle();
+            Assert.AreSame(exception, message.ProcessingContext.LastException);
             Assert.IsTrue(mockPolicy.ShouldRetryCalled);
             mockPolicy.ShouldRetryCalled = false;
 
@@ -85,6 +93,8 @@ namespace Azure.Core.Tests
 
             await task.TimeoutAfterDefault();
             Assert.IsFalse(mockPolicy.ShouldRetryCalled);
+            Assert.AreEqual(2, message.ProcessingContext.RetryNumber);
+            Assert.IsNull(message.ProcessingContext.LastException);
         }
 
         [Test]
@@ -92,22 +102,31 @@ namespace Azure.Core.Tests
         {
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
             MockTransport mockTransport = CreateMockTransport();
-            Task<Response> task = SendGetRequest(mockTransport, policy);
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy });
+            HttpMessage message = pipeline.CreateMessage();
+            Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
             RetryPolicyMock mockPolicy = (RetryPolicyMock) policy;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            Assert.AreEqual(0, message.ProcessingContext.RetryNumber);
             await gate.Cycle();
             Assert.IsTrue(mockPolicy.OnResponseCalled);
             mockPolicy.OnResponseCalled = false;
 
-            await mockTransport.RequestGate.CycleWithException(new IOException());
+            var exception = new IOException();
+            await mockTransport.RequestGate.CycleWithException(exception);
+            Assert.AreEqual(1, message.ProcessingContext.RetryNumber);
             await gate.Cycle();
+            Assert.AreSame(exception, message.ProcessingContext.LastException);
             Assert.IsFalse(mockPolicy.OnResponseCalled);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
             await task.TimeoutAfterDefault();
             Assert.IsTrue(mockPolicy.OnResponseCalled);
+            Assert.AreEqual(2, message.ProcessingContext.RetryNumber);
+            Assert.IsNull(message.ProcessingContext.LastException);
         }
 
         [Test]
@@ -126,6 +145,26 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
             Assert.AreEqual(200, response.Status);
+        }
+
+        [Test]
+        public async Task RetriesWithPolly()
+        {
+            var policy = new PollyPolicy();
+            MockTransport mockTransport = CreateMockTransport();
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy });
+            HttpMessage message = pipeline.CreateMessage();
+            Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            await mockTransport.RequestGate.CycleWithException(new IOException());
+            await mockTransport.RequestGate.Cycle(new MockResponse(200));
+
+            message = await task.TimeoutAfterDefault();
+
+            Assert.AreEqual(2, message.ProcessingContext.RetryNumber);
+            Assert.AreEqual(200, message.Response.Status);
         }
 
         [Test]
