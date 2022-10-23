@@ -16,7 +16,7 @@ namespace Azure.Core.Samples
         {
             Policy.Handle<IOException>()
                 .Or<RequestFailedException>(ex => ex.Status == 0)
-                .OrResult<HttpMessage>(r => r.HasResponse && r.Response.Status >= 400)
+                .OrResult<Response>(r => r.Status >= 400)
                 .WaitAndRetry(
                     new[]
                     {
@@ -40,7 +40,7 @@ namespace Azure.Core.Samples
                 .Execute(() =>
                 {
                     ProcessNext(message, pipeline);
-                    return message;
+                    return message.Response;
                 });
         }
 #if SNIPPET
@@ -53,7 +53,7 @@ namespace Azure.Core.Samples
         {
             await Policy.Handle<IOException>()
                 .Or<RequestFailedException>(ex => ex.Status == 0)
-                .OrResult<HttpMessage>(r => r.HasResponse && r.Response.Status >= 400)
+                .OrResult<Response>(r => r.Status >= 400)
                 .WaitAndRetryAsync(
                     new[]
                     {
@@ -76,7 +76,7 @@ namespace Azure.Core.Samples
                 .ExecuteAsync(async () =>
                 {
                     await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                    return message;
+                    return message.Response;
                 });
         }
     }

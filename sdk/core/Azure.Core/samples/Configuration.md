@@ -80,7 +80,7 @@ internal class PollyPolicy : HttpPipelinePolicy
     {
         Policy.Handle<IOException>()
             .Or<RequestFailedException>(ex => ex.Status == 0)
-            .OrResult<HttpMessage>(r => r.HasResponse && r.Response.Status >= 400)
+            .OrResult<Response>(r => r.Status >= 400)
             .WaitAndRetry(
                 new[]
                 {
@@ -104,7 +104,7 @@ internal class PollyPolicy : HttpPipelinePolicy
             .Execute(() =>
             {
                 ProcessNext(message, pipeline);
-                return message;
+                return message.Response;
             });
     }
     // async version omitted for brevity
