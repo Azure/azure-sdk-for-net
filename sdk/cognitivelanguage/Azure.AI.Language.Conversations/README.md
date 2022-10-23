@@ -389,8 +389,7 @@ var data = new
     },
 };
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
-analyzeConversationOperation.WaitForCompletion();
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
 JsonElement jobResults = result.RootElement;
@@ -473,8 +472,7 @@ var data = new
     },
 };
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
-analyzeConversationOperation.WaitForCompletion();
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
 JsonElement jobResults = result.RootElement;
