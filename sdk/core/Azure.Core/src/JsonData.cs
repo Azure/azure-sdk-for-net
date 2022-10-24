@@ -393,11 +393,6 @@ namespace Azure
                 return this == ((string?)obj);
             }
 
-            if (obj is int)
-            {
-                return (int)this == (int?)obj;
-            }
-
             if (obj is JsonData)
             {
                 return Equals((JsonData)obj);
@@ -699,56 +694,6 @@ namespace Azure
 
                 var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(indexPropertyCall,  restrictions);
-            }
-
-            public override DynamicMetaObject BindBinaryOperation(BinaryOperationBinder binder, DynamicMetaObject arg)
-            {
-                return base.BindBinaryOperation(binder, arg);
-            }
-
-            public override DynamicMetaObject BindCreateInstance(CreateInstanceBinder binder, DynamicMetaObject[] args)
-            {
-                return base.BindCreateInstance(binder, args);
-            }
-
-            public override DynamicMetaObject BindDeleteIndex(DeleteIndexBinder binder, DynamicMetaObject[] indexes)
-            {
-                return base.BindDeleteIndex(binder, indexes);
-            }
-
-            public override DynamicMetaObject BindDeleteMember(DeleteMemberBinder binder)
-            {
-                return base.BindDeleteMember(binder);
-            }
-
-            public override DynamicMetaObject BindInvoke(InvokeBinder binder, DynamicMetaObject[] args)
-            {
-                return base.BindInvoke(binder, args);
-            }
-
-            public override DynamicMetaObject BindInvokeMember(InvokeMemberBinder binder, DynamicMetaObject[] args)
-            {
-                return base.BindInvokeMember(binder, args);
-            }
-
-            public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
-            {
-                return base.BindSetIndex(binder, indexes, value);
-            }
-
-            public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
-            {
-                return base.BindSetMember(binder, value);
-            }
-
-            public override DynamicMetaObject BindUnaryOperation(UnaryOperationBinder binder)
-            {
-                return base.BindUnaryOperation(binder);
-            }
-
-            public override IEnumerable<string> GetDynamicMemberNames()
-            {
-                return base.GetDynamicMemberNames();
             }
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)

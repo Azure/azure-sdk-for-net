@@ -252,17 +252,10 @@ namespace Azure.Core.Tests
             dynamic json = data.ToDynamic();
             dynamic array = json.array;
 
-            // Cool- this doesn't work.  Why?  YOU ARE HERE.
-            // Note: if foreach types item as int, this works.
-            // if foreach types item as var or dynamic, it doesn't work
             int i = 0;
-            foreach (dynamic item in array)
+            foreach (int item in array)
             {
-                // this doesn't work because it calls int32.Equals()
-                //Assert.AreEqual(++i, item);
-
-                // this does work because it calls JsonData.Equals()
-                Assert.AreEqual(item, ++i);
+                Assert.AreEqual(++i, item);
             }
         }
 
