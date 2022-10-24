@@ -661,6 +661,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
+
+        [Test]
+        public void Get_TargetScale_IsNotNull()
+        {
+            var concurrencyOptions = new ConcurrencyOptions
+            {
+                DynamicConcurrencyEnabled = true
+            };
+            var throttleStatus = new ConcurrencyThrottleAggregateStatus { State = ThrottleState.Disabled };
+            var optionsWrapper = new OptionsWrapper<ConcurrencyOptions>(concurrencyOptions);
+            var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
+            mockConcurrencyThrottleManager.Setup(p => p.GetStatus()).Returns(() => throttleStatus);
+            var concurrencyManager = new ConcurrencyManager(optionsWrapper, _loggerFactory, mockConcurrencyThrottleManager.Object);
+            var localListener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, _mockExceptionDispatcher.Object, _loggerFactory, null, _queuesOptions, _mockQueueProcessor.Object, new FunctionDescriptor { Id = TestFunctionId }, concurrencyManager);
+
+            var result = localListener.GetTargetScaler();
+            Assert.IsNotNull(result);
+        }
         public class TestFixture : IDisposable
         {
             private const string TestQueuePrefix = "queuelistenertests";
