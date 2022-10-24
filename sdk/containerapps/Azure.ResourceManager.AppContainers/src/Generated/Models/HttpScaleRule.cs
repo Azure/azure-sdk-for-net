@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App container Custom scaling rule. </summary>
+    /// <summary> Container App container Http scaling rule. </summary>
     public partial class HttpScaleRule
     {
         /// <summary> Initializes a new instance of HttpScaleRule. </summary>

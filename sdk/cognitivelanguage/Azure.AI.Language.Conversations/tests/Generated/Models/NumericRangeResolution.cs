@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Conversations
             RangeKind = rangeKind;
             Minimum = minimum;
             Maximum = maximum;
-            ResolutionKind = ResolutionKind.NumericRange;
+            ResolutionKind = ResolutionKind.NumericRangeResolution;
         }
 
         /// <summary> Initializes a new instance of NumericRangeResolution. </summary>

@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: AppComplianceAutomation
 namespace: Azure.ResourceManager.AppComplianceAutomation
-require: https://github.com/Azure/azure-rest-api-specs/blob/54a0d4c39cef30a7a3dd7760813996b754b9e922/specification/appcomplianceautomation/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8723412b586149d26b64699aad98203d97d84b9e/specification/appcomplianceautomation/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
