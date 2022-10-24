@@ -111,20 +111,20 @@ namespace Azure.Core.Tests
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
             Assert.AreEqual(0, message.ProcessingContext.RetryNumber);
             await gate.Cycle();
-            Assert.IsTrue(mockPolicy.OnResponseCalled);
-            mockPolicy.OnResponseCalled = false;
+            Assert.IsTrue(mockPolicy.OnRequestSentCalled);
+            mockPolicy.OnRequestSentCalled = false;
 
             var exception = new IOException();
             await mockTransport.RequestGate.CycleWithException(exception);
             Assert.AreEqual(1, message.ProcessingContext.RetryNumber);
             await gate.Cycle();
             Assert.AreSame(exception, message.ProcessingContext.LastException);
-            Assert.IsFalse(mockPolicy.OnResponseCalled);
+            Assert.IsTrue(mockPolicy.OnRequestSentCalled);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
             await task.TimeoutAfterDefault();
-            Assert.IsTrue(mockPolicy.OnResponseCalled);
+            Assert.IsTrue(mockPolicy.OnRequestSentCalled);
             Assert.AreEqual(2, message.ProcessingContext.RetryNumber);
             Assert.IsNull(message.ProcessingContext.LastException);
         }
@@ -393,7 +393,7 @@ namespace Azure.Core.Tests
         {
             internal bool ShouldRetryCalled { get; set; }
 
-            internal bool OnResponseCalled { get; set; }
+            internal bool OnRequestSentCalled { get; set; }
 
             public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default) : base(
                 new RetryOptions
@@ -418,16 +418,16 @@ namespace Azure.Core.Tests
                 return DelayGate.WaitForRelease(time);
             }
 
-            protected internal override void OnReceivedResponse(HttpMessage message)
+            protected internal override void OnRequestSent(HttpMessage message)
             {
-                OnResponseCalled = true;
-                base.OnReceivedResponse(message);
+                OnRequestSentCalled = true;
+                base.OnRequestSent(message);
             }
 
-            protected internal override ValueTask OnReceivedResponseAsync(HttpMessage message)
+            protected internal override ValueTask OnRequestSentAsync(HttpMessage message)
             {
-                OnResponseCalled = true;
-                return base.OnReceivedResponseAsync(message);
+                OnRequestSentCalled = true;
+                return base.OnRequestSentAsync(message);
             }
 
             protected internal override bool ShouldRetry(HttpMessage message)

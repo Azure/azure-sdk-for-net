@@ -68,7 +68,6 @@ namespace Azure.Core.Pipeline
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             List<Exception>? exceptions = null;
-            Response? lastResponse = null;
             while (true)
             {
                 var before = Stopwatch.GetTimestamp();
@@ -107,18 +106,15 @@ namespace Azure.Core.Pipeline
                     message.LastException = ex;
                 }
 
-                // If we got a response for this request, trigger OnResponse.
-                if (message.HasResponse && !ReferenceEquals(message.Response, lastResponse))
+                if (async)
                 {
-                    if (async)
-                    {
-                        await OnReceivedResponseAsync(message).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        OnReceivedResponse(message);
-                    }
+                    await OnRequestSentAsync(message).ConfigureAwait(false);
                 }
+                else
+                {
+                    OnRequestSent(message);
+                }
+
                 var after = Stopwatch.GetTimestamp();
                 double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
@@ -172,11 +168,6 @@ namespace Azure.Core.Pipeline
                 }
 
                 message.RetryNumber++;
-
-                if (message.HasResponse)
-                {
-                    lastResponse = message.Response;
-                }
                 AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryNumber, elapsed);
             }
         }
@@ -257,18 +248,20 @@ namespace Azure.Core.Pipeline
         protected internal virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
 
         /// <summary>
-        /// This method can be overridden to introduce logic that runs after a response is received on each attempt. This method will only be called for sync methods.
+        /// This method can be overridden to introduce logic that runs after the request is sent through the pipeline and control is returned to the retry
+        /// policy. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual void OnReceivedResponse(HttpMessage message)
+        protected internal virtual void OnRequestSent(HttpMessage message)
         {
         }
 
         /// <summary>
-        /// This method can be overriden to introduce logic that runs after a response is received. This method will only be called for async methods.
+        /// This method can be overridden to introduce logic that runs after the request is sent through the pipeline and control is returned to the retry
+        /// policy. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual ValueTask OnReceivedResponseAsync(HttpMessage message) => default;
+        protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
         private TimeSpan CalculateNextDelayInternal(HttpMessage message)
         {
