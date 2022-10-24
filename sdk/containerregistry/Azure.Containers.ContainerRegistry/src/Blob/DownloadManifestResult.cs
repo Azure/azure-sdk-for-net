@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// The OCI manifest that was downloaded.
         /// </summary>
-        public OciManifest Manifest { get; }
+        public ArtifactManifest Manifest { get; }
 
         /// <summary>
         /// The manifest stream that was downloaded.
