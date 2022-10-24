@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class SubscriptionGovernanceRuleTests : SecurityCenterManagementTestBase
     {
         private SubscriptionGovernanceRuleCollection _subscriptionGovernanceRuleCollection => DefaultSubscription.GetSubscriptionGovernanceRules();
-        public SubscriptionGovernanceRuleTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public SubscriptionGovernanceRuleTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -51,19 +51,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var list = await _subscriptionGovernanceRuleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
-        }
-
-        private void Validate(JitNetworkAccessPolicyResource jitNetworkAccessPolicy, string jitNetworkAccessPolicyName)
-        {
-            Assert.IsNotNull(jitNetworkAccessPolicy);
-            Assert.IsNotNull(jitNetworkAccessPolicy.Data.Id);
-            Assert.AreEqual(jitNetworkAccessPolicyName, jitNetworkAccessPolicy.Data.Name);
-            Assert.AreEqual("Basic", jitNetworkAccessPolicy.Data.Kind);
-            Assert.AreEqual(DefaultLocation, jitNetworkAccessPolicy.Data.Location);
-            Assert.AreEqual(1, jitNetworkAccessPolicy.Data.VirtualMachines.Count);
-            Assert.AreEqual(8080, jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Number);
-            Assert.AreEqual("TCP", jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Protocol.ToString());
-            Assert.AreEqual(8080, jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Number);
         }
     }
 }
