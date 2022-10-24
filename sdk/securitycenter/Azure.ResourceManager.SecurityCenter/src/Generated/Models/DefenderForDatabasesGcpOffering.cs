@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The offering description. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
         /// <param name="defenderForDatabasesArcAutoProvisioning"> The native cloud connection configuration. </param>
-        internal DefenderForDatabasesGcpOffering(OfferingType offeringType, string description, DefenderForDatabasesGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning) : base(offeringType, description)
+        internal DefenderForDatabasesGcpOffering(OfferingType offeringType, string description, DefenderForDatabasesGcpOfferingArcAutoProvisioning arcAutoProvisioning, GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning) : base(offeringType, description)
         {
             ArcAutoProvisioning = arcAutoProvisioning;
             DefenderForDatabasesArcAutoProvisioning = defenderForDatabasesArcAutoProvisioning;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The native cloud connection configuration. </summary>
-        public DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning DefenderForDatabasesArcAutoProvisioning { get; set; }
+        public GcpDefenderForDatabasesArcAutoProvisioning DefenderForDatabasesArcAutoProvisioning { get; set; }
     }
 }

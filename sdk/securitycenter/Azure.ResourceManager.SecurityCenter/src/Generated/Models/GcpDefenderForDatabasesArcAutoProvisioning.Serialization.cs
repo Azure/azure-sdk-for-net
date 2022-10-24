@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning : IUtf8JsonSerializable
+    public partial class GcpDefenderForDatabasesArcAutoProvisioning : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning DeserializeDefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning(JsonElement element)
+        internal static GcpDefenderForDatabasesArcAutoProvisioning DeserializeGcpDefenderForDatabasesArcAutoProvisioning(JsonElement element)
         {
             Optional<string> serviceAccountEmailAddress = default;
             Optional<string> workloadIdentityProviderId = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning(serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value);
+            return new GcpDefenderForDatabasesArcAutoProvisioning(serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value);
         }
     }
 }

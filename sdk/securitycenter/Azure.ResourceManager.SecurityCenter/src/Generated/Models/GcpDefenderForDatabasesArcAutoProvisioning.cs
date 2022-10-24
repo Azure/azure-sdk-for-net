@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The native cloud connection configuration. </summary>
-    public partial class DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning
+    public partial class GcpDefenderForDatabasesArcAutoProvisioning
     {
-        /// <summary> Initializes a new instance of DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning. </summary>
-        public DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning()
+        /// <summary> Initializes a new instance of GcpDefenderForDatabasesArcAutoProvisioning. </summary>
+        public GcpDefenderForDatabasesArcAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of GcpDefenderForDatabasesArcAutoProvisioning. </summary>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this offering. </param>
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for this offering. </param>
-        internal DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning(string serviceAccountEmailAddress, string workloadIdentityProviderId)
+        internal GcpDefenderForDatabasesArcAutoProvisioning(string serviceAccountEmailAddress, string workloadIdentityProviderId)
         {
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
