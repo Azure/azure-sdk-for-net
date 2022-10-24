@@ -1,14 +1,9 @@
 # Release History
 
 ## 12.15.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2021-12-02.
+- Added support for Blob Cold Tier.
+- Fixed bug where BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed was spelled incorrectly.
 
 ## 12.14.0 (2022-10-12)
 - Includes all features from 12.14.0-beta.1.

@@ -1,14 +1,8 @@
 # Release History
 
 ## 12.13.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2021-12-02.
+- Added support for invalid XML characters in file and directory names for ShareDirectoryClient.GetfilesAndDirectories(), .GetHandles(), and ShareFileClient.GetHandles().
 
 ## 12.12.0 (2022-10-12)
 - Includes all features from 12.12.0-beta.1.
