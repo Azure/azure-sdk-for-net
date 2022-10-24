@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Relay
                 var response = await _relayHybridConnectionAuthorizationRuleHybridConnectionsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RelayAuthorizationRuleResource)new RelayHybridConnectionAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Relay
                 var response = _relayHybridConnectionAuthorizationRuleHybridConnectionsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RelayAuthorizationRuleResource)new RelayHybridConnectionAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = await _relayHybridConnectionAuthorizationRuleHybridConnectionsRestClient.CreateOrUpdateAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelayArmOperation<RelayAuthorizationRuleResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new RelayArmOperation<RelayAuthorizationRuleResource>(Response.FromValue((RelayAuthorizationRuleResource)new RelayHybridConnectionAuthorizationRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = _relayHybridConnectionAuthorizationRuleHybridConnectionsRestClient.CreateOrUpdateAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new RelayArmOperation<RelayAuthorizationRuleResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new RelayArmOperation<RelayAuthorizationRuleResource>(Response.FromValue((RelayAuthorizationRuleResource)new RelayHybridConnectionAuthorizationRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

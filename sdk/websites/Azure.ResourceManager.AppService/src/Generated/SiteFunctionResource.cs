@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteFunctionWebAppsRestClient.GetFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((FunctionEnvelopeResource)new SiteFunctionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteFunctionWebAppsRestClient.GetFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((FunctionEnvelopeResource)new SiteFunctionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

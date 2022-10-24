@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = await _resourceGuardDeleteResourceGuardProxyRequestResourceGuardsRestClient.GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((DppBaseResource)new ResourceGuardDeleteResourceGuardProxyRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = _resourceGuardDeleteResourceGuardProxyRequestResourceGuardsRestClient.GetDefaultDeleteResourceGuardProxyRequestsObject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((DppBaseResource)new ResourceGuardDeleteResourceGuardProxyRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

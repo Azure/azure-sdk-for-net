@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _sitePublicCertificateWebAppsRestClient.GetPublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PublicCertificateResource)new SitePublicCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _sitePublicCertificateWebAppsRestClient.GetPublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PublicCertificateResource)new SitePublicCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _sitePublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<PublicCertificateResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<PublicCertificateResource>(Response.FromValue((PublicCertificateResource)new SitePublicCertificateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _sitePublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<PublicCertificateResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<PublicCertificateResource>(Response.FromValue((PublicCertificateResource)new SitePublicCertificateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

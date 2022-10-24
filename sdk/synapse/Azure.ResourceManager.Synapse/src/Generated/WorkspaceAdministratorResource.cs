@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _workspaceAdministratorWorkspaceAadAdminsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((WorkspaceAadAdminInfoResource)new WorkspaceAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _workspaceAdministratorWorkspaceAadAdminsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((WorkspaceAadAdminInfoResource)new WorkspaceAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

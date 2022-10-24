@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = await _providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuSkusRestClient.GetNestedResourceTypeFirstAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SkuResource)new ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = _providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuSkusRestClient.GetNestedResourceTypeFirst(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SkuResource)new ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuSkusRestClient.CreateOrUpdateNestedResourceTypeFirstAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<SkuResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<SkuResource>(Response.FromValue((SkuResource)new ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuSkusRestClient.CreateOrUpdateNestedResourceTypeFirst(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<SkuResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<SkuResource>(Response.FromValue((SkuResource)new ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

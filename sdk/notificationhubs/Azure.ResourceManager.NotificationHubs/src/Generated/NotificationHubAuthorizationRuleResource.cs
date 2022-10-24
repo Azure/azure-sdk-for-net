@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 var response = await _notificationHubAuthorizationRuleNotificationHubsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseNotificationHubAuthorizationRuleResource)new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 var response = _notificationHubAuthorizationRuleNotificationHubsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseNotificationHubAuthorizationRuleResource)new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = await _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateOrUpdateAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NotificationHubsArmOperation<BaseNotificationHubAuthorizationRuleResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new NotificationHubsArmOperation<BaseNotificationHubAuthorizationRuleResource>(Response.FromValue((BaseNotificationHubAuthorizationRuleResource)new NotificationHubAuthorizationRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateOrUpdateAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new NotificationHubsArmOperation<BaseNotificationHubAuthorizationRuleResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new NotificationHubsArmOperation<BaseNotificationHubAuthorizationRuleResource>(Response.FromValue((BaseNotificationHubAuthorizationRuleResource)new NotificationHubAuthorizationRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((MSDeployStatusResource)new SiteSlotInstanceExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((MSDeployStatusResource)new SiteSlotInstanceExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

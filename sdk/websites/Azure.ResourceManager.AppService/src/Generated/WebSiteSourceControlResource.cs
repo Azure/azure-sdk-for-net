@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteSourceControlWebAppsRestClient.GetSourceControlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SiteSourceControlResource)new WebSiteSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteSourceControlWebAppsRestClient.GetSourceControl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SiteSourceControlResource)new WebSiteSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSourceControlWebAppsRestClient.UpdateSourceControlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SiteSourceControlResource)new WebSiteSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSourceControlWebAppsRestClient.UpdateSourceControl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SiteSourceControlResource)new WebSiteSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

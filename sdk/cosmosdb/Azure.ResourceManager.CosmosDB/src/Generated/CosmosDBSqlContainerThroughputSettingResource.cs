@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((ThroughputSettingResource)new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((ThroughputSettingResource)new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

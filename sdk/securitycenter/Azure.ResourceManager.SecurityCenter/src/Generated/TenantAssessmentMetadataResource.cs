@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _tenantAssessmentMetadataAssessmentsMetadataRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAssessmentMetadataResponseResource)new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _tenantAssessmentMetadataAssessmentsMetadataRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAssessmentMetadataResponseResource)new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

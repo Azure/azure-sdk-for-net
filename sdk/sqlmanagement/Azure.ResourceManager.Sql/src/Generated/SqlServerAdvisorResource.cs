@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerAdvisorServerAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SqlAdvisorResource)new SqlServerAdvisorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerAdvisorServerAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SqlAdvisorResource)new SqlServerAdvisorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerAdvisorServerAdvisorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SqlAdvisorResource)new SqlServerAdvisorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerAdvisorServerAdvisorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SqlAdvisorResource)new SqlServerAdvisorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

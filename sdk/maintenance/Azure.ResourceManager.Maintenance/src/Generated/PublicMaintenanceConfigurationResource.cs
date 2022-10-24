@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Maintenance
                 var response = await _publicMaintenanceConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseMaintenanceConfigurationResource)new PublicMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Maintenance
                 var response = _publicMaintenanceConfigurationRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseMaintenanceConfigurationResource)new PublicMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

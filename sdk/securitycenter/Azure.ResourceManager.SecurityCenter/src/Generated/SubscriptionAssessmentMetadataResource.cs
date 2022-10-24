@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.GetInSubscriptionAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAssessmentMetadataResponseResource)new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.GetInSubscription(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAssessmentMetadataResponseResource)new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = await _labUserServicefabricScheduleServiceFabricSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseScheduleResource)new LabUserServicefabricScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseScheduleResource)new LabUserServicefabricScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _labUserServicefabricScheduleServiceFabricSchedulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, schedule, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseScheduleResource)new LabUserServicefabricScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, schedule, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseScheduleResource)new LabUserServicefabricScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

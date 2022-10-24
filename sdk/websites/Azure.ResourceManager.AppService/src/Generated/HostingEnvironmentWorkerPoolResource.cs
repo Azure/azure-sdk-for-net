@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.GetWorkerPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((AppServiceWorkerPoolResource)new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.GetWorkerPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((AppServiceWorkerPoolResource)new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((AppServiceWorkerPoolResource)new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((AppServiceWorkerPoolResource)new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = await _blueprintVersionArtifactPublishedArtifactsRestClient.GetAsync(Id.Parent.Parent.Parent, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((ArtifactResource)new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = _blueprintVersionArtifactPublishedArtifactsRestClient.Get(Id.Parent.Parent.Parent, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((ArtifactResource)new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = await _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((HealthcareApisPrivateEndpointConnectionResource)new HealthcareApisWorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((HealthcareApisPrivateEndpointConnectionResource)new HealthcareApisWorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

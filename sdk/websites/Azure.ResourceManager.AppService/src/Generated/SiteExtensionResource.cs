@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteExtensionWebAppsRestClient.GetMSDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((MSDeployStatusResource)new SiteExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteExtensionWebAppsRestClient.GetMSDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((MSDeployStatusResource)new SiteExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteSlotPublicCertificateWebAppsRestClient.GetPublicCertificateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PublicCertificateResource)new WebSiteSlotPublicCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteSlotPublicCertificateWebAppsRestClient.GetPublicCertificateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PublicCertificateResource)new WebSiteSlotPublicCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotPublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<PublicCertificateResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<PublicCertificateResource>(Response.FromValue((PublicCertificateResource)new WebSiteSlotPublicCertificateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotPublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<PublicCertificateResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<PublicCertificateResource>(Response.FromValue((PublicCertificateResource)new WebSiteSlotPublicCertificateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = await _labScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseScheduleResource)new LabScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = _labScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseScheduleResource)new LabScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _labScheduleSchedulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schedule, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseScheduleResource)new LabScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _labScheduleSchedulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schedule, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseScheduleResource)new LabScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

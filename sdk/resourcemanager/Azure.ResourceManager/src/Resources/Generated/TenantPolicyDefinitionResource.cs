@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(PolicyDefinitionResource.GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PolicyDefinitionResource)new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltIn(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(PolicyDefinitionResource.GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PolicyDefinitionResource)new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

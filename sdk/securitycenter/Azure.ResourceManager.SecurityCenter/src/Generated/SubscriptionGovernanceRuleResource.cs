@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _subscriptionGovernanceRuleGovernanceRulesRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((GovernanceRuleResource)new SubscriptionGovernanceRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _subscriptionGovernanceRuleGovernanceRulesRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((GovernanceRuleResource)new SubscriptionGovernanceRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _subscriptionGovernanceRuleGovernanceRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue((GovernanceRuleResource)new SubscriptionGovernanceRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _subscriptionGovernanceRuleGovernanceRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue((GovernanceRuleResource)new SubscriptionGovernanceRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

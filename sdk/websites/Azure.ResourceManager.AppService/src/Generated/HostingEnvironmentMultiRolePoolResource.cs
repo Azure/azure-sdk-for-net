@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.GetMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((AppServiceWorkerPoolResource)new HostingEnvironmentMultiRolePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.GetMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((AppServiceWorkerPoolResource)new HostingEnvironmentMultiRolePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.UpdateMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((AppServiceWorkerPoolResource)new HostingEnvironmentMultiRolePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.UpdateMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((AppServiceWorkerPoolResource)new HostingEnvironmentMultiRolePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

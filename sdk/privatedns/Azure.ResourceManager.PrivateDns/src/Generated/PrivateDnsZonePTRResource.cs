@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = await _privateDnsZonePTRRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RecordSetResource)new PrivateDnsZonePTRResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = _privateDnsZonePTRRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RecordSetResource)new PrivateDnsZonePTRResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = await _privateDnsZonePTRRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RecordSetResource)new PrivateDnsZonePTRResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = _privateDnsZonePTRRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RecordSetResource)new PrivateDnsZonePTRResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

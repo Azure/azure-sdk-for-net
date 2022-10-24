@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSitePremierAddonWebAppsRestClient.GetPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PremierAddOnResource)new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSitePremierAddonWebAppsRestClient.GetPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PremierAddOnResource)new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSitePremierAddonWebAppsRestClient.UpdatePremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOn, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PremierAddOnResource)new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSitePremierAddonWebAppsRestClient.UpdatePremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOn, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PremierAddOnResource)new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

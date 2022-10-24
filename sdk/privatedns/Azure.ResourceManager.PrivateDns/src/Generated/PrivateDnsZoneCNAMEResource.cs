@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = await _privateDnsZoneCNAMERecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RecordSetResource)new PrivateDnsZoneCNAMEResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = _privateDnsZoneCNAMERecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RecordSetResource)new PrivateDnsZoneCNAMEResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = await _privateDnsZoneCNAMERecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RecordSetResource)new PrivateDnsZoneCNAMEResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = _privateDnsZoneCNAMERecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((RecordSetResource)new PrivateDnsZoneCNAMEResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

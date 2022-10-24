@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((LongTermRetentionBackupResource)new SubscriptionLongTermRetentionBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((LongTermRetentionBackupResource)new SubscriptionLongTermRetentionBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

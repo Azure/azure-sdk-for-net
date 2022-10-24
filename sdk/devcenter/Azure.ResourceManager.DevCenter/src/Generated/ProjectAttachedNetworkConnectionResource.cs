@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter
                 var response = await _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseAttachedNetworkConnectionResource)new ProjectAttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevCenter
                 var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseAttachedNetworkConnectionResource)new ProjectAttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

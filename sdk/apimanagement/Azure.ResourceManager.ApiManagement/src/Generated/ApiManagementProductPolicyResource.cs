@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementProductPolicyProductPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, format, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PolicyContractResource)new ApiManagementProductPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementProductPolicyProductPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, format, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PolicyContractResource)new ApiManagementProductPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementProductPolicyProductPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<PolicyContractResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<PolicyContractResource>(Response.FromValue((PolicyContractResource)new ApiManagementProductPolicyResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementProductPolicyProductPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<PolicyContractResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<PolicyContractResource>(Response.FromValue((PolicyContractResource)new ApiManagementProductPolicyResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -363,6 +363,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: ProductPolicy_GetEntityTag
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual new async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
+        {
+            return await base.GetEntityTagAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the ETag of the policy configuration at the Product level.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}
+        /// Operation Id: ProductPolicy_GetEntityTag
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<bool> GetEntityTagCore(CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementProductPolicyProductPolicyClientDiagnostics.CreateScope("ApiManagementProductPolicyResource.GetEntityTag");
@@ -377,6 +389,18 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get the ETag of the policy configuration at the Product level.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}
+        /// Operation Id: ProductPolicy_GetEntityTag
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual new Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
+        {
+            return base.GetEntityTag(cancellationToken);
         }
     }
 }

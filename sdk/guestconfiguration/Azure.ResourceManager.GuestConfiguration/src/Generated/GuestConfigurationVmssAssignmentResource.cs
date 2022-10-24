@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 var response = await _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((GuestConfigurationAssignmentResource)new GuestConfigurationVmssAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 var response = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((GuestConfigurationAssignmentResource)new GuestConfigurationVmssAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

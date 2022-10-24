@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _ascLocationLocationTaskTasksRestClient.GetSubscriptionLevelTaskAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityTaskResource)new AscLocationLocationTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _ascLocationLocationTaskTasksRestClient.GetSubscriptionLevelTask(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityTaskResource)new AscLocationLocationTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

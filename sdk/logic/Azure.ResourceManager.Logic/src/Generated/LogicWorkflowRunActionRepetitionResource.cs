@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((LogicWorkflowRunActionRepetitionDefinitionResource)new LogicWorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Logic
                 var response = _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((LogicWorkflowRunActionRepetitionDefinitionResource)new LogicWorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

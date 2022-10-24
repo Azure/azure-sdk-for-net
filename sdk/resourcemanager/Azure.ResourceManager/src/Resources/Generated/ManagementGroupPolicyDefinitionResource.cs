@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroupAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(PolicyDefinitionResource.GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PolicyDefinitionResource)new ManagementGroupPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(PolicyDefinitionResource.GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((PolicyDefinitionResource)new ManagementGroupPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

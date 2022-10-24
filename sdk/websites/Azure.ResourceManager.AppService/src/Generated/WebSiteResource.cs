@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseWebSiteResource)new WebSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseWebSiteResource)new WebSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseWebSiteResource)new WebSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken);
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseWebSiteResource)new WebSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
