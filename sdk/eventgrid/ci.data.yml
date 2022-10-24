@@ -33,7 +33,3 @@ extends:
     Artifacts:
     - name: Microsoft.Azure.EventGrid
       safeName: MicrosoftAzureEventGrid
-    - name: Microsoft.Azure.WebJobs.Extensions.EventGrid
-      safeName: MicrosoftAzureWebJobsExtensionsEventGrid
-    - name: Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
-      safeName: MicrosoftAzureMessagingEventGridCloudNativeCloudEvents
