@@ -112,16 +112,17 @@
     {
       "RequestUri": "https://sanitized.skype.com/calling/callConnections/411f3500-3505-48f4-8bd8-ab01800f78b5:play?api-version=2022-04-07-preview",
       "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "204",
-        "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "3345a7f66b261958ce3089e9dc7a7c73",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 19 Sep 2022 22:20:13 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "Content-Length": "204",
+            "Content-Type": "application/json",
+            "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+            "x-ms-client-request-id": "3345a7f66b261958ce3089e9dc7a7c73",
+            "x-ms-content-sha256": "Sanitized",
+            "x-ms-date": "Mon, 19 Sep 2022 22:20:13 GMT",
+            "x-ms-return-client-request-id": "true"
+        },
       "RequestBody": {
         "playSourceInfo": {
           "sourceType": "file",
@@ -154,6 +155,7 @@
       "RequestUri": "https://sanitized.skype.com/calling/callConnections/411f3500-3505-48f4-8bd8-ab01800f78b5:terminate?api-version=2022-04-07-preview",
       "RequestMethod": "POST",
         "RequestHeaders": {
+            "Accept": "application/json",
             "Authorization": "Sanitized",
             "Content-Length": "0",
             "Repeatability-First-Sent": "Mon, 19 Sep 2022 22:20:00 GMT",

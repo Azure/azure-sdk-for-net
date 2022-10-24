@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string AutoValue = "auto";
         private const string HttpValue = "http";
         private const string Http2Value = "http2";
+        private const string TcpValue = "tcp";
 
         /// <summary> auto. </summary>
         public static IngressTransportMethod Auto { get; } = new IngressTransportMethod(AutoValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static IngressTransportMethod Http { get; } = new IngressTransportMethod(HttpValue);
         /// <summary> http2. </summary>
         public static IngressTransportMethod Http2 { get; } = new IngressTransportMethod(Http2Value);
+        /// <summary> tcp. </summary>
+        public static IngressTransportMethod Tcp { get; } = new IngressTransportMethod(TcpValue);
         /// <summary> Determines if two <see cref="IngressTransportMethod"/> values are the same. </summary>
         public static bool operator ==(IngressTransportMethod left, IngressTransportMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IngressTransportMethod"/> values are not the same. </summary>

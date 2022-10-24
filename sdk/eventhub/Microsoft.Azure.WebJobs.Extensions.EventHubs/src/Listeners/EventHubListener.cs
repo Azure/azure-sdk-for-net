@@ -162,6 +162,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         ProcessorPartition = context
                     };
 
+                    UpdateCheckpointContext(events, context);
+
                     if (_singleDispatch)
                     {
                         // Single dispatch
@@ -212,26 +214,39 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
             }
 
-            private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
+            private void UpdateCheckpointContext(EventData[] events, EventProcessorHostPartition context)
             {
-                bool checkpointed = false;
-                if (_batchCheckpointFrequency == 1)
+                var isCheckpointingAfterInvocation = false;
+
+                if (events != null && events.Length > 0)
                 {
-                    await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
-                    checkpointed = true;
-                }
-                else
-                {
-                    // only checkpoint every N batches
-                    if (++_batchCounter >= _batchCheckpointFrequency)
+                    if (_batchCheckpointFrequency == 1)
                     {
-                        _batchCounter = 0;
-                        await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
-                        checkpointed = true;
+                        isCheckpointingAfterInvocation = true;
+                    }
+                    else
+                    {
+                        // only checkpoint every N batches
+                        if (_batchCounter + 1 >= _batchCheckpointFrequency)
+                        {
+                            isCheckpointingAfterInvocation = true;
+                        }
                     }
                 }
-                if (checkpointed)
+
+                context.PartitionContext.IsCheckpointingAfterInvocation = isCheckpointingAfterInvocation;
+            }
+
+            private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
+            {
+                _batchCounter++;
+
+                if (context.PartitionContext.IsCheckpointingAfterInvocation)
                 {
+                    await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
+
+                    _batchCounter = 0;
+
                     _logger.LogDebug(GetOperationDetails(context, "CheckpointAsync"));
                 }
             }

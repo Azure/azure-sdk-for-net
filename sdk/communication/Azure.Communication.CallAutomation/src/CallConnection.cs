@@ -25,11 +25,11 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ContentRestClient CallContentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
-            ContentRestClient = CallContentRestClient;
+            ContentRestClient = callContentRestClient;
             _clientDiagnostics = clientDiagnostics;
         }
 
@@ -112,13 +112,13 @@ namespace Azure.Communication.CallAutomation
 
                 if (options.ForEveryone)
                 {
-                    if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                    if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                         throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                     return await RestClient.TerminateCallAsync(
                         CallConnectionId,
-                        options.RepeatabilityHeaders.RepeatabilityRequestId,
-                        options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                        options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                        options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                         cancellationToken
                         ).ConfigureAwait(false);
                 }
@@ -165,13 +165,13 @@ namespace Azure.Communication.CallAutomation
 
                 if (options.ForEveryone)
                 {
-                    if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                    if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                         throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                     return RestClient.TerminateCall(
                         CallConnectionId,
-                        options.RepeatabilityHeaders.RepeatabilityRequestId,
-                        options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                        options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                        options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                         cancellationToken
                         );
                 }
@@ -204,7 +204,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);;
@@ -212,8 +212,8 @@ namespace Azure.Communication.CallAutomation
                 return await RestClient.TransferToParticipantAsync(
                     CallConnectionId,
                     request,
-                    options.RepeatabilityHeaders.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -238,7 +238,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
@@ -246,8 +246,8 @@ namespace Azure.Communication.CallAutomation
                 return RestClient.TransferToParticipant(
                     CallConnectionId,
                     request,
-                    options.RepeatabilityHeaders.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     );
             }
@@ -283,7 +283,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 AddParticipantsRequestInternal request = CreateAddParticipantRequest(options);
@@ -291,8 +291,8 @@ namespace Azure.Communication.CallAutomation
                 var response = await RestClient.AddParticipantAsync(
                     callConnectionId: CallConnectionId,
                     request,
-                    options.RepeatabilityHeaders.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
@@ -319,7 +319,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 AddParticipantsRequestInternal request = CreateAddParticipantRequest(options);
@@ -327,8 +327,8 @@ namespace Azure.Communication.CallAutomation
                 var response = RestClient.AddParticipant(
                     callConnectionId: CallConnectionId,
                     request,
-                    options.RepeatabilityHeaders.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken: cancellationToken
                     );
 
@@ -485,7 +485,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
@@ -495,8 +495,8 @@ namespace Azure.Communication.CallAutomation
                 return await RestClient.RemoveParticipantsAsync(
                     CallConnectionId,
                     request,
-                    options.RepeatabilityHeaders.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -536,7 +536,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
@@ -546,8 +546,8 @@ namespace Azure.Communication.CallAutomation
                 return RestClient.RemoveParticipants(
                      CallConnectionId,
                      request,
-                     options.RepeatabilityHeaders.RepeatabilityRequestId,
-                     options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                      cancellationToken
                      );
             }
