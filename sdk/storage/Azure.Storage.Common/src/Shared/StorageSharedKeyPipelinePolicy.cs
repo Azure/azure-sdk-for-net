@@ -56,6 +56,7 @@ namespace Azure.Storage
             message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
+        // If you change this method, make sure live tests are passing before merging PR.
         private string BuildStringToSign(HttpMessage message)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
@@ -97,6 +98,7 @@ namespace Azure.Storage
             return stringBuilder.ToString();
         }
 
+        // If you change this method, make sure live tests are passing before merging PR.
         private static void BuildCanonicalizedHeaders(StringBuilder stringBuilder, HttpMessage message)
         {
             // Grab all the "x-ms-*" headers, trim whitespace, lowercase, sort,
@@ -116,6 +118,7 @@ namespace Azure.Storage
             }
         }
 
+        // If you change this method, make sure live tests are passing before merging PR.
         private void BuildCanonicalizedResource(StringBuilder stringBuilder, Uri resource)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authentication-for-the-azure-storage-services
