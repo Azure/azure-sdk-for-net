@@ -54,8 +54,6 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
-        // TODO: Temporarily setting max version to V2022-05-01 since V2022-10-01-preview does not support AAD yet (https://github.com/Azure/azure-sdk-for-net/issues/31854).
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeHealthcareEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -307,6 +305,8 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -358,6 +358,8 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -507,7 +509,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 FhirVersion = WellKnownFhirVersion.V4_0_1,
             }));
 
-            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.FhirVersion is not available in API version 2022-05-01. Use service API version 2022-10-01-preview or newer.", ex.Message);
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         [RecordedTest]
@@ -523,7 +525,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DocumentType = HealthcareDocumentType.DischargeSummary
             }));
 
-            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.DocumentType is not available in API version 2022-05-01. Use service API version 2022-10-01-preview or newer.", ex.Message);
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
