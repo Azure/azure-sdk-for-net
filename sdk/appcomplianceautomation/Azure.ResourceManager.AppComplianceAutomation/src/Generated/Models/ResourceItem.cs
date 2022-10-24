@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="subscriptionId"> The subscription Id of this resource. </param>
         /// <param name="resourceGroup"> The resource group name of this resource. </param>
         /// <param name="resourceType"> The resource type of this resource. </param>
-        /// <param name="resourceId"> The resource Id. </param>
+        /// <param name="resourceId"> The resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </param>
         internal ResourceItem(string subscriptionId, string resourceGroup, string resourceType, string resourceId)
         {
             SubscriptionId = subscriptionId;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string ResourceGroup { get; }
         /// <summary> The resource type of this resource. </summary>
         public string ResourceType { get; }
-        /// <summary> The resource Id. </summary>
+        /// <summary> The resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </summary>
         public string ResourceId { get; }
     }
 }
