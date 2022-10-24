@@ -305,16 +305,17 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
+            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions();
+
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+            if (ServiceVersion is not TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
-                IncludeStatistics = true
-            };
+                options.IncludeStatistics = true;
+            }
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en", options);
 
@@ -322,7 +323,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateOperationProperties(operation);
 
-            //Take the first page
+            // Take the first page.
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             var expectedOutput = new Dictionary<string, List<string>>()
@@ -358,16 +359,17 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
+            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions();
+
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+            if (ServiceVersion is not TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
-                IncludeStatistics = true
-            };
+                options.IncludeStatistics = true;
+            }
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, options);
 
@@ -550,16 +552,20 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
-            if (includeStatistics)
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+            if (ServiceVersion is not TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                if (includeStatistics)
+                {
+                    Assert.IsNotNull(results.Statistics);
+                    Assert.Greater(results.Statistics.DocumentCount, 0);
+                    Assert.Greater(results.Statistics.TransactionCount, 0);
+                    Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+                    Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                }
+                else
+                    Assert.IsNull(results.Statistics);
             }
-            else
-                Assert.IsNull(results.Statistics);
 
             foreach (AnalyzeHealthcareEntitiesResult entitiesInDocument in results)
             {
@@ -570,15 +576,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
                 Assert.IsNotNull(entitiesInDocument.Statistics);
 
-                if (includeStatistics)
+                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+                if (ServiceVersion is not (TextAnalyticsClientOptions.ServiceVersion.V2022_05_01 or TextAnalyticsClientOptions.ServiceVersion.V3_1))
                 {
-                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
-                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
-                }
-                else
-                {
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                    if (includeStatistics)
+                    {
+                        Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
+                        Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
+                        Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                    }
                 }
 
                 Assert.IsNotNull(entitiesInDocument.Warnings);
