@@ -228,6 +228,45 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanCastToIEnumerableOfT()
+        {
+            dynamic data = JsonData.Parse("{ \"array\": [ 1, 2, 3] }");
+
+            var enumerable = (IEnumerable<int>)data.array;
+
+            int i = 0;
+            foreach (var item in enumerable)
+            {
+                Assert.AreEqual(++i, item);
+            }
+        }
+
+        [Test]
+        public void CanGetDynamicFromBinaryData()
+        {
+            var data = new BinaryData(new
+            {
+                array = new[] { 1, 2, 3 }
+            });
+
+            dynamic json = data.ToDynamic();
+            dynamic array = json.array;
+
+            // Cool- this doesn't work.  Why?  YOU ARE HERE.
+            // Note: if foreach types item as int, this works.
+            // if foreach types item as var or dynamic, it doesn't work
+            int i = 0;
+            foreach (dynamic item in array)
+            {
+                // this doesn't work because it calls int32.Equals()
+                //Assert.AreEqual(++i, item);
+
+                // this does work because it calls JsonData.Equals()
+                Assert.AreEqual(item, ++i);
+            }
+        }
+
+        [Test]
         public void EqualsProvidesValueEqualityPrimitives()
         {
             Assert.AreEqual(new JsonData(1), new JsonData(1));

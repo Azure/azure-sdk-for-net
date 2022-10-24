@@ -58,6 +58,13 @@ namespace Azure
             return element.GetObject();
         }
 
+        /// <summary>
+        /// </summary>
+        public static dynamic ToDynamic(this BinaryData data)
+        {
+            return JsonData.Parse(data);
+        }
+
         private static object? GetObject(in this JsonElement element)
         {
             switch (element.ValueKind)

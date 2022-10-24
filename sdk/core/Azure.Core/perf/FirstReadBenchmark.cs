@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using BenchmarkDotNet.Attributes;
@@ -21,7 +22,7 @@ namespace Azure.Core.Perf
         [Benchmark]
         public int ReadJsonData()
         {
-            dynamic value = JsonData.Parse(_json);
+            dynamic value = new BinaryData(_json).ToDynamic();
             return (int)value.a.b;
         }
     }
