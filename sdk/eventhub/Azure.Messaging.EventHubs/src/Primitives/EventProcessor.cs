@@ -593,7 +593,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
             {
-                bool isBatch = (eventBatch.Count > 1);
+                bool isBatch = (EventBatchMaximumCount > 1);
                 foreach (var eventData in eventBatch)
                 {
                     if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))

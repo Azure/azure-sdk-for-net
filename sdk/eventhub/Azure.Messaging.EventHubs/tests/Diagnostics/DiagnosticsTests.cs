@@ -419,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partition = new EventProcessorPartition { PartitionId = "123" };
             var fullyQualifiedNamespace = "namespace";
             var eventHubName = "eventHub";
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(67, "consumerGroup", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(1, "consumerGroup", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             eventBatch.ForEach(evt => evt.Properties.Add(DiagnosticProperty.DiagnosticIdAttribute, diagnosticId));
             await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
