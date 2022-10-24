@@ -93,15 +93,6 @@ namespace Azure
         }
 
         /// <summary>
-        ///  Creates a new JsonData object which represents the value of the given JsonDocument.
-        /// </summary>
-        /// <param name="jsonDocument">The JsonDocument to convert.</param>
-        /// <remarks>A JsonDocument can be constructed from a JSON string using <see cref="JsonDocument.Parse(string, JsonDocumentOptions)"/>.</remarks>
-        internal JsonData(JsonDocument jsonDocument) : this((object?)jsonDocument, DefaultJsonSerializerOptions, null)
-        {
-        }
-
-        /// <summary>
         /// Creates a new JsonData object which represents the given object.
         /// </summary>
         /// <param name="value">The value to convert.</param>
@@ -160,18 +151,40 @@ namespace Azure
             InitFromElement(element);
         }
 
-        /// <summary>
-        /// Returns a stringified version of the JSON for this value.
-        /// </summary>
-        /// <returns>Returns a stringified version of the JSON for this value.</returns>
-        private string ToJsonString()
+        private void InitFromElement(JsonElement element)
         {
-            using var memoryStream = new MemoryStream();
-            using (var writer = new Utf8JsonWriter(memoryStream))
+            switch (element.ValueKind)
             {
-                WriteTo(writer);
+                case JsonValueKind.Object:
+                    _objectRepresentation = new Dictionary<string, JsonData>();
+                    foreach (var item in element.EnumerateObject())
+                    {
+                        _objectRepresentation[item.Name] = new JsonData(item.Value);
+                    }
+                    break;
+                case JsonValueKind.Array:
+                    _arrayRepresentation = new List<JsonData>();
+                    foreach (var item in element.EnumerateArray())
+                    {
+                        _arrayRepresentation.Add(new JsonData(item));
+                    }
+                    break;
+                case JsonValueKind.String:
+                    _value = element.GetString();
+                    break;
+                case JsonValueKind.Number:
+                    _value = new Number(element);
+                    break;
+                case JsonValueKind.True:
+                case JsonValueKind.False:
+                    _value = element.GetBoolean();
+                    break;
+                case JsonValueKind.Null:
+                    _value = null;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(element), "Unsupported element kind");
             }
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
 
         /// <summary>
@@ -207,42 +220,6 @@ namespace Azure
         private IEnumerable<JsonData> Items
         {
             get => EnsureArray();
-        }
-
-        private void InitFromElement(JsonElement element)
-        {
-            switch (element.ValueKind)
-            {
-                case JsonValueKind.Object:
-                    _objectRepresentation = new Dictionary<string, JsonData>();
-                    foreach (var item in element.EnumerateObject())
-                    {
-                        _objectRepresentation[item.Name] = new JsonData(item.Value);
-                    }
-                    break;
-                case JsonValueKind.Array:
-                    _arrayRepresentation = new List<JsonData>();
-                    foreach (var item in element.EnumerateArray())
-                    {
-                        _arrayRepresentation.Add(new JsonData(item));
-                    }
-                    break;
-                case JsonValueKind.String:
-                    _value = element.GetString();
-                    break;
-                case JsonValueKind.Number:
-                    _value = new Number(element);
-                    break;
-                case JsonValueKind.True:
-                case JsonValueKind.False:
-                    _value = element.GetBoolean();
-                    break;
-                case JsonValueKind.Null:
-                    _value = null;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(element), "Unsupported element kind");
-            }
         }
 
         /// <summary>
@@ -372,6 +349,20 @@ namespace Azure
         /// <param name="right">The <see cref="JsonData"/> to compare.</param>
         /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
         public static bool operator !=(string? left, JsonData? right) => !(left == right);
+
+        /// <summary>
+        /// Returns a stringified version of the JSON for this value.
+        /// </summary>
+        /// <returns>Returns a stringified version of the JSON for this value.</returns>
+        private string ToJsonString()
+        {
+            using var memoryStream = new MemoryStream();
+            using (var writer = new Utf8JsonWriter(memoryStream))
+            {
+                WriteTo(writer);
+            }
+            return Encoding.UTF8.GetString(memoryStream.ToArray());
+        }
 
         /// <inheritdoc />
         public override string ToString()
@@ -603,6 +594,7 @@ namespace Azure
 
             return _value;
         }
+
         private Number EnsureNumberValue()
         {
             if (_kind != JsonValueKind.Number)
@@ -677,23 +669,13 @@ namespace Azure
 
         private class MetaObject : DynamicMetaObject
         {
-            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
+            private static readonly MethodInfo GetDynamicPropertyMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
             private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
-            private static readonly PropertyInfo ArrayIndexerProperty = typeof(JsonData).GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetIndexParameters().FirstOrDefault()?.ParameterType == typeof(int)).First();
-            private static readonly IEnumerable<MethodInfo> CastOperators = typeof(JsonData).GetMethods(BindingFlags.Public | BindingFlags.Static).Where(method => method.Name == "op_Explicit" || method.Name == "op_Implicit")!;
+            private static readonly Dictionary<Type, PropertyInfo> Indexers = GetIndexers();
+            private static readonly Dictionary<Type, MethodInfo> CastOperators = GetCastOperators();
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
-            }
-
-            public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
-            {
-                var targetObject = Expression.Convert(Expression, LimitType);
-                var arguments = indexes.Select(i => i.Expression);
-                var indexPropertyCall = Expression.Property(targetObject, ArrayIndexerProperty, arguments);
-
-                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                return new DynamicMetaObject(indexPropertyCall,  restrictions);
             }
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
@@ -701,39 +683,59 @@ namespace Azure
                 var targetObject = Expression.Convert(Expression, LimitType);
 
                 var arguments = new Expression[] { Expression.Constant(binder.Name) };
-                var getPropertyCall = Expression.Call(targetObject, GetDynamicValueMethod, arguments);
+                var getPropertyCall = Expression.Call(targetObject, GetDynamicPropertyMethod, arguments);
 
                 var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(getPropertyCall, restrictions);
             }
 
-            public override DynamicMetaObject BindConvert(ConvertBinder binder)
+            public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
             {
-                if (binder.Type == typeof(IEnumerable))
-                {
-                    var targetObject = Expression.Convert(Expression, LimitType);
-                    var convertCall = Expression.Call(targetObject, GetDynamicEnumerableMethod);
+                var targetObject = Expression.Convert(Expression, LimitType);
+                var arguments = indexes.Select(i => i.Expression);
+                var indexPropertyCall = Expression.Property(targetObject, Indexers[indexes[0].LimitType], arguments);
 
-                    var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                    return new DynamicMetaObject(convertCall, restrictions);
-                }
-                else if (IsCastableTo(binder.Type))
-                {
-                    return base.BindConvert(binder);
-                }
-                else
-                {
-                    var targetObject = Expression.Convert(Expression, LimitType);
-                    var convertCall = Expression.Call(targetObject, nameof(To), new Type[] { binder.Type });
-
-                    var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                    return new DynamicMetaObject(convertCall, restrictions);
-                }
+                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(indexPropertyCall, restrictions);
             }
 
-            private static bool IsCastableTo(Type type)
+            public override DynamicMetaObject BindConvert(ConvertBinder binder)
             {
-                return type.IsAssignableFrom(typeof(JsonData)) || CastOperators.Where(method => method.ReturnType == type).Any();
+                Expression targetObject = Expression.Convert(Expression, LimitType);
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+
+                Expression convertCall;
+
+                if (binder.Type == typeof(IEnumerable))
+                {
+                    convertCall = Expression.Call(targetObject, GetDynamicEnumerableMethod);
+                    return new DynamicMetaObject(convertCall, restrictions);
+                }
+
+                if (CastOperators.TryGetValue(binder.Type, out MethodInfo? castOperator))
+                {
+                    convertCall = Expression.Call(castOperator, targetObject);
+                    return new DynamicMetaObject(convertCall, restrictions);
+                }
+
+                convertCall = Expression.Call(targetObject, nameof(To), new Type[] { binder.Type });
+                return new DynamicMetaObject(convertCall, restrictions);
+            }
+
+            private static Dictionary<Type, PropertyInfo> GetIndexers()
+            {
+                return typeof(JsonData)
+                    .GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
+                    .Where(p => p.GetIndexParameters().Any())
+                    .ToDictionary(p => p.GetIndexParameters().First().ParameterType);
+            }
+
+            private static Dictionary<Type, MethodInfo> GetCastOperators()
+            {
+                return typeof(JsonData)
+                    .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                    .Where(method => method.Name == "op_Explicit" || method.Name == "op_Implicit")
+                    .ToDictionary(method => method.ReturnType);
             }
         }
 
