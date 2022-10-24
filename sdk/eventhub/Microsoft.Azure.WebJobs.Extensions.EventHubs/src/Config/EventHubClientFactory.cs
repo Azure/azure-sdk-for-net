@@ -48,14 +48,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             eventHubName = _nameResolver.ResolveWholeString(eventHubName);
             connection = _nameResolver.ResolveWholeString(connection);
 
-            return _producerCache.GetOrAdd(eventHubName, key =>
+            if (!string.IsNullOrWhiteSpace(connection))
             {
-                if (!string.IsNullOrWhiteSpace(connection))
-                {
-                    var info = ResolveConnectionInformation(connection);
+                var info = ResolveConnectionInformation(connection);
 
-                    if (info.FullyQualifiedEndpoint != null &&
-                        info.TokenCredential != null)
+                if (info.FullyQualifiedEndpoint != null &&
+                    info.TokenCredential != null)
+                {
+                    return _producerCache.GetOrAdd(info.FullyQualifiedEndpoint + eventHubName, key =>
                     {
                         return new EventHubProducerClient(
                             info.FullyQualifiedEndpoint,
@@ -66,19 +66,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                                 RetryOptions = _options.ClientRetryOptions,
                                 ConnectionOptions = _options.ConnectionOptions
                             });
-                    }
-
-                    return new EventHubProducerClient(
-                        NormalizeConnectionString(info.ConnectionString, eventHubName),
-                        new EventHubProducerClientOptions
-                        {
-                            RetryOptions = _options.ClientRetryOptions,
-                            ConnectionOptions = _options.ConnectionOptions
-                        });
+                    });
                 }
+                else
+                {
+                    return _producerCache.GetOrAdd(NormalizeConnectionString(info.ConnectionString, eventHubName), key =>
+                    {
+                        return new EventHubProducerClient(
+                            NormalizeConnectionString(info.ConnectionString, eventHubName),
+                            new EventHubProducerClientOptions
+                            {
+                                RetryOptions = _options.ClientRetryOptions,
+                                ConnectionOptions = _options.ConnectionOptions
+                            });
+                    });
+                }
+            }
 
-                throw new InvalidOperationException("No event hub sender named " + eventHubName);
-            });
+            throw new InvalidOperationException("No event hub sender named " + eventHubName);
         }
 
         internal EventProcessorHost GetEventProcessorHost(string eventHubName, string connection, string consumerGroup, bool singleDispatch)
