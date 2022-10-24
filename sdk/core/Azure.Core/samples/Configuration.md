@@ -96,7 +96,7 @@ internal class PollyPolicy : HttpPipelinePolicy
                     var context = message.ProcessingContext;
                     if (result.Exception != null)
                     {
-                        message.LastException = result.Exception;
+                        context.LastException = result.Exception;
                     }
                     context.RetryNumber++;
                 }
