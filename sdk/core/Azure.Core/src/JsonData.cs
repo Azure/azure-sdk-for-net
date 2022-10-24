@@ -392,6 +392,11 @@ namespace Azure
             return base.Equals(obj);
         }
 
+        private object EqualsObject(object? obj)
+        {
+            return base.Equals(obj);
+        }
+
         /// <inheritdoc />
         public bool Equals(JsonData? other)
         {
@@ -673,6 +678,7 @@ namespace Azure
             private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
             private static readonly Dictionary<Type, PropertyInfo> Indexers = GetIndexers();
             private static readonly Dictionary<Type, MethodInfo> CastOperators = GetCastOperators();
+            private static readonly MethodInfo EqualsMethod = typeof(JsonData).GetMethod(nameof(EqualsObject), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
@@ -720,6 +726,21 @@ namespace Azure
 
                 convertCall = Expression.Call(targetObject, nameof(To), new Type[] { binder.Type });
                 return new DynamicMetaObject(convertCall, restrictions);
+            }
+
+            public override DynamicMetaObject BindBinaryOperation(BinaryOperationBinder binder, DynamicMetaObject arg)
+            {
+                if (binder.Operation == ExpressionType.Equal)
+                {
+                    Expression targetObject = Expression.Convert(Expression, LimitType);
+                    Expression argObject = Expression.Convert(arg.Expression, typeof(object));
+                    BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+
+                    Expression equalsCall = Expression.Call(targetObject, EqualsMethod, argObject);
+                    return new DynamicMetaObject(equalsCall, restrictions);
+                }
+
+                return base.BindBinaryOperation(binder, arg);
             }
 
             private static Dictionary<Type, PropertyInfo> GetIndexers()
