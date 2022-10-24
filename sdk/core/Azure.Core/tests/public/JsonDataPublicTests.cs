@@ -96,150 +96,124 @@ namespace Azure.Core.Tests.Public
             }
         }
 
-        //[Test]
-        //public void CanAccessProperties()
-        //{
-        //    dynamic jsonData = JsonData.Parse("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }");
+        [Test]
+        public void CanAccessProperties()
+        {
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();
 
-        //    Assert.AreEqual("Hello", (string)jsonData.primitive);
-        //    Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);
-        //}
+            Assert.AreEqual("Hello", (string)jsonData.primitive);
+            Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);
+        }
 
-        //[Test]
-        //public void CanReadIntsAsFloatingPoints()
-        //{
-        //    var json = JsonData.Parse("5");
-        //    dynamic jsonData = json;
+        [Test]
+        public void CanReadIntsAsFloatingPoints()
+        {
+            dynamic json = new BinaryData("{ \"value\": 5 }").ToDynamic().value;
 
-        //    Assert.AreEqual(5, (float)jsonData);
-        //    Assert.AreEqual(5, (double)jsonData);
-        //    Assert.AreEqual(5, (int)jsonData);
-        //    Assert.AreEqual(5, (long)jsonData);
-        //    Assert.AreEqual(5, (float)json);
-        //    Assert.AreEqual(5, (double)json);
-        //    Assert.AreEqual(5, (int)json);
-        //    Assert.AreEqual(5, (long)json);
-        //}
+            Assert.AreEqual(5, (float)json);
+            Assert.AreEqual(5, (double)json);
+            Assert.AreEqual(5, (int)json);
+            Assert.AreEqual(5, (long)json);
+        }
 
-        //[Test]
-        //public void ReadingFloatingPointAsIntThrows()
-        //{
-        //    var json = JsonData.Parse("5.5");
-        //    dynamic jsonData = json;
-        //    Assert.Throws<FormatException>(() => _ = (int)json);
-        //    Assert.Throws<FormatException>(() => _ = (int)jsonData);
-        //    Assert.Throws<FormatException>(() => _ = (long)json);
-        //    Assert.Throws<FormatException>(() => _ = (long)jsonData);
-        //}
+        [Test]
+        public void ReadingFloatingPointAsIntThrows()
+        {
+            dynamic json = new BinaryData("{ \"value\": 5.5 }").ToDynamic().value;
+            Assert.Throws<FormatException>(() => _ = (int)json);
+            Assert.Throws<FormatException>(() => _ = (long)json);
+        }
 
-        //[Test]
-        //public void FloatOverflowThrows()
-        //{
-        //    var json = JsonData.Parse("34028234663852885981170418348451692544000");
-        //    dynamic jsonData = json;
-        //    Assert.Throws<OverflowException>(() => _ = (float)json);
-        //    Assert.Throws<OverflowException>(() => _ = (float)jsonData);
-        //    Assert.AreEqual(34028234663852885981170418348451692544000d, (double)jsonData);
-        //    Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
-        //}
+        [Test]
+        public void FloatOverflowThrows()
+        {
+            var json = new BinaryData("{ \"value\": 34028234663852885981170418348451692544000 }").ToDynamic().value;
+            Assert.Throws<OverflowException>(() => _ = (float)json);
+            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
+        }
 
-        //[Test]
-        //public void CanAccessArrayValues()
-        //{
-        //    dynamic jsonData = JsonData.Parse("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } , \"array\": [1, 2, 3] }");
+        [Test]
+        public void CanAccessArrayValues()
+        {
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } , \"array\": [1, 2, 3] }").ToDynamic();
 
-        //    Assert.AreEqual(1, (int)jsonData.array[0]);
-        //    Assert.AreEqual(2, (int)jsonData.array[1]);
-        //    Assert.AreEqual(3, (int)jsonData.array[2]);
-        //}
+            Assert.AreEqual(1, (int)jsonData.array[0]);
+            Assert.AreEqual(2, (int)jsonData.array[1]);
+            Assert.AreEqual(3, (int)jsonData.array[2]);
+        }
 
-        //[Test]
-        //public void FloatUnderflowThrows()
-        //{
-        //    var json = JsonData.Parse("-34028234663852885981170418348451692544000");
-        //    dynamic jsonData = json;
-        //    Assert.Throws<OverflowException>(() => _ = (float)json);
-        //    Assert.Throws<OverflowException>(() => _ = (float)jsonData);
-        //    Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)jsonData);
-        //    Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
-        //}
+        [Test]
+        public void FloatUnderflowThrows()
+        {
+            var json = new BinaryData("{ \"value\": -34028234663852885981170418348451692544000 }").ToDynamic().value;
+            Assert.Throws<OverflowException>(() => _ = (float)json);
+            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
+        }
 
-        //[Test]
-        //public void IntOverflowThrows()
-        //{
-        //    var json = JsonData.Parse("3402823466385288598");
-        //    dynamic jsonData = json;
-        //    Assert.Throws<OverflowException>(() => _ = (int)json);
-        //    Assert.Throws<OverflowException>(() => _ = (int)jsonData);
-        //    Assert.AreEqual(3402823466385288598L, (long)jsonData);
-        //    Assert.AreEqual(3402823466385288598L, (long)json);
-        //    Assert.AreEqual(3402823466385288598D, (double)jsonData);
-        //    Assert.AreEqual(3402823466385288598D, (double)json);
-        //    Assert.AreEqual(3402823466385288598F, (float)jsonData);
-        //    Assert.AreEqual(3402823466385288598F, (float)json);
-        //}
+        [Test]
+        public void IntOverflowThrows()
+        {
+            var json = new BinaryData("{ \"value\": 3402823466385288598 }").ToDynamic().value;
+            Assert.Throws<OverflowException>(() => _ = (int)json);
+            Assert.AreEqual(3402823466385288598L, (long)json);
+            Assert.AreEqual(3402823466385288598D, (double)json);
+            Assert.AreEqual(3402823466385288598F, (float)json);
+        }
 
-        //[Test]
-        //public void IntUnderflowThrows()
-        //{
-        //    var json = JsonData.Parse("-3402823466385288598");
-        //    dynamic jsonData = json;
-        //    Assert.Throws<OverflowException>(() => _ = (int)json);
-        //    Assert.Throws<OverflowException>(() => _ = (int)jsonData);
-        //    Assert.AreEqual(-3402823466385288598L, (long)jsonData);
-        //    Assert.AreEqual(-3402823466385288598L, (long)json);
-        //    Assert.AreEqual(-3402823466385288598D, (double)jsonData);
-        //    Assert.AreEqual(-3402823466385288598D, (double)json);
-        //    Assert.AreEqual(-3402823466385288598F, (float)jsonData);
-        //    Assert.AreEqual(-3402823466385288598F, (float)json);
-        //}
+        [Test]
+        public void IntUnderflowThrows()
+        {
+            var json = new BinaryData("{ \"value\": -3402823466385288598 }").ToDynamic().value;
+            Assert.Throws<OverflowException>(() => _ = (int)json);
+            Assert.AreEqual(-3402823466385288598L, (long)json);
+            Assert.AreEqual(-3402823466385288598D, (double)json);
+            Assert.AreEqual(-3402823466385288598F, (float)json);
+        }
 
-        //[Test]
-        //public void ReadingArrayAsValueThrows()
-        //{
-        //    var json = JsonData.Parse("[1,3]");
-        //    dynamic jsonData = json;
-        //    Assert.Throws<InvalidOperationException>(() => _ = (int)json);
-        //    Assert.Throws<InvalidOperationException>(() => _ = (int)jsonData);
-        //}
+        [Test]
+        public void ReadingArrayAsValueThrows()
+        {
+            var json = new BinaryData("{ \"value\": [1,3] }").ToDynamic().value;
+            Assert.Throws<InvalidOperationException>(() => _ = (int)json);
+        }
 
-        //[Test]
-        //public void CanCastObjects()
-        //{
-        //    var model = new SampleModel("Hello World", 5);
-        //    dynamic json = new JsonData(model);
-        //    var cast = (SampleModel)json;
+        [Test]
+        public void CanCastObjects()
+        {
+            var model = new SampleModel("Hello World", 5);
+            dynamic json = new BinaryData(model).ToDynamic();
+            var cast = (SampleModel)json;
 
-        //    Assert.AreEqual(model, cast);
-        //}
+            Assert.AreEqual(model, cast);
+        }
 
-        //[Test]
-        //public void CanCastToTypesYouDontOwn()
-        //{
-        //    var now = DateTimeOffset.Now;
+        [Test]
+        public void CanCastToTypesYouDontOwn()
+        {
+            var now = DateTimeOffset.Now;
 
-        //    // "O" is the only format supported by default JsonSerializer:
-        //    // https://learn.microsoft.com/dotnet/standard/datetime/system-text-json-support
-        //    dynamic nowJson = JsonData.Parse($"\"{now.ToString("O", CultureInfo.InvariantCulture)}\"");
+            // "O" is the only format supported by default JsonSerializer:
+            // https://learn.microsoft.com/dotnet/standard/datetime/system-text-json-support
+            dynamic nowJson = new BinaryData($"{{ \"value\": \"{now.ToString("O", CultureInfo.InvariantCulture)}\" }}").ToDynamic().value;
 
-        //    var cast = (DateTimeOffset)nowJson;
+            var cast = (DateTimeOffset)nowJson;
 
-        //    Assert.AreEqual(now, cast);
-        //}
+            Assert.AreEqual(now, cast);
+        }
 
-        //[Test]
-        //public void CanCastToIEnumerableOfT()
-        //{
-        //    dynamic data = JsonData.Parse("{ \"array\": [ 1, 2, 3] }");
+        [Test]
+        public void CanCastToIEnumerableOfT()
+        {
+            dynamic data = new BinaryData("{ \"array\": [ 1, 2, 3] }").ToDynamic();
 
-        //    var enumerable = (IEnumerable<int>)data.array;
+            var enumerable = (IEnumerable<int>)data.array;
 
-        //    int i = 0;
-        //    foreach (var item in enumerable)
-        //    {
-        //        Assert.AreEqual(++i, item);
-        //    }
-        //}
+            int i = 0;
+            foreach (var item in enumerable)
+            {
+                Assert.AreEqual(++i, item);
+            }
+        }
 
         [Test]
         public void CanGetDynamicFromBinaryData()
@@ -258,16 +232,6 @@ namespace Azure.Core.Tests.Public
                 Assert.AreEqual(++i, item);
             }
         }
-
-        //[Test]
-        //public void EqualsProvidesValueEqualityPrimitives()
-        //{
-        //    Assert.AreEqual(new JsonData(1), new JsonData(1));
-        //    Assert.AreEqual(new JsonData(true), new JsonData(true));
-        //    Assert.AreEqual(new JsonData(false), new JsonData(false));
-        //    Assert.AreEqual(new JsonData("hello"), new JsonData("hello"));
-        //    Assert.AreEqual(new JsonData(null), new JsonData(null));
-        //}
 
         //[Test]
         //public void EqualsHandlesStringsSpecial()
@@ -297,17 +261,17 @@ namespace Azure.Core.Tests.Public
         public void OperatorEqualsForString()
         {
             dynamic foo = new BinaryData("{ \"value\": \"foo\" }").ToDynamic().value;
-            //dynamic bar = new BinaryData("{ \"value\": \"bar\" }").ToDynamic().value;
+            dynamic bar = new BinaryData("{ \"value\": \"bar\" }").ToDynamic().value;
 
             Assert.IsTrue(foo == "foo");
             Assert.IsTrue("foo" == foo);
             Assert.IsFalse(foo != "foo");
             Assert.IsFalse("foo" != foo);
 
-            //Assert.IsFalse(bar == "foo");
-            //Assert.IsFalse("foo" == bar);
-            //Assert.IsTrue(bar != "foo");
-            //Assert.IsTrue("foo" != bar);
+            Assert.IsFalse(bar == "foo");
+            Assert.IsFalse("foo" == bar);
+            Assert.IsTrue(bar != "foo");
+            Assert.IsTrue("foo" != bar);
         }
 
         private T JsonAsType<T>(string json)
