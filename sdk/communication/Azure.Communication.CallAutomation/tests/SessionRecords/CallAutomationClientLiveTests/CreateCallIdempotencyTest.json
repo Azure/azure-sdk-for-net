@@ -185,24 +185,28 @@
     {
       "RequestUri": "https://sanitized.skype.com/calling/callConnections/401f3500-af14-4fd7-ae55-37e7590932b1:terminate?api-version=2022-04-07-preview",
       "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "0",
-        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220920.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "beb44243c347d66eada3a462c5a1e683",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 21 Sep 2022 04:40:38 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "Content-Length": "0",
+            "Repeatability-First-Sent": "Wed, 21 Sep 2022 04:40:38 GMT",
+            "Repeatability-Request-ID": "12345678-a0cc-4f65-8cec-b61cc24e646c",
+            "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220920.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+            "x-ms-client-request-id": "beb44243c347d66eada3a462c5a1e683",
+            "x-ms-content-sha256": "Sanitized",
+            "x-ms-date": "Wed, 21 Sep 2022 04:40:38 GMT",
+            "x-ms-return-client-request-id": "true"
+        },
       "RequestBody": null,
       "StatusCode": 204,
-      "ResponseHeaders": {
-        "Date": "Wed, 21 Sep 2022 04:40:38 GMT",
-        "X-Azure-Ref": "0x5UqYwAAAADnVjgyEMWhTIyNDwHyul7UWVZSMzExMDAwMTE2MDE5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "248eaab4-670f-4424-9dd5-adb3ce9167be",
-        "x-ms-client-request-id": "beb44243c347d66eada3a462c5a1e683"
-      },
+        "ResponseHeaders": {
+            "Date": "Wed, 21 Sep 2022 04:40:38 GMT",
+            "Repeatability-Result": "accepted",
+            "X-Azure-Ref": "0x5UqYwAAAADnVjgyEMWhTIyNDwHyul7UWVZSMzExMDAwMTE2MDE5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+            "X-Cache": "CONFIG_NOCACHE",
+            "X-Microsoft-Skype-Chain-ID": "248eaab4-670f-4424-9dd5-adb3ce9167be",
+            "x-ms-client-request-id": "beb44243c347d66eada3a462c5a1e683"
+        },
       "ResponseBody": null
     }
   ],

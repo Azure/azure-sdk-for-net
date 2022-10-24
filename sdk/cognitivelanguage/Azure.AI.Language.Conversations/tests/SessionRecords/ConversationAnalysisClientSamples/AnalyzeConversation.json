@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "263",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "9db931045f8d9df0e2f8593a940d3339",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4e2322c7af4be1a57351846cd6599584",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,17 +29,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b7369e72-035f-45f2-aeaf-e1fc7d3ed059",
+        "apim-request-id": "095def20-6776-4e3a-9f7d-27aff9e43755",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
-        "Date": "Wed, 29 Jun 2022 00:01:11 GMT",
+        "Date": "Thu, 20 Oct 2022 17:18:31 GMT",
         "Pragma": "no-cache",
-        "request-id": "b7369e72-035f-45f2-aeaf-e1fc7d3ed059",
+        "request-id": "095def20-6776-4e3a-9f7d-27aff9e43755",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "174"
+        "x-envoy-upstream-service-time": "98"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -110,8 +110,8 @@
                   {
                     "resolutionKind": "DateTimeResolution",
                     "dateTimeSubKind": "Date",
-                    "timex": "2022-06-30",
-                    "value": "2022-06-30"
+                    "timex": "2022-10-21",
+                    "value": "2022-10-21"
                   }
                 ],
                 "extraInformation": [
@@ -132,6 +132,6 @@
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
-    "RandomSeed": "1794630687"
+    "RandomSeed": "1297671257"
   }
 }

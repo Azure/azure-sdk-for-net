@@ -174,5 +174,24 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             );
         }
         #endregion
+
+        #region FederatedIdentityCredentialResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FederatedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FederatedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="FederatedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FederatedIdentityCredentialResource" /> object. </returns>
+        public static FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FederatedIdentityCredentialResource.ValidateResourceId(id);
+                return new FederatedIdentityCredentialResource(client, id);
+            }
+            );
+        }
+        #endregion
     }
 }

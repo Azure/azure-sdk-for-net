@@ -20,6 +20,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void AnalyzeConversation_ConversationPII_Transcript()
         {
             ConversationAnalysisClient client = Client;
+            List<string> expectedRedactedText = new();
 
             #region Snippet:AnalyzeConversation_ConversationPII_Transcript
             var data = new
@@ -150,8 +151,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 },
             };
 
-            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
-            analyzeConversationOperation.WaitForCompletion();
+            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
             using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
             JsonElement jobResults = result.RootElement;
@@ -172,6 +172,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Console.WriteLine($"Redacted Text: {redactedContent.GetProperty("text").GetString()}");
                         Console.WriteLine($"Redacted Lexical: {redactedContent.GetProperty("lexical").GetString()}");
                         Console.WriteLine($"Redacted MaskedItn: {redactedContent.GetProperty("maskedItn").GetString()}");
+#if !SNIPPET
+                        expectedRedactedText.Add(redactedContent.GetProperty("text").GetString());
+#endif
 
                         Console.WriteLine("Entities:");
                         foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
@@ -189,7 +192,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
             #endregion
 
-            Assert.That(jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray().All(item => item.GetProperty("results").GetProperty("errors").EnumerateArray().IsNullOrEmpty()));
+            Assert.That(expectedRedactedText, Is.EqualTo(new[] { "Hi", "**** Doe", "Hi ****, what's your phone number?" }));
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
 
@@ -198,6 +201,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public async Task AnalyzeConversationAsync_ConversationPII_Transcript()
         {
             ConversationAnalysisClient client = Client;
+            List<string> expectedRedactedText = new();
 
             var data = new
             {
@@ -328,8 +332,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             #region Snippet:AnalyzeConversationAsync_ConversationPII_Transcript
-            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
-            await analyzeConversationOperation.WaitForCompletionAsync();
+            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
             #endregion
 
             using JsonDocument result = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
@@ -351,6 +354,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Console.WriteLine($"Redacted Text: {redactedContent.GetProperty("text").GetString()}");
                         Console.WriteLine($"Redacted Lexical: {redactedContent.GetProperty("lexical").GetString()}");
                         Console.WriteLine($"Redacted MaskedItn: {redactedContent.GetProperty("maskedItn").GetString()}");
+#if !SNIPPET
+                        expectedRedactedText.Add(redactedContent.GetProperty("text").GetString());
+#endif
 
                         Console.WriteLine("Entities:");
                         foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
@@ -367,7 +373,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
 
-            Assert.That(jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray().All(item => item.GetProperty("results").GetProperty("errors").EnumerateArray().IsNullOrEmpty()));
+            Assert.That(expectedRedactedText, Is.EqualTo(new[] { "Hi", "**** Doe", "Hi ****, what's your phone number?" }));
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
     }

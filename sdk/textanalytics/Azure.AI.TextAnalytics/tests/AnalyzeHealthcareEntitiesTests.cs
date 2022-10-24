@@ -54,6 +54,8 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        // TODO: Temporarily setting max version to V2022-05-01 since V2022-10-01-preview does not support AAD yet (https://github.com/Azure/azure-sdk-for-net/issues/31854).
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeHealthcareEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -131,10 +133,39 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(5, role.Entity.Length);
                 }
             }
+
+            // Check that the FHIR bundle is not null, but empty.
+            Assert.IsNotNull(result1.FhirBundle);
+            Assert.AreEqual(0, result1.FhirBundle.Count);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21796")]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeHealthcareEntitiesWithConfidenceScoreTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
+            await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
+
+            // Take the first page.
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            AnalyzeHealthcareEntitiesResult result1 = resultCollection[0];
+            Assert.AreEqual(s_document1ExpectedEntitiesOutput.Count, result1.Entities.Count);
+            Assert.IsNotNull(result1.Id);
+            Assert.AreEqual("1", result1.Id);
+            Assert.AreEqual(2, result1.EntityRelations.Count());
+
+            foreach (HealthcareEntityRelation relation in result1.EntityRelations)
+            {
+                Assert.GreaterOrEqual(relation.ConfidenceScore, 0.0);
+                Assert.LessOrEqual(relation.ConfidenceScore, 1.0);
+            }
+        }
+
+        [RecordedTest]
         public async Task AnalyzeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
@@ -435,6 +466,66 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, pages[0].Count);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeHealthcareEntitiesBatchWithFhirVersionTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                FhirVersion = WellKnownFhirVersion.V4_0_1,
+                DocumentType = HealthcareDocumentType.DischargeSummary
+            });
+
+            await operation.WaitForCompletionAsync();
+
+            ValidateOperationProperties(operation);
+
+            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            var resultCollection = resultInPages.FirstOrDefault();
+            Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
+
+            // Check the FHIR bundle.
+            Assert.IsNotNull(resultCollection[0].FhirBundle);
+            Assert.Greater(resultCollection[0].FhirBundle.Count, 0);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeHealthcareEntitiesBatchWithFhirVersionThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                FhirVersion = WellKnownFhirVersion.V4_0_1,
+            }));
+
+            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.FhirVersion is not available in API version 2022-05-01. Use service API version 2022-10-01-preview or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeHealthcareEntitiesBatchWithDocumentTypeThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                DocumentType = HealthcareDocumentType.DischargeSummary
+            }));
+
+            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.DocumentType is not available in API version 2022-05-01. Use service API version 2022-10-01-preview or newer.", ex.Message);
+        }
+
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
         {
             Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
@@ -497,7 +588,8 @@ namespace Azure.AI.TextAnalytics.Tests
         private void ValidateOperationProperties(AnalyzeHealthcareEntitiesOperation operation)
         {
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+            // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
+            // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
 
             if (operation.ExpiresOn.HasValue)
             {

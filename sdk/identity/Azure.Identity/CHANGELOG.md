@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.9.0-beta.1 (2022-10-13)
 
 ### Features Added
 - Credentials that are implemented via launching a sub-process to acquire tokens now have configurable timeouts. This addresses scenarios where these proceses can take longer than the current default timeout values. (A community contribution, courtesy of _[reynaldoburgos](https://github.com/reynaldoburgos)_). The affected credentials and their associated options are:
@@ -9,19 +9,19 @@
   - `VisualStudioCredential` and `VisualStudioCredentialOptions.VisualStudioProcessTimeout`
   - `DefaultAzureCredential` and `DefaultAzureCredentialOptions.DeveloperCredentialTimeout`  Note: this option applies to all developer credentials above when using `DefaultAzureCredential`.
   
-- Reintroduced `ManagedIdentityCredential` token caching support from 1.7.0-beta.1
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ### Acknowledgments
-
 Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
 
 - _[reynaldoburgos](https://github.com/reynaldoburgos)_
+
+## 1.8.0-beta.1 (2022-10-13)
+
+### Features Added
+- Reintroduced `ManagedIdentityCredential` token caching support from 1.7.0-beta.1
+- `EnvironmentCredential` updated to support specifying a certificate password via the `AZURE_CLIENT_CERTIFICATE_PASSWORD` environment variable
+
+### Breaking Changes
+- Excluded `VisualStudioCodeCredential` from `DefaultAzureCredential` token chain by default as SDK authentication via Visual Studio Code is broken due to issue [#27263](https://github.com/Azure/azure-sdk-for-net/issues/27263). The `VisualStudioCodeCredential` will be re-enabled in the `DefaultAzureCredential` flow once a fix is in place. Issue [#30525](https://github.com/Azure/azure-sdk-for-net/issues/30525) tracks this. In the meantime Visual Studio Code users can authenticate their development environment using the [Azure CLI](https://learn.microsoft.com/cli/azure/).
 
 ## 1.7.0 (2022-09-19)
 

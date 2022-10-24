@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Evaluation details of IfNotExists effect. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of IfNotExistsEvaluationDetails. </summary>
         /// <param name="resourceId"> ID of the last evaluated resource for IfNotExists effect. </param>
         /// <param name="totalResources"> Total number of resources to which the existence condition is applicable. </param>
-        internal IfNotExistsEvaluationDetails(string resourceId, int? totalResources)
+        internal IfNotExistsEvaluationDetails(ResourceIdentifier resourceId, int? totalResources)
         {
             ResourceId = resourceId;
             TotalResources = totalResources;
         }
 
         /// <summary> ID of the last evaluated resource for IfNotExists effect. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Total number of resources to which the existence condition is applicable. </summary>
         public int? TotalResources { get; }
     }

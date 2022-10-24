@@ -79,6 +79,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     settings = new {
         ///         confidenceThreshold = 123.45f,
         ///     },
+        ///     storageInputContainerName = "<storageInputContainerName>",
         ///     projectName = "<projectName>",
         ///     multilingual = true,
         ///     description = "<description>",
@@ -94,6 +95,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("projectKind").ToString());
         /// Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+        /// Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("multilingual").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
@@ -109,10 +111,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>CreateProjectOptions</c>:
         /// <code>{
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///   }, # Optional. The project settings.
+        ///   storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///   projectName: string, # Required. The new project name.
         ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///   description: string, # Optional. The project description.
@@ -128,10 +131,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///   }, # Optional. The project settings.
+        ///   storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///   projectName: string, # Required. The new project name.
         ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///   description: string, # Optional. The project description.
@@ -200,6 +204,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     settings = new {
         ///         confidenceThreshold = 123.45f,
         ///     },
+        ///     storageInputContainerName = "<storageInputContainerName>",
         ///     projectName = "<projectName>",
         ///     multilingual = true,
         ///     description = "<description>",
@@ -215,6 +220,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("projectKind").ToString());
         /// Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+        /// Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("multilingual").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
@@ -230,10 +236,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>CreateProjectOptions</c>:
         /// <code>{
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///   }, # Optional. The project settings.
+        ///   storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///   projectName: string, # Required. The new project name.
         ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///   description: string, # Optional. The project description.
@@ -249,10 +256,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///   }, # Optional. The project settings.
+        ///   storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///   projectName: string, # Required. The new project name.
         ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///   description: string, # Optional. The project description.
@@ -303,6 +311,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("projectKind").ToString());
         /// Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+        /// Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("multilingual").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
@@ -322,10 +331,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///   }, # Optional. The project settings.
+        ///   storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///   projectName: string, # Required. The new project name.
         ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///   description: string, # Optional. The project description.
@@ -375,6 +385,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("projectKind").ToString());
         /// Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+        /// Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("multilingual").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
@@ -394,10 +405,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///   }, # Optional. The project settings.
+        ///   storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///   projectName: string, # Required. The new project name.
         ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///   description: string, # Optional. The project description.
@@ -448,6 +460,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
         /// Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -465,6 +479,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
         ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
+        ///   assignedResources: [
+        ///     {
+        ///       resourceId: string, # Required. Represents the Azure resource Id.
+        ///       region: string, # Required. Represents the resource region.
+        ///     }
+        ///   ], # Optional. Represents the metadata of the assigned Azure resources.
         /// }
         /// </code>
         /// 
@@ -512,6 +532,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
         /// Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -529,6 +551,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
         ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
+        ///   assignedResources: [
+        ///     {
+        ///       resourceId: string, # Required. Represents the Azure resource Id.
+        ///       region: string, # Required. Represents the resource region.
+        ///     }
+        ///   ], # Optional. Represents the metadata of the assigned Azure resources.
         /// }
         /// </code>
         /// 
@@ -543,6 +571,208 @@ namespace Azure.AI.Language.Conversations.Authoring
             try
             {
                 using HttpMessage message = CreateGetDeploymentRequest(projectName, deploymentName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-delete-from-resources-status
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
+        /// <code>{
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
+        ///     {
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
+        ///     }
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional. The errors encountered while executing the job.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeploymentDeleteFromResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDeploymentDeleteFromResourcesStatus with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-delete-from-resources-status
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
+        /// <code>{
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
+        ///     {
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
+        ///     }
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional. The errors encountered while executing the job.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeploymentDeleteFromResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1376,6 +1606,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
         /// Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
         /// Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1393,6 +1624,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
         ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
+        ///   hasSnapshot: boolean, # Optional. The flag to indicate if the trained model has a snapshot ready.
         /// }
         /// </code>
         /// 
@@ -1440,6 +1672,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
         /// Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
         /// Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1457,6 +1690,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
         ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
+        ///   hasSnapshot: boolean, # Optional. The flag to indicate if the trained model has a snapshot ready.
         /// }
         /// </code>
         /// 
@@ -1767,6 +2001,604 @@ namespace Azure.AI.Language.Conversations.Authoring
             try
             {
                 using HttpMessage message = CreateGetModelEvaluationSummaryRequest(projectName, trainedModelLabel, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for loading a snapshot. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetLoadSnapshotStatusAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-load-snapshot-status
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LoadSnapshotJobState</c>:
+        /// <code>{
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
+        ///     {
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
+        ///     }
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional. The errors encountered while executing the job.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetLoadSnapshotStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for loading a snapshot. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetLoadSnapshotStatus with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-load-snapshot-status
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LoadSnapshotJobState</c>:
+        /// <code>{
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
+        ///     {
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
+        ///     }
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional. The errors encountered while executing the job.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetLoadSnapshotStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing assign deployment resources job. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAssignDeploymentResourcesStatusAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-assign-deployment-resources-status
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentResourcesJobState</c>:
+        /// <code>{
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
+        ///     {
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
+        ///     }
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional. The errors encountered while executing the job.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetAssignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetAssignDeploymentResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing assign deployment resources job. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAssignDeploymentResourcesStatus with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-assign-deployment-resources-status
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentResourcesJobState</c>:
+        /// <code>{
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
+        ///     {
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
+        ///     }
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional. The errors encountered while executing the job.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetAssignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetAssignDeploymentResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-unassign-deployment-resources-status
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentResourcesJobState</c>:
+        /// <code>{
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
+        ///     {
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
+        ///     }
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional. The errors encountered while executing the job.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetUnassignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetUnassignDeploymentResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetUnassignDeploymentResourcesStatus with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-unassign-deployment-resources-status
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentResourcesJobState</c>:
+        /// <code>{
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
+        ///     {
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
+        ///     }
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional. The errors encountered while executing the job.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetUnassignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetUnassignDeploymentResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(projectName, jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2238,6 +3070,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("projectKind").ToString());
         ///     Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+        ///     Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
         ///     Console.WriteLine(result.GetProperty("projectName").ToString());
         ///     Console.WriteLine(result.GetProperty("multilingual").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
@@ -2258,10 +3091,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///   }, # Optional. The project settings.
+        ///   storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///   projectName: string, # Required. The new project name.
         ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///   description: string, # Optional. The project description.
@@ -2312,6 +3146,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("projectKind").ToString());
         ///     Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+        ///     Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
         ///     Console.WriteLine(result.GetProperty("projectName").ToString());
         ///     Console.WriteLine(result.GetProperty("multilingual").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
@@ -2332,10 +3167,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///   }, # Optional. The project settings.
+        ///   storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///   projectName: string, # Required. The new project name.
         ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///   description: string, # Optional. The project description.
@@ -2389,6 +3225,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
         ///     Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2407,6 +3245,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
         ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
+        ///   assignedResources: [
+        ///     {
+        ///       resourceId: string, # Required. Represents the Azure resource Id.
+        ///       region: string, # Required. Represents the resource region.
+        ///     }
+        ///   ], # Optional. Represents the metadata of the assigned Azure resources.
         /// }
         /// </code>
         /// 
@@ -2458,6 +3302,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
         ///     Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2476,6 +3322,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
         ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
+        ///   assignedResources: [
+        ///     {
+        ///       resourceId: string, # Required. Represents the Azure resource Id.
+        ///       region: string, # Required. Represents the resource region.
+        ///     }
+        ///   ], # Optional. Represents the metadata of the assigned Azure resources.
         /// }
         /// </code>
         /// 
@@ -2527,6 +3379,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
         ///     Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
         ///     Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2545,6 +3398,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
         ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
+        ///   hasSnapshot: boolean, # Optional. The flag to indicate if the trained model has a snapshot ready.
         /// }
         /// </code>
         /// 
@@ -2596,6 +3450,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
         ///     Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
         ///     Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2614,6 +3469,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
         ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
+        ///   hasSnapshot: boolean, # Optional. The flag to indicate if the trained model has a snapshot ready.
         /// }
         /// </code>
         /// 
@@ -2851,6 +3707,160 @@ namespace Azure.AI.Language.Conversations.Authoring
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context)
                         : CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Lists the deployments resources assigned to the project. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDeploymentResourcesAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetDeploymentResourcesAsync("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("azureResourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("region").ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetDeploymentResourcesAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetDeploymentResourcesAsync("<projectName>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("azureResourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("region").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployment-resources
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringAssignedDeploymentResourcesValue</c>:
+        /// <code>{
+        ///   azureResourceId: string, # Required. The resource ID.
+        ///   region: string, # Required. The resource region.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual AsyncPageable<BinaryData> GetDeploymentResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return GetDeploymentResourcesImplementationAsync("ConversationAuthoringClient.GetDeploymentResources", projectName, maxCount, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetDeploymentResourcesImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, maxpagesize, context)
+                        : CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Lists the deployments resources assigned to the project. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDeploymentResources with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetDeploymentResources("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("azureResourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("region").ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetDeploymentResources with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetDeploymentResources("<projectName>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("azureResourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("region").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployment-resources
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringAssignedDeploymentResourcesValue</c>:
+        /// <code>{
+        ///   azureResourceId: string, # Required. The resource ID.
+        ///   region: string, # Required. The resource region.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Pageable<BinaryData> GetDeploymentResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return GetDeploymentResourcesImplementation("ConversationAuthoringClient.GetDeploymentResources", projectName, maxCount, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetDeploymentResourcesImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, maxpagesize, context)
+                        : CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -3116,8 +4126,172 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
+        /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn&apos;t return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAssignedResourceDeploymentsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAssignedResourceDeploymentsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentExpirationDate").ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAssignedResourceDeploymentsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAssignedResourceDeploymentsAsync(1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentExpirationDate").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-assigned-resource-deployments
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringAssignedResourceDeploymentsMetadataValue</c>:
+        /// <code>{
+        ///   projectName: string, # Required. Represents the project name.
+        ///   deploymentsMetadata: [
+        ///     {
+        ///       deploymentName: string, # Required. Represents the deployment name.
+        ///       lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
+        ///       deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
+        ///     }
+        ///   ], # Required. Represents the resource region.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual AsyncPageable<BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        {
+            return GetAssignedResourceDeploymentsImplementationAsync("ConversationAuthoringClient.GetAssignedResourceDeployments", maxCount, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetAssignedResourceDeploymentsImplementationAsync(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, maxpagesize, context)
+                        : CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn&apos;t return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAssignedResourceDeployments and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAssignedResourceDeployments())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentExpirationDate").ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAssignedResourceDeployments with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAssignedResourceDeployments(1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentExpirationDate").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-assigned-resource-deployments
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringAssignedResourceDeploymentsMetadataValue</c>:
+        /// <code>{
+        ///   projectName: string, # Required. Represents the project name.
+        ///   deploymentsMetadata: [
+        ///     {
+        ///       deploymentName: string, # Required. Represents the deployment name.
+        ///       lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
+        ///       deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
+        ///     }
+        ///   ], # Required. Represents the resource region.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Pageable<BinaryData> GetAssignedResourceDeployments(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        {
+            return GetAssignedResourceDeploymentsImplementation("ConversationAuthoringClient.GetAssignedResourceDeployments", maxCount, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetAssignedResourceDeploymentsImplementation(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, maxpagesize, context)
+                        : CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
         /// <summary> Lists the supported languages for the given project type. </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -3177,7 +4351,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Lists the supported languages for the given project type. </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -3385,7 +4559,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -3445,7 +4619,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -3708,6 +4882,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3732,7 +4907,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
-        /// var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>);
+        /// var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>, "<trainedModelLabel>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -3800,7 +4975,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
@@ -3809,7 +4984,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, context);
+                using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, trainedModelLabel, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3825,6 +5000,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3849,7 +5025,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
-        /// var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>);
+        /// var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>, "<trainedModelLabel>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -3917,7 +5093,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> ExportProject(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
+        public virtual Operation<BinaryData> ExportProject(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
@@ -3926,7 +5102,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, context);
+                using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, trainedModelLabel, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -3986,6 +5162,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///         settings = new {
         ///             confidenceThreshold = 123.45f,
         ///         },
+        ///         storageInputContainerName = "<storageInputContainerName>",
         ///         projectName = "<projectName>",
         ///         multilingual = true,
         ///         description = "<description>",
@@ -4020,6 +5197,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///                     new {
         ///                         category = "<category>",
         ///                     }
+        ///                 },
+        ///                 regex = new {
+        ///                     expressions = new[] {
+        ///                         new {
+        ///                             regexKey = "<regexKey>",
+        ///                             language = "<language>",
+        ///                             regexPattern = "<regexPattern>",
+        ///                         }
+        ///                     },
+        ///                 },
+        ///                 requiredComponents = new[] {
+        ///                     "<String>"
         ///                 },
         ///             }
         ///         },
@@ -4081,17 +5270,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   projectFileVersion: string, # Required. The version of the exported file.
         ///   stringIndexType: &quot;Utf16CodeUnit&quot;, # Required. Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets.
         ///   metadata: {
-        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///     settings: {
-        ///       confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///       confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///     }, # Optional. The project settings.
+        ///     storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///     projectName: string, # Required. The new project name.
         ///     multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///     description: string, # Optional. The project description.
         ///     language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         ///   }, # Required. Represents the project metadata.
         ///   assets: {
-        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of project containing the assets.
+        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. The type of project containing the assets.
         ///   }, # Optional. Represents the project assets.
         /// }
         /// </code>
@@ -4199,6 +5389,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///         settings = new {
         ///             confidenceThreshold = 123.45f,
         ///         },
+        ///         storageInputContainerName = "<storageInputContainerName>",
         ///         projectName = "<projectName>",
         ///         multilingual = true,
         ///         description = "<description>",
@@ -4233,6 +5424,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///                     new {
         ///                         category = "<category>",
         ///                     }
+        ///                 },
+        ///                 regex = new {
+        ///                     expressions = new[] {
+        ///                         new {
+        ///                             regexKey = "<regexKey>",
+        ///                             language = "<language>",
+        ///                             regexPattern = "<regexPattern>",
+        ///                         }
+        ///                     },
+        ///                 },
+        ///                 requiredComponents = new[] {
+        ///                     "<String>"
         ///                 },
         ///             }
         ///         },
@@ -4294,17 +5497,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   projectFileVersion: string, # Required. The version of the exported file.
         ///   stringIndexType: &quot;Utf16CodeUnit&quot;, # Required. Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets.
         ///   metadata: {
-        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
         ///     settings: {
-        ///       confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///       confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
         ///     }, # Optional. The project settings.
+        ///     storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
         ///     projectName: string, # Required. The new project name.
         ///     multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
         ///     description: string, # Optional. The project description.
         ///     language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         ///   }, # Required. Represents the project metadata.
         ///   assets: {
-        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of project containing the assets.
+        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. The type of project containing the assets.
         ///   }, # Optional. Represents the project assets.
         /// }
         /// </code>
@@ -4955,7 +6159,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call DeployProjectAsync with required parameters and request content and parse the result.
+        /// This sample shows how to call DeployProjectAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -4976,6 +6180,32 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
         /// Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
         /// ]]></code>
+        /// This sample shows how to call DeployProjectAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     trainedModelLabel = "<trainedModelLabel>",
+        ///     assignedResourceIds = new[] {
+        ///         "<String>"
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentName").ToString());
+        /// Console.WriteLine(result.GetProperty("modelId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
+        /// Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
@@ -4987,6 +6217,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Schema for <c>CreateDeploymentOptions</c>:
         /// <code>{
         ///   trainedModelLabel: string, # Required. Represents the trained model label.
+        ///   assignedResourceIds: [string], # Optional. Represents the resource IDs to be assigned to the deployment.
+        ///             If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created.
         /// }
         /// </code>
         /// 
@@ -5000,6 +6232,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
         ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
+        ///   assignedResources: [
+        ///     {
+        ///       resourceId: string, # Required. Represents the Azure resource Id.
+        ///       region: string, # Required. Represents the resource region.
+        ///     }
+        ///   ], # Optional. Represents the metadata of the assigned Azure resources.
         /// }
         /// </code>
         /// 
@@ -5035,7 +6273,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call DeployProject with required parameters and request content and parse the result.
+        /// This sample shows how to call DeployProject with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -5056,6 +6294,32 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
         /// Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
         /// ]]></code>
+        /// This sample shows how to call DeployProject with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     trainedModelLabel = "<trainedModelLabel>",
+        ///     assignedResourceIds = new[] {
+        ///         "<String>"
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentName").ToString());
+        /// Console.WriteLine(result.GetProperty("modelId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
+        /// Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
@@ -5067,6 +6331,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Schema for <c>CreateDeploymentOptions</c>:
         /// <code>{
         ///   trainedModelLabel: string, # Required. Represents the trained model label.
+        ///   assignedResourceIds: [string], # Optional. Represents the resource IDs to be assigned to the deployment.
+        ///             If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created.
         /// }
         /// </code>
         /// 
@@ -5080,6 +6346,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
         ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
+        ///   assignedResources: [
+        ///     {
+        ///       resourceId: string, # Required. Represents the Azure resource Id.
+        ///       region: string, # Required. Represents the resource region.
+        ///     }
+        ///   ], # Optional. Represents the metadata of the assigned Azure resources.
         /// }
         /// </code>
         /// 
@@ -5298,6 +6570,508 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.DeleteDeployment", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a project deployment from the specified assigned resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteDeploymentFromResourcesAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// var operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// This sample shows how to call DeleteDeploymentFromResourcesAsync with all parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     assignedResourceIds = new[] {
+        ///         "<String>"
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment-from-resources
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>DeleteDeploymentOptions</c>:
+        /// <code>{
+        ///   assignedResourceIds: [string], # Optional. Represents the resource IDs to delete the deployment from.
+        ///             If not provided, the deployment will be rolled out from all the resources it is deployed to.
+        ///             If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteDeploymentFromResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.DeleteDeploymentFromResources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a project deployment from the specified assigned resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteDeploymentFromResources with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// var operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// This sample shows how to call DeleteDeploymentFromResources with all parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     assignedResourceIds = new[] {
+        ///         "<String>"
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment-from-resources
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>DeleteDeploymentOptions</c>:
+        /// <code>{
+        ///   assignedResourceIds: [string], # Optional. Represents the resource IDs to delete the deployment from.
+        ///             If not provided, the deployment will be rolled out from all the resources it is deployed to.
+        ///             If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteDeploymentFromResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.DeleteDeploymentFromResources", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Restores the snapshot of this trained model to be the current working directory of the project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call LoadSnapshotAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.LoadSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.LoadSnapshot", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Restores the snapshot of this trained model to be the current working directory of the project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call LoadSnapshot with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        public virtual Operation LoadSnapshot(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.LoadSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.LoadSnapshot", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call AssignDeploymentResourcesAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     resourcesMetadata = new[] {
+        ///         new {
+        ///             azureResourceId = "<azureResourceId>",
+        ///             customDomain = "<customDomain>",
+        ///             region = "<region>",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/assign-deployment-resources
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AssignDeploymentResourcesOptions</c>:
+        /// <code>{
+        ///   resourcesMetadata: [
+        ///     {
+        ///       azureResourceId: string, # Required. Represents the Azure resource ID.
+        ///       customDomain: string, # Required. Represents the Azure resource custom domain.
+        ///       region: string, # Required. Represents the Azure resource region.
+        ///     }
+        ///   ], # Required. Represents the metadata for the resources to be assigned.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.AssignDeploymentResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAssignDeploymentResourcesRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.AssignDeploymentResources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call AssignDeploymentResources with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     resourcesMetadata = new[] {
+        ///         new {
+        ///             azureResourceId = "<azureResourceId>",
+        ///             customDomain = "<customDomain>",
+        ///             region = "<region>",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/assign-deployment-resources
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AssignDeploymentResourcesOptions</c>:
+        /// <code>{
+        ///   resourcesMetadata: [
+        ///     {
+        ///       azureResourceId: string, # Required. Represents the Azure resource ID.
+        ///       customDomain: string, # Required. Represents the Azure resource custom domain.
+        ///       region: string, # Required. Represents the Azure resource region.
+        ///     }
+        ///   ], # Required. Represents the metadata for the resources to be assigned.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.AssignDeploymentResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAssignDeploymentResourcesRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.AssignDeploymentResources", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call UnassignDeploymentResourcesAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     assignedResourceIds = new[] {
+        ///         "<String>"
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/unassign-deployment-resources
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>UnassignDeploymentResourcesOptions</c>:
+        /// <code>{
+        ///   assignedResourceIds: [string], # Required. Represents the assigned resource IDs to be unassigned.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.UnassignDeploymentResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUnassignDeploymentResourcesRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.UnassignDeploymentResources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call UnassignDeploymentResources with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAuthoringClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     assignedResourceIds = new[] {
+        ///         "<String>"
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/unassign-deployment-resources
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>UnassignDeploymentResourcesOptions</c>:
+        /// <code>{
+        ///   assignedResourceIds: [string], # Required. Represents the assigned resource IDs to be unassigned.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.UnassignDeploymentResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUnassignDeploymentResourcesRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.UnassignDeploymentResources", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -5623,7 +7397,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateExportProjectRequest(string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, RequestContext context)
+        internal HttpMessage CreateExportProjectRequest(string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, string trainedModelLabel, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -5643,6 +7417,10 @@ namespace Azure.AI.Language.Conversations.Authoring
                 uri.AppendQuery("assetKind", assetKind, true);
             }
             uri.AppendQuery("stringIndexType", stringIndexType, true);
+            if (trainedModelLabel != null)
+            {
+                uri.AppendQuery("trainedModelLabel", trainedModelLabel, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -5783,6 +7561,47 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
+        internal HttpMessage CreateDeleteDeploymentFromResourcesRequest(string projectName, string deploymentName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/:delete-from-resources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetDeploymentDeleteFromResourcesStatusRequest(string projectName, string deploymentName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/delete-from-resources/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetDeploymentJobStatusRequest(string projectName, string deploymentName, string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -5910,6 +7729,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
+        internal HttpMessage CreateLoadSnapshotRequest(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendPath("/:load-snapshot", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetModelEvaluationResultsRequest(string projectName, string trainedModelLabel, string stringIndexType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -5943,6 +7781,129 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/models/", false);
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/evaluation/summary-result", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetLoadSnapshotStatusRequest(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendPath("/load-snapshot/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDeploymentResourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/resources", false);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateAssignDeploymentResourcesRequest(string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/resources/:assign", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUnassignDeploymentResourcesRequest(string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/resources/:unassign", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetAssignDeploymentResourcesStatusRequest(string projectName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/resources/assign/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetUnassignDeploymentResourcesStatusRequest(string projectName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/resources/unassign/jobs/", false);
+            uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -6013,6 +7974,33 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/deletion-jobs/", false);
             uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAssignedResourceDeploymentsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/global/deployments/resources", false);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -6130,7 +8118,35 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
+        internal HttpMessage CreateGetDeploymentResourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetTrainingJobsNextPageRequest(string nextLink, string projectName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAssignedResourceDeploymentsNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -6192,6 +8208,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
         private static ResponseClassifier _responseClassifier200202;
         private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }

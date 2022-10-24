@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void AnalyzeConversation_ConversationPII_Text()
         {
             ConversationAnalysisClient client = Client;
+            List<string> expectedRedactedText = new();
 
             #region Snippet:AnalyzeConversation_ConversationPII_Text
             var data = new
@@ -76,8 +78,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 },
             };
 
-            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
-            analyzeConversationOperation.WaitForCompletion();
+            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
             using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
             JsonElement jobResults = result.RootElement;
@@ -95,6 +96,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
 
                         Console.WriteLine($"Redacted Text: {conversationItem.GetProperty("redactedContent").GetProperty("text").GetString()}");
+#if !SNIPPET
+                        expectedRedactedText.Add(conversationItem.GetProperty("redactedContent").GetProperty("text").GetString());
+#endif
 
                         Console.WriteLine("Entities:");
                         foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
@@ -112,7 +116,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
             #endregion
 
-            Assert.That(jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray().All(item => item.GetProperty("results").GetProperty("errors").EnumerateArray().IsNullOrEmpty()));
+            Assert.That(expectedRedactedText, Is.EqualTo(new[] { "Hi, I am ********.", "Hi ****, how are you doing today?", "Pretty good." }));
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
 
@@ -121,6 +125,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public async Task AnalyzeConversationAsync_ConversationPII_Text()
         {
             ConversationAnalysisClient client = Client;
+            List<string> expectedRedactedText = new();
 
             var data = new
             {
@@ -178,8 +183,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             #region Snippet:AnalyzeConversationAsync_ConversationPII_Text
-            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
-            await analyzeConversationOperation.WaitForCompletionAsync();
+            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
             #endregion
 
             using JsonDocument result = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
@@ -198,6 +202,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
 
                         Console.WriteLine($"Redacted Text: {conversationItem.GetProperty("redactedContent").GetProperty("text").GetString()}");
+#if !SNIPPET
+                        expectedRedactedText.Add(conversationItem.GetProperty("redactedContent").GetProperty("text").GetString());
+#endif
 
                         Console.WriteLine("Entities:");
                         foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
@@ -214,7 +221,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
 
-            Assert.That(jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray().All(item => item.GetProperty("results").GetProperty("errors").EnumerateArray().IsNullOrEmpty()));
+            Assert.That(expectedRedactedText, Is.EqualTo(new[] { "Hi, I am ********.", "Hi ****, how are you doing today?", "Pretty good." }));
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
     }

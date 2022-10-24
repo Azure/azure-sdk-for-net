@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Reservations
         private readonly ReservationOrderRestOperations _reservationOrderRestClient;
         private readonly ClientDiagnostics _reservationDetailReservationClientDiagnostics;
         private readonly ReservationRestOperations _reservationDetailReservationRestClient;
+        private readonly ClientDiagnostics _calculateRefundClientDiagnostics;
+        private readonly CalculateRefundRestOperations _calculateRefundRestClient;
+        private readonly ClientDiagnostics _returnClientDiagnostics;
+        private readonly ReturnRestOperations _returnRestClient;
         private readonly ReservationOrderData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ReservationOrderResource"/> class for mocking. </summary>
@@ -65,6 +69,10 @@ namespace Azure.ResourceManager.Reservations
             _reservationDetailReservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationDetailResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ReservationDetailResource.ResourceType, out string reservationDetailReservationApiVersion);
             _reservationDetailReservationRestClient = new ReservationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reservationDetailReservationApiVersion);
+            _calculateRefundClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _calculateRefundRestClient = new CalculateRefundRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _returnClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _returnRestClient = new ReturnRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -402,6 +410,112 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _reservationOrderRestClient.ChangeDirectory(Guid.Parse(Id.Name), content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Calculate price for returning `Reservations` if there are no policy errors.
+        /// 
+        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/calculateRefund
+        /// Operation Id: CalculateRefund_Post
+        /// </summary>
+        /// <param name="content"> Information needed for calculating refund of a reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ReservationCalculateRefundResult>> CalculateRefundAsync(ReservationCalculateRefundContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _calculateRefundClientDiagnostics.CreateScope("ReservationOrderResource.CalculateRefund");
+            scope.Start();
+            try
+            {
+                var response = await _calculateRefundRestClient.PostAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Calculate price for returning `Reservations` if there are no policy errors.
+        /// 
+        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/calculateRefund
+        /// Operation Id: CalculateRefund_Post
+        /// </summary>
+        /// <param name="content"> Information needed for calculating refund of a reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ReservationCalculateRefundResult> CalculateRefund(ReservationCalculateRefundContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _calculateRefundClientDiagnostics.CreateScope("ReservationOrderResource.CalculateRefund");
+            scope.Start();
+            try
+            {
+                var response = _calculateRefundRestClient.Post(Guid.Parse(Id.Name), content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return a reservation.
+        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/return
+        /// Operation Id: Return_Post
+        /// </summary>
+        /// <param name="content"> Information needed for returning reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ReservationRefundResult>> ReturnAsync(ReservationRefundContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
+            scope.Start();
+            try
+            {
+                var response = await _returnRestClient.PostAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return a reservation.
+        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/return
+        /// Operation Id: Return_Post
+        /// </summary>
+        /// <param name="content"> Information needed for returning reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ReservationRefundResult> Return(ReservationRefundContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
+            scope.Start();
+            try
+            {
+                var response = _returnRestClient.Post(Guid.Parse(Id.Name), content, cancellationToken);
                 return response;
             }
             catch (Exception e)

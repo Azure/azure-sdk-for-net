@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/eventgrid/
+    exclude:
+    - sdk/eventgrid/Azure.ResourceManager.EventGrid/
 
 pr:
   branches:
@@ -20,6 +22,8 @@ pr:
   paths:
     include:
     - sdk/eventgrid/
+    exclude:
+    - sdk/eventgrid/Azure.ResourceManager.EventGrid/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

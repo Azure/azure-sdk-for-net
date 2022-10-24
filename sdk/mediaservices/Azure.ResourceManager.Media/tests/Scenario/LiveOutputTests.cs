@@ -16,11 +16,12 @@ namespace Azure.ResourceManager.Media.Tests
     public class LiveOutputTests : MediaManagementTestBase
     {
         private MediaServicesAccountResource _mediaService;
-        private LiveEventResource _liveEvent;
+        private MediaLiveEventResource _liveEvent;
 
-        private LiveOutputCollection liveOutputCollection => _liveEvent.GetLiveOutputs();
+        private MediaLiveOutputCollection liveOutputCollection => _liveEvent.GetMediaLiveOutputs();
 
-        public LiveOutputTests(bool isAsync) : base(isAsync)
+        public LiveOutputTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -43,14 +44,14 @@ namespace Azure.ResourceManager.Media.Tests
             }
         }
 
-        private async Task<LiveOutputResource> CreateLiveOutPut(string liveOutPutName)
+        private async Task<MediaLiveOutputResource> CreateLiveOutPut(string liveOutPutName)
         {
             var asset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, "empty-asset-input", new MediaAssetData());
-            LiveOutputData data = new LiveOutputData()
+            MediaLiveOutputData data = new MediaLiveOutputData()
             {
                 AssetName = asset.Value.Data.Name,
                 ArchiveWindowLength = new TimeSpan(0, 5, 0),
-                HttpLiveStreaming = new Hls()
+                Hls = new Hls()
                 {
                     FragmentsPerTsSegment = 5
                 },

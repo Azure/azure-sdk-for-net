@@ -14,10 +14,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class NetworkInterfaceTests : NetworkServiceClientTestBase
     {
         private SubscriptionResource _subscription;
-        public NetworkInterfaceTests(bool isAsync) : base(isAsync)
+        public NetworkInterfaceTests(bool isAsync, string apiVersion)
+        : base(isAsync, NetworkInterfaceResource.ResourceType, apiVersion)
         {
         }
 

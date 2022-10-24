@@ -30,12 +30,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the SupportedCapabilities class.
         /// </summary>
+        /// <param name="diskControllerTypes">The disk controllers that an OS
+        /// disk supports. If set it can be SCSI or SCSI, NVME or NVME,
+        /// SCSI.</param>
         /// <param name="acceleratedNetwork">True if the image from which the
         /// OS disk is created supports accelerated networking.</param>
         /// <param name="architecture">CPU architecture supported by an OS
         /// disk. Possible values include: 'x64', 'Arm64'</param>
-        public SupportedCapabilities(bool? acceleratedNetwork = default(bool?), string architecture = default(string))
+        public SupportedCapabilities(string diskControllerTypes = default(string), bool? acceleratedNetwork = default(bool?), string architecture = default(string))
         {
+            DiskControllerTypes = diskControllerTypes;
             AcceleratedNetwork = acceleratedNetwork;
             Architecture = architecture;
             CustomInit();
@@ -45,6 +49,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the disk controllers that an OS disk supports. If set
+        /// it can be SCSI or SCSI, NVME or NVME, SCSI.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskControllerTypes")]
+        public string DiskControllerTypes { get; set; }
 
         /// <summary>
         /// Gets or sets true if the image from which the OS disk is created

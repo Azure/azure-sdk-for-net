@@ -38,6 +38,8 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        // TODO: Temporarily setting max version to V2022-05-01 since V2022-10-01-preview does not support AAD yet (https://github.com/Azure/azure-sdk-for-net/issues/31854).
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeOperationWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -208,9 +210,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(5, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
             Assert.AreEqual(5, operation.ActionsTotal);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -394,9 +395,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(18, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
             Assert.AreEqual(18, operation.ActionsTotal);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -780,6 +780,45 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationAnalyzeHealthcareEntitiesWithFhirVersion()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            List<string> documents = new()
+            {
+                "Prescribed 100mg ibuprofen to Jane Doe, taken twice daily.",
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                AnalyzeHealthcareEntitiesActions = new[]
+                {
+                    new AnalyzeHealthcareEntitiesAction(new AnalyzeHealthcareEntitiesOptions()
+                    {
+                        FhirVersion = WellKnownFhirVersion.V4_0_1,
+                        DocumentType = HealthcareDocumentType.DischargeSummary
+                    }),
+                },
+                DisplayName = "AnalyzeOperationAnalyzeHealthcareEntitiesWithFhirVersion",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            //Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
+            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
+
+            AnalyzeHealthcareEntitiesResultCollection analyzeHealthcareEntitiesDocumentsResults = analyzeHealthcareEntitiesActionResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, analyzeHealthcareEntitiesDocumentsResults.Count);
+            Assert.IsNotNull(analyzeHealthcareEntitiesDocumentsResults[0].FhirBundle);
+            Assert.Greater(analyzeHealthcareEntitiesDocumentsResults[0].FhirBundle.Count, 0);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationAnalyzeHealthcareEntitiesActionNotSupported()
         {
@@ -857,6 +896,18 @@ namespace Azure.AI.TextAnalytics.Tests
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
             Assert.AreEqual("SingleLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        private void ValidateOperationProperties(AnalyzeActionsOperation operation)
+        {
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
+            // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+
+            if (operation.ExpiresOn.HasValue)
+            {
+                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+            }
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Azure.AI.TextAnalytics
             var detectedLanguages = new List<DetectLanguageResult>(results.Documents.Count);
 
             //Read errors
-            foreach (DocumentError error in results.Errors)
+            foreach (InputError error in results.Errors)
             {
                 detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error.Error)));
             }
@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics
             var analyzedSentiments = new List<AnalyzeSentimentResult>(results.Documents.Count);
 
             //Read errors
-            foreach (DocumentError error in results.Errors)
+            foreach (InputError error in results.Errors)
             {
                 analyzedSentiments.Add(new AnalyzeSentimentResult(error.Id, ConvertToError(error.Error)));
             }
@@ -139,7 +139,7 @@ namespace Azure.AI.TextAnalytics
             var keyPhrases = new List<ExtractKeyPhrasesResult>(results.Documents.Count);
 
             //Read errors
-            foreach (DocumentError error in results.Errors)
+            foreach (InputError error in results.Errors)
             {
                 keyPhrases.Add(new ExtractKeyPhrasesResult(error.Id, ConvertToError(error.Error)));
             }
@@ -158,7 +158,7 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Entities
 
-        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<Entity> entities)
+        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<EntityWithResolution> entities)
             => entities.Select((entity) => new CategorizedEntity(entity)).ToList();
 
         internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(EntitiesResultDocumentsItem documentEntities)
@@ -171,7 +171,7 @@ namespace Azure.AI.TextAnalytics
             var recognizeEntities = new List<RecognizeEntitiesResult>(results.Documents.Count);
 
             //Read errors
-            foreach (DocumentError error in results.Errors)
+            foreach (InputError error in results.Errors)
             {
                 recognizeEntities.Add(new RecognizeEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
@@ -259,7 +259,7 @@ namespace Azure.AI.TextAnalytics
             var recognizeEntities = new List<RecognizePiiEntitiesResult>(results.Documents.Count);
 
             //Read errors
-            foreach (DocumentError error in results.Errors)
+            foreach (InputError error in results.Errors)
             {
                 recognizeEntities.Add(new RecognizePiiEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
@@ -288,7 +288,7 @@ namespace Azure.AI.TextAnalytics
             var recognizeLinkedEntities = new List<RecognizeLinkedEntitiesResult>(results.Documents.Count);
 
             //Read errors
-            foreach (DocumentError error in results.Errors)
+            foreach (InputError error in results.Errors)
             {
                 recognizeLinkedEntities.Add(new RecognizeLinkedEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
@@ -314,28 +314,29 @@ namespace Azure.AI.TextAnalytics
 
         internal static AnalyzeHealthcareEntitiesResultCollection ConvertToAnalyzeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
         {
-            var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>(results.Documents.Count);
+            var healthcareEntitiesResults = new List<AnalyzeHealthcareEntitiesResult>(results.Documents.Count);
 
             //Read errors
-            foreach (DocumentError error in results.Errors)
+            foreach (InputError error in results.Errors)
             {
-                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
+                healthcareEntitiesResults.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read entities
-            foreach (var documentHealthcareEntities in results.Documents)
+            foreach (var document in results.Documents)
             {
-                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(
-                    documentHealthcareEntities.Id,
-                    documentHealthcareEntities.Statistics ?? default,
-                    ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities),
-                    ConvertToHealthcareEntityRelationsCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
-                    ConvertToWarnings(documentHealthcareEntities.Warnings)));
+                healthcareEntitiesResults.Add(new AnalyzeHealthcareEntitiesResult(
+                    document.Id,
+                    document.Statistics ?? default,
+                    ConvertToHealthcareEntityCollection(document.Entities),
+                    ConvertToHealthcareEntityRelationsCollection(document.Entities, document.Relations),
+                    ConvertToWarnings(document.Warnings),
+                    document.FhirBundle));
             }
 
-            healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
+            healthcareEntitiesResults = healthcareEntitiesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
 
-            return new AnalyzeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
+            return new AnalyzeHealthcareEntitiesResultCollection(healthcareEntitiesResults, results.Statistics, results.ModelVersion);
         }
 
         private static IList<HealthcareEntityRelation> ConvertToHealthcareEntityRelationsCollection(IList<HealthcareEntityInternal> healthcareEntities, IList<HealthcareRelationInternal> healthcareRelations)
@@ -343,7 +344,10 @@ namespace Azure.AI.TextAnalytics
             List<HealthcareEntityRelation> result = new List<HealthcareEntityRelation>();
             foreach (HealthcareRelationInternal relation in healthcareRelations)
             {
-                result.Add(new HealthcareEntityRelation(relation.RelationType, ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities)));
+                result.Add(new HealthcareEntityRelation(
+                    relation.RelationType,
+                    ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities),
+                    relation.ConfidenceScore));
             }
             return result;
         }
@@ -529,6 +533,8 @@ namespace Azure.AI.TextAnalytics
                     ModelVersion = action.ModelVersion,
                     StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = action.DisableServiceLogs,
+                    FhirVersion = action.FhirVersion,
+                    DocumentType = action.DocumentType,
                 },
                 TaskName = action.ActionName,
             };

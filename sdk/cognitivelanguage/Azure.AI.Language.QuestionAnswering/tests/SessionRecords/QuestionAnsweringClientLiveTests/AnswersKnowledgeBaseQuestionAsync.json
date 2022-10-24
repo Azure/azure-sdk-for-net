@@ -1,19 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-10-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:query-knowledgebases?projectName=testQA\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "238",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6943de65c2707547923636e445180456-178b3ab5e99a2948-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
-          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "373386ea0bbbf4e189a3573800b3724e",
+        "traceparent": "00-bc9d758f935ebd4aa2890907ed089594-58d4b004a25f85c4-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2ce75df7041d5a33e39e647f01077a73",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,59 +27,79 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "74da6f7d-4db1-4c45-bdb9-3d38e8dc74cd",
-        "Content-Length": "1143",
+        "apim-request-id": "94b9b212-03e0-4e4b-8481-c355c77a68a7",
+        "Content-Length": "2040",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=1",
-        "Date": "Thu, 28 Oct 2021 21:15:40 GMT",
+        "Date": "Thu, 22 Sep 2022 00:27:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "705"
+        "x-envoy-upstream-service-time": "493"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022answers\u0022: [\n",
-        "    {\n",
-        "      \u0022questions\u0022: [\n",
-        "        \u0022Make your battery last\u0022\n",
-        "      ],\n",
-        "      \u0022answer\u0022: \u0022**Make your battery last**\\n\\nFor info on how to care for your battery and power supply, conserve power, and make your Surface battery last longer, see [Surface battery and power](http://www.microsoft.com/surface/support/hardware-and-drivers/battery-and-power) on Surface.com.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.9079,\n",
-        "      \u0022id\u0022: 136,\n",
-        "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
-        "      \u0022metadata\u0022: {\n",
-        "        \u0022explicitlytaggedheading\u0022: \u0022make your battery last\u0022\n",
-        "      },\n",
-        "      \u0022dialog\u0022: {\n",
-        "        \u0022isContextOnly\u0022: false,\n",
-        "        \u0022prompts\u0022: []\n",
-        "      }\n",
-        "    },\n",
-        "    {\n",
-        "      \u0022questions\u0022: [\n",
-        "        \u0022Check the battery level\u0022\n",
-        "      ],\n",
-        "      \u0022answer\u0022: \u0022**Check the battery level**\\n\\nYou can check the battery level from the lock screen or the desktop:\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.48469999999999996,\n",
-        "      \u0022id\u0022: 133,\n",
-        "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
-        "      \u0022metadata\u0022: {\n",
-        "        \u0022explicitlytaggedheading\u0022: \u0022check the battery level\u0022\n",
-        "      },\n",
-        "      \u0022dialog\u0022: {\n",
-        "        \u0022isContextOnly\u0022: false,\n",
-        "        \u0022prompts\u0022: []\n",
-        "      }\n",
-        "    }\n",
-        "  ]\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "answers": [
+          {
+            "questions": [
+              "Making your battery last"
+            ],
+            "answer": "**Making your battery last**\n\nTo learn ways to conserve power and make your battery last longer, see [Surface battery and power](https://www.microsoft.com/surface/support/hardware-and-drivers/battery-and-power-pro) on Surface.com.",
+            "confidenceScore": 0.7506,
+            "id": 26,
+            "source": "surface-book-user-guide-EN.pdf",
+            "metadata": {
+              "system_metadata_qna_edited_manually": "true",
+              "explicitlytaggedheading": "make your battery last"
+            },
+            "dialog": {
+              "isContextOnly": false,
+              "prompts": []
+            }
+          },
+          {
+            "questions": [
+              "Check the battery level"
+            ],
+            "answer": "**Check the battery level**\n\nYou can check the battery level from the lock screen or on the desktop. Lock screen\n\nWhen you wake your Surface Book, the battery status appears in the lower-right corner of the lock screen. \u272A",
+            "confidenceScore": 0.49579999999999996,
+            "id": 24,
+            "source": "surface-book-user-guide-EN.pdf",
+            "metadata": {
+              "system_metadata_qna_edited_manually": "true",
+              "explicitlytaggedheading": "check the battery level"
+            },
+            "dialog": {
+              "isContextOnly": false,
+              "prompts": [
+                {
+                  "displayOrder": 0,
+                  "qnaId": 25,
+                  "displayText": "Desktop taskbar"
+                }
+              ]
+            }
+          },
+          {
+            "questions": [
+              "Desktop taskbar"
+            ],
+            "answer": "**Desktop taskbar**\n\nOn the desktop, select the battery status icon on the right side of the taskbar. The battery status pane shows the charging level for both batteries. \u272A\n\nWhen your Surface Book is fully charged, it should last up to 10 hours for web browsing.",
+            "confidenceScore": 0.43829999999999997,
+            "id": 25,
+            "source": "surface-book-user-guide-EN.pdf",
+            "metadata": {},
+            "dialog": {
+              "isContextOnly": false,
+              "prompts": []
+            }
+          }
+        ]
+      }
     }
   ],
   "Variables": {
-    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "QUESTIONANSWERING_KEY": "Sanitized",
-    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "RandomSeed": "285379348"
+    "QUESTIONANSWERING_PROJECT": "testQA",
+    "RandomSeed": "559003129"
   }
 }

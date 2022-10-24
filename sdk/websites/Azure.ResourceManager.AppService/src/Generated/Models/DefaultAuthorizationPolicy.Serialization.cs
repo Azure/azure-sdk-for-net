@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DefaultAuthorizationPolicy DeserializeDefaultAuthorizationPolicy(JsonElement element)
         {
-            Optional<AllowedPrincipals> allowedPrincipals = default;
+            Optional<AppServiceAadAllowedPrincipals> allowedPrincipals = default;
             Optional<IList<string>> allowedApplications = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allowedPrincipals = AllowedPrincipals.DeserializeAllowedPrincipals(property.Value);
+                    allowedPrincipals = AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(property.Value);
                     continue;
                 }
                 if (property.NameEquals("allowedApplications"))

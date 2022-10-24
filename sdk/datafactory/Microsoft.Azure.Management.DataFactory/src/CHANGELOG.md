@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 7.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Stored Procedure Parameters in ADF
+
 ## Version 6.4.0
 ###  Feature Additions
 - Added GoogleSheets connector in ADF

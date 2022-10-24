@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ReservationTransactionsListResult. </summary>
         internal ReservationTransactionsListResult()
         {
-            Value = new ChangeTrackingList<ReservationTransaction>();
+            Value = new ChangeTrackingList<ConsumptionReservationTransaction>();
         }
 
         /// <summary> Initializes a new instance of ReservationTransactionsListResult. </summary>
         /// <param name="value"> The list of reservation recommendations. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ReservationTransactionsListResult(IReadOnlyList<ReservationTransaction> value, string nextLink)
+        internal ReservationTransactionsListResult(IReadOnlyList<ConsumptionReservationTransaction> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of reservation recommendations. </summary>
-        public IReadOnlyList<ReservationTransaction> Value { get; }
+        public IReadOnlyList<ConsumptionReservationTransaction> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

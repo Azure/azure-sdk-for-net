@@ -35,6 +35,8 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Optional display name for the analysis job. </summary>
         public string DisplayName { get; set; }
+        /// <summary> Default language to use for records requesting automatic language detection. </summary>
+        public string DefaultLanguage { get; set; }
         /// <summary> Gets the analysis input. </summary>
         public MultiLanguageAnalysisInput AnalysisInput { get; }
         /// <summary> The set of tasks to execute on the input documents. </summary>

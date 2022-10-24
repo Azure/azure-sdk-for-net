@@ -45,7 +45,7 @@ namespace Azure.Core.TestFramework
                     var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
                     invocation.ReturnValue = type.Name.StartsWith("ValueTask")
                         ? GetValueFromValueTask(taskResultType, instrumentedResult)
-                        : GetValueFromOther(taskResultType, instrumentedResult);
+                        : TaskExtensions.GetValueFromTask(taskResultType, instrumentedResult);
                 }
             }
             else if (invocation.Method.Name.EndsWith("Value") && InheritsFromArmResource(type))
@@ -90,13 +90,6 @@ namespace Azure.Core.TestFramework
                 return true;
 
             return InheritsFromArmResource(elementType.BaseType);
-        }
-
-        private object GetValueFromOther(Type taskResultType, object instrumentedResult)
-        {
-            var method = typeof(Task).GetMethod("FromResult", BindingFlags.Public | BindingFlags.Static);
-            var genericMethod = method.MakeGenericMethod(taskResultType);
-            return genericMethod.Invoke(null, new object[] { instrumentedResult });
         }
 
         private object GetValueFromValueTask(Type taskResultType, object instrumentedResult)

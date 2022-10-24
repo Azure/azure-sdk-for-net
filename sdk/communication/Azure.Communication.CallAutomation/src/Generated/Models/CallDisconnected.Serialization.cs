@@ -14,41 +14,12 @@ namespace Azure.Communication.CallAutomation
     {
         internal static CallDisconnected DeserializeCallDisconnected(JsonElement element)
         {
-            Optional<string> eventSource = default;
-            Optional<string> version = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<string> publicEventType = default;
+            Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventSource"))
-                {
-                    eventSource = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("version"))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("operationContext"))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("callConnectionId"))
                 {
                     callConnectionId = property.Value.GetString();
@@ -64,13 +35,13 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicEventType"))
+                if (property.NameEquals("operationContext"))
                 {
-                    publicEventType = property.Value.GetString();
+                    operationContext = property.Value.GetString();
                     continue;
                 }
             }
-            return new CallDisconnected(eventSource.Value, version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallDisconnected(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value);
         }
     }
 }

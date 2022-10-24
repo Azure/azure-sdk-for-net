@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Media
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AssetFilterResources in the MediaAsset. </summary>
-        /// <returns> An object representing collection of AssetFilterResources and their operations over a AssetFilterResource. </returns>
-        public virtual AssetFilterCollection GetAssetFilters()
+        /// <summary> Gets a collection of MediaAssetFilterResources in the MediaAsset. </summary>
+        /// <returns> An object representing collection of MediaAssetFilterResources and their operations over a MediaAssetFilterResource. </returns>
+        public virtual MediaAssetFilterCollection GetMediaAssetFilters()
         {
-            return GetCachedClient(Client => new AssetFilterCollection(Client, Id));
+            return GetCachedClient(Client => new MediaAssetFilterCollection(Client, Id));
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AssetFilterResource>> GetAssetFilterAsync(string filterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaAssetFilterResource>> GetMediaAssetFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            return await GetAssetFilters().GetAsync(filterName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaAssetFilters().GetAsync(filterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AssetFilterResource> GetAssetFilter(string filterName, CancellationToken cancellationToken = default)
+        public virtual Response<MediaAssetFilterResource> GetMediaAssetFilter(string filterName, CancellationToken cancellationToken = default)
         {
-            return GetAssetFilters().Get(filterName, cancellationToken);
+            return GetMediaAssetFilters().Get(filterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MediaAssetTrackResources in the MediaAsset. </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="Uri" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Uri> GetStorageContainerUrisAsync(GetStorageContainersContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Uri> GetStorageContainerUrisAsync(MediaAssetStorageContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="Uri" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Uri> GetStorageContainerUris(GetStorageContainersContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<Uri> GetStorageContainerUris(MediaAssetStorageContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -425,10 +425,10 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: Assets_ListStreamingLocators
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AssetStreamingLocator" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AssetStreamingLocator> GetStreamingLocatorsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MediaAssetStreamingLocator" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MediaAssetStreamingLocator> GetStreamingLocatorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AssetStreamingLocator>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MediaAssetStreamingLocator>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetStreamingLocators");
                 scope.Start();
@@ -452,10 +452,10 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: Assets_ListStreamingLocators
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssetStreamingLocator" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AssetStreamingLocator> GetStreamingLocators(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MediaAssetStreamingLocator" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MediaAssetStreamingLocator> GetStreamingLocators(CancellationToken cancellationToken = default)
         {
-            Page<AssetStreamingLocator> FirstPageFunc(int? pageSizeHint)
+            Page<MediaAssetStreamingLocator> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetStreamingLocators");
                 scope.Start();
