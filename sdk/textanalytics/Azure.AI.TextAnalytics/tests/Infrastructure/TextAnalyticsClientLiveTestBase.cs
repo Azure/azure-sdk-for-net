@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Tests
         protected TextAnalyticsClientOptions.ServiceVersion ServiceVersion { get; }
 
         public TextAnalyticsClientLiveTestBase(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, RecordedTestMode.Live)
+            : base(isAsync)
         {
             ServiceVersion = serviceVersion;
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
