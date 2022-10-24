@@ -444,6 +444,64 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region Extract Summary
+
+        internal static List<SummarySentence> ConvertToSummarySentenceList(List<ExtractedSummarySentence> sentences)
+            => sentences.Select((sentence) => new SummarySentence(sentence)).ToList();
+
+        internal static SummarySentenceCollection ConvertToSummarySentenceCollection(ExtractiveSummarizationResultDocumentsItem document)
+        {
+            return new SummarySentenceCollection(
+                ConvertToSummarySentenceList(document.Sentences.ToList()),
+                ConvertToWarnings(document.Warnings));
+        }
+
+        internal static ExtractSummaryResultCollection ConvertToExtractSummaryResultCollection(
+            ExtractiveSummarizationResult results,
+            IDictionary<string, int> idToIndexMap)
+        {
+            List<ExtractSummaryResult> extractSummaryResults = new(results.Documents.Count);
+
+            // Read errors.
+            foreach (InputError error in results.Errors)
+            {
+                extractSummaryResults.Add(new ExtractSummaryResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            // Read results.
+            foreach (ExtractiveSummarizationResultDocumentsItem document in results.Documents)
+            {
+                extractSummaryResults.Add(new ExtractSummaryResult(
+                    document.Id,
+                    document.Statistics ?? default,
+                    ConvertToSummarySentenceCollection(document)));
+            }
+
+            extractSummaryResults = extractSummaryResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
+
+            return new ExtractSummaryResultCollection(extractSummaryResults, results.Statistics, results.ModelVersion);
+        }
+
+        internal static ExtractSummaryResultCollection ConvertToExtractSummaryResultCollection(
+            AnalyzeTextJobState jobState,
+            IDictionary<string, int> idToIndexMap)
+        {
+            AnalyzeTextLROResult task = jobState.Tasks.Items[0];
+            if (task.Kind == AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)
+            {
+                return ConvertToExtractSummaryResultCollection((task as ExtractiveSummarizationLROResult).Results, idToIndexMap);
+            }
+
+            if (task.Kind == AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)
+            {
+                return ConvertToExtractSummaryResultCollection((task as ExtractiveSummarizationLROResult).Results, idToIndexMap);
+            }
+
+            throw new InvalidOperationException($"Invalid task executed. Expected a {nameof(AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)} or {nameof(AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)} but instead got {task.Kind}.");
+        }
+
+        #endregion
+
         #region Analyze Operation
 
         internal static PiiLROTask ConvertToPiiTask(RecognizePiiEntitiesAction action)
@@ -576,6 +634,22 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
+        internal static ExtractiveSummarizationLROTask ConvertToExtractiveSummarizationTask(ExtractSummaryAction action)
+        {
+            return new ExtractiveSummarizationLROTask()
+            {
+                Parameters = new ExtractiveSummarizationTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs,
+                    SentenceCount = action.MaxSentenceCount,
+                    SortBy = action.OrderBy
+                },
+                TaskName = action.ActionName
+            };
+        }
+
         internal static IList<EntityLinkingLROTask> ConvertFromRecognizeLinkedEntitiesActionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
         {
             List<EntityLinkingLROTask> list = new(recognizeLinkedEntitiesActions.Count);
@@ -684,6 +758,18 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
+        internal static IList<ExtractiveSummarizationLROTask> ConvertFromExtractSummaryActionsToTasks(IReadOnlyCollection<ExtractSummaryAction> extractSummaryActions)
+        {
+            List<ExtractiveSummarizationLROTask> list = new(extractSummaryActions.Count);
+
+            foreach (ExtractSummaryAction action in extractSummaryActions)
+            {
+                list.Add(ConvertToExtractiveSummarizationTask(action));
+            }
+
+            return list;
+        }
+
         internal static AnalyzeActionsResult ConvertToAnalyzeActionsResult(AnalyzeTextJobState jobState, IDictionary<string, int> map)
         {
             List<ExtractKeyPhrasesActionResult> keyPhrases = new();
@@ -695,6 +781,7 @@ namespace Azure.AI.TextAnalytics
             List<SingleLabelClassifyActionResult> singleLabelClassify = new();
             List<MultiLabelClassifyActionResult> multiLabelClassify = new();
             List<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntities = new();
+            List<ExtractSummaryActionResult> extractSummary = new();
 
             foreach (AnalyzeTextLROResult task in jobState.Tasks.Items)
             {
@@ -734,6 +821,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     analyzeHealthcareEntities.Add(new AnalyzeHealthcareEntitiesActionResult(ConvertToAnalyzeHealthcareEntitiesResultCollection((task as HealthcareLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
                 }
+                else if (task.Kind == AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)
+                {
+                    extractSummary.Add(new ExtractSummaryActionResult(ConvertToExtractSummaryResultCollection((task as ExtractiveSummarizationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
+                }
             }
 
             return new AnalyzeActionsResult(
@@ -745,7 +836,8 @@ namespace Azure.AI.TextAnalytics
                 customEntitiesRecognition,
                 singleLabelClassify,
                 multiLabelClassify,
-                analyzeHealthcareEntities);
+                analyzeHealthcareEntities,
+                extractSummary);
         }
 
         #endregion

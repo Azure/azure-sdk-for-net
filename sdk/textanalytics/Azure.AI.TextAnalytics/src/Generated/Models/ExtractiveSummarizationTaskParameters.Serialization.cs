@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -46,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal static ExtractiveSummarizationTaskParameters DeserializeExtractiveSummarizationTaskParameters(JsonElement element)
         {
             Optional<int> sentenceCount = default;
-            Optional<ExtractiveSummarizationSortingCriteria> sortBy = default;
+            Optional<SummarySentencesOrder> sortBy = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
@@ -69,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sortBy = new ExtractiveSummarizationSortingCriteria(property.Value.GetString());
+                    sortBy = new SummarySentencesOrder(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stringIndexType"))
