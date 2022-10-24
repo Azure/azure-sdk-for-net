@@ -59,7 +59,7 @@ namespace Azure.Communication
             }
         }
 
-        public static CommunicationIdentifierModelKind GetKind(CommunicationIdentifierModel identifier)
+        private static CommunicationIdentifierModelKind GetKind(CommunicationIdentifierModel identifier)
         {
             if (identifier.CommunicationUser is not null)
             {
