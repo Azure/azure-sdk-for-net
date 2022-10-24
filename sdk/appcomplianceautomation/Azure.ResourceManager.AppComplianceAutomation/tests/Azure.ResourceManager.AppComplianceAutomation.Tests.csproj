@@ -2,4 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.AppComplianceAutomation.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\SnapshotTests\" />
+  </ItemGroup>
 </Project>

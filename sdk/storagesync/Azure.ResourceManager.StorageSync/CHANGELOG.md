@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2022-10-24)
+
+### Other Changes
+
+- Upgraded API version to 2022-06-01.
+- Ported Track 1 unit tests over to be compatible with Track 2 changes.  
 
 ## 1.0.0 (2022-09-19)
 

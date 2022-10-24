@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -29,11 +31,25 @@ namespace Azure.AI.Language.Conversations
 
             Aspect = aspect;
             Text = text;
+            Contexts = new ChangeTrackingList<ItemizedSummaryContext>();
+        }
+
+        /// <summary> Initializes a new instance of SummaryResultItem. </summary>
+        /// <param name="aspect"></param>
+        /// <param name="text"></param>
+        /// <param name="contexts"> The context list of the summary. </param>
+        internal SummaryResultItem(string aspect, string text, IList<ItemizedSummaryContext> contexts)
+        {
+            Aspect = aspect;
+            Text = text;
+            Contexts = contexts;
         }
 
         /// <summary> Gets or sets the aspect. </summary>
         public string Aspect { get; set; }
         /// <summary> Gets or sets the text. </summary>
         public string Text { get; set; }
+        /// <summary> The context list of the summary. </summary>
+        public IList<ItemizedSummaryContext> Contexts { get; }
     }
 }

@@ -14,43 +14,43 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static OverviewStatus DeserializeOverviewStatus(JsonElement element)
         {
-            Optional<int> passed = default;
-            Optional<int> failed = default;
-            Optional<int> manual = default;
+            Optional<int> passedCount = default;
+            Optional<int> failedCount = default;
+            Optional<int> manualCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("passed"))
+                if (property.NameEquals("passedCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    passed = property.Value.GetInt32();
+                    passedCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failed"))
+                if (property.NameEquals("failedCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    failed = property.Value.GetInt32();
+                    failedCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("manual"))
+                if (property.NameEquals("manualCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    manual = property.Value.GetInt32();
+                    manualCount = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new OverviewStatus(Optional.ToNullable(passed), Optional.ToNullable(failed), Optional.ToNullable(manual));
+            return new OverviewStatus(Optional.ToNullable(passedCount), Optional.ToNullable(failedCount), Optional.ToNullable(manualCount));
         }
     }
 }

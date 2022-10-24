@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="isPass"> Indicates whether all the resource(s) are compliant. </param>
         /// <param name="policyId"> The policy id mapping to this assessment. </param>
         /// <param name="resourceList"> List of resource assessments. </param>
-        internal Assessment(string name, AssessmentSeverity? severity, string description, string remediation, bool? isPass, string policyId, IReadOnlyList<AssessmentResource> resourceList)
+        internal Assessment(string name, AssessmentSeverity? severity, string description, string remediation, IsPass? isPass, string policyId, IReadOnlyList<AssessmentResource> resourceList)
         {
             Name = name;
             Severity = severity;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> The remediation of the assessment. </summary>
         public string Remediation { get; }
         /// <summary> Indicates whether all the resource(s) are compliant. </summary>
-        public bool? IsPass { get; }
+        public IsPass? IsPass { get; }
         /// <summary> The policy id mapping to this assessment. </summary>
         public string PolicyId { get; }
         /// <summary> List of resource assessments. </summary>

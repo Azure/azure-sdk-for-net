@@ -156,7 +156,7 @@ namespace Azure.AI.Language.Conversations
         ///     query: string, # Required. The conversation utterance given by the caller.
         ///     detectedLanguage: string, # Optional. The system detected language for the query in BCP 47 language representation..
         ///     prediction: {
-        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of the project.
+        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. The type of the project.
         ///       topIntent: string, # Optional. The intent with the highest score.
         ///     }, # Required. The prediction result of a conversation project.
         ///   }, # Required. Represents a conversation analysis response.
@@ -306,7 +306,7 @@ namespace Azure.AI.Language.Conversations
         ///     query: string, # Required. The conversation utterance given by the caller.
         ///     detectedLanguage: string, # Optional. The system detected language for the query in BCP 47 language representation..
         ///     prediction: {
-        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of the project.
+        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. The type of the project.
         ///       topIntent: string, # Optional. The intent with the highest score.
         ///     }, # Required. The prediction result of a conversation project.
         ///   }, # Required. Represents a conversation analysis response.
@@ -403,7 +403,7 @@ namespace Azure.AI.Language.Conversations
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The status of the task at the mentioned last update time.
         ///   errors: [
         ///     {
         ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
@@ -509,7 +509,7 @@ namespace Azure.AI.Language.Conversations
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The status of the task at the mentioned last update time.
         ///   errors: [
         ///     {
         ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
@@ -689,7 +689,7 @@ namespace Azure.AI.Language.Conversations
         ///   }, # Required.
         ///   tasks: [
         ///     {
-        ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversations.
+        ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot; | &quot;ConversationalSentimentTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversation.
         ///       taskName: string, # Optional.
         ///     }
         ///   ], # Required. The set of tasks to execute on the input conversation.
@@ -705,7 +705,7 @@ namespace Azure.AI.Language.Conversations
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The status of the task at the mentioned last update time.
         ///   errors: [
         ///     {
         ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
@@ -887,7 +887,7 @@ namespace Azure.AI.Language.Conversations
         ///   }, # Required.
         ///   tasks: [
         ///     {
-        ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversations.
+        ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot; | &quot;ConversationalSentimentTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversation.
         ///       taskName: string, # Optional.
         ///     }
         ///   ], # Required. The set of tasks to execute on the input conversation.
@@ -903,7 +903,7 @@ namespace Azure.AI.Language.Conversations
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The status of the task at the mentioned last update time.
         ///   errors: [
         ///     {
         ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
