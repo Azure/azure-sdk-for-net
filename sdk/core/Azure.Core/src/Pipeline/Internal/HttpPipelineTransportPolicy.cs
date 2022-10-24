@@ -29,8 +29,6 @@ namespace Azure.Core.Pipeline
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
-            // correlate the response number with the request number - used for invoking response call back in RetryPolicy
-            message.ResponseNumber = message.RetryNumber + 1;
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -42,8 +40,6 @@ namespace Azure.Core.Pipeline
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
-            // correlate the response number with the request number - used for invoking response call back in RetryPolicy
-            message.ResponseNumber = message.RetryNumber + 1;
         }
     }
 }

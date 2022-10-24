@@ -68,6 +68,7 @@ namespace Azure.Core.Pipeline
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             List<Exception>? exceptions = null;
+            Response? lastResponse = null;
             while (true)
             {
                 var before = Stopwatch.GetTimestamp();
@@ -106,10 +107,8 @@ namespace Azure.Core.Pipeline
                     message.LastException = ex;
                 }
 
-                // If we got a response for this request, trigger OnResponse. We can't assume that an exception being thrown means there was no response
-                // since it's possible a policy later in the pipeline could throw after receiving a response. We need to compare the request/response count
-                // to make sure that the response is for this attempt.
-                if (message.HasResponse && message.ResponseNumber == message.RetryNumber + 1)
+                // If we got a response for this request, trigger OnResponse.
+                if (message.HasResponse && !ReferenceEquals(message.Response, lastResponse))
                 {
                     if (async)
                     {
@@ -173,6 +172,11 @@ namespace Azure.Core.Pipeline
                 }
 
                 message.RetryNumber++;
+
+                if (message.HasResponse)
+                {
+                    lastResponse = message.Response;
+                }
                 AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryNumber, elapsed);
             }
         }
