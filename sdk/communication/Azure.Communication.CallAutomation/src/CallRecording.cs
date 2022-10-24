@@ -75,7 +75,10 @@ namespace Azure.Communication.CallAutomation
                     }
                 };
 
-                return ContentRestClient.Recording(request, cancellationToken: cancellationToken);
+                return ContentRestClient.Recording(request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
