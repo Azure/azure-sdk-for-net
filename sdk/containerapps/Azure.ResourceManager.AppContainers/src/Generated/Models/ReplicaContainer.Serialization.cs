@@ -50,6 +50,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<bool> ready = default;
             Optional<bool> started = default;
             Optional<int> restartCount = default;
+            Optional<string> logStreamEndpoint = default;
+            Optional<string> execEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -92,8 +94,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                     restartCount = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("logStreamEndpoint"))
+                {
+                    logStreamEndpoint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("execEndpoint"))
+                {
+                    execEndpoint = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount));
+            return new ReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), logStreamEndpoint.Value, execEndpoint.Value);
         }
     }
 }

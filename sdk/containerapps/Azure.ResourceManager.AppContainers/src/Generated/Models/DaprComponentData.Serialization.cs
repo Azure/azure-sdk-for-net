@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SecretStoreComponent))
+            {
+                writer.WritePropertyName("secretStoreComponent");
+                writer.WriteStringValue(SecretStoreComponent);
+            }
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
@@ -85,6 +90,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<bool> ignoreErrors = default;
             Optional<string> initTimeout = default;
             Optional<IList<AppSecret>> secrets = default;
+            Optional<string> secretStoreComponent = default;
             Optional<IList<DaprMetadata>> metadata = default;
             Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
@@ -163,6 +169,11 @@ namespace Azure.ResourceManager.AppContainers
                             secrets = array;
                             continue;
                         }
+                        if (property0.NameEquals("secretStoreComponent"))
+                        {
+                            secretStoreComponent = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("metadata"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -197,7 +208,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new DaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), Optional.ToList(metadata), Optional.ToList(scopes));
+            return new DaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), secretStoreComponent.Value, Optional.ToList(metadata), Optional.ToList(scopes));
         }
     }
 }

@@ -21,13 +21,17 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="ready"> The container ready status. </param>
         /// <param name="started"> The container start status. </param>
         /// <param name="restartCount"> The container restart count. </param>
-        internal ReplicaContainer(string name, string containerId, bool? ready, bool? started, int? restartCount)
+        /// <param name="logStreamEndpoint"> Log Stream endpoint. </param>
+        /// <param name="execEndpoint"> Container exec endpoint. </param>
+        internal ReplicaContainer(string name, string containerId, bool? ready, bool? started, int? restartCount, string logStreamEndpoint, string execEndpoint)
         {
             Name = name;
             ContainerId = containerId;
             Ready = ready;
             Started = started;
             RestartCount = restartCount;
+            LogStreamEndpoint = logStreamEndpoint;
+            ExecEndpoint = execEndpoint;
         }
 
         /// <summary> The Name of the Container. </summary>
@@ -40,5 +44,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public bool? Started { get; set; }
         /// <summary> The container restart count. </summary>
         public int? RestartCount { get; set; }
+        /// <summary> Log Stream endpoint. </summary>
+        public string LogStreamEndpoint { get; }
+        /// <summary> Container exec endpoint. </summary>
+        public string ExecEndpoint { get; }
     }
 }
