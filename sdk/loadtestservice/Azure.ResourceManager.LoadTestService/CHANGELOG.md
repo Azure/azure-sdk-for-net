@@ -1,10 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (2022-10-24)
-
-### Features Added
-
-New design of track 2 initial commit.
+## 1.0.0-beta.1 (Unreleased)
 
 ### General New Features
 
