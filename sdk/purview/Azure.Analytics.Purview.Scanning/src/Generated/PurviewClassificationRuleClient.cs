@@ -74,70 +74,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetPropertiesAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// Response response = await client.GetPropertiesAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     minimumPercentageMatch: number, # Optional.
-        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-        ///     dataPatterns: [
-        ///       {
-        ///         kind: &quot;Regex&quot;, # Required.
-        ///       }
-        ///     ], # Optional.
-        ///     columnPatterns: [ClassificationRulePattern], # Optional.
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetPropertiesAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
@@ -158,70 +95,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetProperties and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// Response response = client.GetProperties();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     minimumPercentageMatch: number, # Optional.
-        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-        ///     dataPatterns: [
-        ///       {
-        ///         kind: &quot;Regex&quot;, # Required.
-        ///       }
-        ///     ], # Optional.
-        ///     columnPatterns: [ClassificationRulePattern], # Optional.
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetProperties(RequestContext)']/*" />
         public virtual Response GetProperties(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
@@ -243,140 +117,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// var data = new {
-        ///     kind = "System",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         description = "<description>",
-        ///         classificationName = "<classificationName>",
-        ///         ruleStatus = "Enabled",
-        ///     },
-        ///     kind = "System",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     minimumPercentageMatch: number, # Optional.
-        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-        ///     dataPatterns: [
-        ///       {
-        ///         kind: &quot;Regex&quot;, # Required.
-        ///       }
-        ///     ], # Optional.
-        ///     columnPatterns: [ClassificationRulePattern], # Optional.
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     minimumPercentageMatch: number, # Optional.
-        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-        ///     dataPatterns: [
-        ///       {
-        ///         kind: &quot;Regex&quot;, # Required.
-        ///       }
-        ///     ], # Optional.
-        ///     columnPatterns: [ClassificationRulePattern], # Optional.
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
@@ -398,140 +139,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// var data = new {
-        ///     kind = "System",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         description = "<description>",
-        ///         classificationName = "<classificationName>",
-        ///         ruleStatus = "Enabled",
-        ///     },
-        ///     kind = "System",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     minimumPercentageMatch: number, # Optional.
-        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-        ///     dataPatterns: [
-        ///       {
-        ///         kind: &quot;Regex&quot;, # Required.
-        ///       }
-        ///     ], # Optional.
-        ///     columnPatterns: [ClassificationRulePattern], # Optional.
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     minimumPercentageMatch: number, # Optional.
-        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-        ///     dataPatterns: [
-        ///       {
-        ///         kind: &quot;Regex&quot;, # Required.
-        ///       }
-        ///     ], # Optional.
-        ///     columnPatterns: [ClassificationRulePattern], # Optional.
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='CreateOrUpdate(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
@@ -552,70 +160,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// Response response = await client.DeleteAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     minimumPercentageMatch: number, # Optional.
-        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-        ///     dataPatterns: [
-        ///       {
-        ///         kind: &quot;Regex&quot;, # Required.
-        ///       }
-        ///     ], # Optional.
-        ///     columnPatterns: [ClassificationRulePattern], # Optional.
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
@@ -636,70 +181,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call Delete and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// Response response = client.Delete();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-        /// <code>{
-        ///   properties: {
-        ///     minimumPercentageMatch: number, # Optional.
-        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-        ///     dataPatterns: [
-        ///       {
-        ///         kind: &quot;Regex&quot;, # Required.
-        ///       }
-        ///     ], # Optional.
-        ///     columnPatterns: [ClassificationRulePattern], # Optional.
-        ///     description: string, # Optional.
-        ///     version: number, # Optional.
-        ///     classificationName: string, # Optional.
-        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
         public virtual Response Delete(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
@@ -723,56 +205,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call TagVersionAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// Response response = await client.TagVersionAsync(1234, "<action>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
-        /// Console.WriteLine(result.GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>OperationResponse</c>:
-        /// <code>{
-        ///   scanResultId: Guid, # Optional.
-        ///   startTime: string (ISO 8601 Format), # Optional.
-        ///   endTime: string (ISO 8601 Format), # Optional.
-        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
-        ///   error: {
-        ///     code: string, # Optional.
-        ///     message: string, # Optional.
-        ///     target: string, # Optional.
-        ///     details: [
-        ///       {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [ErrorInfo], # Optional.
-        ///       }
-        ///     ], # Optional.
-        ///   }, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersionAsync(Int32,String,RequestContext)']/*" />
         public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
@@ -798,56 +231,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call TagVersion with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// Response response = client.TagVersion(1234, "<action>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
-        /// Console.WriteLine(result.GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>OperationResponse</c>:
-        /// <code>{
-        ///   scanResultId: Guid, # Optional.
-        ///   startTime: string (ISO 8601 Format), # Optional.
-        ///   endTime: string (ISO 8601 Format), # Optional.
-        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
-        ///   error: {
-        ///     code: string, # Optional.
-        ///     message: string, # Optional.
-        ///     target: string, # Optional.
-        ///     details: [
-        ///       {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [ErrorInfo], # Optional.
-        ///       }
-        ///     ], # Optional.
-        ///   }, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersion(Int32,String,RequestContext)']/*" />
         public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
@@ -870,36 +254,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetVersionsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// await foreach (var data in client.GetVersionsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ClassificationRuleListValue</c>:
-        /// <code>{
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetVersionsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(RequestContext context = null)
         {
             return GetVersionsImplementationAsync("PurviewClassificationRuleClient.GetVersions", context);
@@ -926,36 +281,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetVersions and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-        /// 
-        /// foreach (var data in client.GetVersions())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ClassificationRuleListValue</c>:
-        /// <code>{
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetVersions(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetVersions(RequestContext context = null)
         {
             return GetVersionsImplementation("PurviewClassificationRuleClient.GetVersions", context);

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetMetadataRolesAsync(RequestContext)">
+<example>
+This sample shows how to call GetMetadataRolesAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewMetadataRolesClient(endpoint, credential);
+
+await foreach (var data in client.GetMetadataRolesAsync())
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetMetadataRoles(RequestContext)">
+<example>
+This sample shows how to call GetMetadataRoles and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewMetadataRolesClient(endpoint, credential);
+
+foreach (var data in client.GetMetadataRoles())
+{
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>
