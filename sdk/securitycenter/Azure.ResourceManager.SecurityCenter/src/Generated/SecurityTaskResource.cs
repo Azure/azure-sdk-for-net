@@ -15,26 +15,26 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> This is the base client representation of the following resources <see cref="AscLocationLocationTaskResource" /> or <see cref="ResourceGroupLocationTaskResource" />. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SubscriptionSecurityTaskResource" /> or <see cref="ResourceGroupSecurityTaskResource" />. </summary>
     public abstract partial class SecurityTaskResource : ArmResource
     {
         internal static SecurityTaskResource GetResource(ArmClient client, SecurityTaskData data)
         {
-            if (IsAscLocationLocationTaskResource(data.Id))
+            if (IsSubscriptionSecurityTaskResource(data.Id))
             {
-                return new AscLocationLocationTaskResource(client, data);
+                return new SubscriptionSecurityTaskResource(client, data);
             }
-            if (IsResourceGroupLocationTaskResource(data.Id))
+            if (IsResourceGroupSecurityTaskResource(data.Id))
             {
-                return new ResourceGroupLocationTaskResource(client, data);
+                return new ResourceGroupSecurityTaskResource(client, data);
             }
-            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: AscLocationLocationTaskResource or ResourceGroupLocationTaskResource");
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SubscriptionSecurityTaskResource or ResourceGroupSecurityTaskResource");
         }
 
-        private static bool IsAscLocationLocationTaskResource(ResourceIdentifier id)
+        private static bool IsSubscriptionSecurityTaskResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != AscLocationLocationTaskResource.ResourceType)
+            if (id.ResourceType != SubscriptionSecurityTaskResource.ResourceType)
             {
                 return false;
             }
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.SecurityCenter
             return true;
         }
 
-        private static bool IsResourceGroupLocationTaskResource(ResourceIdentifier id)
+        private static bool IsResourceGroupSecurityTaskResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != ResourceGroupLocationTaskResource.ResourceType)
+            if (id.ResourceType != ResourceGroupSecurityTaskResource.ResourceType)
             {
                 return false;
             }

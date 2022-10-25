@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionAssessmentMetadataResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionAssessmentMetadata method.
     /// </summary>
-    public partial class SubscriptionAssessmentMetadataResource : SecurityAssessmentMetadataResponseResource
+    public partial class SubscriptionAssessmentMetadataResource : SecurityAssessmentMetadataResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionAssessmentMetadataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string assessmentMetadataName)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "SubscriptionAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataResponseData data) : base(client, data)
+        internal SubscriptionAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataData data) : base(client, data)
         {
             _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string subscriptionAssessmentMetadataAssessmentsMetadataApiVersion);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AssessmentsMetadata_GetInSubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<SecurityAssessmentMetadataResponseResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SecurityAssessmentMetadataResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Get");
             scope.Start();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.GetInSubscriptionAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((SecurityAssessmentMetadataResponseResource)new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAssessmentMetadataResource)new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AssessmentsMetadata_GetInSubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<SecurityAssessmentMetadataResponseResource> GetCore(CancellationToken cancellationToken = default)
+        protected override Response<SecurityAssessmentMetadataResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Get");
             scope.Start();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.GetInSubscription(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((SecurityAssessmentMetadataResponseResource)new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAssessmentMetadataResource)new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> AssessmentMetadata object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SubscriptionAssessmentMetadataResource>> UpdateAsync(WaitUntil waitUntil, SecurityAssessmentMetadataResponseData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SubscriptionAssessmentMetadataResource>> UpdateAsync(WaitUntil waitUntil, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> AssessmentMetadata object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SubscriptionAssessmentMetadataResource> Update(WaitUntil waitUntil, SecurityAssessmentMetadataResponseData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SubscriptionAssessmentMetadataResource> Update(WaitUntil waitUntil, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

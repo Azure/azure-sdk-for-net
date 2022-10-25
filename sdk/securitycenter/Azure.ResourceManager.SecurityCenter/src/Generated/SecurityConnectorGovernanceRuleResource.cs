@@ -317,9 +317,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="executeGovernanceRuleParams"> GovernanceRule over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RuleIdExecuteSingleSecurityConnectorGovernanceRuleAsync(WaitUntil waitUntil, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> ExecuteRuleCoreAsync(WaitUntil waitUntil, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _governanceRulesClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.RuleIdExecuteSingleSecurityConnectorGovernanceRule");
+            using var scope = _governanceRulesClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.ExecuteRule");
             scope.Start();
             try
             {
@@ -344,9 +344,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="executeGovernanceRuleParams"> GovernanceRule over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RuleIdExecuteSingleSecurityConnectorGovernanceRule(WaitUntil waitUntil, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
+        protected override ArmOperation ExecuteRuleCore(WaitUntil waitUntil, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _governanceRulesClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.RuleIdExecuteSingleSecurityConnectorGovernanceRule");
+            using var scope = _governanceRulesClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.ExecuteRule");
             scope.Start();
             try
             {
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<ArmOperation<ExecuteRuleStatus>> GetSecurityConnectorGovernanceRulesExecuteStatuAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<ExecuteRuleStatus>> GetRuleExecutionStatusCoreAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _securityConnectorGovernanceRulesExecuteStatusClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.GetSecurityConnectorGovernanceRulesExecuteStatu");
+            using var scope = _securityConnectorGovernanceRulesExecuteStatusClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.GetRuleExecutionStatus");
             scope.Start();
             try
             {
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual ArmOperation<ExecuteRuleStatus> GetSecurityConnectorGovernanceRulesExecuteStatu(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        protected override ArmOperation<ExecuteRuleStatus> GetRuleExecutionStatusCore(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _securityConnectorGovernanceRulesExecuteStatusClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.GetSecurityConnectorGovernanceRulesExecuteStatu");
+            using var scope = _securityConnectorGovernanceRulesExecuteStatusClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.GetRuleExecutionStatus");
             scope.Start();
             try
             {

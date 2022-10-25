@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// from an instance of <see cref="ArmClient" /> using the GetTenantAssessmentMetadataResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantAssessmentMetadata method.
     /// </summary>
-    public partial class TenantAssessmentMetadataResource : SecurityAssessmentMetadataResponseResource
+    public partial class TenantAssessmentMetadataResource : SecurityAssessmentMetadataResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantAssessmentMetadataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string assessmentMetadataName)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "TenantAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataResponseData data) : base(client, data)
+        internal TenantAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataData data) : base(client, data)
         {
             _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string tenantAssessmentMetadataAssessmentsMetadataApiVersion);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AssessmentsMetadata_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<SecurityAssessmentMetadataResponseResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SecurityAssessmentMetadataResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.Get");
             scope.Start();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _tenantAssessmentMetadataAssessmentsMetadataRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((SecurityAssessmentMetadataResponseResource)new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAssessmentMetadataResource)new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AssessmentsMetadata_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<SecurityAssessmentMetadataResponseResource> GetCore(CancellationToken cancellationToken = default)
+        protected override Response<SecurityAssessmentMetadataResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.Get");
             scope.Start();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _tenantAssessmentMetadataAssessmentsMetadataRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((SecurityAssessmentMetadataResponseResource)new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAssessmentMetadataResource)new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

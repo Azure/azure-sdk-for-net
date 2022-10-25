@@ -18,49 +18,49 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a ResourceGroupLocationTask along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupLocationTaskResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupLocationTaskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceGroupLocationTask method.
+    /// A Class representing a ResourceGroupSecurityTask along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupSecurityTaskResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupSecurityTaskResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceGroupSecurityTask method.
     /// </summary>
-    public partial class ResourceGroupLocationTaskResource : SecurityTaskResource
+    public partial class ResourceGroupSecurityTaskResource : SecurityTaskResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ResourceGroupLocationTaskResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ascLocation, string taskName)
+        /// <summary> Generate the resource identifier of a <see cref="ResourceGroupSecurityTaskResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string taskName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _resourceGroupLocationTaskTasksClientDiagnostics;
-        private readonly TasksRestOperations _resourceGroupLocationTaskTasksRestClient;
+        private readonly ClientDiagnostics _resourceGroupSecurityTaskTasksClientDiagnostics;
+        private readonly TasksRestOperations _resourceGroupSecurityTaskTasksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupLocationTaskResource"/> class for mocking. </summary>
-        protected ResourceGroupLocationTaskResource()
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityTaskResource"/> class for mocking. </summary>
+        protected ResourceGroupSecurityTaskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupLocationTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupSecurityTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGroupLocationTaskResource(ArmClient client, SecurityTaskData data) : base(client, data)
+        internal ResourceGroupSecurityTaskResource(ArmClient client, SecurityTaskData data) : base(client, data)
         {
-            _resourceGroupLocationTaskTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string resourceGroupLocationTaskTasksApiVersion);
-            _resourceGroupLocationTaskTasksRestClient = new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupLocationTaskTasksApiVersion);
+            _resourceGroupSecurityTaskTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string resourceGroupSecurityTaskTasksApiVersion);
+            _resourceGroupSecurityTaskTasksRestClient = new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupSecurityTaskTasksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupLocationTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupLocationTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceGroupSecurityTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourceGroupLocationTaskTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string resourceGroupLocationTaskTasksApiVersion);
-            _resourceGroupLocationTaskTasksRestClient = new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupLocationTaskTasksApiVersion);
+            _resourceGroupSecurityTaskTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string resourceGroupSecurityTaskTasksApiVersion);
+            _resourceGroupSecurityTaskTasksRestClient = new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupSecurityTaskTasksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SecurityTaskResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationTaskTasksClientDiagnostics.CreateScope("ResourceGroupLocationTaskResource.Get");
+            using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskResource.Get");
             scope.Start();
             try
             {
-                var response = await _resourceGroupLocationTaskTasksRestClient.GetResourceGroupLevelTaskAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTaskAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((SecurityTaskResource)new ResourceGroupLocationTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityTaskResource)new ResourceGroupSecurityTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<ResourceGroupLocationTaskResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<ResourceGroupSecurityTaskResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((ResourceGroupLocationTaskResource)result.Value, result.GetRawResponse());
+            return Response.FromValue((ResourceGroupSecurityTaskResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SecurityTaskResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationTaskTasksClientDiagnostics.CreateScope("ResourceGroupLocationTaskResource.Get");
+            using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskResource.Get");
             scope.Start();
             try
             {
-                var response = _resourceGroupLocationTaskTasksRestClient.GetResourceGroupLevelTask(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTask(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((SecurityTaskResource)new ResourceGroupLocationTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityTaskResource)new ResourceGroupSecurityTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<ResourceGroupLocationTaskResource> Get(CancellationToken cancellationToken = default)
+        public new Response<ResourceGroupSecurityTaskResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
-            return Response.FromValue((ResourceGroupLocationTaskResource)result.Value, result.GetRawResponse());
+            return Response.FromValue((ResourceGroupSecurityTaskResource)result.Value, result.GetRawResponse());
         }
     }
 }

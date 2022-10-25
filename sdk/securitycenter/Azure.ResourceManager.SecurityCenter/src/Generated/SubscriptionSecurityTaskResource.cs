@@ -17,49 +17,49 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing an AscLocationLocationTask along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AscLocationLocationTaskResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAscLocationLocationTaskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AscLocationResource" /> using the GetAscLocationLocationTask method.
+    /// A Class representing a SubscriptionSecurityTask along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionSecurityTaskResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionSecurityTaskResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource" /> using the GetSubscriptionSecurityTask method.
     /// </summary>
-    public partial class AscLocationLocationTaskResource : SecurityTaskResource
+    public partial class SubscriptionSecurityTaskResource : SecurityTaskResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AscLocationLocationTaskResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ascLocation, string taskName)
+        /// <summary> Generate the resource identifier of a <see cref="SubscriptionSecurityTaskResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation ascLocation, string taskName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _ascLocationLocationTaskTasksClientDiagnostics;
-        private readonly TasksRestOperations _ascLocationLocationTaskTasksRestClient;
+        private readonly ClientDiagnostics _subscriptionSecurityTaskTasksClientDiagnostics;
+        private readonly TasksRestOperations _subscriptionSecurityTaskTasksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AscLocationLocationTaskResource"/> class for mocking. </summary>
-        protected AscLocationLocationTaskResource()
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityTaskResource"/> class for mocking. </summary>
+        protected SubscriptionSecurityTaskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AscLocationLocationTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SubscriptionSecurityTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AscLocationLocationTaskResource(ArmClient client, SecurityTaskData data) : base(client, data)
+        internal SubscriptionSecurityTaskResource(ArmClient client, SecurityTaskData data) : base(client, data)
         {
-            _ascLocationLocationTaskTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string ascLocationLocationTaskTasksApiVersion);
-            _ascLocationLocationTaskTasksRestClient = new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ascLocationLocationTaskTasksApiVersion);
+            _subscriptionSecurityTaskTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string subscriptionSecurityTaskTasksApiVersion);
+            _subscriptionSecurityTaskTasksRestClient = new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSecurityTaskTasksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AscLocationLocationTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AscLocationLocationTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionSecurityTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ascLocationLocationTaskTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string ascLocationLocationTaskTasksApiVersion);
-            _ascLocationLocationTaskTasksRestClient = new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ascLocationLocationTaskTasksApiVersion);
+            _subscriptionSecurityTaskTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string subscriptionSecurityTaskTasksApiVersion);
+            _subscriptionSecurityTaskTasksRestClient = new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSecurityTaskTasksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SecurityTaskResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ascLocationLocationTaskTasksClientDiagnostics.CreateScope("AscLocationLocationTaskResource.Get");
+            using var scope = _subscriptionSecurityTaskTasksClientDiagnostics.CreateScope("SubscriptionSecurityTaskResource.Get");
             scope.Start();
             try
             {
-                var response = await _ascLocationLocationTaskTasksRestClient.GetSubscriptionLevelTaskAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityTaskTasksRestClient.GetSubscriptionLevelTaskAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((SecurityTaskResource)new AscLocationLocationTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityTaskResource)new SubscriptionSecurityTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<AscLocationLocationTaskResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SubscriptionSecurityTaskResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((AscLocationLocationTaskResource)result.Value, result.GetRawResponse());
+            return Response.FromValue((SubscriptionSecurityTaskResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SecurityTaskResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _ascLocationLocationTaskTasksClientDiagnostics.CreateScope("AscLocationLocationTaskResource.Get");
+            using var scope = _subscriptionSecurityTaskTasksClientDiagnostics.CreateScope("SubscriptionSecurityTaskResource.Get");
             scope.Start();
             try
             {
-                var response = _ascLocationLocationTaskTasksRestClient.GetSubscriptionLevelTask(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _subscriptionSecurityTaskTasksRestClient.GetSubscriptionLevelTask(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((SecurityTaskResource)new AscLocationLocationTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityTaskResource)new SubscriptionSecurityTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<AscLocationLocationTaskResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SubscriptionSecurityTaskResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
-            return Response.FromValue((AscLocationLocationTaskResource)result.Value, result.GetRawResponse());
+            return Response.FromValue((SubscriptionSecurityTaskResource)result.Value, result.GetRawResponse());
         }
     }
 }

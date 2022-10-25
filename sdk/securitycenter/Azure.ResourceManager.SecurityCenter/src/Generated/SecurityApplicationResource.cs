@@ -15,26 +15,26 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> This is the base client representation of the following resources <see cref="SubscriptionApplicationResource" /> or <see cref="SecurityConnectorApplicationResource" />. </summary>
-    public abstract partial class ApplicationResource : ArmResource
+    /// <summary> This is the base client representation of the following resources <see cref="SubscriptionSecurityApplicationResource" /> or <see cref="SecurityConnectorApplicationResource" />. </summary>
+    public abstract partial class SecurityApplicationResource : ArmResource
     {
-        internal static ApplicationResource GetResource(ArmClient client, ApplicationData data)
+        internal static SecurityApplicationResource GetResource(ArmClient client, SecurityApplicationData data)
         {
-            if (IsSubscriptionApplicationResource(data.Id))
+            if (IsSubscriptionSecurityApplicationResource(data.Id))
             {
-                return new SubscriptionApplicationResource(client, data);
+                return new SubscriptionSecurityApplicationResource(client, data);
             }
             if (IsSecurityConnectorApplicationResource(data.Id))
             {
                 return new SecurityConnectorApplicationResource(client, data);
             }
-            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SubscriptionApplicationResource or SecurityConnectorApplicationResource");
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SubscriptionSecurityApplicationResource or SecurityConnectorApplicationResource");
         }
 
-        private static bool IsSubscriptionApplicationResource(ResourceIdentifier id)
+        private static bool IsSubscriptionSecurityApplicationResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != SubscriptionApplicationResource.ResourceType)
+            if (id.ResourceType != SubscriptionSecurityApplicationResource.ResourceType)
             {
                 return false;
             }
@@ -61,26 +61,26 @@ namespace Azure.ResourceManager.SecurityCenter
             return true;
         }
 
-        private readonly ApplicationData _data;
+        private readonly SecurityApplicationData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationResource"/> class for mocking. </summary>
-        protected ApplicationResource()
+        /// <summary> Initializes a new instance of the <see cref="SecurityApplicationResource"/> class for mocking. </summary>
+        protected SecurityApplicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SecurityApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApplicationResource(ArmClient client, ApplicationData data) : this(client, data.Id)
+        internal SecurityApplicationResource(ArmClient client, SecurityApplicationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApplicationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityApplicationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApplicationData Data
+        public virtual SecurityApplicationData Data
         {
             get
             {
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<ApplicationResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<SecurityApplicationResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<ApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<ApplicationResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<SecurityApplicationResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<ApplicationResource> Get(CancellationToken cancellationToken = default)
+        public Response<SecurityApplicationResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract Task<ArmOperation<ApplicationResource>> UpdateCoreAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default);
+        protected abstract Task<ArmOperation<SecurityApplicationResource>> UpdateCoreAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<ArmOperation<ApplicationResource>> UpdateAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public async Task<ArmOperation<SecurityApplicationResource>> UpdateAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract ArmOperation<ApplicationResource> UpdateCore(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default);
+        protected abstract ArmOperation<SecurityApplicationResource> UpdateCore(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public ArmOperation<ApplicationResource> Update(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public ArmOperation<SecurityApplicationResource> Update(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

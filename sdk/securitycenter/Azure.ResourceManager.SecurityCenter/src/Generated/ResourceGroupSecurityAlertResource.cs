@@ -18,49 +18,49 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a ResourceGroupLocationAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupLocationAlertResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupLocationAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceGroupLocationAlert method.
+    /// A Class representing a ResourceGroupSecurityAlert along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupSecurityAlertResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupSecurityAlertResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceGroupSecurityAlert method.
     /// </summary>
-    public partial class ResourceGroupLocationAlertResource : AlertResource
+    public partial class ResourceGroupSecurityAlertResource : SecurityAlertResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ResourceGroupLocationAlertResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ascLocation, string alertName)
+        /// <summary> Generate the resource identifier of a <see cref="ResourceGroupSecurityAlertResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _resourceGroupLocationAlertAlertsClientDiagnostics;
-        private readonly AlertsRestOperations _resourceGroupLocationAlertAlertsRestClient;
+        private readonly ClientDiagnostics _resourceGroupSecurityAlertAlertsClientDiagnostics;
+        private readonly AlertsRestOperations _resourceGroupSecurityAlertAlertsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupLocationAlertResource"/> class for mocking. </summary>
-        protected ResourceGroupLocationAlertResource()
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityAlertResource"/> class for mocking. </summary>
+        protected ResourceGroupSecurityAlertResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupLocationAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupSecurityAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGroupLocationAlertResource(ArmClient client, AlertData data) : base(client, data)
+        internal ResourceGroupSecurityAlertResource(ArmClient client, SecurityAlertData data) : base(client, data)
         {
-            _resourceGroupLocationAlertAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string resourceGroupLocationAlertAlertsApiVersion);
-            _resourceGroupLocationAlertAlertsRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupLocationAlertAlertsApiVersion);
+            _resourceGroupSecurityAlertAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string resourceGroupSecurityAlertAlertsApiVersion);
+            _resourceGroupSecurityAlertAlertsRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupSecurityAlertAlertsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupLocationAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupLocationAlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceGroupSecurityAlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourceGroupLocationAlertAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string resourceGroupLocationAlertAlertsApiVersion);
-            _resourceGroupLocationAlertAlertsRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupLocationAlertAlertsApiVersion);
+            _resourceGroupSecurityAlertAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string resourceGroupSecurityAlertAlertsApiVersion);
+            _resourceGroupSecurityAlertAlertsRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupSecurityAlertAlertsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_GetResourceGroupLevel
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<AlertResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SecurityAlertResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.Get");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Get");
             scope.Start();
             try
             {
-                var response = await _resourceGroupLocationAlertAlertsRestClient.GetResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((AlertResource)new ResourceGroupLocationAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAlertResource)new ResourceGroupSecurityAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<ResourceGroupLocationAlertResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<ResourceGroupSecurityAlertResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((ResourceGroupLocationAlertResource)result.Value, result.GetRawResponse());
+            return Response.FromValue((ResourceGroupSecurityAlertResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_GetResourceGroupLevel
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<AlertResource> GetCore(CancellationToken cancellationToken = default)
+        protected override Response<SecurityAlertResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.Get");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Get");
             scope.Start();
             try
             {
-                var response = _resourceGroupLocationAlertAlertsRestClient.GetResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((AlertResource)new ResourceGroupLocationAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityAlertResource)new ResourceGroupSecurityAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<ResourceGroupLocationAlertResource> Get(CancellationToken cancellationToken = default)
+        public new Response<ResourceGroupSecurityAlertResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
-            return Response.FromValue((ResourceGroupLocationAlertResource)result.Value, result.GetRawResponse());
+            return Response.FromValue((ResourceGroupSecurityAlertResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -155,13 +155,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_UpdateResourceGroupLevelStateToResolve
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateResourceGroupLevelStateToResolveAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response> ResolveCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.UpdateResourceGroupLevelStateToResolve");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Resolve");
             scope.Start();
             try
             {
-                var response = await _resourceGroupLocationAlertAlertsRestClient.UpdateResourceGroupLevelStateToResolveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityAlertAlertsRestClient.UpdateResourceGroupLevelStateToResolveAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -177,13 +177,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_UpdateResourceGroupLevelStateToResolve
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateResourceGroupLevelStateToResolve(CancellationToken cancellationToken = default)
+        protected override Response ResolveCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.UpdateResourceGroupLevelStateToResolve");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Resolve");
             scope.Start();
             try
             {
-                var response = _resourceGroupLocationAlertAlertsRestClient.UpdateResourceGroupLevelStateToResolve(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceGroupSecurityAlertAlertsRestClient.UpdateResourceGroupLevelStateToResolve(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -199,13 +199,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_UpdateResourceGroupLevelStateToDismiss
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateResourceGroupLevelStateToDismissAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response> DismissCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.UpdateResourceGroupLevelStateToDismiss");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Dismiss");
             scope.Start();
             try
             {
-                var response = await _resourceGroupLocationAlertAlertsRestClient.UpdateResourceGroupLevelStateToDismissAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityAlertAlertsRestClient.UpdateResourceGroupLevelStateToDismissAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_UpdateResourceGroupLevelStateToDismiss
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateResourceGroupLevelStateToDismiss(CancellationToken cancellationToken = default)
+        protected override Response DismissCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.UpdateResourceGroupLevelStateToDismiss");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Dismiss");
             scope.Start();
             try
             {
-                var response = _resourceGroupLocationAlertAlertsRestClient.UpdateResourceGroupLevelStateToDismiss(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceGroupSecurityAlertAlertsRestClient.UpdateResourceGroupLevelStateToDismiss(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -243,13 +243,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_UpdateResourceGroupLevelStateToActivate
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateResourceGroupLevelStateToActivateAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response> ActivateCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.UpdateResourceGroupLevelStateToActivate");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Activate");
             scope.Start();
             try
             {
-                var response = await _resourceGroupLocationAlertAlertsRestClient.UpdateResourceGroupLevelStateToActivateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityAlertAlertsRestClient.UpdateResourceGroupLevelStateToActivateAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -265,13 +265,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_UpdateResourceGroupLevelStateToActivate
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateResourceGroupLevelStateToActivate(CancellationToken cancellationToken = default)
+        protected override Response ActivateCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.UpdateResourceGroupLevelStateToActivate");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Activate");
             scope.Start();
             try
             {
-                var response = _resourceGroupLocationAlertAlertsRestClient.UpdateResourceGroupLevelStateToActivate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceGroupSecurityAlertAlertsRestClient.UpdateResourceGroupLevelStateToActivate(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -287,13 +287,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_UpdateResourceGroupLevelStateToInProgress
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateResourceGroupLevelStateToInProgressAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response> UpdateSatateToInProgressCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.UpdateResourceGroupLevelStateToInProgress");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateSatateToInProgress");
             scope.Start();
             try
             {
-                var response = await _resourceGroupLocationAlertAlertsRestClient.UpdateResourceGroupLevelStateToInProgressAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityAlertAlertsRestClient.UpdateResourceGroupLevelStateToInProgressAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -309,13 +309,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_UpdateResourceGroupLevelStateToInProgress
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateResourceGroupLevelStateToInProgress(CancellationToken cancellationToken = default)
+        protected override Response UpdateSatateToInProgressCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.UpdateResourceGroupLevelStateToInProgress");
+            using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateSatateToInProgress");
             scope.Start();
             try
             {
-                var response = _resourceGroupLocationAlertAlertsRestClient.UpdateResourceGroupLevelStateToInProgress(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceGroupSecurityAlertAlertsRestClient.UpdateResourceGroupLevelStateToInProgress(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

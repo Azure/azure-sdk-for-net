@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// from an instance of <see cref="ArmClient" /> using the GetSecurityConnectorApplicationResource method.
     /// Otherwise you can get one from its parent resource <see cref="SecurityConnectorResource" /> using the GetSecurityConnectorApplication method.
     /// </summary>
-    public partial class SecurityConnectorApplicationResource : ApplicationResource
+    public partial class SecurityConnectorApplicationResource : SecurityApplicationResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityConnectorApplicationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string securityConnectorName, string applicationId)
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "SecurityConnectorApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityConnectorApplicationResource(ArmClient client, ApplicationData data) : base(client, data)
+        internal SecurityConnectorApplicationResource(ArmClient client, SecurityApplicationData data) : base(client, data)
         {
             _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string securityConnectorApplicationApiVersion);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<ApplicationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SecurityApplicationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.Get");
             scope.Start();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securityConnectorApplicationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((ApplicationResource)new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityApplicationResource)new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<ApplicationResource> GetCore(CancellationToken cancellationToken = default)
+        protected override Response<SecurityApplicationResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.Get");
             scope.Start();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securityConnectorApplicationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((ApplicationResource)new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityApplicationResource)new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected override async Task<ArmOperation<ApplicationResource>> UpdateCoreAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<SecurityApplicationResource>> UpdateCoreAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityConnectorApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<ApplicationResource>(Response.FromValue((ApplicationResource)new SecurityConnectorApplicationResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityApplicationResource>(Response.FromValue((SecurityApplicationResource)new SecurityConnectorApplicationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new async Task<ArmOperation<SecurityConnectorApplicationResource>> UpdateAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<SecurityConnectorApplicationResource>> UpdateAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected override ArmOperation<ApplicationResource> UpdateCore(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        protected override ArmOperation<SecurityApplicationResource> UpdateCore(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityConnectorApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<ApplicationResource>(Response.FromValue((ApplicationResource)new SecurityConnectorApplicationResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityApplicationResource>(Response.FromValue((SecurityApplicationResource)new SecurityConnectorApplicationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new ArmOperation<SecurityConnectorApplicationResource> Update(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<SecurityConnectorApplicationResource> Update(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

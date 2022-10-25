@@ -16,9 +16,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> This is the base client representation of the following resources <see cref="TenantAssessmentMetadataResource" /> or <see cref="SubscriptionAssessmentMetadataResource" />. </summary>
-    public abstract partial class SecurityAssessmentMetadataResponseResource : ArmResource
+    public abstract partial class SecurityAssessmentMetadataResource : ArmResource
     {
-        internal static SecurityAssessmentMetadataResponseResource GetResource(ArmClient client, SecurityAssessmentMetadataResponseData data)
+        internal static SecurityAssessmentMetadataResource GetResource(ArmClient client, SecurityAssessmentMetadataData data)
         {
             if (IsTenantAssessmentMetadataResource(data.Id))
             {
@@ -61,26 +61,26 @@ namespace Azure.ResourceManager.SecurityCenter
             return true;
         }
 
-        private readonly SecurityAssessmentMetadataResponseData _data;
+        private readonly SecurityAssessmentMetadataData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityAssessmentMetadataResponseResource"/> class for mocking. </summary>
-        protected SecurityAssessmentMetadataResponseResource()
+        /// <summary> Initializes a new instance of the <see cref="SecurityAssessmentMetadataResource"/> class for mocking. </summary>
+        protected SecurityAssessmentMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityAssessmentMetadataResponseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SecurityAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityAssessmentMetadataResponseResource(ArmClient client, SecurityAssessmentMetadataResponseData data) : this(client, data.Id)
+        internal SecurityAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityAssessmentMetadataResponseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SecurityAssessmentMetadataResponseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityAssessmentMetadataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SecurityAssessmentMetadataResponseData Data
+        public virtual SecurityAssessmentMetadataData Data
         {
             get
             {
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<SecurityAssessmentMetadataResponseResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<SecurityAssessmentMetadataResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<SecurityAssessmentMetadataResponseResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAssessmentMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<SecurityAssessmentMetadataResponseResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<SecurityAssessmentMetadataResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<SecurityAssessmentMetadataResponseResource> Get(CancellationToken cancellationToken = default)
+        public Response<SecurityAssessmentMetadataResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }

@@ -17,34 +17,34 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> This is the base client representation of the following resources <see cref="ScheduleResource" />, <see cref="LabScheduleResource" />, <see cref="LabUserServicefabricScheduleResource" /> or <see cref="LabVirtualmachineScheduleResource" />. </summary>
-    public abstract partial class BaseScheduleResource : ArmResource
+    /// <summary> This is the base client representation of the following resources <see cref="DevTestLabGlobalScheduleResource" />, <see cref="DevTestLabScheduleResource" />, <see cref="DevTestLabServiceFabricScheduleResource" /> or <see cref="DevTestLabVmScheduleResource" />. </summary>
+    public abstract partial class BaseDevTestLabScheduleResource : ArmResource
     {
-        internal static BaseScheduleResource GetResource(ArmClient client, ScheduleData data)
+        internal static BaseDevTestLabScheduleResource GetResource(ArmClient client, DevTestLabScheduleData data)
         {
-            if (IsScheduleResource(data.Id))
+            if (IsDevTestLabGlobalScheduleResource(data.Id))
             {
-                return new ScheduleResource(client, data);
+                return new DevTestLabGlobalScheduleResource(client, data);
             }
-            if (IsLabScheduleResource(data.Id))
+            if (IsDevTestLabScheduleResource(data.Id))
             {
-                return new LabScheduleResource(client, data);
+                return new DevTestLabScheduleResource(client, data);
             }
-            if (IsLabUserServicefabricScheduleResource(data.Id))
+            if (IsDevTestLabServiceFabricScheduleResource(data.Id))
             {
-                return new LabUserServicefabricScheduleResource(client, data);
+                return new DevTestLabServiceFabricScheduleResource(client, data);
             }
-            if (IsLabVirtualmachineScheduleResource(data.Id))
+            if (IsDevTestLabVmScheduleResource(data.Id))
             {
-                return new LabVirtualmachineScheduleResource(client, data);
+                return new DevTestLabVmScheduleResource(client, data);
             }
-            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: ScheduleResource, LabScheduleResource, LabUserServicefabricScheduleResource or LabVirtualmachineScheduleResource");
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: DevTestLabGlobalScheduleResource, DevTestLabScheduleResource, DevTestLabServiceFabricScheduleResource or DevTestLabVmScheduleResource");
         }
 
-        private static bool IsScheduleResource(ResourceIdentifier id)
+        private static bool IsDevTestLabGlobalScheduleResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != ScheduleResource.ResourceType)
+            if (id.ResourceType != DevTestLabGlobalScheduleResource.ResourceType)
             {
                 return false;
             }
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.DevTestLabs
             return true;
         }
 
-        private static bool IsLabScheduleResource(ResourceIdentifier id)
+        private static bool IsDevTestLabScheduleResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != LabScheduleResource.ResourceType)
+            if (id.ResourceType != DevTestLabScheduleResource.ResourceType)
             {
                 return false;
             }
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.DevTestLabs
             return true;
         }
 
-        private static bool IsLabUserServicefabricScheduleResource(ResourceIdentifier id)
+        private static bool IsDevTestLabServiceFabricScheduleResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != LabUserServicefabricScheduleResource.ResourceType)
+            if (id.ResourceType != DevTestLabServiceFabricScheduleResource.ResourceType)
             {
                 return false;
             }
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.DevTestLabs
             return true;
         }
 
-        private static bool IsLabVirtualmachineScheduleResource(ResourceIdentifier id)
+        private static bool IsDevTestLabVmScheduleResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != LabVirtualmachineScheduleResource.ResourceType)
+            if (id.ResourceType != DevTestLabVmScheduleResource.ResourceType)
             {
                 return false;
             }
@@ -101,26 +101,26 @@ namespace Azure.ResourceManager.DevTestLabs
             return true;
         }
 
-        private readonly ScheduleData _data;
+        private readonly DevTestLabScheduleData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="BaseScheduleResource"/> class for mocking. </summary>
-        protected BaseScheduleResource()
+        /// <summary> Initializes a new instance of the <see cref="BaseDevTestLabScheduleResource"/> class for mocking. </summary>
+        protected BaseDevTestLabScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BaseScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "BaseDevTestLabScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BaseScheduleResource(ArmClient client, ScheduleData data) : this(client, data.Id)
+        internal BaseDevTestLabScheduleResource(ArmClient client, DevTestLabScheduleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BaseScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BaseDevTestLabScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BaseScheduleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BaseDevTestLabScheduleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ScheduleData Data
+        public virtual DevTestLabScheduleData Data
         {
             get
             {
@@ -142,13 +142,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<BaseScheduleResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default);
+        protected abstract Task<Response<BaseDevTestLabScheduleResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<BaseScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BaseDevTestLabScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(expand, cancellationToken).ConfigureAwait(false);
         }
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<BaseScheduleResource> GetCore(string expand = null, CancellationToken cancellationToken = default);
+        protected abstract Response<BaseDevTestLabScheduleResource> GetCore(string expand = null, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<BaseScheduleResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public Response<BaseDevTestLabScheduleResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             return GetCore(expand, cancellationToken);
         }
@@ -196,39 +196,39 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> The core implementation for operation Update. </summary>
-        /// <param name="schedule"> A schedule. </param>
+        /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
-        protected abstract Task<Response<BaseScheduleResource>> UpdateCoreAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default);
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        protected abstract Task<Response<BaseDevTestLabScheduleResource>> UpdateCoreAsync(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
-        /// <param name="schedule"> A schedule. </param>
+        /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<Response<BaseScheduleResource>> UpdateAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        public async Task<Response<BaseDevTestLabScheduleResource>> UpdateAsync(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            return await UpdateCoreAsync(schedule, cancellationToken).ConfigureAwait(false);
+            return await UpdateCoreAsync(patch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Update. </summary>
-        /// <param name="schedule"> A schedule. </param>
+        /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
-        protected abstract Response<BaseScheduleResource> UpdateCore(ScheduleFragment schedule, CancellationToken cancellationToken = default);
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        protected abstract Response<BaseDevTestLabScheduleResource> UpdateCore(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
-        /// <param name="schedule"> A schedule. </param>
+        /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [ForwardsClientCalls]
-        public Response<BaseScheduleResource> Update(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        public Response<BaseDevTestLabScheduleResource> Update(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            return UpdateCore(schedule, cancellationToken);
+            return UpdateCore(patch, cancellationToken);
         }
 
         /// <summary> The core implementation for operation Execute. </summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        protected abstract Task<Response<BaseScheduleResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default);
+        protected abstract Task<Response<BaseDevTestLabScheduleResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<Response<BaseScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Response<BaseDevTestLabScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        protected abstract Response<BaseScheduleResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default);
+        protected abstract Response<BaseDevTestLabScheduleResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public Response<BaseScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Response<BaseDevTestLabScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -305,14 +305,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        protected abstract Task<Response<BaseScheduleResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default);
+        protected abstract Task<Response<BaseDevTestLabScheduleResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<Response<BaseScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Response<BaseDevTestLabScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -323,14 +323,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        protected abstract Response<BaseScheduleResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default);
+        protected abstract Response<BaseDevTestLabScheduleResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public Response<BaseScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Response<BaseDevTestLabScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -341,14 +341,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        protected abstract Task<Response<BaseScheduleResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default);
+        protected abstract Task<Response<BaseDevTestLabScheduleResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<Response<BaseScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Response<BaseDevTestLabScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -359,14 +359,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        protected abstract Response<BaseScheduleResource> RemoveTagCore(string key, CancellationToken cancellationToken = default);
+        protected abstract Response<BaseDevTestLabScheduleResource> RemoveTagCore(string key, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public Response<BaseScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public Response<BaseDevTestLabScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

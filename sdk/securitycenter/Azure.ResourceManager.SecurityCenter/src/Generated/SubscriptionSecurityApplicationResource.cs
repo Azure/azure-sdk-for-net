@@ -18,49 +18,49 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a SubscriptionApplication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionApplicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionApplicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionApplication method.
+    /// A Class representing a SubscriptionSecurityApplication along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionSecurityApplicationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionSecurityApplicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionSecurityApplication method.
     /// </summary>
-    public partial class SubscriptionApplicationResource : ApplicationResource
+    public partial class SubscriptionSecurityApplicationResource : SecurityApplicationResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SubscriptionApplicationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SubscriptionSecurityApplicationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string applicationId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _subscriptionApplicationApplicationClientDiagnostics;
-        private readonly ApplicationRestOperations _subscriptionApplicationApplicationRestClient;
+        private readonly ClientDiagnostics _subscriptionSecurityApplicationApplicationClientDiagnostics;
+        private readonly ApplicationRestOperations _subscriptionSecurityApplicationApplicationRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionApplicationResource"/> class for mocking. </summary>
-        protected SubscriptionApplicationResource()
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityApplicationResource"/> class for mocking. </summary>
+        protected SubscriptionSecurityApplicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SubscriptionSecurityApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionApplicationResource(ArmClient client, ApplicationData data) : base(client, data)
+        internal SubscriptionSecurityApplicationResource(ArmClient client, SecurityApplicationData data) : base(client, data)
         {
-            _subscriptionApplicationApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string subscriptionApplicationApplicationApiVersion);
-            _subscriptionApplicationApplicationRestClient = new ApplicationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionApplicationApplicationApiVersion);
+            _subscriptionSecurityApplicationApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string subscriptionSecurityApplicationApplicationApiVersion);
+            _subscriptionSecurityApplicationApplicationRestClient = new ApplicationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSecurityApplicationApplicationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionApplicationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionSecurityApplicationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionApplicationApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string subscriptionApplicationApplicationApiVersion);
-            _subscriptionApplicationApplicationRestClient = new ApplicationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionApplicationApplicationApiVersion);
+            _subscriptionSecurityApplicationApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string subscriptionSecurityApplicationApplicationApiVersion);
+            _subscriptionSecurityApplicationApplicationRestClient = new ApplicationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSecurityApplicationApplicationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Application_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<ApplicationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SecurityApplicationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Get");
+            using var scope = _subscriptionSecurityApplicationApplicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionApplicationApplicationRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityApplicationApplicationRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((ApplicationResource)new SubscriptionApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityApplicationResource)new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<SubscriptionApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SubscriptionSecurityApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse());
+            return Response.FromValue((SubscriptionSecurityApplicationResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Application_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<ApplicationResource> GetCore(CancellationToken cancellationToken = default)
+        protected override Response<SecurityApplicationResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Get");
+            using var scope = _subscriptionSecurityApplicationApplicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionApplicationApplicationRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _subscriptionSecurityApplicationApplicationRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((ApplicationResource)new SubscriptionApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((SecurityApplicationResource)new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<SubscriptionApplicationResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SubscriptionSecurityApplicationResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
-            return Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse());
+            return Response.FromValue((SubscriptionSecurityApplicationResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Delete");
+            using var scope = _subscriptionSecurityApplicationApplicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _subscriptionApplicationApplicationRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityApplicationApplicationRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityCenterArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Delete");
+            using var scope = _subscriptionSecurityApplicationApplicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Delete");
             scope.Start();
             try
             {
-                var response = _subscriptionApplicationApplicationRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _subscriptionSecurityApplicationApplicationRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
                 var operation = new SecurityCenterArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -210,16 +210,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected override async Task<ArmOperation<ApplicationResource>> UpdateCoreAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<SecurityApplicationResource>> UpdateCoreAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Update");
+            using var scope = _subscriptionSecurityApplicationApplicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Update");
             scope.Start();
             try
             {
-                var response = await _subscriptionApplicationApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<ApplicationResource>(Response.FromValue((ApplicationResource)new SubscriptionApplicationResource(Client, response), response.GetRawResponse()));
+                var response = await _subscriptionSecurityApplicationApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityCenterArmOperation<SecurityApplicationResource>(Response.FromValue((SecurityApplicationResource)new SubscriptionSecurityApplicationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,12 +241,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new async Task<ArmOperation<SubscriptionApplicationResource>> UpdateAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<SubscriptionSecurityApplicationResource>> UpdateAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
             var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new SecurityCenterArmOperation<SubscriptionApplicationResource>(Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse()));
+            return new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue((SubscriptionSecurityApplicationResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -258,16 +258,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected override ArmOperation<ApplicationResource> UpdateCore(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        protected override ArmOperation<SecurityApplicationResource> UpdateCore(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Update");
+            using var scope = _subscriptionSecurityApplicationApplicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Update");
             scope.Start();
             try
             {
-                var response = _subscriptionApplicationApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<ApplicationResource>(Response.FromValue((ApplicationResource)new SubscriptionApplicationResource(Client, response), response.GetRawResponse()));
+                var response = _subscriptionSecurityApplicationApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, data, cancellationToken);
+                var operation = new SecurityCenterArmOperation<SecurityApplicationResource>(Response.FromValue((SecurityApplicationResource)new SubscriptionSecurityApplicationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -289,12 +289,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new ArmOperation<SubscriptionApplicationResource> Update(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<SubscriptionSecurityApplicationResource> Update(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
             var result = UpdateCore(waitUntil, data, cancellationToken);
-            return new SecurityCenterArmOperation<SubscriptionApplicationResource>(Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse()));
+            return new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue((SubscriptionSecurityApplicationResource)result.Value, result.GetRawResponse()));
         }
     }
 }
