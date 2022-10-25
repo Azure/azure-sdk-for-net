@@ -71,5 +71,16 @@ namespace Microsoft.Azure.Management.Compute
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/johnzhang-microsoft/azure-rest-api-specs/blob/dev/johnzhang/addReimageNotification/specification/compute/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\repos\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "johnzhang-microsoft";
+      public static readonly String GithubBranchName = "dev/johnzhang/addReimageNotification";
+      public static readonly String GithubCommidId = "be732013399f96a530754ecc25fb9a8cd53ea556";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

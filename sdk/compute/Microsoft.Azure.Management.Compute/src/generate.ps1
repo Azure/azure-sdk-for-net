@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "compute/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "compute/resource-manager" -AutoRestVersion "v2" -SpecsRepoFork "johnzhang-microsoft" -SpecsRepoBranch "dev/johnzhang/addReimageNotification"

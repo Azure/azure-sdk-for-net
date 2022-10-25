@@ -3,13 +3,13 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/compute/resource-manager/readme.md  --tag=package-2022-07-02-preview --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\work\azure-sdk-for-net\sdk
+cmd.exe /c autorest.cmd https://github.com/johnzhang-microsoft/azure-rest-api-specs/blob/dev/johnzhang/addReimageNotification/specification/compute/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\repos\azure-sdk-for-net\sdk
 Autorest CSharp Version: 2.3.82
-2022-09-13 19:24:00 UTC
+2022-10-25 00:12:40 UTC
 Azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      main
-Commit:      967fe62dd0051ef9fd0af3fdba52fbcabd33c46c
+GitHub fork: johnzhang-microsoft
+Branch:      dev/johnzhang/addReimageNotification
+Commit:      be732013399f96a530754ecc25fb9a8cd53ea556
 AutoRest information
-Requested version: v2
+Requested version: 2.0.4421
 Bootstrapper version:    autorest@2.0.4413
