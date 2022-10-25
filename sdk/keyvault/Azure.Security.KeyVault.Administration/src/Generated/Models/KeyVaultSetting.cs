@@ -44,8 +44,6 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> The account setting to be updated. </summary>
         public string Name { get; }
-        /// <summary> The value of the pool setting. </summary>
-        public string Value { get; }
         /// <summary> The type specifier of the value. </summary>
         public SettingType? Type { get; }
     }

@@ -120,5 +120,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns>A new <see cref="BackupResult"/> instance.</returns>
         public static KeyVaultRestoreResult SelectiveKeyRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
             new KeyVaultRestoreResult(startTime, endTime);
+
+        /// <summary> Initializes a new instance of KeyVaultSetting. </summary>
+        /// <param name="name"> The account setting to be updated. </param>
+        /// <param name="value"> The value of the pool setting. </param>
+        /// <param name="type"> The type specifier of the value. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
+        public static KeyVaultSetting KeyVaultSetting(string name, string value, SettingType? type = null) =>
+            new KeyVaultSetting(name, value, type);
     }
 }

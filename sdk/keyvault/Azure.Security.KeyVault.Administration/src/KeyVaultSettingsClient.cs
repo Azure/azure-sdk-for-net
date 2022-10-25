@@ -16,9 +16,6 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultSettingsClient
     {
-        private const string TrueValue = "true";
-        private const string FalseValue = "false";
-
         private readonly ClientDiagnostics _diagnostics;
         private readonly SettingsRestClient _restClient;
 
@@ -177,7 +174,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return _restClient.UpdateSetting(VaultUri.AbsoluteUri, name, value ? TrueValue : FalseValue, cancellationToken);
+                return _restClient.UpdateSetting(VaultUri.AbsoluteUri, name, KeyVaultSetting.Convert(value), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -201,7 +198,55 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return await _restClient.UpdateSettingAsync(VaultUri.AbsoluteUri, name, value ? TrueValue : FalseValue, cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdateSettingAsync(VaultUri.AbsoluteUri, name, KeyVaultSetting.Convert(value), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the named account setting.
+        /// </summary>
+        /// <param name="name">The name of the account setting. Must be a valid settings option.</param>
+        /// <param name="value">The value of the account setting.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual Response<KeyVaultSetting> UpdateSetting(string name, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
+            scope.Start();
+            try
+            {
+                return _restClient.UpdateSetting(VaultUri.AbsoluteUri, name, value, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the named account setting.
+        /// </summary>
+        /// <param name="name">The name of the account setting. Must be a valid settings option.</param>
+        /// <param name="value">The value of the account setting.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual async Task<Response<KeyVaultSetting>> UpdateSettingAsync(string name, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.UpdateSettingAsync(VaultUri.AbsoluteUri, name, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
