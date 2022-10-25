@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             VaultExtendedInfo = new VaultExtendedInfoOperations(this);
             Usages = new UsagesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2022-04-01";
+            ApiVersion = "2022-09-10";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

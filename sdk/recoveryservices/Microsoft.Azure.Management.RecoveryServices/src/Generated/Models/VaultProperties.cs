@@ -54,7 +54,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// vault</param>
         /// <param name="redundancySettings">The redundancy Settings of a
         /// Vault</param>
-        public VaultProperties(string provisioningState = default(string), UpgradeDetails upgradeDetails = default(UpgradeDetails), IList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = default(IList<PrivateEndpointConnectionVaultProperties>), string privateEndpointStateForBackup = default(string), string privateEndpointStateForSiteRecovery = default(string), VaultPropertiesEncryption encryption = default(VaultPropertiesEncryption), VaultPropertiesMoveDetails moveDetails = default(VaultPropertiesMoveDetails), string moveState = default(string), string backupStorageVersion = default(string), MonitoringSettings monitoringSettings = default(MonitoringSettings), VaultPropertiesRedundancySettings redundancySettings = default(VaultPropertiesRedundancySettings))
+        /// <param name="securitySettings">Security Settings of the
+        /// vault</param>
+        public VaultProperties(string provisioningState = default(string), UpgradeDetails upgradeDetails = default(UpgradeDetails), IList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = default(IList<PrivateEndpointConnectionVaultProperties>), string privateEndpointStateForBackup = default(string), string privateEndpointStateForSiteRecovery = default(string), VaultPropertiesEncryption encryption = default(VaultPropertiesEncryption), VaultPropertiesMoveDetails moveDetails = default(VaultPropertiesMoveDetails), string moveState = default(string), string backupStorageVersion = default(string), MonitoringSettings monitoringSettings = default(MonitoringSettings), VaultPropertiesRedundancySettings redundancySettings = default(VaultPropertiesRedundancySettings), SecuritySettings securitySettings = default(SecuritySettings))
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
             BackupStorageVersion = backupStorageVersion;
             MonitoringSettings = monitoringSettings;
             RedundancySettings = redundancySettings;
+            SecuritySettings = securitySettings;
             CustomInit();
         }
 
@@ -146,6 +149,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "redundancySettings")]
         public VaultPropertiesRedundancySettings RedundancySettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets security Settings of the vault
+        /// </summary>
+        [JsonProperty(PropertyName = "securitySettings")]
+        public SecuritySettings SecuritySettings { get; set; }
 
     }
 }

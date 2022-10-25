@@ -30,8 +30,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">The Sku name. Possible values include:
-        /// 'Standard', 'RS0'</param>
+        /// <param name="name">Name of SKU is RS0 (Recovery Services 0th
+        /// version) and the tier is standard tier. They do not have affect on
+        /// backend storage redundancy or any other vault settings. To manage
+        /// storage redundancy, use the backupstorageconfig. Possible values
+        /// include: 'Standard', 'RS0'</param>
         /// <param name="tier">The Sku tier.</param>
         /// <param name="family">The sku family</param>
         /// <param name="size">The sku size</param>
@@ -52,8 +55,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Sku name. Possible values include: 'Standard',
-        /// 'RS0'
+        /// Gets or sets name of SKU is RS0 (Recovery Services 0th version) and
+        /// the tier is standard tier. They do not have affect on backend
+        /// storage redundancy or any other vault settings. To manage storage
+        /// redundancy, use the backupstorageconfig. Possible values include:
+        /// 'Standard', 'RS0'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
