@@ -110,10 +110,9 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
-
                 if (options.ForEveryone)
                 {
+                    options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                     return await RestClient.TerminateCallAsync(
                         CallConnectionId,
                         options.RepeatabilityHeaders?.RepeatabilityRequestId,
@@ -162,10 +161,9 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
-
                 if (options.ForEveryone)
                 {
+                    options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                     return RestClient.TerminateCall(
                         CallConnectionId,
                         options.RepeatabilityHeaders?.RepeatabilityRequestId,
