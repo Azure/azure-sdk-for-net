@@ -32,6 +32,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
             // create call and assert response
             var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+            createCallOptions.RepeatabilityHeaders = null;
             CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
             Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -42,6 +43,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
             // answer the call
             var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+            answerCallOptions.RepeatabilityHeaders = null;
             var answerResponse = await client.AnswerCallAsync(answerCallOptions);
             Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
@@ -110,6 +112,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             {
                 var callConnection = client.GetCallConnection(callConnectionId);
                 var hangUpOptions = new HangUpOptions(true);
+                hangUpOptions.RepeatabilityHeaders = null;
                 await callConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
             }
         }
@@ -128,6 +131,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             */
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
+            string? callConnectionId = null;
 
             try
             {
@@ -140,8 +144,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                 // create call and assert response
                 var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                createCallOptions.RepeatabilityHeaders = null;
                 CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
-                string callConnectionId = response.CallConnectionProperties.CallConnectionId;
+                callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                 // wait for incomingcall context
@@ -150,6 +155,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                 // answer the call
                 var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                answerCallOptions.RepeatabilityHeaders = null;
                 var answerResponse = await client.AnswerCallAsync(answerCallOptions);
                 Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
@@ -187,15 +193,26 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                 // try hangup
                 var hangUpOptions = new HangUpOptions(true);
+                hangUpOptions.RepeatabilityHeaders = null;
                 await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                 var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(disconnectedEvent);
                 Assert.IsTrue(disconnectedEvent is CallDisconnected);
                 Assert.IsTrue(((CallDisconnected)disconnectedEvent!).CallConnectionId == callConnectionId);
+                callConnectionId = null;
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    var hangUpOptions = new HangUpOptions(true);
+                    hangUpOptions.RepeatabilityHeaders = null;
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                }
             }
         }
 
@@ -213,6 +230,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             */
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
+            string? callConnectionId = null;
 
             try
             {
@@ -225,8 +243,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                 // create call and assert response
                 var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                createCallOptions.RepeatabilityHeaders = null;
                 CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
-                string callConnectionId = response.CallConnectionProperties.CallConnectionId;
+                callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                 // wait for incomingcall context
@@ -235,6 +254,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                 // answer the call
                 var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                answerCallOptions.RepeatabilityHeaders = null;
                 var answerResponse = await client.AnswerCallAsync(answerCallOptions);
                 Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
@@ -275,15 +295,26 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                 // try hangup
                 var hangUpOptions = new HangUpOptions(true);
+                hangUpOptions.RepeatabilityHeaders = null;
                 await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                 var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(disconnectedEvent);
                 Assert.IsTrue(disconnectedEvent is CallDisconnected);
                 Assert.IsTrue(((CallDisconnected)disconnectedEvent!).CallConnectionId == callConnectionId);
+                callConnectionId = null;
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    var hangUpOptions = new HangUpOptions(true);
+                    hangUpOptions.RepeatabilityHeaders = null;
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                }
             }
         }
     }

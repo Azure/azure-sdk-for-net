@@ -110,11 +110,10 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
                 if (options.ForEveryone)
                 {
-                    if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                        throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
-
                     return await RestClient.TerminateCallAsync(
                         CallConnectionId,
                         options.RepeatabilityHeaders?.RepeatabilityRequestId,
@@ -163,11 +162,10 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
                 if (options.ForEveryone)
                 {
-                    if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                        throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
-
                     return RestClient.TerminateCall(
                         CallConnectionId,
                         options.RepeatabilityHeaders?.RepeatabilityRequestId,
@@ -204,10 +202,9 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);;
+                TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 return await RestClient.TransferToParticipantAsync(
                     CallConnectionId,
@@ -238,10 +235,9 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 return RestClient.TransferToParticipant(
                     CallConnectionId,
@@ -283,10 +279,9 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 AddParticipantsRequestInternal request = CreateAddParticipantRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 var response = await RestClient.AddParticipantAsync(
                     callConnectionId: CallConnectionId,
@@ -319,10 +314,9 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 AddParticipantsRequestInternal request = CreateAddParticipantRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 var response = RestClient.AddParticipant(
                     callConnectionId: CallConnectionId,
@@ -485,10 +479,9 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 request.OperationContext = options.OperationContext;
 
@@ -536,10 +529,9 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
-                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 request.OperationContext = options.OperationContext;
 
