@@ -24,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
     public class EventHubsClientFactoryTests
     {
         private const string ConnectionString = "Endpoint=sb://test89123-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey";
+        private const string AnotherConnectionString = "Endpoint=sb://test12345-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey";
         private const string ConnectionStringWithEventHub = "Endpoint=sb://test89123-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey;EntityPath=path2";
 
         // Validate that if connection string has EntityPath, that takes precedence over the parameter.
@@ -102,6 +103,40 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
+        public void ProducersWithSameNameAreProperlyCached()
+        {
+            EventHubOptions options = new EventHubOptions();
+
+            var componentFactoryMock = new Mock<AzureComponentFactory>();
+            componentFactoryMock.Setup(c => c.CreateTokenCredential(
+                    It.Is<IConfiguration>(c => c["fullyQualifiedNamespace"] != null)))
+                .Returns(new DefaultAzureCredential());
+
+            var configuration = ConfigurationUtilities.CreateConfiguration(
+                new KeyValuePair<string, string>("connection1", ConnectionString),
+                new KeyValuePair<string, string>("connection2", AnotherConnectionString),
+                new KeyValuePair<string, string>("connection3:fullyQualifiedNamespace", "test89123-ns-x.servicebus.windows.net"),
+                new KeyValuePair<string, string>("connection4:fullyQualifiedNamespace", "test12345-ns-x.servicebus.windows.net"));
+
+            var factory = ConfigurationUtilities.CreateFactory(configuration, options, componentFactoryMock.Object);
+            var producer1 = factory.GetEventHubProducerClient("k1", "connection1");
+            var producer2 = factory.GetEventHubProducerClient("k1", "connection2");
+            var producer3 = factory.GetEventHubProducerClient("k1", "connection3");
+            var producer4 = factory.GetEventHubProducerClient("k1", "connection4");
+
+            Assert.AreEqual("k1", producer1.EventHubName);
+            Assert.AreEqual("k1", producer2.EventHubName);
+            Assert.AreNotSame(producer1, producer2);
+
+            Assert.AreEqual("k1", producer3.EventHubName);
+            Assert.AreEqual("k1", producer4.EventHubName);
+            Assert.AreNotSame(producer3, producer4);
+
+            Assert.AreSame(producer1, producer3);
+            Assert.AreSame(producer2, producer4);
+        }
+
+        [Test]
         public void UsesDefaultConnectionToStorageAccount()
         {
             EventHubOptions options = new EventHubOptions();
@@ -140,15 +175,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
             var producer = factory.GetEventHubProducerClient(expectedPathName, "connection");
-            EventHubConnection connection = (EventHubConnection)typeof(EventHubProducerClient).GetProperty("Connection", BindingFlags.NonPublic | BindingFlags.Instance)
+            EventHubProducerClientOptions clientOptions = (EventHubProducerClientOptions)typeof(EventHubProducerClient).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(producer);
-            EventHubConnectionOptions connectionOptions = (EventHubConnectionOptions)typeof(EventHubConnection).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(connection);
-
-            Assert.AreEqual(testEndpoint, connectionOptions.CustomEndpointAddress);
-            Assert.AreEqual(expectedPathName, producer.EventHubName);
-
-            EventHubProducerClientOptions producerOptions = (EventHubProducerClientOptions)typeof(EventHubProducerClient).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(producer);
-            Assert.AreEqual(10, producerOptions.RetryOptions.MaximumRetries);
+            Assert.AreEqual(testEndpoint, clientOptions.ConnectionOptions.CustomEndpointAddress);
+            Assert.AreEqual(10, clientOptions.RetryOptions.MaximumRetries);
             Assert.AreEqual(expectedPathName, producer.EventHubName);
         }
 

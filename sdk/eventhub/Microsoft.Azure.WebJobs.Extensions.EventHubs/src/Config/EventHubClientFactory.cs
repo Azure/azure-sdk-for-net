@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using Azure.Core;
+using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
@@ -51,36 +52,28 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             if (!string.IsNullOrWhiteSpace(connection))
             {
                 var info = ResolveConnectionInformation(connection);
+                EventHubConnection eventHubConnection;
 
                 if (info.FullyQualifiedEndpoint != null &&
                     info.TokenCredential != null)
                 {
-                    return _producerCache.GetOrAdd(info.FullyQualifiedEndpoint + eventHubName, key =>
-                    {
-                        return new EventHubProducerClient(
-                            info.FullyQualifiedEndpoint,
-                            eventHubName,
-                            info.TokenCredential,
-                            new EventHubProducerClientOptions
-                            {
-                                RetryOptions = _options.ClientRetryOptions,
-                                ConnectionOptions = _options.ConnectionOptions
-                            });
-                    });
+                    eventHubConnection = new EventHubConnection(info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential);
                 }
                 else
                 {
-                    return _producerCache.GetOrAdd(NormalizeConnectionString(info.ConnectionString, eventHubName), key =>
-                    {
-                        return new EventHubProducerClient(
-                            NormalizeConnectionString(info.ConnectionString, eventHubName),
-                            new EventHubProducerClientOptions
-                            {
-                                RetryOptions = _options.ClientRetryOptions,
-                                ConnectionOptions = _options.ConnectionOptions
-                            });
-                    });
+                    eventHubConnection = new EventHubConnection(NormalizeConnectionString(info.ConnectionString, eventHubName));
                 }
+
+                return _producerCache.GetOrAdd(GenerateCacheKey(eventHubConnection), key =>
+                {
+                    return new EventHubProducerClient(
+                        eventHubConnection,
+                        new EventHubProducerClientOptions
+                        {
+                            RetryOptions = _options.ClientRetryOptions,
+                            ConnectionOptions = _options.ConnectionOptions
+                        });
+                });
             }
 
             throw new InvalidOperationException("No event hub sender named " + eventHubName);
@@ -216,6 +209,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             return new EventHubsConnectionInformation(fullyQualifiedNamespace, credential);
         }
+
+        private static string GenerateCacheKey(EventHubConnection eventHubConnection) => $"{eventHubConnection.FullyQualifiedNamespace}/{eventHubConnection.EventHubName}";
 
         private record EventHubsConnectionInformation
         {
