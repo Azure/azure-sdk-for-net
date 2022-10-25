@@ -175,6 +175,44 @@ namespace Azure.Storage.Blobs.DataMovement
                 resourceType: blobProperties.BlobType.ToStorageResourceType());
         }
 
+        internal static StorageResourceProperties ToStorageResourceProperties(this BlobDownloadDetails blobProperties)
+        {
+            return new StorageResourceProperties(
+                lastModified: blobProperties.LastModified,
+                createdOn: default,
+                metadata: blobProperties.Metadata,
+                copyCompletedOn: blobProperties.CopyCompletedOn,
+                copyStatusDescription: blobProperties.CopyStatusDescription,
+                copyId: blobProperties.CopyId,
+                copyProgress: blobProperties.CopyProgress,
+                copySource: blobProperties.CopySource,
+                copyStatus: blobProperties.CopyStatus.ToCopyStatus(),
+                contentLength: blobProperties.ContentLength,
+                contentType: blobProperties.ContentType,
+                eTag: blobProperties.ETag,
+                contentHash: blobProperties.ContentHash,
+                blobSequenceNumber: blobProperties.BlobSequenceNumber,
+                blobCommittedBlockCount: blobProperties.BlobCommittedBlockCount,
+                isServerEncrypted: blobProperties.IsServerEncrypted,
+                encryptionKeySha256: blobProperties.EncryptionKeySha256,
+                encryptionScope: blobProperties.EncryptionScope,
+                versionId: blobProperties.VersionId,
+                isLatestVersion: default,
+                expiresOn: default,
+                lastAccessed: blobProperties.LastAccessed,
+                resourceType: blobProperties.BlobType.ToStorageResourceType());
+        }
+
+        internal static ReadStreamStorageResourceInfo ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
+        {
+            return new ReadStreamStorageResourceInfo(
+                content: result.Content,
+                contentRange: result.Details.ContentRange,
+                acceptRanges: result.Details.AcceptRanges,
+                rangeContentHash: result.Details.BlobContentHash,
+                properties: result.Details.ToStorageResourceProperties());
+        }
+
         private static ServiceCopyStatus? ToCopyStatus(this CopyStatus copyStatus)
         {
             if (CopyStatus.Pending == copyStatus)

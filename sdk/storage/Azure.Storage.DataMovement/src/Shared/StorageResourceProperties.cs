@@ -106,7 +106,7 @@ namespace Azure.Storage.DataMovement.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
-        /// The current sequence number for a page blob. This header is not returned for block blobs or append blobs.
+        /// The current sequence number for a page blob. This header is returned only for page blobs.
         /// </summary>
         internal long BlobSequenceNumber { get; }
 
@@ -156,9 +156,9 @@ namespace Azure.Storage.DataMovement.Models
         internal DateTimeOffset LastAccessed { get; }
 
         /// <summary>
-        /// Constructor.
+        /// Mock Constructor.
         /// </summary>
-        public StorageResourceProperties()
+        protected StorageResourceProperties()
         {
             Metadata = new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }

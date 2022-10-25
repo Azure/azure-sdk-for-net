@@ -39,12 +39,6 @@ namespace Azure.Storage.DataMovement
         public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
-        /// Defines whether the object can consume a readable stream and upload it
-        /// </summary>
-        /// <returns></returns>
-        public abstract StreamConsumableType CanCreateOpenReadStream { get; }
-
-        /// <summary>
         /// Determines whether or not the resource requires a commit block list (e.g. Commit Block List)
         /// to determine which blocks will make up the resource.
         /// </summary>
@@ -55,13 +49,25 @@ namespace Azure.Storage.DataMovement
         /// Produces readable stream to download
         /// </summary>
         /// <returns></returns>
-        public abstract Task<Stream> OpenReadStreamAsync(long? position = default);
+        public abstract Task<ReadStreamStorageResourceInfo> ReadStreamAsync(
+            long? position = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Produces writable stream to upload
+        /// Consumes the readable stream to upload
         /// </summary>
+        /// <param name="offset">
+        /// The offset which the stream will be copied to.
+        /// </param>
+        /// <param name="length">
+        /// The length of the stream.
+        /// </param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task<Stream> OpenWriteStreamAsync();
+        public abstract Task<ReadStreamStorageResourceInfo> ReadPartialStreamAsync(
+            long offset,
+            long length,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Consumes the readable stream to upload
@@ -90,15 +96,34 @@ namespace Azure.Storage.DataMovement
             long offset,
             long length,
             Stream stream,
-            ConsumePartialReadableStreamOptions options,
+            WriteToOffsetOptions options,
             CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sasUri"></param>
+        /// <param name="sourceUri"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task CopyFromUriAsync(Uri sasUri);
+        public abstract Task CopyFromUriAsync(
+            Uri sourceUri,
+            StorageResourceCopyFromUriOptions options = default,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Uploads/copy the blob from a url
+        /// </summary>
+        /// <param name="sourceUri"></param>
+        /// <param name="range"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task CopyBlockFromUriAsync(
+            Uri sourceUri,
+            HttpRange range,
+            StorageResourceCopyFromUriOptions options = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get lengths of the resource.

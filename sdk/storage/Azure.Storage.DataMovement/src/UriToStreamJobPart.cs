@@ -119,34 +119,29 @@ namespace Azure.Storage.DataMovement
 
             try
             {
-                Stream openWriteStream = await _sourceResource.OpenWriteStreamAsync().ConfigureAwait(false);
-
-                byte[] buffer = new byte[_initialTransferSize];
-                Task<int> initialTask = openWriteStream.ReadAsync(
-                    buffer,
-                    0,
-                    (int)_initialTransferSize,
+                Task<ReadStreamStorageResourceInfo> initialTask = _sourceResource.ReadPartialStreamAsync(
+                    offset: 0,
+                    length: _initialTransferSize,
                     _cancellationTokenSource.Token);
 
-                int? initialLength = default;
+                ReadStreamStorageResourceInfo initialResult = default;
                 try
                 {
-                    initialLength = await initialTask.ConfigureAwait(false);
+                    initialResult = await initialTask.ConfigureAwait(false);
                 }
                 catch // TODO: only catch initial range error.
                 {
                     // Range not accepted, we need to attempt to use a default range
-                    initialLength = await openWriteStream.ReadAsync(
-                        buffer,
-                        0,
-                        (int)_initialTransferSize,
-                        _cancellationTokenSource.Token)
-                        .ConfigureAwait(false);
+                    initialResult = await _sourceResource.ReadPartialStreamAsync(
+                    offset: 0,
+                    length: _initialTransferSize,
+                    _cancellationTokenSource.Token)
+                    .ConfigureAwait(false);
                 }
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
-                if (!initialLength.HasValue)
+                if (initialResult != default)
                 {
                     // Invoke event handler and progress handler
                     return;
@@ -159,9 +154,9 @@ namespace Azure.Storage.DataMovement
                 long totalLength = properties.ContentLength;
 
                 // TODO: Change to use buffer instead of converting to stream
-                await CopyToStreamInternal(new MemoryStream(buffer)).ConfigureAwait(false);
-                ReportBytesWritten(initialLength.Value);
-                if (initialLength.Value == totalLength)
+                await CopyToStreamInternal(initialResult.Content).ConfigureAwait(false);
+                ReportBytesWritten(initialResult.Content.Length);
+                if (initialResult.Content.Length == totalLength)
                 {
                     // Complete download since it was done in one go
                     await QueueChunk(
@@ -180,10 +175,10 @@ namespace Azure.Storage.DataMovement
                     }
 
                     // Get list of ranges of the blob
-                    IList<HttpRange> ranges = GetRangesList(initialLength.Value, totalLength, rangeSize);
+                    IList<HttpRange> ranges = GetRangesList(initialResult.Content.Length, totalLength, rangeSize);
                     // Create Download Chunk event handler to manage when the ranges finish downloading
                     _downloadChunkHandler = GetDownloadChunkHandler(
-                        currentTranferred: initialLength.Value,
+                        currentTranferred: initialResult.Content.Length,
                         expectedLength: totalLength,
                         ranges: ranges,
                         jobPart: this);
@@ -227,13 +222,16 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                Stream stream = await _sourceResource.OpenReadStreamAsync(range.Offset).ConfigureAwait(false);
+                ReadStreamStorageResourceInfo result = await _sourceResource.ReadPartialStreamAsync(
+                    range.Offset,
+                    (long) range.Length,
+                    _cancellationTokenSource.Token).ConfigureAwait(false);
                 await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
                     transferId: _dataTransfer.Id,
                     success: true,
                     offset: range.Offset,
                     bytesTransferred: (long)range.Length,
-                    result: stream,
+                    result: result.Content,
                     false,
                     _cancellationTokenSource.Token)).ConfigureAwait(false);
             }
@@ -255,6 +253,7 @@ namespace Azure.Storage.DataMovement
 
             try
             {
+                // TODO: change to custom offset based on chunk offset
                 await _destinationResource.WriteStreamToOffsetAsync(
                     0,
                     source.Length,
@@ -288,6 +287,7 @@ namespace Azure.Storage.DataMovement
                 await InvokeFailedArg(ex).ConfigureAwait(false);
             }
         }
+
         // If Encryption is enabled this is required to flush
         private async Task FlushFinalCryptoStreamInternal()
         {

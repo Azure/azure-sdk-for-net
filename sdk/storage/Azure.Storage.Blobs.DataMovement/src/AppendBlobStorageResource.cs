@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -42,12 +43,6 @@ namespace Azure.Storage.Blobs.DataMovement
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
-        /// Defines whether the object can consume a stream
-        /// </summary>
-        /// <returns></returns>
-        public override StreamConsumableType CanCreateOpenReadStream => StreamConsumableType.Consumable;
-
-        /// <summary>
         /// Does not require Commit List operation.
         /// </summary>
         /// <returns></returns>
@@ -68,21 +63,40 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Creates readable stream to download
         /// </summary>
         /// <returns></returns>
-        public override Task<Stream> OpenReadStreamAsync(long? position = default)
+        public override async Task<ReadStreamStorageResourceInfo> ReadStreamAsync(
+            long? position = default,
+            CancellationToken cancellationToken = default)
         {
-            return _blobClient.OpenReadAsync(new BlobOpenReadOptions(true)
-            {
-                Position = position ?? 0,
-            });
+            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
+                new HttpRange(position ?? 0, Constants.LargeBufferSize), // TODO: convert to take in max size
+                default, // TODO: convert options to conditions
+                false,
+                cancellationToken).ConfigureAwait(false);
+            return response.Value.ToReadStreamStorageResourceInfo();
         }
 
         /// <summary>
-        /// Creates writable stream to upload
+        /// Consumes the readable stream to upload
         /// </summary>
+        /// <param name="offset">
+        /// The offset which the stream will be copied to.
+        /// </param>
+        /// <param name="length">
+        /// The length of the stream.
+        /// </param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task<Stream> OpenWriteStreamAsync()
+        public override async Task<ReadStreamStorageResourceInfo> ReadPartialStreamAsync(
+            long offset,
+            long length,
+            CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
+                new HttpRange(offset, length),
+                default, // TODO: convert options to conditions
+                false,
+                cancellationToken).ConfigureAwait(false);
+            return response.Value.ToReadStreamStorageResourceInfo();
         }
 
         /// <summary>
@@ -112,7 +126,7 @@ namespace Azure.Storage.Blobs.DataMovement
             long offset,
             long length,
             Stream stream,
-            ConsumePartialReadableStreamOptions options,
+            WriteToOffsetOptions options,
             CancellationToken cancellationToken = default)
         {
             await _blobClient.AppendBlockAsync(
@@ -121,14 +135,50 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Consumes blob Url to upload / copy
+        /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="uri"></param>
+        /// <param name="sourceUri"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task CopyFromUriAsync(Uri uri)
+        public override async Task CopyFromUriAsync(
+            Uri sourceUri,
+            StorageResourceCopyFromUriOptions options = default,
+            CancellationToken cancellationToken = default)
         {
-            // Change depending on type of copy
-            await _blobClient.SyncCopyFromUriAsync(uri).ConfigureAwait(false);
+             await _blobClient.AppendBlockFromUriAsync(
+               sourceUri,
+               options: new AppendBlobAppendBlockFromUriOptions()
+               {
+                   SourceAuthentication = options.SourceAuthentication,
+                   //TODO: convert options to this options bag
+               },
+               cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Uploads/copy the blob from a url
+        /// </summary>
+        /// <param name="sourceUri"></param>
+        /// <param name="range"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async Task CopyBlockFromUriAsync(
+            Uri sourceUri,
+            HttpRange range,
+            StorageResourceCopyFromUriOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            await _blobClient.AppendBlockFromUriAsync(
+                sourceUri,
+                options: new AppendBlobAppendBlockFromUriOptions()
+                {
+                    SourceRange = range,
+                    SourceAuthentication = options.SourceAuthentication,
+                    //TODO: convert options to this options bag
+                },
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

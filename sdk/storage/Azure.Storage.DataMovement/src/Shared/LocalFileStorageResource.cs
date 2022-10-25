@@ -39,13 +39,6 @@ namespace Azure.Storage.DataMovement
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
-        /// Cannot consume readable stream
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override StreamConsumableType CanCreateOpenReadStream => StreamConsumableType.Consumable;
-
-        /// <summary>
         /// Does not require Commit List operation.
         /// </summary>
         /// <returns></returns>
@@ -59,17 +52,6 @@ namespace Azure.Storage.DataMovement
         {
             _originalPath = path;
             _path = path.Split('/').ToList();
-        }
-
-        /// <summary>
-        /// Cannot produce consumable stream, will throw a NotSupportException.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
-        public override Task<Stream> OpenWriteStreamAsync()
-        {
-            // Cannot produce consumable stream
-            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -110,7 +92,7 @@ namespace Azure.Storage.DataMovement
             long offset,
             long length,
             Stream stream,
-            ConsumePartialReadableStreamOptions options,
+            WriteToOffsetOptions options,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -131,12 +113,33 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Cannot produce URL/Uri
+        /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="uri"></param>
+        /// <param name="sourceUri"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
-        public override Task CopyFromUriAsync(Uri uri)
+        public override Task CopyFromUriAsync(
+            Uri sourceUri,
+            StorageResourceCopyFromUriOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <summary>
+        /// Uploads/copy the blob from a url
+        /// </summary>
+        /// <param name="sourceUri"></param>
+        /// <param name="range"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override Task CopyBlockFromUriAsync(
+            Uri sourceUri,
+            HttpRange range,
+            StorageResourceCopyFromUriOptions options = default,
+            CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
         }
@@ -162,9 +165,33 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override Task<Stream> OpenReadStreamAsync(long? position = default)
+        public override Task<ReadStreamStorageResourceInfo> ReadStreamAsync(
+            long? position = default,
+            CancellationToken cancellationToken = default)
         {
-            return Task.FromResult((Stream) new FileStream(_originalPath, FileMode.Open, FileAccess.Read));
+            FileStream stream = new FileStream(_originalPath, FileMode.Open, FileAccess.Read);
+            return Task.FromResult(new ReadStreamStorageResourceInfo(stream));
+        }
+
+        /// <summary>
+        /// Consumes the readable stream to upload
+        /// </summary>
+        /// <param name="offset">
+        /// The offset which the stream will be copied to.
+        /// </param>
+        /// <param name="length">
+        /// The length of the stream.
+        /// </param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override Task<ReadStreamStorageResourceInfo> ReadPartialStreamAsync(
+            long offset,
+            long length,
+            CancellationToken cancellationToken = default)
+        {
+            FileStream stream = new FileStream(_originalPath, FileMode.Open, FileAccess.Read);
+            stream.Position = offset;
+            return Task.FromResult(new ReadStreamStorageResourceInfo(stream));
         }
 
         /// <summary>
