@@ -65,6 +65,11 @@ namespace PolicyInsights.Tests
                     {
                         new AttestationEvidence(description: "Evidence 1", sourceUri: "http://www.contoso.com/evidence1"),
                         new AttestationEvidence(description: "Evidence 2", sourceUri: "http://www.contoso.com/evidence2")
+                    },
+                    AssessmentDate = new DateTime(2022, 12, 5),
+                    Metadata = new JObject()
+                    {
+                        {"DEPT_ID", "NYC4-MARKETING" }
                     }
                 };
 
@@ -149,6 +154,11 @@ namespace PolicyInsights.Tests
                     {
                         new AttestationEvidence(description: "Evidence 1", sourceUri: "http://www.contoso.com/evidence1"),
                         new AttestationEvidence(description: "Evidence 2", sourceUri: "http://www.contoso.com/evidence2")
+                    },
+                    AssessmentDate = new DateTime(2022, 12, 5),
+                    Metadata = new JObject()
+                    {
+                        {"DEPT_ID", "NYC4-MARKETING" }
                     }
                 };
 
@@ -202,6 +212,9 @@ namespace PolicyInsights.Tests
             Assert.Equal(expected.PolicyAssignmentId, actual.PolicyAssignmentId, ignoreCase: true);
             Assert.Equal(expected.PolicyDefinitionReferenceId, actual.PolicyDefinitionReferenceId, ignoreCase: true);
             Assert.Equal(expected.Evidence.Count, actual.Evidence.Count);
+            Assert.Equal(expected.AssessmentDate, actual.AssessmentDate);
+            Assert.Equal(expected.Metadata, actual.Metadata);
+
             for(var i = 0; i < expected.Evidence.Count; i++)
             {
                 Assert.Equal(expected.Evidence[i].Description, actual.Evidence[i].Description);

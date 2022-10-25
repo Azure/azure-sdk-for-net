@@ -7,11 +7,10 @@
     <PackageId>Microsoft.Azure.Management.PolicyInsights</PackageId>
     <Description>Provides policy insights operations for Microsoft Azure.</Description>
     <AssemblyName>Microsoft.Azure.Management.PolicyInsights</AssemblyName>
-    <Version>5.0.0</Version>
-    <PackageTags>Azure;Policy;PolicyInsights;PolicyEvent;PolicyState;Compliance;PolicyRemediations</PackageTags>
+    <Version>5.1.0</Version>
+    <PackageTags>Azure;Policy;PolicyInsights;PolicyEvent;PolicyState;Compliance;PolicyRemediations;PolicyAttestations</PackageTags>
     <PackageReleaseNotes><![CDATA[
-      - Added support for new remediations API version
-      - Added support for attestations and checkPolicyRestrictions APIs
+      - Added two fields to policy attestations
     ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
