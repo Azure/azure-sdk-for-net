@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -26,6 +27,14 @@ namespace Azure.AI.Language.Conversations
             {
                 throw new ArgumentNullException(nameof(text));
             }
+        }
+
+        /// <summary> Initializes a new instance of ConversationsSummaryResultSummariesItem. </summary>
+        /// <param name="aspect"></param>
+        /// <param name="text"></param>
+        /// <param name="contexts"> The context list of the summary. </param>
+        internal ConversationsSummaryResultSummariesItem(string aspect, string text, IList<ItemizedSummaryContext> contexts) : base(aspect, text, contexts)
+        {
         }
     }
 }

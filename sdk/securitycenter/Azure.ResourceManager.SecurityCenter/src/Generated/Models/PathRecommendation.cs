@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="action"> The recommendation action of the machine or rule. </param>
         /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
         /// <param name="publisherInfo"> Represents the publisher information of a process/rule. </param>
-        /// <param name="common"> Whether the application is commonly run on the machine. </param>
+        /// <param name="isCommon"> Whether the application is commonly run on the machine. </param>
         /// <param name="userSids"></param>
         /// <param name="usernames"></param>
         /// <param name="fileType"> The type of the file (for Linux files - Executable is used). </param>
         /// <param name="configurationStatus"> The configuration status of the machines group or machine or rule. </param>
-        internal PathRecommendation(string path, RecommendationAction? action, RecommendationType? recommendationType, PublisherInfo publisherInfo, bool? common, IList<string> userSids, IList<UserRecommendation> usernames, FileType? fileType, ConfigurationStatus? configurationStatus)
+        internal PathRecommendation(string path, RecommendationAction? action, RecommendationType? recommendationType, PublisherInfo publisherInfo, bool? isCommon, IList<string> userSids, IList<UserRecommendation> usernames, PathRecommendationFileType? fileType, ConfigurationStatus? configurationStatus)
         {
             Path = path;
             Action = action;
             RecommendationType = recommendationType;
             PublisherInfo = publisherInfo;
-            Common = common;
+            IsCommon = isCommon;
             UserSids = userSids;
             Usernames = usernames;
             FileType = fileType;
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Represents the publisher information of a process/rule. </summary>
         public PublisherInfo PublisherInfo { get; set; }
         /// <summary> Whether the application is commonly run on the machine. </summary>
-        public bool? Common { get; set; }
+        public bool? IsCommon { get; set; }
         /// <summary> Gets the user sids. </summary>
         public IList<string> UserSids { get; }
         /// <summary> Gets the usernames. </summary>
         public IList<UserRecommendation> Usernames { get; }
         /// <summary> The type of the file (for Linux files - Executable is used). </summary>
-        public FileType? FileType { get; set; }
+        public PathRecommendationFileType? FileType { get; set; }
         /// <summary> The configuration status of the machines group or machine or rule. </summary>
         public ConfigurationStatus? ConfigurationStatus { get; set; }
     }

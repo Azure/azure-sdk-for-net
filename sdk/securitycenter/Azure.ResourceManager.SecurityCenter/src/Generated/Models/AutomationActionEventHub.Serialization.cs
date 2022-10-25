@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AutomationActionEventHub DeserializeAutomationActionEventHub(JsonElement element)
         {
-            Optional<string> eventHubResourceId = default;
+            Optional<ResourceIdentifier> eventHubResourceId = default;
             Optional<string> sasPolicyName = default;
             Optional<string> connectionString = default;
             ActionType actionType = default;
@@ -40,7 +40,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 if (property.NameEquals("eventHubResourceId"))
                 {
-                    eventHubResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    eventHubResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sasPolicyName"))

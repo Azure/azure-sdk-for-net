@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("platformReservedDnsIP");
                 writer.WriteStringValue(PlatformReservedDnsIP);
             }
+            if (Optional.IsDefined(OutboundSettings))
+            {
+                writer.WritePropertyName("outboundSettings");
+                writer.WriteObjectValue(OutboundSettings);
+            }
             writer.WriteEndObject();
         }
 
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> dockerBridgeCidr = default;
             Optional<string> platformReservedCidr = default;
             Optional<string> platformReservedDnsIP = default;
+            Optional<ManagedEnvironmentOutboundSettings> outboundSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("internal"))
@@ -93,8 +99,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                     platformReservedDnsIP = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("outboundSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    outboundSettings = ManagedEnvironmentOutboundSettings.DeserializeManagedEnvironmentOutboundSettings(property.Value);
+                    continue;
+                }
             }
-            return new VnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, runtimeSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value);
+            return new VnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, runtimeSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value, outboundSettings.Value);
         }
     }
 }

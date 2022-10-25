@@ -20,12 +20,20 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="appId"> Dapr application identifier. </param>
         /// <param name="appProtocol"> Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http. </param>
         /// <param name="appPort"> Tells Dapr which port your application is listening on. </param>
-        internal DaprProvider(bool? enabled, string appId, AppProtocol? appProtocol, int? appPort)
+        /// <param name="httpReadBufferSize"> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </param>
+        /// <param name="httpMaxRequestSize"> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </param>
+        /// <param name="logLevel"> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </param>
+        /// <param name="enableApiLogging"> Enables API logging for the Dapr sidecar. </param>
+        internal DaprProvider(bool? enabled, string appId, AppProtocol? appProtocol, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, LogLevel? logLevel, bool? enableApiLogging)
         {
             Enabled = enabled;
             AppId = appId;
             AppProtocol = appProtocol;
             AppPort = appPort;
+            HttpReadBufferSize = httpReadBufferSize;
+            HttpMaxRequestSize = httpMaxRequestSize;
+            LogLevel = logLevel;
+            EnableApiLogging = enableApiLogging;
         }
 
         /// <summary> Boolean indicating if the Dapr side car is enabled. </summary>
@@ -36,5 +44,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         public AppProtocol? AppProtocol { get; set; }
         /// <summary> Tells Dapr which port your application is listening on. </summary>
         public int? AppPort { get; set; }
+        /// <summary> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </summary>
+        public int? HttpReadBufferSize { get; set; }
+        /// <summary> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </summary>
+        public int? HttpMaxRequestSize { get; set; }
+        /// <summary> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </summary>
+        public LogLevel? LogLevel { get; set; }
+        /// <summary> Enables API logging for the Dapr sidecar. </summary>
+        public bool? EnableApiLogging { get; set; }
     }
 }

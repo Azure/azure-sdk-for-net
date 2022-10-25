@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> The ports that were opened for the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
-        public JitNetworkAccessRequestVirtualMachine(string id, IEnumerable<JitNetworkAccessRequestPort> ports)
+        public JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IEnumerable<JitNetworkAccessRequestPort> ports)
         {
             if (id == null)
             {
@@ -36,14 +37,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of JitNetworkAccessRequestVirtualMachine. </summary>
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> The ports that were opened for the virtual machine. </param>
-        internal JitNetworkAccessRequestVirtualMachine(string id, IList<JitNetworkAccessRequestPort> ports)
+        internal JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessRequestPort> ports)
         {
             Id = id;
             Ports = ports;
         }
 
         /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> The ports that were opened for the virtual machine. </summary>
         public IList<JitNetworkAccessRequestPort> Ports { get; }
     }

@@ -17,13 +17,13 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Initializes a new instance of AnalyzeConversationLROTask. </summary>
         /// <param name="taskName"></param>
-        /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
+        /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversation. </param>
         internal AnalyzeConversationLROTask(string taskName, AnalyzeConversationLROTaskKind kind) : base(taskName)
         {
             Kind = kind;
         }
 
-        /// <summary> Enumeration of supported analysis tasks on a collection of conversations. </summary>
+        /// <summary> Enumeration of supported analysis tasks on a collection of conversation. </summary>
         internal AnalyzeConversationLROTaskKind Kind { get; set; }
     }
 }

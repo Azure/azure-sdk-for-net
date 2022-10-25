@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="location"> The location. </param>
         public ManagedEnvironmentData(AzureLocation location) : base(location)
         {
+            WorkloadProfiles = new ChangeTrackingList<WorkloadProfile>();
         }
 
         /// <summary> Initializes a new instance of ManagedEnvironmentData. </summary>
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="sku"> SKU properties of the Environment. </param>
         /// <param name="provisioningState"> Provisioning state of the Environment. </param>
         /// <param name="daprAIInstrumentationKey"> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </param>
         /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
@@ -41,8 +43,12 @@ namespace Azure.ResourceManager.AppContainers
         /// supported
         /// </param>
         /// <param name="zoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
-        internal ManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, VnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, string staticIP, AppLogsConfiguration appLogsConfiguration, bool? zoneRedundant) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
+        /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the Environment. </param>
+        /// <param name="workloadProfiles"> Workload profiles configured for the Managed Environment. </param>
+        internal ManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EnvironmentSkuProperties sku, EnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, VnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, string staticIP, AppLogsConfiguration appLogsConfiguration, bool? zoneRedundant, CustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<WorkloadProfile> workloadProfiles) : base(id, name, resourceType, systemData, tags, location)
         {
+            Sku = sku;
             ProvisioningState = provisioningState;
             DaprAIInstrumentationKey = daprAIInstrumentationKey;
             DaprAIConnectionString = daprAIConnectionString;
@@ -52,6 +58,21 @@ namespace Azure.ResourceManager.AppContainers
             StaticIP = staticIP;
             AppLogsConfiguration = appLogsConfiguration;
             ZoneRedundant = zoneRedundant;
+            CustomDomainConfiguration = customDomainConfiguration;
+            EventStreamEndpoint = eventStreamEndpoint;
+            WorkloadProfiles = workloadProfiles;
+        }
+
+        /// <summary> SKU properties of the Environment. </summary>
+        internal EnvironmentSkuProperties Sku { get; set; }
+        /// <summary> Name of the Sku. </summary>
+        public AppContainersSkuName? SkuName
+        {
+            get => Sku is null ? default(AppContainersSkuName?) : Sku.Name;
+            set
+            {
+                Sku = value.HasValue ? new EnvironmentSkuProperties(value.Value) : null;
+            }
         }
 
         /// <summary> Provisioning state of the Environment. </summary>
@@ -76,5 +97,11 @@ namespace Azure.ResourceManager.AppContainers
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
         /// <summary> Whether or not this Managed Environment is zone-redundant. </summary>
         public bool? ZoneRedundant { get; set; }
+        /// <summary> Custom domain configuration for the environment. </summary>
+        public CustomDomainConfiguration CustomDomainConfiguration { get; set; }
+        /// <summary> The endpoint of the eventstream of the Environment. </summary>
+        public string EventStreamEndpoint { get; }
+        /// <summary> Workload profiles configured for the Managed Environment. </summary>
+        public IList<WorkloadProfile> WorkloadProfiles { get; }
     }
 }

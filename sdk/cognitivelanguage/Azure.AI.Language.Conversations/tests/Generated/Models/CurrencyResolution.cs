@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations
 
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Currency;
+            ResolutionKind = ResolutionKind.CurrencyResolution;
         }
 
         /// <summary> Initializes a new instance of CurrencyResolution. </summary>

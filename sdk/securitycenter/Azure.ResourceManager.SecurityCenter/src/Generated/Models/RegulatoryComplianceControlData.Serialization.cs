@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<State> state = default;
+            Optional<RegulatoryComplianceState> state = default;
             Optional<int> passedAssessments = default;
             Optional<int> failedAssessments = default;
             Optional<int> skippedAssessments = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new State(property0.Value.GetString());
+                            state = new RegulatoryComplianceState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("passedAssessments"))
