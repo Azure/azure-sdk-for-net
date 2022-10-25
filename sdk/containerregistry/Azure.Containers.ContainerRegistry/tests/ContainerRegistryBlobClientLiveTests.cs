@@ -122,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             string repository = "oci-artifact";
             var client = CreateBlobClient(repository);
-            var metadataClient = CreateClient();
+            var registryClient = CreateClient();
             string tag = "v1";
 
             await UploadManifestPrerequisites(client);
@@ -139,7 +139,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
-            var artifact = metadataClient.GetArtifact(repository, digest);
+            var artifact = registryClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
             var count = await tags.CountAsync();
             Assert.AreEqual(1, count);
@@ -156,7 +156,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             string repository = "oci-artifact";
             var client = CreateBlobClient(repository);
-            var metadataClient = CreateClient();
+            var registryClient = CreateClient();
             string tag = "v1";
 
             await UploadManifestPrerequisites(client);
@@ -192,7 +192,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
-            var artifact = metadataClient.GetArtifact(repository, digest);
+            var artifact = registryClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
             var count = await tags.CountAsync();
             Assert.AreEqual(1, count);
@@ -280,6 +280,23 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateBlobClient("oci-artifact");
 
             // Act
+            var uploadManifestResult = await Push(client);
+
+            // Assert
+            ContainerRegistryClient registryClient = CreateClient();
+
+            var names = registryClient.GetRepositoryNamesAsync();
+            Assert.IsTrue(await names.AnyAsync(n => n == "oci-artifact"));
+
+            var properties = await registryClient.GetArtifact("oci-artifact", "v1").GetManifestPropertiesAsync();
+            Assert.AreEqual(uploadManifestResult.Digest, properties.Value.Digest);
+
+            // Clean up
+            await registryClient.DeleteRepositoryAsync("oci-artifact");
+        }
+
+        private async Task<UploadManifestResult> Push(ContainerRegistryBlobClient client)
+        {
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
 
             OciManifest manifest = new OciManifest();
@@ -325,35 +342,22 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Finally, upload manifest
-            var uploadManifestResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions("v1"));
-
-            // Assert
-            ContainerRegistryClient registryClient = CreateClient();
-
-            var names = registryClient.GetRepositoryNamesAsync();
-            Assert.IsTrue(await names.AnyAsync(n => n == "oci-artifact"));
-
-            var properties = await registryClient.GetArtifact("oci-artifact", "v1").GetManifestPropertiesAsync();
-            Assert.AreEqual(uploadManifestResult.Value.Digest, properties.Value.Digest);
-
-            // Clean up
-            await registryClient.DeleteRepositoryAsync("oci-artifact");
+            return await client.UploadManifestAsync(manifest, new UploadManifestOptions("v1"));
         }
 
         [RecordedTest]
         public async Task CanPullArtifact()
         {
             // Arrange
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact-test");
-            var client = CreateBlobClient("oci-artifact-test");
+            var client = CreateBlobClient("oci-artifact");
+            await Push(client);
 
             // Act
 
-            // Get Manifest
-
+            // Download Manifest
             var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions("v1"));
 
-            // Write manifest to file
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
             Directory.CreateDirectory(path);
             string manifestFile = Path.Combine(path, "manifest.json");
             using (FileStream fs = File.Create(manifestFile))
@@ -361,10 +365,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 Stream stream = manifestResult.Value.ManifestStream;
                 await stream.CopyToAsync(fs);
             }
-
             OciManifest manifest = (OciManifest)manifestResult.Value.Manifest;
 
-            // Write Config
+            // Download Config
             string configFileName = Path.Combine(path, "config.json");
             using (FileStream fs = File.Create(configFileName))
             {
@@ -373,7 +376,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 await stream.CopyToAsync(fs);
             }
 
-            // Write Layers
+            // Download Layers
             foreach (var layerFile in manifest.Layers)
             {
                 string fileName = Path.Combine(path, TrimSha(layerFile.Digest));
@@ -385,6 +388,23 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     await stream.CopyToAsync(fs);
                 }
             }
+
+            // Assert
+            ContainerRegistryClient registryClient = CreateClient();
+
+            var properties = await registryClient.GetArtifact("oci-artifact", "v1").GetManifestPropertiesAsync();
+            Assert.AreEqual(manifestResult.Value.Digest, properties.Value.Digest);
+            var files = Directory.GetFiles(path).Select(f => Path.GetFileName(f)).ToArray();
+            Assert.Contains("manifest.json", files);
+            Assert.Contains("config.json", files);
+            foreach (var file in  manifest.Layers)
+            {
+                Assert.Contains(TrimSha(file.Digest), files);
+            }
+
+            // Clean up
+            await registryClient.DeleteRepositoryAsync("oci-artifact");
+            Directory.Delete(path, true);
         }
 
         private static string TrimSha(string digest)
