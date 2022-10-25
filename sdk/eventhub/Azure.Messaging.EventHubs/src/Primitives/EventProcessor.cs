@@ -594,7 +594,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
             {
                 var isBatch = (EventBatchMaximumCount > 1);
-                
+
                 foreach (var eventData in eventBatch)
                 {
                     if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
@@ -607,7 +607,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                             };
 
                             // Use links only when the batch size is not set to a single event.
-                            
+
                             diagnosticScope.AddLink(diagnosticId, null, attributes);
                         }
                         else
