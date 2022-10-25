@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static SharedPublicIPAddressConfiguration DeserializeSharedPublicIPAddressConfiguration(JsonElement element)
         {
-            Optional<IList<InboundNatRule>> inboundNatRules = default;
+            Optional<IList<DevTestLabInboundNatRule>> inboundNatRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNatRules"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InboundNatRule> array = new List<InboundNatRule>();
+                    List<DevTestLabInboundNatRule> array = new List<DevTestLabInboundNatRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatRule.DeserializeInboundNatRule(item));
+                        array.Add(DevTestLabInboundNatRule.DeserializeDevTestLabInboundNatRule(item));
                     }
                     inboundNatRules = array;
                     continue;
