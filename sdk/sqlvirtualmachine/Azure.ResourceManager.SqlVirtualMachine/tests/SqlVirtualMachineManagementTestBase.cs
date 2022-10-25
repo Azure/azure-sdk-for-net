@@ -34,11 +34,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
         protected SqlVirtualMachineManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$..storageAccountPrimaryKey");
         }
 
         protected SqlVirtualMachineManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..storageAccountPrimaryKey");
         }
 
         [SetUp]

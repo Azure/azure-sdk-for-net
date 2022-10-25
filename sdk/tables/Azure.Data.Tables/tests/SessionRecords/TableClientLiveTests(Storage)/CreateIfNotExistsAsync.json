@@ -1,209 +1,195 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-7d00a49d2e03154784cf5deca9a3bf54-61c66760e53c0f42-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "43d421b70bfc0fe2907b9ed2bd54a554",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:10 GMT",
+        "traceparent": "00-e034b172bd766bfea82046e7341cee1a-66c6d542a334a9fa-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4e72d38ee933f5f5e567f75f555f19db",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
-        "TableName": "testtablebjl1agf2"
+        "TableName": "testtablem7gikdkr"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 18:29:12 GMT",
-        "Location": "https://jverazsdkprim.table.core.windows.net/Tables(\u0027testtablebjl1agf2\u0027)",
+        "Date": "Mon, 29 Aug 2022 22:56:26 GMT",
+        "Location": "https://chrisstablesprim.table.core.windows.net/Tables(\u0027testtablem7gikdkr\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "43d421b70bfc0fe2907b9ed2bd54a554",
-        "x-ms-request-id": "a028872a-e002-0026-3012-207c0c000000",
-        "x-ms-version": "2019-02-02"
+        "x-ms-client-request-id": "4e72d38ee933f5f5e567f75f555f19db",
+        "x-ms-request-id": "908de814-a002-005e-63fa-bb420b000000",
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": {
-        "odata.metadata": "https://jverazsdkprim.table.core.windows.net/$metadata#Tables/@Element",
-        "TableName": "testtablebjl1agf2"
+        "odata.metadata": "https://chrisstablesprim.table.core.windows.net/$metadata#Tables/@Element",
+        "TableName": "testtablem7gikdkr"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-77ff1ea91e2d5c4ebe0828efde3457e6-7e253725d5a46145-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "dd4d7a23e97a7df046a1fb7113eafdc5",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:10 GMT",
+        "Prefer": "return-no-content",
+        "traceparent": "00-27f4ce9614926242e65a6822d7b0b809-7ec2effe1eacfb27-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e3e96c559f66d201500b35d404ee4158",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
-        "TableName": "testtablebjl1agf2"
+        "TableName": "testtablem7gikdkr"
       },
       "StatusCode": 409,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 18:29:12 GMT",
+        "Date": "Mon, 29 Aug 2022 22:56:26 GMT",
+        "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "dd4d7a23e97a7df046a1fb7113eafdc5",
-        "x-ms-request-id": "a0288730-e002-0026-3512-207c0c000000",
-        "x-ms-version": "2019-02-02"
+        "x-ms-client-request-id": "e3e96c559f66d201500b35d404ee4158",
+        "x-ms-request-id": "908de82d-a002-005e-7bfa-bb420b000000",
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": {
         "odata.error": {
           "code": "TableAlreadyExists",
           "message": {
             "lang": "en-US",
-            "value": "The table specified already exists.\nRequestId:a0288730-e002-0026-3512-207c0c000000\nTime:2021-03-23T18:29:13.2533480Z"
+            "value": "The table specified already exists.\nRequestId:908de82d-a002-005e-7bfa-bb420b000000\nTime:2022-08-29T22:56:26.4803678Z"
           }
         }
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-450eba549b626a4c8c8232a9888ad89a-83ad44b777c06742-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "b71f0ee4548f5c23062e8fb4f4d21dce",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:10 GMT",
+        "Prefer": "return-no-content",
+        "traceparent": "00-88e8bf5a39846997a0931de3843d8634-35e1d0cb327cb249-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "81069265fc315ab3845bc590e9deabee",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
-        "TableName": "testtableei976bta"
+        "TableName": "testtable9o3sc6zs"
       },
-      "StatusCode": 201,
+      "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 18:29:12 GMT",
-        "Location": "https://jverazsdkprim.table.core.windows.net/Tables(\u0027testtableei976bta\u0027)",
+        "Content-Length": "0",
+        "DataServiceId": "https://chrisstablesprim.table.core.windows.net/Tables(\u0027testtable9o3sc6zs\u0027)",
+        "Date": "Mon, 29 Aug 2022 22:56:26 GMT",
+        "Location": "https://chrisstablesprim.table.core.windows.net/Tables(\u0027testtable9o3sc6zs\u0027)",
+        "Preference-Applied": "return-no-content",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "b71f0ee4548f5c23062e8fb4f4d21dce",
-        "x-ms-request-id": "a0288734-e002-0026-3912-207c0c000000",
-        "x-ms-version": "2019-02-02"
+        "x-ms-client-request-id": "81069265fc315ab3845bc590e9deabee",
+        "x-ms-request-id": "908de847-a002-005e-15fa-bb420b000000",
+        "x-ms-version": "2020-12-06"
       },
-      "ResponseBody": {
-        "odata.metadata": "https://jverazsdkprim.table.core.windows.net/$metadata#Tables/@Element",
-        "TableName": "testtableei976bta"
-      }
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/Tables(\u0027testtableei976bta\u0027)",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/Tables(\u0027testtable9o3sc6zs\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e80b581dbdd5f6449cf41081be012de2-5ec325238a866a43-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "5bfd5730710fa5fb7ed986856ff5c169",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:10 GMT",
+        "traceparent": "00-d4def06ca87a99ed4ef1c2974e7ed53d-ab9475cdf558030d-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "27fe9fd221b3f7f0269ec96538a05b9d",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:29:12 GMT",
+        "Date": "Mon, 29 Aug 2022 22:56:26 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5bfd5730710fa5fb7ed986856ff5c169",
-        "x-ms-request-id": "a028873d-e002-0026-4112-207c0c000000",
-        "x-ms-version": "2019-02-02"
+        "x-ms-client-request-id": "27fe9fd221b3f7f0269ec96538a05b9d",
+        "x-ms-request-id": "908de860-a002-005e-2dfa-bb420b000000",
+        "x-ms-version": "2020-12-06"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.core.windows.net/Tables(\u0027testtablebjl1agf2\u0027)",
+      "RequestUri": "https://chrisstablesprim.table.core.windows.net/Tables(\u0027testtablem7gikdkr\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8a46c6bb86dd3248bf3818038c65ac7f-f120cb26ad3b274b-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "6bf8cec539caf1ee7d9f6ae55a48d179",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:10 GMT",
+        "traceparent": "00-94988f4a0bfcb5890f5d413ba874b523-da6d4e4f178f73c2-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d37d5a597f9953a158db4fa928b16eb7",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:29:12 GMT",
+        "Date": "Mon, 29 Aug 2022 22:56:26 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "6bf8cec539caf1ee7d9f6ae55a48d179",
-        "x-ms-request-id": "a0288744-e002-0026-4812-207c0c000000",
-        "x-ms-version": "2019-02-02"
+        "x-ms-client-request-id": "d37d5a597f9953a158db4fa928b16eb7",
+        "x-ms-request-id": "908de86e-a002-005e-3afa-bb420b000000",
+        "x-ms-version": "2020-12-06"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1998817806",
+    "RandomSeed": "1503084074",
     "STORAGE_ENDPOINT_SUFFIX": "core.windows.net",
     "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "Kg==",
-    "TABLES_STORAGE_ACCOUNT_NAME": "jverazsdkprim"
+    "TABLES_STORAGE_ACCOUNT_NAME": "chrisstablesprim"
   }
 }

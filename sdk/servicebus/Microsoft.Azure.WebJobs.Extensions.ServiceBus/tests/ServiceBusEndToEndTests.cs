@@ -340,6 +340,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction.ReceiveActions.ReceiveMessagesAsync(1));
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction.ReceiveActions.PeekMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
                 await host.StopAsync();
             }
@@ -373,6 +375,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(500);
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction_Batch.ReceiveActions.PeekMessagesAsync(1));
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
                 await host.StopAsync();
@@ -606,10 +610,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // start the host and wait for all messages to be processed
                 await host.StartAsync();
-                await TestHelpers.Await(() =>
-                {
-                    return DynamicConcurrencyTestJob.InvocationCount >= numMessages;
-                });
+                await TestHelpers.Await(
+                    () => DynamicConcurrencyTestJob.InvocationCount >= numMessages,
+                    timeout: 100 * 1000);
 
                 // ensure we've dynamically increased concurrency
                 concurrencyStatus = concurrencyManager.GetStatus(functionId);
@@ -649,6 +652,23 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var message = new ServiceBusMessage();
                 message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task BindToAmqpValueAsPoco()
+        {
+            var host = BuildHost<ServiceBusAmqpValueBindingAsPoco>();
+            using (host)
+            {
+                var message = new ServiceBusMessage();
+                message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue(new BinaryData(new TestPoco() { Name = "Key", Value = "Value" }).ToString());
                 await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
@@ -1244,7 +1264,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.AreEqual("value", userPropertiesArray[i]["key"]);
                     Assert.Greater(expiresAtUtcArray[i], DateTime.UtcNow);
                     Assert.AreEqual(expiresAtArray[i].DateTime, expiresAtUtcArray[i]);
-                    Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow);
+                    // account for clock skew
+                    Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow.AddSeconds(2));
                     Assert.AreEqual(enqueuedTimeArray[i].DateTime, enqueuedTimeUtcArray[i]);
                     Assert.IsNull(sessionIdArray[i]);
                     Assert.IsNull(replyToSessionIdArray[i]);
@@ -1352,6 +1373,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey)] string input)
             {
                 Assert.AreEqual("foobar", input);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusAmqpValueBindingAsPoco
+        {
+            public static void BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] TestPoco poco)
+            {
+                Assert.AreEqual("Key", poco.Name);
+                Assert.AreEqual("Value", poco.Value);
                 _waitHandle1.Set();
             }
         }
@@ -1525,8 +1557,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var receiveDeferred = await receiveActions.ReceiveDeferredMessagesAsync(
                     new[] { message.SequenceNumber });
 
-                var received = await receiveActions.ReceiveMessagesAsync(1);
-                Assert.IsNotNull(received);
+                var peeked = await receiveActions.PeekMessagesAsync(1, message.SequenceNumber);
+                Assert.IsNotEmpty(peeked);
+                Assert.AreEqual(message.SequenceNumber, peeked.Single().SequenceNumber);
 
                 _waitHandle1.Set();
             }

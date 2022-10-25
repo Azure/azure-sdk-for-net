@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -33,8 +34,8 @@ namespace Azure.ResourceManager.DataShare.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> dataSetId = default;
-            string synapseWorkspaceSqlPoolTableResourceId = default;
+            Optional<Guid> dataSetId = default;
+            ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -78,19 +79,24 @@ namespace Azure.ResourceManager.DataShare.Models
                     {
                         if (property0.NameEquals("dataSetId"))
                         {
-                            dataSetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataSetId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("synapseWorkspaceSqlPoolTableResourceId"))
                         {
-                            synapseWorkspaceSqlPoolTableResourceId = property0.Value.GetString();
+                            synapseWorkspaceSqlPoolTableResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SynapseWorkspaceSqlPoolTableDataSet(id, name, type, systemData.Value, kind, dataSetId.Value, synapseWorkspaceSqlPoolTableResourceId);
+            return new SynapseWorkspaceSqlPoolTableDataSet(id, name, type, systemData.Value, kind, Optional.ToNullable(dataSetId), synapseWorkspaceSqlPoolTableResourceId);
         }
     }
 }

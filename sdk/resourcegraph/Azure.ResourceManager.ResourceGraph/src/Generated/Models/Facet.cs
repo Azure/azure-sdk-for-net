@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// Please note <see cref="Facet"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FacetError"/> and <see cref="FacetResult"/>.
     /// </summary>
-    public partial class Facet
+    public abstract partial class Facet
     {
         /// <summary> Initializes a new instance of Facet. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
-        internal Facet(string expression)
+        protected Facet(string expression)
         {
             if (expression == null)
             {

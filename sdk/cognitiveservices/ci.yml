@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/cognitiveservices/
+    exclude:
+    - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/
 
 pr:
   branches:
@@ -20,7 +22,8 @@ pr:
   paths:
     include:
     - sdk/cognitiveservices/
-    - sdk/resourcemanager/
+    exclude:
+    - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -94,6 +97,3 @@ extends:
     - name: Microsoft.Azure.CognitiveServices.Vision.Face
       safeName: MicrosoftAzureCognitiveServicesVisionFace
       directoryName: Vision.Face
-    - name: Azure.ResourceManager.CognitiveServices
-      safeName: AzureResourceManagerCognitiveServices
-      directoryName: Azure.ResourceManager.CognitiveServices

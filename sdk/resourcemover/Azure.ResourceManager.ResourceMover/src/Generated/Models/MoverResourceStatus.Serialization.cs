@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        jobStatus = null;
                         continue;
                     }
                     jobStatus = MoverResourceJobStatus.DeserializeMoverResourceJobStatus(property.Value);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        errors = null;
                         continue;
                     }
                     errors = MoveResourceError.DeserializeMoveResourceError(property.Value);

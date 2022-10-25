@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultDescription. </summary>
         internal PrivateEndpointConnectionListResultDescription()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnectionDescriptionData>();
+            Value = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultDescription. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal PrivateEndpointConnectionListResultDescription(IReadOnlyList<PrivateEndpointConnectionDescriptionData> value)
+        internal PrivateEndpointConnectionListResultDescription(IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionDescriptionData> Value { get; }
+        public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> Value { get; }
     }
 }

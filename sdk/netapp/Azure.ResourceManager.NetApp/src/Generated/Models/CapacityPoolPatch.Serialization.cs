@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("qosType");
                 writer.WriteStringValue(QosType.Value.ToString());
             }
-            if (Optional.IsDefined(CoolAccess))
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess");
-                writer.WriteBooleanValue(CoolAccess.Value);
+                writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

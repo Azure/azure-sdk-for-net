@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContactListResult>> ListAsync(string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<OrbitalContactListResult>> ListAsync(string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Orbital
             {
                 case 200:
                     {
-                        ContactListResult value = default;
+                        OrbitalContactListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContactListResult.DeserializeContactListResult(document.RootElement);
+                        value = OrbitalContactListResult.DeserializeOrbitalContactListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContactListResult> List(string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<OrbitalContactListResult> List(string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Orbital
             {
                 case 200:
                     {
-                        ContactListResult value = default;
+                        OrbitalContactListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContactListResult.DeserializeContactListResult(document.RootElement);
+                        value = OrbitalContactListResult.DeserializeOrbitalContactListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="spacecraftName"/> or <paramref name="contactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="spacecraftName"/> or <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContactData>> GetAsync(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, CancellationToken cancellationToken = default)
+        public async Task<Response<OrbitalContactData>> GetAsync(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,13 +165,13 @@ namespace Azure.ResourceManager.Orbital
             {
                 case 200:
                     {
-                        ContactData value = default;
+                        OrbitalContactData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContactData.DeserializeContactData(document.RootElement);
+                        value = OrbitalContactData.DeserializeOrbitalContactData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ContactData)null, message.Response);
+                    return Response.FromValue((OrbitalContactData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="spacecraftName"/> or <paramref name="contactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="spacecraftName"/> or <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContactData> Get(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, CancellationToken cancellationToken = default)
+        public Response<OrbitalContactData> Get(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,19 +198,19 @@ namespace Azure.ResourceManager.Orbital
             {
                 case 200:
                     {
-                        ContactData value = default;
+                        OrbitalContactData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContactData.DeserializeContactData(document.RootElement);
+                        value = OrbitalContactData.DeserializeOrbitalContactData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ContactData)null, message.Response);
+                    return Response.FromValue((OrbitalContactData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, ContactData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, OrbitalContactData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="spacecraftName"/>, <paramref name="contactName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="spacecraftName"/> or <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, ContactData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, OrbitalContactData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="spacecraftName"/>, <paramref name="contactName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="spacecraftName"/> or <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, ContactData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, OrbitalContactData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContactListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<OrbitalContactListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.Orbital
             {
                 case 200:
                     {
-                        ContactListResult value = default;
+                        OrbitalContactListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContactListResult.DeserializeContactListResult(document.RootElement);
+                        value = OrbitalContactListResult.DeserializeOrbitalContactListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContactListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<OrbitalContactListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -440,9 +440,9 @@ namespace Azure.ResourceManager.Orbital
             {
                 case 200:
                     {
-                        ContactListResult value = default;
+                        OrbitalContactListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContactListResult.DeserializeContactListResult(document.RootElement);
+                        value = OrbitalContactListResult.DeserializeOrbitalContactListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

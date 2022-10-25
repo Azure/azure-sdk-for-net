@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.NetApp
         private readonly AccountsRestOperations _netAppAccountAccountsRestClient;
         private readonly ClientDiagnostics _vaultsClientDiagnostics;
         private readonly VaultsRestOperations _vaultsRestClient;
-        private readonly ClientDiagnostics _volumeGroupDetailVolumeGroupsClientDiagnostics;
-        private readonly VolumeGroupsRestOperations _volumeGroupDetailVolumeGroupsRestClient;
+        private readonly ClientDiagnostics _netAppVolumeGroupVolumeGroupsClientDiagnostics;
+        private readonly VolumeGroupsRestOperations _netAppVolumeGroupVolumeGroupsRestClient;
         private readonly NetAppAccountData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NetAppAccountResource"/> class for mocking. </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.NetApp
             _netAppAccountAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountAccountsApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _vaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _volumeGroupDetailVolumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", VolumeGroupDetailResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VolumeGroupDetailResource.ResourceType, out string volumeGroupDetailVolumeGroupsApiVersion);
-            _volumeGroupDetailVolumeGroupsRestClient = new VolumeGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, volumeGroupDetailVolumeGroupsApiVersion);
+            _netAppVolumeGroupVolumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetAppVolumeGroupResource.ResourceType, out string netAppVolumeGroupVolumeGroupsApiVersion);
+            _netAppVolumeGroupVolumeGroupsRestClient = new VolumeGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeGroupVolumeGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.NetApp
             return GetSnapshotPolicies().Get(snapshotPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetAppAccountAccountBackupResources in the NetAppAccount. </summary>
-        /// <returns> An object representing collection of NetAppAccountAccountBackupResources and their operations over a NetAppAccountAccountBackupResource. </returns>
-        public virtual NetAppAccountAccountBackupCollection GetNetAppAccountAccountBackups()
+        /// <summary> Gets a collection of NetAppAccountBackupResources in the NetAppAccount. </summary>
+        /// <returns> An object representing collection of NetAppAccountBackupResources and their operations over a NetAppAccountBackupResource. </returns>
+        public virtual NetAppAccountBackupCollection GetNetAppAccountBackups()
         {
-            return GetCachedClient(Client => new NetAppAccountAccountBackupCollection(Client, Id));
+            return GetCachedClient(Client => new NetAppAccountBackupCollection(Client, Id));
         }
 
         /// <summary>
@@ -189,9 +189,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetAppAccountAccountBackupResource>> GetNetAppAccountAccountBackupAsync(string backupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppAccountBackupResource>> GetNetAppAccountBackupAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppAccountAccountBackups().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppAccountBackups().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -204,31 +204,16 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetAppAccountAccountBackupResource> GetNetAppAccountAccountBackup(string backupName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppAccountBackupResource> GetNetAppAccountBackup(string backupName, CancellationToken cancellationToken = default)
         {
-            return GetNetAppAccountAccountBackups().Get(backupName, cancellationToken);
+            return GetNetAppAccountBackups().Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BackupPolicyResources in the NetAppAccount. </summary>
-        /// <returns> An object representing collection of BackupPolicyResources and their operations over a BackupPolicyResource. </returns>
-        public virtual BackupPolicyCollection GetBackupPolicies()
+        /// <summary> Gets a collection of NetAppBackupPolicyResources in the NetAppAccount. </summary>
+        /// <returns> An object representing collection of NetAppBackupPolicyResources and their operations over a NetAppBackupPolicyResource. </returns>
+        public virtual NetAppBackupPolicyCollection GetNetAppBackupPolicies()
         {
-            return GetCachedClient(Client => new BackupPolicyCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a particular backup Policy
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/backupPolicies/{backupPolicyName}
-        /// Operation Id: BackupPolicies_Get
-        /// </summary>
-        /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BackupPolicyResource>> GetBackupPolicyAsync(string backupPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetBackupPolicies().GetAsync(backupPolicyName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new NetAppBackupPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -241,16 +226,31 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BackupPolicyResource> GetBackupPolicy(string backupPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBackupPolicyResource>> GetNetAppBackupPolicyAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetBackupPolicies().Get(backupPolicyName, cancellationToken);
+            return await GetNetAppBackupPolicies().GetAsync(backupPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of VolumeGroupDetailResources in the NetAppAccount. </summary>
-        /// <returns> An object representing collection of VolumeGroupDetailResources and their operations over a VolumeGroupDetailResource. </returns>
-        public virtual VolumeGroupDetailCollection GetVolumeGroupDetails()
+        /// <summary>
+        /// Get a particular backup Policy
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/backupPolicies/{backupPolicyName}
+        /// Operation Id: BackupPolicies_Get
+        /// </summary>
+        /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetAppBackupPolicyResource> GetNetAppBackupPolicy(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new VolumeGroupDetailCollection(Client, Id));
+            return GetNetAppBackupPolicies().Get(backupPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetAppVolumeGroupResources in the NetAppAccount. </summary>
+        /// <returns> An object representing collection of NetAppVolumeGroupResources and their operations over a NetAppVolumeGroupResource. </returns>
+        public virtual NetAppVolumeGroupCollection GetNetAppVolumeGroups()
+        {
+            return GetCachedClient(Client => new NetAppVolumeGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -263,9 +263,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VolumeGroupDetailResource>> GetVolumeGroupDetailAsync(string volumeGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppVolumeGroupResource>> GetNetAppVolumeGroupAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetVolumeGroupDetails().GetAsync(volumeGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppVolumeGroups().GetAsync(volumeGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -278,9 +278,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VolumeGroupDetailResource> GetVolumeGroupDetail(string volumeGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppVolumeGroupResource> GetNetAppVolumeGroup(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            return GetVolumeGroupDetails().Get(volumeGroupName, cancellationToken);
+            return GetNetAppVolumeGroups().Get(volumeGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -444,15 +444,67 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// Renew identity credentials that are used to authenticate to key vault, for customer-managed key encryption. If encryption.identity.principalId does not match identity.principalId, running this operation will fix it.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/renewCredentials
+        /// Operation Id: Accounts_RenewCredentials
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RenewCredentialsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.RenewCredentials");
+            scope.Start();
+            try
+            {
+                var response = await _netAppAccountAccountsRestClient.RenewCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateRenewCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Renew identity credentials that are used to authenticate to key vault, for customer-managed key encryption. If encryption.identity.principalId does not match identity.principalId, running this operation will fix it.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/renewCredentials
+        /// Operation Id: Accounts_RenewCredentials
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation RenewCredentials(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.RenewCredentials");
+            scope.Start();
+            try
+            {
+                var response = _netAppAccountAccountsRestClient.RenewCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateRenewCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// List vaults for a Netapp Account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/vaults
         /// Operation Id: Vaults_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Vault" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Vault> GetVaultsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppVault" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppVault> GetVaultsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Vault>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NetAppVault>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vaultsClientDiagnostics.CreateScope("NetAppAccountResource.GetVaults");
                 scope.Start();
@@ -476,10 +528,10 @@ namespace Azure.ResourceManager.NetApp
         /// Operation Id: Vaults_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Vault" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Vault> GetVaults(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppVault" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppVault> GetVaults(CancellationToken cancellationToken = default)
         {
-            Page<Vault> FirstPageFunc(int? pageSizeHint)
+            Page<NetAppVault> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vaultsClientDiagnostics.CreateScope("NetAppAccountResource.GetVaults");
                 scope.Start();
@@ -503,16 +555,16 @@ namespace Azure.ResourceManager.NetApp
         /// Operation Id: VolumeGroups_ListByNetAppAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VolumeGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VolumeGroup> GetVolumeGroupsByNetAppAccountAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VolumeGroup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NetAppVolumeGroupResult>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _volumeGroupDetailVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroupsByNetAppAccount");
+                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroups");
                 scope.Start();
                 try
                 {
-                    var response = await _volumeGroupDetailVolumeGroupsRestClient.ListByNetAppAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _netAppVolumeGroupVolumeGroupsRestClient.ListByNetAppAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -530,16 +582,16 @@ namespace Azure.ResourceManager.NetApp
         /// Operation Id: VolumeGroups_ListByNetAppAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VolumeGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VolumeGroup> GetVolumeGroupsByNetAppAccount(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroups(CancellationToken cancellationToken = default)
         {
-            Page<VolumeGroup> FirstPageFunc(int? pageSizeHint)
+            Page<NetAppVolumeGroupResult> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _volumeGroupDetailVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroupsByNetAppAccount");
+                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroups");
                 scope.Start();
                 try
                 {
-                    var response = _volumeGroupDetailVolumeGroupsRestClient.ListByNetAppAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _netAppVolumeGroupVolumeGroupsRestClient.ListByNetAppAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -569,11 +621,26 @@ namespace Azure.ResourceManager.NetApp
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _netAppAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _netAppAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new NetAppAccountPatch(current.Location);
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -600,11 +667,26 @@ namespace Azure.ResourceManager.NetApp
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _netAppAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _netAppAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new NetAppAccountPatch(current.Location);
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -629,12 +711,23 @@ namespace Azure.ResourceManager.NetApp
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _netAppAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _netAppAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new NetAppAccountPatch(current.Location);
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -659,12 +752,23 @@ namespace Azure.ResourceManager.NetApp
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _netAppAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _netAppAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new NetAppAccountPatch(current.Location);
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -689,11 +793,26 @@ namespace Azure.ResourceManager.NetApp
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _netAppAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _netAppAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new NetAppAccountPatch(current.Location);
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -718,11 +837,26 @@ namespace Azure.ResourceManager.NetApp
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _netAppAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _netAppAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new NetAppAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new NetAppAccountPatch(current.Location);
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

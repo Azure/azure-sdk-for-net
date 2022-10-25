@@ -5,24 +5,21 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Language.QuestionAnswering.Projects;
+using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using System.Linq;
-using System.Threading;
-using System.Text.Json;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
-    public partial class QuestionAnsweringProjectsClientSamples : QuestionAnsweringProjectsLiveTestBase
+    public partial class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringLiveTestBase
     {
         [RecordedTest]
         [SyncOnly]
-        // TODO: Make this test Sync once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-        public async Task KnowledgeSources()
+        public void KnowledgeSources()
         {
-            QuestionAnsweringProjectsClient client = Client;
+            QuestionAnsweringAuthoringClient client = Client;
 
-            #region Snippet:QuestionAnsweringProjectsClient_UpdateSources_UpdateSample
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSources_UpdateSample
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
             string testProjectName = "{ProjectName}";
@@ -47,28 +44,27 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
+            Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
+
 #if SNIPPET
-            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: false, testProjectName, updateSourcesRequestContent);
-            updateSourcesOperation.WaitForCompletion();
+            // Updated Knowledge Sources can be retrieved as follows
+            Pageable<BinaryData> sources = updateSourcesOperation.Value;
 #else
-            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> updateSourcesOperation = InstrumentOperation(client.UpdateSources(WaitUntil.Started, testProjectName, updateSourcesRequestContent));
-            await updateSourcesOperation.WaitForCompletionAsync();
+            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
+            Pageable<BinaryData> sources = client.GetSources(testProjectName);
 #endif
 
-            // Knowledge Sources can be retrieved as follows
-            Pageable<BinaryData> sources = client.GetSources(testProjectName);
             Console.WriteLine("Sources: ");
             foreach (BinaryData source in sources)
             {
                 Console.WriteLine(source);
             }
-            #endregion
+#endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
 
-            #region Snippet:QuestionAnsweringProjectsClient_UpdateQnas
+#region Snippet:QuestionAnsweringAuthoringClient_UpdateQnas
 
             string question = "{NewQuestion}";
             string answer = "{NewAnswer}";
@@ -91,24 +87,29 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
+            Operation<Pageable<BinaryData>> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
+#if SNIPPET
             // QnAs can be retrieved as follows
-            Pageable<BinaryData> qnas = Client.GetQnas(testProjectName);
+            Pageable<BinaryData> qnas = updateQnasOperation.Value;
+#else
+            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
+            Pageable<BinaryData> qnas = client.GetQnas(testProjectName);
+#endif
 
             Console.WriteLine("Qnas: ");
             foreach (var qna in qnas)
             {
                 Console.WriteLine(qna);
             }
-            #endregion
+#endregion
 
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
             Assert.That(qnas.Any(qna => qna.ToString().Contains(question)));
             Assert.That(qnas.Any(qna => qna.ToString().Contains(answer)));
 
-            #region Snippet:QuestionAnsweringProjectsClient_UpdateSynonyms
+#region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonyms
             RequestContent updateSynonymsRequestContent = RequestContent.Create(
                 new
                 {
@@ -140,13 +141,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(synonym);
             }
-            #endregion
+#endregion
 
             Assert.AreEqual(204, updateSynonymsResponse.Status);
             Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qna maker")));
 
-            #region Snippet:QuestionAnsweringProjectsClient_AddFeedback
+#region Snippet:QuestionAnsweringAuthoringClient_AddFeedback
             RequestContent addFeedbackRequestContent = RequestContent.Create(
                 new
                 {
@@ -162,7 +163,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
             Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRequestContent);
-            #endregion
+#endregion
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
         }
@@ -171,9 +172,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         [AsyncOnly]
         public async Task KnowledgeSourcesAsync()
         {
-            QuestionAnsweringProjectsClient client = Client;
+            QuestionAnsweringAuthoringClient client = Client;
 
-            #region Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync_UpdateSample
+#region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_UpdateSample
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
             string testProjectName = "{ProjectName}";
@@ -198,27 +199,27 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
-            await updateSourcesOperation.WaitForCompletionAsync();
+            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
-            // Wait for operation completion
-            Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
-
-            Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
-
-            // Knowledge Sources can be retrieved as follows
+#if SNIPPET
+            // Updated Knowledge Sources can be retrieved as follows
+            AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
+#else
+            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
             AsyncPageable<BinaryData> sources = client.GetSourcesAsync(testProjectName);
+#endif
+
             Console.WriteLine("Sources: ");
             await foreach (BinaryData source in sources)
             {
                 Console.WriteLine(source);
             }
-            #endregion
+#endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
 
-            #region Snippet:QuestionAnsweringProjectsClient_UpdateQnasAsync
+#region Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync
             string question = "{NewQuestion}";
             string answer = "{NewAnswer}";
 #if !SNIPPET
@@ -240,25 +241,29 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
-            await updateQnasOperation.WaitForCompletionAsync();
+            Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
+#if SNIPPET
             // QnAs can be retrieved as follows
-            AsyncPageable<BinaryData> qnas = Client.GetQnasAsync(testProjectName);
+            AsyncPageable<BinaryData> qnas = updateQnasOperation.Value;
+#else
+            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
+            AsyncPageable<BinaryData> qnas = client.GetQnasAsync(testProjectName);
+#endif
 
             Console.WriteLine("Qnas: ");
             await foreach (var qna in qnas)
             {
                 Console.WriteLine(qna);
             }
-            #endregion
+#endregion
 
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
             Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
             Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
 
-            #region Snippet:QuestionAnsweringProjectsClient_UpdateSynonymsAsync
+#region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonymsAsync
             RequestContent updateSynonymsRequestContent = RequestContent.Create(
                 new
                 {
@@ -290,13 +295,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(synonym);
             }
-            #endregion
+#endregion
 
             Assert.AreEqual(204, updateSynonymsResponse.Status);
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna maker")));
 
-            #region Snippet:QuestionAnsweringProjectsClient_AddFeedbackAsync
+#region Snippet:QuestionAnsweringAuthoringClient_AddFeedbackAsync
             RequestContent addFeedbackRequestContent = RequestContent.Create(
                 new
                 {
@@ -312,7 +317,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
-            #endregion
+#endregion
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
         }

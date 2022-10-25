@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Dicom Service patch properties. </summary>
-    public partial class DicomServicePatch : ResourceTags
+    public partial class DicomServicePatch : HealthcareApisResourceTags
     {
         /// <summary> Initializes a new instance of DicomServicePatch. </summary>
         public DicomServicePatch()

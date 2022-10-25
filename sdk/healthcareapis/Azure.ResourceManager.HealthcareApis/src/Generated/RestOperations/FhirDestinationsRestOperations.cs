@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.IotFhirDestinationCollection>> ListByIotConnectorAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotFhirDestinationCollection>> ListByIotConnectorAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.IotFhirDestinationCollection value = default;
+                        IotFhirDestinationCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
+                        value = IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.IotFhirDestinationCollection> ListByIotConnector(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        public Response<IotFhirDestinationCollection> ListByIotConnector(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.IotFhirDestinationCollection value = default;
+                        IotFhirDestinationCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
+                        value = IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.IotFhirDestinationCollection>> ListByIotConnectorNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotFhirDestinationCollection>> ListByIotConnectorNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.IotFhirDestinationCollection value = default;
+                        IotFhirDestinationCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
+                        value = IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.IotFhirDestinationCollection> ListByIotConnectorNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        public Response<IotFhirDestinationCollection> ListByIotConnectorNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.IotFhirDestinationCollection value = default;
+                        IotFhirDestinationCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
+                        value = IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

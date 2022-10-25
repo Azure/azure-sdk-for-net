@@ -12,21 +12,21 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
     /// </summary>
-    public partial class CopyLogDetails
+    public abstract partial class CopyLogDetails
     {
         /// <summary> Initializes a new instance of CopyLogDetails. </summary>
-        internal CopyLogDetails()
+        protected CopyLogDetails()
         {
         }
 
         /// <summary> Initializes a new instance of CopyLogDetails. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        internal CopyLogDetails(ClassDiscriminator copyLogDetailsType)
+        internal CopyLogDetails(DataBoxOrderType copyLogDetailsType)
         {
             CopyLogDetailsType = copyLogDetailsType;
         }
 
         /// <summary> Indicates the type of job details. </summary>
-        internal ClassDiscriminator CopyLogDetailsType { get; set; }
+        internal DataBoxOrderType CopyLogDetailsType { get; set; }
     }
 }

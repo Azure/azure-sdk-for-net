@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureDataExplorer": return AzureDataExplorerConnectionProperties.DeserializeAzureDataExplorerConnectionProperties(element);
+                    case "AzureDataExplorer": return DataExplorerConnectionProperties.DeserializeDataExplorerConnectionProperties(element);
                 }
             }
             ConnectionType connectionType = default;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new TimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState));
+            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState));
         }
     }
 }

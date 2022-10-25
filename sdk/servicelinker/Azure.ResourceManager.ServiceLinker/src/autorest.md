@@ -72,6 +72,9 @@ rename-rules:
   Etag: ETag|etag
   VNet: Vnet
 
+generate-arm-resource-extensions:
+  - /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
+
 directive:
   - from: servicelinker.json
     where: $.definitions

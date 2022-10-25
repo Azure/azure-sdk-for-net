@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> hostname = default;
             Optional<DateTimeOffset> createdTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedOn = default;
-            Optional<BuildStatus> status = default;
+            Optional<StaticSiteBuildStatus> status = default;
             Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new BuildStatus(property0.Value.GetString());
+                            status = new StaticSiteBuildStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("userProvidedFunctionApps"))

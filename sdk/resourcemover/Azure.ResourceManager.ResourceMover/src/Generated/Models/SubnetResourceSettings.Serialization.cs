@@ -27,8 +27,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
-                writer.WritePropertyName("networkSecurityGroup");
-                writer.WriteObjectValue(NetworkSecurityGroup);
+                if (NetworkSecurityGroup != null)
+                {
+                    writer.WritePropertyName("networkSecurityGroup");
+                    writer.WriteObjectValue(NetworkSecurityGroup);
+                }
+                else
+                {
+                    writer.WriteNull("networkSecurityGroup");
+                }
             }
             writer.WriteEndObject();
         }
@@ -54,7 +61,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        networkSecurityGroup = null;
                         continue;
                     }
                     networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value);

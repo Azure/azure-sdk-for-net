@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new CustomPersistentDiskProperties(type, mountPath, Optional.ToNullable(readOnly), Optional.ToList(mountOptions));
+            return new UnknownCustomPersistentDiskProperties(type, mountPath, Optional.ToNullable(readOnly), Optional.ToList(mountOptions));
         }
     }
 }

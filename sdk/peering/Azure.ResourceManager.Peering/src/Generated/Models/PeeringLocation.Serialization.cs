@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion");
-                writer.WriteStringValue(AzureRegion);
+                writer.WriteStringValue(AzureRegion.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Peering.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<PeeringLocationPropertiesDirect> direct = default;
+            Optional<DirectPeeringLocationProperties> direct = default;
             Optional<PeeringLocationPropertiesExchange> exchange = default;
             Optional<string> peeringLocation = default;
             Optional<string> country = default;
-            Optional<string> azureRegion = default;
+            Optional<AzureLocation> azureRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Peering.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            direct = PeeringLocationPropertiesDirect.DeserializePeeringLocationPropertiesDirect(property0.Value);
+                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("exchange"))
@@ -142,14 +142,19 @@ namespace Azure.ResourceManager.Peering.Models
                         }
                         if (property0.NameEquals("azureRegion"))
                         {
-                            azureRegion = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            azureRegion = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PeeringLocation(id, name, type, systemData.Value, Optional.ToNullable(kind), direct.Value, exchange.Value, peeringLocation.Value, country.Value, azureRegion.Value);
+            return new PeeringLocation(id, name, type, systemData.Value, Optional.ToNullable(kind), direct.Value, exchange.Value, peeringLocation.Value, country.Value, Optional.ToNullable(azureRegion));
         }
     }
 }
