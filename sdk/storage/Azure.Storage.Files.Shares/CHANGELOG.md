@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where ShareFileClient Download() and DownloadAsync() would return a consumed stream when TransferValidation was enabled.
 
 ### Other Changes
 

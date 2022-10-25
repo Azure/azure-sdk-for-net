@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<State> state = default;
+            Optional<RegulatoryComplianceState> state = default;
             Optional<int> passedControls = default;
             Optional<int> failedControls = default;
             Optional<int> skippedControls = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new State(property0.Value.GetString());
+                            state = new RegulatoryComplianceState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("passedControls"))

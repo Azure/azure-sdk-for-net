@@ -87,63 +87,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnvironmentByUserAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// Response response = await client.GetEnvironmentByUserAsync("<environmentName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetEnvironmentByUserAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// Response response = await client.GetEnvironmentByUserAsync("<environmentName>", <me>);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUserAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetEnvironmentByUserAsync(string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -171,63 +115,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnvironmentByUser with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// Response response = client.GetEnvironmentByUser("<environmentName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetEnvironmentByUser with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// Response response = client.GetEnvironmentByUser("<environmentName>", <me>);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUser(String,String,RequestContext)']/*" />
         public virtual Response GetEnvironmentByUser(string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -256,105 +144,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call UpdateEnvironmentAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     environmentType = "<environmentType>",
-        /// };
-        /// 
-        /// Response response = await client.UpdateEnvironmentAsync("<environmentName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call UpdateEnvironmentAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     environmentType = "<environmentType>",
-        ///     owner = "<owner>",
-        ///     description = "<description>",
-        ///     catalogName = "<catalogName>",
-        ///     catalogItemName = "<catalogItemName>",
-        ///     parameters = new {},
-        ///     scheduledTasks = new {
-        ///         key = new {
-        ///             type = "AutoExpire",
-        ///             enabled = "Enabled",
-        ///             startTime = "2022-05-10T18:57:31.2311892Z",
-        ///         },
-        ///     },
-        ///     tags = new {
-        ///         key = "<String>",
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.UpdateEnvironmentAsync("<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// <details><summary>Environment</summary>Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='UpdateEnvironmentAsync(String,RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Response> UpdateEnvironmentAsync(string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -384,105 +174,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call UpdateEnvironment with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     environmentType = "<environmentType>",
-        /// };
-        /// 
-        /// Response response = client.UpdateEnvironment("<environmentName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call UpdateEnvironment with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     environmentType = "<environmentType>",
-        ///     owner = "<owner>",
-        ///     description = "<description>",
-        ///     catalogName = "<catalogName>",
-        ///     catalogItemName = "<catalogItemName>",
-        ///     parameters = new {},
-        ///     scheduledTasks = new {
-        ///         key = new {
-        ///             type = "AutoExpire",
-        ///             enabled = "Enabled",
-        ///             startTime = "2022-05-10T18:57:31.2311892Z",
-        ///         },
-        ///     },
-        ///     tags = new {
-        ///         key = "<String>",
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.UpdateEnvironment("<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// <details><summary>Environment</summary>Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='UpdateEnvironment(String,RequestContent,String,RequestContext)']/*" />
         public virtual Response UpdateEnvironment(string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -510,34 +202,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCatalogItemAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// Response response = await client.GetCatalogItemAsync("<catalogItemId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CatalogItem</c>:
-        /// <code>{
-        ///   id: string, # Optional. Unique identifier of the catalog item.
-        ///   name: string, # Optional. Name of the catalog item.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetCatalogItemAsync(string catalogItemId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -563,34 +228,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCatalogItem with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// Response response = client.GetCatalogItem("<catalogItemId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CatalogItem</c>:
-        /// <code>{
-        ///   id: string, # Optional. Unique identifier of the catalog item.
-        ///   name: string, # Optional. Name of the catalog item.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItem(String,RequestContext)']/*" />
         public virtual Response GetCatalogItem(string catalogItemId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -617,97 +255,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCatalogItemVersionAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("catalogItemId").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// Console.WriteLine(result.GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("summary").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("templatePath").ToString());
-        /// Console.WriteLine(result.GetProperty("parametersSchema").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parametersSchema").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("runner").ToString());
-        /// Console.WriteLine(result.GetProperty("runner").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CatalogItemVersion</c>:
-        /// <code>{
-        ///   catalogItemId: string, # Optional. Unique identifier of the catalog item.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   version: string, # Optional. The version of the catalog item.
-        ///   summary: string, # Optional. A short summary of the catalog item.
-        ///   description: string, # Optional. A long description of the catalog item.
-        ///   templatePath: string, # Optional. Path to the catalog item entrypoint file.
-        ///   parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-        ///   parameters: [
-        ///     {
-        ///       id: string, # Optional. Unique ID of the parameter
-        ///       name: string, # Optional. Display name of the parameter
-        ///       description: string, # Optional. Description of the parameter
-        ///       default: AnyObject, # Optional. Default value of the parameter
-        ///       type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-        ///       readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-        ///       required: boolean, # Optional. Whether or not this parameter is required
-        ///       allowed: [AnyObject], # Optional. An array of allowed values
-        ///     }
-        ///   ], # Optional. Input parameters passed to actions
-        ///   actions: [
-        ///     {
-        ///       id: string, # Optional. Unique identifier of the action
-        ///       name: string, # Optional. Display name of the action
-        ///       description: string, # Optional. Description of the action
-        ///       parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-        ///       parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-        ///       type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-        ///       typeName: string, # Optional. Name of the custom action type
-        ///       runner: string, # Optional. The container image to use to execute the action
-        ///     }
-        ///   ], # Optional. Custom actions for the catalog item.
-        ///   runner: string, # Optional. The default container image to use to execute actions
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-        ///   eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersionAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetCatalogItemVersionAsync(string catalogItemId, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -735,97 +283,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCatalogItemVersion with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// Response response = client.GetCatalogItemVersion("<catalogItemId>", "<version>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("catalogItemId").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// Console.WriteLine(result.GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("summary").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("templatePath").ToString());
-        /// Console.WriteLine(result.GetProperty("parametersSchema").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parametersSchema").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("actions")[0].GetProperty("runner").ToString());
-        /// Console.WriteLine(result.GetProperty("runner").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CatalogItemVersion</c>:
-        /// <code>{
-        ///   catalogItemId: string, # Optional. Unique identifier of the catalog item.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   version: string, # Optional. The version of the catalog item.
-        ///   summary: string, # Optional. A short summary of the catalog item.
-        ///   description: string, # Optional. A long description of the catalog item.
-        ///   templatePath: string, # Optional. Path to the catalog item entrypoint file.
-        ///   parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-        ///   parameters: [
-        ///     {
-        ///       id: string, # Optional. Unique ID of the parameter
-        ///       name: string, # Optional. Display name of the parameter
-        ///       description: string, # Optional. Description of the parameter
-        ///       default: AnyObject, # Optional. Default value of the parameter
-        ///       type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-        ///       readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-        ///       required: boolean, # Optional. Whether or not this parameter is required
-        ///       allowed: [AnyObject], # Optional. An array of allowed values
-        ///     }
-        ///   ], # Optional. Input parameters passed to actions
-        ///   actions: [
-        ///     {
-        ///       id: string, # Optional. Unique identifier of the action
-        ///       name: string, # Optional. Display name of the action
-        ///       description: string, # Optional. Description of the action
-        ///       parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-        ///       parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-        ///       type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-        ///       typeName: string, # Optional. Name of the custom action type
-        ///       runner: string, # Optional. The container image to use to execute the action
-        ///     }
-        ///   ], # Optional. Custom actions for the catalog item.
-        ///   runner: string, # Optional. The default container image to use to execute actions
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-        ///   eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersion(String,String,RequestContext)']/*" />
         public virtual Response GetCatalogItemVersion(string catalogItemId, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -850,65 +308,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnvironmentsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetEnvironmentsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("environmentType").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetEnvironmentsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetEnvironmentsAsync(1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("environmentType").ToString());
-        ///     Console.WriteLine(result.GetProperty("owner").ToString());
-        ///     Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogName").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>EnvironmentListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsAsync(Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentsAsync(int? maxCount = null, RequestContext context = null)
         {
             return GetEnvironmentsImplementationAsync("EnvironmentsClient.GetEnvironments", maxCount, context);
@@ -936,65 +336,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnvironments and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetEnvironments())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("environmentType").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetEnvironments with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetEnvironments(1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("environmentType").ToString());
-        ///     Console.WriteLine(result.GetProperty("owner").ToString());
-        ///     Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogName").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>EnvironmentListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironments(Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironments(int? maxCount = null, RequestContext context = null)
         {
             return GetEnvironmentsImplementation("EnvironmentsClient.GetEnvironments", maxCount, context);
@@ -1025,65 +367,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnvironmentsByUserAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetEnvironmentsByUserAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("environmentType").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetEnvironmentsByUserAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetEnvironmentsByUserAsync(<me>, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("environmentType").ToString());
-        ///     Console.WriteLine(result.GetProperty("owner").ToString());
-        ///     Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogName").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>EnvironmentListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsByUserAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentsByUserAsync(string userId = "me", int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1116,65 +400,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnvironmentsByUser and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetEnvironmentsByUser())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("environmentType").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetEnvironmentsByUser with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetEnvironmentsByUser(<me>, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("environmentType").ToString());
-        ///     Console.WriteLine(result.GetProperty("owner").ToString());
-        ///     Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogName").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        ///     Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>EnvironmentListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsByUser(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironmentsByUser(string userId = "me", int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1207,54 +433,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetArtifactsByEnvironmentAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetArtifactsByEnvironmentAsync("<environmentName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetArtifactsByEnvironmentAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetArtifactsByEnvironmentAsync("<environmentName>", <me>))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("isDirectory").ToString());
-        ///     Console.WriteLine(result.GetProperty("downloadUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("fileSize").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastModifiedTime").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ArtifactListResultValue</c>:
-        /// <code>{
-        ///   id: string, # Optional. Artifact identifier
-        ///   name: string, # Optional. Artifact name
-        ///   isDirectory: boolean, # Optional. Whether artifact is a directory
-        ///   downloadUri: string, # Optional. Uri where the file contents can be downloaded
-        ///   fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
-        ///   createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
-        ///   lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetArtifactsByEnvironmentAsync(String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetArtifactsByEnvironmentAsync(string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -1288,54 +467,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetArtifactsByEnvironment with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetArtifactsByEnvironment("<environmentName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetArtifactsByEnvironment with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetArtifactsByEnvironment("<environmentName>", <me>))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("isDirectory").ToString());
-        ///     Console.WriteLine(result.GetProperty("downloadUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("fileSize").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastModifiedTime").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ArtifactListResultValue</c>:
-        /// <code>{
-        ///   id: string, # Optional. Artifact identifier
-        ///   name: string, # Optional. Artifact name
-        ///   isDirectory: boolean, # Optional. Whether artifact is a directory
-        ///   downloadUri: string, # Optional. Uri where the file contents can be downloaded
-        ///   fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
-        ///   createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
-        ///   lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetArtifactsByEnvironment(String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetArtifactsByEnvironment(string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -1370,54 +502,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/>, <paramref name="artifactPath"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetArtifactsByEnvironmentAndPathAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetArtifactsByEnvironmentAndPathAsync("<environmentName>", "<artifactPath>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetArtifactsByEnvironmentAndPathAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetArtifactsByEnvironmentAndPathAsync("<environmentName>", "<artifactPath>", <me>))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("isDirectory").ToString());
-        ///     Console.WriteLine(result.GetProperty("downloadUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("fileSize").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastModifiedTime").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ArtifactListResultValue</c>:
-        /// <code>{
-        ///   id: string, # Optional. Artifact identifier
-        ///   name: string, # Optional. Artifact name
-        ///   isDirectory: boolean, # Optional. Whether artifact is a directory
-        ///   downloadUri: string, # Optional. Uri where the file contents can be downloaded
-        ///   fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
-        ///   createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
-        ///   lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetArtifactsByEnvironmentAndPathAsync(String,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetArtifactsByEnvironmentAndPathAsync(string environmentName, string artifactPath, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -1453,54 +538,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/>, <paramref name="artifactPath"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetArtifactsByEnvironmentAndPath with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetArtifactsByEnvironmentAndPath("<environmentName>", "<artifactPath>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetArtifactsByEnvironmentAndPath with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetArtifactsByEnvironmentAndPath("<environmentName>", "<artifactPath>", <me>))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("isDirectory").ToString());
-        ///     Console.WriteLine(result.GetProperty("downloadUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("fileSize").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastModifiedTime").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ArtifactListResultValue</c>:
-        /// <code>{
-        ///   id: string, # Optional. Artifact identifier
-        ///   name: string, # Optional. Artifact name
-        ///   isDirectory: boolean, # Optional. Whether artifact is a directory
-        ///   downloadUri: string, # Optional. Uri where the file contents can be downloaded
-        ///   fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
-        ///   createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
-        ///   lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetArtifactsByEnvironmentAndPath(String,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetArtifactsByEnvironmentAndPath(string environmentName, string artifactPath, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -1532,46 +570,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCatalogItemsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetCatalogItemsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetCatalogItemsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetCatalogItemsAsync(1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CatalogItemListResultValue</c>:
-        /// <code>{
-        ///   id: string, # Optional. Unique identifier of the catalog item.
-        ///   name: string, # Optional. Name of the catalog item.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemsAsync(Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetCatalogItemsAsync(int? maxCount = null, RequestContext context = null)
         {
             return GetCatalogItemsImplementationAsync("EnvironmentsClient.GetCatalogItems", maxCount, context);
@@ -1599,46 +598,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCatalogItems and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetCatalogItems())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetCatalogItems with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetCatalogItems(1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CatalogItemListResultValue</c>:
-        /// <code>{
-        ///   id: string, # Optional. Unique identifier of the catalog item.
-        ///   name: string, # Optional. Name of the catalog item.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItems(Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetCatalogItems(int? maxCount = null, RequestContext context = null)
         {
             return GetCatalogItemsImplementation("EnvironmentsClient.GetCatalogItems", maxCount, context);
@@ -1669,109 +629,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCatalogItemVersionsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetCatalogItemVersionsAsync("<catalogItemId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetCatalogItemVersionsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetCatalogItemVersionsAsync("<catalogItemId>", 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("catalogItemId").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogName").ToString());
-        ///     Console.WriteLine(result.GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("summary").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("templatePath").ToString());
-        ///     Console.WriteLine(result.GetProperty("parametersSchema").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parametersSchema").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("typeName").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("runner").ToString());
-        ///     Console.WriteLine(result.GetProperty("runner").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CatalogItemVersionListResultValue</c>:
-        /// <code>{
-        ///   catalogItemId: string, # Optional. Unique identifier of the catalog item.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   version: string, # Optional. The version of the catalog item.
-        ///   summary: string, # Optional. A short summary of the catalog item.
-        ///   description: string, # Optional. A long description of the catalog item.
-        ///   templatePath: string, # Optional. Path to the catalog item entrypoint file.
-        ///   parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-        ///   parameters: [
-        ///     {
-        ///       id: string, # Optional. Unique ID of the parameter
-        ///       name: string, # Optional. Display name of the parameter
-        ///       description: string, # Optional. Description of the parameter
-        ///       default: AnyObject, # Optional. Default value of the parameter
-        ///       type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-        ///       readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-        ///       required: boolean, # Optional. Whether or not this parameter is required
-        ///       allowed: [AnyObject], # Optional. An array of allowed values
-        ///     }
-        ///   ], # Optional. Input parameters passed to actions
-        ///   actions: [
-        ///     {
-        ///       id: string, # Optional. Unique identifier of the action
-        ///       name: string, # Optional. Display name of the action
-        ///       description: string, # Optional. Description of the action
-        ///       parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-        ///       parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-        ///       type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-        ///       typeName: string, # Optional. Name of the custom action type
-        ///       runner: string, # Optional. The container image to use to execute the action
-        ///     }
-        ///   ], # Optional. Custom actions for the catalog item.
-        ///   runner: string, # Optional. The default container image to use to execute actions
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-        ///   eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersionsAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetCatalogItemVersionsAsync(string catalogItemId, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -1804,109 +662,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCatalogItemVersions with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetCatalogItemVersions("<catalogItemId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetCatalogItemVersions with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetCatalogItemVersions("<catalogItemId>", 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("catalogItemId").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        ///     Console.WriteLine(result.GetProperty("catalogName").ToString());
-        ///     Console.WriteLine(result.GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("summary").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("templatePath").ToString());
-        ///     Console.WriteLine(result.GetProperty("parametersSchema").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
-        ///     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parametersSchema").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("typeName").ToString());
-        ///     Console.WriteLine(result.GetProperty("actions")[0].GetProperty("runner").ToString());
-        ///     Console.WriteLine(result.GetProperty("runner").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CatalogItemVersionListResultValue</c>:
-        /// <code>{
-        ///   catalogItemId: string, # Optional. Unique identifier of the catalog item.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   version: string, # Optional. The version of the catalog item.
-        ///   summary: string, # Optional. A short summary of the catalog item.
-        ///   description: string, # Optional. A long description of the catalog item.
-        ///   templatePath: string, # Optional. Path to the catalog item entrypoint file.
-        ///   parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-        ///   parameters: [
-        ///     {
-        ///       id: string, # Optional. Unique ID of the parameter
-        ///       name: string, # Optional. Display name of the parameter
-        ///       description: string, # Optional. Description of the parameter
-        ///       default: AnyObject, # Optional. Default value of the parameter
-        ///       type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-        ///       readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-        ///       required: boolean, # Optional. Whether or not this parameter is required
-        ///       allowed: [AnyObject], # Optional. An array of allowed values
-        ///     }
-        ///   ], # Optional. Input parameters passed to actions
-        ///   actions: [
-        ///     {
-        ///       id: string, # Optional. Unique identifier of the action
-        ///       name: string, # Optional. Display name of the action
-        ///       description: string, # Optional. Description of the action
-        ///       parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-        ///       parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-        ///       type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-        ///       typeName: string, # Optional. Name of the custom action type
-        ///       runner: string, # Optional. The container image to use to execute the action
-        ///     }
-        ///   ], # Optional. Custom actions for the catalog item.
-        ///   runner: string, # Optional. The default container image to use to execute actions
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-        ///   eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersions(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetCatalogItemVersions(string catalogItemId, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -1936,46 +692,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnvironmentTypesAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetEnvironmentTypesAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetEnvironmentTypesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// await foreach (var data in client.GetEnvironmentTypesAsync(1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>EnvironmentTypeListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Name of the environment type
-        ///   deploymentTargetId: string, # Optional. Id of a subscription or management group that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription or management group.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether this Environment Type can be used in this Project.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypesAsync(Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentTypesAsync(int? maxCount = null, RequestContext context = null)
         {
             return GetEnvironmentTypesImplementationAsync("EnvironmentsClient.GetEnvironmentTypes", maxCount, context);
@@ -2003,46 +720,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnvironmentTypes and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetEnvironmentTypes())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetEnvironmentTypes with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// foreach (var data in client.GetEnvironmentTypes(1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>EnvironmentTypeListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Name of the environment type
-        ///   deploymentTargetId: string, # Optional. Id of a subscription or management group that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription or management group.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether this Environment Type can be used in this Project.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypes(Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironmentTypes(int? maxCount = null, RequestContext context = null)
         {
             return GetEnvironmentTypesImplementation("EnvironmentsClient.GetEnvironmentTypes", maxCount, context);
@@ -2075,106 +753,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateEnvironmentAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     environmentType = "<environmentType>",
-        /// };
-        /// 
-        /// var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateEnvironmentAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     environmentType = "<environmentType>",
-        ///     owner = "<owner>",
-        ///     description = "<description>",
-        ///     catalogName = "<catalogName>",
-        ///     catalogItemName = "<catalogItemName>",
-        ///     parameters = new {},
-        ///     scheduledTasks = new {
-        ///         key = new {
-        ///             type = "AutoExpire",
-        ///             enabled = "Enabled",
-        ///             startTime = "2022-05-10T18:57:31.2311892Z",
-        ///         },
-        ///     },
-        ///     tags = new {
-        ///         key = "<String>",
-        ///     },
-        /// };
-        /// 
-        /// var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironmentAsync(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrUpdateEnvironmentAsync(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -2205,106 +784,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateEnvironment with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     environmentType = "<environmentType>",
-        /// };
-        /// 
-        /// var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateEnvironment with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     environmentType = "<environmentType>",
-        ///     owner = "<owner>",
-        ///     description = "<description>",
-        ///     catalogName = "<catalogName>",
-        ///     catalogItemName = "<catalogItemName>",
-        ///     parameters = new {},
-        ///     scheduledTasks = new {
-        ///         key = new {
-        ///             type = "AutoExpire",
-        ///             enabled = "Enabled",
-        ///             startTime = "2022-05-10T18:57:31.2311892Z",
-        ///         },
-        ///     },
-        ///     tags = new {
-        ///         key = "<String>",
-        ///     },
-        /// };
-        /// 
-        /// var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentType").ToString());
-        /// Console.WriteLine(result.GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogName").ToString());
-        /// Console.WriteLine(result.GetProperty("catalogItemName").ToString());
-        /// Console.WriteLine(result.GetProperty("parameters").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("enabled").ToString());
-        /// Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Environment</c>:
-        /// <code>{
-        ///   name: string, # Optional. Environment name.
-        ///   environmentType: string, # Required. Environment type.
-        ///   owner: string, # Optional. Identifier of the owner of this Environment.
-        ///   provisioningState: string, # Optional. The provisioning state of the environment.
-        ///   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-        ///   description: string, # Optional. Description of the Environment.
-        ///   catalogName: string, # Optional. Name of the catalog.
-        ///   catalogItemName: string, # Optional. Name of the catalog item.
-        ///   parameters: AnyObject, # Optional. Parameters object for the deploy action
-        ///   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironment(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrUpdateEnvironment(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -2334,28 +814,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteEnvironmentAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>");
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// This sample shows how to call DeleteEnvironmentAsync with all parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>", <me>);
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironmentAsync(WaitUntil,String,String,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteEnvironmentAsync(WaitUntil waitUntil, string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -2384,28 +843,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteEnvironment with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>");
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// This sample shows how to call DeleteEnvironment with all parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>", <me>);
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironment(WaitUntil,String,String,RequestContext)']/*" />
         public virtual Operation DeleteEnvironment(WaitUntil waitUntil, string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -2435,50 +873,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeployEnvironmentActionAsync with required parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        /// };
-        /// 
-        /// var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// This sample shows how to call DeployEnvironmentActionAsync with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        ///     parameters = new {},
-        /// };
-        /// 
-        /// var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ActionRequest</c>:
-        /// <code>{
-        ///   actionId: string, # Required. The Catalog Item action id to execute
-        ///   parameters: AnyObject, # Optional. Parameters object for the Action
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeployEnvironmentActionAsync(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Operation> DeployEnvironmentActionAsync(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -2509,50 +904,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeployEnvironmentAction with required parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        /// };
-        /// 
-        /// var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// This sample shows how to call DeployEnvironmentAction with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        ///     parameters = new {},
-        /// };
-        /// 
-        /// var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ActionRequest</c>:
-        /// <code>{
-        ///   actionId: string, # Required. The Catalog Item action id to execute
-        ///   parameters: AnyObject, # Optional. Parameters object for the Action
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeployEnvironmentAction(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
         public virtual Operation DeployEnvironmentAction(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -2583,50 +935,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteEnvironmentActionAsync with required parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        /// };
-        /// 
-        /// var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// This sample shows how to call DeleteEnvironmentActionAsync with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        ///     parameters = new {},
-        /// };
-        /// 
-        /// var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ActionRequest</c>:
-        /// <code>{
-        ///   actionId: string, # Required. The Catalog Item action id to execute
-        ///   parameters: AnyObject, # Optional. Parameters object for the Action
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironmentActionAsync(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteEnvironmentActionAsync(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -2657,50 +966,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteEnvironmentAction with required parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        /// };
-        /// 
-        /// var operation = client.DeleteEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// This sample shows how to call DeleteEnvironmentAction with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        ///     parameters = new {},
-        /// };
-        /// 
-        /// var operation = client.DeleteEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ActionRequest</c>:
-        /// <code>{
-        ///   actionId: string, # Required. The Catalog Item action id to execute
-        ///   parameters: AnyObject, # Optional. Parameters object for the Action
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironmentAction(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
         public virtual Operation DeleteEnvironmentAction(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -2731,50 +997,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call CustomEnvironmentActionAsync with required parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        /// };
-        /// 
-        /// var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// This sample shows how to call CustomEnvironmentActionAsync with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        ///     parameters = new {},
-        /// };
-        /// 
-        /// var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ActionRequest</c>:
-        /// <code>{
-        ///   actionId: string, # Required. The Catalog Item action id to execute
-        ///   parameters: AnyObject, # Optional. Parameters object for the Action
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CustomEnvironmentActionAsync(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Operation> CustomEnvironmentActionAsync(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -2805,50 +1028,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call CustomEnvironmentAction with required parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        /// };
-        /// 
-        /// var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// This sample shows how to call CustomEnvironmentAction with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-        /// 
-        /// var data = new {
-        ///     actionId = "<actionId>",
-        ///     parameters = new {},
-        /// };
-        /// 
-        /// var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ActionRequest</c>:
-        /// <code>{
-        ///   actionId: string, # Required. The Catalog Item action id to execute
-        ///   parameters: AnyObject, # Optional. Parameters object for the Action
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CustomEnvironmentAction(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
         public virtual Operation CustomEnvironmentAction(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));

@@ -77,7 +77,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             try
             {
                 ObjectAnchorsConversionClient client = new ObjectAnchorsConversionClient(Guid.NewGuid(), "eastus2.azure.com", new AccessToken("dummykey", new DateTimeOffset(new DateTime(3000, 1, 1))));
-                await client.StartAssetConversionAsync(new AssetConversionOptions(new Uri(anyWorkingUriString), new AssetFileType(".exe"), new AssetConversionConfiguration(new System.Numerics.Vector3(0, 0, 1), 1)));
+                await client.StartAssetConversionAsync(new AssetConversionOptions(new Uri(anyWorkingUriString), new AssetFileType(".exe"), new AssetConversionConfiguration(new System.Numerics.Vector3(0, 0, 1), 1, false)));
             }
             catch (AssetFileTypeNotSupportedException)
             {

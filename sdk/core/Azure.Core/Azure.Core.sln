@@ -37,6 +37,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental.Per
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests.Public", "tests\public\Azure.Core.Tests.Public.csproj", "{08240359-7777-4119-8628-D7AA4E085418}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{13A04222-4F21-40FC-BE42-A37EE34FF272}"
+	ProjectSection(SolutionItems) = preProject
+		samples\Configuration.md = samples\Configuration.md
+		samples\Diagnostics.md = samples\Diagnostics.md
+		samples\Events.md = samples\Events.md
+		samples\LongRunningOperations.md = samples\LongRunningOperations.md
+		samples\Mocking.md = samples\Mocking.md
+		samples\Pipeline.md = samples\Pipeline.md
+		samples\ProtocolMethods.md = samples\ProtocolMethods.md
+		samples\README.md = samples\README.md
+		samples\RequestContext.md = samples\RequestContext.md
+		samples\Response.md = samples\Response.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

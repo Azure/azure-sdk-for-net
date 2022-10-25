@@ -1,5 +1,15 @@
 # Release History
 
+## 1.9.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.9.0-beta.1 (2022-10-13)
 
 ### Features Added
@@ -8,7 +18,7 @@
   - `AzurePowerShellCredential` and `AzurePowerShellCredentialOptions.PowerShellProcessTimeout`
   - `VisualStudioCredential` and `VisualStudioCredentialOptions.VisualStudioProcessTimeout`
   - `DefaultAzureCredential` and `DefaultAzureCredentialOptions.DeveloperCredentialTimeout`  Note: this option applies to all developer credentials above when using `DefaultAzureCredential`.
-  
+
 ### Acknowledgments
 Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
 

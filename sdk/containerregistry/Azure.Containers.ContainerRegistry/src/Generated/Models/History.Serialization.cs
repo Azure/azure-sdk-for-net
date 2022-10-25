@@ -10,8 +10,19 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class History
+    internal partial class History : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(V1Compatibility))
+            {
+                writer.WritePropertyName("v1Compatibility");
+                writer.WriteStringValue(V1Compatibility);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static History DeserializeHistory(JsonElement element)
         {
             Optional<string> v1Compatibility = default;

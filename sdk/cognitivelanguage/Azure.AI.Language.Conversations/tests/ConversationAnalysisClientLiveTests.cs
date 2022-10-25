@@ -190,6 +190,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
         public async Task AnalyzeConversation_ConversationSummarization()
         {
             var textConversationItems = new List<TextConversationItem>()
@@ -243,6 +244,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
         public async Task AnalyzeConversation_ConversationPII_TextInput()
         {
             var textConversationItems = new List<TextConversationItem>()
@@ -303,6 +305,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
         public async Task AnalyzeConversation_ConversationPII_TranscriptInput()
         {
             var transcriptConversationItemOne = new TranscriptConversationItem("1", "speaker", "hi", "hi", "Hi", "hi");

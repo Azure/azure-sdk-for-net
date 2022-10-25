@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="propertyType"> The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]. </param>
         /// <param name="expectedValue"> The expected value. </param>
         /// <param name="operator"> A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType. </param>
-        internal AutomationTriggeringRule(string propertyJPath, PropertyType? propertyType, string expectedValue, Operator? @operator)
+        internal AutomationTriggeringRule(string propertyJPath, AutomationTriggeringRulePropertyType? propertyType, string expectedValue, AutomationTriggeringRuleOperator? @operator)
         {
             PropertyJPath = propertyJPath;
             PropertyType = propertyType;
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The JPath of the entity model property that should be checked. </summary>
         public string PropertyJPath { get; set; }
         /// <summary> The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]. </summary>
-        public PropertyType? PropertyType { get; set; }
+        public AutomationTriggeringRulePropertyType? PropertyType { get; set; }
         /// <summary> The expected value. </summary>
         public string ExpectedValue { get; set; }
         /// <summary> A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType. </summary>
-        public Operator? Operator { get; set; }
+        public AutomationTriggeringRuleOperator? Operator { get; set; }
     }
 }

@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2022-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckFeatureSupportRequest(string subscriptionId, AzureLocation location, FeatureValidationRequestBase featureValidationRequestBase)
+        internal HttpMessage CreateCheckFeatureSupportRequest(string subscriptionId, AzureLocation location, BackupFeatureValidationContentBase content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(featureValidationRequestBase);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -63,24 +63,24 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Validates if a feature is supported. </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="location"> The String to use. </param>
-        /// <param name="featureValidationRequestBase"> Feature support request object. </param>
+        /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="featureValidationRequestBase"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FeatureValidationResponseBase>> CheckFeatureSupportAsync(string subscriptionId, AzureLocation location, FeatureValidationRequestBase featureValidationRequestBase, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupFeatureValidationResultBase>> CheckFeatureSupportAsync(string subscriptionId, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(featureValidationRequestBase, nameof(featureValidationRequestBase));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckFeatureSupportRequest(subscriptionId, location, featureValidationRequestBase);
+            using var message = CreateCheckFeatureSupportRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FeatureValidationResponseBase value = default;
+                        BackupFeatureValidationResultBase value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FeatureValidationResponseBase.DeserializeFeatureValidationResponseBase(document.RootElement);
+                        value = BackupFeatureValidationResultBase.DeserializeBackupFeatureValidationResultBase(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,24 +91,24 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Validates if a feature is supported. </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="location"> The String to use. </param>
-        /// <param name="featureValidationRequestBase"> Feature support request object. </param>
+        /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="featureValidationRequestBase"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FeatureValidationResponseBase> CheckFeatureSupport(string subscriptionId, AzureLocation location, FeatureValidationRequestBase featureValidationRequestBase, CancellationToken cancellationToken = default)
+        public Response<BackupFeatureValidationResultBase> CheckFeatureSupport(string subscriptionId, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(featureValidationRequestBase, nameof(featureValidationRequestBase));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckFeatureSupportRequest(subscriptionId, location, featureValidationRequestBase);
+            using var message = CreateCheckFeatureSupportRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FeatureValidationResponseBase value = default;
+                        BackupFeatureValidationResultBase value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FeatureValidationResponseBase.DeserializeFeatureValidationResponseBase(document.RootElement);
+                        value = BackupFeatureValidationResultBase.DeserializeBackupFeatureValidationResultBase(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

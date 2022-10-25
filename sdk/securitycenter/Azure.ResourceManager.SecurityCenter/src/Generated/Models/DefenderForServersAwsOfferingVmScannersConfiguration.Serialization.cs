@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,14 +26,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("scanningMode");
                 writer.WriteStringValue(ScanningMode.Value.ToString());
             }
-            if (Optional.IsDefined(ExclusionTags))
+            if (Optional.IsCollectionDefined(ExclusionTags))
             {
                 writer.WritePropertyName("exclusionTags");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ExclusionTags);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExclusionTags.ToString()).RootElement);
-#endif
+                writer.WriteStartObject();
+                foreach (var item in ExclusionTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
@@ -41,8 +43,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static DefenderForServersAwsOfferingVmScannersConfiguration DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(JsonElement element)
         {
             Optional<string> cloudRoleArn = default;
-            Optional<ScanningMode> scanningMode = default;
-            Optional<BinaryData> exclusionTags = default;
+            Optional<DefenderForServersScanningMode> scanningMode = default;
+            Optional<IDictionary<string, string>> exclusionTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cloudRoleArn"))
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scanningMode = new ScanningMode(property.Value.GetString());
+                    scanningMode = new DefenderForServersScanningMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("exclusionTags"))
@@ -67,11 +69,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    exclusionTags = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    exclusionTags = dictionary;
                     continue;
                 }
             }
-            return new DefenderForServersAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), exclusionTags.Value);
+            return new DefenderForServersAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), Optional.ToDictionary(exclusionTags));
         }
     }
 }
