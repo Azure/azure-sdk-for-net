@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("publisherInfo");
                 writer.WriteObjectValue(PublisherInfo);
             }
-            if (Optional.IsDefined(Common))
+            if (Optional.IsDefined(IsCommon))
             {
                 writer.WritePropertyName("common");
-                writer.WriteBooleanValue(Common.Value);
+                writer.WriteBooleanValue(IsCommon.Value);
             }
             if (Optional.IsCollectionDefined(UserSids))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<bool> common = default;
             Optional<IList<string>> userSids = default;
             Optional<IList<UserRecommendation>> usernames = default;
-            Optional<FileType> fileType = default;
+            Optional<PathRecommendationFileType> fileType = default;
             Optional<ConfigurationStatus> configurationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileType = new FileType(property.Value.GetString());
+                    fileType = new PathRecommendationFileType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configurationStatus"))

@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetReceivedInvitationAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetReceivedInvitationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.GetReceivedInvitationAsync("<receivedInvitationName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Get a received invitation
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties for a received invitation of kind application.
+  invitationKind: Application, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties for a received invitation of kind user.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="GetReceivedInvitation(String,RequestContext)">
+<example>
+This sample shows how to call GetReceivedInvitation with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+Response response = client.GetReceivedInvitation("<receivedInvitationName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Get a received invitation
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties for a received invitation of kind application.
+  invitationKind: Application, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties for a received invitation of kind user.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="RejectAsync(String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call RejectAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        targetActiveDirectoryId = "<targetActiveDirectoryId>",
+        targetObjectId = "<targetObjectId>",
+    },
+    invitationKind = "Application",
+};
+
+Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call RejectAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        shareKind = "InPlace",
+        targetActiveDirectoryId = "<targetActiveDirectoryId>",
+        targetObjectId = "<targetObjectId>",
+    },
+    invitationKind = "Application",
+};
+
+Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Reject a received invitation
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties for a received invitation of kind application.
+  invitationKind: Application, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties for a received invitation of kind user.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties for a received invitation of kind application.
+  invitationKind: Application, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties for a received invitation of kind user.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="Reject(String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call Reject with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        targetActiveDirectoryId = "<targetActiveDirectoryId>",
+        targetObjectId = "<targetObjectId>",
+    },
+    invitationKind = "Application",
+};
+
+Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Reject with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        shareKind = "InPlace",
+        targetActiveDirectoryId = "<targetActiveDirectoryId>",
+        targetObjectId = "<targetObjectId>",
+    },
+    invitationKind = "Application",
+};
+
+Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Reject a received invitation
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties for a received invitation of kind application.
+  invitationKind: Application, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties for a received invitation of kind user.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties for a received invitation of kind application.
+  invitationKind: Application, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
+<code>{
+  properties: {
+    description: string, # Optional. Description shared when the invitation was created
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
+    invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
+    location: string, # Optional. Location of the invitation.
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
+    sentShareName: string, # Optional. Gets the source share Name.
+    shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties for a received invitation of kind user.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="GetReceivedInvitationsAsync(String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetReceivedInvitationsAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetReceivedInvitationsAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetReceivedInvitationsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetReceivedInvitationsAsync("<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List received invitations
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>ReceivedInvitationListValue</c>:
+<code>{
+  invitationKind: &quot;User&quot; | &quot;Application&quot;, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetReceivedInvitations(String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetReceivedInvitations and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetReceivedInvitations())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetReceivedInvitations with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetReceivedInvitations("<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List received invitations
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>ReceivedInvitationListValue</c>:
+<code>{
+  invitationKind: &quot;User&quot; | &quot;Application&quot;, # Required. The types of invitations.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

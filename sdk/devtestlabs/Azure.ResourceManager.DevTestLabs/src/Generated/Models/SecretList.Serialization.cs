@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static SecretList DeserializeSecretList(JsonElement element)
         {
-            Optional<IReadOnlyList<SecretData>> value = default;
+            Optional<IReadOnlyList<DevTestLabSecretData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecretData> array = new List<SecretData>();
+                    List<DevTestLabSecretData> array = new List<DevTestLabSecretData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecretData.DeserializeSecretData(item));
+                        array.Add(DevTestLabSecretData.DeserializeDevTestLabSecretData(item));
                     }
                     value = array;
                     continue;
