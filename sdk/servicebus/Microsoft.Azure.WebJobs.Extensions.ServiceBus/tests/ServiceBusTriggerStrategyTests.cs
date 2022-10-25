@@ -10,7 +10,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
     public class ServiceBusTriggerStrategyTests
     {
-        private const int BindingContractCount = 25;
+        private const int BindingContractCount = 27;
 
         [Test]
         public void GetStaticBindingContract_ReturnsExpectedValue()
@@ -91,6 +91,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreSame(message.CorrelationId, bindingData["CorrelationId"]);
             Assert.AreSame(message.SessionId, bindingData["SessionId"]);
             Assert.AreSame(message.ReplyToSessionId, bindingData["ReplyToSessionId"]);
+            Assert.AreSame(message.PartitionKey, bindingData["PartitionKey"]);
+            Assert.AreSame(message.TransactionPartitionKey, bindingData["TransactionPartitionKey"]);
 
             IDictionary<string, object> bindingDataUserProps = bindingData["ApplicationProperties"] as IDictionary<string, object>;
             Assert.NotNull(bindingDataUserProps);
@@ -134,6 +136,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(messages.Length, ((string[])bindingData["CorrelationIdArray"]).Length);
             Assert.AreEqual(messages.Length, ((string[])bindingData["SessionIdArray"]).Length);
             Assert.AreEqual(messages.Length, ((string[])bindingData["ReplyToSessionIdArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["PartitionKeyArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["TransactionPartitionKeyArray"]).Length);
             Assert.AreEqual(messages.Length, ((IDictionary<string, object>[])bindingData["ApplicationPropertiesArray"]).Length);
         }
 
@@ -172,6 +176,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(typeof(string), bindingDataContract["CorrelationId"]);
             Assert.AreEqual(typeof(string), bindingDataContract["SessionId"]);
             Assert.AreEqual(typeof(string), bindingDataContract["ReplyToSessionId"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["PartitionKey"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["TransactionPartitionKey"]);
             Assert.AreEqual(typeof(IDictionary<string, object>), bindingDataContract["ApplicationProperties"]);
             Assert.AreEqual(typeof(ServiceBusMessageActions), bindingDataContract["MessageReceiver"]);
             Assert.AreEqual(typeof(ServiceBusSessionMessageActions), bindingDataContract["MessageSession"]);

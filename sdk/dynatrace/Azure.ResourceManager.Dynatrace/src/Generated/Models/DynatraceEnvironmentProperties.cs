@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="accountInfo"> Dynatrace Account Information. </param>
         /// <param name="environmentInfo"> Dynatrace Environment Information. </param>
         /// <param name="singleSignOnProperties"> The details of a Dynatrace single sign-on. </param>
-        internal DynatraceEnvironmentProperties(string userId, AccountInfo accountInfo, EnvironmentInfo environmentInfo, DynatraceSingleSignOnProperties singleSignOnProperties)
+        internal DynatraceEnvironmentProperties(string userId, DynatraceAccountInfo accountInfo, DynatraceEnvironmentInfo environmentInfo, DynatraceSingleSignOnProperties singleSignOnProperties)
         {
             UserId = userId;
             AccountInfo = accountInfo;
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> User id. </summary>
         public string UserId { get; set; }
         /// <summary> Dynatrace Account Information. </summary>
-        public AccountInfo AccountInfo { get; set; }
+        public DynatraceAccountInfo AccountInfo { get; set; }
         /// <summary> Dynatrace Environment Information. </summary>
-        public EnvironmentInfo EnvironmentInfo { get; set; }
+        public DynatraceEnvironmentInfo EnvironmentInfo { get; set; }
         /// <summary> The details of a Dynatrace single sign-on. </summary>
         public DynatraceSingleSignOnProperties SingleSignOnProperties { get; set; }
     }

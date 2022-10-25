@@ -10,8 +10,24 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class JWK
+    internal partial class JWK : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Jwk))
+            {
+                writer.WritePropertyName("jwk");
+                writer.WriteObjectValue(Jwk);
+            }
+            if (Optional.IsDefined(Alg))
+            {
+                writer.WritePropertyName("alg");
+                writer.WriteStringValue(Alg);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static JWK DeserializeJWK(JsonElement element)
         {
             Optional<JWKHeader> jwk = default;

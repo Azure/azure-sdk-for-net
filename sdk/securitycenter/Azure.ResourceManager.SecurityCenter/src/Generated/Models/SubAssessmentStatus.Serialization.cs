@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<SubAssessmentStatusCode> code = default;
             Optional<string> cause = default;
             Optional<string> description = default;
-            Optional<Severity> severity = default;
+            Optional<SecurityAssessmentSeverity> severity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    severity = new Severity(property.Value.GetString());
+                    severity = new SecurityAssessmentSeverity(property.Value.GetString());
                     continue;
                 }
             }

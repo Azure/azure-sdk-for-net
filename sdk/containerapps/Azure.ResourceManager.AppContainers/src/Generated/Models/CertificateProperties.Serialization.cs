@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<CertificateProvisioningState> provisioningState = default;
             Optional<string> password = default;
             Optional<string> subjectName = default;
+            Optional<IReadOnlyList<string>> subjectAlternativeNames = default;
             Optional<byte[]> value = default;
             Optional<string> issuer = default;
             Optional<DateTimeOffset> issueDate = default;
@@ -61,6 +63,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("subjectName"))
                 {
                     subjectName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subjectAlternativeNames"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    subjectAlternativeNames = array;
                     continue;
                 }
                 if (property.NameEquals("value"))
@@ -119,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new CertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value);
+            return new CertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, Optional.ToList(subjectAlternativeNames), value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value);
         }
     }
 }

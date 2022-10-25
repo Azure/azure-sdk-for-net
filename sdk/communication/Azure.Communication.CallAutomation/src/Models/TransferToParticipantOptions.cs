@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The transfer call to participant operation options.
     /// </summary>
-    public class TransferToParticipantOptions: RepeatabilityHeaders
+    public class TransferToParticipantOptions
     {
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
@@ -38,5 +38,10 @@ namespace Azure.Communication.CallAutomation
         /// The operationContext for this transfer call.
         /// </summary>
         public string OperationContext { get; set; }
+
+        /// <summary>
+        /// Repeatability Headers.
+        /// </summary>
+        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
     }
 }

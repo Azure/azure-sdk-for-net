@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use &apos;*&apos;. </param>
-        /// <param name="lastModifiedUtc"> The last time this rule was modified. </param>
-        /// <param name="expirationDateUtc"> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </param>
+        /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
+        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </param>
         /// <param name="reason"> The reason for dismissing the alert. </param>
         /// <param name="state"> Possible states of the rule. </param>
         /// <param name="comment"> Any comment regarding the rule. </param>
         /// <param name="suppressionAlertsScope"> The suppression conditions. </param>
-        internal AlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, DateTimeOffset? lastModifiedUtc, DateTimeOffset? expirationDateUtc, string reason, RuleState? state, string comment, SuppressionAlertsScope suppressionAlertsScope) : base(id, name, resourceType, systemData)
+        internal AlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, DateTimeOffset? lastModifiedOn, DateTimeOffset? expireOn, string reason, AlertsSuppressionRuleState? state, string comment, SuppressionAlertsScope suppressionAlertsScope) : base(id, name, resourceType, systemData)
         {
             AlertType = alertType;
-            LastModifiedUtc = lastModifiedUtc;
-            ExpirationDateUtc = expirationDateUtc;
+            LastModifiedOn = lastModifiedOn;
+            ExpireOn = expireOn;
             Reason = reason;
             State = state;
             Comment = comment;
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Type of the alert to automatically suppress. For all alert types, use &apos;*&apos;. </summary>
         public string AlertType { get; set; }
         /// <summary> The last time this rule was modified. </summary>
-        public DateTimeOffset? LastModifiedUtc { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </summary>
-        public DateTimeOffset? ExpirationDateUtc { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The reason for dismissing the alert. </summary>
         public string Reason { get; set; }
         /// <summary> Possible states of the rule. </summary>
-        public RuleState? State { get; set; }
+        public AlertsSuppressionRuleState? State { get; set; }
         /// <summary> Any comment regarding the rule. </summary>
         public string Comment { get; set; }
         /// <summary> The suppression conditions. </summary>
         internal SuppressionAlertsScope SuppressionAlertsScope { get; set; }
         /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
-        public IList<ScopeElement> SuppressionAlertsScopeAllOf
+        public IList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
         {
             get => SuppressionAlertsScope is null ? default : SuppressionAlertsScope.AllOf;
             set => SuppressionAlertsScope = new SuppressionAlertsScope(value);

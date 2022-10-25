@@ -63,6 +63,7 @@ namespace Azure.Identity
             string clientId = EnvironmentVariables.ClientId;
             string clientSecret = EnvironmentVariables.ClientSecret;
             string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
+            string clientCertificatePassword = EnvironmentVariables.ClientCertificatePassword;
             string clientSendCertificateChain = EnvironmentVariables.ClientSendCertificateChain;
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
@@ -99,7 +100,7 @@ namespace Azure.Identity
                         AdditionallyAllowedTenantsCore = new List<string>(_options.AdditionallyAllowedTenantsCore),
                         SendCertificateChain = sendCertificateChain
                     };
-                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificateCredentialOptions, _pipeline, null);
+                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificatePassword, clientCertificateCredentialOptions, _pipeline, null);
                 }
             }
         }

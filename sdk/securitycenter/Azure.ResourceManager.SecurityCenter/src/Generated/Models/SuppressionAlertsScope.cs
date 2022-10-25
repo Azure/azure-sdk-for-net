@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SuppressionAlertsScope. </summary>
         /// <param name="allOf"> All the conditions inside need to be true in order to suppress the alert. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allOf"/> is null. </exception>
-        public SuppressionAlertsScope(IEnumerable<ScopeElement> allOf)
+        public SuppressionAlertsScope(IEnumerable<SuppressionAlertsScopeElement> allOf)
         {
             if (allOf == null)
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of SuppressionAlertsScope. </summary>
         /// <param name="allOf"> All the conditions inside need to be true in order to suppress the alert. </param>
-        internal SuppressionAlertsScope(IList<ScopeElement> allOf)
+        internal SuppressionAlertsScope(IList<SuppressionAlertsScopeElement> allOf)
         {
             AllOf = allOf;
         }
 
         /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
-        public IList<ScopeElement> AllOf { get; }
+        public IList<SuppressionAlertsScopeElement> AllOf { get; }
     }
 }

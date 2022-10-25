@@ -16,6 +16,12 @@ namespace Azure.AI.Language.Conversations
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("documentsCount");
+            writer.WriteNumberValue(DocumentsCount);
+            writer.WritePropertyName("validDocumentsCount");
+            writer.WriteNumberValue(ValidDocumentsCount);
+            writer.WritePropertyName("erroneousDocumentsCount");
+            writer.WriteNumberValue(ErroneousDocumentsCount);
             writer.WritePropertyName("transactionsCount");
             writer.WriteNumberValue(TransactionsCount);
             foreach (var item in AdditionalProperties)
@@ -28,11 +34,29 @@ namespace Azure.AI.Language.Conversations
 
         internal static RequestStatistics DeserializeRequestStatistics(JsonElement element)
         {
+            int documentsCount = default;
+            int validDocumentsCount = default;
+            int erroneousDocumentsCount = default;
             long transactionsCount = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("documentsCount"))
+                {
+                    documentsCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("validDocumentsCount"))
+                {
+                    validDocumentsCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("erroneousDocumentsCount"))
+                {
+                    erroneousDocumentsCount = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("transactionsCount"))
                 {
                     transactionsCount = property.Value.GetInt64();
@@ -41,7 +65,7 @@ namespace Azure.AI.Language.Conversations
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RequestStatistics(transactionsCount, additionalProperties);
+            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalProperties);
         }
     }
 }

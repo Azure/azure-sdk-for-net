@@ -8,7 +8,6 @@ csharp: true
 library-name: DataBoxEdge
 namespace: Azure.ResourceManager.DataBoxEdge
 require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/databoxedge/resource-manager/readme.md
-tag: package-2022-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -88,6 +87,8 @@ rename-mapping:
   Addon: DataBoxEdgeRoleAddon
   AddonState: DataBoxEdgeRoleAddonProvisioningState
   Alert.properties.appearedAtDateTime: AppearedOn
+  BandwidthSchedule.properties.start: StartOn
+  BandwidthSchedule.properties.stop: StopOn
   Container: DataBoxEdgeStorageContainer
   DataBoxEdgeDevice.properties.systemData: SystemData
   DCAccessCode: DataBoxEdgeDataCenterAccessCode
@@ -253,7 +254,9 @@ directive:
     transform: >
       $.locations.items['x-ms-format'] = 'azure-location';
   - from: databoxedge.json
-    where: $.definitions.GenerateCertResponse.properties.expiryTimeInUTC
+    where: $.definitions
     transform: >
-      $.format = 'date-time';
+      $.GenerateCertResponse.properties.expiryTimeInUTC['format'] = 'date-time';
+      $.BandwidthScheduleProperties.properties.start['format'] = 'time';
+      $.BandwidthScheduleProperties.properties.stop['format'] = 'time';
 ```

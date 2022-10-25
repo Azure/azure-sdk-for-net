@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policyAssignments"> Policy assignments summary. </param>
         internal PolicySummary(string odataId, string odataContext, PolicySummaryResults results, IReadOnlyList<PolicyAssignmentSummary> policyAssignments)
         {
-            OdataId = odataId;
-            OdataContext = odataContext;
+            ODataId = odataId;
+            ODataContext = odataContext;
             Results = results;
             PolicyAssignments = policyAssignments;
         }
 
         /// <summary> OData entity ID; always set to null since summaries do not have an entity ID. </summary>
-        public string OdataId { get; }
+        public string ODataId { get; }
         /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
-        public string OdataContext { get; }
+        public string ODataContext { get; }
         /// <summary> Compliance summary for all policy assignments. </summary>
         public PolicySummaryResults Results { get; }
         /// <summary> Policy assignments summary. </summary>

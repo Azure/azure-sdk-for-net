@@ -1,39 +1,46 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
-* [Add histogram metric type support](https://github.com/Azure/azure-sdk-for-net/pull/27544)
-* [Update OTel package dependencies to 1.2.0](https://github.com/Azure/azure-sdk-for-net/pull/28507)
-* [Add default storage initialization for logs and metrics](https://github.com/Azure/azure-sdk-for-net/pull/28506)
-* [Add disable storage switch](https://github.com/Azure/azure-sdk-for-net/pull/28446)
-* [Transmit from storage](https://github.com/Azure/azure-sdk-for-net/pull/26762)
-* [Add exception telemetry](https://github.com/Azure/azure-sdk-for-net/pull/26670)
-* [Storage transmission evaluator](https://github.com/Azure/azure-sdk-for-net/pull/26976)
-* [Add metrics exporter](https://github.com/Azure/azure-sdk-for-net/pull/26651)
-* [Add default storage location and initialization for traces](https://github.com/Azure/azure-sdk-for-net/pull/26494)
-* [Change AzureMonitorExporterLoggingExtensions from internal to public](https://github.com/Azure/azure-sdk-for-net/pull/26355)
-* [Support for exporting Activity exception
-  event](https://github.com/Azure/azure-sdk-for-net/pull/29676)
-* [Update SampleRate in Request/Dependency telemetry](https://github.com/Azure/azure-sdk-for-net/pull/31118)
-
 ### Breaking Changes
-
-* [Request and Dependency Success criteria will now be decided based on
-  `Activity.Status`](https://github.com/Azure/azure-sdk-for-net/pull/31024)
-* [Changed `AzureMonitorTraceExporter` to internal](https://github.com/Azure/azure-sdk-for-net/pull/31067)
-* [Changed default offline storage directory from "Microsoft\ApplicationInsights" to "Microsoft\AzureMonitor"](https://github.com/Azure/azure-sdk-for-net/pull/31073).
-  Users may override the default location by setting `AzureMonitorExporterOptions.StorageDirectory`.
 
 ### Bugs Fixed
 
-* [Remove populating _MS.AggregationIntervalMs to all metrics](https://github.com/Azure/azure-sdk-for-net/pull/29473)
-* [Fix shared RoleName/RoleInstance between Trace and Log Exporter](https://github.com/Azure/azure-sdk-for-net/pull/26438)
+### Other Changes
+
+## 1.0.0-beta.4 (2022-10-07)
+
+### Features Added
+
+* A public "AddAzureMonitorExporter" method is now available for all three signals
+  - `AddAzureMonitorTraceExporter()` for Traces (available in previous version)
+  - `AddAzureMonitorMetricExporter()` for Metrics ([#26651](https://github.com/Azure/azure-sdk-for-net/pull/26651))
+  - `AddAzureMonitorLogExporter()` for Logs ([#26355](https://github.com/Azure/azure-sdk-for-net/pull/26355))
+* Added support for offline storage when ingestion endpoint is unavailable. This is enabled by default.
+  - Default directory is "Microsoft\AzureMonitor" ([#31073](https://github.com/Azure/azure-sdk-for-net/pull/31073))
+  - Users may override the default location by setting `AzureMonitorExporterOptions.StorageDirectory` ([#26494](https://github.com/Azure/azure-sdk-for-net/pull/26494))
+  - Users may disable by setting `AzureMonitorExporterOptions.DisableOfflineStorage` ([#28446](https://github.com/Azure/azure-sdk-for-net/pull/28446))
+* Added support for exception telemetry from ILogger ([#26670](https://github.com/Azure/azure-sdk-for-net/pull/26670))
+* Support for exporting Activity exception event ([#29676](https://github.com/Azure/azure-sdk-for-net/pull/29676))
+* Added support for sampling using [Application Insights based sampler](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Extensions.AzureMonitor).  ([#31118](https://github.com/Azure/azure-sdk-for-net/pull/31118))
+
+### Breaking Changes
+
+* Request and Dependency Success criteria will now be decided based on
+  `Activity.Status` ([#31024](https://github.com/Azure/azure-sdk-for-net/pull/31024))
+* Changed `AzureMonitorTraceExporter` to internal ([#31067](https://github.com/Azure/azure-sdk-for-net/pull/31067))
+  
+### Bugs Fixed
+
+* Fix shared RoleName/RoleInstance between Trace and Log Exporter ([#26438](https://github.com/Azure/azure-sdk-for-net/pull/26438))
 
 ### Other Changes
 
-* [Update persistent storage package dependency](https://github.com/Azure/azure-sdk-for-net/pull/29530)
+* Update OpenTelemetry dependencies ([#31065](https://github.com/Azure/azure-sdk-for-net/pull/31065))
+  - OpenTelemetry v1.3.1
+  - OpenTelemetry.Extensions.PersistentStorage v1.0.0-beta.1
 
 ## 1.0.0-beta.3 (2021-10-04)
 

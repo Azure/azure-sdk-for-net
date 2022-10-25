@@ -219,7 +219,7 @@ namespace Azure.AI.TextAnalytics
         public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore), warnings);
+            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore, default), warnings);
         }
 
         /// <summary>
@@ -1319,7 +1319,28 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<HealthcareEntityRelation> entityRelations,
             IEnumerable<TextAnalyticsWarning> warnings)
         {
-            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), warnings.ToList());
+            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), warnings.ToList(), default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="healthcareEntities">Sets the collection of <see cref="TextAnalytics.HealthcareEntity"/>.</param>
+        /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/>.</param>
+        /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/>.</param>
+        /// <param name="fhirBundle">Sets the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
+        public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            IEnumerable<HealthcareEntity> healthcareEntities,
+            IEnumerable<HealthcareEntityRelation> entityRelations,
+            IEnumerable<TextAnalyticsWarning> warnings,
+            IDictionary<string, object> fhirBundle)
+        {
+            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), warnings.ToList(), fhirBundle);
         }
 
         /// <summary>
@@ -1398,11 +1419,27 @@ namespace Azure.AI.TextAnalytics
         /// <param name="relationType">Sets the <see cref="HealthcareEntityRelation.RelationType"/> property.</param>
         /// <param name="roles">Sets the collection of <see cref="HealthcareEntityRelation.Roles"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static HealthcareEntityRelation HealthcareEntityRelation(
             HealthcareEntityRelationType relationType,
             IEnumerable<HealthcareEntityRelationRole> roles)
         {
-            return new HealthcareEntityRelation(relationType, roles.ToList());
+            return new HealthcareEntityRelation(relationType, roles.ToList(), default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.
+        /// </summary>
+        /// <param name="relationType">Sets the <see cref="HealthcareEntityRelation.RelationType"/> property.</param>
+        /// <param name="roles">Sets the collection of <see cref="HealthcareEntityRelation.Roles"/> property.</param>
+        /// <param name="confidenceScore">Set the <see cref="HealthcareEntityRelation.ConfidenceScore"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.</returns>
+        public static HealthcareEntityRelation HealthcareEntityRelation(
+            HealthcareEntityRelationType relationType,
+            IEnumerable<HealthcareEntityRelationRole> roles,
+            double? confidenceScore)
+        {
+            return new HealthcareEntityRelation(relationType, roles.ToList(), confidenceScore);
         }
 
         /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>

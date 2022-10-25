@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static PolicyList DeserializePolicyList(JsonElement element)
         {
-            Optional<IReadOnlyList<PolicyData>> value = default;
+            Optional<IReadOnlyList<DevTestLabPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PolicyData> array = new List<PolicyData>();
+                    List<DevTestLabPolicyData> array = new List<DevTestLabPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyData.DeserializePolicyData(item));
+                        array.Add(DevTestLabPolicyData.DeserializeDevTestLabPolicyData(item));
                     }
                     value = array;
                     continue;

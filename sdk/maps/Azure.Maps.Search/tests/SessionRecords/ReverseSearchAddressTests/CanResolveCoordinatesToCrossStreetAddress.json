@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/search/address/reverse/crossStreet/json?api-version=1.0\u0026query=24%2C121\u0026language=en",
+      "RequestUri": "https://atlas.microsoft.com/search/address/reverse/crossStreet/json?api-version=1.0\u0026query=24%2C121\u0026language=en-US",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a9cabbd9206bfd1cfa99d71cedcc7ce0-a3575cd272112437-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
-        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "bef1683a4ed7d84c0fb66a7214c9f8cf",
+        "traceparent": "00-2d7a1e8e4f99e540a0679418774ed015-080a6aeddc56284a-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20221011.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "d38dc176a6cfdec6118e87ddf8957429",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,18 +17,18 @@
       "ResponseHeaders": {
         "Content-Length": "450",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 08 Sep 2022 18:56:23 GMT",
+        "Date": "Tue, 11 Oct 2022 15:03:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: EC4BB9B5CA734B60ADBD224D431BC57C Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:24Z"
+        "X-MSEdge-Ref": "Ref A: A3BEA3E29BEE4B2CA3EF509573A4136E Ref B: TPE30EDGE0922 Ref C: 2022-10-11T15:03:15Z"
       },
       "ResponseBody": {
         "summary": {
           "numResults": 1,
-          "queryTime": 98
+          "queryTime": 33
         },
         "addresses": [
           {
@@ -51,9 +51,9 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1487084498"
+    "RandomSeed": "1489790178"
   }
 }

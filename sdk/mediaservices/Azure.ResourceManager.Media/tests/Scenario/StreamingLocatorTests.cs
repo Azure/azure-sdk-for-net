@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private StreamingLocatorCollection streamingLocatorCollection => _mediaService.GetStreamingLocators();
 
-        public StreamingLocatorTests(bool isAsync) : base(isAsync)
+        public StreamingLocatorTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

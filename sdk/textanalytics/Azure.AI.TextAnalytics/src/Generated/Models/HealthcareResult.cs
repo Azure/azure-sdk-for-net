@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        public HealthcareResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<HealthcareResultDocumentsItem> documents) : base(errors, modelVersion)
+        public HealthcareResult(IEnumerable<InputError> errors, string modelVersion, IEnumerable<HealthcareResultDocumentsItem> documents) : base(errors, modelVersion)
         {
             if (errors == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"></param>
-        internal HealthcareResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<HealthcareResultDocumentsItem> documents) : base(errors, statistics, modelVersion)
+        internal HealthcareResult(IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<HealthcareResultDocumentsItem> documents) : base(errors, statistics, modelVersion)
         {
             Documents = documents;
         }

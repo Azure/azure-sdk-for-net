@@ -9,7 +9,6 @@ csharp: true
 library-name: Subscription
 namespace: Azure.ResourceManager.Subscription
 require: https://github.com/Azure/azure-rest-api-specs/blob/2614c5038cb384e864c1608e76be61a5ee84cb02/specification/subscription/resource-manager/readme.md
-tag: package-2021-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -26,7 +25,7 @@ override-operation-name:
 rename-mapping:
   AcceptOwnershipStatusResponse.subscriptionTenantId: -|uuid
   PutAliasRequestAdditionalProperties.subscriptionTenantId: -|uuid
-  SubscriptionAliasResponseProperties.createdTime: CreatedOn|datetime
+  SubscriptionAliasResponseProperties.createdTime: CreatedOn|date-time
   AcceptOwnership: AcceptOwnershipState
   AcceptOwnershipStatusResponse: AcceptOwnershipStatus
   BillingAccountPoliciesResponse: BillingAccountPolicy

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> The RouteInstructionsType. </summary>
     public readonly partial struct RouteInstructionsType : IEquatable<RouteInstructionsType>

@@ -57,7 +57,7 @@ namespace Azure.Maps.Rendering.Tests
                 MapImageLayer = MapImageLayer.Basic,
                 MapImageStyle = MapImageStyle.Dark,
                 ZoomLevel = 10,
-                Language = RenderingLanguage.EnglishUSA,
+                Language = RenderingLanguage.EnglishUsa,
             };
 
             // Get static image
@@ -128,7 +128,7 @@ namespace Azure.Maps.Rendering.Tests
                 MapImageLayer = MapImageLayer.Basic,
                 MapImageStyle = MapImageStyle.Dark,
                 ZoomLevel = 10,
-                Language = RenderingLanguage.EnglishUSA
+                Language = RenderingLanguage.EnglishUsa
             };
 
             // Get static image

@@ -22,6 +22,12 @@ namespace Azure.AI.Language.Conversations
             writer.WriteNumberValue(ValidConversationsCount);
             writer.WritePropertyName("erroneousConversationsCount");
             writer.WriteNumberValue(ErroneousConversationsCount);
+            writer.WritePropertyName("documentsCount");
+            writer.WriteNumberValue(DocumentsCount);
+            writer.WritePropertyName("validDocumentsCount");
+            writer.WriteNumberValue(ValidDocumentsCount);
+            writer.WritePropertyName("erroneousDocumentsCount");
+            writer.WriteNumberValue(ErroneousDocumentsCount);
             writer.WritePropertyName("transactionsCount");
             writer.WriteNumberValue(TransactionsCount);
             foreach (var item in AdditionalProperties)
@@ -37,6 +43,9 @@ namespace Azure.AI.Language.Conversations
             int conversationsCount = default;
             int validConversationsCount = default;
             int erroneousConversationsCount = default;
+            int documentsCount = default;
+            int validDocumentsCount = default;
+            int erroneousDocumentsCount = default;
             long transactionsCount = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -57,6 +66,21 @@ namespace Azure.AI.Language.Conversations
                     erroneousConversationsCount = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("documentsCount"))
+                {
+                    documentsCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("validDocumentsCount"))
+                {
+                    validDocumentsCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("erroneousDocumentsCount"))
+                {
+                    erroneousDocumentsCount = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("transactionsCount"))
                 {
                     transactionsCount = property.Value.GetInt64();
@@ -65,7 +89,7 @@ namespace Azure.AI.Language.Conversations
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ConversationRequestStatistics(transactionsCount, additionalProperties, conversationsCount, validConversationsCount, erroneousConversationsCount);
+            return new ConversationRequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalProperties, conversationsCount, validConversationsCount, erroneousConversationsCount);
         }
     }
 }

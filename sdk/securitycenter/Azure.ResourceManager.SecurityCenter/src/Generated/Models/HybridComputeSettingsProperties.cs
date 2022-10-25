@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of HybridComputeSettingsProperties. </summary>
         /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
-        public HybridComputeSettingsProperties(AutoProvision autoProvision)
+        public HybridComputeSettingsProperties(AutoProvisionState autoProvision)
         {
             AutoProvision = autoProvision;
         }
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="region"> The location where the metadata of machines will be stored. </param>
         /// <param name="proxyServer"> For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use. </param>
         /// <param name="servicePrincipal"> An object to access resources that are secured by an Azure AD tenant. </param>
-        internal HybridComputeSettingsProperties(HybridComputeProvisioningState? hybridComputeProvisioningState, AutoProvision autoProvision, string resourceGroupName, string region, ProxyServerProperties proxyServer, ServicePrincipalProperties servicePrincipal)
+        internal HybridComputeSettingsProperties(HybridComputeProvisioningState? hybridComputeProvisioningState, AutoProvisionState autoProvision, string resourceGroupName, string region, ProxyServerProperties proxyServer, ServicePrincipalProperties servicePrincipal)
         {
             HybridComputeProvisioningState = hybridComputeProvisioningState;
             AutoProvision = autoProvision;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> State of the service principal and its secret. </summary>
         public HybridComputeProvisioningState? HybridComputeProvisioningState { get; }
         /// <summary> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </summary>
-        public AutoProvision AutoProvision { get; set; }
+        public AutoProvisionState AutoProvision { get; set; }
         /// <summary> The name of the resource group where Arc (Hybrid Compute) connectors are connected. </summary>
         public string ResourceGroupName { get; set; }
         /// <summary> The location where the metadata of machines will be stored. </summary>

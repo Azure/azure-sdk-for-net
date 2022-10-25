@@ -33,14 +33,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AutomationActionLogicApp DeserializeAutomationActionLogicApp(JsonElement element)
         {
-            Optional<string> logicAppResourceId = default;
+            Optional<ResourceIdentifier> logicAppResourceId = default;
             Optional<Uri> uri = default;
             ActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logicAppResourceId"))
                 {
-                    logicAppResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    logicAppResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("uri"))

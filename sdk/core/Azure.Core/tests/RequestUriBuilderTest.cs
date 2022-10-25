@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -173,6 +174,7 @@ namespace Azure.Core.Tests
                 Port = 80,
                 Query = initialQuery
             };
+
             uriBuilder.AppendQuery("a", "b");
             uriBuilder.AppendQuery("c", "d");
 
@@ -201,33 +203,20 @@ namespace Azure.Core.Tests
         [TestCase("", new[] {"%E1%88%B4"}, "", "http://localhost/%E1%88%B4", false)]
         [TestCase("", new[] {"\u1234"}, "", "http://localhost/%E1%88%B4", true)]
         [TestCase("", new[] {"%E1%88%B4"}, "", "http://localhost/%25E1%2588%25B4", true)]
-        public void AppendPathWorks(string initialPath, string[] appends, string query, string expectedResult, bool escape = false)
+        public void AppendPathWorks(string initialPath, string[] appends, string initialQuery, string expectedResult, bool escape = false)
         {
             var uriBuilder = new RequestUriBuilder
             {
                 Scheme = "http",
                 Host = "localhost",
                 Port = 80,
-                Path = initialPath
+                Path = initialPath,
+                Query = initialQuery
             };
-            if (!string.IsNullOrEmpty(query))
-            {
-                uriBuilder.Query = query;
-            }
 
-            if (escape)
+            foreach (var append in appends)
             {
-                foreach (var append in appends)
-                {
-                    uriBuilder.AppendPath(append);
-                }
-            }
-            else
-            {
-                foreach (var append in appends)
-                {
-                    uriBuilder.AppendPath(append, escape: false);
-                }
+                uriBuilder.AppendPath(append, escape);
             }
 
             Assert.AreEqual(expectedResult, uriBuilder.ToUri().OriginalString);

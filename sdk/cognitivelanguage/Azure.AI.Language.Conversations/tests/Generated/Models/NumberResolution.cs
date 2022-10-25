@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations
 
             NumberKind = numberKind;
             Value = value;
-            ResolutionKind = ResolutionKind.Number;
+            ResolutionKind = ResolutionKind.NumberResolution;
         }
 
         /// <summary> Initializes a new instance of NumberResolution. </summary>

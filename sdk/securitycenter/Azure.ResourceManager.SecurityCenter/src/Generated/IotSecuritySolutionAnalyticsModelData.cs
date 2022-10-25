@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelData. </summary>
         public IotSecuritySolutionAnalyticsModelData()
         {
-            DevicesMetrics = new ChangeTrackingList<IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>();
+            DevicesMetrics = new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
             TopAlertedDevices = new ChangeTrackingList<IotSecurityAlertedDevice>();
             MostPrevalentDeviceAlerts = new ChangeTrackingList<IotSecurityDeviceAlert>();
             MostPrevalentDeviceRecommendations = new ChangeTrackingList<IotSecurityDeviceRecommendation>();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="topAlertedDevices"> List of the 3 devices with the most alerts. </param>
         /// <param name="mostPrevalentDeviceAlerts"> List of the 3 most prevalent device alerts. </param>
         /// <param name="mostPrevalentDeviceRecommendations"> List of the 3 most prevalent device recommendations. </param>
-        internal IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotSeverityMetrics metrics, long? unhealthyDeviceCount, IReadOnlyList<IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> devicesMetrics, IList<IotSecurityAlertedDevice> topAlertedDevices, IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts, IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations) : base(id, name, resourceType, systemData)
+        internal IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotSeverityMetrics metrics, long? unhealthyDeviceCount, IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics, IList<IotSecurityAlertedDevice> topAlertedDevices, IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts, IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations) : base(id, name, resourceType, systemData)
         {
             Metrics = metrics;
             UnhealthyDeviceCount = unhealthyDeviceCount;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Number of unhealthy devices within your IoT Security solution. </summary>
         public long? UnhealthyDeviceCount { get; }
         /// <summary> List of device metrics by the aggregation date. </summary>
-        public IReadOnlyList<IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> DevicesMetrics { get; }
+        public IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> DevicesMetrics { get; }
         /// <summary> List of the 3 devices with the most alerts. </summary>
         public IList<IotSecurityAlertedDevice> TopAlertedDevices { get; }
         /// <summary> List of the 3 most prevalent device alerts. </summary>
