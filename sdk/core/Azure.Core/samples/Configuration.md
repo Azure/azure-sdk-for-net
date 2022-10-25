@@ -20,7 +20,7 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
-## Setting a retry policy
+## Setting a custom retry policy
 
 Using `RetryOptions` to configure retry behavior is sufficient for the vast majority of scenarios. For more advanced scenarios, it is possible to create a custom retry policy and set it to the `RetryPolicy` property of client options class. This can be accomplished by implementing a retry policy that derives from the abstract `RetryPolicy` class. The `RetryPolicy` class contains hooks to determine if a request should be retried and how long to wait before retrying. In the following example, we implement a policy that will prevent retries from taking place if the overall processing time has exceeded some threshold. Notice that the policy takes in `RetryOptions` as one of the constructor parameters and passes it to the base constructor. By doing this, we are able to delegate to the base `RetryPolicy` as needed (either by explicitly invoking the base methods, or by not overriding methods that we do not need to customize) which will respect the `RetryOptions`.
 

@@ -1000,6 +1000,7 @@ namespace Azure.Core.Pipeline
         protected RetryPolicy(Azure.Core.RetryOptions? options = null) { }
         protected internal virtual System.TimeSpan CalculateNextDelay(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual System.Threading.Tasks.ValueTask<System.TimeSpan> CalculateNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected static System.TimeSpan GetServerDelay(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
         protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }

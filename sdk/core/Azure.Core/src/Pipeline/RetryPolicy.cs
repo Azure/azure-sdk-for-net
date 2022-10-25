@@ -120,8 +120,9 @@ namespace Azure.Core.Pipeline
 
                 bool shouldRetry = false;
 
-                // Only invoke should ShouldRetry for errors. If customer needs full control they can override HttpPipelinePolicy directly
+                // We only invoke ShouldRetry for errors. If a user needs full control they can either override HttpPipelinePolicy directly
                 // or modify the ResponseClassifier.
+
                 if (message.LastException != null || (message.HasResponse && message.Response.IsError))
                 {
                     shouldRetry = async ? await ShouldRetryAsync(message).ConfigureAwait(false) : ShouldRetry(message);
@@ -141,8 +142,19 @@ namespace Azure.Core.Pipeline
                             Wait(delay, message.CancellationToken);
                         }
                     }
+
+                    if (message.HasResponse)
+                    {
+                        // Dispose the content stream to free up a connection if the request has any
+                        message.Response.ContentStream?.Dispose();
+                    }
+
+                    message.RetryNumber++;
+                    AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryNumber, elapsed);
+                    continue;
                 }
-                else if (message.LastException != null)
+
+                if (message.LastException != null)
                 {
                     // Rethrow a singular exception
                     if (exceptions!.Count == 1)
@@ -155,20 +167,9 @@ namespace Azure.Core.Pipeline
                         $" or by configuring a custom retry policy in {nameof(ClientOptions)}.{nameof(ClientOptions.RetryPolicy)}.",
                         exceptions);
                 }
-                else
-                {
-                    // We are not retrying and the last attempt didn't result in an exception.
-                    return;
-                }
 
-                if (message.HasResponse)
-                {
-                    // Dispose the content stream to free up a connection if the request has any
-                    message.Response.ContentStream?.Dispose();
-                }
-
-                message.RetryNumber++;
-                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryNumber, elapsed);
+                // We are not retrying and the last attempt didn't result in an exception.
+                break;
             }
         }
 
@@ -286,7 +287,14 @@ namespace Azure.Core.Pipeline
             return delay;
         }
 
-        internal virtual TimeSpan GetServerDelay(HttpMessage message)
+        /// <summary>
+        /// Gets the server specified delay. If the message has no response, <see cref="TimeSpan.Zero"/> is returned.
+        /// This method can be used to help calculate the next delay when overriding <see cref="CalculateNextDelay(HttpMessage)"/>, i.e.
+        /// implementors may want to add the server delay to their own custom delay.
+        /// </summary>
+        /// <param name="message">The message to inspect for the server specified delay.</param>
+        /// <returns>The server specified delay.</returns>
+        protected static TimeSpan GetServerDelay(HttpMessage message)
         {
             if (!message.HasResponse)
             {
