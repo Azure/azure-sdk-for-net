@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         public SubscriptionAssessmentMetadataTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
+            JsonPathSanitizers.Add("$..description");
+            JsonPathSanitizers.Add("$..remediationDescription");
         }
 
         [TearDown]
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             await CreateSubscriptionAssessmentMetadata(assessmentMetadataName);
             var list = await _subAssessmentMetadataCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateSubscriptionAssessmentMetadata(list.First(item => item.Data.Description == "JustForTest"), assessmentMetadataName);
+            ValidateSubscriptionAssessmentMetadata(list.First(item => item.Data.Name == assessmentMetadataName), assessmentMetadataName);
         }
 
         [RecordedTest]
@@ -117,8 +119,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.AreEqual(assessmentMetadataName, subAssessmentMetadata.Data.Name);
             Assert.AreEqual("Microsoft.Security/assessmentMetadata", subAssessmentMetadata.Data.ResourceType.ToString());
             Assert.AreEqual("JustForTest", subAssessmentMetadata.Data.DisplayName);
-            Assert.AreEqual("JustForTest", subAssessmentMetadata.Data.Description);
-            Assert.AreEqual("JustForTest", subAssessmentMetadata.Data.RemediationDescription);
             Assert.AreEqual(SecurityAssessmentSeverity.Medium, subAssessmentMetadata.Data.Severity);
             Assert.AreEqual(SecurityAssessmentUserImpact.Low, subAssessmentMetadata.Data.UserImpact);
             Assert.AreEqual(ImplementationEffort.Low, subAssessmentMetadata.Data.ImplementationEffort);
