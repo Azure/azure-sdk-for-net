@@ -8,6 +8,8 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
+[assembly: CodeGenSuppressType("SecurityAssessmentMetadataData")]
+
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> A class representing the SecurityAssessmentMetadata data model. </summary>
