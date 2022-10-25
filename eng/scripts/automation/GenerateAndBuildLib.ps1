@@ -7,9 +7,10 @@ $CI_YAML_FILE = "ci.yml"
 $packageNameHash = [ordered]@{"vmware" = "avs"; 
     "azure-kusto" = "kusto";
     "cosmos-db" = "cosmosdb";
-    "customer-insights" = "customerinsights";
     "msi" = "managedserviceidentity";
-    "web" = "appservice"
+    "web" = "websites";
+    "recoveryservicesbackup" = "recoveryservices-backup";
+    "recoveryservicessiterecovery" = "recoveryservices-siterecovery"
 }
 
 function Get-SwaggerInfo()
