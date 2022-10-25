@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Adhoc backup tagging criteria. </summary>
-    public partial class AdhocBasedBackupTaggingCriteria
+    internal partial class AdhocBasedBackupTaggingCriteria
     {
         /// <summary> Initializes a new instance of AdhocBasedBackupTaggingCriteria. </summary>
         public AdhocBasedBackupTaggingCriteria()

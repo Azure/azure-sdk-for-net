@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class AdhocBackupTriggerSetting : IUtf8JsonSerializable
+    internal partial class AdhocBackupTriggerSetting : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

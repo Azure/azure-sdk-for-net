@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Adhoc backup trigger option. </summary>
-    public partial class AdhocBackupTriggerSetting
+    internal partial class AdhocBackupTriggerSetting
     {
         /// <summary> Initializes a new instance of AdhocBackupTriggerSetting. </summary>
         public AdhocBackupTriggerSetting()
