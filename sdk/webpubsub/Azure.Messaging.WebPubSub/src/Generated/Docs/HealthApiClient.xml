@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetServiceStatusAsync(RequestContext)">
+<example>
+This sample shows how to call GetServiceStatusAsync.
+<code><![CDATA[
+var client = new HealthApiClient("<https://my-service.azure.com>");
+
+Response response = await client.GetServiceStatusAsync();
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetServiceStatus(RequestContext)">
+<example>
+This sample shows how to call GetServiceStatus.
+<code><![CDATA[
+var client = new HealthApiClient("<https://my-service.azure.com>");
+
+Response response = client.GetServiceStatus();
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>
