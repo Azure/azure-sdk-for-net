@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.DataMovement
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.WriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AppendBlobStorageResourceOptions
     {
@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs.DataMovement
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken token = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.WriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BlockBlobStorageResourceOptions
     {
@@ -126,7 +126,7 @@ namespace Azure.Storage.Blobs.DataMovement
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken token) { throw null; }
-        public override System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.WriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PageBlobStorageResourceOptions
     {

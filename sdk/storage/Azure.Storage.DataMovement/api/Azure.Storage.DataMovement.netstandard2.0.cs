@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken token = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.WriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LocalTransferCheckpointer : Azure.Storage.DataMovement.TransferCheckpointer
     {
@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement
         public abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.WriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public abstract partial class StorageResourceContainer
     {
@@ -220,6 +220,11 @@ namespace Azure.Storage.DataMovement.Models
         public StorageResourceProperties(System.DateTimeOffset lastModified, System.DateTimeOffset createdOn, long contentLength, System.DateTimeOffset lastAccessed, Azure.Storage.DataMovement.StorageResourceType resourceType) { }
         public Azure.Storage.DataMovement.StorageResourceType ResourceType { get { throw null; } }
     }
+    public partial class StorageResourceWriteToOffsetOptions
+    {
+        public StorageResourceWriteToOffsetOptions() { }
+        public string BlockId { get { throw null; } }
+    }
     public enum TransferCopyMethod
     {
         SyncCopy = 0,
@@ -243,10 +248,5 @@ namespace Azure.Storage.DataMovement.Models
     {
         public TransferStatusEventArgs(string transferId, Azure.Storage.DataMovement.StorageTransferStatus transferStatus, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.DataMovement.StorageTransferStatus StorageTransferStatus { get { throw null; } }
-    }
-    public partial class WriteToOffsetOptions
-    {
-        public WriteToOffsetOptions() { }
-        public string BlockId { get { throw null; } }
     }
 }

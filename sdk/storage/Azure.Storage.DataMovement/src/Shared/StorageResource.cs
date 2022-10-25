@@ -96,7 +96,7 @@ namespace Azure.Storage.DataMovement
             long offset,
             long length,
             Stream stream,
-            WriteToOffsetOptions options,
+            StorageResourceWriteToOffsetOptions options,
             CancellationToken cancellationToken = default);
 
         /// <summary>

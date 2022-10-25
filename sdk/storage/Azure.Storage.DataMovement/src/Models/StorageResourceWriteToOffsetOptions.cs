@@ -10,9 +10,9 @@ using System.Threading;
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// Options for <see cref="StorageResource.WriteStreamToOffsetAsync(long, long, Stream, WriteToOffsetOptions, CancellationToken)"/>
+    /// Options for <see cref="StorageResource.WriteStreamToOffsetAsync(long, long, Stream, StorageResourceWriteToOffsetOptions, CancellationToken)"/>
     /// </summary>
-    public class WriteToOffsetOptions
+    public class StorageResourceWriteToOffsetOptions
     {
         /// <summary>
         /// Optional. If a specific block id is wanted to send with the request when staging a block

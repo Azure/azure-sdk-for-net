@@ -129,7 +129,7 @@ namespace Azure.Storage.Blobs.DataMovement
             long offset,
             long length,
             Stream stream,
-            WriteToOffsetOptions options,
+            StorageResourceWriteToOffsetOptions options,
             CancellationToken cancellationToken = default)
         {
             await _blobClient.UploadPagesAsync(stream, default, cancellationToken: cancellationToken).ConfigureAwait(false);
