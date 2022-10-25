@@ -574,11 +574,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityTaskResource> GetTasksAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityTaskResource> GetSecurityTasksAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityTaskResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = TasksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTasks");
+                using var scope = TasksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityTasks");
                 scope.Start();
                 try
                 {
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             async Task<Page<SecurityTaskResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = TasksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTasks");
+                using var scope = TasksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityTasks");
                 scope.Start();
                 try
                 {
@@ -617,11 +617,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityTaskResource> GetTasks(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityTaskResource> GetSecurityTasks(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<SecurityTaskResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = TasksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTasks");
+                using var scope = TasksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityTasks");
                 scope.Start();
                 try
                 {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             Page<SecurityTaskResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = TasksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTasks");
+                using var scope = TasksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityTasks");
                 scope.Start();
                 try
                 {
@@ -1529,11 +1529,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityAlertResource> GetAlertsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityAlertResource> GetSecurityAlertsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityAlertResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlerts");
+                using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityAlerts");
                 scope.Start();
                 try
                 {
@@ -1548,7 +1548,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             async Task<Page<SecurityAlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlerts");
+                using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityAlerts");
                 scope.Start();
                 try
                 {
@@ -1571,11 +1571,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityAlertResource> GetAlerts(CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityAlertResource> GetSecurityAlerts(CancellationToken cancellationToken = default)
         {
             Page<SecurityAlertResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlerts");
+                using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityAlerts");
                 scope.Start();
                 try
                 {
@@ -1590,7 +1590,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             Page<SecurityAlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlerts");
+                using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityAlerts");
                 scope.Start();
                 try
                 {

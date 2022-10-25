@@ -245,6 +245,9 @@ override-operation-name:
   GovernanceRules_RuleIdExecuteSingleSubscription: ExecuteRule
   SubscriptionGovernanceRulesExecuteStatus_Get: GetRuleExecutionStatus
   ExternalSecuritySolutions_List: GetExternalSecuritySolutions
+  Tasks_List: GetSecurityTasks
+  Alerts_List: GetSecurityAlerts
+  Alerts_ListByResourceGroup: GetSecurityAlerts
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}: SubscriptionSecurityAlert

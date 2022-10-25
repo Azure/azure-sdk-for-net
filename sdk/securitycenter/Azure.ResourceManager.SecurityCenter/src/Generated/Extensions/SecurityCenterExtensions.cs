@@ -794,9 +794,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityTaskResource> GetTasksAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SecurityTaskResource> GetSecurityTasksAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetTasksAsync(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSecurityTasksAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -808,9 +808,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityTaskResource> GetTasks(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<SecurityTaskResource> GetSecurityTasks(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetTasks(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSecurityTasks(filter, cancellationToken);
         }
 
         /// <summary>
@@ -1113,9 +1113,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityAlertResource> GetAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SecurityAlertResource> GetSecurityAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAlertsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSecurityAlertsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1126,9 +1126,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityAlertResource> GetAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<SecurityAlertResource> GetSecurityAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAlerts(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSecurityAlerts(cancellationToken);
         }
 
         /// <summary>
@@ -1890,9 +1890,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityAlertResource> GetAlertsByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SecurityAlertResource> GetSecurityAlertsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAlertsByResourceGroupAsync(cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetSecurityAlertsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1903,9 +1903,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityAlertResource> GetAlertsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        public static Pageable<SecurityAlertResource> GetSecurityAlerts(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAlertsByResourceGroup(cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetSecurityAlerts(cancellationToken);
         }
 
         private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)

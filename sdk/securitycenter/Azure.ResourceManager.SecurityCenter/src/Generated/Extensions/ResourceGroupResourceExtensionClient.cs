@@ -488,11 +488,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityAlertResource> GetAlertsByResourceGroupAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityAlertResource> GetSecurityAlertsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityAlertResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
+                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityAlerts");
                 scope.Start();
                 try
                 {
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             async Task<Page<SecurityAlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
+                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityAlerts");
                 scope.Start();
                 try
                 {
@@ -530,11 +530,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityAlertResource> GetAlertsByResourceGroup(CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityAlertResource> GetSecurityAlerts(CancellationToken cancellationToken = default)
         {
             Page<SecurityAlertResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
+                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityAlerts");
                 scope.Start();
                 try
                 {
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             Page<SecurityAlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
+                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityAlerts");
                 scope.Start();
                 try
                 {
