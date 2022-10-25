@@ -51,5 +51,15 @@ namespace Azure.Security.KeyVault.Administration
         {
             return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId);
         }
+
+        /// <summary> Initializes a new instance of KeyVaultSetting. </summary>
+        /// <param name="name"> The account setting to be updated. </param>
+        /// <param name="value"> The value of the pool setting. </param>
+        /// <param name="type"> The type specifier of the value. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
+        public static KeyVaultSetting KeyVaultSetting(string name = null, string value = null, SettingType? type = null)
+        {
+            return new KeyVaultSetting(name, value, type);
+        }
     }
 }

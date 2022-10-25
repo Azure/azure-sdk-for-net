@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `KeyVaultSettingsClient` to get and update Managed HSM settings.
+
 ### Breaking Changes
 
 ### Bugs Fixed
