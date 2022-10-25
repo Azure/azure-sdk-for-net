@@ -12,13 +12,44 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class V2Manifest
+    internal partial class V2Manifest : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MediaType))
+            {
+                writer.WritePropertyName("mediaType");
+                writer.WriteStringValue(MediaType);
+            }
+            if (Optional.IsDefined(Config))
+            {
+                writer.WritePropertyName("config");
+                writer.WriteObjectValue(Config);
+            }
+            if (Optional.IsCollectionDefined(Layers))
+            {
+                writer.WritePropertyName("layers");
+                writer.WriteStartArray();
+                foreach (var item in Layers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SchemaVersion))
+            {
+                writer.WritePropertyName("schemaVersion");
+                writer.WriteNumberValue(SchemaVersion.Value);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static V2Manifest DeserializeV2Manifest(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<OciBlobDescriptor> config = default;
-            Optional<IReadOnlyList<OciBlobDescriptor>> layers = default;
+            Optional<IList<OciBlobDescriptor>> layers = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {

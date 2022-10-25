@@ -237,6 +237,7 @@ rename-mapping:
   ExportPipelineTargetProperties.type: PipelineTargetType
   TlsCertificateProperties.location: CertificateLocation
   TokenCredentialsProperties: ContainerRegistryTokenCredentials
+  ImportSource.registryUri: RegistryAddress
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun

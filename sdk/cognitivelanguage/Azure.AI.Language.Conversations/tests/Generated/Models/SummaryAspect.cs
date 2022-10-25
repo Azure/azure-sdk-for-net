@@ -24,11 +24,17 @@ namespace Azure.AI.Language.Conversations
 
         private const string IssueValue = "issue";
         private const string ResolutionValue = "resolution";
+        private const string ChapterTitleValue = "chapterTitle";
+        private const string NarrativeValue = "narrative";
 
-        /// <summary> issue. </summary>
+        /// <summary> A summary of issues in transcripts of web chats and service call transcripts between customer-service agents, and your customers. </summary>
         public static SummaryAspect Issue { get; } = new SummaryAspect(IssueValue);
-        /// <summary> resolution. </summary>
+        /// <summary> A summary of resolutions in transcripts of web chats and service call transcripts between customer-service agents, and your customers. </summary>
         public static SummaryAspect Resolution { get; } = new SummaryAspect(ResolutionValue);
+        /// <summary> A chapter title of any conversation. It is usually one phrase or several phrases naturally combined together. Long conversation tends to have more chapters. The chapter boundary can be found from the summary context. </summary>
+        public static SummaryAspect ChapterTitle { get; } = new SummaryAspect(ChapterTitleValue);
+        /// <summary> A generic narrative summary of any conversation. It generally converts the conversational language into formal written language, compresses the text length and keeps the salient information. </summary>
+        public static SummaryAspect Narrative { get; } = new SummaryAspect(NarrativeValue);
         /// <summary> Determines if two <see cref="SummaryAspect"/> values are the same. </summary>
         public static bool operator ==(SummaryAspect left, SummaryAspect right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SummaryAspect"/> values are not the same. </summary>

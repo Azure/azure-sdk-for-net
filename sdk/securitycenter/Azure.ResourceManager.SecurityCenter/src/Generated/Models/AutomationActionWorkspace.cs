@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Log Analytics Workspace to which event data will be exported. Security alerts data will reside in the &apos;SecurityAlert&apos; table and the assessments data will reside in the &apos;SecurityRecommendation&apos; table (under the &apos;Security&apos;/&apos;SecurityCenterFree&apos; solutions). Note that in order to view the data in the workspace, the Security Center Log Analytics free/standard solution needs to be enabled on that workspace. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
@@ -19,13 +21,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AutomationActionWorkspace. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
         /// <param name="workspaceResourceId"> The fully qualified Log Analytics Workspace Azure Resource ID. </param>
-        internal AutomationActionWorkspace(ActionType actionType, string workspaceResourceId) : base(actionType)
+        internal AutomationActionWorkspace(ActionType actionType, ResourceIdentifier workspaceResourceId) : base(actionType)
         {
             WorkspaceResourceId = workspaceResourceId;
             ActionType = actionType;
         }
 
         /// <summary> The fully qualified Log Analytics Workspace Azure Resource ID. </summary>
-        public string WorkspaceResourceId { get; set; }
+        public ResourceIdentifier WorkspaceResourceId { get; set; }
     }
 }

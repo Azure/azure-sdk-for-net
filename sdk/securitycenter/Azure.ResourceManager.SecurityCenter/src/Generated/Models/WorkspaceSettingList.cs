@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of WorkspaceSettingList. </summary>
         /// <param name="value"> List of workspace settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkspaceSettingList(IEnumerable<WorkspaceSettingData> value)
+        internal WorkspaceSettingList(IEnumerable<SecurityWorkspaceSettingData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of WorkspaceSettingList. </summary>
         /// <param name="value"> List of workspace settings. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal WorkspaceSettingList(IReadOnlyList<WorkspaceSettingData> value, string nextLink)
+        internal WorkspaceSettingList(IReadOnlyList<SecurityWorkspaceSettingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of workspace settings. </summary>
-        public IReadOnlyList<WorkspaceSettingData> Value { get; }
+        public IReadOnlyList<SecurityWorkspaceSettingData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

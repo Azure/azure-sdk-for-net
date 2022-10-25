@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
         /// <param name="logicAppResourceId"> The triggered Logic App Azure Resource ID. This can also reside on other subscriptions, given that you have permissions to trigger the Logic App. </param>
         /// <param name="uri"> The Logic App trigger URI endpoint (it will not be included in any response). </param>
-        internal AutomationActionLogicApp(ActionType actionType, string logicAppResourceId, Uri uri) : base(actionType)
+        internal AutomationActionLogicApp(ActionType actionType, ResourceIdentifier logicAppResourceId, Uri uri) : base(actionType)
         {
             LogicAppResourceId = logicAppResourceId;
             Uri = uri;
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The triggered Logic App Azure Resource ID. This can also reside on other subscriptions, given that you have permissions to trigger the Logic App. </summary>
-        public string LogicAppResourceId { get; set; }
+        public ResourceIdentifier LogicAppResourceId { get; set; }
         /// <summary> The Logic App trigger URI endpoint (it will not be included in any response). </summary>
         public Uri Uri { get; set; }
     }

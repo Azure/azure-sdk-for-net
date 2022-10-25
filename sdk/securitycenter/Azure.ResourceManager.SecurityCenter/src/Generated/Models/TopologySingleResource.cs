@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="location"> The location of this resource. </param>
         /// <param name="parents"> Azure resources connected to this resource which are in higher level in the topology view. </param>
         /// <param name="children"> Azure resources connected to this resource which are in lower level in the topology view. </param>
-        internal TopologySingleResource(string resourceId, string severity, bool? recommendationsExist, string networkZones, int? topologyScore, AzureLocation? location, IReadOnlyList<TopologySingleResourceParent> parents, IReadOnlyList<TopologySingleResourceChild> children)
+        internal TopologySingleResource(ResourceIdentifier resourceId, string severity, bool? recommendationsExist, string networkZones, int? topologyScore, AzureLocation? location, IReadOnlyList<TopologySingleResourceParent> parents, IReadOnlyList<TopologySingleResourceChild> children)
         {
             ResourceId = resourceId;
             Severity = severity;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Azure resource id. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> The security severity of the resource. </summary>
         public string Severity { get; }
         /// <summary> Indicates if the resource has security recommendations. </summary>

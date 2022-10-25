@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// Create security contact configurations for the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}
         /// Operation Id: SecurityContacts_Create
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// Create security contact configurations for the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}
         /// Operation Id: SecurityContacts_Create
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// Get Default Security contact configurations for the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}
         /// Operation Id: SecurityContacts_Get
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// Get Default Security contact configurations for the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}
         /// Operation Id: SecurityContacts_Get
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// List all security contact configurations for the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts
         /// Operation Id: SecurityContacts_List
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// List all security contact configurations for the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts
         /// Operation Id: SecurityContacts_List
         /// </summary>

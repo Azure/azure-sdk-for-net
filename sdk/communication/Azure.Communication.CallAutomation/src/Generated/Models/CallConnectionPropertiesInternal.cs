@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CallConnectionProperties. </summary>
+    /// <summary> Properties of a call connection. </summary>
     internal partial class CallConnectionPropertiesInternal
     {
         /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="serverCallId"> The server call id. </param>
-        /// <param name="source"> The source of the call. </param>
+        /// <param name="source"> The source of the call, which is the caller. </param>
         /// <param name="targets"> The targets of the call. </param>
         /// <param name="callConnectionState"> The state of the call connection. </param>
         /// <param name="callbackUri"> The callback URI. </param>
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         public string CallConnectionId { get; }
         /// <summary> The server call id. </summary>
         public string ServerCallId { get; }
-        /// <summary> The source of the call. </summary>
+        /// <summary> The source of the call, which is the caller. </summary>
         public CallSourceInternal Source { get; }
         /// <summary> The targets of the call. </summary>
         public IReadOnlyList<CommunicationIdentifierModel> Targets { get; }

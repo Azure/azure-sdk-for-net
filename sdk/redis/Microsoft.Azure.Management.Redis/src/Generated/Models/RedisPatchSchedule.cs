@@ -42,10 +42,13 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        public RedisPatchSchedule(IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        public RedisPatchSchedule(IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
             : base(id, name, type)
         {
             ScheduleEntries = scheduleEntries;
+            Location = location;
             CustomInit();
         }
 
@@ -59,6 +62,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.scheduleEntries")]
         public IList<ScheduleEntry> ScheduleEntries { get; set; }
+
+        /// <summary>
+        /// Gets the geo-location where the resource lives
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; private set; }
 
         /// <summary>
         /// Validate the object.

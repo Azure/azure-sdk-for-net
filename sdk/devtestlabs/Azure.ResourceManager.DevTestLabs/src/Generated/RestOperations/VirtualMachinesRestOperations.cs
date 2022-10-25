@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabVirtualMachineList>> ListAsync(string subscriptionId, string resourceGroupName, string labName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LabVmList>> ListAsync(string subscriptionId, string resourceGroupName, string labName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        LabVirtualMachineList value = default;
+                        LabVmList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabVirtualMachineList.DeserializeLabVirtualMachineList(document.RootElement);
+                        value = LabVmList.DeserializeLabVmList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabVirtualMachineList> List(string subscriptionId, string resourceGroupName, string labName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<LabVmList> List(string subscriptionId, string resourceGroupName, string labName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        LabVirtualMachineList value = default;
+                        LabVmList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabVirtualMachineList.DeserializeLabVirtualMachineList(document.RootElement);
+                        value = LabVmList.DeserializeLabVmList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabVirtualMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabVmData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        LabVirtualMachineData value = default;
+                        DevTestLabVmData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabVirtualMachineData.DeserializeLabVirtualMachineData(document.RootElement);
+                        value = DevTestLabVmData.DeserializeDevTestLabVmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LabVirtualMachineData)null, message.Response);
+                    return Response.FromValue((DevTestLabVmData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabVirtualMachineData> Get(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public Response<DevTestLabVmData> Get(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        LabVirtualMachineData value = default;
+                        DevTestLabVmData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabVirtualMachineData.DeserializeLabVirtualMachineData(document.RootElement);
+                        value = DevTestLabVmData.DeserializeDevTestLabVmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LabVirtualMachineData)null, message.Response);
+                    return Response.FromValue((DevTestLabVmData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, LabVirtualMachineData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, LabVirtualMachineData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string labName, string name, LabVirtualMachineData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, LabVirtualMachinePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabVirtualMachineData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, LabVirtualMachinePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabVmData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -445,9 +445,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        LabVirtualMachineData value = default;
+                        DevTestLabVmData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabVirtualMachineData.DeserializeLabVirtualMachineData(document.RootElement);
+                        value = DevTestLabVmData.DeserializeDevTestLabVmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabVirtualMachineData> Update(string subscriptionId, string resourceGroupName, string labName, string name, LabVirtualMachinePatch patch, CancellationToken cancellationToken = default)
+        public Response<DevTestLabVmData> Update(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        LabVirtualMachineData value = default;
+                        DevTestLabVmData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabVirtualMachineData.DeserializeLabVirtualMachineData(document.RootElement);
+                        value = DevTestLabVmData.DeserializeDevTestLabVmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateAddDataDiskRequest(string subscriptionId, string resourceGroupName, string labName, string name, DataDiskProperties dataDiskProperties)
+        internal HttpMessage CreateAddDataDiskRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabDataDiskProperties dataDiskProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="dataDiskProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> AddDataDiskAsync(string subscriptionId, string resourceGroupName, string labName, string name, DataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> AddDataDiskAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabDataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="dataDiskProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response AddDataDisk(string subscriptionId, string resourceGroupName, string labName, string name, DataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
+        public Response AddDataDisk(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabDataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateApplyArtifactsRequest(string subscriptionId, string resourceGroupName, string labName, string name, ApplyArtifactsContent content)
+        internal HttpMessage CreateApplyArtifactsRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmApplyArtifactsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ApplyArtifactsAsync(string subscriptionId, string resourceGroupName, string labName, string name, ApplyArtifactsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ApplyArtifactsAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmApplyArtifactsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ApplyArtifacts(string subscriptionId, string resourceGroupName, string labName, string name, ApplyArtifactsContent content, CancellationToken cancellationToken = default)
+        public Response ApplyArtifacts(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmApplyArtifactsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateDetachDataDiskRequest(string subscriptionId, string resourceGroupName, string labName, string name, DetachDataDiskProperties detachDataDiskProperties)
+        internal HttpMessage CreateDetachDataDiskRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmDetachDataDiskContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -755,9 +755,9 @@ namespace Azure.ResourceManager.DevTestLabs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(detachDataDiskProperties);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -767,19 +767,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="detachDataDiskProperties"> Request body for detaching data disk from a virtual machine. </param>
+        /// <param name="content"> Request body for detaching data disk from a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="detachDataDiskProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DetachDataDiskAsync(string subscriptionId, string resourceGroupName, string labName, string name, DetachDataDiskProperties detachDataDiskProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> DetachDataDiskAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmDetachDataDiskContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(detachDataDiskProperties, nameof(detachDataDiskProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDetachDataDiskRequest(subscriptionId, resourceGroupName, labName, name, detachDataDiskProperties);
+            using var message = CreateDetachDataDiskRequest(subscriptionId, resourceGroupName, labName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -796,19 +796,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="detachDataDiskProperties"> Request body for detaching data disk from a virtual machine. </param>
+        /// <param name="content"> Request body for detaching data disk from a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="detachDataDiskProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DetachDataDisk(string subscriptionId, string resourceGroupName, string labName, string name, DetachDataDiskProperties detachDataDiskProperties, CancellationToken cancellationToken = default)
+        public Response DetachDataDisk(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmDetachDataDiskContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(detachDataDiskProperties, nameof(detachDataDiskProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDetachDataDiskRequest(subscriptionId, resourceGroupName, labName, name, detachDataDiskProperties);
+            using var message = CreateDetachDataDiskRequest(subscriptionId, resourceGroupName, labName, name, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RdpConnection>> GetRdpFileContentsAsync(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabRdpConnection>> GetRdpFileContentsAsync(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -864,9 +864,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        RdpConnection value = default;
+                        DevTestLabRdpConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RdpConnection.DeserializeRdpConnection(document.RootElement);
+                        value = DevTestLabRdpConnection.DeserializeDevTestLabRdpConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RdpConnection> GetRdpFileContents(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
+        public Response<DevTestLabRdpConnection> GetRdpFileContents(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -895,9 +895,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        RdpConnection value = default;
+                        DevTestLabRdpConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RdpConnection.DeserializeRdpConnection(document.RootElement);
+                        value = DevTestLabRdpConnection.DeserializeDevTestLabRdpConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicableSchedule>> ListApplicableSchedulesAsync(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabApplicableSchedule>> ListApplicableSchedulesAsync(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -949,9 +949,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        ApplicableSchedule value = default;
+                        DevTestLabApplicableSchedule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicableSchedule.DeserializeApplicableSchedule(document.RootElement);
+                        value = DevTestLabApplicableSchedule.DeserializeDevTestLabApplicableSchedule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicableSchedule> ListApplicableSchedules(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
+        public Response<DevTestLabApplicableSchedule> ListApplicableSchedules(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -980,9 +980,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        ApplicableSchedule value = default;
+                        DevTestLabApplicableSchedule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicableSchedule.DeserializeApplicableSchedule(document.RootElement);
+                        value = DevTestLabApplicableSchedule.DeserializeDevTestLabApplicableSchedule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1067,7 +1067,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateResizeRequest(string subscriptionId, string resourceGroupName, string labName, string name, ResizeLabVirtualMachineProperties resizeLabVirtualMachineProperties)
+        internal HttpMessage CreateResizeRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmResizeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1087,9 +1087,9 @@ namespace Azure.ResourceManager.DevTestLabs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(resizeLabVirtualMachineProperties);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1099,19 +1099,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="resizeLabVirtualMachineProperties"> Request body for resizing a virtual machine. </param>
+        /// <param name="content"> Request body for resizing a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="resizeLabVirtualMachineProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResizeAsync(string subscriptionId, string resourceGroupName, string labName, string name, ResizeLabVirtualMachineProperties resizeLabVirtualMachineProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> ResizeAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmResizeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(resizeLabVirtualMachineProperties, nameof(resizeLabVirtualMachineProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateResizeRequest(subscriptionId, resourceGroupName, labName, name, resizeLabVirtualMachineProperties);
+            using var message = CreateResizeRequest(subscriptionId, resourceGroupName, labName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1128,19 +1128,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="resizeLabVirtualMachineProperties"> Request body for resizing a virtual machine. </param>
+        /// <param name="content"> Request body for resizing a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="resizeLabVirtualMachineProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Resize(string subscriptionId, string resourceGroupName, string labName, string name, ResizeLabVirtualMachineProperties resizeLabVirtualMachineProperties, CancellationToken cancellationToken = default)
+        public Response Resize(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVmResizeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(resizeLabVirtualMachineProperties, nameof(resizeLabVirtualMachineProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateResizeRequest(subscriptionId, resourceGroupName, labName, name, resizeLabVirtualMachineProperties);
+            using var message = CreateResizeRequest(subscriptionId, resourceGroupName, labName, name, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabVirtualMachineList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string labName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LabVmList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string labName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1576,9 +1576,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        LabVirtualMachineList value = default;
+                        LabVmList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabVirtualMachineList.DeserializeLabVirtualMachineList(document.RootElement);
+                        value = LabVmList.DeserializeLabVmList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1598,7 +1598,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabVirtualMachineList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string labName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<LabVmList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string labName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1611,9 +1611,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        LabVirtualMachineList value = default;
+                        LabVmList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabVirtualMachineList.DeserializeLabVirtualMachineList(document.RootElement);
+                        value = LabVmList.DeserializeLabVmList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

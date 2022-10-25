@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId");
-                writer.WriteStringValue(ApplicationId);
+                writer.WriteStringValue(ApplicationId.Value);
             }
             if (Optional.IsDefined(Secret))
             {
@@ -30,13 +31,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ServicePrincipalProperties DeserializeServicePrincipalProperties(JsonElement element)
         {
-            Optional<string> applicationId = default;
+            Optional<Guid> applicationId = default;
             Optional<string> secret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"))
                 {
-                    applicationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    applicationId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("secret"))
@@ -45,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ServicePrincipalProperties(applicationId.Value, secret.Value);
+            return new ServicePrincipalProperties(Optional.ToNullable(applicationId), secret.Value);
         }
     }
 }

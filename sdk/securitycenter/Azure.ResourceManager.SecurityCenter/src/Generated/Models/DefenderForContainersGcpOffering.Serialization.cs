@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("dataPipelineNativeCloudConnection");
                 writer.WriteObjectValue(DataPipelineNativeCloudConnection);
             }
-            if (Optional.IsDefined(AuditLogsAutoProvisioningFlag))
+            if (Optional.IsDefined(IsAuditLogsAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("auditLogsAutoProvisioningFlag");
-                writer.WriteBooleanValue(AuditLogsAutoProvisioningFlag.Value);
+                writer.WriteBooleanValue(IsAuditLogsAutoProvisioningEnabled.Value);
             }
-            if (Optional.IsDefined(DefenderAgentAutoProvisioningFlag))
+            if (Optional.IsDefined(IsDefenderAgentAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("defenderAgentAutoProvisioningFlag");
-                writer.WriteBooleanValue(DefenderAgentAutoProvisioningFlag.Value);
+                writer.WriteBooleanValue(IsDefenderAgentAutoProvisioningEnabled.Value);
             }
-            if (Optional.IsDefined(PolicyAgentAutoProvisioningFlag))
+            if (Optional.IsDefined(IsPolicyAgentAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("policyAgentAutoProvisioningFlag");
-                writer.WriteBooleanValue(PolicyAgentAutoProvisioningFlag.Value);
+                writer.WriteBooleanValue(IsPolicyAgentAutoProvisioningEnabled.Value);
             }
             writer.WritePropertyName("offeringType");
             writer.WriteStringValue(OfferingType.ToString());
