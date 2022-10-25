@@ -10,7 +10,8 @@ $packageNameHash = [ordered]@{"vmware" = "avs";
     "msi" = "managedserviceidentity";
     "web" = "websites";
     "recoveryservicesbackup" = "recoveryservices-backup";
-    "recoveryservicessiterecovery" = "recoveryservices-siterecovery"
+    "recoveryservicessiterecovery" = "recoveryservices-siterecovery";
+    "security" = "securitycenter"
 }
 
 function Get-SwaggerInfo()
