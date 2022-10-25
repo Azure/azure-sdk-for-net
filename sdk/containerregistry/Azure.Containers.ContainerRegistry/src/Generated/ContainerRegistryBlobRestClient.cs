@@ -412,7 +412,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUploadChunkRequest(string nextLink, Stream value)
+        internal HttpMessage CreateUploadChunkRequest(string nextLink, Stream value, string contentRange, string contentLength)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -423,6 +423,14 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            if (contentRange != null)
+            {
+                request.Headers.Add("Content-Range", contentRange);
+            }
+            if (contentLength != null)
+            {
+                request.Headers.Add("Content-Length", contentLength);
+            }
             request.Headers.Add("Content-Type", "application/octet-stream");
             request.Content = RequestContent.Create(value);
             return message;
@@ -431,9 +439,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Upload a stream of data without completing the upload. </summary>
         /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Raw data of blob. </param>
+        /// <param name="contentRange"> Range of bytes identifying the desired block of content represented by the body. Start must the end offset retrieved via status check plus one. Note that this is a non-standard use of the Content-Range header. </param>
+        /// <param name="contentLength"> Length of the chunk being uploaded, corresponding the length of the request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders>> UploadChunkAsync(string nextLink, Stream value, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders>> UploadChunkAsync(string nextLink, Stream value, string contentRange = null, string contentLength = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -444,7 +454,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateUploadChunkRequest(nextLink, value);
+            using var message = CreateUploadChunkRequest(nextLink, value, contentRange, contentLength);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRegistryBlobUploadChunkHeaders(message.Response);
             switch (message.Response.Status)
@@ -459,9 +469,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Upload a stream of data without completing the upload. </summary>
         /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Raw data of blob. </param>
+        /// <param name="contentRange"> Range of bytes identifying the desired block of content represented by the body. Start must the end offset retrieved via status check plus one. Note that this is a non-standard use of the Content-Range header. </param>
+        /// <param name="contentLength"> Length of the chunk being uploaded, corresponding the length of the request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
-        public ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> UploadChunk(string nextLink, Stream value, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> UploadChunk(string nextLink, Stream value, string contentRange = null, string contentLength = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -472,7 +484,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateUploadChunkRequest(nextLink, value);
+            using var message = CreateUploadChunkRequest(nextLink, value, contentRange, contentLength);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRegistryBlobUploadChunkHeaders(message.Response);
             switch (message.Response.Status)

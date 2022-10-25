@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +18,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// blobs and manifests, the building blocks of artifacts. </summary>
     public class ContainerRegistryBlobClient
     {
+        private const int DefaultChunkSize = 4 * 1024 * 1024; // 4MB
+
         private readonly Uri _endpoint;
         private readonly string _registryName;
         private readonly string _repositoryName;
@@ -304,9 +309,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// Upload an artifact blob.
         /// </summary>
         /// <param name="stream">The stream containing the blob data.</param>
+        /// <param name="options">Options for the blob upload.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadBlobResult> UploadBlob(Stream stream, CancellationToken cancellationToken = default)
+        public virtual Response<UploadBlobResult> UploadBlob(Stream stream, UploadBlobOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
@@ -316,12 +322,29 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 string digest = OciBlobDescriptor.ComputeDigest(stream);
                 long length = stream.Length;
+                int maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
 
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
-                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
-                    _blobRestClient.UploadChunk(startUploadResult.Headers.Location, stream, cancellationToken);
+                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = null;
+                if (length < maxChunkSize)
+                {
+                    uploadChunkResult = _blobRestClient.UploadChunk(startUploadResult.Headers.Location, stream, cancellationToken: cancellationToken);
+                }
+                else
+                {
+                    byte[] buffer = new byte[maxChunkSize];
+                    foreach (var range in GetRanges(length, maxChunkSize))
+                    {
+                        var location = uploadChunkResult?.Headers.Location ?? startUploadResult.Headers.Location;
+                        var chunkLength = stream.Read(buffer, 0, (int)range.Length);
+                        using (Stream chunk = new MemoryStream(buffer))
+                        {
+                            uploadChunkResult = _blobRestClient.UploadChunk(location, chunk, ToContentRangeString(range), chunkLength.ToString(CultureInfo.InvariantCulture), cancellationToken);
+                        }
+                    }
+                };
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(digest, uploadChunkResult.Headers.Location, null, cancellationToken);
@@ -339,9 +362,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// Upload an artifact blob.
         /// </summary>
         /// <param name="stream">The stream containing the blob data.</param>
+        /// <param name="options">Options for the blob upload.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, UploadBlobOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
@@ -351,12 +375,29 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 string digest = OciBlobDescriptor.ComputeDigest(stream);
                 long length = stream.Length;
+                int maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
 
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
-                    await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = null;
+                if (length < maxChunkSize)
+                {
+                    uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    byte[] buffer = new byte[maxChunkSize];
+                    foreach (var range in GetRanges(length, maxChunkSize))
+                    {
+                        var location = uploadChunkResult?.Headers.Location ?? startUploadResult.Headers.Location;
+                        var chunkLength = await stream.ReadAsync(buffer, 0, (int)range.Length, cancellationToken).ConfigureAwait(false);
+                        using (Stream chunk = new MemoryStream(buffer))
+                        {
+                            uploadChunkResult = await _blobRestClient.UploadChunkAsync(location, chunk, ToContentRangeString(range), chunkLength.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
+                        }
+                    }
+                };
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
@@ -367,6 +408,33 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 scope.Failed(e);
                 throw;
+            }
+        }
+
+        private static string ToContentRangeString(HttpRange range)
+        {
+            var endRange = "";
+            if (range.Length.HasValue && range.Length != 0)
+            {
+                endRange = (range.Offset + range.Length.Value - 1).ToString(CultureInfo.InvariantCulture);
+            }
+
+            return FormattableString.Invariant($"{range.Offset}-{endRange}");
+        }
+
+        private static IEnumerable<HttpRange> GetRanges(long fileSize, long chunkSize)
+        {
+            long count = Math.DivRem(fileSize, chunkSize, out long lastChunkSize);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (i == (count - 1) && lastChunkSize > 0)
+                {
+                    yield return new HttpRange(i * chunkSize, lastChunkSize);
+                    yield break;
+                }
+
+                yield return new HttpRange(i * chunkSize, chunkSize);
             }
         }
 

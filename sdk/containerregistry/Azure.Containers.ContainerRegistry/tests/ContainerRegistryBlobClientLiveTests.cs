@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -295,6 +296,73 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await registryClient.DeleteRepositoryAsync("oci-artifact");
         }
 
+        [Test]
+        [LiveOnly]
+        public async Task CanPushLargeArtifact()
+        {
+            // Arrange
+            var name = "oci-artifact-large";
+            var sizeInMiB = 32;
+            var tag = $"big-{sizeInMiB}";
+            var size = 1024 * 1024 * sizeInMiB;
+            var client = CreateBlobClient(name);
+
+            // Act
+            OciManifest manifest = new OciManifest();
+            manifest.SchemaVersion = 2;
+
+            // Upload config
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
+            var configFilePath = Path.Combine(path, "config.json");
+            if (File.Exists(configFilePath))
+            {
+                using (var fs = File.OpenRead(configFilePath))
+                {
+                    var uploadResult = await client.UploadBlobAsync(fs);
+
+                    // Update manifest
+                    OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                    descriptor.Digest = uploadResult.Value.Digest;
+                    descriptor.Size = uploadResult.Value.Size;
+                    descriptor.MediaType = "application/vnd.acme.rocket.config";
+
+                    manifest.Config = descriptor;
+                }
+            }
+
+            // Upload large layer
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                var uploadResult = await client.UploadBlobAsync(stream);
+
+                // Update manifest
+                OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                descriptor.Digest = uploadResult.Value.Digest;
+                descriptor.Size = uploadResult.Value.Size;
+                descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";
+
+                manifest.Layers.Add(descriptor);
+            }
+
+            // Finally, upload manifest
+            var uploadManifestResult = await client.UploadManifestAsync(
+                manifest,
+                new UploadManifestOptions(tag));
+
+            // Assert
+            ContainerRegistryClient registryClient = CreateClient();
+
+            var names = registryClient.GetRepositoryNamesAsync();
+            Assert.IsTrue(await names.AnyAsync(n => n == name));
+
+            var properties = await registryClient.GetArtifact(name, tag).GetManifestPropertiesAsync();
+            Assert.AreEqual(uploadManifestResult.Value.Digest, properties.Value.Digest);
+
+            // Clean up
+            //await registryClient.DeleteRepositoryAsync(name);
+        }
+
         private async Task<UploadManifestResult> Push(ContainerRegistryBlobClient client)
         {
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
@@ -397,7 +465,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var files = Directory.GetFiles(path).Select(f => Path.GetFileName(f)).ToArray();
             Assert.Contains("manifest.json", files);
             Assert.Contains("config.json", files);
-            foreach (var file in  manifest.Layers)
+            foreach (var file in manifest.Layers)
             {
                 Assert.Contains(TrimSha(file.Digest), files);
             }
@@ -416,6 +484,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             return digest;
+        }
+
+        private static byte[] GetRandomBuffer(long size, Random random = null)
+        {
+            random ??= new Random(Environment.TickCount);
+            var buffer = new byte[size];
+            random.NextBytes(buffer);
+            return buffer;
         }
     }
 }
