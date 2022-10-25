@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static CertificateCollection DeserializeCertificateCollection(JsonElement element)
         {
-            IReadOnlyList<ContainerAppCertificateData> value = default;
+            IReadOnlyList<CertificateData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ContainerAppCertificateData> array = new List<ContainerAppCertificateData>();
+                    List<CertificateData> array = new List<CertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppCertificateData.DeserializeContainerAppCertificateData(item));
+                        array.Add(CertificateData.DeserializeCertificateData(item));
                     }
                     value = array;
                     continue;

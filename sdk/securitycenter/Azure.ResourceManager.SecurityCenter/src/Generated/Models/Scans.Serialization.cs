@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static Scans DeserializeScans(JsonElement element)
         {
-            Optional<IReadOnlyList<ScanData>> value = default;
+            Optional<IReadOnlyList<SqlVulnerabilityAssessmentScanData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScanData> array = new List<ScanData>();
+                    List<SqlVulnerabilityAssessmentScanData> array = new List<SqlVulnerabilityAssessmentScanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScanData.DeserializeScanData(item));
+                        array.Add(SqlVulnerabilityAssessmentScanData.DeserializeSqlVulnerabilityAssessmentScanData(item));
                     }
                     value = array;
                     continue;

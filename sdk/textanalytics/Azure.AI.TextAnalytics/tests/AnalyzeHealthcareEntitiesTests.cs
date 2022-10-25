@@ -131,6 +131,36 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(5, role.Entity.Length);
                 }
             }
+
+            // Check that the FHIR bundle is not null, but empty.
+            Assert.IsNotNull(result1.FhirBundle);
+            Assert.AreEqual(0, result1.FhirBundle.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeHealthcareEntitiesWithConfidenceScoreTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
+            await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
+
+            // Take the first page.
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            AnalyzeHealthcareEntitiesResult result1 = resultCollection[0];
+            Assert.AreEqual(s_document1ExpectedEntitiesOutput.Count, result1.Entities.Count);
+            Assert.IsNotNull(result1.Id);
+            Assert.AreEqual("1", result1.Id);
+            Assert.AreEqual(2, result1.EntityRelations.Count());
+
+            foreach (HealthcareEntityRelation relation in result1.EntityRelations)
+            {
+                Assert.GreaterOrEqual(relation.ConfidenceScore, 0.0);
+                Assert.LessOrEqual(relation.ConfidenceScore, 1.0);
+            }
         }
 
         [RecordedTest]
@@ -279,10 +309,13 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
+            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions();
+
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+            if (ServiceVersion is not TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
-                IncludeStatistics = true
-            };
+                options.IncludeStatistics = true;
+            }
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en", options);
 
@@ -290,7 +323,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateOperationProperties(operation);
 
-            //Take the first page
+            // Take the first page.
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             var expectedOutput = new Dictionary<string, List<string>>()
@@ -330,10 +363,13 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
+            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions();
+
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+            if (ServiceVersion is not TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
-                IncludeStatistics = true
-            };
+                options.IncludeStatistics = true;
+            }
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, options);
 
@@ -434,6 +470,66 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, pages[0].Count);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeHealthcareEntitiesBatchWithFhirVersionTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                FhirVersion = WellKnownFhirVersion.V4_0_1,
+                DocumentType = HealthcareDocumentType.DischargeSummary
+            });
+
+            await operation.WaitForCompletionAsync();
+
+            ValidateOperationProperties(operation);
+
+            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            var resultCollection = resultInPages.FirstOrDefault();
+            Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
+
+            // Check the FHIR bundle.
+            Assert.IsNotNull(resultCollection[0].FhirBundle);
+            Assert.Greater(resultCollection[0].FhirBundle.Count, 0);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeHealthcareEntitiesBatchWithFhirVersionThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                FhirVersion = WellKnownFhirVersion.V4_0_1,
+            }));
+
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeHealthcareEntitiesBatchWithDocumentTypeThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                DocumentType = HealthcareDocumentType.DischargeSummary
+            }));
+
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
         {
             Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
@@ -456,16 +552,20 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
-            if (includeStatistics)
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+            if (ServiceVersion is not TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                if (includeStatistics)
+                {
+                    Assert.IsNotNull(results.Statistics);
+                    Assert.Greater(results.Statistics.DocumentCount, 0);
+                    Assert.Greater(results.Statistics.TransactionCount, 0);
+                    Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+                    Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                }
+                else
+                    Assert.IsNull(results.Statistics);
             }
-            else
-                Assert.IsNull(results.Statistics);
 
             foreach (AnalyzeHealthcareEntitiesResult entitiesInDocument in results)
             {
@@ -476,15 +576,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
                 Assert.IsNotNull(entitiesInDocument.Statistics);
 
-                if (includeStatistics)
+                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+                if (ServiceVersion is not (TextAnalyticsClientOptions.ServiceVersion.V2022_05_01 or TextAnalyticsClientOptions.ServiceVersion.V3_1))
                 {
-                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
-                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
-                }
-                else
-                {
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                    if (includeStatistics)
+                    {
+                        Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
+                        Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
+                        Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                    }
                 }
 
                 Assert.IsNotNull(entitiesInDocument.Warnings);
@@ -496,7 +600,8 @@ namespace Azure.AI.TextAnalytics.Tests
         private void ValidateOperationProperties(AnalyzeHealthcareEntitiesOperation operation)
         {
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+            // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
+            // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
 
             if (operation.ExpiresOn.HasValue)
             {

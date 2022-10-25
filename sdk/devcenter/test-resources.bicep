@@ -1,26 +1,39 @@
 param resourceLocation string = resourceGroup().location
+param catalogSecretIdentifier string
+param devCenterPresetMsi string
+param projectEnvironmentTypePresetMsi string
+param testUserOid string
+param testUserName string
+param projectAdminRoleDefinitionId string
+param deploymentEnvironmentsRoleDefinitionId string
 
 var defaultDevCenterName = 'sdk-default-devcenter'
 var defaultProjectName = 'sdk-default-project'
+var defaultPoolName = 'sdk-default-pool'
 var defaultNetworkConnectionName = 'sdk-default-networkconnection'
 var defaultNetworkConnection2Name = 'sdk-default-networkconnection2'
 var defaultMarketplaceDefinition = 'sdk-default-devboxdefinition'
-
+var defaultCatalogName = 'sdk-default-catalog'
+var defaultEnvironmentTypeName = 'sdk-default-environment-type'
 var devBoxSkuName = 'general_a_8c32gb_v1'
 var devBoxStorage = 'ssd_1024gb'
 var marketplaceImageName = 'MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365'
+var gitUri = 'https://github.com/Azure/fidalgoIntegrationTests.git'
 
-resource devcenter 'Microsoft.DevCenter/devcenters@2022-08-01-preview' = {
+resource devcenter 'Microsoft.DevCenter/devcenters@2022-09-01-preview' = {
   name: defaultDevCenterName
   location: resourceLocation
   identity: {
-    type: 'SystemAssigned'
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${devCenterPresetMsi}': {}
+  }
   }
   properties: {
   }
 }
 
-resource project 'Microsoft.DevCenter/projects@2022-08-01-preview' = {
+resource project 'Microsoft.DevCenter/projects@2022-09-01-preview' = {
   name: defaultProjectName
   location: resourceLocation
   properties: {
@@ -47,7 +60,7 @@ resource vnet1 'Microsoft.Network/virtualNetworks@2021-05-01' = {
             {
               name: 'Microsoft.DevCenter.networkConnections'
               properties: {
-                'serviceName': 'Microsoft.DevCenter/networkConnection'
+                serviceName: 'Microsoft.DevCenter/networkConnection'
               }
             }
           ]
@@ -82,7 +95,7 @@ resource vnet2 'Microsoft.Network/virtualNetworks@2021-05-01' = {
             {
               name: 'Microsoft.DevCenter.networkConnections'
               properties: {
-                'serviceName': 'Microsoft.DevCenter/networkConnection'
+                serviceName: 'Microsoft.DevCenter/networkConnection'
               }
             }
           ]
@@ -98,7 +111,7 @@ resource vnet2 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   }
 }
 
-resource networkConnection1 'Microsoft.DevCenter/networkConnections@2022-08-01-preview' = {
+resource networkConnection1 'Microsoft.DevCenter/networkConnections@2022-09-01-preview' = {
   name: defaultNetworkConnectionName
   location: resourceLocation
   properties: {
@@ -107,7 +120,7 @@ resource networkConnection1 'Microsoft.DevCenter/networkConnections@2022-08-01-p
   }
 }
 
-resource networkConnection2 'Microsoft.DevCenter/networkConnections@2022-08-01-preview' = {
+resource networkConnection2 'Microsoft.DevCenter/networkConnections@2022-09-01-preview' = {
   name: defaultNetworkConnection2Name
   location: resourceLocation
   properties: {
@@ -116,14 +129,14 @@ resource networkConnection2 'Microsoft.DevCenter/networkConnections@2022-08-01-p
   }
 }
 
-resource attachedNetwork 'Microsoft.DevCenter/devcenters/attachednetworks@2022-08-01-preview' = {
+resource attachedNetwork 'Microsoft.DevCenter/devcenters/attachednetworks@2022-09-01-preview' = {
   name: '${devcenter.name}/${networkConnection1.name}'
   properties: {
     networkConnectionId: networkConnection1.id
   }
 }
 
-resource marketplaceDefinition 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-08-01-preview' = {
+resource marketplaceDefinition 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-09-01-preview' = {
   name: '${devcenter.name}/${defaultMarketplaceDefinition}'
   location: resourceLocation
   properties: {
@@ -137,9 +150,80 @@ resource marketplaceDefinition 'Microsoft.DevCenter/devcenters/devboxdefinitions
   }
 }
 
+resource pool 'Microsoft.DevCenter/projects/pools@2022-09-01-preview' = {
+  name: '${project.name}/${defaultPoolName}'
+  location: resourceLocation
+  properties: {
+    networkConnectionName: networkConnection1.name
+    devBoxDefinitionName: defaultMarketplaceDefinition
+    localAdministrator: 'Enabled'
+    licenseType: 'Windows_Client'
+  }
+}
+
+resource catalog 'Microsoft.DevCenter/devcenters/catalogs@2022-09-01-preview' = {
+  name: '${devcenter.name}/${defaultCatalogName}'
+  properties: {
+    gitHub: {
+      branch: 'main'
+      secretIdentifier: catalogSecretIdentifier
+      path: '/NewFormat'
+      uri: gitUri
+    }
+  }
+}
+
+resource environmentType 'Microsoft.DevCenter/devcenters/environmentTypes@2022-09-01-preview' = {
+  name: '${devcenter.name}/${defaultEnvironmentTypeName}'
+  properties: {
+  }
+}
+
+resource projectEnvironmentType 'Microsoft.DevCenter/projects/environmentTypes@2022-09-01-preview' = {
+  name: '${project.name}/${defaultEnvironmentTypeName}'
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+        '${devCenterPresetMsi}': {}
+    }
+  }
+  properties: {
+      deploymentTargetId: subscription().id
+      status: 'Enabled'
+  }
+}
+
+resource environmentRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
+  name: guid(resourceGroup().id, projectAdminRoleDefinitionId, testUserOid)
+  scope: project
+  properties: {
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', projectAdminRoleDefinitionId)
+    principalId: testUserOid
+    principalType: 'User'
+  }
+}
+
+resource devBoxRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
+  name: guid(resourceGroup().id, deploymentEnvironmentsRoleDefinitionId, testUserOid)
+  scope: project
+  properties: {
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', deploymentEnvironmentsRoleDefinitionId)
+    principalId: testUserOid
+    principalType: 'User'
+}
+}
+
 output DEFAULT_DEVCENTER_ID string = devcenter.id
 output DEFAULT_PROJECT_ID string = project.id
 output DEFAULT_MARKETPLACE_DEFINITION_ID string = marketplaceDefinition.id
 output DEFAULT_NETWORKCONNECTION_ID string = networkConnection1.id
 output DEFAULT_ATTACHED_NETWORK_NAME string = networkConnection1.name
 output DEFAULT_NETWORK_CONNECTION_ID string = networkConnection2.id
+output DEFAULT_PROJECT_NAME string = defaultProjectName
+output DEFAULT_DEVCENTER_NAME string = defaultDevCenterName
+output DEFAULT_POOL_NAME string = defaultPoolName
+output DEFAULT_ENVIRONMENT_TYPE_NAME string = defaultEnvironmentTypeName
+output DEFAULT_CATALOG_NAME string = defaultCatalogName
+output DEVCENTER_TENANT_ID string = subscription().tenantId
+output STATIC_TEST_USER_ID string = testUserOid
+output DEFAULT_TEST_USER_NAME string = testUserName

@@ -8,8 +8,8 @@ title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations-authoring.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/40f5247a48ff1eec044c8441c422af0628a8a288/specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/analyzeconversations.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/40f5247a48ff1eec044c8441c422af0628a8a288/specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/analyzeconversations-authoring.json
 clear-output-folder: true
 
 data-plane: true
@@ -146,19 +146,19 @@ directive:
       }
     };
 
-# Move the stringIndexType parameter to the end for all operations referencing it.
+# Move the stringIndexType parameter to just before the newly append trainedModelLabel for all operations referencing it.
 - where-operation: ConversationalAnalysisAuthoring_Export
   transform: |
     var stringIndexTypeParamIndex = $.parameters.findIndex(param => param["$ref"] === "#/parameters/ConversationalAnalysisAuthoringStringIndexTypeQueryParameter");
     var stringIndexTypeParam = $.parameters[stringIndexTypeParamIndex];
+    $.parameters.splice(stringIndexTypeParamIndex, 1);
 
     var apiVersionParamIndex = $.parameters.findIndex(param => param["$ref"] === "common.json#/parameters/ApiVersionParameter");
     var apiVersionParam = $.parameters[apiVersionParamIndex];
+    $.parameters.splice(apiVersionParamIndex, 1);
 
-    $.parameters.splice(stringIndexTypeParamIndex, 1);
-    $.parameters.splice(apiVersionParamIndex - 1, 1);
-
-    $.parameters.push(stringIndexTypeParam);
+    var trainedModelLabelIndex = $.parameters.findIndex(param => param.name === "trainedModelLabel");
+    $.parameters.splice(trainedModelLabelIndex, 0, stringIndexTypeParam);
     $.parameters.push(apiVersionParam);
 
 # Update descriptions to include a link to the REST API documentation.

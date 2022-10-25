@@ -23,12 +23,15 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesAction"/>
         /// class based on the values of a <see cref="AnalyzeHealthcareEntitiesOptions"/>.
-        /// It sets the <see cref="ModelVersion"/> and <see cref="DisableServiceLogs"/> properties.
+        /// It sets the <see cref="ModelVersion"/>, <see cref="DisableServiceLogs"/>,
+        /// <see cref="FhirVersion"/>, and <see cref="DocumentType"/> properties.
         /// </summary>
         public AnalyzeHealthcareEntitiesAction(AnalyzeHealthcareEntitiesOptions options)
         {
             ModelVersion = options.ModelVersion;
             DisableServiceLogs = options.DisableServiceLogs;
+            FhirVersion = options.FhirVersion;
+            DocumentType = options.DocumentType;
         }
 
         /// <summary>
@@ -54,5 +57,19 @@ namespace Azure.AI.TextAnalytics
         /// Gets or sets a name for this action. If not provided, the service will generate one.
         /// </summary>
         public string ActionName { get; set; }
+
+        /// <summary>
+        /// The version of the FHIR specification that will be used to format the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/>
+        /// in the result. If not set, the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/> will not be produced. For additional information, see
+        /// <see href="https://www.hl7.org/fhir/overview.html"/>.
+        /// </summary>
+        public WellKnownFhirVersion? FhirVersion { get; set; }
+
+        /// <summary>
+        /// The document type, which can be provided as a hint to improve the production of the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/> when
+        /// the <see cref="AnalyzeHealthcareEntitiesOptions.FhirVersion"/> property is specified. The default behavior is equivalent to using
+        /// <see cref="HealthcareDocumentType.None"/>.
+        /// </summary>
+        public HealthcareDocumentType? DocumentType { get; set; }
     }
 }

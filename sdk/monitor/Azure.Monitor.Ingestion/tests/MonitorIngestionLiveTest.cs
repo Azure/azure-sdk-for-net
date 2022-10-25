@@ -104,7 +104,7 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public async Task ValidInputFromArrayAsJsonWithSingleBatchWithGzip()
         {
-            LogsIngestionClient client = CreateClient();
+           LogsIngestionClient client = CreateClient();
 
            // Make the request
            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
@@ -119,26 +119,14 @@ namespace Azure.Monitor.Ingestion.Tests
         public async Task ValidInputFromArrayAsJsonWithMultiBatchWithGzip()
         {
             LogsIngestionClient client = CreateClient();
+            LogsIngestionClient.SingleUploadThreshold = 500; // make batch size smaller for Uploads for test recording size
 
             // Make the request
-            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000, Recording.Now.DateTime)).ConfigureAwait(false);
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(1000, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
             Assert.IsEmpty(response.Value.Errors);
-        }
-
-        [LiveOnly]
-        [Test]
-        public async Task InvalidInputFromObjectAsJsonNoBatchingNoGzipAsync()
-        {
-            LogsIngestionClient client = CreateClient();
-
-            Response<UploadLogsResult> response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000, Recording.Now.DateTime)).ConfigureAwait(false); //takes StreamName not tablename
-            // Check the response - run without Batching and Gzip for error 413
-            Assert.AreEqual(UploadLogsStatus.Failure, response.Value.Status);
-            Assert.AreEqual(413, response.Value.Errors.FirstOrDefault().Error.Code);
-            Assert.AreEqual(10000, response.Value.Errors.FirstOrDefault().FailedLogs.Count());
         }
 
         [AsyncOnly]

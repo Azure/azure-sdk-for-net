@@ -773,6 +773,8 @@ namespace Azure.Maps.Routing
                 var operation = new GetRouteMatrixOperation(this, new Uri(response.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
+                    // TODO: Remove Thread.Sleep after adding RetryAfterInSeconds parameter
+                    Thread.Sleep(400);
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
 
@@ -868,6 +870,8 @@ namespace Azure.Maps.Routing
                 var operation = new GetDirectionsOperation(this, new Uri(response.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
+                    // TODO: Remove Thread.Sleep after adding RetryAfterInSeconds parameter
+                    Thread.Sleep(400);
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
 

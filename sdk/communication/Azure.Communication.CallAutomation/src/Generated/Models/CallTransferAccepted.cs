@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CallTransferAccepted. </summary>
+    /// <summary> The call transfer accepted event. </summary>
     public partial class CallTransferAccepted
     {
         /// <summary> Initializes a new instance of CallTransferAccepted. </summary>

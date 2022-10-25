@@ -1,3 +1,26 @@
+namespace Azure.Communication
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommunicationIdentifierModelKind : System.IEquatable<Azure.Communication.CommunicationIdentifierModelKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommunicationIdentifierModelKind(string value) { throw null; }
+        public static Azure.Communication.CommunicationIdentifierModelKind CommunicationUser { get { throw null; } }
+        public static Azure.Communication.CommunicationIdentifierModelKind MicrosoftTeamsUser { get { throw null; } }
+        public static Azure.Communication.CommunicationIdentifierModelKind PhoneNumber { get { throw null; } }
+        public static Azure.Communication.CommunicationIdentifierModelKind Unknown { get { throw null; } }
+        public bool Equals(Azure.Communication.CommunicationIdentifierModelKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CommunicationIdentifierModelKind left, Azure.Communication.CommunicationIdentifierModelKind right) { throw null; }
+        public static implicit operator Azure.Communication.CommunicationIdentifierModelKind (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CommunicationIdentifierModelKind left, Azure.Communication.CommunicationIdentifierModelKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+}
 namespace Azure.Communication.MediaComposition
 {
     public partial class ActivePresenter : Azure.Communication.MediaComposition.Models.MediaInput
@@ -35,26 +58,6 @@ namespace Azure.Communication.MediaComposition
         public AutoGridLayout(System.Collections.Generic.IEnumerable<string> inputIds) { }
         public bool? HighlightDominantSpeaker { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> InputIds { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommunicationIdentifierModelKind : System.IEquatable<Azure.Communication.MediaComposition.CommunicationIdentifierModelKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CommunicationIdentifierModelKind(string value) { throw null; }
-        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind CommunicationUser { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind MicrosoftTeamsUser { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind PhoneNumber { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind Unknown { get { throw null; } }
-        public bool Equals(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind left, Azure.Communication.MediaComposition.CommunicationIdentifierModelKind right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.CommunicationIdentifierModelKind (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind left, Azure.Communication.MediaComposition.CommunicationIdentifierModelKind right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class CompositionStreamState
     {

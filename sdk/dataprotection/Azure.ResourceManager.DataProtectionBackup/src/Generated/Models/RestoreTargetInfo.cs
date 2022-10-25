@@ -13,29 +13,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class RestoreTargetInfo : RestoreTargetInfoBase
     {
         /// <summary> Initializes a new instance of RestoreTargetInfo. </summary>
-        /// <param name="recoveryOption"> Recovery Option. </param>
-        /// <param name="datasourceInfo"> Information of target DS. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datasourceInfo"/> is null. </exception>
-        public RestoreTargetInfo(RecoveryOption recoveryOption, Datasource datasourceInfo) : base(recoveryOption)
+        /// <param name="recoverySetting"> Recovery Option. </param>
+        /// <param name="dataSourceInfo"> Information of target DS. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceInfo"/> is null. </exception>
+        public RestoreTargetInfo(RecoverySetting recoverySetting, DataSourceInfo dataSourceInfo) : base(recoverySetting)
         {
-            if (datasourceInfo == null)
+            if (dataSourceInfo == null)
             {
-                throw new ArgumentNullException(nameof(datasourceInfo));
+                throw new ArgumentNullException(nameof(dataSourceInfo));
             }
 
-            DatasourceInfo = datasourceInfo;
+            DataSourceInfo = dataSourceInfo;
             ObjectType = "RestoreTargetInfo";
         }
 
         /// <summary> Information of target DS. </summary>
-        public Datasource DatasourceInfo { get; }
+        public DataSourceInfo DataSourceInfo { get; }
         /// <summary> Information of target DS Set. </summary>
-        public DatasourceSet DatasourceSetInfo { get; set; }
+        public DataSourceSetInfo DataSourceSetInfo { get; set; }
         /// <summary>
         /// Credentials to use to authenticate with data source provider.
-        /// Please note <see cref="AuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
         /// </summary>
-        public AuthCredentials DatasourceAuthCredentials { get; set; }
+        public DataProtectionBackupAuthCredentials DataSourceAuthCredentials { get; set; }
     }
 }

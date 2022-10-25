@@ -12,10 +12,12 @@ pr:
     include:
     - sdk/devcenter/ci.mgmt.yml
     - sdk/devcenter/Azure.ResourceManager.DevCenter/
+    - sdk/devcenter/service.projects
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: mgmtclient
     ServiceDirectory: devcenter
     LimitForPullRequest: true
     Artifacts:

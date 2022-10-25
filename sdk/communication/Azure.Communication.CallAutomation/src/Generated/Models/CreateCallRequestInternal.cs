@@ -12,7 +12,7 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CreateCallRequest. </summary>
+    /// <summary> The request payload for creating the call. </summary>
     internal partial class CreateCallRequestInternal
     {
         /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
@@ -44,8 +44,8 @@ namespace Azure.Communication.CallAutomation
         public IList<CommunicationIdentifierModel> Targets { get; }
         /// <summary> The source of the call. </summary>
         public CallSourceInternal Source { get; }
-        /// <summary> The subject. </summary>
-        public string Subject { get; set; }
+        /// <summary> A customer set value used to track the answering of a call. </summary>
+        public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
         /// <summary> Media Streaming Configuration. </summary>

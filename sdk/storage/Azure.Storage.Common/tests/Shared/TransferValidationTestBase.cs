@@ -75,23 +75,23 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="client">Client to call upload on.</param>
         /// <param name="source">Data to upload.</param>
-        /// <param name="validationOptions">Validation options to use on upload.</param>
+        /// <param name="transferValidation">Validation options to use on upload.</param>
         protected abstract Task<Response> UploadPartitionAsync(
             TResourceClient client,
             Stream source,
-            UploadTransferValidationOptions validationOptions);
+            UploadTransferValidationOptions transferValidation);
 
         /// <summary>
         /// Calls the 1:1 download method for the given resource client.
         /// </summary>
         /// <param name="client">Client to call the download on.</param>
         /// <param name="destination">Where to send downloaded data.</param>
-        /// <param name="validationOptions">Validation options to use on download.</param>
+        /// <param name="transferValidation">Validation options to use on download.</param>
         /// <param name="range">Range parameter for download, necessary for transactional checksum request to be accepted by service.</param>
         protected abstract Task<Response> DownloadPartitionAsync(
             TResourceClient client,
             Stream destination,
-            DownloadTransferValidationOptions validationOptions,
+            DownloadTransferValidationOptions transferValidation,
             HttpRange range = default);
 
         /// <summary>
@@ -99,12 +99,12 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="client">Client to call upload on.</param>
         /// <param name="source">Data to upload.</param>
-        /// <param name="validationOptions">Validation options to use on upload.</param>
+        /// <param name="transferValidation">Validation options to use on upload.</param>
         /// <param name="transferOptions">Storage transfer options to use on upload.</param>
         protected abstract Task ParallelUploadAsync(
             TResourceClient client,
             Stream source,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             StorageTransferOptions transferOptions);
 
         /// <summary>
@@ -112,34 +112,34 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="client">Client to call download on.</param>
         /// <param name="destination">Where to send downloaded data.</param>
-        /// <param name="validationOptions">Validation options to use on download.</param>
+        /// <param name="transferValidation">Validation options to use on download.</param>
         /// <param name="transferOptions">Storage transfer options to use on download.</param>
         protected abstract Task ParallelDownloadAsync(
             TResourceClient client,
             Stream destination,
-            DownloadTransferValidationOptions validationOptions,
+            DownloadTransferValidationOptions transferValidation,
             StorageTransferOptions transferOptions);
 
         /// <summary>
         /// Calls the open write method for the given resource client.
         /// </summary>
         /// <param name="client">Client to call open write on.</param>
-        /// <param name="validationOptions">Validation options to use in the write stream.</param>
+        /// <param name="transferValidation">Validation options to use in the write stream.</param>
         /// <param name="internalBufferSize">Buffer size for the write stream.</param>
         protected abstract Task<Stream> OpenWriteAsync(
             TResourceClient client,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             int internalBufferSize);
 
         /// <summary>
         /// Calls the open read method for the given resource client.
         /// </summary>
         /// <param name="client">Client to call open read on.</param>
-        /// <param name="validationOptions">Validation options to use in the read stream.</param>
+        /// <param name="transferValidation">Validation options to use in the read stream.</param>
         /// <param name="internalBufferSize">Buffer size for the read stream.</param>
         protected abstract Task<Stream> OpenReadAsync(
             TResourceClient client,
-            DownloadTransferValidationOptions validationOptions,
+            DownloadTransferValidationOptions transferValidation,
             int internalBufferSize);
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace Azure.Storage.Test.Shared
             using (var stream = new MemoryStream(data))
             {
                 checksumPipelineAssertion.CheckRequest = true;
-                await UploadPartitionAsync(client, stream, validationOptions: null);
+                await UploadPartitionAsync(client, stream, transferValidation: null);
             }
 
             // Assert

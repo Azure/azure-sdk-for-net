@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of TargetCopySetting. </summary>
         /// <param name="copyAfter">
         /// It can be CustomCopyOption or ImmediateCopyOption.
-        /// Please note <see cref="CopyOption"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CopyOnExpiryOption"/>, <see cref="CustomCopyOption"/> and <see cref="ImmediateCopyOption"/>.
+        /// Please note <see cref="DataProtectionBackupCopySetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CopyOnExpirySetting"/>, <see cref="CustomCopySetting"/> and <see cref="ImmediateCopySetting"/>.
         /// </param>
         /// <param name="dataStore"> Info of target datastore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copyAfter"/> or <paramref name="dataStore"/> is null. </exception>
-        public TargetCopySetting(CopyOption copyAfter, DataStoreInfoBase dataStore)
+        public TargetCopySetting(DataProtectionBackupCopySetting copyAfter, DataStoreInfoBase dataStore)
         {
             if (copyAfter == null)
             {
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary>
         /// It can be CustomCopyOption or ImmediateCopyOption.
-        /// Please note <see cref="CopyOption"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CopyOnExpiryOption"/>, <see cref="CustomCopyOption"/> and <see cref="ImmediateCopyOption"/>.
+        /// Please note <see cref="DataProtectionBackupCopySetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CopyOnExpirySetting"/>, <see cref="CustomCopySetting"/> and <see cref="ImmediateCopySetting"/>.
         /// </summary>
-        public CopyOption CopyAfter { get; set; }
+        public DataProtectionBackupCopySetting CopyAfter { get; set; }
         /// <summary> Info of target datastore. </summary>
         public DataStoreInfoBase DataStore { get; set; }
     }

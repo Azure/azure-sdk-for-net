@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class CheckDnsAvailabilityTests : NetworkServiceClientTestBase
     {
-        public CheckDnsAvailabilityTests(bool isAsync) : base(isAsync)
+        public CheckDnsAvailabilityTests(bool isAsync, string apiVersion)
+            : base(isAsync, "Microsoft.Network/locations/CheckDnsNameAvailability", apiVersion)
         {
         }
 

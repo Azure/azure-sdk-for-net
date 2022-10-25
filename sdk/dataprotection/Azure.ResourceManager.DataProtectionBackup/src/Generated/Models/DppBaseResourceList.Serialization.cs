@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static DppBaseResourceList DeserializeDppBaseResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<DppBaseResourceData>> value = default;
+            Optional<IReadOnlyList<ResourceGuardProtectedObjectData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DppBaseResourceData> array = new List<DppBaseResourceData>();
+                    List<ResourceGuardProtectedObjectData> array = new List<ResourceGuardProtectedObjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DppBaseResourceData.DeserializeDppBaseResourceData(item));
+                        array.Add(ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(item));
                     }
                     value = array;
                     continue;

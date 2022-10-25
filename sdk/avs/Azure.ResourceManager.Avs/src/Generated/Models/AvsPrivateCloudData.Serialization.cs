@@ -127,6 +127,7 @@ namespace Azure.ResourceManager.Avs
             Optional<string> nsxtCertificateThumbprint = default;
             Optional<IReadOnlyList<ResourceIdentifier>> externalCloudLinks = default;
             Optional<ExpressRouteCircuit> secondaryCircuit = default;
+            Optional<NsxPublicIPQuotaRaisedEnum> nsxPublicIPQuotaRaised = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -348,11 +349,21 @@ namespace Azure.ResourceManager.Avs
                             secondaryCircuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("nsxPublicIpQuotaRaised"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            nsxPublicIPQuotaRaised = new NsxPublicIPQuotaRaisedEnum(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new AvsPrivateCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, Optional.ToList(externalCloudLinks), secondaryCircuit.Value);
+            return new AvsPrivateCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, Optional.ToList(externalCloudLinks), secondaryCircuit.Value, Optional.ToNullable(nsxPublicIPQuotaRaised));
         }
     }
 }

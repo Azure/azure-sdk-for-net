@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="valueType"> The value type of the items in the list. </param>
         /// <param name="denylistValues"> The values to deny. The format of the values depends on the rule type. </param>
-        internal DenylistCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, ValueType? valueType, IList<string> denylistValues) : base(displayName, description, isEnabled, ruleType, valueType)
+        internal DenylistCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, SecurityValueType? valueType, IList<string> denylistValues) : base(displayName, description, isEnabled, ruleType, valueType)
         {
             DenylistValues = denylistValues;
             RuleType = ruleType ?? "DenylistCustomAlertRule";

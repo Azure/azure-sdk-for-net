@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class ItemLevelRestoreTargetInfo : RestoreTargetInfoBase
     {
         /// <summary> Initializes a new instance of ItemLevelRestoreTargetInfo. </summary>
-        /// <param name="recoveryOption"> Recovery Option. </param>
+        /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="restoreCriteria">
         /// Restore Criteria
         /// Please note <see cref="ItemLevelRestoreCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="datasourceInfo"> Information of target DS. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreCriteria"/> or <paramref name="datasourceInfo"/> is null. </exception>
-        public ItemLevelRestoreTargetInfo(RecoveryOption recoveryOption, IEnumerable<ItemLevelRestoreCriteria> restoreCriteria, Datasource datasourceInfo) : base(recoveryOption)
+        public ItemLevelRestoreTargetInfo(RecoverySetting recoverySetting, IEnumerable<ItemLevelRestoreCriteria> restoreCriteria, DataSourceInfo datasourceInfo) : base(recoverySetting)
         {
             if (restoreCriteria == null)
             {
@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </summary>
         public IList<ItemLevelRestoreCriteria> RestoreCriteria { get; }
         /// <summary> Information of target DS. </summary>
-        public Datasource DatasourceInfo { get; }
+        public DataSourceInfo DatasourceInfo { get; }
         /// <summary> Information of target DS Set. </summary>
-        public DatasourceSet DatasourceSetInfo { get; set; }
+        public DataSourceSetInfo DatasourceSetInfo { get; set; }
         /// <summary>
         /// Credentials to use to authenticate with data source provider.
-        /// Please note <see cref="AuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
         /// </summary>
-        public AuthCredentials DatasourceAuthCredentials { get; set; }
+        public DataProtectionBackupAuthCredentials DatasourceAuthCredentials { get; set; }
     }
 }

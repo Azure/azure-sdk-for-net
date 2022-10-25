@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppContainers
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
+                case 201:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppContainers
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
+                case 201:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

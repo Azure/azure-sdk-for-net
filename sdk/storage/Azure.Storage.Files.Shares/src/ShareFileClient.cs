@@ -1870,7 +1870,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             DownloadInternal(
                 options?.Range ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -1904,7 +1904,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             await DownloadInternal(
                 options?.Range ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -2137,7 +2137,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range">
         /// Range to download.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Override for client-configured transfer validation options.
         /// </param>
         /// <param name="conditions">
@@ -2161,12 +2161,12 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileDownloadInfo>> DownloadInternal(
             HttpRange range,
-            DownloadTransferValidationOptions validationOptionsOverride,
+            DownloadTransferValidationOptions transferValidationOverride,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
-            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Download;
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
@@ -2285,7 +2285,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range">
         /// Range to download.
         /// </param>
-        /// <param name="validationOptions">
+        /// <param name="transferValidationOverride">
         /// Transfer validation options to use. This method assumes defaults and overrides have already been checked
         /// and will use exactly what is provided through this argument.
         /// </param>
@@ -2307,13 +2307,13 @@ namespace Azure.Storage.Files.Shares
         /// </returns>
         private async Task<(Response<ShareFileDownloadInfo> Response, Stream ContentStream)> StartDownloadAsync(
             HttpRange range,
-            DownloadTransferValidationOptions validationOptions,
+            DownloadTransferValidationOptions transferValidationOverride,
             ShareFileRequestConditions conditions,
             long startOffset = 0,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
+            ShareErrors.AssertAlgorithmSupport(transferValidationOverride?.ChecksumAlgorithm);
 
             // calculation gets illegible with null coalesce; just pre-initialize
             var pageRange = range;
@@ -2330,7 +2330,7 @@ namespace Azure.Storage.Files.Shares
             {
                 response = await FileRestClient.DownloadAsync(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: transferValidationOverride?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2339,7 +2339,7 @@ namespace Azure.Storage.Files.Shares
             {
                 response = FileRestClient.Download(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: transferValidationOverride?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken);
             }
@@ -2384,7 +2384,7 @@ namespace Azure.Storage.Files.Shares
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2419,7 +2419,7 @@ namespace Azure.Storage.Files.Shares
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2466,7 +2466,7 @@ namespace Azure.Storage.Files.Shares
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                validationOptionsOverride: default,
+                transferValidationOverride: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2556,7 +2556,7 @@ namespace Azure.Storage.Files.Shares
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                validationOptionsOverride: default,
+                transferValidationOverride: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2625,7 +2625,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Optional override for client-configured transfer validation options.
         /// </param>
         /// <param name="cancellationToken">
@@ -2649,13 +2649,13 @@ namespace Azure.Storage.Files.Shares
             int? bufferSize,
             ShareFileRequestConditions conditions,
             bool allowModifications,
-            DownloadTransferValidationOptions validationOptionsOverride,
+            DownloadTransferValidationOptions transferValidationOverride,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
-            DownloadTransferValidationOptions validaitonOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Download;
+            DownloadTransferValidationOptions validaitonOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
 
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
             try
@@ -2675,7 +2675,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         Response<ShareFileDownloadInfo> response = await DownloadInternal(
                             range,
-                            validationOptionsOverride: downloadValidationOptions,
+                            transferValidationOverride: downloadValidationOptions,
                             conditions,
                             async,
                             cancellationToken).ConfigureAwait(false);
@@ -3927,7 +3927,7 @@ namespace Azure.Storage.Files.Shares
             UploadRangeInternal(
                 range: range,
                 content: content,
-                validationOptionsOverride: options?.TransferValidationOptions,
+                transferValidationOverride: options?.TransferValidation,
                 progressHandler: options?.ProgressHandler,
                 conditions: options?.Conditions,
                 fileLastWrittenMode: options?.FileLastWrittenMode,
@@ -3972,7 +3972,7 @@ namespace Azure.Storage.Files.Shares
             await UploadRangeInternal(
                 range: range,
                 content: content,
-                validationOptionsOverride: options?.TransferValidationOptions,
+                transferValidationOverride: options?.TransferValidation,
                 progressHandler: options?.ProgressHandler,
                 conditions: options?.Conditions,
                 fileLastWrittenMode: options?.FileLastWrittenMode,
@@ -4037,7 +4037,7 @@ namespace Azure.Storage.Files.Shares
             return UploadRangeInternal(
                 range,
                 content,
-                validationOptionsOverride: transactionalContentHash != default
+                transferValidationOverride: transactionalContentHash != default
                     ? new UploadTransferValidationOptions()
                     {
                         ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
@@ -4109,7 +4109,7 @@ namespace Azure.Storage.Files.Shares
             return await UploadRangeInternal(
                 range,
                 content,
-                validationOptionsOverride: transactionalContentHash != default
+                transferValidationOverride: transactionalContentHash != default
                     ? new UploadTransferValidationOptions()
                     {
                         ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
@@ -4177,7 +4177,7 @@ namespace Azure.Storage.Files.Shares
             return UploadRangeInternal(
                 range,
                 content,
-                validationOptionsOverride: transactionalContentHash != default
+                transferValidationOverride: transactionalContentHash != default
                     ? new UploadTransferValidationOptions()
                     {
                         ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
@@ -4245,7 +4245,7 @@ namespace Azure.Storage.Files.Shares
             return await UploadRangeInternal(
                 range,
                 content,
-                validationOptionsOverride: transactionalContentHash != default
+                transferValidationOverride: transactionalContentHash != default
                     ? new UploadTransferValidationOptions()
                     {
                         ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
@@ -4274,7 +4274,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the range to upload.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Optional override for transfer validation on upload.
         /// </param>
         /// <param name="progressHandler">
@@ -4305,14 +4305,14 @@ namespace Azure.Storage.Files.Shares
         internal async Task<Response<ShareFileUploadInfo>> UploadRangeInternal(
             HttpRange range,
             Stream content,
-            UploadTransferValidationOptions validationOptionsOverride,
+            UploadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
             ShareFileRequestConditions conditions,
             FileLastWrittenMode? fileLastWrittenMode,
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
             ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
@@ -4819,7 +4819,7 @@ namespace Azure.Storage.Files.Shares
                 stream,
                 options?.ProgressHandler,
                 options?.Conditions,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.TransferOptions ?? default,
                 async: false,
                 cancellationToken)
@@ -4860,7 +4860,7 @@ namespace Azure.Storage.Files.Shares
                 stream,
                 options?.ProgressHandler,
                 options?.Conditions,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.TransferOptions ?? default,
                 async: true,
                 cancellationToken)
@@ -5137,13 +5137,13 @@ namespace Azure.Storage.Files.Shares
 
         internal PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             => new PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
-                validationOptions,
+                transferValidation,
                 arrayPool,
                 operationName);
 
@@ -6464,7 +6464,7 @@ namespace Azure.Storage.Files.Shares
                     position: position,
                     conditions: options?.OpenConditions,
                     progressHandler: options?.ProgressHandler,
-                    options?.TransferValidationOptions
+                    options?.TransferValidation
                     );
             }
             catch (Exception ex)

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of AzureBackupRecoveryPointResourceList. </summary>
         internal AzureBackupRecoveryPointResourceList()
         {
-            Value = new ChangeTrackingList<AzureBackupRecoveryPointResourceData>();
+            Value = new ChangeTrackingList<DataProtectionBackupRecoveryPointData>();
         }
 
         /// <summary> Initializes a new instance of AzureBackupRecoveryPointResourceList. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal AzureBackupRecoveryPointResourceList(IReadOnlyList<AzureBackupRecoveryPointResourceData> value, string nextLink)
+        internal AzureBackupRecoveryPointResourceList(IReadOnlyList<DataProtectionBackupRecoveryPointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<AzureBackupRecoveryPointResourceData> Value { get; }
+        public IReadOnlyList<DataProtectionBackupRecoveryPointData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </summary>
         public string NextLink { get; }
     }

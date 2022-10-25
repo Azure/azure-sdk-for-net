@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static WorkloadNetworkSegmentProvisioningState Succeeded { get; } = new WorkloadNetworkSegmentProvisioningState(SucceededValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkSegmentProvisioningState Deleting { get; } = new WorkloadNetworkSegmentProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static WorkloadNetworkSegmentProvisioningState Updating { get; } = new WorkloadNetworkSegmentProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static WorkloadNetworkSegmentProvisioningState Canceled { get; } = new WorkloadNetworkSegmentProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkSegmentProvisioningState left, WorkloadNetworkSegmentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentProvisioningState"/> values are not the same. </summary>
