@@ -83,7 +83,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 if (!string.IsNullOrEmpty(callConnectionId))
                 {
-                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
                 }
             }
         }
@@ -154,7 +162,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 if (!string.IsNullOrEmpty(callConnectionId))
                 {
-                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
                 }
             }
         }
