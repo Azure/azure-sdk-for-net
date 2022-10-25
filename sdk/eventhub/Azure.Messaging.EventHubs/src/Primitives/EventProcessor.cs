@@ -593,7 +593,8 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
             {
-                bool isBatch = (EventBatchMaximumCount > 1);
+                var isBatch = (EventBatchMaximumCount > 1);
+                
                 foreach (var eventData in eventBatch)
                 {
                     if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
@@ -604,7 +605,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                             {
                                 { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture) }
                             };
-                            // only use links when we have a batch of events
+
+                            // Use links only when the batch size is not set to a single event.
+                            
                             diagnosticScope.AddLink(diagnosticId, null, attributes);
                         }
                         else
