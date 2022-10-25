@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> description = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
