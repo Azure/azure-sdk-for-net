@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateFindRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupFindRestorableTimeRangesContent content)
+        internal HttpMessage CreateFindRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupFindRestorableTimeRangeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AzureBackupFindRestorableTimeRangesResponseResource>> FindAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupFindRestorableTimeRangesContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupFindRestorableTimeRangeResult>> FindAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupFindRestorableTimeRangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 case 200:
                     {
-                        AzureBackupFindRestorableTimeRangesResponseResource value = default;
+                        BackupFindRestorableTimeRangeResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureBackupFindRestorableTimeRangesResponseResource.DeserializeAzureBackupFindRestorableTimeRangesResponseResource(document.RootElement);
+                        value = BackupFindRestorableTimeRangeResult.DeserializeBackupFindRestorableTimeRangeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AzureBackupFindRestorableTimeRangesResponseResource> Find(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupFindRestorableTimeRangesContent content, CancellationToken cancellationToken = default)
+        public Response<BackupFindRestorableTimeRangeResult> Find(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupFindRestorableTimeRangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 case 200:
                     {
-                        AzureBackupFindRestorableTimeRangesResponseResource value = default;
+                        BackupFindRestorableTimeRangeResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureBackupFindRestorableTimeRangesResponseResource.DeserializeAzureBackupFindRestorableTimeRangesResponseResource(document.RootElement);
+                        value = BackupFindRestorableTimeRangeResult.DeserializeBackupFindRestorableTimeRangeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

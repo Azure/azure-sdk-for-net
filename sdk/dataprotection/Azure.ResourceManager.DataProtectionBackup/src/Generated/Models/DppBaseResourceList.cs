@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of DppBaseResourceList. </summary>
         internal DppBaseResourceList()
         {
-            Value = new ChangeTrackingList<DppBaseResourceData>();
+            Value = new ChangeTrackingList<ResourceGuardProtectedObjectData>();
         }
 
         /// <summary> Initializes a new instance of DppBaseResourceList. </summary>
         /// <param name="value"> List of Dpp resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal DppBaseResourceList(IReadOnlyList<DppBaseResourceData> value, string nextLink)
+        internal DppBaseResourceList(IReadOnlyList<ResourceGuardProtectedObjectData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Dpp resources. </summary>
-        public IReadOnlyList<DppBaseResourceData> Value { get; }
+        public IReadOnlyList<ResourceGuardProtectedObjectData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </summary>
         public string NextLink { get; }
     }

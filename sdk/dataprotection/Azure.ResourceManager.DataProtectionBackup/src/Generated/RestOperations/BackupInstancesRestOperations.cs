@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupInstanceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataProtectionBackupInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 case 200:
                     {
-                        BackupInstanceResourceData value = default;
+                        DataProtectionBackupInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupInstanceResourceData.DeserializeBackupInstanceResourceData(document.RootElement);
+                        value = DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupInstanceResourceData)null, message.Response);
+                    return Response.FromValue((DataProtectionBackupInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupInstanceResourceData> Get(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public Response<DataProtectionBackupInstanceData> Get(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 case 200:
                     {
-                        BackupInstanceResourceData value = default;
+                        DataProtectionBackupInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupInstanceResourceData.DeserializeBackupInstanceResourceData(document.RootElement);
+                        value = DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupInstanceResourceData)null, message.Response);
+                    return Response.FromValue((DataProtectionBackupInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal HttpMessage CreateAdhocBackupRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, TriggerBackupContent content)
+        internal HttpMessage CreateAdhocBackupRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AdhocBackupTriggerContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> AdhocBackupAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, TriggerBackupContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> AdhocBackupAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response AdhocBackup(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, TriggerBackupContent content, CancellationToken cancellationToken = default)
+        public Response AdhocBackup(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal HttpMessage CreateValidateForBackupRequest(string subscriptionId, string resourceGroupName, string vaultName, ValidateForBackupContent content)
+        internal HttpMessage CreateValidateForBackupRequest(string subscriptionId, string resourceGroupName, string vaultName, AdhocBackupValidateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateForBackupAsync(string subscriptionId, string resourceGroupName, string vaultName, ValidateForBackupContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateForBackupAsync(string subscriptionId, string resourceGroupName, string vaultName, AdhocBackupValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateForBackup(string subscriptionId, string resourceGroupName, string vaultName, ValidateForBackupContent content, CancellationToken cancellationToken = default)
+        public Response ValidateForBackup(string subscriptionId, string resourceGroupName, string vaultName, AdhocBackupValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal HttpMessage CreateTriggerRehydrateRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRehydrationContent content)
+        internal HttpMessage CreateTriggerRehydrateRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRehydrationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TriggerRehydrateAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRehydrationContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> TriggerRehydrateAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRehydrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response TriggerRehydrate(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRehydrationContent content, CancellationToken cancellationToken = default)
+        public Response TriggerRehydrate(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRehydrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal HttpMessage CreateTriggerRestoreRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreContent content)
+        internal HttpMessage CreateTriggerRestoreRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TriggerRestoreAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> TriggerRestoreAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response TriggerRestore(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupRestoreContent content, CancellationToken cancellationToken = default)
+        public Response TriggerRestore(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal HttpMessage CreateSyncBackupInstanceRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, SyncBackupInstanceContent content)
+        internal HttpMessage CreateSyncBackupInstanceRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceSyncContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SyncBackupInstanceAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, SyncBackupInstanceContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> SyncBackupInstanceAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceSyncContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1081,7 +1081,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SyncBackupInstance(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, SyncBackupInstanceContent content, CancellationToken cancellationToken = default)
+        public Response SyncBackupInstance(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupInstanceSyncContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal HttpMessage CreateValidateForRestoreRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, ValidateRestoreRequestObject validateRestoreRequestObject)
+        internal HttpMessage CreateValidateForRestoreRequest(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupValidateRestoreContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1121,9 +1121,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(validateRestoreRequestObject);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1133,19 +1133,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
-        /// <param name="validateRestoreRequestObject"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="validateRestoreRequestObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateForRestoreAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, ValidateRestoreRequestObject validateRestoreRequestObject, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateForRestoreAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupValidateRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
-            Argument.AssertNotNull(validateRestoreRequestObject, nameof(validateRestoreRequestObject));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateForRestoreRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, validateRestoreRequestObject);
+            using var message = CreateValidateForRestoreRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1162,19 +1162,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupName"> The name of the resource group where the backup vault is present. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
-        /// <param name="validateRestoreRequestObject"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="validateRestoreRequestObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupInstanceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateForRestore(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, ValidateRestoreRequestObject validateRestoreRequestObject, CancellationToken cancellationToken = default)
+        public Response ValidateForRestore(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, BackupValidateRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
-            Argument.AssertNotNull(validateRestoreRequestObject, nameof(validateRestoreRequestObject));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateForRestoreRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, validateRestoreRequestObject);
+            using var message = CreateValidateForRestoreRequest(subscriptionId, resourceGroupName, vaultName, backupInstanceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
