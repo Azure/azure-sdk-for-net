@@ -1,5 +1,5 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
-# This is for Track 2 data plane SDK
+# This is for Track 1 and Track 2 data plane SDK
 
 trigger:
   branches:
@@ -11,6 +11,7 @@ trigger:
     include:
     - sdk/eventgrid/ci.yml
     - sdk/eventgrid/Azure.Messaging.EventGrid/
+    - sdk/eventgrid/Microsoft.Azure.EventGrid/
     - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/
     - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/
 
@@ -25,18 +26,21 @@ pr:
     include:
     - sdk/eventgrid/ci.yml
     - sdk/eventgrid/Azure.Messaging.EventGrid/
+    - sdk/eventgrid/Microsoft.Azure.EventGrid/
     - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/
     - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SdkType: client
+    SdkType: alldata
     ServiceDirectory: eventgrid
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.EventGrid
       safeName: AzureMessagingEventGrid
+    - name: Microsoft.Azure.EventGrid
+      safeName: MicrosoftAzureEventGrid
     - name: Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
       safeName: MicrosoftAzureMessagingEventGridCloudNativeCloudEvents
     - name: Microsoft.Azure.WebJobs.Extensions.EventGrid

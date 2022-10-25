@@ -8,9 +8,10 @@
 
   SDKType values
    - "all" will build all projects
-   - "client" will build the new track 2 client/data libraries
-   - "mgmtclient" will build the track 2 mgmt libraries
-   - "data" will build the track 1 data plane libraries
+   - "client" will build the new Track 2 client/data libraries
+   - "mgmtclient" will build the Track 2 mgmt libraries
+   - "data" will build the Track 1 data plane libraries
+   - "alldata" will build both the Track 1 and Track 2 data plane libraries
 -->
 
 <Project>
@@ -27,6 +28,13 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'data'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.EventGrid.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Messaging.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.*\**\*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SDKType)' == 'alldata'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Messaging.*\**\*.csproj" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.EventGrid.*\**\*.csproj" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Messaging.*\**\*.csproj" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.*\**\*.csproj" />

@@ -5,7 +5,7 @@ extends:
   parameters:
     MaxParallel: 4
     ServiceDirectory: eventgrid
-    SDKType: client
+    SDKType: alldata
     TimeoutInMinutes: 240
     Clouds: 'Public,Canary'
     SupportedClouds: 'Public,UsGov,China,Canary'
