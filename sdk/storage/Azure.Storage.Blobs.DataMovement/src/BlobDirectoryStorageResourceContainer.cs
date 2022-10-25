@@ -26,6 +26,32 @@ namespace Azure.Storage.Blobs.DataMovement
         private BlobDirectoryStorageResourceContainerOptions _options;
 
         /// <summary>
+        /// Can produce uri
+        /// </summary>
+        /// <returns></returns>
+        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+
+        /// <summary>
+        /// Returns the path
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> Path => _blobContainerClient.Uri.AbsolutePath.Split('/').ToList();
+
+        /// <summary>
+        /// Obtains the Uri of the blob directory resource, which means we can list
+        /// </summary>
+        /// <returns></returns>
+        public override Uri Uri
+        {
+            get
+            {
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
+                blobUriBuilder.BlobName = string.Join("/", _directoryPrefix);
+                return blobUriBuilder.ToUri();
+            }
+        }
+
+        /// <summary>
         /// Constructor for directory client.
         ///
         /// Listing is a container level operation, which is why the constructor
@@ -68,24 +94,6 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Can produce uri
-        /// </summary>
-        /// <returns></returns>
-        public override ProduceUriType CanProduceUri()
-        {
-            return ProduceUriType.ProducesUri;
-        }
-
-        /// <summary>
-        /// Returns the path
-        /// </summary>
-        /// <returns></returns>
-        public override List<string> GetPath()
-        {
-            return _blobContainerClient.Uri.AbsolutePath.Split('/').ToList();
-        }
-
-        /// <summary>
         /// Retrieves a single blob resoruce based on this respective resource.
         /// </summary>
         /// <param name="encodedPath"></param>
@@ -93,7 +101,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        public override StorageResource GetStorageResource(List<string> encodedPath)
+        public override StorageResource GetChildStorageResource(List<string> encodedPath)
         {
             // Recreate the blobName using the existing parent directory path
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
@@ -106,7 +114,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         /// <param name="encodedPath"></param>
         /// <returns></returns>
-        public override StorageResourceContainer GetStorageResourceContainer(List<string> encodedPath)
+        public override StorageResourceContainer GetParentStorageResourceContainer(List<string> encodedPath)
         {
             // Recreate the blobName using the existing parent directory path
             List<string> fullDirectoryPath = new List<string>(_directoryPrefix);
@@ -125,22 +133,11 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Obtains the Uri of the blob directory resource, which means we can list
-        /// </summary>
-        /// <returns></returns>
-        public override Uri GetUri()
-        {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
-            blobUriBuilder.BlobName = string.Join("/", _directoryPrefix);
-            return blobUriBuilder.ToUri();
-        }
-
-        /// <summary>
         /// Lists the child paths in the resource
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>List of the child resources in the storage container</returns>
-        public override async IAsyncEnumerable<StorageResource> ListStorageResources(
+        public override async IAsyncEnumerable<StorageResource> GetStorageResources(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(
@@ -148,7 +145,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 cancellationToken: cancellationToken);
             await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
             {
-                yield return GetStorageResource(blobItem.Name.Split('/').ToList());
+                yield return GetChildStorageResource(blobItem.Name.Split('/').ToList());
             }
         }
     }

@@ -28,9 +28,9 @@ namespace Azure.Storage.DataMovement.Models
         internal IDictionary<string, string> Metadata { get; }
 
         /// <summary>
-        /// Storage Resource Type TODO: is this needed?
+        /// Storage Resource Type
         /// </summary>
-        ///public BlobType BlobType { get; }
+        public StorageResourceType ResourceType { get; }
 
         /// <summary>
         /// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob.
@@ -188,7 +188,8 @@ namespace Azure.Storage.DataMovement.Models
             string versionId,
             bool isLatestVersion,
             DateTimeOffset expiresOn,
-            DateTimeOffset lastAccessed)
+            DateTimeOffset lastAccessed,
+            StorageResourceType resourceType)
         {
             LastModified = lastModified;
             ContentLength = contentLength;
@@ -212,6 +213,7 @@ namespace Azure.Storage.DataMovement.Models
             CreatedOn = createdOn;
             ContentHash = contentHash;
             LastAccessed = lastAccessed;
+            ResourceType = resourceType;
         }
 
         /// <summary>
@@ -221,12 +223,14 @@ namespace Azure.Storage.DataMovement.Models
             DateTimeOffset lastModified,
             DateTimeOffset createdOn,
             long contentLength,
-            DateTimeOffset lastAccessed)
+            DateTimeOffset lastAccessed,
+            StorageResourceType resourceType)
         {
             LastModified = lastModified;
             ContentLength = contentLength;
             CreatedOn = createdOn;
             LastAccessed = lastAccessed;
+            ResourceType = resourceType;
         }
     }
 }

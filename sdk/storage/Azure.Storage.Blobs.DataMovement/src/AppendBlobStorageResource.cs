@@ -19,33 +19,68 @@ namespace Azure.Storage.Blobs.DataMovement
     /// <summary>
     /// Blob Storage Resource
     /// </summary>
-    internal class AppendBlobStorageResource : StorageResource
+    public class AppendBlobStorageResource : StorageResource
     {
-        private AppendBlobClient blobClient;
+        private AppendBlobClient _blobClient;
+        private AppendBlobStorageResourceOptions _options;
+
+        /// <summary>
+        /// Returns URL
+        /// </summary>
+        /// <returns></returns>
+        public override Uri Uri => _blobClient.Uri;
+
+        /// <summary>
+        /// Gets the path of the resource.
+        /// </summary>
+        public override List<string> Path => _blobClient.Name.Split('/').ToList();
+
+        /// <summary>
+        /// Defines whether the object can produce a SAS URL
+        /// </summary>
+        /// <returns></returns>
+        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+
+        /// <summary>
+        /// Defines whether the object can consume a stream
+        /// </summary>
+        /// <returns></returns>
+        public override StreamConsumableType CanCreateOpenReadStream => StreamConsumableType.Consumable;
+
+        /// <summary>
+        /// Does not require Commit List operation.
+        /// </summary>
+        /// <returns></returns>
+        public override RequiresCompleteTransferType RequiresCompleteTransfer => RequiresCompleteTransferType.None;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="blobClient"></param>
-        public AppendBlobStorageResource(AppendBlobClient blobClient)
+        /// <param name="options"></param>
+        public AppendBlobStorageResource(AppendBlobClient blobClient, AppendBlobStorageResourceOptions options = default)
         {
-            this.blobClient = blobClient;
+            _blobClient = blobClient;
+            _options = options;
         }
 
         /// <summary>
         /// Creates readable stream to download
         /// </summary>
         /// <returns></returns>
-        public override Stream GetReadableInputStream()
+        public override Task<Stream> OpenReadStreamAsync(long? position = default)
         {
-            return blobClient.OpenRead();
+            return _blobClient.OpenReadAsync(new BlobOpenReadOptions(true)
+            {
+                Position = position ?? 0,
+            });
         }
 
         /// <summary>
         /// Creates writable stream to upload
         /// </summary>
         /// <returns></returns>
-        public override Stream GetConsumableStream()
+        public override Task<Stream> OpenWriteStreamAsync()
         {
             throw new NotImplementedException();
         }
@@ -56,12 +91,12 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="stream"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task ConsumeReadableStream(
+        public override async Task WriteFromStreamAsync(
             Stream stream,
             CancellationToken cancellationToken)
         {
             // TODO: change depending on type of blob and type single shot or parallel transfer
-            await blobClient.AppendBlockAsync(stream, cancellationToken: cancellationToken).ConfigureAwait(false);
+            await _blobClient.AppendBlockAsync(stream, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -73,26 +108,16 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task ConsumePartialReadableStream(
+        public override async Task WriteStreamToOffsetAsync(
             long offset,
             long length,
             Stream stream,
             ConsumePartialReadableStreamOptions options,
             CancellationToken cancellationToken = default)
         {
-            await blobClient.AppendBlockAsync(
+            await _blobClient.AppendBlockAsync(
                 stream,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns URL with SAS
-        /// </summary>
-        /// <returns></returns>
-        public override Uri GetUri()
-        {
-            // TODO: remove need to set all permissions and 7 days is how long the staged blocks live on the service
-            return blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, DateTimeOffset.UtcNow.AddDays(7));
         }
 
         /// <summary>
@@ -100,37 +125,10 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        public override async Task ConsumeUri(Uri uri)
+        public override async Task CopyFromUriAsync(Uri uri)
         {
             // Change depending on type of copy
-            await blobClient.SyncCopyFromUriAsync(uri).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// returns path split up
-        /// </summary>
-        /// <returns></returns>
-        public override List<string> GetPath()
-        {
-            return blobClient.Name.Split('/').ToList();
-        }
-
-        /// <summary>
-        /// Defines whether the object can consume a stream
-        /// </summary>
-        /// <returns></returns>
-        public override StreamConsumableType CanConsumeReadableStream()
-        {
-            return StreamConsumableType.Consumable;
-        }
-
-        /// <summary>
-        /// Defines whether the object can produce a SAS URL
-        /// </summary>
-        /// <returns></returns>
-        public override ProduceUriType CanProduceUri()
-        {
-            return ProduceUriType.ProducesUri;
+            await _blobClient.SyncCopyFromUriAsync(uri).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,23 +137,14 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns>Returns the length of the storage resource</returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken)
         {
-            BlobProperties properties = await blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             return properties.ToStorageResourceProperties();
-        }
-
-        /// <summary>
-        /// Does not require Commit List operation.
-        /// </summary>
-        /// <returns></returns>
-        public override RequiresCommitListType CanCommitBlockListType()
-        {
-            return RequiresCommitListType.None;
         }
 
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override Task CommitBlockList(IEnumerable<string> base64BlockIds, CancellationToken cancellationToken)
+        public override Task CompleteTransferAsync(CancellationToken cancellationToken)
         {
             throw new NotSupportedException();
         }

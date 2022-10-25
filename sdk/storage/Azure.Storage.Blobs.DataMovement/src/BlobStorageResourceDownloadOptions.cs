@@ -9,7 +9,7 @@ namespace Azure.Storage.Blobs.DataMovement
     /// <summary>
     /// Optional parameters for uploading to a Blob.
     /// </summary>
-    public class BlockBlobStorageResourceDownloadOptions
+    public class BlobStorageResourceDownloadOptions
     {
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on

@@ -28,7 +28,8 @@ namespace Azure.Storage.DataMovement
                 lastModified: fileInfo.LastWriteTimeUtc,
                 createdOn: fileInfo.CreationTimeUtc,
                 contentLength: fileInfo.Length,
-                lastAccessed: fileInfo.LastAccessTimeUtc);
+                lastAccessed: fileInfo.LastAccessTimeUtc,
+                resourceType: StorageResourceType.LocalFile);
         }
     }
 }

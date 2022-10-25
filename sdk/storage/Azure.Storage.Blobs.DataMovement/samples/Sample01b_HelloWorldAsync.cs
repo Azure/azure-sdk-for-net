@@ -5,24 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.DataMovement;
-using Azure.Storage.Blobs.DataMovement.Models;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
 using Azure.Core;
 using Azure.Identity;
-using System.Linq;
 using System.Threading;
-using Microsoft;
-using System.Security.AccessControl;
 using System.Runtime.InteropServices;
 using Azure.Storage.DataMovement;
 using Azure.Storage.DataMovement.Models;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.DataMovement.Samples
 {
@@ -38,7 +31,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
         public async Task UploadSingle_ConnectionStringAsync()
         {
             // Create a temporary Lorem Ipsum file on disk that we can upload
-            string originalPath = CreateTempFile(SampleFileContent);
+            string sourceLocalPath = CreateTempFile(SampleFileContent);
 
             // Get a connection string to our Azure Storage account.  You can
             // obtain your connection string from the Azure Portal (click
@@ -59,21 +52,19 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
             try
             {
                 // Get a reference to a source local file
-                StorageResource sourceResource = new LocalFileStorageResource(originalPath);
+                StorageResource sourceResource = new LocalFileStorageResource(sourceLocalPath);
 
                 // Get a reference to a destination blobs
                 BlockBlobClient destinationBlob = container.GetBlockBlobClient(Randomize("sample-blob"));
                 StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
 
                 // Upload file data
-                TransferManagerOptions options = new TransferManagerOptions()
-                {
-                    MaximumConcurrency = 16
-                };
-                TransferManager dataController = new TransferManager(options);
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
                 // Create simple transfer single blob upload job
-                DataTransfer dataTransfer = await dataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
+                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: new LocalFileStorageResource(sourceLocalPath),
+                    destinationResource: new BlockBlobStorageResource(destinationBlob)).ConfigureAwait(false);
             }
             finally
             {
@@ -146,8 +137,14 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 StorageResource destinationResource2 = new LocalFileStorageResource(downloadPath2);
 
                 await dataController.StartTransferAsync(
-                    sourceResource2,
-                    destinationResource2).ConfigureAwait(false);
+                    sourceResource: new BlockBlobStorageResource(sourceBlob, new BlockBlobStorageResourceOptions()
+                        {
+                            DownloadOptions = new BlobStorageResourceDownloadOptions()
+                            {
+                                Conditions = new BlobRequestConditions(){ LeaseId = "xyz" }
+                            }
+                        }),
+                    destinationResource: new LocalFileStorageResource(downloadPath2)).ConfigureAwait(false);
             }
             finally
             {
@@ -217,15 +214,102 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 StorageResourceContainer directoryDestination = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
 
                 // Create BlobDataController with event handler in Options bag
+                TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
+                ContainerTransferOptions options = new ContainerTransferOptions()
+                {
+                    MaximumTransferChunkSize = 4 * Constants.MB,
+                    CreateMode = StorageResourceCreateMode.Overwrite,
+                };
+                TransferManager transferManager = new TransferManager(transferManagerOptions);
+
+                // Create simple transfer directory upload job which uploads the directory and the contents of that directory
+                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: new LocalDirectoryStorageResourceContainer(sourcePath),
+                    destinationResource: new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")),
+                    transferOptions: options).ConfigureAwait(false);
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Use a shared access signature to access  a Storage Account and upload a directory.
+        ///
+        /// A shared access signature (SAS) is a URI that grants restricted
+        /// access rights to Azure Storage resources. You can provide a shared
+        /// access signature to clients who should not be trusted with your
+        /// storage account key but to whom you wish to delegate access to
+        /// certain storage account resources. By distributing a shared access
+        /// signature URI to these clients, you can grant them access to a
+        /// resource for a specified period of time, with a specified set of
+        /// permissions.
+        /// </summary>
+        [Test]
+        public async Task UploadDirectory_CompletedEventHandler()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string sourcePath = CreateSampleDirectoryTree();
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string sourcePath2 = CreateSampleDirectoryTree();
+
+            string logFile = Path.GetTempFileName();
+
+            // Create a service level SAS that only allows reading from service
+            // level APIs
+            AccountSasBuilder sas = new AccountSasBuilder
+            {
+                // Allow access to blobs
+                Services = AccountSasServices.Blobs,
+
+                // Allow access to the service level APIs
+                ResourceTypes = AccountSasResourceTypes.Service,
+
+                // Access expires in 1 hour!
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+            };
+            // Allow read access
+            sas.SetPermissions(AccountSasPermissions.Read);
+
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
+
+            // Build a SAS URI
+            UriBuilder sasUri = new UriBuilder(StorageAccountBlobUri);
+            sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
+
+            // Create a client that can authenticate with the SAS URI
+            BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
+
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
+            await container.CreateIfNotExistsAsync();
+
+            // Make a service request to verify we've successfully authenticated
+            try
+            {
+                // Create BlobDataController with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                ContainerTransferOptions uploadOptions = new ContainerTransferOptions();
+                ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
+                containerTransferOptions.SingleTransferCompletedEventHandler += (SingleTransferCompletedEventArgs args) =>
+                {
+                    // Customers like logging their own exceptions in their production environments.
+                    using (StreamWriter logStream = File.AppendText(logFile))
+                    {
+                        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Path}");
+                    }
+                    return Task.CompletedTask;
+                };
                 TransferManager transferManager = new TransferManager(options);
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
-                    localDirectory,
-                    directoryDestination,
-                    uploadOptions).ConfigureAwait(false);
+                    new LocalDirectoryStorageResourceContainer(sourcePath),
+                    new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"))).ConfigureAwait(false);
             }
             finally
             {
@@ -314,8 +398,8 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                         // Specifying specific resources that failed, since its a directory transfer
                         // maybe only one file failed out of many
                         logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
-                            $"Source Resource: {args.SourceResource.GetPath()}, +" +
-                            $"Destination Resource: {args.DestinationResource.GetPath()}," +
+                            $"Source Resource: {args.SourceResource.Path}, +" +
+                            $"Destination Resource: {args.DestinationResource.Path}," +
                             $"Exception Message: {args.Exception.Message}");
                     }
                     return Task.CompletedTask;
@@ -1060,7 +1144,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 {
                     Checkpointer = localCheckpointer
                 };
-                List<string> savedTransfers = await checkpointer.ListStoredTransfersAsync().ConfigureAwait(false);
+                List<string> savedTransfers = await checkpointer.GetStoredTransfersAsync().ConfigureAwait(false);
 
                 // Create Blob Transfer Manager
                 TransferManager transferManagerResume = new TransferManager(options2);

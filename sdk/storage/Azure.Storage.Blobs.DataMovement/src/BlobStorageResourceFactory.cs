@@ -18,30 +18,33 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Generate block blob resource
         /// </summary>
         /// <param name="blobClient"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        public static StorageResource GetBlockBlob(BlockBlobClient blobClient)
+        public static StorageResource GetBlockBlob(BlockBlobClient blobClient, BlockBlobStorageResourceOptions options)
         {
-            return new BlockBlobStorageResource(blobClient);
+            return new BlockBlobStorageResource(blobClient, options);
         }
 
         /// <summary>
         /// Generate page blob resource. Currently not supported
         /// </summary>
         /// <param name="blobClient"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        internal static StorageResource GetPageBlob(PageBlobClient blobClient)
+        public static StorageResource GetPageBlob(PageBlobClient blobClient, PageBlobStorageResourceOptions options)
         {
-            return new PageBlobStorageResource(blobClient);
+            return new PageBlobStorageResource(blobClient, options);
         }
 
         /// <summary>
         /// Generate append blob resource. Currently not supported
         /// </summary>
         /// <param name="blobClient"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        internal static StorageResource GetPageBlob(AppendBlobClient blobClient)
+        public static StorageResource GetPageBlob(AppendBlobClient blobClient, AppendBlobStorageResourceOptions options)
         {
-            return new AppendBlobStorageResource(blobClient);
+            return new AppendBlobStorageResource(blobClient, options);
         }
 
         /// <summary>

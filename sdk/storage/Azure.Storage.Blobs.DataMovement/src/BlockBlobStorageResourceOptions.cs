@@ -13,23 +13,23 @@ namespace Azure.Storage.Blobs.DataMovement
     public class BlockBlobStorageResourceOptions
     {
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.ConsumeUri(Uri)"/>
+        /// When calling <see cref="BlockBlobStorageResource.CopyFromUriAsync(Uri)"/>
         /// </summary>
-        public BlockBlobStorageResourceServiceCopyOptions CopyOptions { get; internal set; }
+        public BlockBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
 
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.ConsumeReadableStream(System.IO.Stream, System.Threading.CancellationToken)"/>,
-        /// <see cref="BlockBlobStorageResource.ConsumePartialReadableStream(long, long, System.IO.Stream, Storage.DataMovement.Models.ConsumePartialReadableStreamOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="BlockBlobStorageResource.CommitBlockList(IEnumerable{string}, System.Threading.CancellationToken)"/>.
+        /// When calling <see cref="BlockBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, System.Threading.CancellationToken)"/>,
+        /// <see cref="BlockBlobStorageResource.WriteStreamToOffsetAsync(long, long, System.IO.Stream, Storage.DataMovement.Models.ConsumePartialReadableStreamOptions, System.Threading.CancellationToken)"/>,
+        /// and <see cref="BlockBlobStorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
         /// These options will apply to the blob service requests to complete uploading to the block blob.
         /// </summary>
-        public BlockBlobStorageResourceUploadOptions UploadOptions { get; internal set; }
+        public BlockBlobStorageResourceUploadOptions UploadOptions { get; set; }
 
         /// <summary>
-        /// When calling for <see cref="BlockBlobStorageResource.ConsumePartialReadableStream(long, long, System.IO.Stream, Storage.DataMovement.Models.ConsumePartialReadableStreamOptions, System.Threading.CancellationToken)"/>
+        /// When calling for <see cref="BlockBlobStorageResource.WriteStreamToOffsetAsync(long, long, System.IO.Stream, Storage.DataMovement.Models.ConsumePartialReadableStreamOptions, System.Threading.CancellationToken)"/>
         ///
         /// these options will apply to the blob service requests.
         /// </summary>
-        public BlockBlobStorageResourceDownloadOptions ConsumePartialOffsetReadableStream { get; internal set; }
+        public BlobStorageResourceDownloadOptions DownloadOptions { get; set; }
     }
 }

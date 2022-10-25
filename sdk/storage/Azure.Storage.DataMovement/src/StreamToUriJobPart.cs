@@ -118,14 +118,12 @@ namespace Azure.Storage.DataMovement
 
                     await QueueStageBlockRequests(commitBlockList).ConfigureAwait(false);
 
-                    if (RequiresCommitListType.RequiresCommitListCall == _sourceResource.CanCommitBlockListType())
+                    if (RequiresCompleteTransferType.RequiresCompleteCall == _sourceResource.RequiresCompleteTransfer)
                     {
                         _commitBlockHandler = GetCommitController(
                             expectedLength: fileLength.Value,
                             commitBlockTask: async (cancellationToken) =>
-                            await _sourceResource.CommitBlockList(
-                                commitBlockList.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
-                                cancellationToken).ConfigureAwait(false),
+                                await _sourceResource.CompleteTransferAsync(cancellationToken).ConfigureAwait(false),
                             this);
                     }
                 }
@@ -174,8 +172,8 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                await _destinationResource.ConsumeReadableStream(
-                        _sourceResource.GetConsumableStream(),
+                await _destinationResource.WriteFromStreamAsync(
+                        await _sourceResource.OpenWriteStreamAsync().ConfigureAwait(false),
                         _cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Set completion status to completed
@@ -195,7 +193,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 Stream slicedStream = Stream.Null;
-                using (Stream stream = _sourceResource.GetConsumableStream())
+                using (Stream stream = await _sourceResource.OpenWriteStreamAsync().ConfigureAwait(false))
                 {
                     //await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
                     slicedStream = await GetOffsetPartitionInternal(
@@ -205,7 +203,7 @@ namespace Azure.Storage.DataMovement
                         _arrayPool,
                         _cancellationTokenSource.Token).ConfigureAwait(false);
                 }
-                await _destinationResource.ConsumePartialReadableStream(
+                await _destinationResource.WriteStreamToOffsetAsync(
                         offset,
                         blockLength,
                         slicedStream,
@@ -290,7 +288,7 @@ namespace Azure.Storage.DataMovement
             acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
 
             long absolutePosition = 0;
-            long blockLength = acceptableBlockSize;
+            long blockLength;
 
             // TODO: divide up paritions based on how much array pool is left
             while (absolutePosition < streamLength)

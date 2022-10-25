@@ -34,41 +34,29 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Defines whether we can produce a Uri
+        /// Can produce uri
         /// </summary>
         /// <returns></returns>
-        public override ProduceUriType CanProduceUri()
-        {
-            return ProduceUriType.ProducesUri;
-        }
+        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
-        /// Gets Uri
+        /// Returns the path
         /// </summary>
         /// <returns></returns>
-        public override Uri GetUri()
-        {
-            return _blobContainerClient.GenerateSasUri(Sas.BlobContainerSasPermissions.All, DateTimeOffset.UtcNow.AddDays(7));
-        }
+        public override List<string> Path => _blobContainerClient.Uri.AbsolutePath.Split('/').ToList();
 
         /// <summary>
-        /// Returns default since resource is at the root/container level.
+        /// Obtains the Uri of the blob directory resource, which means we can list
         /// </summary>
-        /// <returns>
-        /// Returns Directory Path split up in a List of Strings (delimited by '/').
-        /// Returns empty list of strings if the resource is at the root/container level.
-        /// </returns>
-        public override List<string> GetPath()
-        {
-            return default;
-        }
+        /// <returns></returns>
+        public override Uri Uri => _blobContainerClient.Uri;
 
         /// <summary>
         /// Creates new blob client based on the parent container client
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public override StorageResource GetStorageResource(List<string> path)
+        public override StorageResource GetChildStorageResource(List<string> path)
         {
             return new BlockBlobStorageResource(_blobContainerClient.GetBlockBlobClient(string.Join("/", path)));
         }
@@ -79,7 +67,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="encodedPath">
         /// The path to append to the current directory prefix (if one exists)</param>
         /// <returns></returns>
-        public override StorageResourceContainer GetStorageResourceContainer(List<string> encodedPath)
+        public override StorageResourceContainer GetParentStorageResourceContainer(List<string> encodedPath)
         {
             return new BlobDirectoryStorageResourceContainer(_blobContainerClient, encodedPath);
         }
@@ -89,14 +77,14 @@ namespace Azure.Storage.Blobs.DataMovement
         ///
         /// Because blobs is a flat namespace, virtual directories will not be returned.
         /// </summary>
-        public override async IAsyncEnumerable<StorageResource> ListStorageResources(
+        public override async IAsyncEnumerable<StorageResource> GetStorageResources(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(
                 cancellationToken: cancellationToken);
             await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
             {
-                yield return GetStorageResource(blobItem.Name.Split('/').ToList());
+                yield return GetChildStorageResource(blobItem.Name.Split('/').ToList());
             }
         }
     }

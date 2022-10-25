@@ -33,19 +33,19 @@ namespace Azure.Storage.DataMovement
         /// Writes to the memory mapped file to store the checkpointing information.
         /// </summary>
         /// <returns></returns>
-        public abstract Task WriteToCheckpoint(string id, long offset, byte[] buffer);
+        public abstract Task WriteToCheckpointAsync(string id, long offset, byte[] buffer);
 
         /// <summary>
         /// Removes transfer checkpoint information from checkpointer
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public abstract Task<bool> TryRemoveStoredTransfer(string id);
+        public abstract Task<bool> TryRemoveStoredTransferAsync(string id);
 
         /// <summary>
         /// Lists all the transfers contained in the checkpointer.
         /// </summary>
         /// <returns></returns>
-        public abstract Task<List<string>> ListStoredTransfersAsync();
+        public abstract Task<List<string>> GetStoredTransfersAsync();
     }
 }

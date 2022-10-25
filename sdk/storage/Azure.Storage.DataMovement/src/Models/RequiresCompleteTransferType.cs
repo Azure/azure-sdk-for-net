@@ -11,12 +11,12 @@ namespace Azure.Storage.DataMovement.Models
     /// Determines whether or not the resource requires a commit block list (e.g. Commit Block List)
     /// to determine which blocks will make up the resource.
     /// </summary>
-    public enum RequiresCommitListType
+    public enum RequiresCompleteTransferType
     {
         /// <summary>
-        /// Requires Commit List to finish the transfer
+        /// Requires Download Complete call to finish the transfer
         /// </summary>
-        RequiresCommitListCall = 1,
+        RequiresCompleteCall = 1,
 
         /// <summary>
         /// Does not require any commit list type to finish the transfer.

@@ -305,7 +305,7 @@ namespace Azure.Storage.Blobs.DataMovement
             // As each local path is found, it is added to the queue as well.
             await QueueJobAsync(transferJob).ConfigureAwait(false);
 
-            PathScannerFactory scannerFactory = new PathScannerFactory(string.Join("/",transferJob.SourceLocalPath.GetPath()));
+            PathScannerFactory scannerFactory = new PathScannerFactory(string.Join("/",transferJob.SourceLocalPath.Path));
             PathScanner scanner = scannerFactory.BuildPathScanner();
             IEnumerable<FileSystemInfo> pathList = scanner.Scan();
 

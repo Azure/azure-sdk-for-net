@@ -23,7 +23,37 @@ namespace Azure.Storage.Blobs.DataMovement
     public class BlockBlobStorageResource : StorageResource
     {
         private BlockBlobClient _blobClient;
+        private List<string> _blocks;
         private BlockBlobStorageResourceOptions _options;
+
+        /// <summary>
+        /// Returns URL
+        /// </summary>
+        /// <returns></returns>
+        public override Uri Uri => _blobClient.Uri;
+
+        /// <summary>
+        /// Gets the path of the resource.
+        /// </summary>
+        public override List<string> Path => _blobClient.Name.Split('/').ToList();
+
+        /// <summary>
+        /// Defines whether the object can produce a SAS URL
+        /// </summary>
+        /// <returns></returns>
+        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+
+        /// <summary>
+        /// Defines whether the object can consume a stream
+        /// </summary>
+        /// <returns></returns>
+        public override StreamConsumableType CanCreateOpenReadStream => StreamConsumableType.Consumable;
+
+        /// <summary>
+        /// Does not require Commit List operation.
+        /// </summary>
+        /// <returns></returns>
+        public override RequiresCompleteTransferType RequiresCompleteTransfer => RequiresCompleteTransferType.RequiresCompleteCall;
 
         /// <summary>
         /// Constructor
@@ -35,6 +65,7 @@ namespace Azure.Storage.Blobs.DataMovement
             BlockBlobStorageResourceOptions options = default)
         {
             _blobClient = blobClient;
+            _blocks = new List<string>();
             _options = options;
         }
 
@@ -42,28 +73,22 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Creates readable stream to download
         /// </summary>
         /// <returns></returns>
-        public override Stream GetReadableInputStream()
+        public override Task<Stream> OpenReadStreamAsync(long? position = default)
         {
-            return _blobClient.OpenRead();
+            return _blobClient.OpenReadAsync(new BlobOpenReadOptions(true)
+            {
+                Position = position ?? 0,
+            });
         }
 
         /// <summary>
         /// Creates writable stream to upload
         /// </summary>
         /// <returns></returns>
-        public override Stream GetConsumableStream()
+        public override Task<Stream> OpenWriteStreamAsync()
         {
             // TODO: check for proper conversion
-            return _blobClient.OpenWrite(overwrite: false);
-        }
-
-        /// <summary>
-        /// Defines whether the object can consume a stream
-        /// </summary>
-        /// <returns></returns>
-        public override StreamConsumableType CanConsumeReadableStream()
-        {
-            return StreamConsumableType.Consumable;
+            return _blobClient.OpenWriteAsync(overwrite: false);
         }
 
         /// <summary>
@@ -72,7 +97,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="stream"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public override async Task ConsumeReadableStream(
+        public override async Task WriteFromStreamAsync(
             Stream stream,
             CancellationToken token = default)
         {
@@ -89,15 +114,17 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task ConsumePartialReadableStream(
+        public override async Task WriteStreamToOffsetAsync(
             long offset,
             long length,
             Stream stream,
             ConsumePartialReadableStreamOptions options,
             CancellationToken cancellationToken = default)
         {
+            string id = Shared.StorageExtensions.GenerateBlockId(offset);
+            _blocks.Add(id);
             await _blobClient.StageBlockAsync(
-                Shared.StorageExtensions.GenerateBlockId(offset),
+                id,
                 stream,
                 // TODO #27253
                 //new BlockBlobStageBlockOptions()
@@ -113,42 +140,14 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Defines whether the object can produce a SAS URL
-        /// </summary>
-        /// <returns></returns>
-        public override ProduceUriType CanProduceUri()
-        {
-            return ProduceUriType.ProducesUri;
-        }
-
-        /// <summary>
-        /// Returns URL with SAS
-        /// </summary>
-        /// <returns></returns>
-        public override Uri GetUri()
-        {
-            // TODO: remove need to set all permissions and 7 days is how long the staged blocks live on the service
-            return _blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, DateTimeOffset.UtcNow.AddDays(7));
-        }
-
-        /// <summary>
         /// Consumes blob Url to upload / copy
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        public override async Task ConsumeUri(Uri uri)
+        public override async Task CopyFromUriAsync(Uri uri)
         {
             // Change depending on type of copy
             await _blobClient.SyncUploadFromUriAsync(uri).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// returns path split up
-        /// </summary>
-        /// <returns></returns>
-        public override List<string> GetPath()
-        {
-            return _blobClient.Name.Split('/').ToList();
         }
 
         /// <summary>
@@ -162,23 +161,18 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Does not require Commit List operation.
-        /// </summary>
-        /// <returns></returns>
-        public override RequiresCommitListType CanCommitBlockListType()
-        {
-            return RequiresCommitListType.RequiresCommitListCall;
-        }
-
-        /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override async Task CommitBlockList(IEnumerable<string> base64BlockIds, CancellationToken cancellationToken)
+        public override async Task CompleteTransferAsync(CancellationToken cancellationToken)
         {
-            await _blobClient.CommitBlockListAsync(
-                        base64BlockIds,
-                        default,
-                        cancellationToken).ConfigureAwait(false);
+            if (_blocks != null && _blocks.Count > 0)
+            {
+                await _blobClient.CommitBlockListAsync(
+                    _blocks,
+                    default,
+                    cancellationToken).ConfigureAwait(false);
+                _blocks.Clear();
+            }
         }
     }
 }

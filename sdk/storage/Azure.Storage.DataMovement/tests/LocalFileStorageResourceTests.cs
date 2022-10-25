@@ -26,8 +26,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.NotNull(resource);
-            Assert.Equals(StreamConsumableType.Consumable, resource.CanConsumeReadableStream());
-            Assert.Equals(ProduceUriType.ProducesUri ,resource.CanProduceUri());
+            Assert.Equals(StreamConsumableType.Consumable, resource.CanCreateOpenReadStream);
+            Assert.Equals(ProduceUriType.ProducesUri ,resource.CanProduceUri);
         }
     }
 }

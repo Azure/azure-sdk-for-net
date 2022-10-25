@@ -2,20 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models;
 using System.Buffers;
+using System.Collections.Generic;
+using Azure.Storage.DataMovement.Models;
+using System.Threading.Tasks;
 using System.Linq;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class StreamToUriTransferJob : TransferJobInternal
+    internal class UriToStreamTransferJob : TransferJobInternal
     {
         /// <summary>
-        /// Create Storage Transfer Job.
+        /// Create Storage Transfer Job for single transfer
         /// </summary>
-        internal StreamToUriTransferJob(
+        internal UriToStreamTransferJob(
             DataTransfer dataTransfer,
             StorageResource sourceResource,
             StorageResource destinationResource,
@@ -36,9 +36,9 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Create Storage Transfer Job.
+        /// Create Storage Transfer Job for container transfer
         /// </summary>
-        internal StreamToUriTransferJob(
+        internal UriToStreamTransferJob(
             DataTransfer dataTransfer,
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement
                     sourceResource: _sourceResource,
                     destinationResource: _destinationResource,
                     maximumTransferChunkSize: _maximumTransferChunkSize,
-                    initialTransferSize: _initialTransferSize,
+                initialTransferSize: _initialTransferSize,
                     errorHandling: _errorHandling,
                     checkpointer: _checkpointer,
                     uploadPool: _arrayPool,
@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement
                 // Call listing operation on the source container
                 await foreach (StorageResource resource
                     in _sourceResourceContainer.GetStorageResources(
-                        cancellationToken:_cancellationTokenSource.Token).ConfigureAwait(false))
+                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false))
                 {
                     // Pass each storage resource found in each list call
                     StreamToUriJobPart part = new StreamToUriJobPart(
@@ -128,8 +128,8 @@ namespace Azure.Storage.DataMovement
             if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
             {
                 await _events.InvokeTransferStatus(
-                    new TransferStatusEventArgs(
-                        transferId: _dataTransfer.Id,
+                new TransferStatusEventArgs(
+                transferId: _dataTransfer.Id,
                         transferStatus: StorageTransferStatus.Completed,
                         isRunningSynchronously: true,
                         cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);

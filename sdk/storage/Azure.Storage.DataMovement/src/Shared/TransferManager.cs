@@ -265,9 +265,9 @@ namespace Azure.Storage.DataMovement
             // From here we only support an upload job
             DataTransfer dataTransfer = new DataTransfer();
             TransferJobInternal transferJobInternal;
-            if (sourceResource.CanProduceUri() == ProduceUriType.NoUri)
+            if (sourceResource.CanProduceUri == ProduceUriType.NoUri)
             {
-                if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
+                if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
                     // Stream to Uri job (Upload Job)
                     transferJobInternal = new StreamToUriTransferJob(
@@ -288,10 +288,10 @@ namespace Azure.Storage.DataMovement
                     throw Errors.InvalidSourceDestinationParams();
                 }
             }
-            else if (sourceResource.CanProduceUri() == ProduceUriType.ProducesUri)
+            else if (sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
             {
                 // Source is remote
-                if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
+                if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
                     // Most likely a copy operation.
                     throw new NotImplementedException();
@@ -333,9 +333,9 @@ namespace Azure.Storage.DataMovement
             // From here we only support an upload job
             DataTransfer dataTransfer = new DataTransfer();
             TransferJobInternal transferJobInternal;
-            if (sourceResource.CanProduceUri() == ProduceUriType.NoUri)
+            if (sourceResource.CanProduceUri == ProduceUriType.NoUri)
             {
-                if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
+                if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
                     // Stream to Uri job (Upload Job)
                     transferJobInternal = new StreamToUriTransferJob(
@@ -356,10 +356,10 @@ namespace Azure.Storage.DataMovement
                     throw Errors.InvalidSourceDestinationParams();
                 }
             }
-            else if (sourceResource.CanProduceUri() == ProduceUriType.ProducesUri)
+            else if (sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
             {
                 // Source is remote
-                if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
+                if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
                     // Most likely a copy operation.
                     throw new NotImplementedException();

@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.DataMovement
                   queueChunkTask: queueChunkTask)
         {
             _sourceResource = sourceLocalPath;
-            _sourceLocalPath = string.Join("/", sourceLocalPath.GetPath().ToArray());
+            _sourceLocalPath = string.Join("/", sourceLocalPath.Path.ToArray());
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _destinationBlobClient = destinationClient;
             DestinationBlobConfiguration = new BlobBaseConfiguration()

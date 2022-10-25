@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -21,6 +22,36 @@ namespace Azure.Storage.DataMovement
         private string _originalPath;
 
         /// <summary>
+        /// Returns URL
+        /// </summary>
+        /// <returns></returns>
+        public override Uri Uri => throw new NotSupportedException();
+
+        /// <summary>
+        /// Gets the path of the resource.
+        /// </summary>
+        public override List<string> Path => _path;
+
+        /// <summary>
+        /// Defines whether the object can produce a SAS URL
+        /// </summary>
+        /// <returns></returns>
+        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+
+        /// <summary>
+        /// Cannot consume readable stream
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public override StreamConsumableType CanCreateOpenReadStream => StreamConsumableType.Consumable;
+
+        /// <summary>
+        /// Does not require Commit List operation.
+        /// </summary>
+        /// <returns></returns>
+        public override RequiresCompleteTransferType RequiresCompleteTransfer => RequiresCompleteTransferType.None;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="path"></param>
@@ -31,31 +62,11 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Cannot consume readable stream
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override StreamConsumableType CanConsumeReadableStream()
-        {
-            return StreamConsumableType.Consumable;
-        }
-
-        /// <summary>
-        /// Cannot produce URL
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override ProduceUriType CanProduceUri()
-        {
-            return ProduceUriType.NoUri;
-        }
-
-        /// <summary>
         /// Cannot produce consumable stream, will throw a NotSupportException.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        public override Stream GetConsumableStream()
+        public override Task<Stream> OpenWriteStreamAsync()
         {
             // Cannot produce consumable stream
             throw new NotSupportedException();
@@ -68,7 +79,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="stream">Stream to append to the local file</param>
         /// <param name="token">Cancellation Token</param>
         /// <returns></returns>
-        public override async Task ConsumeReadableStream(
+        public override async Task WriteFromStreamAsync(
             Stream stream,
             CancellationToken token = default)
         {
@@ -95,34 +106,37 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task ConsumePartialReadableStream(
+        public override async Task WriteStreamToOffsetAsync(
             long offset,
             long length,
             Stream stream,
             ConsumePartialReadableStreamOptions options,
             CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
             // Appends incoming stream to the local file resource
             using (FileStream fileStream = new FileStream(
                     _originalPath,
-                    FileMode.Append,
+                    FileMode.OpenOrCreate,
                     FileAccess.Write))
             {
+                fileStream.Seek(offset, SeekOrigin.Begin);
                 await stream.CopyToAsync(
                     fileStream,
-                    Constants.DefaultDownloadCopyBufferSize,
+                    (int) length,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
         }
 
         /// <summary>
-        /// Cannot produce URL
+        /// Cannot produce URL/Uri
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        public override Task ConsumeUri(Uri uri)
+        public override Task CopyFromUriAsync(Uri uri)
         {
             throw new NotSupportedException();
         }
@@ -144,33 +158,13 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Get Path of the file
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override List<string> GetPath()
-        {
-            return _path;
-        }
-
-        /// <summary>
-        /// Get the Uri
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
-        public override Uri GetUri()
-        {
-            throw new NotSupportedException();
-        }
-
-        /// <summary>
         /// Gets the readable input stream.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override Stream GetReadableInputStream()
+        public override Task<Stream> OpenReadStreamAsync(long? position = default)
         {
-            return new FileStream(_originalPath, FileMode.Open, FileAccess.Read);
+            return Task.FromResult((Stream) new FileStream(_originalPath, FileMode.Open, FileAccess.Read));
         }
 
         /// <summary>
@@ -188,20 +182,20 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Does not require Commit List operation.
+        /// Completes the transfer if the resource resides locally.
+        ///
+        /// If the transfer requires client-side encryption, necessary
+        /// operations will occur here.
         /// </summary>
-        /// <returns></returns>
-        public override RequiresCommitListType CanCommitBlockListType()
+        public override Task CompleteTransferAsync(CancellationToken cancellationToken)
         {
-            return RequiresCommitListType.None;
-        }
-
-        /// <summary>
-        /// Commits the block list given.
-        /// </summary>
-        public override Task CommitBlockList(IEnumerable<string> base64BlockIds, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
+            if (File.Exists(_originalPath))
+            {
+                // Make file visible
+                FileAttributes attributes = File.GetAttributes(_originalPath);
+                File.SetAttributes(_originalPath, attributes | FileAttributes.Normal);
+            }
+            return Task.CompletedTask;
         }
     }
 }

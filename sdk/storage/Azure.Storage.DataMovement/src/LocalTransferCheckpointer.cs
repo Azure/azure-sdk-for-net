@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="buffer"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override Task WriteToCheckpoint(string id, long offset, byte[] buffer)
+        public override Task WriteToCheckpointAsync(string id, long offset, byte[] buffer)
         {
             throw new NotImplementedException();
         }
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override Task<bool> TryRemoveStoredTransfer(string id)
+        public override Task<bool> TryRemoveStoredTransferAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -73,7 +73,7 @@ namespace Azure.Storage.DataMovement
         /// Lists all the transfers contained in the checkpointer.
         /// </summary>
         /// <returns></returns>
-        public override Task<List<string>> ListStoredTransfersAsync()
+        public override Task<List<string>> GetStoredTransfersAsync()
         {
             throw new NotImplementedException();
         }

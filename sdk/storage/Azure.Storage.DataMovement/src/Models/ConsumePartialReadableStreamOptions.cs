@@ -10,7 +10,7 @@ using System.Threading;
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// Options for <see cref="StorageResource.ConsumePartialReadableStream(long, long, Stream, ConsumePartialReadableStreamOptions, CancellationToken)"/>
+    /// Options for <see cref="StorageResource.WriteStreamToOffsetAsync(long, long, Stream, ConsumePartialReadableStreamOptions, CancellationToken)"/>
     /// </summary>
     public class ConsumePartialReadableStreamOptions
     {
@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Models
         /// Optional. If a specific block id is wanted to send with the request when staging a block
         /// to the blob.
         ///
-        /// Applies only to blobs.
+        /// Applies only to block blobs.
         /// </summary>
         public string BlockId { get; internal set; }
     }

@@ -25,25 +25,25 @@ namespace Azure.Storage.DataMovement
         /// Defines whether we can produce a Uri
         /// </summary>
         /// <returns></returns>
-        public abstract ProduceUriType CanProduceUri();
+        public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
         /// Gets Uri
         /// </summary>
         /// <returns></returns>
-        public abstract Uri GetUri();
+        public abstract Uri Uri { get; }
 
         /// <summary>
         /// Gets path split up
         /// </summary>
         /// <returns></returns>
-        public abstract List<string> GetPath();
+        public abstract List<string> Path { get; }
 
         /// <summary>
         /// Lists all the child storage resources in the path.
         /// </summary>
         /// <returns></returns>
-        public abstract IAsyncEnumerable<StorageResource> ListStorageResources(
+        public abstract IAsyncEnumerable<StorageResource> GetStorageResources(
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -51,13 +51,13 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public abstract StorageResource GetStorageResource(List<string> path);
+        public abstract StorageResource GetChildStorageResource(List<string> path);
 
         /// <summary>
         /// Returns storage resource container from the parent container
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public abstract StorageResourceContainer GetStorageResourceContainer(List<string> path);
+        public abstract StorageResourceContainer GetParentStorageResourceContainer(List<string> path);
     }
 }

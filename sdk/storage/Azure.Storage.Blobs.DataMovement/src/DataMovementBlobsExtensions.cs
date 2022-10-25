@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     Resource = BlobTransferType.ResourceType.Blob,
                     Operation = BlobTransferType.OperationType.Upload,
                 },
-                SourceUri = transferJob.SourceResource.GetUri(),
+                SourceUri = transferJob.SourceResource.Uri,
                 DestinationUri = transferJob._destinationBlobClient.Uri,
             };
         }
@@ -45,7 +45,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     Resource = BlobTransferType.ResourceType.BlobFolder,
                     Operation = BlobTransferType.OperationType.Upload,
                 },
-                SourceUri = new Uri(transferJob.SourceLocalPath.GetPath().ToLocalPathString()),
+                SourceUri = new Uri(transferJob.SourceLocalPath.Path.ToLocalPathString()),
                 DestinationUri = transferJob.DestinationBlobDirectoryClient.Uri,
             };
         }
@@ -171,7 +171,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 versionId: blobProperties.VersionId,
                 isLatestVersion: blobProperties.IsLatestVersion,
                 expiresOn: blobProperties.ExpiresOn,
-                lastAccessed: blobProperties.LastAccessed);
+                lastAccessed: blobProperties.LastAccessed,
+                resourceType: blobProperties.BlobType.ToStorageResourceType());
         }
 
         private static ServiceCopyStatus? ToCopyStatus(this CopyStatus copyStatus)
@@ -191,6 +192,23 @@ namespace Azure.Storage.Blobs.DataMovement
             else if (CopyStatus.Failed == copyStatus)
             {
                 return ServiceCopyStatus.Failed;
+            }
+            return default;
+        }
+
+        private static StorageResourceType ToStorageResourceType(this BlobType blobType)
+        {
+            if (BlobType.Block == blobType)
+            {
+                return StorageResourceType.BlockBlob;
+            }
+            else if (BlobType.Page == blobType)
+            {
+                return StorageResourceType.PageBlob;
+            }
+            else if (BlobType.Append == blobType)
+            {
+                return StorageResourceType.AppendBlob;
             }
             return default;
         }

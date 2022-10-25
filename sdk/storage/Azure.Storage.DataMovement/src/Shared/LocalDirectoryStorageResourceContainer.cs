@@ -21,6 +21,24 @@ namespace Azure.Storage.DataMovement
         private string _originalPath;
 
         /// <summary>
+        /// Gets the path
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> Path => _path;
+
+        /// <summary>
+        /// Cannot produce Uri
+        /// </summary>
+        /// <returns></returns>
+        public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
+
+        /// <summary>
+        /// Cannot get Uri
+        /// </summary>
+        /// <returns><see cref="NotImplementedException"/></returns>
+        public override Uri Uri => throw new NotSupportedException();
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="path"></param>
@@ -31,29 +49,11 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Gets the path
-        /// </summary>
-        /// <returns></returns>
-        public override List<string> GetPath()
-        {
-            return _path;
-        }
-
-        /// <summary>
-        /// Returns the full path concatenated
-        /// </summary>
-        /// <returns></returns>
-        public string GetFullPath()
-        {
-            return _originalPath;
-        }
-
-        /// <summary>
         /// Gets the storage Resource
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public override StorageResource GetStorageResource(List<string> path)
+        public override StorageResource GetChildStorageResource(List<string> path)
         {
             List<string> listPaths = new List<string>(_path.Count + path.Count);
             listPaths.AddRange(_path);
@@ -68,28 +68,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="path"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override StorageResourceContainer GetStorageResourceContainer(List<string> path)
+        public override StorageResourceContainer GetParentStorageResourceContainer(List<string> path)
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Cannot produce Uri
-        /// </summary>
-        /// <returns></returns>
-        public override ProduceUriType CanProduceUri()
-        {
-            return ProduceUriType.NoUri;
-        }
-
-        /// <summary>
-        /// Cannot produce uri, will throw exception.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
-        public override Uri GetUri()
-        {
-            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -98,14 +79,14 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public override async IAsyncEnumerable<StorageResource> ListStorageResources(
+        public override async IAsyncEnumerable<StorageResource> GetStorageResources(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             PathScanner scanner = new PathScanner(_originalPath);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
-                yield return GetStorageResource(fileSystemInfo.Name.Split('/').ToList());
+                yield return GetChildStorageResource(fileSystemInfo.Name.Split('/').ToList());
             }
         }
     }

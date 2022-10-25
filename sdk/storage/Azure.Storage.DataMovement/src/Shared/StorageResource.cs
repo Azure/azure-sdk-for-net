@@ -17,27 +17,51 @@ namespace Azure.Storage.DataMovement
     public abstract class StorageResource
     {
         /// <summary>
-        /// For Mocking
+        /// For Mocking.
         /// </summary>
         protected StorageResource() { }
 
         /// <summary>
-        /// Produces readable stream to download
+        /// Returns URL.
         /// </summary>
         /// <returns></returns>
-        public abstract Stream GetReadableInputStream();
+        public abstract Uri Uri { get; }
 
         /// <summary>
-        /// Produces writable stream to upload
+        /// Gets the path of the resource.
+        /// </summary>
+        public abstract List<string> Path { get; }
+
+        /// <summary>
+        /// Defines whether the object can generate a URL to consume
         /// </summary>
         /// <returns></returns>
-        public abstract Stream GetConsumableStream();
+        public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
         /// Defines whether the object can consume a readable stream and upload it
         /// </summary>
         /// <returns></returns>
-        public abstract StreamConsumableType CanConsumeReadableStream();
+        public abstract StreamConsumableType CanCreateOpenReadStream { get; }
+
+        /// <summary>
+        /// Determines whether or not the resource requires a commit block list (e.g. Commit Block List)
+        /// to determine which blocks will make up the resource.
+        /// </summary>
+        /// <returns><see cref="RequiresCompleteTransferType"/></returns>
+        public abstract RequiresCompleteTransferType RequiresCompleteTransfer { get; }
+
+        /// <summary>
+        /// Produces readable stream to download
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task<Stream> OpenReadStreamAsync(long? position = default);
+
+        /// <summary>
+        /// Produces writable stream to upload
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task<Stream> OpenWriteStreamAsync();
 
         /// <summary>
         /// Consumes the readable stream to upload
@@ -45,7 +69,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="stream"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task ConsumeReadableStream(
+        public abstract Task WriteFromStreamAsync(
             Stream stream,
             CancellationToken cancellationToken = default);
 
@@ -62,7 +86,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task ConsumePartialReadableStream(
+        public abstract Task WriteStreamToOffsetAsync(
             long offset,
             long length,
             Stream stream,
@@ -70,29 +94,11 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Defines whether the object can generate a URL to consume
-        /// </summary>
-        /// <returns></returns>
-        public abstract ProduceUriType CanProduceUri();
-
-        /// <summary>
-        /// Returns URL with SAS
-        /// </summary>
-        /// <returns></returns>
-        public abstract Uri GetUri();
-
-        /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
         /// <param name="sasUri"></param>
         /// <returns></returns>
-        public abstract Task ConsumeUri(Uri sasUri);
-
-        /// <summary>
-        /// returns path split up
-        /// </summary>
-        /// <returns></returns>
-        public abstract List<string> GetPath();
+        public abstract Task CopyFromUriAsync(Uri sasUri);
 
         /// <summary>
         /// Get lengths of the resource.
@@ -101,16 +107,9 @@ namespace Azure.Storage.DataMovement
         public abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token);
 
         /// <summary>
-        /// Determines whether or not the resource requires a commit block list (e.g. Commit Block List)
-        /// to determine which blocks will make up the resource.
-        /// </summary>
-        /// <returns><see cref="RequiresCommitListType"/></returns>
-        public abstract RequiresCommitListType CanCommitBlockListType();
-
-        /// <summary>
-        /// Commits the block list given.
+        /// If the operation requires any ending transfers (e.g. Committing a block list, flushing crypto streams)
         /// </summary>
         /// <returns>The Task which Commits the list of ids</returns>
-        public abstract Task CommitBlockList(IEnumerable<string> base64BlockIds, CancellationToken cancellationToken);
+        public abstract Task CompleteTransferAsync(CancellationToken cancellationToken);
     }
 }

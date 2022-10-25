@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.DataMovement
 {
     /// <summary>
     /// Options for <see cref="BlockBlobStorageResource"/> when calling
-    /// <see cref="BlockBlobStorageResource.ConsumeUri(System.Uri)"/>.
+    /// <see cref="BlockBlobStorageResource.CopyFromUriAsync(System.Uri)"/>.
     /// </summary>
     public class BlockBlobStorageResourceServiceCopyOptions
     {

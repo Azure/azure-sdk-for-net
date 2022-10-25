@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.DataMovement
         internal async Task<Response<BlobContentInfo>> GetSingleUploadTaskAsync(string fullPathName)
         {
             // Remove parent directory path from blob name
-            string parentDirectoryPath = string.Join("/", SourceLocalPath.GetPath());
+            string parentDirectoryPath = string.Join("/", SourceLocalPath.Path);
             string blobName = fullPathName.Substring(parentDirectoryPath.Length + 1);
 
             BlobBaseClient blobClient = DestinationBlobDirectoryClient.GetBlobBaseClient(blobName);
