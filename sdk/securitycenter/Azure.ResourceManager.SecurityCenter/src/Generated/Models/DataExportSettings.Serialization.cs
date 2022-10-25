@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

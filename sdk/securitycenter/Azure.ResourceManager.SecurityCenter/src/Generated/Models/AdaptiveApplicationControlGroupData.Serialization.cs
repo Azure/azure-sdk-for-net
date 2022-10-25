@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<ConfigurationStatus> configurationStatus = default;
             Optional<RecommendationStatus> recommendationStatus = default;
             Optional<IReadOnlyList<AdaptiveApplicationControlIssueSummary>> issues = default;
-            Optional<SourceSystem> sourceSystem = default;
+            Optional<AdaptiveApplicationControlGroupSourceSystem> sourceSystem = default;
             Optional<IList<VmRecommendation>> vmRecommendations = default;
             Optional<IList<PathRecommendation>> pathRecommendations = default;
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sourceSystem = new SourceSystem(property0.Value.GetString());
+                            sourceSystem = new AdaptiveApplicationControlGroupSourceSystem(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vmRecommendations"))

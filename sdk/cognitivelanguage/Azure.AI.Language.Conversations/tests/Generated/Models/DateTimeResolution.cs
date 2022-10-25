@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations
             Timex = timex;
             DateTimeSubKind = dateTimeSubKind;
             Value = value;
-            ResolutionKind = ResolutionKind.DateTime;
+            ResolutionKind = ResolutionKind.DateTimeResolution;
         }
 
         /// <summary> Initializes a new instance of DateTimeResolution. </summary>

@@ -65,9 +65,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
-        // TODO: Temporarily setting max version to V2022-05-01 since V2022-10-01-preview does not support AAD yet (https://github.com/Azure/azure-sdk-for-net/issues/31854).
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public async Task RecognizeCustomEntitiesWithADDTest()
+        public async Task RecognizeCustomEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// A Class representing a GovernanceAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GovernanceAssignmentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetGovernanceAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResponseResource" /> using the GetGovernanceAssignment method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResource" /> using the GetGovernanceAssignment method.
     /// </summary>
     public partial class GovernanceAssignmentResource : ArmResource
     {

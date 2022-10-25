@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         {
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Temperature;
+            ResolutionKind = ResolutionKind.TemperatureResolution;
         }
 
         /// <summary> Initializes a new instance of TemperatureResolution. </summary>

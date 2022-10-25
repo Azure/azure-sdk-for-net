@@ -79,32 +79,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetProjectAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// Response response = await client.GetProjectAsync("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Project</c>:
-        /// <code>{
-        ///   name: string, # Optional. Name of the project
-        ///   description: string, # Optional. Description of the project.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -130,32 +105,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetProject with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// Response response = client.GetProject("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Project</c>:
-        /// <code>{
-        ///   name: string, # Optional. Name of the project
-        ///   description: string, # Optional. Description of the project.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProject(String,RequestContext)']/*" />
         public virtual Response GetProject(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -180,44 +130,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetProjectsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// await foreach (var data in client.GetProjectsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// await foreach (var data in client.GetProjectsAsync("<filter>", 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Name of the project
-        ///   description: string, # Optional. Description of the project.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
             return GetProjectsImplementationAsync("DevCenterClient.GetProjects", filter, maxCount, context);
@@ -246,44 +159,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetProjects and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// foreach (var data in client.GetProjects())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetProjects with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// foreach (var data in client.GetProjects("<filter>", 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Name of the project
-        ///   description: string, # Optional. Description of the project.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetProjects(string filter = null, int? maxCount = null, RequestContext context = null)
         {
             return GetProjectsImplementation("DevCenterClient.GetProjects", filter, maxCount, context);
@@ -312,96 +188,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllDevBoxesAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// await foreach (var data in client.GetAllDevBoxesAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("poolName").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAllDevBoxesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// await foreach (var data in client.GetAllDevBoxesAsync("<filter>", 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
-        ///     Console.WriteLine(result.GetProperty("poolName").ToString());
-        ///     Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("actionState").ToString());
-        ///     Console.WriteLine(result.GetProperty("powerState").ToString());
-        ///     Console.WriteLine(result.GetProperty("uniqueId").ToString());
-        ///     Console.WriteLine(result.GetProperty("errorDetails").GetProperty("code").ToString());
-        ///     Console.WriteLine(result.GetProperty("errorDetails").GetProperty("message").ToString());
-        ///     Console.WriteLine(result.GetProperty("location").ToString());
-        ///     Console.WriteLine(result.GetProperty("osType").ToString());
-        ///     Console.WriteLine(result.GetProperty("user").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-        ///     Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("localAdministrator").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DevBoxListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Display name for the Dev Box
-        ///   projectName: string, # Optional. Name of the project this Dev Box belongs to
-        ///   poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-        ///   provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-        ///   actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-        ///   powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-        ///   uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-        ///   errorDetails: {
-        ///     code: string, # Optional. The error code.
-        ///     message: string, # Optional. The error message.
-        ///   }, # Optional. Provisioning or action error details. Populated only for error states.
-        ///   location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-        ///   osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-        ///   user: string, # Optional. User identifier of the user this vm is assigned to.
-        ///   hardwareProfile: {
-        ///     skuName: string, # Optional. The name of the SKU
-        ///     vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-        ///     memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-        ///   }, # Optional. Information about the Dev Box&apos;s hardware resources
-        ///   storageProfile: {
-        ///     osDisk: {
-        ///       diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-        ///     }, # Optional. Settings for the operating system disk.
-        ///   }, # Optional. Storage settings for this Dev Box
-        ///   imageReference: {
-        ///     name: string, # Optional. The name of the image used.
-        ///     version: string, # Optional. The version of the image.
-        ///     operatingSystem: string, # Optional. The operating system of the image.
-        ///     osBuildNumber: string, # Optional. The operating system build number of the image.
-        ///     publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-        ///   }, # Optional. Information about the image used for this Dev Box
-        ///   createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-        ///   localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
             return GetAllDevBoxesImplementationAsync("DevCenterClient.GetAllDevBoxes", filter, maxCount, context);
@@ -430,96 +217,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllDevBoxes and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// foreach (var data in client.GetAllDevBoxes())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("poolName").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAllDevBoxes with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// foreach (var data in client.GetAllDevBoxes("<filter>", 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
-        ///     Console.WriteLine(result.GetProperty("poolName").ToString());
-        ///     Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("actionState").ToString());
-        ///     Console.WriteLine(result.GetProperty("powerState").ToString());
-        ///     Console.WriteLine(result.GetProperty("uniqueId").ToString());
-        ///     Console.WriteLine(result.GetProperty("errorDetails").GetProperty("code").ToString());
-        ///     Console.WriteLine(result.GetProperty("errorDetails").GetProperty("message").ToString());
-        ///     Console.WriteLine(result.GetProperty("location").ToString());
-        ///     Console.WriteLine(result.GetProperty("osType").ToString());
-        ///     Console.WriteLine(result.GetProperty("user").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-        ///     Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("localAdministrator").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DevBoxListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Display name for the Dev Box
-        ///   projectName: string, # Optional. Name of the project this Dev Box belongs to
-        ///   poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-        ///   provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-        ///   actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-        ///   powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-        ///   uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-        ///   errorDetails: {
-        ///     code: string, # Optional. The error code.
-        ///     message: string, # Optional. The error message.
-        ///   }, # Optional. Provisioning or action error details. Populated only for error states.
-        ///   location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-        ///   osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-        ///   user: string, # Optional. User identifier of the user this vm is assigned to.
-        ///   hardwareProfile: {
-        ///     skuName: string, # Optional. The name of the SKU
-        ///     vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-        ///     memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-        ///   }, # Optional. Information about the Dev Box&apos;s hardware resources
-        ///   storageProfile: {
-        ///     osDisk: {
-        ///       diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-        ///     }, # Optional. Settings for the operating system disk.
-        ///   }, # Optional. Storage settings for this Dev Box
-        ///   imageReference: {
-        ///     name: string, # Optional. The name of the image used.
-        ///     version: string, # Optional. The version of the image.
-        ///     operatingSystem: string, # Optional. The operating system of the image.
-        ///     osBuildNumber: string, # Optional. The operating system build number of the image.
-        ///     publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-        ///   }, # Optional. Information about the image used for this Dev Box
-        ///   createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-        ///   localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxes(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllDevBoxes(string filter = null, int? maxCount = null, RequestContext context = null)
         {
             return GetAllDevBoxesImplementation("DevCenterClient.GetAllDevBoxes", filter, maxCount, context);
@@ -551,96 +249,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllDevBoxesByUserAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// await foreach (var data in client.GetAllDevBoxesByUserAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("poolName").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAllDevBoxesByUserAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// await foreach (var data in client.GetAllDevBoxesByUserAsync(<me>, "<filter>", 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
-        ///     Console.WriteLine(result.GetProperty("poolName").ToString());
-        ///     Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("actionState").ToString());
-        ///     Console.WriteLine(result.GetProperty("powerState").ToString());
-        ///     Console.WriteLine(result.GetProperty("uniqueId").ToString());
-        ///     Console.WriteLine(result.GetProperty("errorDetails").GetProperty("code").ToString());
-        ///     Console.WriteLine(result.GetProperty("errorDetails").GetProperty("message").ToString());
-        ///     Console.WriteLine(result.GetProperty("location").ToString());
-        ///     Console.WriteLine(result.GetProperty("osType").ToString());
-        ///     Console.WriteLine(result.GetProperty("user").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-        ///     Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("localAdministrator").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DevBoxListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Display name for the Dev Box
-        ///   projectName: string, # Optional. Name of the project this Dev Box belongs to
-        ///   poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-        ///   provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-        ///   actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-        ///   powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-        ///   uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-        ///   errorDetails: {
-        ///     code: string, # Optional. The error code.
-        ///     message: string, # Optional. The error message.
-        ///   }, # Optional. Provisioning or action error details. Populated only for error states.
-        ///   location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-        ///   osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-        ///   user: string, # Optional. User identifier of the user this vm is assigned to.
-        ///   hardwareProfile: {
-        ///     skuName: string, # Optional. The name of the SKU
-        ///     vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-        ///     memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-        ///   }, # Optional. Information about the Dev Box&apos;s hardware resources
-        ///   storageProfile: {
-        ///     osDisk: {
-        ///       diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-        ///     }, # Optional. Settings for the operating system disk.
-        ///   }, # Optional. Storage settings for this Dev Box
-        ///   imageReference: {
-        ///     name: string, # Optional. The name of the image used.
-        ///     version: string, # Optional. The version of the image.
-        ///     operatingSystem: string, # Optional. The operating system of the image.
-        ///     osBuildNumber: string, # Optional. The operating system build number of the image.
-        ///     publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-        ///   }, # Optional. Information about the image used for this Dev Box
-        ///   createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-        ///   localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(String,String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -674,96 +283,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllDevBoxesByUser and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// foreach (var data in client.GetAllDevBoxesByUser())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("poolName").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAllDevBoxesByUser with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
-        /// 
-        /// foreach (var data in client.GetAllDevBoxesByUser(<me>, "<filter>", 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
-        ///     Console.WriteLine(result.GetProperty("poolName").ToString());
-        ///     Console.WriteLine(result.GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("actionState").ToString());
-        ///     Console.WriteLine(result.GetProperty("powerState").ToString());
-        ///     Console.WriteLine(result.GetProperty("uniqueId").ToString());
-        ///     Console.WriteLine(result.GetProperty("errorDetails").GetProperty("code").ToString());
-        ///     Console.WriteLine(result.GetProperty("errorDetails").GetProperty("message").ToString());
-        ///     Console.WriteLine(result.GetProperty("location").ToString());
-        ///     Console.WriteLine(result.GetProperty("osType").ToString());
-        ///     Console.WriteLine(result.GetProperty("user").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-        ///     Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("localAdministrator").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DevBoxListResultValue</c>:
-        /// <code>{
-        ///   name: string, # Optional. Display name for the Dev Box
-        ///   projectName: string, # Optional. Name of the project this Dev Box belongs to
-        ///   poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-        ///   provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-        ///   actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-        ///   powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-        ///   uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-        ///   errorDetails: {
-        ///     code: string, # Optional. The error code.
-        ///     message: string, # Optional. The error message.
-        ///   }, # Optional. Provisioning or action error details. Populated only for error states.
-        ///   location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-        ///   osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-        ///   user: string, # Optional. User identifier of the user this vm is assigned to.
-        ///   hardwareProfile: {
-        ///     skuName: string, # Optional. The name of the SKU
-        ///     vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-        ///     memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-        ///   }, # Optional. Information about the Dev Box&apos;s hardware resources
-        ///   storageProfile: {
-        ///     osDisk: {
-        ///       diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-        ///     }, # Optional. Settings for the operating system disk.
-        ///   }, # Optional. Storage settings for this Dev Box
-        ///   imageReference: {
-        ///     name: string, # Optional. The name of the image used.
-        ///     version: string, # Optional. The version of the image.
-        ///     operatingSystem: string, # Optional. The operating system of the image.
-        ///     osBuildNumber: string, # Optional. The operating system build number of the image.
-        ///     publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-        ///   }, # Optional. Information about the image used for this Dev Box
-        ///   createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-        ///   localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(String,String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));

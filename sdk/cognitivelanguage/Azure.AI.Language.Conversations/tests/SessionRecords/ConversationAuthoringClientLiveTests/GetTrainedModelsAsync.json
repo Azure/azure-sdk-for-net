@@ -1,28 +1,29 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/CLUScriptDeployed/models?api-version=2022-05-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/CLUScriptDeployed/models?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c9a2180f398393021ca11bd7bab9e765-ab2d1ecbb47853be-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "54fa45554a40013dfb0aeb1c576608c4",
+        "traceparent": "00-7156487a35d44419c8a9a11fe060cf5a-7388573aa6e9ede4-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f912fb2f423816b20623a8f799254146",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "c5f2acf4-a1a1-46b0-8ecb-cb541fe523b2",
-        "Content-Length": "271",
+        "apim-request-id": "0ab34c2c-09c7-4ec4-bc49-dd53ceca2d52",
+        "Content-Length": "291",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 18 Jun 2022 00:44:15 GMT",
-        "request-id": "c5f2acf4-a1a1-46b0-8ecb-cb541fe523b2",
+        "Date": "Thu, 20 Oct 2022 00:18:34 GMT",
+        "request-id": "0ab34c2c-09c7-4ec4-bc49-dd53ceca2d52",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "291"
+        "x-envoy-upstream-service-time": "54",
+        "x-ms-region": "UK South"
       },
       "ResponseBody": {
         "value": [
@@ -32,7 +33,8 @@
             "lastTrainedDateTime": "2022-06-05T11:06:41Z",
             "lastTrainingDurationInSeconds": 21,
             "modelExpirationDate": "2022-10-28",
-            "modelTrainingConfigVersion": "2022-05-01"
+            "modelTrainingConfigVersion": "2022-05-01",
+            "hasSnapshot": false
           }
         ],
         "nextLink": null
@@ -43,6 +45,6 @@
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
-    "RandomSeed": "1550602700"
+    "RandomSeed": "510927933"
   }
 }
