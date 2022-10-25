@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static BaselineAdjustedResult DeserializeBaselineAdjustedResult(JsonElement element)
         {
-            Optional<Baseline> baseline = default;
-            Optional<RuleStatus> status = default;
+            Optional<SqlVulnerabilityAssessmentBaseline> baseline = default;
+            Optional<SqlVulnerabilityAssessmentScanResultRuleStatus> status = default;
             Optional<IList<IList<string>>> resultsNotInBaseline = default;
             Optional<IList<IList<string>>> resultsOnlyInBaseline = default;
             foreach (var property in element.EnumerateObject())
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    baseline = Baseline.DeserializeBaseline(property.Value);
+                    baseline = SqlVulnerabilityAssessmentBaseline.DeserializeSqlVulnerabilityAssessmentBaseline(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new RuleStatus(property.Value.GetString());
+                    status = new SqlVulnerabilityAssessmentScanResultRuleStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resultsNotInBaseline"))

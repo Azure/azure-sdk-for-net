@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityAssessmentMetadataResponseData>> GetAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAssessmentMetadataData>> GetAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecurityAssessmentMetadataResponseData value = default;
+                        SecurityAssessmentMetadataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecurityAssessmentMetadataResponseData.DeserializeSecurityAssessmentMetadataResponseData(document.RootElement);
+                        value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityAssessmentMetadataResponseData)null, message.Response);
+                    return Response.FromValue((SecurityAssessmentMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityAssessmentMetadataResponseData> Get(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        public Response<SecurityAssessmentMetadataData> Get(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
@@ -150,13 +150,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecurityAssessmentMetadataResponseData value = default;
+                        SecurityAssessmentMetadataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecurityAssessmentMetadataResponseData.DeserializeSecurityAssessmentMetadataResponseData(document.RootElement);
+                        value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityAssessmentMetadataResponseData)null, message.Response);
+                    return Response.FromValue((SecurityAssessmentMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityAssessmentMetadataResponseData>> GetInSubscriptionAsync(string subscriptionId, string assessmentMetadataName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAssessmentMetadataData>> GetInSubscriptionAsync(string subscriptionId, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
@@ -264,13 +264,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecurityAssessmentMetadataResponseData value = default;
+                        SecurityAssessmentMetadataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecurityAssessmentMetadataResponseData.DeserializeSecurityAssessmentMetadataResponseData(document.RootElement);
+                        value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityAssessmentMetadataResponseData)null, message.Response);
+                    return Response.FromValue((SecurityAssessmentMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityAssessmentMetadataResponseData> GetInSubscription(string subscriptionId, string assessmentMetadataName, CancellationToken cancellationToken = default)
+        public Response<SecurityAssessmentMetadataData> GetInSubscription(string subscriptionId, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
@@ -293,19 +293,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecurityAssessmentMetadataResponseData value = default;
+                        SecurityAssessmentMetadataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecurityAssessmentMetadataResponseData.DeserializeSecurityAssessmentMetadataResponseData(document.RootElement);
+                        value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityAssessmentMetadataResponseData)null, message.Response);
+                    return Response.FromValue((SecurityAssessmentMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateInSubscriptionRequest(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataResponseData data)
+        internal HttpMessage CreateCreateInSubscriptionRequest(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="assessmentMetadataName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityAssessmentMetadataResponseData>> CreateInSubscriptionAsync(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataResponseData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAssessmentMetadataData>> CreateInSubscriptionAsync(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
@@ -346,9 +346,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecurityAssessmentMetadataResponseData value = default;
+                        SecurityAssessmentMetadataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecurityAssessmentMetadataResponseData.DeserializeSecurityAssessmentMetadataResponseData(document.RootElement);
+                        value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="assessmentMetadataName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityAssessmentMetadataResponseData> CreateInSubscription(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataResponseData data, CancellationToken cancellationToken = default)
+        public Response<SecurityAssessmentMetadataData> CreateInSubscription(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
@@ -375,9 +375,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecurityAssessmentMetadataResponseData value = default;
+                        SecurityAssessmentMetadataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecurityAssessmentMetadataResponseData.DeserializeSecurityAssessmentMetadataResponseData(document.RootElement);
+                        value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
