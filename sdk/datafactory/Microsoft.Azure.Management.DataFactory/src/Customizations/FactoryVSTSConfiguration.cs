@@ -12,7 +12,7 @@
         /// <param name="projectName">VSTS project name.</param>
         /// <param name="lastCommitId">Last commit id.</param>
         /// <param name="tenantId">VSTS tenant id.</param>
-        public FactoryVSTSConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string projectName, string lastCommitId = default(string), string tenantId = default(string))
+        public FactoryVSTSConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string projectName, string lastCommitId, string tenantId)
             : base(accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
         {
             ProjectName = projectName;

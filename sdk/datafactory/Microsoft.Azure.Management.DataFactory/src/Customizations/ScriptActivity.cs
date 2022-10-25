@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="policy">Activity policy.</param>
         /// <param name="scripts">Array of script blocks. Type: array.</param>
         /// <param name="logSettings">Log settings of script activity.</param>
-        public ScriptActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<ScriptActivityScriptBlock> scripts = default(IList<ScriptActivityScriptBlock>), ScriptActivityTypePropertiesLogSettings logSettings = default(ScriptActivityTypePropertiesLogSettings))
+        public ScriptActivity(string name, IDictionary<string, object> additionalProperties, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypePropertiesLogSettings logSettings = default(ScriptActivityTypePropertiesLogSettings))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             Scripts = scripts;
