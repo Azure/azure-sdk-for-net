@@ -441,6 +441,11 @@ namespace Compute.Tests
                                 {
                                     Enable = true,
                                     NotBeforeTimeout = "PT6M",
+                                },
+                                OsImageNotificationProfile = new OSImageNotificationProfile
+                                {
+                                    Enable = true,
+                                    NotBeforeTimeout = "PT15M",
                                 }
                             };
                         },
@@ -448,6 +453,8 @@ namespace Compute.Tests
                         {
                             Assert.True(true == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.Enable);
                             Assert.True("PT6M" == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.NotBeforeTimeout);
+                            Assert.True(true == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.OsImageNotificationProfile?.Enable);
+                            Assert.True("PT15M" == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.OsImageNotificationProfile?.NotBeforeTimeout);
                         });
                 }
             }
