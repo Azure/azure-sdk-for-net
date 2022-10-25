@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Represents a .rdp file
-    /// Serialized Name: RdpConnection
-    /// </summary>
+    /// <summary> Represents a .rdp file. </summary>
     public partial class DevTestLabRdpConnection
     {
         /// <summary> Initializes a new instance of DevTestLabRdpConnection. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabRdpConnection. </summary>
-        /// <param name="contents">
-        /// The contents of the .rdp file
-        /// Serialized Name: RdpConnection.contents
-        /// </param>
+        /// <param name="contents"> The contents of the .rdp file. </param>
         internal DevTestLabRdpConnection(string contents)
         {
             Contents = contents;
         }
 
-        /// <summary>
-        /// The contents of the .rdp file
-        /// Serialized Name: RdpConnection.contents
-        /// </summary>
+        /// <summary> The contents of the .rdp file. </summary>
         public string Contents { get; }
     }
 }

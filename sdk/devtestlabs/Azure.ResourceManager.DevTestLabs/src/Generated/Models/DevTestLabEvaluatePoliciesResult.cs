@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Response body for evaluating a policy set.
-    /// Serialized Name: EvaluatePoliciesResponse
-    /// </summary>
+    /// <summary> Response body for evaluating a policy set. </summary>
     public partial class DevTestLabEvaluatePoliciesResult
     {
         /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>
-        /// <param name="results">
-        /// Results of evaluating a policy set.
-        /// Serialized Name: EvaluatePoliciesResponse.results
-        /// </param>
+        /// <param name="results"> Results of evaluating a policy set. </param>
         internal DevTestLabEvaluatePoliciesResult(IReadOnlyList<DevTestLabPolicySetResult> results)
         {
             Results = results;
         }
 
-        /// <summary>
-        /// Results of evaluating a policy set.
-        /// Serialized Name: EvaluatePoliciesResponse.results
-        /// </summary>
+        /// <summary> Results of evaluating a policy set. </summary>
         public IReadOnlyList<DevTestLabPolicySetResult> Results { get; }
     }
 }

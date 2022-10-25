@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// A custom image.
-    /// Serialized Name: CustomImageFragment
-    /// </summary>
+    /// <summary> A custom image. </summary>
     public partial class DevTestLabCustomImagePatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabCustomImagePatch. </summary>

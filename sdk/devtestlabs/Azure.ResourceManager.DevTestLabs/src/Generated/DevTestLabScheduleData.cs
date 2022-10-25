@@ -29,50 +29,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="status">
-        /// The status of the schedule (i.e. Enabled, Disabled)
-        /// Serialized Name: Schedule.properties.status
-        /// </param>
-        /// <param name="taskType">
-        /// The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart).
-        /// Serialized Name: Schedule.properties.taskType
-        /// </param>
-        /// <param name="weeklyRecurrence">
-        /// If the schedule will occur only some days of the week, specify the weekly recurrence.
-        /// Serialized Name: Schedule.properties.weeklyRecurrence
-        /// </param>
-        /// <param name="dailyRecurrence">
-        /// If the schedule will occur once each day of the week, specify the daily recurrence.
-        /// Serialized Name: Schedule.properties.dailyRecurrence
-        /// </param>
-        /// <param name="hourlyRecurrence">
-        /// If the schedule will occur multiple times a day, specify the hourly recurrence.
-        /// Serialized Name: Schedule.properties.hourlyRecurrence
-        /// </param>
-        /// <param name="timeZoneId">
-        /// The time zone ID (e.g. Pacific Standard time).
-        /// Serialized Name: Schedule.properties.timeZoneId
-        /// </param>
-        /// <param name="notificationSettings">
-        /// Notification settings.
-        /// Serialized Name: Schedule.properties.notificationSettings
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the schedule.
-        /// Serialized Name: Schedule.properties.createdDate
-        /// </param>
-        /// <param name="targetResourceId">
-        /// The resource ID to which the schedule belongs
-        /// Serialized Name: Schedule.properties.targetResourceId
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: Schedule.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: Schedule.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
+        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
+        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
+        /// <param name="dailyRecurrence"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
+        /// <param name="hourlyRecurrence"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
+        /// <param name="notificationSettings"> Notification settings. </param>
+        /// <param name="createdOn"> The creation date of the schedule. </param>
+        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, DateTimeOffset? createdOn, string targetResourceId, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Status = status;
@@ -88,30 +55,15 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The status of the schedule (i.e. Enabled, Disabled)
-        /// Serialized Name: Schedule.properties.status
-        /// </summary>
+        /// <summary> The status of the schedule (i.e. Enabled, Disabled). </summary>
         public DevTestLabEnableStatus? Status { get; set; }
-        /// <summary>
-        /// The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart).
-        /// Serialized Name: Schedule.properties.taskType
-        /// </summary>
+        /// <summary> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </summary>
         public string TaskType { get; set; }
-        /// <summary>
-        /// If the schedule will occur only some days of the week, specify the weekly recurrence.
-        /// Serialized Name: Schedule.properties.weeklyRecurrence
-        /// </summary>
+        /// <summary> If the schedule will occur only some days of the week, specify the weekly recurrence. </summary>
         public DevTestLabWeekDetails WeeklyRecurrence { get; set; }
-        /// <summary>
-        /// If the schedule will occur once each day of the week, specify the daily recurrence.
-        /// Serialized Name: Schedule.properties.dailyRecurrence
-        /// </summary>
+        /// <summary> If the schedule will occur once each day of the week, specify the daily recurrence. </summary>
         internal DayDetails DailyRecurrence { get; set; }
-        /// <summary>
-        /// The time of day the schedule will occur.
-        /// Serialized Name: DayDetails.time
-        /// </summary>
+        /// <summary> The time of day the schedule will occur. </summary>
         public string DailyRecurrenceTime
         {
             get => DailyRecurrence is null ? default : DailyRecurrence.Time;
@@ -123,15 +75,9 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// If the schedule will occur multiple times a day, specify the hourly recurrence.
-        /// Serialized Name: Schedule.properties.hourlyRecurrence
-        /// </summary>
+        /// <summary> If the schedule will occur multiple times a day, specify the hourly recurrence. </summary>
         internal HourDetails HourlyRecurrence { get; set; }
-        /// <summary>
-        /// Minutes of the hour the schedule will run.
-        /// Serialized Name: HourDetails.minute
-        /// </summary>
+        /// <summary> Minutes of the hour the schedule will run. </summary>
         public int? HourlyRecurrenceMinute
         {
             get => HourlyRecurrence is null ? default : HourlyRecurrence.Minute;
@@ -143,35 +89,17 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// The time zone ID (e.g. Pacific Standard time).
-        /// Serialized Name: Schedule.properties.timeZoneId
-        /// </summary>
+        /// <summary> The time zone ID (e.g. Pacific Standard time). </summary>
         public string TimeZoneId { get; set; }
-        /// <summary>
-        /// Notification settings.
-        /// Serialized Name: Schedule.properties.notificationSettings
-        /// </summary>
+        /// <summary> Notification settings. </summary>
         public DevTestLabNotificationSettings NotificationSettings { get; set; }
-        /// <summary>
-        /// The creation date of the schedule.
-        /// Serialized Name: Schedule.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the schedule. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The resource ID to which the schedule belongs
-        /// Serialized Name: Schedule.properties.targetResourceId
-        /// </summary>
+        /// <summary> The resource ID to which the schedule belongs. </summary>
         public string TargetResourceId { get; set; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: Schedule.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: Schedule.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

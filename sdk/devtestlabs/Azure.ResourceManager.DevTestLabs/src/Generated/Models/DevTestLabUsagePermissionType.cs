@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)).
-    /// Serialized Name: UsagePermissionType
-    /// </summary>
+    /// <summary> The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)). </summary>
     public readonly partial struct DevTestLabUsagePermissionType : IEquatable<DevTestLabUsagePermissionType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string DenyValue = "Deny";
         private const string AllowValue = "Allow";
 
-        /// <summary>
-        /// Default
-        /// Serialized Name: UsagePermissionType.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static DevTestLabUsagePermissionType Default { get; } = new DevTestLabUsagePermissionType(DefaultValue);
-        /// <summary>
-        /// Deny
-        /// Serialized Name: UsagePermissionType.Deny
-        /// </summary>
+        /// <summary> Deny. </summary>
         public static DevTestLabUsagePermissionType Deny { get; } = new DevTestLabUsagePermissionType(DenyValue);
-        /// <summary>
-        /// Allow
-        /// Serialized Name: UsagePermissionType.Allow
-        /// </summary>
+        /// <summary> Allow. </summary>
         public static DevTestLabUsagePermissionType Allow { get; } = new DevTestLabUsagePermissionType(AllowValue);
         /// <summary> Determines if two <see cref="DevTestLabUsagePermissionType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabUsagePermissionType left, DevTestLabUsagePermissionType right) => left.Equals(right);

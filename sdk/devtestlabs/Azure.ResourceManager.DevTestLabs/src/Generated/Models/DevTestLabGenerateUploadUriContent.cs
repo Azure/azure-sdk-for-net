@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties for generating an upload URI.
-    /// Serialized Name: GenerateUploadUriParameter
-    /// </summary>
+    /// <summary> Properties for generating an upload URI. </summary>
     public partial class DevTestLabGenerateUploadUriContent
     {
         /// <summary> Initializes a new instance of DevTestLabGenerateUploadUriContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary>
-        /// The blob name of the upload URI.
-        /// Serialized Name: GenerateUploadUriParameter.blobName
-        /// </summary>
+        /// <summary> The blob name of the upload URI. </summary>
         public string BlobName { get; set; }
     }
 }

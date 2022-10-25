@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The transport protocol for the endpoint.
-    /// Serialized Name: TransportProtocol
-    /// </summary>
+    /// <summary> The transport protocol for the endpoint. </summary>
     public readonly partial struct DevTestLabTransportProtocol : IEquatable<DevTestLabTransportProtocol>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string TcpValue = "Tcp";
         private const string UdpValue = "Udp";
 
-        /// <summary>
-        /// Tcp
-        /// Serialized Name: TransportProtocol.Tcp
-        /// </summary>
+        /// <summary> Tcp. </summary>
         public static DevTestLabTransportProtocol Tcp { get; } = new DevTestLabTransportProtocol(TcpValue);
-        /// <summary>
-        /// Udp
-        /// Serialized Name: TransportProtocol.Udp
-        /// </summary>
+        /// <summary> Udp. </summary>
         public static DevTestLabTransportProtocol Udp { get; } = new DevTestLabTransportProtocol(UdpValue);
         /// <summary> Determines if two <see cref="DevTestLabTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(DevTestLabTransportProtocol left, DevTestLabTransportProtocol right) => left.Equals(right);

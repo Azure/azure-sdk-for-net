@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of a cost threshold item.
-    /// Serialized Name: CostThresholdProperties
-    /// </summary>
+    /// <summary> Properties of a cost threshold item. </summary>
     public partial class DevTestLabCostThreshold
     {
         /// <summary> Initializes a new instance of DevTestLabCostThreshold. </summary>
@@ -19,26 +16,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabCostThreshold. </summary>
-        /// <param name="thresholdId">
-        /// The ID of the cost threshold item.
-        /// Serialized Name: CostThresholdProperties.thresholdId
-        /// </param>
-        /// <param name="percentageThreshold">
-        /// The value of the percentage cost threshold.
-        /// Serialized Name: CostThresholdProperties.percentageThreshold
-        /// </param>
-        /// <param name="displayOnChart">
-        /// Indicates whether this threshold will be displayed on cost charts.
-        /// Serialized Name: CostThresholdProperties.displayOnChart
-        /// </param>
-        /// <param name="sendNotificationWhenExceeded">
-        /// Indicates whether notifications will be sent when this threshold is exceeded.
-        /// Serialized Name: CostThresholdProperties.sendNotificationWhenExceeded
-        /// </param>
-        /// <param name="notificationSent">
-        /// Indicates the datetime when notifications were last sent for this threshold.
-        /// Serialized Name: CostThresholdProperties.notificationSent
-        /// </param>
+        /// <param name="thresholdId"> The ID of the cost threshold item. </param>
+        /// <param name="percentageThreshold"> The value of the percentage cost threshold. </param>
+        /// <param name="displayOnChart"> Indicates whether this threshold will be displayed on cost charts. </param>
+        /// <param name="sendNotificationWhenExceeded"> Indicates whether notifications will be sent when this threshold is exceeded. </param>
+        /// <param name="notificationSent"> Indicates the datetime when notifications were last sent for this threshold. </param>
         internal DevTestLabCostThreshold(string thresholdId, PercentageCostThresholdProperties percentageThreshold, DevTestLabCostThresholdStatus? displayOnChart, DevTestLabCostThresholdStatus? sendNotificationWhenExceeded, string notificationSent)
         {
             ThresholdId = thresholdId;
@@ -48,20 +30,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             NotificationSent = notificationSent;
         }
 
-        /// <summary>
-        /// The ID of the cost threshold item.
-        /// Serialized Name: CostThresholdProperties.thresholdId
-        /// </summary>
+        /// <summary> The ID of the cost threshold item. </summary>
         public string ThresholdId { get; set; }
-        /// <summary>
-        /// The value of the percentage cost threshold.
-        /// Serialized Name: CostThresholdProperties.percentageThreshold
-        /// </summary>
+        /// <summary> The value of the percentage cost threshold. </summary>
         internal PercentageCostThresholdProperties PercentageThreshold { get; set; }
-        /// <summary>
-        /// The cost threshold value.
-        /// Serialized Name: PercentageCostThresholdProperties.thresholdValue
-        /// </summary>
+        /// <summary> The cost threshold value. </summary>
         public double? ThresholdValue
         {
             get => PercentageThreshold is null ? default : PercentageThreshold.ThresholdValue;
@@ -73,20 +46,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
-        /// <summary>
-        /// Indicates whether this threshold will be displayed on cost charts.
-        /// Serialized Name: CostThresholdProperties.displayOnChart
-        /// </summary>
+        /// <summary> Indicates whether this threshold will be displayed on cost charts. </summary>
         public DevTestLabCostThresholdStatus? DisplayOnChart { get; set; }
-        /// <summary>
-        /// Indicates whether notifications will be sent when this threshold is exceeded.
-        /// Serialized Name: CostThresholdProperties.sendNotificationWhenExceeded
-        /// </summary>
+        /// <summary> Indicates whether notifications will be sent when this threshold is exceeded. </summary>
         public DevTestLabCostThresholdStatus? SendNotificationWhenExceeded { get; set; }
-        /// <summary>
-        /// Indicates the datetime when notifications were last sent for this threshold.
-        /// Serialized Name: CostThresholdProperties.notificationSent
-        /// </summary>
+        /// <summary> Indicates the datetime when notifications were last sent for this threshold. </summary>
         public string NotificationSent { get; set; }
     }
 }

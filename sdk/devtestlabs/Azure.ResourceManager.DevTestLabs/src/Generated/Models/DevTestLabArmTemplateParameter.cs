@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of an Azure Resource Manager template parameter.
-    /// Serialized Name: ArmTemplateParameterProperties
-    /// </summary>
+    /// <summary> Properties of an Azure Resource Manager template parameter. </summary>
     public partial class DevTestLabArmTemplateParameter
     {
         /// <summary> Initializes a new instance of DevTestLabArmTemplateParameter. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabArmTemplateParameter. </summary>
-        /// <param name="name">
-        /// The name of the template parameter.
-        /// Serialized Name: ArmTemplateParameterProperties.name
-        /// </param>
-        /// <param name="value">
-        /// The value of the template parameter.
-        /// Serialized Name: ArmTemplateParameterProperties.value
-        /// </param>
+        /// <param name="name"> The name of the template parameter. </param>
+        /// <param name="value"> The value of the template parameter. </param>
         internal DevTestLabArmTemplateParameter(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary>
-        /// The name of the template parameter.
-        /// Serialized Name: ArmTemplateParameterProperties.name
-        /// </summary>
+        /// <summary> The name of the template parameter. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The value of the template parameter.
-        /// Serialized Name: ArmTemplateParameterProperties.value
-        /// </summary>
+        /// <summary> The value of the template parameter. </summary>
         public string Value { get; set; }
     }
 }

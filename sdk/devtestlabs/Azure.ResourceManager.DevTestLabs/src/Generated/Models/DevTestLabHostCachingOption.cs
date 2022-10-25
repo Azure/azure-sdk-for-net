@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Caching option for a data disk (i.e. None, ReadOnly, ReadWrite).
-    /// Serialized Name: HostCachingOptions
-    /// </summary>
+    /// <summary> Caching option for a data disk (i.e. None, ReadOnly, ReadWrite). </summary>
     public readonly partial struct DevTestLabHostCachingOption : IEquatable<DevTestLabHostCachingOption>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string ReadOnlyValue = "ReadOnly";
         private const string ReadWriteValue = "ReadWrite";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: HostCachingOptions.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static DevTestLabHostCachingOption None { get; } = new DevTestLabHostCachingOption(NoneValue);
-        /// <summary>
-        /// ReadOnly
-        /// Serialized Name: HostCachingOptions.ReadOnly
-        /// </summary>
+        /// <summary> ReadOnly. </summary>
         public static DevTestLabHostCachingOption ReadOnly { get; } = new DevTestLabHostCachingOption(ReadOnlyValue);
-        /// <summary>
-        /// ReadWrite
-        /// Serialized Name: HostCachingOptions.ReadWrite
-        /// </summary>
+        /// <summary> ReadWrite. </summary>
         public static DevTestLabHostCachingOption ReadWrite { get; } = new DevTestLabHostCachingOption(ReadWriteValue);
         /// <summary> Determines if two <see cref="DevTestLabHostCachingOption"/> values are the same. </summary>
         public static bool operator ==(DevTestLabHostCachingOption left, DevTestLabHostCachingOption right) => left.Equals(right);

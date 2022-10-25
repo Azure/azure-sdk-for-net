@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// A file containing a set of parameter values for an ARM template.
-    /// Serialized Name: ParametersValueFileInfo
-    /// </summary>
+    /// <summary> A file containing a set of parameter values for an ARM template. </summary>
     public partial class DevTestLabParametersValueFileInfo
     {
         /// <summary> Initializes a new instance of DevTestLabParametersValueFileInfo. </summary>
@@ -21,28 +18,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabParametersValueFileInfo. </summary>
-        /// <param name="fileName">
-        /// File name.
-        /// Serialized Name: ParametersValueFileInfo.fileName
-        /// </param>
-        /// <param name="parametersValueInfo">
-        /// Contents of the file.
-        /// Serialized Name: ParametersValueFileInfo.parametersValueInfo
-        /// </param>
+        /// <param name="fileName"> File name. </param>
+        /// <param name="parametersValueInfo"> Contents of the file. </param>
         internal DevTestLabParametersValueFileInfo(string fileName, BinaryData parametersValueInfo)
         {
             FileName = fileName;
             ParametersValueInfo = parametersValueInfo;
         }
 
-        /// <summary>
-        /// File name.
-        /// Serialized Name: ParametersValueFileInfo.fileName
-        /// </summary>
+        /// <summary> File name. </summary>
         public string FileName { get; }
         /// <summary>
         /// Contents of the file.
-        /// Serialized Name: ParametersValueFileInfo.parametersValueInfo
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

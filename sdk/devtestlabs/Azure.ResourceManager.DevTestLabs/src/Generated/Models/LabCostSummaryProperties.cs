@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The properties of the cost summary.
-    /// Serialized Name: LabCostSummaryProperties
-    /// </summary>
+    /// <summary> The properties of the cost summary. </summary>
     internal partial class LabCostSummaryProperties
     {
         /// <summary> Initializes a new instance of LabCostSummaryProperties. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of LabCostSummaryProperties. </summary>
-        /// <param name="estimatedLabCost">
-        /// The cost component of the cost item.
-        /// Serialized Name: LabCostSummaryProperties.estimatedLabCost
-        /// </param>
+        /// <param name="estimatedLabCost"> The cost component of the cost item. </param>
         internal LabCostSummaryProperties(double? estimatedLabCost)
         {
             EstimatedLabCost = estimatedLabCost;
         }
 
-        /// <summary>
-        /// The cost component of the cost item.
-        /// Serialized Name: LabCostSummaryProperties.estimatedLabCost
-        /// </summary>
+        /// <summary> The cost component of the cost item. </summary>
         public double? EstimatedLabCost { get; }
     }
 }

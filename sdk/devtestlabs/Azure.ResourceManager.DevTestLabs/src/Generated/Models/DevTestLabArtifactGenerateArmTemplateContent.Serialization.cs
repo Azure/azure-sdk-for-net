@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualMachineName))
+            if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("virtualMachineName");
-                writer.WriteStringValue(VirtualMachineName);
+                writer.WriteStringValue(VmName);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {

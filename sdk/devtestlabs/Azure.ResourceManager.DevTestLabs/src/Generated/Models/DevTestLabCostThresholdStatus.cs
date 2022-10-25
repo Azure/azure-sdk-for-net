@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Indicates whether this threshold will be displayed on cost charts.
-    /// Serialized Name: CostThresholdStatus
-    /// </summary>
+    /// <summary> Indicates whether this threshold will be displayed on cost charts. </summary>
     public readonly partial struct DevTestLabCostThresholdStatus : IEquatable<DevTestLabCostThresholdStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: CostThresholdStatus.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static DevTestLabCostThresholdStatus Enabled { get; } = new DevTestLabCostThresholdStatus(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: CostThresholdStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static DevTestLabCostThresholdStatus Disabled { get; } = new DevTestLabCostThresholdStatus(DisabledValue);
         /// <summary> Determines if two <see cref="DevTestLabCostThresholdStatus"/> values are the same. </summary>
         public static bool operator ==(DevTestLabCostThresholdStatus left, DevTestLabCostThresholdStatus right) => left.Equals(right);

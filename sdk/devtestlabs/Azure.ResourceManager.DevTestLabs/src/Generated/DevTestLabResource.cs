@@ -919,16 +919,16 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> This represents the payload required to import a virtual machine from a different lab into the current one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ImportVirtualMachineAsync(WaitUntil waitUntil, DevTestLabImportVirtualMachineContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ImportVmAsync(WaitUntil waitUntil, DevTestLabImportVmContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.ImportVirtualMachine");
+            using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.ImportVm");
             scope.Start();
             try
             {
-                var response = await _devTestLabLabsRestClient.ImportVirtualMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabLabsClientDiagnostics, Pipeline, _devTestLabLabsRestClient.CreateImportVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _devTestLabLabsRestClient.ImportVmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation(_devTestLabLabsClientDiagnostics, Pipeline, _devTestLabLabsRestClient.CreateImportVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -949,16 +949,16 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="content"> This represents the payload required to import a virtual machine from a different lab into the current one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ImportVirtualMachine(WaitUntil waitUntil, DevTestLabImportVirtualMachineContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ImportVm(WaitUntil waitUntil, DevTestLabImportVmContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.ImportVirtualMachine");
+            using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.ImportVm");
             scope.Start();
             try
             {
-                var response = _devTestLabLabsRestClient.ImportVirtualMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabLabsClientDiagnostics, Pipeline, _devTestLabLabsRestClient.CreateImportVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _devTestLabLabsRestClient.ImportVm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new DevTestLabsArmOperation(_devTestLabLabsClientDiagnostics, Pipeline, _devTestLabLabsRestClient.CreateImportVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

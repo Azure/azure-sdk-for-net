@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied).
-    /// Serialized Name: LinuxOsState
-    /// </summary>
+    /// <summary> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </summary>
     public readonly partial struct DevTestLabLinuxOSState : IEquatable<DevTestLabLinuxOSState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string DeprovisionRequestedValue = "DeprovisionRequested";
         private const string DeprovisionAppliedValue = "DeprovisionApplied";
 
-        /// <summary>
-        /// NonDeprovisioned
-        /// Serialized Name: LinuxOsState.NonDeprovisioned
-        /// </summary>
+        /// <summary> NonDeprovisioned. </summary>
         public static DevTestLabLinuxOSState NonDeprovisioned { get; } = new DevTestLabLinuxOSState(NonDeprovisionedValue);
-        /// <summary>
-        /// DeprovisionRequested
-        /// Serialized Name: LinuxOsState.DeprovisionRequested
-        /// </summary>
+        /// <summary> DeprovisionRequested. </summary>
         public static DevTestLabLinuxOSState DeprovisionRequested { get; } = new DevTestLabLinuxOSState(DeprovisionRequestedValue);
-        /// <summary>
-        /// DeprovisionApplied
-        /// Serialized Name: LinuxOsState.DeprovisionApplied
-        /// </summary>
+        /// <summary> DeprovisionApplied. </summary>
         public static DevTestLabLinuxOSState DeprovisionApplied { get; } = new DevTestLabLinuxOSState(DeprovisionAppliedValue);
         /// <summary> Determines if two <see cref="DevTestLabLinuxOSState"/> values are the same. </summary>
         public static bool operator ==(DevTestLabLinuxOSState left, DevTestLabLinuxOSState right) => left.Equals(right);

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Result of a policy set evaluation.
-    /// Serialized Name: PolicySetResult
-    /// </summary>
+    /// <summary> Result of a policy set evaluation. </summary>
     public partial class DevTestLabPolicySetResult
     {
         /// <summary> Initializes a new instance of DevTestLabPolicySetResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabPolicySetResult. </summary>
-        /// <param name="hasError">
-        /// A value indicating whether this policy set evaluation has discovered violations.
-        /// Serialized Name: PolicySetResult.hasError
-        /// </param>
-        /// <param name="policyViolations">
-        /// The list of policy violations.
-        /// Serialized Name: PolicySetResult.policyViolations
-        /// </param>
+        /// <param name="hasError"> A value indicating whether this policy set evaluation has discovered violations. </param>
+        /// <param name="policyViolations"> The list of policy violations. </param>
         internal DevTestLabPolicySetResult(bool? hasError, IReadOnlyList<DevTestLabPolicyViolation> policyViolations)
         {
             HasError = hasError;
             PolicyViolations = policyViolations;
         }
 
-        /// <summary>
-        /// A value indicating whether this policy set evaluation has discovered violations.
-        /// Serialized Name: PolicySetResult.hasError
-        /// </summary>
+        /// <summary> A value indicating whether this policy set evaluation has discovered violations. </summary>
         public bool? HasError { get; }
-        /// <summary>
-        /// The list of policy violations.
-        /// Serialized Name: PolicySetResult.policyViolations
-        /// </summary>
+        /// <summary> The list of policy violations. </summary>
         public IReadOnlyList<DevTestLabPolicyViolation> PolicyViolations { get; }
     }
 }

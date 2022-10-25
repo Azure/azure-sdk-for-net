@@ -30,54 +30,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="vm">
-        /// The virtual machine from which the image is to be created.
-        /// Serialized Name: CustomImage.properties.vm
-        /// </param>
-        /// <param name="vhd">
-        /// The VHD from which the image is to be created.
-        /// Serialized Name: CustomImage.properties.vhd
-        /// </param>
-        /// <param name="description">
-        /// The description of the custom image.
-        /// Serialized Name: CustomImage.properties.description
-        /// </param>
-        /// <param name="author">
-        /// The author of the custom image.
-        /// Serialized Name: CustomImage.properties.author
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the custom image.
-        /// Serialized Name: CustomImage.properties.creationDate
-        /// </param>
-        /// <param name="managedImageId">
-        /// The Managed Image Id backing the custom image.
-        /// Serialized Name: CustomImage.properties.managedImageId
-        /// </param>
-        /// <param name="managedSnapshotId">
-        /// The Managed Snapshot Id backing the custom image.
-        /// Serialized Name: CustomImage.properties.managedSnapshotId
-        /// </param>
-        /// <param name="dataDiskStorageInfo">
-        /// Storage information about the data disks present in the custom image
-        /// Serialized Name: CustomImage.properties.dataDiskStorageInfo
-        /// </param>
-        /// <param name="customImagePlan">
-        /// Storage information about the plan related to this custom image
-        /// Serialized Name: CustomImage.properties.customImagePlan
-        /// </param>
-        /// <param name="isPlanAuthorized">
-        /// Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment
-        /// Serialized Name: CustomImage.properties.isPlanAuthorized
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: CustomImage.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: CustomImage.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="vm"> The virtual machine from which the image is to be created. </param>
+        /// <param name="vhd"> The VHD from which the image is to be created. </param>
+        /// <param name="description"> The description of the custom image. </param>
+        /// <param name="author"> The author of the custom image. </param>
+        /// <param name="createdOn"> The creation date of the custom image. </param>
+        /// <param name="managedImageId"> The Managed Image Id backing the custom image. </param>
+        /// <param name="managedSnapshotId"> The Managed Snapshot Id backing the custom image. </param>
+        /// <param name="dataDiskStorageInfo"> Storage information about the data disks present in the custom image. </param>
+        /// <param name="customImagePlan"> Storage information about the plan related to this custom image. </param>
+        /// <param name="isPlanAuthorized"> Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Vm = vm;
@@ -94,65 +58,29 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The virtual machine from which the image is to be created.
-        /// Serialized Name: CustomImage.properties.vm
-        /// </summary>
+        /// <summary> The virtual machine from which the image is to be created. </summary>
         public DevTestLabCustomImageVm Vm { get; set; }
-        /// <summary>
-        /// The VHD from which the image is to be created.
-        /// Serialized Name: CustomImage.properties.vhd
-        /// </summary>
+        /// <summary> The VHD from which the image is to be created. </summary>
         public DevTestLabCustomImageVhd Vhd { get; set; }
-        /// <summary>
-        /// The description of the custom image.
-        /// Serialized Name: CustomImage.properties.description
-        /// </summary>
+        /// <summary> The description of the custom image. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The author of the custom image.
-        /// Serialized Name: CustomImage.properties.author
-        /// </summary>
+        /// <summary> The author of the custom image. </summary>
         public string Author { get; set; }
-        /// <summary>
-        /// The creation date of the custom image.
-        /// Serialized Name: CustomImage.properties.creationDate
-        /// </summary>
+        /// <summary> The creation date of the custom image. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The Managed Image Id backing the custom image.
-        /// Serialized Name: CustomImage.properties.managedImageId
-        /// </summary>
+        /// <summary> The Managed Image Id backing the custom image. </summary>
         public string ManagedImageId { get; set; }
-        /// <summary>
-        /// The Managed Snapshot Id backing the custom image.
-        /// Serialized Name: CustomImage.properties.managedSnapshotId
-        /// </summary>
+        /// <summary> The Managed Snapshot Id backing the custom image. </summary>
         public string ManagedSnapshotId { get; set; }
-        /// <summary>
-        /// Storage information about the data disks present in the custom image
-        /// Serialized Name: CustomImage.properties.dataDiskStorageInfo
-        /// </summary>
+        /// <summary> Storage information about the data disks present in the custom image. </summary>
         public IList<DevTestLabDataDiskStorageTypeInfo> DataDiskStorageInfo { get; }
-        /// <summary>
-        /// Storage information about the plan related to this custom image
-        /// Serialized Name: CustomImage.properties.customImagePlan
-        /// </summary>
+        /// <summary> Storage information about the plan related to this custom image. </summary>
         public DevTestLabCustomImagePlan CustomImagePlan { get; set; }
-        /// <summary>
-        /// Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment
-        /// Serialized Name: CustomImage.properties.isPlanAuthorized
-        /// </summary>
+        /// <summary> Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment. </summary>
         public bool? IsPlanAuthorized { get; set; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: CustomImage.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: CustomImage.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

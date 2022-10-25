@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateImportVirtualMachineRequest(string subscriptionId, string resourceGroupName, string name, DevTestLabImportVirtualMachineContent content)
+        internal HttpMessage CreateImportVmRequest(string subscriptionId, string resourceGroupName, string name, DevTestLabImportVmContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -898,14 +898,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ImportVirtualMachineAsync(string subscriptionId, string resourceGroupName, string name, DevTestLabImportVirtualMachineContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ImportVmAsync(string subscriptionId, string resourceGroupName, string name, DevTestLabImportVmContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateImportVirtualMachineRequest(subscriptionId, resourceGroupName, name, content);
+            using var message = CreateImportVmRequest(subscriptionId, resourceGroupName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -925,14 +925,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ImportVirtualMachine(string subscriptionId, string resourceGroupName, string name, DevTestLabImportVirtualMachineContent content, CancellationToken cancellationToken = default)
+        public Response ImportVm(string subscriptionId, string resourceGroupName, string name, DevTestLabImportVmContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateImportVirtualMachineRequest(subscriptionId, resourceGroupName, name, content);
+            using var message = CreateImportVmRequest(subscriptionId, resourceGroupName, name, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

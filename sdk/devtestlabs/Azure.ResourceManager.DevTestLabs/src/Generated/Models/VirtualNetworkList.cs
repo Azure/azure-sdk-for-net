@@ -11,10 +11,7 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The response of a list operation.
-    /// Serialized Name: VirtualNetworkList
-    /// </summary>
+    /// <summary> The response of a list operation. </summary>
     internal partial class VirtualNetworkList
     {
         /// <summary> Initializes a new instance of VirtualNetworkList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkList. </summary>
-        /// <param name="value">
-        /// Results of the list operation.
-        /// Serialized Name: VirtualNetworkList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link for next set of results.
-        /// Serialized Name: VirtualNetworkList.nextLink
-        /// </param>
+        /// <param name="value"> Results of the list operation. </param>
+        /// <param name="nextLink"> Link for next set of results. </param>
         internal VirtualNetworkList(IReadOnlyList<DevTestLabVirtualNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Results of the list operation.
-        /// Serialized Name: VirtualNetworkList.value
-        /// </summary>
+        /// <summary> Results of the list operation. </summary>
         public IReadOnlyList<DevTestLabVirtualNetworkData> Value { get; }
-        /// <summary>
-        /// Link for next set of results.
-        /// Serialized Name: VirtualNetworkList.nextLink
-        /// </summary>
+        /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }
 }

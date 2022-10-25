@@ -28,38 +28,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="title">
-        /// The artifact&apos;s title.
-        /// Serialized Name: Artifact.properties.title
-        /// </param>
-        /// <param name="description">
-        /// The artifact&apos;s description.
-        /// Serialized Name: Artifact.properties.description
-        /// </param>
-        /// <param name="publisher">
-        /// The artifact&apos;s publisher.
-        /// Serialized Name: Artifact.properties.publisher
-        /// </param>
-        /// <param name="filePath">
-        /// The file path to the artifact.
-        /// Serialized Name: Artifact.properties.filePath
-        /// </param>
-        /// <param name="icon">
-        /// The URI to the artifact icon.
-        /// Serialized Name: Artifact.properties.icon
-        /// </param>
-        /// <param name="targetOSType">
-        /// The artifact&apos;s target OS.
-        /// Serialized Name: Artifact.properties.targetOsType
-        /// </param>
-        /// <param name="parameters">
-        /// The artifact&apos;s parameters.
-        /// Serialized Name: Artifact.properties.parameters
-        /// </param>
-        /// <param name="createdOn">
-        /// The artifact&apos;s creation date.
-        /// Serialized Name: Artifact.properties.createdDate
-        /// </param>
+        /// <param name="title"> The artifact&apos;s title. </param>
+        /// <param name="description"> The artifact&apos;s description. </param>
+        /// <param name="publisher"> The artifact&apos;s publisher. </param>
+        /// <param name="filePath"> The file path to the artifact. </param>
+        /// <param name="icon"> The URI to the artifact icon. </param>
+        /// <param name="targetOSType"> The artifact&apos;s target OS. </param>
+        /// <param name="parameters"> The artifact&apos;s parameters. </param>
+        /// <param name="createdOn"> The artifact&apos;s creation date. </param>
         internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Title = title;
@@ -72,39 +48,20 @@ namespace Azure.ResourceManager.DevTestLabs
             CreatedOn = createdOn;
         }
 
-        /// <summary>
-        /// The artifact&apos;s title.
-        /// Serialized Name: Artifact.properties.title
-        /// </summary>
+        /// <summary> The artifact&apos;s title. </summary>
         public string Title { get; }
-        /// <summary>
-        /// The artifact&apos;s description.
-        /// Serialized Name: Artifact.properties.description
-        /// </summary>
+        /// <summary> The artifact&apos;s description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The artifact&apos;s publisher.
-        /// Serialized Name: Artifact.properties.publisher
-        /// </summary>
+        /// <summary> The artifact&apos;s publisher. </summary>
         public string Publisher { get; }
-        /// <summary>
-        /// The file path to the artifact.
-        /// Serialized Name: Artifact.properties.filePath
-        /// </summary>
+        /// <summary> The file path to the artifact. </summary>
         public string FilePath { get; }
-        /// <summary>
-        /// The URI to the artifact icon.
-        /// Serialized Name: Artifact.properties.icon
-        /// </summary>
+        /// <summary> The URI to the artifact icon. </summary>
         public string Icon { get; }
-        /// <summary>
-        /// The artifact&apos;s target OS.
-        /// Serialized Name: Artifact.properties.targetOsType
-        /// </summary>
+        /// <summary> The artifact&apos;s target OS. </summary>
         public string TargetOSType { get; }
         /// <summary>
         /// The artifact&apos;s parameters.
-        /// Serialized Name: Artifact.properties.parameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -134,10 +91,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </para>
         /// </summary>
         public BinaryData Parameters { get; }
-        /// <summary>
-        /// The artifact&apos;s creation date.
-        /// Serialized Name: Artifact.properties.createdDate
-        /// </summary>
+        /// <summary> The artifact&apos;s creation date. </summary>
         public DateTimeOffset? CreatedOn { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Reporting cycle type.
-    /// Serialized Name: ReportingCycleType
-    /// </summary>
+    /// <summary> Reporting cycle type. </summary>
     public readonly partial struct DevTestLabReportingCycleType : IEquatable<DevTestLabReportingCycleType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string CalendarMonthValue = "CalendarMonth";
         private const string CustomValue = "Custom";
 
-        /// <summary>
-        /// CalendarMonth
-        /// Serialized Name: ReportingCycleType.CalendarMonth
-        /// </summary>
+        /// <summary> CalendarMonth. </summary>
         public static DevTestLabReportingCycleType CalendarMonth { get; } = new DevTestLabReportingCycleType(CalendarMonthValue);
-        /// <summary>
-        /// Custom
-        /// Serialized Name: ReportingCycleType.Custom
-        /// </summary>
+        /// <summary> Custom. </summary>
         public static DevTestLabReportingCycleType Custom { get; } = new DevTestLabReportingCycleType(CustomValue);
         /// <summary> Determines if two <see cref="DevTestLabReportingCycleType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabReportingCycleType left, DevTestLabReportingCycleType right) => left.Equals(right);

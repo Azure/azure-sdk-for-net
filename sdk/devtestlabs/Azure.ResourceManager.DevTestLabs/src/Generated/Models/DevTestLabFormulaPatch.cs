@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// A formula for creating a VM, specifying an image base and other parameters
-    /// Serialized Name: FormulaFragment
-    /// </summary>
+    /// <summary> A formula for creating a VM, specifying an image base and other parameters. </summary>
     public partial class DevTestLabFormulaPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabFormulaPatch. </summary>

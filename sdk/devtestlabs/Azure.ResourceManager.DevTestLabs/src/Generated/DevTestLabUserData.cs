@@ -29,26 +29,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity of the user.
-        /// Serialized Name: User.properties.identity
-        /// </param>
-        /// <param name="secretStore">
-        /// The secret store of the user.
-        /// Serialized Name: User.properties.secretStore
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the user profile.
-        /// Serialized Name: User.properties.createdDate
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: User.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: User.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="identity"> The identity of the user. </param>
+        /// <param name="secretStore"> The secret store of the user. </param>
+        /// <param name="createdOn"> The creation date of the user profile. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabUserIdentity identity, DevTestLabUserSecretStore secretStore, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
@@ -58,30 +43,15 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The identity of the user.
-        /// Serialized Name: User.properties.identity
-        /// </summary>
+        /// <summary> The identity of the user. </summary>
         public DevTestLabUserIdentity Identity { get; set; }
-        /// <summary>
-        /// The secret store of the user.
-        /// Serialized Name: User.properties.secretStore
-        /// </summary>
+        /// <summary> The secret store of the user. </summary>
         public DevTestLabUserSecretStore SecretStore { get; set; }
-        /// <summary>
-        /// The creation date of the user profile.
-        /// Serialized Name: User.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the user profile. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: User.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: User.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

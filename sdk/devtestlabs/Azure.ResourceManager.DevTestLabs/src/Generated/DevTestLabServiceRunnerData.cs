@@ -28,19 +28,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity of the resource.
-        /// Serialized Name: ServiceRunner.identity
-        /// </param>
+        /// <param name="identity"> The identity of the resource. </param>
         internal DevTestLabServiceRunnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
         }
 
-        /// <summary>
-        /// The identity of the resource.
-        /// Serialized Name: ServiceRunner.identity
-        /// </summary>
+        /// <summary> The identity of the resource. </summary>
         public DevTestLabManagedIdentity Identity { get; set; }
     }
 }

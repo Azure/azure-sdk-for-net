@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<DateTimeOffset> expirationDate = default;
             Optional<bool> allowClaim = default;
             Optional<string> storageType = default;
-            Optional<DevTestLabVmCreationSource> virtualMachineCreationSource = default;
+            Optional<DevTestLabVmCreationSource> vmCreationSource = default;
             Optional<ResourceIdentifier> environmentId = default;
             Optional<IList<DevTestLabDataDiskProperties>> dataDiskParameters = default;
             Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.DevTestLabs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualMachineCreationSource = new DevTestLabVmCreationSource(property0.Value.GetString());
+                            vmCreationSource = new DevTestLabVmCreationSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("environmentId"))
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, createdByUserId.Value, createdByUser.Value, Optional.ToNullable(createdDate), computeId.Value, customImageId.Value, osType.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), fqdn.Value, labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), artifactDeploymentStatus.Value, galleryImageReference.Value, planId.Value, computeVm.Value, networkInterface.Value, applicableSchedule.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, Optional.ToNullable(virtualMachineCreationSource), environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), lastKnownPowerState.Value, provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, createdByUserId.Value, createdByUser.Value, Optional.ToNullable(createdDate), computeId.Value, customImageId.Value, osType.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), fqdn.Value, labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), artifactDeploymentStatus.Value, galleryImageReference.Value, planId.Value, computeVm.Value, networkInterface.Value, applicableSchedule.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, Optional.ToNullable(vmCreationSource), environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), lastKnownPowerState.Value, provisioningState.Value, uniqueIdentifier.Value);
         }
     }
 }

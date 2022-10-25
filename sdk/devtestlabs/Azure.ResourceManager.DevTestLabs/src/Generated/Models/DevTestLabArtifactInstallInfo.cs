@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of an artifact.
-    /// Serialized Name: ArtifactInstallProperties
-    /// </summary>
+    /// <summary> Properties of an artifact. </summary>
     public partial class DevTestLabArtifactInstallInfo
     {
         /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
@@ -24,34 +21,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
-        /// <param name="artifactId">
-        /// The artifact&apos;s identifier.
-        /// Serialized Name: ArtifactInstallProperties.artifactId
-        /// </param>
-        /// <param name="artifactTitle">
-        /// The artifact&apos;s title.
-        /// Serialized Name: ArtifactInstallProperties.artifactTitle
-        /// </param>
-        /// <param name="parameters">
-        /// The parameters of the artifact.
-        /// Serialized Name: ArtifactInstallProperties.parameters
-        /// </param>
-        /// <param name="status">
-        /// The status of the artifact.
-        /// Serialized Name: ArtifactInstallProperties.status
-        /// </param>
-        /// <param name="deploymentStatusMessage">
-        /// The status message from the deployment.
-        /// Serialized Name: ArtifactInstallProperties.deploymentStatusMessage
-        /// </param>
-        /// <param name="vmExtensionStatusMessage">
-        /// The status message from the virtual machine extension.
-        /// Serialized Name: ArtifactInstallProperties.vmExtensionStatusMessage
-        /// </param>
-        /// <param name="installOn">
-        /// The time that the artifact starts to install on the virtual machine.
-        /// Serialized Name: ArtifactInstallProperties.installTime
-        /// </param>
+        /// <param name="artifactId"> The artifact&apos;s identifier. </param>
+        /// <param name="artifactTitle"> The artifact&apos;s title. </param>
+        /// <param name="parameters"> The parameters of the artifact. </param>
+        /// <param name="status"> The status of the artifact. </param>
+        /// <param name="deploymentStatusMessage"> The status message from the deployment. </param>
+        /// <param name="vmExtensionStatusMessage"> The status message from the virtual machine extension. </param>
+        /// <param name="installOn"> The time that the artifact starts to install on the virtual machine. </param>
         internal DevTestLabArtifactInstallInfo(string artifactId, string artifactTitle, IList<DevTestLabArtifactParameter> parameters, string status, string deploymentStatusMessage, string vmExtensionStatusMessage, DateTimeOffset? installOn)
         {
             ArtifactId = artifactId;
@@ -63,40 +39,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             InstallOn = installOn;
         }
 
-        /// <summary>
-        /// The artifact&apos;s identifier.
-        /// Serialized Name: ArtifactInstallProperties.artifactId
-        /// </summary>
+        /// <summary> The artifact&apos;s identifier. </summary>
         public string ArtifactId { get; set; }
-        /// <summary>
-        /// The artifact&apos;s title.
-        /// Serialized Name: ArtifactInstallProperties.artifactTitle
-        /// </summary>
+        /// <summary> The artifact&apos;s title. </summary>
         public string ArtifactTitle { get; set; }
-        /// <summary>
-        /// The parameters of the artifact.
-        /// Serialized Name: ArtifactInstallProperties.parameters
-        /// </summary>
+        /// <summary> The parameters of the artifact. </summary>
         public IList<DevTestLabArtifactParameter> Parameters { get; }
-        /// <summary>
-        /// The status of the artifact.
-        /// Serialized Name: ArtifactInstallProperties.status
-        /// </summary>
+        /// <summary> The status of the artifact. </summary>
         public string Status { get; set; }
-        /// <summary>
-        /// The status message from the deployment.
-        /// Serialized Name: ArtifactInstallProperties.deploymentStatusMessage
-        /// </summary>
+        /// <summary> The status message from the deployment. </summary>
         public string DeploymentStatusMessage { get; set; }
-        /// <summary>
-        /// The status message from the virtual machine extension.
-        /// Serialized Name: ArtifactInstallProperties.vmExtensionStatusMessage
-        /// </summary>
+        /// <summary> The status message from the virtual machine extension. </summary>
         public string VmExtensionStatusMessage { get; set; }
-        /// <summary>
-        /// The time that the artifact starts to install on the virtual machine.
-        /// Serialized Name: ArtifactInstallProperties.installTime
-        /// </summary>
+        /// <summary> The time that the artifact starts to install on the virtual machine. </summary>
         public DateTimeOffset? InstallOn { get; set; }
     }
 }

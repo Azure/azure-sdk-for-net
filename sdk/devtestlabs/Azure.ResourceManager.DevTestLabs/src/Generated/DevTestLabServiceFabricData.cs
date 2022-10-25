@@ -28,26 +28,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="externalServiceFabricId">
-        /// The backing service fabric resource&apos;s id
-        /// Serialized Name: ServiceFabric.properties.externalServiceFabricId
-        /// </param>
-        /// <param name="environmentId">
-        /// The resource id of the environment under which the service fabric resource is present
-        /// Serialized Name: ServiceFabric.properties.environmentId
-        /// </param>
-        /// <param name="applicableSchedule">
-        /// The applicable schedule for the virtual machine.
-        /// Serialized Name: ServiceFabric.properties.applicableSchedule
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: ServiceFabric.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: ServiceFabric.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="externalServiceFabricId"> The backing service fabric resource&apos;s id. </param>
+        /// <param name="environmentId"> The resource id of the environment under which the service fabric resource is present. </param>
+        /// <param name="applicableSchedule"> The applicable schedule for the virtual machine. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabServiceFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string externalServiceFabricId, string environmentId, DevTestLabApplicableSchedule applicableSchedule, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             ExternalServiceFabricId = externalServiceFabricId;
@@ -57,30 +42,15 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The backing service fabric resource&apos;s id
-        /// Serialized Name: ServiceFabric.properties.externalServiceFabricId
-        /// </summary>
+        /// <summary> The backing service fabric resource&apos;s id. </summary>
         public string ExternalServiceFabricId { get; set; }
-        /// <summary>
-        /// The resource id of the environment under which the service fabric resource is present
-        /// Serialized Name: ServiceFabric.properties.environmentId
-        /// </summary>
+        /// <summary> The resource id of the environment under which the service fabric resource is present. </summary>
         public string EnvironmentId { get; set; }
-        /// <summary>
-        /// The applicable schedule for the virtual machine.
-        /// Serialized Name: ServiceFabric.properties.applicableSchedule
-        /// </summary>
+        /// <summary> The applicable schedule for the virtual machine. </summary>
         public DevTestLabApplicableSchedule ApplicableSchedule { get; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: ServiceFabric.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: ServiceFabric.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

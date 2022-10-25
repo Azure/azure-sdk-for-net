@@ -32,38 +32,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="allowedSubnets">
-        /// The allowed subnets of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.allowedSubnets
-        /// </param>
-        /// <param name="description">
-        /// The description of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.description
-        /// </param>
-        /// <param name="externalProviderResourceId">
-        /// The Microsoft.Network resource identifier of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.externalProviderResourceId
-        /// </param>
-        /// <param name="externalSubnets">
-        /// The external subnet properties.
-        /// Serialized Name: VirtualNetwork.properties.externalSubnets
-        /// </param>
-        /// <param name="subnetOverrides">
-        /// The subnet overrides of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.subnetOverrides
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.createdDate
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: VirtualNetwork.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: VirtualNetwork.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="allowedSubnets"> The allowed subnets of the virtual network. </param>
+        /// <param name="description"> The description of the virtual network. </param>
+        /// <param name="externalProviderResourceId"> The Microsoft.Network resource identifier of the virtual network. </param>
+        /// <param name="externalSubnets"> The external subnet properties. </param>
+        /// <param name="subnetOverrides"> The subnet overrides of the virtual network. </param>
+        /// <param name="createdOn"> The creation date of the virtual network. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<DevTestLabSubnet> allowedSubnets, string description, string externalProviderResourceId, IReadOnlyList<DevTestLabExternalSubnet> externalSubnets, IList<DevTestLabSubnetOverride> subnetOverrides, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             AllowedSubnets = allowedSubnets;
@@ -76,45 +52,21 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The allowed subnets of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.allowedSubnets
-        /// </summary>
+        /// <summary> The allowed subnets of the virtual network. </summary>
         public IList<DevTestLabSubnet> AllowedSubnets { get; }
-        /// <summary>
-        /// The description of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.description
-        /// </summary>
+        /// <summary> The description of the virtual network. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The Microsoft.Network resource identifier of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.externalProviderResourceId
-        /// </summary>
+        /// <summary> The Microsoft.Network resource identifier of the virtual network. </summary>
         public string ExternalProviderResourceId { get; set; }
-        /// <summary>
-        /// The external subnet properties.
-        /// Serialized Name: VirtualNetwork.properties.externalSubnets
-        /// </summary>
+        /// <summary> The external subnet properties. </summary>
         public IReadOnlyList<DevTestLabExternalSubnet> ExternalSubnets { get; }
-        /// <summary>
-        /// The subnet overrides of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.subnetOverrides
-        /// </summary>
+        /// <summary> The subnet overrides of the virtual network. </summary>
         public IList<DevTestLabSubnetOverride> SubnetOverrides { get; }
-        /// <summary>
-        /// The creation date of the virtual network.
-        /// Serialized Name: VirtualNetwork.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the virtual network. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: VirtualNetwork.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: VirtualNetwork.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

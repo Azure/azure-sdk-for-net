@@ -15,9 +15,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug:
-  show-serialized-names: true
-
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/costs/{name}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}
@@ -51,6 +48,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  VirtualMachine: Vm
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}: DevTestLabSchedule
@@ -60,6 +58,7 @@ request-path-to-resource-name:
 
 operation-name-override:
   PolicySets_EvaluatePolicies: EvaluatePolicies
+#   Labs_ImportVirtualMachine: ImportVm
 
 rename-mapping:
   ArmTemplate: DevTestLabArmTemplate
@@ -137,7 +136,7 @@ rename-mapping:
   HostCachingOptions: DevTestLabHostCachingOption
   IdentityProperties: DevTestLabManagedIdentity
   IdentityProperties.principalId: -|uuid
-  ImportLabVirtualMachineRequest: DevTestLabImportVirtualMachineContent
+  ImportLabVirtualMachineRequest: DevTestLabImportVmContent
   ImportLabVirtualMachineRequest.sourceVirtualMachineResourceId: -|arm-id
   InboundNatRule: DevTestLabInboundNatRule
   LabAnnouncementProperties: DevTestLabAnnouncement

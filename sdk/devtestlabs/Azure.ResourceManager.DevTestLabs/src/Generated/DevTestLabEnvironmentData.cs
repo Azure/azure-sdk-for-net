@@ -28,30 +28,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="deploymentProperties">
-        /// The deployment properties of the environment.
-        /// Serialized Name: DtlEnvironment.properties.deploymentProperties
-        /// </param>
-        /// <param name="armTemplateDisplayName">
-        /// The display name of the Azure Resource Manager template that produced the environment.
-        /// Serialized Name: DtlEnvironment.properties.armTemplateDisplayName
-        /// </param>
-        /// <param name="resourceGroupId">
-        /// The identifier of the resource group containing the environment&apos;s resources.
-        /// Serialized Name: DtlEnvironment.properties.resourceGroupId
-        /// </param>
-        /// <param name="createdByUser">
-        /// The creator of the environment.
-        /// Serialized Name: DtlEnvironment.properties.createdByUser
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: DtlEnvironment.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: DtlEnvironment.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="deploymentProperties"> The deployment properties of the environment. </param>
+        /// <param name="armTemplateDisplayName"> The display name of the Azure Resource Manager template that produced the environment. </param>
+        /// <param name="resourceGroupId"> The identifier of the resource group containing the environment&apos;s resources. </param>
+        /// <param name="createdByUser"> The creator of the environment. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnvironmentDeployment deploymentProperties, string armTemplateDisplayName, string resourceGroupId, string createdByUser, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             DeploymentProperties = deploymentProperties;
@@ -62,35 +44,17 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The deployment properties of the environment.
-        /// Serialized Name: DtlEnvironment.properties.deploymentProperties
-        /// </summary>
+        /// <summary> The deployment properties of the environment. </summary>
         public DevTestLabEnvironmentDeployment DeploymentProperties { get; set; }
-        /// <summary>
-        /// The display name of the Azure Resource Manager template that produced the environment.
-        /// Serialized Name: DtlEnvironment.properties.armTemplateDisplayName
-        /// </summary>
+        /// <summary> The display name of the Azure Resource Manager template that produced the environment. </summary>
         public string ArmTemplateDisplayName { get; set; }
-        /// <summary>
-        /// The identifier of the resource group containing the environment&apos;s resources.
-        /// Serialized Name: DtlEnvironment.properties.resourceGroupId
-        /// </summary>
+        /// <summary> The identifier of the resource group containing the environment&apos;s resources. </summary>
         public string ResourceGroupId { get; }
-        /// <summary>
-        /// The creator of the environment.
-        /// Serialized Name: DtlEnvironment.properties.createdByUser
-        /// </summary>
+        /// <summary> The creator of the environment. </summary>
         public string CreatedByUser { get; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: DtlEnvironment.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: DtlEnvironment.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

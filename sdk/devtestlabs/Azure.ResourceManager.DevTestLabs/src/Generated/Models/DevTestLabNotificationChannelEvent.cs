@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// An event to be notified for.
-    /// Serialized Name: Event
-    /// </summary>
+    /// <summary> An event to be notified for. </summary>
     public partial class DevTestLabNotificationChannelEvent
     {
         /// <summary> Initializes a new instance of DevTestLabNotificationChannelEvent. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabNotificationChannelEvent. </summary>
-        /// <param name="eventName">
-        /// The event type for which this notification is enabled (i.e. AutoShutdown, Cost)
-        /// Serialized Name: Event.eventName
-        /// </param>
+        /// <param name="eventName"> The event type for which this notification is enabled (i.e. AutoShutdown, Cost). </param>
         internal DevTestLabNotificationChannelEvent(DevTestLabNotificationChannelEventType? eventName)
         {
             EventName = eventName;
         }
 
-        /// <summary>
-        /// The event type for which this notification is enabled (i.e. AutoShutdown, Cost)
-        /// Serialized Name: Event.eventName
-        /// </summary>
+        /// <summary> The event type for which this notification is enabled (i.e. AutoShutdown, Cost). </summary>
         public DevTestLabNotificationChannelEventType? EventName { get; set; }
     }
 }

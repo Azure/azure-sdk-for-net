@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabImportVirtualMachineContent : IUtf8JsonSerializable
+    public partial class DevTestLabImportVmContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVirtualMachineResourceId))
+            if (Optional.IsDefined(SourceVmResourceId))
             {
                 writer.WritePropertyName("sourceVirtualMachineResourceId");
-                writer.WriteStringValue(SourceVirtualMachineResourceId);
+                writer.WriteStringValue(SourceVmResourceId);
             }
-            if (Optional.IsDefined(DestinationVirtualMachineName))
+            if (Optional.IsDefined(DestinationVmName))
             {
                 writer.WritePropertyName("destinationVirtualMachineName");
-                writer.WriteStringValue(DestinationVirtualMachineName);
+                writer.WriteStringValue(DestinationVmName);
             }
             writer.WriteEndObject();
         }

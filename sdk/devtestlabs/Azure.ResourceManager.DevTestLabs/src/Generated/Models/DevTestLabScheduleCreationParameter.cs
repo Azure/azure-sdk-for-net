@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties for creating a schedule.
-    /// Serialized Name: ScheduleCreationParameter
-    /// </summary>
+    /// <summary> Properties for creating a schedule. </summary>
     public partial class DevTestLabScheduleCreationParameter
     {
         /// <summary> Initializes a new instance of DevTestLabScheduleCreationParameter. </summary>
@@ -23,50 +20,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabScheduleCreationParameter. </summary>
-        /// <param name="name">
-        /// The name of the virtual machine or environment
-        /// Serialized Name: ScheduleCreationParameter.name
-        /// </param>
-        /// <param name="location">
-        /// The location of the new virtual machine or environment
-        /// Serialized Name: ScheduleCreationParameter.location
-        /// </param>
-        /// <param name="tags">
-        /// The tags of the resource.
-        /// Serialized Name: ScheduleCreationParameter.tags
-        /// </param>
-        /// <param name="status">
-        /// The status of the schedule (i.e. Enabled, Disabled)
-        /// Serialized Name: ScheduleCreationParameter.properties.status
-        /// </param>
-        /// <param name="taskType">
-        /// The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart).
-        /// Serialized Name: ScheduleCreationParameter.properties.taskType
-        /// </param>
-        /// <param name="weeklyRecurrence">
-        /// If the schedule will occur only some days of the week, specify the weekly recurrence.
-        /// Serialized Name: ScheduleCreationParameter.properties.weeklyRecurrence
-        /// </param>
-        /// <param name="dailyRecurrence">
-        /// If the schedule will occur once each day of the week, specify the daily recurrence.
-        /// Serialized Name: ScheduleCreationParameter.properties.dailyRecurrence
-        /// </param>
-        /// <param name="hourlyRecurrence">
-        /// If the schedule will occur multiple times a day, specify the hourly recurrence.
-        /// Serialized Name: ScheduleCreationParameter.properties.hourlyRecurrence
-        /// </param>
-        /// <param name="timeZoneId">
-        /// The time zone ID (e.g. Pacific Standard time).
-        /// Serialized Name: ScheduleCreationParameter.properties.timeZoneId
-        /// </param>
-        /// <param name="notificationSettings">
-        /// Notification settings.
-        /// Serialized Name: ScheduleCreationParameter.properties.notificationSettings
-        /// </param>
-        /// <param name="targetResourceId">
-        /// The resource ID to which the schedule belongs
-        /// Serialized Name: ScheduleCreationParameter.properties.targetResourceId
-        /// </param>
+        /// <param name="name"> The name of the virtual machine or environment. </param>
+        /// <param name="location"> The location of the new virtual machine or environment. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
+        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
+        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
+        /// <param name="dailyRecurrence"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
+        /// <param name="hourlyRecurrence"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
+        /// <param name="notificationSettings"> Notification settings. </param>
+        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
         internal DevTestLabScheduleCreationParameter(string name, AzureLocation? location, IDictionary<string, string> tags, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId)
         {
             Name = name;
@@ -82,45 +46,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             TargetResourceId = targetResourceId;
         }
 
-        /// <summary>
-        /// The name of the virtual machine or environment
-        /// Serialized Name: ScheduleCreationParameter.name
-        /// </summary>
+        /// <summary> The name of the virtual machine or environment. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The location of the new virtual machine or environment
-        /// Serialized Name: ScheduleCreationParameter.location
-        /// </summary>
+        /// <summary> The location of the new virtual machine or environment. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// The tags of the resource.
-        /// Serialized Name: ScheduleCreationParameter.tags
-        /// </summary>
+        /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// The status of the schedule (i.e. Enabled, Disabled)
-        /// Serialized Name: ScheduleCreationParameter.properties.status
-        /// </summary>
+        /// <summary> The status of the schedule (i.e. Enabled, Disabled). </summary>
         public DevTestLabEnableStatus? Status { get; set; }
-        /// <summary>
-        /// The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart).
-        /// Serialized Name: ScheduleCreationParameter.properties.taskType
-        /// </summary>
+        /// <summary> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </summary>
         public string TaskType { get; set; }
-        /// <summary>
-        /// If the schedule will occur only some days of the week, specify the weekly recurrence.
-        /// Serialized Name: ScheduleCreationParameter.properties.weeklyRecurrence
-        /// </summary>
+        /// <summary> If the schedule will occur only some days of the week, specify the weekly recurrence. </summary>
         public DevTestLabWeekDetails WeeklyRecurrence { get; set; }
-        /// <summary>
-        /// If the schedule will occur once each day of the week, specify the daily recurrence.
-        /// Serialized Name: ScheduleCreationParameter.properties.dailyRecurrence
-        /// </summary>
+        /// <summary> If the schedule will occur once each day of the week, specify the daily recurrence. </summary>
         internal DayDetails DailyRecurrence { get; set; }
-        /// <summary>
-        /// The time of day the schedule will occur.
-        /// Serialized Name: DayDetails.time
-        /// </summary>
+        /// <summary> The time of day the schedule will occur. </summary>
         public string DailyRecurrenceTime
         {
             get => DailyRecurrence is null ? default : DailyRecurrence.Time;
@@ -132,15 +72,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
-        /// <summary>
-        /// If the schedule will occur multiple times a day, specify the hourly recurrence.
-        /// Serialized Name: ScheduleCreationParameter.properties.hourlyRecurrence
-        /// </summary>
+        /// <summary> If the schedule will occur multiple times a day, specify the hourly recurrence. </summary>
         internal HourDetails HourlyRecurrence { get; set; }
-        /// <summary>
-        /// Minutes of the hour the schedule will run.
-        /// Serialized Name: HourDetails.minute
-        /// </summary>
+        /// <summary> Minutes of the hour the schedule will run. </summary>
         public int? HourlyRecurrenceMinute
         {
             get => HourlyRecurrence is null ? default : HourlyRecurrence.Minute;
@@ -152,20 +86,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
-        /// <summary>
-        /// The time zone ID (e.g. Pacific Standard time).
-        /// Serialized Name: ScheduleCreationParameter.properties.timeZoneId
-        /// </summary>
+        /// <summary> The time zone ID (e.g. Pacific Standard time). </summary>
         public string TimeZoneId { get; set; }
-        /// <summary>
-        /// Notification settings.
-        /// Serialized Name: ScheduleCreationParameter.properties.notificationSettings
-        /// </summary>
+        /// <summary> Notification settings. </summary>
         public DevTestLabNotificationSettings NotificationSettings { get; set; }
-        /// <summary>
-        /// The resource ID to which the schedule belongs
-        /// Serialized Name: ScheduleCreationParameter.properties.targetResourceId
-        /// </summary>
+        /// <summary> The resource ID to which the schedule belongs. </summary>
         public ResourceIdentifier TargetResourceId { get; set; }
     }
 }

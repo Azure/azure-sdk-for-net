@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of an hourly schedule.
-    /// Serialized Name: HourDetails
-    /// </summary>
+    /// <summary> Properties of an hourly schedule. </summary>
     internal partial class HourDetails
     {
         /// <summary> Initializes a new instance of HourDetails. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of HourDetails. </summary>
-        /// <param name="minute">
-        /// Minutes of the hour the schedule will run.
-        /// Serialized Name: HourDetails.minute
-        /// </param>
+        /// <param name="minute"> Minutes of the hour the schedule will run. </param>
         internal HourDetails(int? minute)
         {
             Minute = minute;
         }
 
-        /// <summary>
-        /// Minutes of the hour the schedule will run.
-        /// Serialized Name: HourDetails.minute
-        /// </summary>
+        /// <summary> Minutes of the hour the schedule will run. </summary>
         public int? Minute { get; set; }
     }
 }

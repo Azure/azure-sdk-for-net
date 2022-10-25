@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties for retargeting a virtual machine schedule.
-    /// Serialized Name: RetargetScheduleProperties
-    /// </summary>
+    /// <summary> Properties for retargeting a virtual machine schedule. </summary>
     public partial class DevTestLabGlobalScheduleRetargetContent
     {
         /// <summary> Initializes a new instance of DevTestLabGlobalScheduleRetargetContent. </summary>
@@ -20,15 +17,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary>
-        /// The resource Id of the virtual machine on which the schedule operates
-        /// Serialized Name: RetargetScheduleProperties.currentResourceId
-        /// </summary>
+        /// <summary> The resource Id of the virtual machine on which the schedule operates. </summary>
         public ResourceIdentifier CurrentResourceId { get; set; }
-        /// <summary>
-        /// The resource Id of the virtual machine that the schedule should be retargeted to
-        /// Serialized Name: RetargetScheduleProperties.targetResourceId
-        /// </summary>
+        /// <summary> The resource Id of the virtual machine that the schedule should be retargeted to. </summary>
         public ResourceIdentifier TargetResourceId { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc.
-    /// Serialized Name: PolicyFactName
-    /// </summary>
+    /// <summary> The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc. </summary>
     public readonly partial struct DevTestLabPolicyFactName : IEquatable<DevTestLabPolicyFactName>
     {
         private readonly string _value;
@@ -36,55 +33,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string EnvironmentTemplateValue = "EnvironmentTemplate";
         private const string ScheduleEditPermissionValue = "ScheduleEditPermission";
 
-        /// <summary>
-        /// UserOwnedLabVmCount
-        /// Serialized Name: PolicyFactName.UserOwnedLabVmCount
-        /// </summary>
+        /// <summary> UserOwnedLabVmCount. </summary>
         public static DevTestLabPolicyFactName UserOwnedLabVmCount { get; } = new DevTestLabPolicyFactName(UserOwnedLabVmCountValue);
-        /// <summary>
-        /// UserOwnedLabPremiumVmCount
-        /// Serialized Name: PolicyFactName.UserOwnedLabPremiumVmCount
-        /// </summary>
+        /// <summary> UserOwnedLabPremiumVmCount. </summary>
         public static DevTestLabPolicyFactName UserOwnedLabPremiumVmCount { get; } = new DevTestLabPolicyFactName(UserOwnedLabPremiumVmCountValue);
-        /// <summary>
-        /// LabVmCount
-        /// Serialized Name: PolicyFactName.LabVmCount
-        /// </summary>
+        /// <summary> LabVmCount. </summary>
         public static DevTestLabPolicyFactName LabVmCount { get; } = new DevTestLabPolicyFactName(LabVmCountValue);
-        /// <summary>
-        /// LabPremiumVmCount
-        /// Serialized Name: PolicyFactName.LabPremiumVmCount
-        /// </summary>
+        /// <summary> LabPremiumVmCount. </summary>
         public static DevTestLabPolicyFactName LabPremiumVmCount { get; } = new DevTestLabPolicyFactName(LabPremiumVmCountValue);
-        /// <summary>
-        /// LabVmSize
-        /// Serialized Name: PolicyFactName.LabVmSize
-        /// </summary>
+        /// <summary> LabVmSize. </summary>
         public static DevTestLabPolicyFactName LabVmSize { get; } = new DevTestLabPolicyFactName(LabVmSizeValue);
-        /// <summary>
-        /// GalleryImage
-        /// Serialized Name: PolicyFactName.GalleryImage
-        /// </summary>
+        /// <summary> GalleryImage. </summary>
         public static DevTestLabPolicyFactName GalleryImage { get; } = new DevTestLabPolicyFactName(GalleryImageValue);
-        /// <summary>
-        /// UserOwnedLabVmCountInSubnet
-        /// Serialized Name: PolicyFactName.UserOwnedLabVmCountInSubnet
-        /// </summary>
+        /// <summary> UserOwnedLabVmCountInSubnet. </summary>
         public static DevTestLabPolicyFactName UserOwnedLabVmCountInSubnet { get; } = new DevTestLabPolicyFactName(UserOwnedLabVmCountInSubnetValue);
-        /// <summary>
-        /// LabTargetCost
-        /// Serialized Name: PolicyFactName.LabTargetCost
-        /// </summary>
+        /// <summary> LabTargetCost. </summary>
         public static DevTestLabPolicyFactName LabTargetCost { get; } = new DevTestLabPolicyFactName(LabTargetCostValue);
-        /// <summary>
-        /// EnvironmentTemplate
-        /// Serialized Name: PolicyFactName.EnvironmentTemplate
-        /// </summary>
+        /// <summary> EnvironmentTemplate. </summary>
         public static DevTestLabPolicyFactName EnvironmentTemplate { get; } = new DevTestLabPolicyFactName(EnvironmentTemplateValue);
-        /// <summary>
-        /// ScheduleEditPermission
-        /// Serialized Name: PolicyFactName.ScheduleEditPermission
-        /// </summary>
+        /// <summary> ScheduleEditPermission. </summary>
         public static DevTestLabPolicyFactName ScheduleEditPermission { get; } = new DevTestLabPolicyFactName(ScheduleEditPermissionValue);
         /// <summary> Determines if two <see cref="DevTestLabPolicyFactName"/> values are the same. </summary>
         public static bool operator ==(DevTestLabPolicyFactName left, DevTestLabPolicyFactName right) => left.Equals(right);

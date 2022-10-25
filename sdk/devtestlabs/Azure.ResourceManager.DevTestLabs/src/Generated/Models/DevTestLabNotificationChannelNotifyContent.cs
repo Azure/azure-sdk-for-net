@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties for generating a Notification.
-    /// Serialized Name: NotifyParameters
-    /// </summary>
+    /// <summary> Properties for generating a Notification. </summary>
     public partial class DevTestLabNotificationChannelNotifyContent
     {
         /// <summary> Initializes a new instance of DevTestLabNotificationChannelNotifyContent. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary>
-        /// The type of event (i.e. AutoShutdown, Cost)
-        /// Serialized Name: NotifyParameters.eventName
-        /// </summary>
+        /// <summary> The type of event (i.e. AutoShutdown, Cost). </summary>
         public DevTestLabNotificationChannelEventType? EventName { get; set; }
-        /// <summary>
-        /// Properties for the notification in json format.
-        /// Serialized Name: NotifyParameters.jsonPayload
-        /// </summary>
+        /// <summary> Properties for the notification in json format. </summary>
         public string JsonPayload { get; set; }
     }
 }

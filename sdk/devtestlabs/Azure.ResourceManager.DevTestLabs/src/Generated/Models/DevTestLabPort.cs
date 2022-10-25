@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of a network port.
-    /// Serialized Name: Port
-    /// </summary>
+    /// <summary> Properties of a network port. </summary>
     public partial class DevTestLabPort
     {
         /// <summary> Initializes a new instance of DevTestLabPort. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabPort. </summary>
-        /// <param name="transportProtocol">
-        /// Protocol type of the port.
-        /// Serialized Name: Port.transportProtocol
-        /// </param>
-        /// <param name="backendPort">
-        /// Backend port of the target virtual machine.
-        /// Serialized Name: Port.backendPort
-        /// </param>
+        /// <param name="transportProtocol"> Protocol type of the port. </param>
+        /// <param name="backendPort"> Backend port of the target virtual machine. </param>
         internal DevTestLabPort(DevTestLabTransportProtocol? transportProtocol, int? backendPort)
         {
             TransportProtocol = transportProtocol;
             BackendPort = backendPort;
         }
 
-        /// <summary>
-        /// Protocol type of the port.
-        /// Serialized Name: Port.transportProtocol
-        /// </summary>
+        /// <summary> Protocol type of the port. </summary>
         public DevTestLabTransportProtocol? TransportProtocol { get; set; }
-        /// <summary>
-        /// Backend port of the target virtual machine.
-        /// Serialized Name: Port.backendPort
-        /// </summary>
+        /// <summary> Backend port of the target virtual machine. </summary>
         public int? BackendPort { get; set; }
     }
 }

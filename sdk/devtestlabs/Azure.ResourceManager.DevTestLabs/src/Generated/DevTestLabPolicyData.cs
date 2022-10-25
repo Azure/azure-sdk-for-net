@@ -29,42 +29,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="description">
-        /// The description of the policy.
-        /// Serialized Name: Policy.properties.description
-        /// </param>
-        /// <param name="status">
-        /// The status of the policy.
-        /// Serialized Name: Policy.properties.status
-        /// </param>
-        /// <param name="factName">
-        /// The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc.
-        /// Serialized Name: Policy.properties.factName
-        /// </param>
-        /// <param name="factData">
-        /// The fact data of the policy.
-        /// Serialized Name: Policy.properties.factData
-        /// </param>
-        /// <param name="threshold">
-        /// The threshold of the policy (i.e. a number for MaxValuePolicy, and a JSON array of values for AllowedValuesPolicy).
-        /// Serialized Name: Policy.properties.threshold
-        /// </param>
-        /// <param name="evaluatorType">
-        /// The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy).
-        /// Serialized Name: Policy.properties.evaluatorType
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the policy.
-        /// Serialized Name: Policy.properties.createdDate
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: Policy.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: Policy.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="description"> The description of the policy. </param>
+        /// <param name="status"> The status of the policy. </param>
+        /// <param name="factName"> The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc. </param>
+        /// <param name="factData"> The fact data of the policy. </param>
+        /// <param name="threshold"> The threshold of the policy (i.e. a number for MaxValuePolicy, and a JSON array of values for AllowedValuesPolicy). </param>
+        /// <param name="evaluatorType"> The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy). </param>
+        /// <param name="createdOn"> The creation date of the policy. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, DevTestLabPolicyStatus? status, DevTestLabPolicyFactName? factName, string factData, string threshold, DevTestLabPolicyEvaluatorType? evaluatorType, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
@@ -78,50 +51,23 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The description of the policy.
-        /// Serialized Name: Policy.properties.description
-        /// </summary>
+        /// <summary> The description of the policy. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The status of the policy.
-        /// Serialized Name: Policy.properties.status
-        /// </summary>
+        /// <summary> The status of the policy. </summary>
         public DevTestLabPolicyStatus? Status { get; set; }
-        /// <summary>
-        /// The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc.
-        /// Serialized Name: Policy.properties.factName
-        /// </summary>
+        /// <summary> The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc. </summary>
         public DevTestLabPolicyFactName? FactName { get; set; }
-        /// <summary>
-        /// The fact data of the policy.
-        /// Serialized Name: Policy.properties.factData
-        /// </summary>
+        /// <summary> The fact data of the policy. </summary>
         public string FactData { get; set; }
-        /// <summary>
-        /// The threshold of the policy (i.e. a number for MaxValuePolicy, and a JSON array of values for AllowedValuesPolicy).
-        /// Serialized Name: Policy.properties.threshold
-        /// </summary>
+        /// <summary> The threshold of the policy (i.e. a number for MaxValuePolicy, and a JSON array of values for AllowedValuesPolicy). </summary>
         public string Threshold { get; set; }
-        /// <summary>
-        /// The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy).
-        /// Serialized Name: Policy.properties.evaluatorType
-        /// </summary>
+        /// <summary> The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy). </summary>
         public DevTestLabPolicyEvaluatorType? EvaluatorType { get; set; }
-        /// <summary>
-        /// The creation date of the policy.
-        /// Serialized Name: Policy.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the policy. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: Policy.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: Policy.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

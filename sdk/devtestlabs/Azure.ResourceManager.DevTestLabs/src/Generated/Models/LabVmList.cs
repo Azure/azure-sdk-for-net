@@ -12,25 +12,25 @@ using Azure.ResourceManager.DevTestLabs;
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The response of a list operation. </summary>
-    internal partial class ServiceFabricList
+    internal partial class LabVmList
     {
-        /// <summary> Initializes a new instance of ServiceFabricList. </summary>
-        internal ServiceFabricList()
+        /// <summary> Initializes a new instance of LabVmList. </summary>
+        internal LabVmList()
         {
-            Value = new ChangeTrackingList<DevTestLabServiceFabricData>();
+            Value = new ChangeTrackingList<DevTestLabVmData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricList. </summary>
+        /// <summary> Initializes a new instance of LabVmList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal ServiceFabricList(IReadOnlyList<DevTestLabServiceFabricData> value, string nextLink)
+        internal LabVmList(IReadOnlyList<DevTestLabVmData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<DevTestLabServiceFabricData> Value { get; }
+        public IReadOnlyList<DevTestLabVmData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

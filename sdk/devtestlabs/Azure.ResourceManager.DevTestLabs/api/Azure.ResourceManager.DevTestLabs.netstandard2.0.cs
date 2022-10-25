@@ -602,8 +602,8 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.SubResource> GetVhds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.SubResource> GetVhdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ImportVirtualMachine(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVirtualMachineContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ImportVirtualMachineAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVirtualMachineContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ImportVm(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ImportVmAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string StorageType { get { throw null; } set { } }
         public string UniqueIdentifier { get { throw null; } }
         public string UserName { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? VirtualMachineCreationSource { get { throw null; } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? VmCreationSource { get { throw null; } }
     }
     public partial class DevTestLabVmResource : Azure.ResourceManager.ArmResource
     {
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string name) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string vmName, string name) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Execute(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption? FileUploadOptions { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter> Parameters { get { throw null; } }
-        public string VirtualMachineName { get { throw null; } set { } }
+        public string VmName { get { throw null; } set { } }
     }
     public partial class DevTestLabArtifactInstallInfo
     {
@@ -1488,11 +1488,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DevTestLabImportVirtualMachineContent
+    public partial class DevTestLabImportVmContent
     {
-        public DevTestLabImportVirtualMachineContent() { }
-        public string DestinationVirtualMachineName { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SourceVirtualMachineResourceId { get { throw null; } set { } }
+        public DevTestLabImportVmContent() { }
+        public string DestinationVmName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVmResourceId { get { throw null; } set { } }
     }
     public partial class DevTestLabInboundNatRule
     {

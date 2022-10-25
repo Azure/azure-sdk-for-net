@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Request body for detaching data disk from a virtual machine.
-    /// Serialized Name: DetachDataDiskProperties
-    /// </summary>
+    /// <summary> Request body for detaching data disk from a virtual machine. </summary>
     public partial class DevTestLabVmDetachDataDiskContent
     {
         /// <summary> Initializes a new instance of DevTestLabVmDetachDataDiskContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary>
-        /// Specifies the disk resource ID to detach from virtual machine.
-        /// Serialized Name: DetachDataDiskProperties.existingLabDiskId
-        /// </summary>
+        /// <summary> Specifies the disk resource ID to detach from virtual machine. </summary>
         public string ExistingLabDiskId { get; set; }
     }
 }

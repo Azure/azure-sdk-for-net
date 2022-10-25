@@ -11,10 +11,7 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The response of a list operation.
-    /// Serialized Name: NotificationChannelList
-    /// </summary>
+    /// <summary> The response of a list operation. </summary>
     internal partial class NotificationChannelList
     {
         /// <summary> Initializes a new instance of NotificationChannelList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationChannelList. </summary>
-        /// <param name="value">
-        /// Results of the list operation.
-        /// Serialized Name: NotificationChannelList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link for next set of results.
-        /// Serialized Name: NotificationChannelList.nextLink
-        /// </param>
+        /// <param name="value"> Results of the list operation. </param>
+        /// <param name="nextLink"> Link for next set of results. </param>
         internal NotificationChannelList(IReadOnlyList<DevTestLabNotificationChannelData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Results of the list operation.
-        /// Serialized Name: NotificationChannelList.value
-        /// </summary>
+        /// <summary> Results of the list operation. </summary>
         public IReadOnlyList<DevTestLabNotificationChannelData> Value { get; }
-        /// <summary>
-        /// Link for next set of results.
-        /// Serialized Name: NotificationChannelList.nextLink
-        /// </summary>
+        /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }
 }

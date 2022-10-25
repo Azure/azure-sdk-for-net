@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Indicates if the artifact source is enabled (values: Enabled, Disabled).
-    /// Serialized Name: EnableStatus
-    /// </summary>
+    /// <summary> Indicates if the artifact source is enabled (values: Enabled, Disabled). </summary>
     public readonly partial struct DevTestLabEnableStatus : IEquatable<DevTestLabEnableStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: EnableStatus.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static DevTestLabEnableStatus Enabled { get; } = new DevTestLabEnableStatus(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: EnableStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static DevTestLabEnableStatus Disabled { get; } = new DevTestLabEnableStatus(DisabledValue);
         /// <summary> Determines if two <see cref="DevTestLabEnableStatus"/> values are the same. </summary>
         public static bool operator ==(DevTestLabEnableStatus left, DevTestLabEnableStatus right) => left.Equals(right);

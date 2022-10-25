@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Configuration for public IP address sharing.
-    /// Serialized Name: SubnetSharedPublicIpAddressConfiguration
-    /// </summary>
+    /// <summary> Configuration for public IP address sharing. </summary>
     internal partial class SubnetSharedPublicIPAddressConfiguration
     {
         /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>
-        /// <param name="allowedPorts">
-        /// Backend ports that virtual machines on this subnet are allowed to expose
-        /// Serialized Name: SubnetSharedPublicIpAddressConfiguration.allowedPorts
-        /// </param>
+        /// <param name="allowedPorts"> Backend ports that virtual machines on this subnet are allowed to expose. </param>
         internal SubnetSharedPublicIPAddressConfiguration(IList<DevTestLabPort> allowedPorts)
         {
             AllowedPorts = allowedPorts;
         }
 
-        /// <summary>
-        /// Backend ports that virtual machines on this subnet are allowed to expose
-        /// Serialized Name: SubnetSharedPublicIpAddressConfiguration.allowedPorts
-        /// </summary>
+        /// <summary> Backend ports that virtual machines on this subnet are allowed to expose. </summary>
         public IList<DevTestLabPort> AllowedPorts { get; }
     }
 }

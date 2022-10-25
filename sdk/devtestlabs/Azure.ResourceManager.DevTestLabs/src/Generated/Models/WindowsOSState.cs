@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied).
-    /// Serialized Name: WindowsOsState
-    /// </summary>
+    /// <summary> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </summary>
     public readonly partial struct WindowsOSState : IEquatable<WindowsOSState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string SysprepRequestedValue = "SysprepRequested";
         private const string SysprepAppliedValue = "SysprepApplied";
 
-        /// <summary>
-        /// NonSysprepped
-        /// Serialized Name: WindowsOsState.NonSysprepped
-        /// </summary>
+        /// <summary> NonSysprepped. </summary>
         public static WindowsOSState NonSysprepped { get; } = new WindowsOSState(NonSyspreppedValue);
-        /// <summary>
-        /// SysprepRequested
-        /// Serialized Name: WindowsOsState.SysprepRequested
-        /// </summary>
+        /// <summary> SysprepRequested. </summary>
         public static WindowsOSState SysprepRequested { get; } = new WindowsOSState(SysprepRequestedValue);
-        /// <summary>
-        /// SysprepApplied
-        /// Serialized Name: WindowsOsState.SysprepApplied
-        /// </summary>
+        /// <summary> SysprepApplied. </summary>
         public static WindowsOSState SysprepApplied { get; } = new WindowsOSState(SysprepAppliedValue);
         /// <summary> Determines if two <see cref="WindowsOSState"/> values are the same. </summary>
         public static bool operator ==(WindowsOSState left, WindowsOSState right) => left.Equals(right);

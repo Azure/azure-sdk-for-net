@@ -30,38 +30,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="webHookUri">
-        /// The webhook URL to send notifications to.
-        /// Serialized Name: NotificationChannel.properties.webHookUrl
-        /// </param>
-        /// <param name="emailRecipient">
-        /// The email recipient to send notifications to (can be a list of semi-colon separated email addresses).
-        /// Serialized Name: NotificationChannel.properties.emailRecipient
-        /// </param>
-        /// <param name="notificationLocale">
-        /// The locale to use when sending a notification (fallback for unsupported languages is EN).
-        /// Serialized Name: NotificationChannel.properties.notificationLocale
-        /// </param>
-        /// <param name="description">
-        /// Description of notification.
-        /// Serialized Name: NotificationChannel.properties.description
-        /// </param>
-        /// <param name="events">
-        /// The list of event for which this notification is enabled.
-        /// Serialized Name: NotificationChannel.properties.events
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the notification channel.
-        /// Serialized Name: NotificationChannel.properties.createdDate
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: NotificationChannel.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: NotificationChannel.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="webHookUri"> The webhook URL to send notifications to. </param>
+        /// <param name="emailRecipient"> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </param>
+        /// <param name="notificationLocale"> The locale to use when sending a notification (fallback for unsupported languages is EN). </param>
+        /// <param name="description"> Description of notification. </param>
+        /// <param name="events"> The list of event for which this notification is enabled. </param>
+        /// <param name="createdOn"> The creation date of the notification channel. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabNotificationChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri webHookUri, string emailRecipient, string notificationLocale, string description, IList<DevTestLabNotificationChannelEvent> events, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             WebHookUri = webHookUri;
@@ -74,45 +50,21 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The webhook URL to send notifications to.
-        /// Serialized Name: NotificationChannel.properties.webHookUrl
-        /// </summary>
+        /// <summary> The webhook URL to send notifications to. </summary>
         public Uri WebHookUri { get; set; }
-        /// <summary>
-        /// The email recipient to send notifications to (can be a list of semi-colon separated email addresses).
-        /// Serialized Name: NotificationChannel.properties.emailRecipient
-        /// </summary>
+        /// <summary> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </summary>
         public string EmailRecipient { get; set; }
-        /// <summary>
-        /// The locale to use when sending a notification (fallback for unsupported languages is EN).
-        /// Serialized Name: NotificationChannel.properties.notificationLocale
-        /// </summary>
+        /// <summary> The locale to use when sending a notification (fallback for unsupported languages is EN). </summary>
         public string NotificationLocale { get; set; }
-        /// <summary>
-        /// Description of notification.
-        /// Serialized Name: NotificationChannel.properties.description
-        /// </summary>
+        /// <summary> Description of notification. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The list of event for which this notification is enabled.
-        /// Serialized Name: NotificationChannel.properties.events
-        /// </summary>
+        /// <summary> The list of event for which this notification is enabled. </summary>
         public IList<DevTestLabNotificationChannelEvent> Events { get; }
-        /// <summary>
-        /// The creation date of the notification channel.
-        /// Serialized Name: NotificationChannel.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the notification channel. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: NotificationChannel.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: NotificationChannel.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

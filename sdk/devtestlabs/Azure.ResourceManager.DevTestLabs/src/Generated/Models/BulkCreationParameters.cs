@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Parameters for creating multiple virtual machines as a single action.
-    /// Serialized Name: BulkCreationParameters
-    /// </summary>
+    /// <summary> Parameters for creating multiple virtual machines as a single action. </summary>
     internal partial class BulkCreationParameters
     {
         /// <summary> Initializes a new instance of BulkCreationParameters. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of BulkCreationParameters. </summary>
-        /// <param name="instanceCount">
-        /// The number of virtual machine instances to create.
-        /// Serialized Name: BulkCreationParameters.instanceCount
-        /// </param>
+        /// <param name="instanceCount"> The number of virtual machine instances to create. </param>
         internal BulkCreationParameters(int? instanceCount)
         {
             InstanceCount = instanceCount;
         }
 
-        /// <summary>
-        /// The number of virtual machine instances to create.
-        /// Serialized Name: BulkCreationParameters.instanceCount
-        /// </summary>
+        /// <summary> The number of virtual machine instances to create. </summary>
         public int? InstanceCount { get; set; }
     }
 }

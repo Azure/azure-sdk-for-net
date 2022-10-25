@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Information about a Linux OS.
-    /// Serialized Name: LinuxOsInfo
-    /// </summary>
+    /// <summary> Information about a Linux OS. </summary>
     internal partial class LinuxOSInfo
     {
         /// <summary> Initializes a new instance of LinuxOSInfo. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of LinuxOSInfo. </summary>
-        /// <param name="linuxOSState">
-        /// The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied).
-        /// Serialized Name: LinuxOsInfo.linuxOsState
-        /// </param>
+        /// <param name="linuxOSState"> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </param>
         internal LinuxOSInfo(DevTestLabLinuxOSState? linuxOSState)
         {
             LinuxOSState = linuxOSState;
         }
 
-        /// <summary>
-        /// The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied).
-        /// Serialized Name: LinuxOsInfo.linuxOsState
-        /// </summary>
+        /// <summary> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </summary>
         public DevTestLabLinuxOSState? LinuxOSState { get; set; }
     }
 }

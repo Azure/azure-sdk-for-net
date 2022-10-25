@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Parameters for generating an ARM template for deploying artifacts.
-    /// Serialized Name: GenerateArmTemplateRequest
-    /// </summary>
+    /// <summary> Parameters for generating an ARM template for deploying artifacts. </summary>
     public partial class DevTestLabArtifactGenerateArmTemplateContent
     {
         /// <summary> Initializes a new instance of DevTestLabArtifactGenerateArmTemplateContent. </summary>
@@ -22,25 +19,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Parameters = new ChangeTrackingList<DevTestLabParameter>();
         }
 
-        /// <summary>
-        /// The resource name of the virtual machine.
-        /// Serialized Name: GenerateArmTemplateRequest.virtualMachineName
-        /// </summary>
-        public string VirtualMachineName { get; set; }
-        /// <summary>
-        /// The parameters of the ARM template.
-        /// Serialized Name: GenerateArmTemplateRequest.parameters
-        /// </summary>
+        /// <summary> The resource name of the virtual machine. </summary>
+        public string VmName { get; set; }
+        /// <summary> The parameters of the ARM template. </summary>
         public IList<DevTestLabParameter> Parameters { get; }
-        /// <summary>
-        /// The location of the virtual machine.
-        /// Serialized Name: GenerateArmTemplateRequest.location
-        /// </summary>
+        /// <summary> The location of the virtual machine. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value.
-        /// Serialized Name: GenerateArmTemplateRequest.fileUploadOptions
-        /// </summary>
+        /// <summary> Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value. </summary>
         public DevTestLabFileUploadOption? FileUploadOptions { get; set; }
     }
 }

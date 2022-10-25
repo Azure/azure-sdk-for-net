@@ -11,10 +11,7 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The response of a list operation.
-    /// Serialized Name: ArtifactSourceList
-    /// </summary>
+    /// <summary> The response of a list operation. </summary>
     internal partial class ArtifactSourceList
     {
         /// <summary> Initializes a new instance of ArtifactSourceList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of ArtifactSourceList. </summary>
-        /// <param name="value">
-        /// Results of the list operation.
-        /// Serialized Name: ArtifactSourceList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link for next set of results.
-        /// Serialized Name: ArtifactSourceList.nextLink
-        /// </param>
+        /// <param name="value"> Results of the list operation. </param>
+        /// <param name="nextLink"> Link for next set of results. </param>
         internal ArtifactSourceList(IReadOnlyList<DevTestLabArtifactSourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Results of the list operation.
-        /// Serialized Name: ArtifactSourceList.value
-        /// </summary>
+        /// <summary> Results of the list operation. </summary>
         public IReadOnlyList<DevTestLabArtifactSourceData> Value { get; }
-        /// <summary>
-        /// Link for next set of results.
-        /// Serialized Name: ArtifactSourceList.nextLink
-        /// </summary>
+        /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }
 }

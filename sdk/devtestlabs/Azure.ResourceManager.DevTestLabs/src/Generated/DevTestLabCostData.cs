@@ -31,46 +31,16 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="targetCost">
-        /// The target cost properties
-        /// Serialized Name: LabCost.properties.targetCost
-        /// </param>
-        /// <param name="labCostSummary">
-        /// The lab cost summary component of the cost data.
-        /// Serialized Name: LabCost.properties.labCostSummary
-        /// </param>
-        /// <param name="labCostDetails">
-        /// The lab cost details component of the cost data.
-        /// Serialized Name: LabCost.properties.labCostDetails
-        /// </param>
-        /// <param name="resourceCosts">
-        /// The resource cost component of the cost data.
-        /// Serialized Name: LabCost.properties.resourceCosts
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code of the cost.
-        /// Serialized Name: LabCost.properties.currencyCode
-        /// </param>
-        /// <param name="startOn">
-        /// The start time of the cost data.
-        /// Serialized Name: LabCost.properties.startDateTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time of the cost data.
-        /// Serialized Name: LabCost.properties.endDateTime
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the cost.
-        /// Serialized Name: LabCost.properties.createdDate
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: LabCost.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: LabCost.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="targetCost"> The target cost properties. </param>
+        /// <param name="labCostSummary"> The lab cost summary component of the cost data. </param>
+        /// <param name="labCostDetails"> The lab cost details component of the cost data. </param>
+        /// <param name="resourceCosts"> The resource cost component of the cost data. </param>
+        /// <param name="currencyCode"> The currency code of the cost. </param>
+        /// <param name="startOn"> The start time of the cost data. </param>
+        /// <param name="endOn"> The end time of the cost data. </param>
+        /// <param name="createdOn"> The creation date of the cost. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabTargetCost targetCost, LabCostSummaryProperties labCostSummary, IReadOnlyList<DevTestLabCostDetails> labCostDetails, IReadOnlyList<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             TargetCost = targetCost;
@@ -85,64 +55,31 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The target cost properties
-        /// Serialized Name: LabCost.properties.targetCost
-        /// </summary>
+        /// <summary> The target cost properties. </summary>
         public DevTestLabTargetCost TargetCost { get; set; }
-        /// <summary>
-        /// The lab cost summary component of the cost data.
-        /// Serialized Name: LabCost.properties.labCostSummary
-        /// </summary>
+        /// <summary> The lab cost summary component of the cost data. </summary>
         internal LabCostSummaryProperties LabCostSummary { get; }
-        /// <summary>
-        /// The cost component of the cost item.
-        /// Serialized Name: LabCostSummaryProperties.estimatedLabCost
-        /// </summary>
+        /// <summary> The cost component of the cost item. </summary>
         public double? EstimatedLabCost
         {
             get => LabCostSummary?.EstimatedLabCost;
         }
 
-        /// <summary>
-        /// The lab cost details component of the cost data.
-        /// Serialized Name: LabCost.properties.labCostDetails
-        /// </summary>
+        /// <summary> The lab cost details component of the cost data. </summary>
         public IReadOnlyList<DevTestLabCostDetails> LabCostDetails { get; }
-        /// <summary>
-        /// The resource cost component of the cost data.
-        /// Serialized Name: LabCost.properties.resourceCosts
-        /// </summary>
+        /// <summary> The resource cost component of the cost data. </summary>
         public IReadOnlyList<DevTestLabResourceCost> ResourceCosts { get; }
-        /// <summary>
-        /// The currency code of the cost.
-        /// Serialized Name: LabCost.properties.currencyCode
-        /// </summary>
+        /// <summary> The currency code of the cost. </summary>
         public string CurrencyCode { get; set; }
-        /// <summary>
-        /// The start time of the cost data.
-        /// Serialized Name: LabCost.properties.startDateTime
-        /// </summary>
+        /// <summary> The start time of the cost data. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// The end time of the cost data.
-        /// Serialized Name: LabCost.properties.endDateTime
-        /// </summary>
+        /// <summary> The end time of the cost data. </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// The creation date of the cost.
-        /// Serialized Name: LabCost.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the cost. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: LabCost.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: LabCost.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

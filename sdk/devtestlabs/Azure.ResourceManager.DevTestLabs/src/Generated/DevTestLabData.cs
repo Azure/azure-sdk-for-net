@@ -32,88 +32,30 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="defaultStorageAccount">
-        /// The lab&apos;s default storage account.
-        /// Serialized Name: Lab.properties.defaultStorageAccount
-        /// </param>
-        /// <param name="defaultPremiumStorageAccount">
-        /// The lab&apos;s default premium storage account.
-        /// Serialized Name: Lab.properties.defaultPremiumStorageAccount
-        /// </param>
-        /// <param name="artifactsStorageAccount">
-        /// The lab&apos;s artifact storage account.
-        /// Serialized Name: Lab.properties.artifactsStorageAccount
-        /// </param>
-        /// <param name="premiumDataDiskStorageAccount">
-        /// The lab&apos;s premium data disk storage account.
-        /// Serialized Name: Lab.properties.premiumDataDiskStorageAccount
-        /// </param>
-        /// <param name="vaultName">
-        /// The lab&apos;s Key vault.
-        /// Serialized Name: Lab.properties.vaultName
-        /// </param>
-        /// <param name="labStorageType">
-        /// Type of storage used by the lab. It can be either Premium or Standard. Default is Premium.
-        /// Serialized Name: Lab.properties.labStorageType
-        /// </param>
-        /// <param name="mandatoryArtifactsResourceIdsLinux">
-        /// The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user.
-        /// Serialized Name: Lab.properties.mandatoryArtifactsResourceIdsLinux
-        /// </param>
-        /// <param name="mandatoryArtifactsResourceIdsWindows">
-        /// The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user.
-        /// Serialized Name: Lab.properties.mandatoryArtifactsResourceIdsWindows
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the lab.
-        /// Serialized Name: Lab.properties.createdDate
-        /// </param>
+        /// <param name="defaultStorageAccount"> The lab&apos;s default storage account. </param>
+        /// <param name="defaultPremiumStorageAccount"> The lab&apos;s default premium storage account. </param>
+        /// <param name="artifactsStorageAccount"> The lab&apos;s artifact storage account. </param>
+        /// <param name="premiumDataDiskStorageAccount"> The lab&apos;s premium data disk storage account. </param>
+        /// <param name="vaultName"> The lab&apos;s Key vault. </param>
+        /// <param name="labStorageType"> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </param>
+        /// <param name="mandatoryArtifactsResourceIdsLinux"> The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user. </param>
+        /// <param name="mandatoryArtifactsResourceIdsWindows"> The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user. </param>
+        /// <param name="createdOn"> The creation date of the lab. </param>
         /// <param name="premiumDataDisks">
         /// The setting to enable usage of premium data disks.
         /// When its value is &apos;Enabled&apos;, creation of standard or premium data disks is allowed.
         /// When its value is &apos;Disabled&apos;, only creation of standard data disks is allowed.
-        /// Serialized Name: Lab.properties.premiumDataDisks
         /// </param>
-        /// <param name="environmentPermission">
-        /// The access rights to be granted to the user when provisioning an environment
-        /// Serialized Name: Lab.properties.environmentPermission
-        /// </param>
-        /// <param name="announcement">
-        /// The properties of any lab announcement associated with this lab
-        /// Serialized Name: Lab.properties.announcement
-        /// </param>
-        /// <param name="support">
-        /// The properties of any lab support message associated with this lab
-        /// Serialized Name: Lab.properties.support
-        /// </param>
-        /// <param name="vmCreationResourceGroup">
-        /// The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null.
-        /// Serialized Name: Lab.properties.vmCreationResourceGroup
-        /// </param>
-        /// <param name="publicIPId">
-        /// The public IP address for the lab&apos;s load balancer.
-        /// Serialized Name: Lab.properties.publicIpId
-        /// </param>
-        /// <param name="loadBalancerId">
-        /// The load balancer used to for lab VMs that use shared IP address.
-        /// Serialized Name: Lab.properties.loadBalancerId
-        /// </param>
-        /// <param name="networkSecurityGroupId">
-        /// The Network Security Group attached to the lab VMs Network interfaces to restrict open ports.
-        /// Serialized Name: Lab.properties.networkSecurityGroupId
-        /// </param>
-        /// <param name="extendedProperties">
-        /// Extended properties of the lab used for experimental features
-        /// Serialized Name: Lab.properties.extendedProperties
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: Lab.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: Lab.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="environmentPermission"> The access rights to be granted to the user when provisioning an environment. </param>
+        /// <param name="announcement"> The properties of any lab announcement associated with this lab. </param>
+        /// <param name="support"> The properties of any lab support message associated with this lab. </param>
+        /// <param name="vmCreationResourceGroup"> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </param>
+        /// <param name="publicIPId"> The public IP address for the lab&apos;s load balancer. </param>
+        /// <param name="loadBalancerId"> The load balancer used to for lab VMs that use shared IP address. </param>
+        /// <param name="networkSecurityGroupId"> The Network Security Group attached to the lab VMs Network interfaces to restrict open ports. </param>
+        /// <param name="extendedProperties"> Extended properties of the lab used for experimental features. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, DevTestLabStorageType? labStorageType, IList<string> mandatoryArtifactsResourceIdsLinux, IList<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, DevTestLabPremiumDataDisk? premiumDataDisks, DevTestLabEnvironmentPermission? environmentPermission, DevTestLabAnnouncement announcement, DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             DefaultStorageAccount = defaultStorageAccount;
@@ -138,107 +80,49 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The lab&apos;s default storage account.
-        /// Serialized Name: Lab.properties.defaultStorageAccount
-        /// </summary>
+        /// <summary> The lab&apos;s default storage account. </summary>
         public string DefaultStorageAccount { get; }
-        /// <summary>
-        /// The lab&apos;s default premium storage account.
-        /// Serialized Name: Lab.properties.defaultPremiumStorageAccount
-        /// </summary>
+        /// <summary> The lab&apos;s default premium storage account. </summary>
         public string DefaultPremiumStorageAccount { get; }
-        /// <summary>
-        /// The lab&apos;s artifact storage account.
-        /// Serialized Name: Lab.properties.artifactsStorageAccount
-        /// </summary>
+        /// <summary> The lab&apos;s artifact storage account. </summary>
         public string ArtifactsStorageAccount { get; }
-        /// <summary>
-        /// The lab&apos;s premium data disk storage account.
-        /// Serialized Name: Lab.properties.premiumDataDiskStorageAccount
-        /// </summary>
+        /// <summary> The lab&apos;s premium data disk storage account. </summary>
         public string PremiumDataDiskStorageAccount { get; }
-        /// <summary>
-        /// The lab&apos;s Key vault.
-        /// Serialized Name: Lab.properties.vaultName
-        /// </summary>
+        /// <summary> The lab&apos;s Key vault. </summary>
         public string VaultName { get; }
-        /// <summary>
-        /// Type of storage used by the lab. It can be either Premium or Standard. Default is Premium.
-        /// Serialized Name: Lab.properties.labStorageType
-        /// </summary>
+        /// <summary> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </summary>
         public DevTestLabStorageType? LabStorageType { get; set; }
-        /// <summary>
-        /// The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user.
-        /// Serialized Name: Lab.properties.mandatoryArtifactsResourceIdsLinux
-        /// </summary>
+        /// <summary> The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user. </summary>
         public IList<string> MandatoryArtifactsResourceIdsLinux { get; }
-        /// <summary>
-        /// The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user.
-        /// Serialized Name: Lab.properties.mandatoryArtifactsResourceIdsWindows
-        /// </summary>
+        /// <summary> The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user. </summary>
         public IList<string> MandatoryArtifactsResourceIdsWindows { get; }
-        /// <summary>
-        /// The creation date of the lab.
-        /// Serialized Name: Lab.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the lab. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// The setting to enable usage of premium data disks.
         /// When its value is &apos;Enabled&apos;, creation of standard or premium data disks is allowed.
         /// When its value is &apos;Disabled&apos;, only creation of standard data disks is allowed.
-        /// Serialized Name: Lab.properties.premiumDataDisks
         /// </summary>
         public DevTestLabPremiumDataDisk? PremiumDataDisks { get; set; }
-        /// <summary>
-        /// The access rights to be granted to the user when provisioning an environment
-        /// Serialized Name: Lab.properties.environmentPermission
-        /// </summary>
+        /// <summary> The access rights to be granted to the user when provisioning an environment. </summary>
         public DevTestLabEnvironmentPermission? EnvironmentPermission { get; set; }
-        /// <summary>
-        /// The properties of any lab announcement associated with this lab
-        /// Serialized Name: Lab.properties.announcement
-        /// </summary>
+        /// <summary> The properties of any lab announcement associated with this lab. </summary>
         public DevTestLabAnnouncement Announcement { get; set; }
-        /// <summary>
-        /// The properties of any lab support message associated with this lab
-        /// Serialized Name: Lab.properties.support
-        /// </summary>
+        /// <summary> The properties of any lab support message associated with this lab. </summary>
         public DevTestLabSupport Support { get; set; }
-        /// <summary>
-        /// The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null.
-        /// Serialized Name: Lab.properties.vmCreationResourceGroup
-        /// </summary>
+        /// <summary> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </summary>
         public string VmCreationResourceGroup { get; }
-        /// <summary>
-        /// The public IP address for the lab&apos;s load balancer.
-        /// Serialized Name: Lab.properties.publicIpId
-        /// </summary>
+        /// <summary> The public IP address for the lab&apos;s load balancer. </summary>
         public string PublicIPId { get; }
-        /// <summary>
-        /// The load balancer used to for lab VMs that use shared IP address.
-        /// Serialized Name: Lab.properties.loadBalancerId
-        /// </summary>
+        /// <summary> The load balancer used to for lab VMs that use shared IP address. </summary>
         public string LoadBalancerId { get; }
-        /// <summary>
-        /// The Network Security Group attached to the lab VMs Network interfaces to restrict open ports.
-        /// Serialized Name: Lab.properties.networkSecurityGroupId
-        /// </summary>
+        /// <summary> The Network Security Group attached to the lab VMs Network interfaces to restrict open ports. </summary>
         public string NetworkSecurityGroupId { get; }
-        /// <summary>
-        /// Extended properties of the lab used for experimental features
-        /// Serialized Name: Lab.properties.extendedProperties
-        /// </summary>
+        /// <summary> Extended properties of the lab used for experimental features. </summary>
         public IDictionary<string, string> ExtendedProperties { get; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: Lab.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: Lab.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

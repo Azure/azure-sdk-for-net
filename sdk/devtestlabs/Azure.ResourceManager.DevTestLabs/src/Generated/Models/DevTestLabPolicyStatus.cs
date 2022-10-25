@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The status of the policy.
-    /// Serialized Name: PolicyStatus
-    /// </summary>
+    /// <summary> The status of the policy. </summary>
     public readonly partial struct DevTestLabPolicyStatus : IEquatable<DevTestLabPolicyStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PolicyStatus.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static DevTestLabPolicyStatus Enabled { get; } = new DevTestLabPolicyStatus(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PolicyStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static DevTestLabPolicyStatus Disabled { get; } = new DevTestLabPolicyStatus(DisabledValue);
         /// <summary> Determines if two <see cref="DevTestLabPolicyStatus"/> values are the same. </summary>
         public static bool operator ==(DevTestLabPolicyStatus left, DevTestLabPolicyStatus right) => left.Equals(right);

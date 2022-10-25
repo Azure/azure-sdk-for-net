@@ -32,147 +32,42 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="notes">
-        /// The notes of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.notes
-        /// </param>
-        /// <param name="ownerObjectId">
-        /// The object identifier of the owner of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.ownerObjectId
-        /// </param>
-        /// <param name="ownerUserPrincipalName">
-        /// The user principal name of the virtual machine owner.
-        /// Serialized Name: LabVirtualMachine.properties.ownerUserPrincipalName
-        /// </param>
-        /// <param name="createdByUserId">
-        /// The object identifier of the creator of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.createdByUserId
-        /// </param>
-        /// <param name="createdByUser">
-        /// The email address of creator of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.createdByUser
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.createdDate
-        /// </param>
-        /// <param name="computeId">
-        /// The resource identifier (Microsoft.Compute) of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.computeId
-        /// </param>
-        /// <param name="customImageId">
-        /// The custom image identifier of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.customImageId
-        /// </param>
-        /// <param name="osType">
-        /// The OS type of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.osType
-        /// </param>
-        /// <param name="size">
-        /// The size of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.size
-        /// </param>
-        /// <param name="userName">
-        /// The user name of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.userName
-        /// </param>
-        /// <param name="password">
-        /// The password of the virtual machine administrator.
-        /// Serialized Name: LabVirtualMachine.properties.password
-        /// </param>
-        /// <param name="sshKey">
-        /// The SSH key of the virtual machine administrator.
-        /// Serialized Name: LabVirtualMachine.properties.sshKey
-        /// </param>
-        /// <param name="isAuthenticationWithSshKey">
-        /// Indicates whether this virtual machine uses an SSH key for authentication.
-        /// Serialized Name: LabVirtualMachine.properties.isAuthenticationWithSshKey
-        /// </param>
-        /// <param name="fqdn">
-        /// The fully-qualified domain name of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.fqdn
-        /// </param>
-        /// <param name="labSubnetName">
-        /// The lab subnet name of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.labSubnetName
-        /// </param>
-        /// <param name="labVirtualNetworkId">
-        /// The lab virtual network identifier of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.labVirtualNetworkId
-        /// </param>
-        /// <param name="isPublicIPAddressDisallowed">
-        /// Indicates whether the virtual machine is to be created without a public IP address.
-        /// Serialized Name: LabVirtualMachine.properties.disallowPublicIpAddress
-        /// </param>
-        /// <param name="artifacts">
-        /// The artifacts to be installed on the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.artifacts
-        /// </param>
-        /// <param name="artifactDeploymentStatus">
-        /// The artifact deployment status for the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.artifactDeploymentStatus
-        /// </param>
-        /// <param name="galleryImageReference">
-        /// The Microsoft Azure Marketplace image reference of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.galleryImageReference
-        /// </param>
-        /// <param name="planId">
-        /// The id of the plan associated with the virtual machine image
-        /// Serialized Name: LabVirtualMachine.properties.planId
-        /// </param>
-        /// <param name="computeVm">
-        /// The compute virtual machine properties.
-        /// Serialized Name: LabVirtualMachine.properties.computeVm
-        /// </param>
-        /// <param name="networkInterface">
-        /// The network interface properties.
-        /// Serialized Name: LabVirtualMachine.properties.networkInterface
-        /// </param>
-        /// <param name="applicableSchedule">
-        /// The applicable schedule for the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.applicableSchedule
-        /// </param>
-        /// <param name="expireOn">
-        /// The expiration date for VM.
-        /// Serialized Name: LabVirtualMachine.properties.expirationDate
-        /// </param>
-        /// <param name="allowClaim">
-        /// Indicates whether another user can take ownership of the virtual machine
-        /// Serialized Name: LabVirtualMachine.properties.allowClaim
-        /// </param>
-        /// <param name="storageType">
-        /// Storage type to use for virtual machine (i.e. Standard, Premium).
-        /// Serialized Name: LabVirtualMachine.properties.storageType
-        /// </param>
-        /// <param name="virtualMachineCreationSource">
-        /// Tells source of creation of lab virtual machine. Output property only.
-        /// Serialized Name: LabVirtualMachine.properties.virtualMachineCreationSource
-        /// </param>
-        /// <param name="environmentId">
-        /// The resource ID of the environment that contains this virtual machine, if any.
-        /// Serialized Name: LabVirtualMachine.properties.environmentId
-        /// </param>
-        /// <param name="dataDiskParameters">
-        /// New or existing data disks to attach to the virtual machine after creation
-        /// Serialized Name: LabVirtualMachine.properties.dataDiskParameters
-        /// </param>
-        /// <param name="scheduleParameters">
-        /// Virtual Machine schedules to be created
-        /// Serialized Name: LabVirtualMachine.properties.scheduleParameters
-        /// </param>
-        /// <param name="lastKnownPowerState">
-        /// Last known compute power state captured in DTL
-        /// Serialized Name: LabVirtualMachine.properties.lastKnownPowerState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: LabVirtualMachine.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: LabVirtualMachine.properties.uniqueIdentifier
-        /// </param>
-        internal DevTestLabVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? isPublicIPAddressDisallowed, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? virtualMachineCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="notes"> The notes of the virtual machine. </param>
+        /// <param name="ownerObjectId"> The object identifier of the owner of the virtual machine. </param>
+        /// <param name="ownerUserPrincipalName"> The user principal name of the virtual machine owner. </param>
+        /// <param name="createdByUserId"> The object identifier of the creator of the virtual machine. </param>
+        /// <param name="createdByUser"> The email address of creator of the virtual machine. </param>
+        /// <param name="createdOn"> The creation date of the virtual machine. </param>
+        /// <param name="computeId"> The resource identifier (Microsoft.Compute) of the virtual machine. </param>
+        /// <param name="customImageId"> The custom image identifier of the virtual machine. </param>
+        /// <param name="osType"> The OS type of the virtual machine. </param>
+        /// <param name="size"> The size of the virtual machine. </param>
+        /// <param name="userName"> The user name of the virtual machine. </param>
+        /// <param name="password"> The password of the virtual machine administrator. </param>
+        /// <param name="sshKey"> The SSH key of the virtual machine administrator. </param>
+        /// <param name="isAuthenticationWithSshKey"> Indicates whether this virtual machine uses an SSH key for authentication. </param>
+        /// <param name="fqdn"> The fully-qualified domain name of the virtual machine. </param>
+        /// <param name="labSubnetName"> The lab subnet name of the virtual machine. </param>
+        /// <param name="labVirtualNetworkId"> The lab virtual network identifier of the virtual machine. </param>
+        /// <param name="isPublicIPAddressDisallowed"> Indicates whether the virtual machine is to be created without a public IP address. </param>
+        /// <param name="artifacts"> The artifacts to be installed on the virtual machine. </param>
+        /// <param name="artifactDeploymentStatus"> The artifact deployment status for the virtual machine. </param>
+        /// <param name="galleryImageReference"> The Microsoft Azure Marketplace image reference of the virtual machine. </param>
+        /// <param name="planId"> The id of the plan associated with the virtual machine image. </param>
+        /// <param name="computeVm"> The compute virtual machine properties. </param>
+        /// <param name="networkInterface"> The network interface properties. </param>
+        /// <param name="applicableSchedule"> The applicable schedule for the virtual machine. </param>
+        /// <param name="expireOn"> The expiration date for VM. </param>
+        /// <param name="allowClaim"> Indicates whether another user can take ownership of the virtual machine. </param>
+        /// <param name="storageType"> Storage type to use for virtual machine (i.e. Standard, Premium). </param>
+        /// <param name="vmCreationSource"> Tells source of creation of lab virtual machine. Output property only. </param>
+        /// <param name="environmentId"> The resource ID of the environment that contains this virtual machine, if any. </param>
+        /// <param name="dataDiskParameters"> New or existing data disks to attach to the virtual machine after creation. </param>
+        /// <param name="scheduleParameters"> Virtual Machine schedules to be created. </param>
+        /// <param name="lastKnownPowerState"> Last known compute power state captured in DTL. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        internal DevTestLabVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? isPublicIPAddressDisallowed, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? vmCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Notes = notes;
             OwnerObjectId = ownerObjectId;
@@ -202,7 +97,7 @@ namespace Azure.ResourceManager.DevTestLabs
             ExpireOn = expireOn;
             AllowClaim = allowClaim;
             StorageType = storageType;
-            VirtualMachineCreationSource = virtualMachineCreationSource;
+            VmCreationSource = vmCreationSource;
             EnvironmentId = environmentId;
             DataDiskParameters = dataDiskParameters;
             ScheduleParameters = scheduleParameters;
@@ -211,180 +106,75 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The notes of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.notes
-        /// </summary>
+        /// <summary> The notes of the virtual machine. </summary>
         public string Notes { get; set; }
-        /// <summary>
-        /// The object identifier of the owner of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.ownerObjectId
-        /// </summary>
+        /// <summary> The object identifier of the owner of the virtual machine. </summary>
         public string OwnerObjectId { get; set; }
-        /// <summary>
-        /// The user principal name of the virtual machine owner.
-        /// Serialized Name: LabVirtualMachine.properties.ownerUserPrincipalName
-        /// </summary>
+        /// <summary> The user principal name of the virtual machine owner. </summary>
         public string OwnerUserPrincipalName { get; set; }
-        /// <summary>
-        /// The object identifier of the creator of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.createdByUserId
-        /// </summary>
+        /// <summary> The object identifier of the creator of the virtual machine. </summary>
         public string CreatedByUserId { get; }
-        /// <summary>
-        /// The email address of creator of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.createdByUser
-        /// </summary>
+        /// <summary> The email address of creator of the virtual machine. </summary>
         public string CreatedByUser { get; }
-        /// <summary>
-        /// The creation date of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the virtual machine. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// The resource identifier (Microsoft.Compute) of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.computeId
-        /// </summary>
+        /// <summary> The resource identifier (Microsoft.Compute) of the virtual machine. </summary>
         public ResourceIdentifier ComputeId { get; }
-        /// <summary>
-        /// The custom image identifier of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.customImageId
-        /// </summary>
+        /// <summary> The custom image identifier of the virtual machine. </summary>
         public string CustomImageId { get; set; }
-        /// <summary>
-        /// The OS type of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.osType
-        /// </summary>
+        /// <summary> The OS type of the virtual machine. </summary>
         public string OSType { get; }
-        /// <summary>
-        /// The size of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.size
-        /// </summary>
+        /// <summary> The size of the virtual machine. </summary>
         public string Size { get; set; }
-        /// <summary>
-        /// The user name of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.userName
-        /// </summary>
+        /// <summary> The user name of the virtual machine. </summary>
         public string UserName { get; set; }
-        /// <summary>
-        /// The password of the virtual machine administrator.
-        /// Serialized Name: LabVirtualMachine.properties.password
-        /// </summary>
+        /// <summary> The password of the virtual machine administrator. </summary>
         public string Password { get; set; }
-        /// <summary>
-        /// The SSH key of the virtual machine administrator.
-        /// Serialized Name: LabVirtualMachine.properties.sshKey
-        /// </summary>
+        /// <summary> The SSH key of the virtual machine administrator. </summary>
         public string SshKey { get; set; }
-        /// <summary>
-        /// Indicates whether this virtual machine uses an SSH key for authentication.
-        /// Serialized Name: LabVirtualMachine.properties.isAuthenticationWithSshKey
-        /// </summary>
+        /// <summary> Indicates whether this virtual machine uses an SSH key for authentication. </summary>
         public bool? IsAuthenticationWithSshKey { get; set; }
-        /// <summary>
-        /// The fully-qualified domain name of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.fqdn
-        /// </summary>
+        /// <summary> The fully-qualified domain name of the virtual machine. </summary>
         public string Fqdn { get; }
-        /// <summary>
-        /// The lab subnet name of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.labSubnetName
-        /// </summary>
+        /// <summary> The lab subnet name of the virtual machine. </summary>
         public string LabSubnetName { get; set; }
-        /// <summary>
-        /// The lab virtual network identifier of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.labVirtualNetworkId
-        /// </summary>
+        /// <summary> The lab virtual network identifier of the virtual machine. </summary>
         public ResourceIdentifier LabVirtualNetworkId { get; set; }
-        /// <summary>
-        /// Indicates whether the virtual machine is to be created without a public IP address.
-        /// Serialized Name: LabVirtualMachine.properties.disallowPublicIpAddress
-        /// </summary>
+        /// <summary> Indicates whether the virtual machine is to be created without a public IP address. </summary>
         public bool? IsPublicIPAddressDisallowed { get; set; }
-        /// <summary>
-        /// The artifacts to be installed on the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.artifacts
-        /// </summary>
+        /// <summary> The artifacts to be installed on the virtual machine. </summary>
         public IList<DevTestLabArtifactInstallInfo> Artifacts { get; }
-        /// <summary>
-        /// The artifact deployment status for the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.artifactDeploymentStatus
-        /// </summary>
+        /// <summary> The artifact deployment status for the virtual machine. </summary>
         public DevTestLabArtifactDeploymentStatus ArtifactDeploymentStatus { get; }
-        /// <summary>
-        /// The Microsoft Azure Marketplace image reference of the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.galleryImageReference
-        /// </summary>
+        /// <summary> The Microsoft Azure Marketplace image reference of the virtual machine. </summary>
         public DevTestLabGalleryImageReference GalleryImageReference { get; set; }
-        /// <summary>
-        /// The id of the plan associated with the virtual machine image
-        /// Serialized Name: LabVirtualMachine.properties.planId
-        /// </summary>
+        /// <summary> The id of the plan associated with the virtual machine image. </summary>
         public string PlanId { get; set; }
-        /// <summary>
-        /// The compute virtual machine properties.
-        /// Serialized Name: LabVirtualMachine.properties.computeVm
-        /// </summary>
+        /// <summary> The compute virtual machine properties. </summary>
         public ComputeVmProperties ComputeVm { get; }
-        /// <summary>
-        /// The network interface properties.
-        /// Serialized Name: LabVirtualMachine.properties.networkInterface
-        /// </summary>
+        /// <summary> The network interface properties. </summary>
         public DevTestLabNetworkInterface NetworkInterface { get; set; }
-        /// <summary>
-        /// The applicable schedule for the virtual machine.
-        /// Serialized Name: LabVirtualMachine.properties.applicableSchedule
-        /// </summary>
+        /// <summary> The applicable schedule for the virtual machine. </summary>
         public DevTestLabApplicableSchedule ApplicableSchedule { get; }
-        /// <summary>
-        /// The expiration date for VM.
-        /// Serialized Name: LabVirtualMachine.properties.expirationDate
-        /// </summary>
+        /// <summary> The expiration date for VM. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary>
-        /// Indicates whether another user can take ownership of the virtual machine
-        /// Serialized Name: LabVirtualMachine.properties.allowClaim
-        /// </summary>
+        /// <summary> Indicates whether another user can take ownership of the virtual machine. </summary>
         public bool? AllowClaim { get; set; }
-        /// <summary>
-        /// Storage type to use for virtual machine (i.e. Standard, Premium).
-        /// Serialized Name: LabVirtualMachine.properties.storageType
-        /// </summary>
+        /// <summary> Storage type to use for virtual machine (i.e. Standard, Premium). </summary>
         public string StorageType { get; set; }
-        /// <summary>
-        /// Tells source of creation of lab virtual machine. Output property only.
-        /// Serialized Name: LabVirtualMachine.properties.virtualMachineCreationSource
-        /// </summary>
-        public DevTestLabVmCreationSource? VirtualMachineCreationSource { get; }
-        /// <summary>
-        /// The resource ID of the environment that contains this virtual machine, if any.
-        /// Serialized Name: LabVirtualMachine.properties.environmentId
-        /// </summary>
+        /// <summary> Tells source of creation of lab virtual machine. Output property only. </summary>
+        public DevTestLabVmCreationSource? VmCreationSource { get; }
+        /// <summary> The resource ID of the environment that contains this virtual machine, if any. </summary>
         public ResourceIdentifier EnvironmentId { get; set; }
-        /// <summary>
-        /// New or existing data disks to attach to the virtual machine after creation
-        /// Serialized Name: LabVirtualMachine.properties.dataDiskParameters
-        /// </summary>
+        /// <summary> New or existing data disks to attach to the virtual machine after creation. </summary>
         public IList<DevTestLabDataDiskProperties> DataDiskParameters { get; }
-        /// <summary>
-        /// Virtual Machine schedules to be created
-        /// Serialized Name: LabVirtualMachine.properties.scheduleParameters
-        /// </summary>
+        /// <summary> Virtual Machine schedules to be created. </summary>
         public IList<DevTestLabScheduleCreationParameter> ScheduleParameters { get; }
-        /// <summary>
-        /// Last known compute power state captured in DTL
-        /// Serialized Name: LabVirtualMachine.properties.lastKnownPowerState
-        /// </summary>
+        /// <summary> Last known compute power state captured in DTL. </summary>
         public string LastKnownPowerState { get; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: LabVirtualMachine.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: LabVirtualMachine.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

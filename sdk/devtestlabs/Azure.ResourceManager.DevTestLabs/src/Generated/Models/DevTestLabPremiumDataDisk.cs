@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// The setting to enable usage of premium data disks.
     /// When its value is &apos;Enabled&apos;, creation of standard or premium data disks is allowed.
     /// When its value is &apos;Disabled&apos;, only creation of standard data disks is allowed.
-    /// Serialized Name: PremiumDataDisk
     /// </summary>
     public readonly partial struct DevTestLabPremiumDataDisk : IEquatable<DevTestLabPremiumDataDisk>
     {
@@ -30,15 +29,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PremiumDataDisk.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static DevTestLabPremiumDataDisk Disabled { get; } = new DevTestLabPremiumDataDisk(DisabledValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PremiumDataDisk.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static DevTestLabPremiumDataDisk Enabled { get; } = new DevTestLabPremiumDataDisk(EnabledValue);
         /// <summary> Determines if two <see cref="DevTestLabPremiumDataDisk"/> values are the same. </summary>
         public static bool operator ==(DevTestLabPremiumDataDisk left, DevTestLabPremiumDataDisk right) => left.Equals(right);

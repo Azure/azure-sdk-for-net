@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Information about an artifact&apos;s parameter.
-    /// Serialized Name: ParameterInfo
-    /// </summary>
+    /// <summary> Information about an artifact&apos;s parameter. </summary>
     public partial class DevTestLabParameter
     {
         /// <summary> Initializes a new instance of DevTestLabParameter. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary>
-        /// The name of the artifact parameter.
-        /// Serialized Name: ParameterInfo.name
-        /// </summary>
+        /// <summary> The name of the artifact parameter. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The value of the artifact parameter.
-        /// Serialized Name: ParameterInfo.value
-        /// </summary>
+        /// <summary> The value of the artifact parameter. </summary>
         public string Value { get; set; }
     }
 }

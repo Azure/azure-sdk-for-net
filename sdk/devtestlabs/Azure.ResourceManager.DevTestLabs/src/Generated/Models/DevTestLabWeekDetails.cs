@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of a weekly schedule.
-    /// Serialized Name: WeekDetails
-    /// </summary>
+    /// <summary> Properties of a weekly schedule. </summary>
     public partial class DevTestLabWeekDetails
     {
         /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>
-        /// <param name="weekdays">
-        /// The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.).
-        /// Serialized Name: WeekDetails.weekdays
-        /// </param>
-        /// <param name="time">
-        /// The time of the day the schedule will occur.
-        /// Serialized Name: WeekDetails.time
-        /// </param>
+        /// <param name="weekdays"> The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.). </param>
+        /// <param name="time"> The time of the day the schedule will occur. </param>
         internal DevTestLabWeekDetails(IList<string> weekdays, string time)
         {
             Weekdays = weekdays;
             Time = time;
         }
 
-        /// <summary>
-        /// The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.).
-        /// Serialized Name: WeekDetails.weekdays
-        /// </summary>
+        /// <summary> The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.). </summary>
         public IList<string> Weekdays { get; }
-        /// <summary>
-        /// The time of the day the schedule will occur.
-        /// Serialized Name: WeekDetails.time
-        /// </summary>
+        /// <summary> The time of the day the schedule will occur. </summary>
         public string Time { get; set; }
     }
 }

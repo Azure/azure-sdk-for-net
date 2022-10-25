@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of a user&apos;s secret store.
-    /// Serialized Name: UserSecretStore
-    /// </summary>
+    /// <summary> Properties of a user&apos;s secret store. </summary>
     public partial class DevTestLabUserSecretStore
     {
         /// <summary> Initializes a new instance of DevTestLabUserSecretStore. </summary>
@@ -22,29 +19,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabUserSecretStore. </summary>
-        /// <param name="keyVaultUri">
-        /// The URI of the user&apos;s Key vault.
-        /// Serialized Name: UserSecretStore.keyVaultUri
-        /// </param>
-        /// <param name="keyVaultId">
-        /// The ID of the user&apos;s Key vault.
-        /// Serialized Name: UserSecretStore.keyVaultId
-        /// </param>
+        /// <param name="keyVaultUri"> The URI of the user&apos;s Key vault. </param>
+        /// <param name="keyVaultId"> The ID of the user&apos;s Key vault. </param>
         internal DevTestLabUserSecretStore(Uri keyVaultUri, ResourceIdentifier keyVaultId)
         {
             KeyVaultUri = keyVaultUri;
             KeyVaultId = keyVaultId;
         }
 
-        /// <summary>
-        /// The URI of the user&apos;s Key vault.
-        /// Serialized Name: UserSecretStore.keyVaultUri
-        /// </summary>
+        /// <summary> The URI of the user&apos;s Key vault. </summary>
         public Uri KeyVaultUri { get; set; }
-        /// <summary>
-        /// The ID of the user&apos;s Key vault.
-        /// Serialized Name: UserSecretStore.keyVaultId
-        /// </summary>
+        /// <summary> The ID of the user&apos;s Key vault. </summary>
         public ResourceIdentifier KeyVaultId { get; set; }
     }
 }

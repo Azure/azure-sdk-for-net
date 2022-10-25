@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The artifact source&apos;s type.
-    /// Serialized Name: SourceControlType
-    /// </summary>
+    /// <summary> The artifact source&apos;s type. </summary>
     public readonly partial struct DevTestLabSourceControlType : IEquatable<DevTestLabSourceControlType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string GitHubValue = "GitHub";
         private const string StorageAccountValue = "StorageAccount";
 
-        /// <summary>
-        /// VsoGit
-        /// Serialized Name: SourceControlType.VsoGit
-        /// </summary>
+        /// <summary> VsoGit. </summary>
         public static DevTestLabSourceControlType VsoGit { get; } = new DevTestLabSourceControlType(VsoGitValue);
-        /// <summary>
-        /// GitHub
-        /// Serialized Name: SourceControlType.GitHub
-        /// </summary>
+        /// <summary> GitHub. </summary>
         public static DevTestLabSourceControlType GitHub { get; } = new DevTestLabSourceControlType(GitHubValue);
-        /// <summary>
-        /// StorageAccount
-        /// Serialized Name: SourceControlType.StorageAccount
-        /// </summary>
+        /// <summary> StorageAccount. </summary>
         public static DevTestLabSourceControlType StorageAccount { get; } = new DevTestLabSourceControlType(StorageAccountValue);
         /// <summary> Determines if two <see cref="DevTestLabSourceControlType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabSourceControlType left, DevTestLabSourceControlType right) => left.Equals(right);

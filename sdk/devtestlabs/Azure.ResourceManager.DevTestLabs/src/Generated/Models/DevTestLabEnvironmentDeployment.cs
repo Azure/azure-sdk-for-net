@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of an environment deployment.
-    /// Serialized Name: EnvironmentDeploymentProperties
-    /// </summary>
+    /// <summary> Properties of an environment deployment. </summary>
     public partial class DevTestLabEnvironmentDeployment
     {
         /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>
-        /// <param name="armTemplateId">
-        /// The Azure Resource Manager template&apos;s identifier.
-        /// Serialized Name: EnvironmentDeploymentProperties.armTemplateId
-        /// </param>
-        /// <param name="parameters">
-        /// The parameters of the Azure Resource Manager template.
-        /// Serialized Name: EnvironmentDeploymentProperties.parameters
-        /// </param>
+        /// <param name="armTemplateId"> The Azure Resource Manager template&apos;s identifier. </param>
+        /// <param name="parameters"> The parameters of the Azure Resource Manager template. </param>
         internal DevTestLabEnvironmentDeployment(ResourceIdentifier armTemplateId, IList<DevTestLabArmTemplateParameter> parameters)
         {
             ArmTemplateId = armTemplateId;
             Parameters = parameters;
         }
 
-        /// <summary>
-        /// The Azure Resource Manager template&apos;s identifier.
-        /// Serialized Name: EnvironmentDeploymentProperties.armTemplateId
-        /// </summary>
+        /// <summary> The Azure Resource Manager template&apos;s identifier. </summary>
         public ResourceIdentifier ArmTemplateId { get; set; }
-        /// <summary>
-        /// The parameters of the Azure Resource Manager template.
-        /// Serialized Name: EnvironmentDeploymentProperties.parameters
-        /// </summary>
+        /// <summary> The parameters of the Azure Resource Manager template. </summary>
         public IList<DevTestLabArmTemplateParameter> Parameters { get; }
     }
 }

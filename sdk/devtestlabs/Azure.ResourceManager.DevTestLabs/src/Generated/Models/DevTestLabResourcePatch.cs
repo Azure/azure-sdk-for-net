@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Represents an update resource
-    /// Serialized Name: UpdateResource
-    /// </summary>
+    /// <summary> Represents an update resource. </summary>
     public partial class DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabResourcePatch. </summary>
@@ -22,10 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// The tags of the resource.
-        /// Serialized Name: UpdateResource.tags
-        /// </summary>
+        /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

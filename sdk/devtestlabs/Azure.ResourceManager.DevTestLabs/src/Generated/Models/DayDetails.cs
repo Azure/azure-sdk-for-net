@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of a daily schedule.
-    /// Serialized Name: DayDetails
-    /// </summary>
+    /// <summary> Properties of a daily schedule. </summary>
     internal partial class DayDetails
     {
         /// <summary> Initializes a new instance of DayDetails. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DayDetails. </summary>
-        /// <param name="time">
-        /// The time of day the schedule will occur.
-        /// Serialized Name: DayDetails.time
-        /// </param>
+        /// <param name="time"> The time of day the schedule will occur. </param>
         internal DayDetails(string time)
         {
             Time = time;
         }
 
-        /// <summary>
-        /// The time of day the schedule will occur.
-        /// Serialized Name: DayDetails.time
-        /// </summary>
+        /// <summary> The time of day the schedule will occur. </summary>
         public string Time { get; set; }
     }
 }

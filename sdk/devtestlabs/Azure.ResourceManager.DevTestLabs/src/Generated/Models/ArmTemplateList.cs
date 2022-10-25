@@ -11,10 +11,7 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The response of a list operation.
-    /// Serialized Name: ArmTemplateList
-    /// </summary>
+    /// <summary> The response of a list operation. </summary>
     internal partial class ArmTemplateList
     {
         /// <summary> Initializes a new instance of ArmTemplateList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of ArmTemplateList. </summary>
-        /// <param name="value">
-        /// Results of the list operation.
-        /// Serialized Name: ArmTemplateList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link for next set of results.
-        /// Serialized Name: ArmTemplateList.nextLink
-        /// </param>
+        /// <param name="value"> Results of the list operation. </param>
+        /// <param name="nextLink"> Link for next set of results. </param>
         internal ArmTemplateList(IReadOnlyList<DevTestLabArmTemplateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Results of the list operation.
-        /// Serialized Name: ArmTemplateList.value
-        /// </summary>
+        /// <summary> Results of the list operation. </summary>
         public IReadOnlyList<DevTestLabArmTemplateData> Value { get; }
-        /// <summary>
-        /// Link for next set of results.
-        /// Serialized Name: ArmTemplateList.nextLink
-        /// </summary>
+        /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }
 }

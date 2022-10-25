@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Target cost status
-    /// Serialized Name: TargetCostStatus
-    /// </summary>
+    /// <summary> Target cost status. </summary>
     public readonly partial struct DevTestLabTargetCostStatus : IEquatable<DevTestLabTargetCostStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: TargetCostStatus.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static DevTestLabTargetCostStatus Enabled { get; } = new DevTestLabTargetCostStatus(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: TargetCostStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static DevTestLabTargetCostStatus Disabled { get; } = new DevTestLabTargetCostStatus(DisabledValue);
         /// <summary> Determines if two <see cref="DevTestLabTargetCostStatus"/> values are the same. </summary>
         public static bool operator ==(DevTestLabTargetCostStatus left, DevTestLabTargetCostStatus right) => left.Equals(right);

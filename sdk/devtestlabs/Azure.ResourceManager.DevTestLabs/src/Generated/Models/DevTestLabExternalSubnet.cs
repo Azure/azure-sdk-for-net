@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Subnet information as returned by the Microsoft.Network API.
-    /// Serialized Name: ExternalSubnet
-    /// </summary>
+    /// <summary> Subnet information as returned by the Microsoft.Network API. </summary>
     public partial class DevTestLabExternalSubnet
     {
         /// <summary> Initializes a new instance of DevTestLabExternalSubnet. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabExternalSubnet. </summary>
-        /// <param name="id">
-        /// Gets or sets the identifier.
-        /// Serialized Name: ExternalSubnet.id
-        /// </param>
-        /// <param name="name">
-        /// Gets or sets the name.
-        /// Serialized Name: ExternalSubnet.name
-        /// </param>
+        /// <param name="id"> Gets or sets the identifier. </param>
+        /// <param name="name"> Gets or sets the name. </param>
         internal DevTestLabExternalSubnet(ResourceIdentifier id, string name)
         {
             Id = id;
             Name = name;
         }
 
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// Serialized Name: ExternalSubnet.id
-        /// </summary>
+        /// <summary> Gets or sets the identifier. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// Gets or sets the name.
-        /// Serialized Name: ExternalSubnet.name
-        /// </summary>
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; }
     }
 }

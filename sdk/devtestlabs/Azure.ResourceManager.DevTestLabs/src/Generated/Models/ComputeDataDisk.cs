@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// A data disks attached to a virtual machine.
-    /// Serialized Name: ComputeDataDisk
-    /// </summary>
+    /// <summary> A data disks attached to a virtual machine. </summary>
     public partial class ComputeDataDisk
     {
         /// <summary> Initializes a new instance of ComputeDataDisk. </summary>
@@ -21,22 +18,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of ComputeDataDisk. </summary>
-        /// <param name="name">
-        /// Gets data disk name.
-        /// Serialized Name: ComputeDataDisk.name
-        /// </param>
-        /// <param name="diskUri">
-        /// When backed by a blob, the URI of underlying blob.
-        /// Serialized Name: ComputeDataDisk.diskUri
-        /// </param>
-        /// <param name="managedDiskId">
-        /// When backed by managed disk, this is the ID of the compute disk resource.
-        /// Serialized Name: ComputeDataDisk.managedDiskId
-        /// </param>
-        /// <param name="diskSizeGiB">
-        /// Gets data disk size in GiB.
-        /// Serialized Name: ComputeDataDisk.diskSizeGiB
-        /// </param>
+        /// <param name="name"> Gets data disk name. </param>
+        /// <param name="diskUri"> When backed by a blob, the URI of underlying blob. </param>
+        /// <param name="managedDiskId"> When backed by managed disk, this is the ID of the compute disk resource. </param>
+        /// <param name="diskSizeGiB"> Gets data disk size in GiB. </param>
         internal ComputeDataDisk(string name, Uri diskUri, string managedDiskId, int? diskSizeGiB)
         {
             Name = name;
@@ -45,25 +30,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DiskSizeGiB = diskSizeGiB;
         }
 
-        /// <summary>
-        /// Gets data disk name.
-        /// Serialized Name: ComputeDataDisk.name
-        /// </summary>
+        /// <summary> Gets data disk name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// When backed by a blob, the URI of underlying blob.
-        /// Serialized Name: ComputeDataDisk.diskUri
-        /// </summary>
+        /// <summary> When backed by a blob, the URI of underlying blob. </summary>
         public Uri DiskUri { get; }
-        /// <summary>
-        /// When backed by managed disk, this is the ID of the compute disk resource.
-        /// Serialized Name: ComputeDataDisk.managedDiskId
-        /// </summary>
+        /// <summary> When backed by managed disk, this is the ID of the compute disk resource. </summary>
         public string ManagedDiskId { get; }
-        /// <summary>
-        /// Gets data disk size in GiB.
-        /// Serialized Name: ComputeDataDisk.diskSizeGiB
-        /// </summary>
+        /// <summary> Gets data disk size in GiB. </summary>
         public int? DiskSizeGiB { get; }
     }
 }

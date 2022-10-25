@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of a cost target.
-    /// Serialized Name: TargetCostProperties
-    /// </summary>
+    /// <summary> Properties of a cost target. </summary>
     public partial class DevTestLabTargetCost
     {
         /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>
-        /// <param name="status">
-        /// Target cost status
-        /// Serialized Name: TargetCostProperties.status
-        /// </param>
-        /// <param name="target">
-        /// Lab target cost
-        /// Serialized Name: TargetCostProperties.target
-        /// </param>
-        /// <param name="costThresholds">
-        /// Cost thresholds.
-        /// Serialized Name: TargetCostProperties.costThresholds
-        /// </param>
-        /// <param name="cycleStartOn">
-        /// Reporting cycle start date.
-        /// Serialized Name: TargetCostProperties.cycleStartDateTime
-        /// </param>
-        /// <param name="cycleEndOn">
-        /// Reporting cycle end date.
-        /// Serialized Name: TargetCostProperties.cycleEndDateTime
-        /// </param>
-        /// <param name="cycleType">
-        /// Reporting cycle type.
-        /// Serialized Name: TargetCostProperties.cycleType
-        /// </param>
+        /// <param name="status"> Target cost status. </param>
+        /// <param name="target"> Lab target cost. </param>
+        /// <param name="costThresholds"> Cost thresholds. </param>
+        /// <param name="cycleStartOn"> Reporting cycle start date. </param>
+        /// <param name="cycleEndOn"> Reporting cycle end date. </param>
+        /// <param name="cycleType"> Reporting cycle type. </param>
         internal DevTestLabTargetCost(DevTestLabTargetCostStatus? status, int? target, IList<DevTestLabCostThreshold> costThresholds, DateTimeOffset? cycleStartOn, DateTimeOffset? cycleEndOn, DevTestLabReportingCycleType? cycleType)
         {
             Status = status;
@@ -58,35 +37,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             CycleType = cycleType;
         }
 
-        /// <summary>
-        /// Target cost status
-        /// Serialized Name: TargetCostProperties.status
-        /// </summary>
+        /// <summary> Target cost status. </summary>
         public DevTestLabTargetCostStatus? Status { get; set; }
-        /// <summary>
-        /// Lab target cost
-        /// Serialized Name: TargetCostProperties.target
-        /// </summary>
+        /// <summary> Lab target cost. </summary>
         public int? Target { get; set; }
-        /// <summary>
-        /// Cost thresholds.
-        /// Serialized Name: TargetCostProperties.costThresholds
-        /// </summary>
+        /// <summary> Cost thresholds. </summary>
         public IList<DevTestLabCostThreshold> CostThresholds { get; }
-        /// <summary>
-        /// Reporting cycle start date.
-        /// Serialized Name: TargetCostProperties.cycleStartDateTime
-        /// </summary>
+        /// <summary> Reporting cycle start date. </summary>
         public DateTimeOffset? CycleStartOn { get; set; }
-        /// <summary>
-        /// Reporting cycle end date.
-        /// Serialized Name: TargetCostProperties.cycleEndDateTime
-        /// </summary>
+        /// <summary> Reporting cycle end date. </summary>
         public DateTimeOffset? CycleEndOn { get; set; }
-        /// <summary>
-        /// Reporting cycle type.
-        /// Serialized Name: TargetCostProperties.cycleType
-        /// </summary>
+        /// <summary> Reporting cycle type. </summary>
         public DevTestLabReportingCycleType? CycleType { get; set; }
     }
 }

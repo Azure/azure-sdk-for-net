@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Tells source of creation of lab virtual machine. Output property only.
-    /// Serialized Name: VirtualMachineCreationSource
-    /// </summary>
+    /// <summary> Tells source of creation of lab virtual machine. Output property only. </summary>
     public readonly partial struct DevTestLabVmCreationSource : IEquatable<DevTestLabVmCreationSource>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string FromGalleryImageValue = "FromGalleryImage";
         private const string FromSharedGalleryImageValue = "FromSharedGalleryImage";
 
-        /// <summary>
-        /// FromCustomImage
-        /// Serialized Name: VirtualMachineCreationSource.FromCustomImage
-        /// </summary>
+        /// <summary> FromCustomImage. </summary>
         public static DevTestLabVmCreationSource FromCustomImage { get; } = new DevTestLabVmCreationSource(FromCustomImageValue);
-        /// <summary>
-        /// FromGalleryImage
-        /// Serialized Name: VirtualMachineCreationSource.FromGalleryImage
-        /// </summary>
+        /// <summary> FromGalleryImage. </summary>
         public static DevTestLabVmCreationSource FromGalleryImage { get; } = new DevTestLabVmCreationSource(FromGalleryImageValue);
-        /// <summary>
-        /// FromSharedGalleryImage
-        /// Serialized Name: VirtualMachineCreationSource.FromSharedGalleryImage
-        /// </summary>
+        /// <summary> FromSharedGalleryImage. </summary>
         public static DevTestLabVmCreationSource FromSharedGalleryImage { get; } = new DevTestLabVmCreationSource(FromSharedGalleryImageValue);
         /// <summary> Determines if two <see cref="DevTestLabVmCreationSource"/> values are the same. </summary>
         public static bool operator ==(DevTestLabVmCreationSource left, DevTestLabVmCreationSource right) => left.Equals(right);

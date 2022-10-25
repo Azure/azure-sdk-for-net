@@ -29,50 +29,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="diskType">
-        /// The storage type for the disk (i.e. Standard, Premium).
-        /// Serialized Name: Disk.properties.diskType
-        /// </param>
-        /// <param name="diskSizeGiB">
-        /// The size of the disk in Gibibytes.
-        /// Serialized Name: Disk.properties.diskSizeGiB
-        /// </param>
-        /// <param name="leasedByLabVmId">
-        /// The resource ID of the VM to which this disk is leased.
-        /// Serialized Name: Disk.properties.leasedByLabVmId
-        /// </param>
-        /// <param name="diskBlobName">
-        /// When backed by a blob, the name of the VHD blob without extension.
-        /// Serialized Name: Disk.properties.diskBlobName
-        /// </param>
-        /// <param name="diskUri">
-        /// When backed by a blob, the URI of underlying blob.
-        /// Serialized Name: Disk.properties.diskUri
-        /// </param>
-        /// <param name="storageAccountId">
-        /// When backed by a blob, the storage account where the blob is.
-        /// Serialized Name: Disk.properties.storageAccountId
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the disk.
-        /// Serialized Name: Disk.properties.createdDate
-        /// </param>
-        /// <param name="hostCaching">
-        /// The host caching policy of the disk (i.e. None, ReadOnly, ReadWrite).
-        /// Serialized Name: Disk.properties.hostCaching
-        /// </param>
-        /// <param name="managedDiskId">
-        /// When backed by managed disk, this is the ID of the compute disk resource.
-        /// Serialized Name: Disk.properties.managedDiskId
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning status of the resource.
-        /// Serialized Name: Disk.properties.provisioningState
-        /// </param>
-        /// <param name="uniqueIdentifier">
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: Disk.properties.uniqueIdentifier
-        /// </param>
+        /// <param name="diskType"> The storage type for the disk (i.e. Standard, Premium). </param>
+        /// <param name="diskSizeGiB"> The size of the disk in Gibibytes. </param>
+        /// <param name="leasedByLabVmId"> The resource ID of the VM to which this disk is leased. </param>
+        /// <param name="diskBlobName"> When backed by a blob, the name of the VHD blob without extension. </param>
+        /// <param name="diskUri"> When backed by a blob, the URI of underlying blob. </param>
+        /// <param name="storageAccountId"> When backed by a blob, the storage account where the blob is. </param>
+        /// <param name="createdOn"> The creation date of the disk. </param>
+        /// <param name="hostCaching"> The host caching policy of the disk (i.e. None, ReadOnly, ReadWrite). </param>
+        /// <param name="managedDiskId"> When backed by managed disk, this is the ID of the compute disk resource. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         internal DevTestLabDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabStorageType? diskType, int? diskSizeGiB, string leasedByLabVmId, string diskBlobName, Uri diskUri, string storageAccountId, DateTimeOffset? createdOn, string hostCaching, string managedDiskId, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             DiskType = diskType;
@@ -88,60 +55,27 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary>
-        /// The storage type for the disk (i.e. Standard, Premium).
-        /// Serialized Name: Disk.properties.diskType
-        /// </summary>
+        /// <summary> The storage type for the disk (i.e. Standard, Premium). </summary>
         public DevTestLabStorageType? DiskType { get; set; }
-        /// <summary>
-        /// The size of the disk in Gibibytes.
-        /// Serialized Name: Disk.properties.diskSizeGiB
-        /// </summary>
+        /// <summary> The size of the disk in Gibibytes. </summary>
         public int? DiskSizeGiB { get; set; }
-        /// <summary>
-        /// The resource ID of the VM to which this disk is leased.
-        /// Serialized Name: Disk.properties.leasedByLabVmId
-        /// </summary>
+        /// <summary> The resource ID of the VM to which this disk is leased. </summary>
         public string LeasedByLabVmId { get; set; }
-        /// <summary>
-        /// When backed by a blob, the name of the VHD blob without extension.
-        /// Serialized Name: Disk.properties.diskBlobName
-        /// </summary>
+        /// <summary> When backed by a blob, the name of the VHD blob without extension. </summary>
         public string DiskBlobName { get; set; }
-        /// <summary>
-        /// When backed by a blob, the URI of underlying blob.
-        /// Serialized Name: Disk.properties.diskUri
-        /// </summary>
+        /// <summary> When backed by a blob, the URI of underlying blob. </summary>
         public Uri DiskUri { get; set; }
-        /// <summary>
-        /// When backed by a blob, the storage account where the blob is.
-        /// Serialized Name: Disk.properties.storageAccountId
-        /// </summary>
+        /// <summary> When backed by a blob, the storage account where the blob is. </summary>
         public string StorageAccountId { get; set; }
-        /// <summary>
-        /// The creation date of the disk.
-        /// Serialized Name: Disk.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the disk. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The host caching policy of the disk (i.e. None, ReadOnly, ReadWrite).
-        /// Serialized Name: Disk.properties.hostCaching
-        /// </summary>
+        /// <summary> The host caching policy of the disk (i.e. None, ReadOnly, ReadWrite). </summary>
         public string HostCaching { get; set; }
-        /// <summary>
-        /// When backed by managed disk, this is the ID of the compute disk resource.
-        /// Serialized Name: Disk.properties.managedDiskId
-        /// </summary>
+        /// <summary> When backed by managed disk, this is the ID of the compute disk resource. </summary>
         public string ManagedDiskId { get; set; }
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// Serialized Name: Disk.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The unique immutable identifier of a resource (Guid).
-        /// Serialized Name: Disk.properties.uniqueIdentifier
-        /// </summary>
+        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
         public string UniqueIdentifier { get; }
     }
 }

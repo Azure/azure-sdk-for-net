@@ -12,9 +12,9 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class LabVirtualMachineList
+    internal partial class LabVmList
     {
-        internal static LabVirtualMachineList DeserializeLabVirtualMachineList(JsonElement element)
+        internal static LabVmList DeserializeLabVmList(JsonElement element)
         {
             Optional<IReadOnlyList<DevTestLabVmData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new LabVirtualMachineList(Optional.ToList(value), nextLink.Value);
+            return new LabVmList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

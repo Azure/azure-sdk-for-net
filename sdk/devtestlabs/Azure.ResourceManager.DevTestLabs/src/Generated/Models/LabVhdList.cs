@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// The response of a list operation.
-    /// Serialized Name: LabVhdList
-    /// </summary>
+    /// <summary> The response of a list operation. </summary>
     internal partial class LabVhdList
     {
         /// <summary> Initializes a new instance of LabVhdList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of LabVhdList. </summary>
-        /// <param name="value">
-        /// Results of the list operation.
-        /// Serialized Name: LabVhdList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link for next set of results.
-        /// Serialized Name: LabVhdList.nextLink
-        /// </param>
+        /// <param name="value"> Results of the list operation. </param>
+        /// <param name="nextLink"> Link for next set of results. </param>
         internal LabVhdList(IReadOnlyList<SubResource> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Results of the list operation.
-        /// Serialized Name: LabVhdList.value
-        /// </summary>
+        /// <summary> Results of the list operation. </summary>
         public IReadOnlyList<SubResource> Value { get; }
-        /// <summary>
-        /// Link for next set of results.
-        /// Serialized Name: LabVhdList.nextLink
-        /// </summary>
+        /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }
 }

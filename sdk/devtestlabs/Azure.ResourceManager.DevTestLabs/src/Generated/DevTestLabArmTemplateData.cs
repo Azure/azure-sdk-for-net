@@ -30,38 +30,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="displayName">
-        /// The display name of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// The description of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.description
-        /// </param>
-        /// <param name="publisher">
-        /// The publisher of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.publisher
-        /// </param>
-        /// <param name="icon">
-        /// The URI to the icon of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.icon
-        /// </param>
-        /// <param name="contents">
-        /// The contents of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.contents
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the armTemplate.
-        /// Serialized Name: ArmTemplate.properties.createdDate
-        /// </param>
-        /// <param name="parametersValueFilesInfo">
-        /// File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template.
-        /// Serialized Name: ArmTemplate.properties.parametersValueFilesInfo
-        /// </param>
-        /// <param name="enabled">
-        /// Whether or not ARM template is enabled for use by lab user.
-        /// Serialized Name: ArmTemplate.properties.enabled
-        /// </param>
+        /// <param name="displayName"> The display name of the ARM template. </param>
+        /// <param name="description"> The description of the ARM template. </param>
+        /// <param name="publisher"> The publisher of the ARM template. </param>
+        /// <param name="icon"> The URI to the icon of the ARM template. </param>
+        /// <param name="contents"> The contents of the ARM template. </param>
+        /// <param name="createdOn"> The creation date of the armTemplate. </param>
+        /// <param name="parametersValueFilesInfo"> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </param>
+        /// <param name="enabled"> Whether or not ARM template is enabled for use by lab user. </param>
         internal DevTestLabArmTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string description, string publisher, string icon, BinaryData contents, DateTimeOffset? createdOn, IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? enabled) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
@@ -74,29 +50,16 @@ namespace Azure.ResourceManager.DevTestLabs
             Enabled = enabled;
         }
 
-        /// <summary>
-        /// The display name of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.displayName
-        /// </summary>
+        /// <summary> The display name of the ARM template. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// The description of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.description
-        /// </summary>
+        /// <summary> The description of the ARM template. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The publisher of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.publisher
-        /// </summary>
+        /// <summary> The publisher of the ARM template. </summary>
         public string Publisher { get; }
-        /// <summary>
-        /// The URI to the icon of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.icon
-        /// </summary>
+        /// <summary> The URI to the icon of the ARM template. </summary>
         public string Icon { get; }
         /// <summary>
         /// The contents of the ARM template.
-        /// Serialized Name: ArmTemplate.properties.contents
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -126,20 +89,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </para>
         /// </summary>
         public BinaryData Contents { get; }
-        /// <summary>
-        /// The creation date of the armTemplate.
-        /// Serialized Name: ArmTemplate.properties.createdDate
-        /// </summary>
+        /// <summary> The creation date of the armTemplate. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template.
-        /// Serialized Name: ArmTemplate.properties.parametersValueFilesInfo
-        /// </summary>
+        /// <summary> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </summary>
         public IReadOnlyList<DevTestLabParametersValueFileInfo> ParametersValueFilesInfo { get; }
-        /// <summary>
-        /// Whether or not ARM template is enabled for use by lab user.
-        /// Serialized Name: ArmTemplate.properties.enabled
-        /// </summary>
+        /// <summary> Whether or not ARM template is enabled for use by lab user. </summary>
         public bool? Enabled { get; }
     }
 }

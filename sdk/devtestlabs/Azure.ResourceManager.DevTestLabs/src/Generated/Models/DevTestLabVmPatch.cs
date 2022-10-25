@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// A virtual machine.
-    /// Serialized Name: LabVirtualMachineFragment
-    /// </summary>
+    /// <summary> A virtual machine. </summary>
     public partial class DevTestLabVmPatch : DevTestLabResourcePatch
     {
         /// <summary> Initializes a new instance of DevTestLabVmPatch. </summary>

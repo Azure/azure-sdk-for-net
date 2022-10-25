@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value.
-    /// Serialized Name: FileUploadOptions
-    /// </summary>
+    /// <summary> Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value. </summary>
     public readonly partial struct DevTestLabFileUploadOption : IEquatable<DevTestLabFileUploadOption>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string UploadFilesAndGenerateSasTokensValue = "UploadFilesAndGenerateSasTokens";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// UploadFilesAndGenerateSasTokens
-        /// Serialized Name: FileUploadOptions.UploadFilesAndGenerateSasTokens
-        /// </summary>
+        /// <summary> UploadFilesAndGenerateSasTokens. </summary>
         public static DevTestLabFileUploadOption UploadFilesAndGenerateSasTokens { get; } = new DevTestLabFileUploadOption(UploadFilesAndGenerateSasTokensValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: FileUploadOptions.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static DevTestLabFileUploadOption None { get; } = new DevTestLabFileUploadOption(NoneValue);
         /// <summary> Determines if two <see cref="DevTestLabFileUploadOption"/> values are the same. </summary>
         public static bool operator ==(DevTestLabFileUploadOption left, DevTestLabFileUploadOption right) => left.Equals(right);
