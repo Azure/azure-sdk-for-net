@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -143,11 +143,8 @@ namespace Azure.Monitor.Ingestion.Tests
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
             options.MaxConcurrency = 10;
-            var tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8, Recording.Now.DateTime), options).ConfigureAwait(false);
-
-            var response = await tasks;
-
-            // Check the response
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8, Recording.Now.DateTime), options).ConfigureAwait(false);
+            //Check the response
             Assert.IsNotNull(response);
             Assert.AreEqual(204, response.Status);
             Assert.IsFalse(response.IsError);

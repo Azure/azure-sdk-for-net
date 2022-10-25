@@ -9,28 +9,28 @@
         "Content-Encoding": "gzip",
         "Content-Length": "169",
         "Content-Type": "application/json",
-        "traceparent": "00-913b72ba192b4bdfd517ff3b0a248b9e-692f60a6b235d821-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221021.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "bb26433d1678f08dbc249a33ca218d98",
+        "traceparent": "00-0dfef621c31dee4aab0c62904d6dd43d-47e216707cacf44b-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221024.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1da3a0875cb88f54ef9760a08075ae6c",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Time\u0022:\u00222022-10-21T16:34:00.2265901\u0022,\u0022Computer\u0022:\u0022Computer1\u0022,\u0022AdditionalContext\u0022:2},{\u0022Time\u0022:\u00222022-10-21T16:34:00.2265901\u0022,\u0022Computer\u0022:\u0022Computer2\u0022,\u0022AdditionalContext\u0022:3}]",
+      "RequestBody": "[{\u0022Time\u0022:\u00222022-10-24T17:04:30.2416336\u0022,\u0022Computer\u0022:\u0022Computer1\u0022,\u0022AdditionalContext\u0022:2},{\u0022Time\u0022:\u00222022-10-24T17:04:30.2416336\u0022,\u0022Computer\u0022:\u0022Computer2\u0022,\u0022AdditionalContext\u0022:3}]",
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Date": "Fri, 21 Oct 2022 23:34:00 GMT",
+        "Date": "Tue, 25 Oct 2022 00:04:30 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "bb26433d-1678-f08d-bc24-9a33ca218d98",
-        "x-ms-request-id": "72dc044a-ef57-4213-9622-41b15ed678ea"
+        "x-ms-client-request-id": "1da3a087-5cb8-8f54-ef97-60a08075ae6c",
+        "x-ms-request-id": "0c683e88-c575-40ea-8d74-6fe16ba7bbe9"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2022-10-21T16:34:00.2265901-07:00",
+    "DateTimeOffsetNow": "2022-10-24T17:04:30.2416336-07:00",
     "INGESTION_DATA_COLLECTION_ENDPOINT": "https://86923540-75e9-5143-84b6-7535316a68dc-lipn.westus-1.ingest.monitor.azure.com",
     "INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID": "dcr-ba536bf3cee94b1db8d04b30ee3f2e80",
     "INGESTION_STREAM_NAME": "Custom-MyTableRawData",
-    "RandomSeed": "1774021678"
+    "RandomSeed": "665627355"
   }
 }

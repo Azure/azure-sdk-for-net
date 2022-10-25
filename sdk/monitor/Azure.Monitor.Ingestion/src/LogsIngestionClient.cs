@@ -254,7 +254,6 @@ namespace Azure.Monitor.Ingestion
             int _maxWorkerCount = (options == null || options.MaxConcurrency <= 0) ? DefaultParallelWorkerCount : options.MaxConcurrency;
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
-            Response response = null;
             var exceptions = new List<Exception>();
             scope.Start();
 
@@ -315,7 +314,7 @@ namespace Azure.Monitor.Ingestion
             }
 
             // If no exceptions return response
-            return response; //204 - response of last batch with header
+            return runningTasks.Last().Result; //204 - response of last batch with header
         }
 
         private async Task<Response> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
