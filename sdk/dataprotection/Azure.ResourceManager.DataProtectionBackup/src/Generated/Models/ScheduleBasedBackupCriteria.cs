@@ -12,17 +12,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Schedule based backup criteria. </summary>
-    public partial class ScheduleBasedBackupCriteria : BackupCriteria
+    public partial class ScheduleBasedBackupCriteria : DataProtectionBackupCriteria
     {
         /// <summary> Initializes a new instance of ScheduleBasedBackupCriteria. </summary>
         public ScheduleBasedBackupCriteria()
         {
-            AbsoluteCriteria = new ChangeTrackingList<AbsoluteMarker>();
-            DaysOfMonth = new ChangeTrackingList<Day>();
-            DaysOfTheWeek = new ChangeTrackingList<DayOfWeek>();
-            MonthsOfYear = new ChangeTrackingList<Month>();
+            AbsoluteCriteria = new ChangeTrackingList<BackupAbsoluteMarker>();
+            DaysOfMonth = new ChangeTrackingList<DataProtectionBackupDay>();
+            DaysOfTheWeek = new ChangeTrackingList<DataProtectionBackupDayOfWeek>();
+            MonthsOfYear = new ChangeTrackingList<DataProtectionBackupMonth>();
             ScheduleTimes = new ChangeTrackingList<DateTimeOffset>();
-            WeeksOfTheMonth = new ChangeTrackingList<WeekNumber>();
+            WeeksOfTheMonth = new ChangeTrackingList<DataProtectionBackupWeekNumber>();
             ObjectType = "ScheduleBasedBackupCriteria";
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="monthsOfYear"> It should be January/February/....../December. </param>
         /// <param name="scheduleTimes"> List of schedule times for backup. </param>
         /// <param name="weeksOfTheMonth"> It should be First/Second/Third/Fourth/Last. </param>
-        internal ScheduleBasedBackupCriteria(string objectType, IList<AbsoluteMarker> absoluteCriteria, IList<Day> daysOfMonth, IList<DayOfWeek> daysOfTheWeek, IList<Month> monthsOfYear, IList<DateTimeOffset> scheduleTimes, IList<WeekNumber> weeksOfTheMonth) : base(objectType)
+        internal ScheduleBasedBackupCriteria(string objectType, IList<BackupAbsoluteMarker> absoluteCriteria, IList<DataProtectionBackupDay> daysOfMonth, IList<DataProtectionBackupDayOfWeek> daysOfTheWeek, IList<DataProtectionBackupMonth> monthsOfYear, IList<DateTimeOffset> scheduleTimes, IList<DataProtectionBackupWeekNumber> weeksOfTheMonth) : base(objectType)
         {
             AbsoluteCriteria = absoluteCriteria;
             DaysOfMonth = daysOfMonth;
@@ -52,16 +52,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// it contains absolute values like &quot;AllBackup&quot; / &quot;FirstOfDay&quot; / &quot;FirstOfWeek&quot; / &quot;FirstOfMonth&quot;
         /// and should be part of AbsoluteMarker enum
         /// </summary>
-        public IList<AbsoluteMarker> AbsoluteCriteria { get; }
+        public IList<BackupAbsoluteMarker> AbsoluteCriteria { get; }
         /// <summary> This is day of the month from 1 to 28 other wise last of month. </summary>
-        public IList<Day> DaysOfMonth { get; }
+        public IList<DataProtectionBackupDay> DaysOfMonth { get; }
         /// <summary> It should be Sunday/Monday/T..../Saturday. </summary>
-        public IList<DayOfWeek> DaysOfTheWeek { get; }
+        public IList<DataProtectionBackupDayOfWeek> DaysOfTheWeek { get; }
         /// <summary> It should be January/February/....../December. </summary>
-        public IList<Month> MonthsOfYear { get; }
+        public IList<DataProtectionBackupMonth> MonthsOfYear { get; }
         /// <summary> List of schedule times for backup. </summary>
         public IList<DateTimeOffset> ScheduleTimes { get; }
         /// <summary> It should be First/Second/Third/Fourth/Last. </summary>
-        public IList<WeekNumber> WeeksOfTheMonth { get; }
+        public IList<DataProtectionBackupWeekNumber> WeeksOfTheMonth { get; }
     }
 }
