@@ -258,9 +258,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             using (var fs = File.OpenRead(path))
             {
-                streamLength = fs.Length;
                 var uploadResult = await client.UploadBlobAsync(fs);
                 digest = uploadResult.Value.Digest;
+                streamLength = uploadResult.Value.Size;
             }
 
             // Assert
@@ -271,6 +271,131 @@ namespace Azure.Containers.ContainerRegistry.Tests
             //// Clean up
             await client.DeleteBlobAsync(digest);
             downloadResult.Value.Dispose();
+        }
+
+        [RecordedTest]
+        public async Task CanPushArtifact()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact");
+
+            // Act
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
+
+            OciManifest manifest = new OciManifest();
+            manifest.SchemaVersion = 2;
+
+            // Upload config
+            var configFilePath = Path.Combine(path, "config.json");
+            if (File.Exists(configFilePath))
+            {
+                using (var fs = File.OpenRead(configFilePath))
+                {
+                    var uploadResult = await client.UploadBlobAsync(fs);
+
+                    // Update manifest
+                    OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                    descriptor.Digest = uploadResult.Value.Digest;
+                    descriptor.Size = uploadResult.Value.Size;
+                    descriptor.MediaType = "application/vnd.acme.rocket.config";
+
+                    manifest.Config = descriptor;
+                }
+            }
+
+            // Upload layers
+            var manifestFilePath = Path.Combine(path, "manifest.json");
+            foreach (var file in Directory.GetFiles(path))
+            {
+                if (file != manifestFilePath && file != configFilePath)
+                {
+                    using (var fs = File.OpenRead(file))
+                    {
+                        var uploadResult = await client.UploadBlobAsync(fs);
+
+                        // Update manifest
+                        OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                        descriptor.Digest = uploadResult.Value.Digest;
+                        descriptor.Size = uploadResult.Value.Size;
+                        descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";
+
+                        manifest.Layers.Add(descriptor);
+                    }
+                }
+            }
+
+            // Finally, upload manifest
+            var uploadManifestResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions("v1"));
+
+            // Assert
+            ContainerRegistryClient registryClient = CreateClient();
+
+            var names = registryClient.GetRepositoryNamesAsync();
+            Assert.IsTrue(await names.AnyAsync(n => n == "oci-artifact"));
+
+            var properties = await registryClient.GetArtifact("oci-artifact", "v1").GetManifestPropertiesAsync();
+            Assert.AreEqual(uploadManifestResult.Value.Digest, properties.Value.Digest);
+
+            // Clean up
+            await registryClient.DeleteRepositoryAsync("oci-artifact");
+        }
+
+        [RecordedTest]
+        public async Task CanPullArtifact()
+        {
+            // Arrange
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact-test");
+            var client = CreateBlobClient("oci-artifact-test");
+
+            // Act
+
+            // Get Manifest
+
+            var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions("v1"));
+
+            // Write manifest to file
+            Directory.CreateDirectory(path);
+            string manifestFile = Path.Combine(path, "manifest.json");
+            using (FileStream fs = File.Create(manifestFile))
+            {
+                Stream stream = manifestResult.Value.ManifestStream;
+                await stream.CopyToAsync(fs);
+            }
+
+            OciManifest manifest = (OciManifest)manifestResult.Value.Manifest;
+
+            // Write Config
+            string configFileName = Path.Combine(path, "config.json");
+            using (FileStream fs = File.Create(configFileName))
+            {
+                var layerResult = await client.DownloadBlobAsync(manifest.Config.Digest);
+                Stream stream = layerResult.Value.Content;
+                await stream.CopyToAsync(fs);
+            }
+
+            // Write Layers
+            foreach (var layerFile in manifest.Layers)
+            {
+                string fileName = Path.Combine(path, TrimSha(layerFile.Digest));
+
+                using (FileStream fs = File.Create(fileName))
+                {
+                    var layerResult = await client.DownloadBlobAsync(layerFile.Digest);
+                    Stream stream = layerResult.Value.Content;
+                    await stream.CopyToAsync(fs);
+                }
+            }
+        }
+
+        private static string TrimSha(string digest)
+        {
+            int index = digest.IndexOf(':');
+            if (index > -1)
+            {
+                return digest.Substring(index + 1);
+            }
+
+            return digest;
         }
     }
 }

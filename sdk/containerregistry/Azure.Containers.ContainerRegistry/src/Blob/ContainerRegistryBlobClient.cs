@@ -315,6 +315,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 string digest = OciBlobDescriptor.ComputeDigest(stream);
+                long length = stream.Length;
 
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
@@ -325,7 +326,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(digest, uploadChunkResult.Headers.Location, null, cancellationToken);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, length), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -349,6 +350,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 string digest = OciBlobDescriptor.ComputeDigest(stream);
+                long length = stream.Length;
 
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
