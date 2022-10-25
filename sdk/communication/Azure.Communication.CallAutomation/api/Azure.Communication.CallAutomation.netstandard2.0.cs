@@ -88,7 +88,6 @@ namespace Azure.Communication.CallAutomation
     }
     public static partial class CallAutomationEventParser
     {
-        public const string EventPrefix = "Microsoft.Communication.";
         public static Azure.Communication.CallAutomation.CallAutomationEventBase Parse(Azure.Messaging.CloudEvent cloudEvent) { throw null; }
         public static Azure.Communication.CallAutomation.CallAutomationEventBase Parse(System.BinaryData json) { throw null; }
         public static Azure.Communication.CallAutomation.CallAutomationEventBase Parse(string eventData, string eventType) { throw null; }
@@ -695,11 +694,10 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class RepeatabilityHeaders
     {
+        public RepeatabilityHeaders() { }
         public RepeatabilityHeaders(System.Guid repeatabilityRequestId, System.DateTimeOffset repeatabilityFirstSent) { }
         public System.DateTimeOffset RepeatabilityFirstSent { get { throw null; } }
         public System.Guid RepeatabilityRequestId { get { throw null; } }
-        public string GetRepeatabilityFirstSentString() { throw null; }
-        public bool IsInvalidRepeatabilityHeaders() { throw null; }
     }
     public partial class ResultInformation
     {
