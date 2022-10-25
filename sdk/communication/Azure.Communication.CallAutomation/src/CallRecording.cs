@@ -51,7 +51,6 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="options">Options for start recording</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         public virtual Response<RecordingStateResult> StartRecording(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
@@ -60,9 +59,6 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
-
                 StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
@@ -79,6 +75,7 @@ namespace Azure.Communication.CallAutomation
                     }
                 };
 
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 return ContentRestClient.Recording(request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
@@ -96,7 +93,6 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="options">Options for start recording</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         public virtual async Task<Response<RecordingStateResult>> StartRecordingAsync(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
@@ -105,9 +101,6 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options.RepeatabilityHeaders != null && options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
-                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
-
                 StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
@@ -124,6 +117,7 @@ namespace Azure.Communication.CallAutomation
                     }
                 };
 
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 return await ContentRestClient.RecordingAsync(request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
