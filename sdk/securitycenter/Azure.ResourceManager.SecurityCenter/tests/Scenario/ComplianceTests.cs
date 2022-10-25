@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class ComplianceTests : SecurityCenterManagementTestBase
     {
-        private ComplianceCollection _complianceCollection => Client.GetCompliances(DefaultSubscription.Id);
+        private SecurityComplianceCollection _complianceCollection => Client.GetSecurityCompliances(DefaultSubscription.Id);
         private const string _existComplianceName = "2022-10-14Z";
 
         public ComplianceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateCompliance(list.First(item => item.Data.Name == _existComplianceName), _existComplianceName);
         }
 
-        private void ValidateCompliance(ComplianceResource compliance, string complianceName)
+        private void ValidateCompliance(SecurityComplianceResource compliance, string complianceName)
         {
             Assert.IsNotNull(compliance);
             Assert.IsNotNull(compliance.Data.Id);

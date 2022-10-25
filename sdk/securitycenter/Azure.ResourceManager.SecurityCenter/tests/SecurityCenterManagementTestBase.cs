@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             return iotHub.Value;
         }
 
-        protected async Task<IotSecuritySolutionModelResource> CreateIotSecuritySolutionModel(ResourceGroupResource resourceGroup, string iotHubId, string solutionModelName)
+        protected async Task<IotSecuritySolutionResource> CreateIotSecuritySolution(ResourceGroupResource resourceGroup, string iotHubId, string solutionModelName)
         {
-            IotSecuritySolutionModelData data = new IotSecuritySolutionModelData(resourceGroup.Data.Location)
+            IotSecuritySolutionData data = new IotSecuritySolutionData(resourceGroup.Data.Location)
             {
                 Status = SecuritySolutionStatus.Enabled,
                 UnmaskedIPLoggingStatus = UnmaskedIPLoggingStatus.Enabled,
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     new RecommendationConfigurationProperties(RecommendationType.IotSharedCredentials,RecommendationConfigStatus.Disabled),
                 }
             };
-            var iotSecuritySolutionModel = await resourceGroup.GetIotSecuritySolutionModels().CreateOrUpdateAsync(WaitUntil.Completed, solutionModelName, data);
+            var iotSecuritySolutionModel = await resourceGroup.GetIotSecuritySolutions().CreateOrUpdateAsync(WaitUntil.Completed, solutionModelName, data);
             return iotSecuritySolutionModel.Value;
         }
     }

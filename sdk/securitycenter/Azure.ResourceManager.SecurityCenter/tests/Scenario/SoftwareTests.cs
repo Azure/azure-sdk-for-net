@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class SoftwareTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private SoftwareCollection _softwareCollection;
+        private SoftwareInventoryCollection _softwareCollection;
         public SoftwareTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var network = await CreateNetwork(_resourceGroup, nsg, Recording.GenerateAssetName("vnet"));
             var networkInterface = await CreateNetworkInterface(_resourceGroup, network, Recording.GenerateAssetName("networkInterface"));
             var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Data.Id, Recording.GenerateAssetName("vm"));
-            _softwareCollection = _resourceGroup.GetSoftwares("Microsoft.Compute", "virtualMachines", vm.Data.Name);
+            _softwareCollection = _resourceGroup.GetSoftwareInventories("Microsoft.Compute", "virtualMachines", vm.Data.Name);
         }
 
         [RecordedTest]

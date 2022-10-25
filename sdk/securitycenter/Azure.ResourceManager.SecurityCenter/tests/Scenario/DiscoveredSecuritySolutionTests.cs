@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class DiscoveredSecuritySolutionTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private DiscoveredSecuritySolutionCollection _discoveredSecuritySolutionCollection;
 
         public DiscoveredSecuritySolutionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
-            _discoveredSecuritySolutionCollection = _resourceGroup.GetDiscoveredSecuritySolutions();
         }
 
         [RecordedTest]
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             string ascLocation = "";
             string discoveredSecuritySolutionName = "";
-            var discoveredSecuritySolution = await _discoveredSecuritySolutionCollection.GetAsync(ascLocation, discoveredSecuritySolutionName);
+            var discoveredSecuritySolution = await _resourceGroup.GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName);
             Assert.IsNotNull(discoveredSecuritySolution);
         }
 
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task ListByHomeRegion()
         {
-            var ascLocation = await DefaultSubscription.GetAscLocations().GetAsync("centralus");
+            var ascLocation = await DefaultSubscription.GetSecurityCenterLocations().GetAsync("centralus");
             var list = await ascLocation.Value.GetDiscoveredSecuritySolutionsByHomeRegionAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

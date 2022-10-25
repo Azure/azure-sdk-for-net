@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class AscLocationLocationAlertTests : SecurityCenterManagementTestBase
     {
-        private AscLocationResource _ascLocationResource;
-        private AscLocationLocationAlertCollection _ascLocationLocationAlertCollection;
+        private SecurityCenterLocationResource _ascLocationResource;
+        private SubscriptionSecurityAlertCollection _subscriptionSecurityAlertCollection;
         private const string _existAlertName = "2517370881989999999_7d56ae12-07f3-4f0a-8406-97650a437505";
 
         public AscLocationLocationAlertTests(bool isAsync) : base(isAsync)
@@ -26,33 +26,33 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [SetUp]
         public async Task TestSetUp()
         {
-            _ascLocationResource = await DefaultSubscription.GetAscLocations().GetAsync("centralus");
-            _ascLocationLocationAlertCollection = _ascLocationResource.GetAscLocationLocationAlerts();
+            _ascLocationResource = await DefaultSubscription.GetSecurityCenterLocations().GetAsync("centralus");
+            _subscriptionSecurityAlertCollection = _ascLocationResource.GetSubscriptionSecurityAlerts();
         }
 
         [RecordedTest]
         public async Task Exist()
         {
-            bool flag = await _ascLocationLocationAlertCollection.ExistsAsync(_existAlertName);
+            bool flag = await _subscriptionSecurityAlertCollection.ExistsAsync(_existAlertName);
             Assert.IsTrue(flag);
         }
 
         [RecordedTest]
         public async Task Get()
         {
-            var alert = await _ascLocationLocationAlertCollection.GetAsync(_existAlertName);
+            var alert = await _subscriptionSecurityAlertCollection.GetAsync(_existAlertName);
             ValidateAscLocationLocationAlert(alert);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
-            var list = await _ascLocationLocationAlertCollection.GetAllAsync().ToEnumerableAsync();
+            var list = await _subscriptionSecurityAlertCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateAscLocationLocationAlert(list.First(item => item.Data.Name == _existAlertName));
         }
 
-        private void ValidateAscLocationLocationAlert(AscLocationLocationAlertResource alert)
+        private void ValidateAscLocationLocationAlert(SubscriptionSecurityAlertResource alert)
         {
             Assert.IsNotNull(alert);
             Assert.IsNotNull(alert.Data.Id);

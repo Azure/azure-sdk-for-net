@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class IotSecurityAggregatedRecommendationTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private IotSecuritySolutionModelResource _iotSecuritySolutionModelResource;
+        private IotSecuritySolutionResource _iotSecuritySolutionResource;
         private IotSecurityAggregatedRecommendationCollection _iotSecurityAggregatedRecommendationCollection;
 
         public IotSecurityAggregatedRecommendationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             _resourceGroup = await CreateResourceGroup();
             var iotHub = await CreateIotHub(_resourceGroup, Recording.GenerateAssetName("iothub"));
-            _iotSecuritySolutionModelResource = await CreateIotSecuritySolutionModel(_resourceGroup, iotHub.Data.Id, Recording.GenerateAssetName("solution"));
-            _iotSecurityAggregatedRecommendationCollection = _iotSecuritySolutionModelResource.GetIotSecuritySolutionAnalyticsModel().GetIotSecurityAggregatedRecommendations();
+            _iotSecuritySolutionResource = await CreateIotSecuritySolution(_resourceGroup, iotHub.Data.Id, Recording.GenerateAssetName("solution"));
+            _iotSecurityAggregatedRecommendationCollection = _iotSecuritySolutionResource.GetIotSecuritySolutionAnalyticsModel().GetIotSecurityAggregatedRecommendations();
         }
 
         [RecordedTest]

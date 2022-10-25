@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class SecuritySolutionTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private SecuritySolutionCollection _securitySolutionCollection;
+        private IotSecuritySolutionCollection _securitySolutionCollection;
         public SecuritySolutionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
-            _securitySolutionCollection = _resourceGroup.GetSecuritySolutions();
+            _securitySolutionCollection = _resourceGroup.GetIotSecuritySolutions();
         }
 
         [RecordedTest]
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Exist()
         {
             string securitySolutionName = "";
-            bool flag = await _securitySolutionCollection.ExistsAsync(AzureLocation.CentralUS, securitySolutionName);
+            bool flag = await _securitySolutionCollection.ExistsAsync(securitySolutionName);
             Assert.IsTrue(flag);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Get()
         {
             string securitySolutionName = "";
-            var securitySolution = await _securitySolutionCollection.GetAsync(AzureLocation.CentralUS, securitySolutionName);
+            var securitySolution = await _securitySolutionCollection.GetAsync(securitySolutionName);
             Assert.IsNotNull(securitySolution);
         }
 

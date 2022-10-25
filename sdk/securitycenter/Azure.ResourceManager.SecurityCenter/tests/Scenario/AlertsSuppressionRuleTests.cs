@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var data = new AlertsSuppressionRuleData()
             {
                 AlertType = "VM_EICAR",
-                State = RuleState.Enabled,
+                State = AlertsSuppressionRuleState.Enabled,
                 Reason = "test",
             };
             var alertSuppressionRule = await _alertsSuppressionRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, "JustForTest", data);

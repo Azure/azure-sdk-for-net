@@ -17,29 +17,26 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class SecurityContactTests : SecurityCenterManagementTestBase
     {
         private SecurityContactCollection _SecurityContactCollection => DefaultSubscription.GetSecurityContacts();
+        private const string _securityContactName = "default";
 
         public SecurityContactTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [TearDown]
-        public async Task TestTearDown()
-        {
-            var list = await _SecurityContactCollection.GetAllAsync().ToEnumerableAsync();
-            foreach (var item in list)
-            {
-                await item.DeleteAsync(WaitUntil.Completed);
-            }
-        }
-
-        private async Task<SecurityContactResource> CreateSecurityContact(string securityContactName)
+        private async Task<SecurityContactResource> CreateSecurityContact(string securityContactName = _securityContactName)
         {
             SecurityContactData data = new SecurityContactData()
             {
-                Email = $"{Recording.GenerateAssetName("john")}@contoso.com",
+                Emails = $"{Recording.GenerateAssetName("john")}@contoso.com",
                 Phone = "18800001111",
-                AlertNotifications = AlertNotification.On,
-                AlertsToAdmins = AlertsToAdmin.Off,
+                AlertNotifications = new SecurityContactPropertiesAlertNotifications()
+                {
+                    State = SecurityAlertNotificationState.On
+                },
+                NotificationsByRole = new SecurityContactPropertiesNotificationsByRole()
+                {
+                    State = SecurityAlertNotificationByRoleState.Off,
+                },
             };
             var securityContact = await _SecurityContactCollection.CreateOrUpdateAsync(WaitUntil.Completed, securityContactName, data);
             return securityContact.Value;
@@ -48,60 +45,54 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            string securityContactName = Recording.GenerateAssetName("newSecurityContact");
-            var securityContact = await CreateSecurityContact(securityContactName);
-            ValidateSecurityContactResource(securityContact, securityContactName);
+            var securityContact = await CreateSecurityContact();
+            ValidateSecurityContactResource(securityContact, _securityContactName);
         }
 
         [RecordedTest]
         public async Task Exist()
         {
-            string securityContactName = Recording.GenerateAssetName("newSecurityContact");
-            await CreateSecurityContact(securityContactName);
-            bool flag = await _SecurityContactCollection.ExistsAsync(securityContactName);
+            await CreateSecurityContact();
+            bool flag = await _SecurityContactCollection.ExistsAsync(_securityContactName);
             Assert.IsTrue(flag);
         }
 
         [RecordedTest]
         public async Task Get()
         {
-            string securityContactName = Recording.GenerateAssetName("newSecurityContact");
-            await CreateSecurityContact(securityContactName);
-            var securityContact = await _SecurityContactCollection.GetAsync(securityContactName);
-            ValidateSecurityContactResource(securityContact, securityContactName);
+            await CreateSecurityContact();
+            var securityContact = await _SecurityContactCollection.GetAsync(_securityContactName);
+            ValidateSecurityContactResource(securityContact);
         }
 
         [RecordedTest]
+        [Ignore("OPEN ISSUE: https://github.com/Azure/azure-rest-api-specs/issues/21260")]
         public async Task GetAll()
         {
-            string securityContactName = Recording.GenerateAssetName("newSecurityContact");
-            await CreateSecurityContact(securityContactName);
+            await CreateSecurityContact();
             var list = await _SecurityContactCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateSecurityContactResource(list.First(item => item.Data.Name == securityContactName), securityContactName);
+            ValidateSecurityContactResource(list.First(item => item.Data.Name == _securityContactName));
         }
 
         [RecordedTest]
         public async Task Delete()
         {
-            string securityContactName = Recording.GenerateAssetName("newSecurityContact");
-            var securityContact = await CreateSecurityContact(securityContactName);
-            bool flag = await _SecurityContactCollection.ExistsAsync(securityContactName);
+            var securityContact = await CreateSecurityContact();
+            bool flag = await _SecurityContactCollection.ExistsAsync(_securityContactName);
             Assert.IsTrue(flag);
 
             await securityContact.DeleteAsync(WaitUntil.Completed);
-            flag = await _SecurityContactCollection.ExistsAsync(securityContactName);
+            flag = await _SecurityContactCollection.ExistsAsync(_securityContactName);
             Assert.IsFalse(flag);
         }
 
-        private void ValidateSecurityContactResource(SecurityContactResource securityContact, string securityContactName)
+        private void ValidateSecurityContactResource(SecurityContactResource securityContact, string securityContactName = _securityContactName)
         {
             Assert.IsNotNull(securityContact);
             Assert.IsNotNull(securityContact.Data.Id);
             Assert.AreEqual(securityContactName, securityContact.Data.Name);
             Assert.AreEqual("18800001111", securityContact.Data.Phone);
-            Assert.AreEqual(AlertNotification.On, securityContact.Data.AlertNotifications);
-            Assert.AreEqual(AlertsToAdmin.Off, securityContact.Data.AlertsToAdmins);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class IotSecurityAggregatedAlertTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private IotSecuritySolutionModelResource _iotSecuritySolutionModelResource;
+        private IotSecuritySolutionResource _iotSecuritySolutionModelResource;
         private IotSecurityAggregatedAlertCollection _iotSecurityAggregatedAlertCollection;
 
         public IotSecurityAggregatedAlertTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             _resourceGroup = await CreateResourceGroup();
             var iotHub = await CreateIotHub(_resourceGroup, Recording.GenerateAssetName("iothub"));
-            _iotSecuritySolutionModelResource = await CreateIotSecuritySolutionModel(_resourceGroup, iotHub.Data.Id, Recording.GenerateAssetName("solution"));
+            _iotSecuritySolutionModelResource = await CreateIotSecuritySolution(_resourceGroup, iotHub.Data.Id, Recording.GenerateAssetName("solution"));
             _iotSecurityAggregatedAlertCollection = _iotSecuritySolutionModelResource.GetIotSecuritySolutionAnalyticsModel().GetIotSecurityAggregatedAlerts();
         }
 

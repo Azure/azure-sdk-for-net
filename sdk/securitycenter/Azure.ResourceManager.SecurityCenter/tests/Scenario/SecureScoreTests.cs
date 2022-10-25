@@ -13,12 +13,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
-    internal class SecureScoreItemTests : SecurityCenterManagementTestBase
+    internal class SecureScoreTests : SecurityCenterManagementTestBase
     {
-        private SecureScoreItemCollection _secureScoreItemCollection => DefaultSubscription.GetSecureScoreItems();
+        private SecureScoreCollection _secureScoreItemCollection => DefaultSubscription.GetSecureScores();
         private const string _existSecureScoreItemName = "ascScore";
 
-        public SecureScoreItemTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public SecureScoreTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateSecureScoreItem(list.First(item => item.Data.Name == _existSecureScoreItemName));
         }
 
-        private void ValidateSecureScoreItem(SecureScoreItemResource secureScoreItem)
+        private void ValidateSecureScoreItem(SecureScoreResource secureScoreItem)
         {
             Assert.IsNotNull(secureScoreItem);
             Assert.IsNotNull(secureScoreItem.Data.Id);

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var jitVirtualMachines = new List<JitNetworkAccessPolicyVirtualMachine>()
             {
-                new JitNetworkAccessPolicyVirtualMachine(vm.Data.Id, new List<JitNetworkAccessPortRule>() { new JitNetworkAccessPortRule(8080, Protocol.TCP, TimeSpan.FromHours(5)) { AllowedSourceAddressPrefix = "192.168.0.5" } })
+                new JitNetworkAccessPolicyVirtualMachine(vm.Data.Id, new List<JitNetworkAccessPortRule>() { new JitNetworkAccessPortRule(8080, JitNetworkAccessPortProtocol.Tcp, TimeSpan.FromHours(5)) { AllowedSourceAddressPrefix = "192.168.0.5" } })
             };
             JitNetworkAccessPolicyData data = new JitNetworkAccessPolicyData(jitVirtualMachines)
             {

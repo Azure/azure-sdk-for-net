@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class SettingTests : SecurityCenterManagementTestBase
     {
         private const string _existSettingName = "WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW";
-        private SettingCollection _settingCollection;
+        private SecuritySettingCollection _settingCollection;
 
         public SettingTests(bool isAsync) : base(isAsync)
         {
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [SetUp]
         public void TestSetUp()
         {
-            _settingCollection = DefaultSubscription.GetSettings();
+            _settingCollection = DefaultSubscription.GetSecuritySettings();
         }
 
         [RecordedTest]
         [Ignore("Do not support delete")]
         public async Task CreateOrUpdate()
         {
-            SettingName settingName = "JUST_FOR_TEST";
-            SettingData data = new SettingData()
+            string settingName = "JUST_FOR_TEST";
+            SecuritySettingData data = new SecuritySettingData()
             {
                 Kind = SettingKind.DataExportSettings,
             };
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateSetting(list.First(item => item.Data.Name == _existSettingName), _existSettingName);
         }
 
-        private void ValidateSetting(SettingResource setting, string settingName)
+        private void ValidateSetting(SecuritySettingResource setting, string settingName)
         {
             Assert.IsNotNull(setting);
             Assert.IsNotNull(setting.Data.Id);

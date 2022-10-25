@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var data = new CustomAssessmentAutomationCreateOrUpdateContent()
             {
                 CompressedQuery = _compressedQuery,
-                SupportedCloud = SupportedCloudEnum.AWS,
-                Severity = SeverityEnum.Medium,
+                SupportedCloud = CustomAssessmentAutomationSupportedCloud.Aws,
+                Severity = CustomAssessmentSeverity.Medium,
                 DisplayName  = "Password Policy",
                 Description = "Data should be encrypted",
                 RemediationDescription = "Encrypt store by...",

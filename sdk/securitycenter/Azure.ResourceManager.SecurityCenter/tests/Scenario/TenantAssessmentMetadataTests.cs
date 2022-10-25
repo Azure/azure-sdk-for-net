@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.AreEqual(assessmentMetadataName, tenantAssessmentMetadataResource.Data.Name);
             Assert.AreEqual("Microsoft.Security/assessmentMetadata", tenantAssessmentMetadataResource.Data.ResourceType.ToString());
             Assert.AreEqual("Endpoint protection should be installed on machines", tenantAssessmentMetadataResource.Data.DisplayName);
-            Assert.AreEqual(Severity.High, tenantAssessmentMetadataResource.Data.Severity);
-            Assert.AreEqual(UserImpact.Low, tenantAssessmentMetadataResource.Data.UserImpact);
+            Assert.AreEqual(SecurityAssessmentSeverity.High, tenantAssessmentMetadataResource.Data.Severity);
+            Assert.AreEqual(SecurityAssessmentUserImpact.Low, tenantAssessmentMetadataResource.Data.UserImpact);
             Assert.AreEqual(ImplementationEffort.Low, tenantAssessmentMetadataResource.Data.ImplementationEffort);
         }
     }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class AutomationCollectionTests : SecurityCenterManagementTestBase
     {
-        private AutomationCollection _automationCollection => _resourceGroup.GetAutomations();
+        private SecurityAutomationCollection _automationCollection => _resourceGroup.GetSecurityAutomations();
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _workflowId;
 
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             _resourceGroup = await CreateResourceGroup();
         }
 
-        private async Task<AutomationResource> CreateSecurityAutomation(string automationName)
+        private async Task<SecurityAutomationResource> CreateSecurityAutomation(string automationName)
         {
             // prerequisites
             var workflow = await CreateLogicWorkFlow(_resourceGroup);
             _workflowId = workflow.Data.Id;
 
-            AutomationData data = new AutomationData(_resourceGroup.Data.Location)
+            SecurityAutomationData data = new SecurityAutomationData(_resourceGroup.Data.Location)
             {
                 Scopes =
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 },
                 Sources =
                 {
-                    new AutomationSource()
+                    new SecurityAutomationSource()
                     {
                         EventSource = "Assessments",
                     }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.AreEqual(0, automation.Data.Tags.Count);
         }
 
-        private void ValidateAutomation(AutomationResource automation, string automationName)
+        private void ValidateAutomation(SecurityAutomationResource automation, string automationName)
         {
             Assert.IsNotNull(automation);
             Assert.IsNotNull(automation.Data.Id);

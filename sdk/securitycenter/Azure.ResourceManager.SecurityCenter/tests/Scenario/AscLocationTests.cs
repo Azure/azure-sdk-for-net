@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class AscLocationTests : SecurityCenterManagementTestBase
     {
-        private AscLocationCollection _ascLocationCollection => DefaultSubscription.GetAscLocations();
+        private SecurityCenterLocationCollection _ascLocationCollection => DefaultSubscription.GetSecurityCenterLocations();
         private const string _existAscLocationName = "centralus";
 
         public AscLocationTests(bool isAsync) : base(isAsync)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateAscLocation(list.First(item => item.Data.Name == _existAscLocationName), _existAscLocationName);
         }
 
-        private void ValidateAscLocation(AscLocationResource ascLocation, string ascLocationName)
+        private void ValidateAscLocation(SecurityCenterLocationResource ascLocation, string ascLocationName)
         {
             Assert.IsNotNull(ascLocation);
             Assert.IsNotNull(ascLocation.Data.Id);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class PricingTests : SecurityCenterManagementTestBase
     {
-        private PricingCollection _pricingCollection;
+        private SecurityCenterPricingCollection _pricingCollection;
         public PricingTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [SetUp]
         public void TestSetUp()
         {
-            _pricingCollection = DefaultSubscription.GetPricings();
+            _pricingCollection = DefaultSubscription.GetSecurityCenterPricings();
         }
 
         [RecordedTest]

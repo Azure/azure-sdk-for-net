@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private async Task<AdaptiveApplicationControlGroupCollection> GetAdaptiveApplicationControlGroupCollection(string existAscLocationName = "centralus")
         {
-            var ascLocation = await DefaultSubscription.GetAscLocations().GetAsync(existAscLocationName);
+            var ascLocation = await DefaultSubscription.GetSecurityCenterLocations().GetAsync(existAscLocationName);
             return ascLocation.Value.GetAdaptiveApplicationControlGroups();
         }
 

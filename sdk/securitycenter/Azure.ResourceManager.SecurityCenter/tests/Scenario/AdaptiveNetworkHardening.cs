@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var list = await _adaptiveNetworkHardeningCollection.GetAllAsync().ToEnumerableAsync();
             var adaptiveNetworkHardening = list.FirstOrDefault();
 
-            List<Rule> rules = new List<Rule>()
+            List<RecommendedSecurityRule> rules = new List<RecommendedSecurityRule>()
             {
-                new Rule()
+                new RecommendedSecurityRule()
                 {
                     Name = "SystemGenerated",
-                    Direction = Direction.Inbound,
+                    Direction = SecurityTrafficDirection.Inbound,
                     DestinationPort = 3389,
                     Protocols =
                     {

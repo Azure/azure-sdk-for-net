@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class ResourceGroupLocationAlertTests : SecurityCenterManagementTestBase
     {
-        private ResourceGroupResource _resourceGroup;
-        private ResourceGroupLocationAlertCollection _resourceGroupLocationAlertCollection;
+        //private ResourceGroupResource _resourceGroup;
+        //private ResourceGroupLocationAlertCollection _resourceGroupLocationAlertCollection;
         public ResourceGroupLocationAlertTests(bool isAsync) : base(isAsync)//,RecordedTestMode.Record)
         {
         }
 
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            DefaultLocation = AzureLocation.CentralUS;
-            _resourceGroup = await CreateResourceGroup();
-            _resourceGroupLocationAlertCollection = _resourceGroup.GetResourceGroupLocationAlerts(DefaultLocation);
-        }
+        //[SetUp]
+        //public async Task TestSetUp()
+        //{
+        //    DefaultLocation = AzureLocation.CentralUS;
+        //    _resourceGroup = await CreateResourceGroup();
+        //    _resourceGroupLocationAlertCollection = _resourceGroup.GetResourceGroupSecurityAlerts();.GetResourceGroupLocationAlerts(DefaultLocation);
+        //}
 
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            var list  = await _resourceGroupLocationAlertCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
-        }
+        //[RecordedTest]
+        //public async Task GetAll()
+        //{
+        //    var list  = await _resourceGroupLocationAlertCollection.GetAllAsync().ToEnumerableAsync();
+        //    Assert.IsEmpty(list);
+        //}
     }
 }

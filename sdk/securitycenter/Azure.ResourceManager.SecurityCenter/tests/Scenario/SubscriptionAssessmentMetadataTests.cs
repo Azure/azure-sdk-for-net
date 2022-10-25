@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private async Task<SubscriptionAssessmentMetadataResource> CreateSubscriptionAssessmentMetadata(string assessmentMetadataName)
         {
-            var data = new SecurityAssessmentMetadataResponseData()
+            var data = new SecurityAssessmentMetadataData()
             {
                 DisplayName = "JustForTest",
                 Description = "JustForTest",
                 RemediationDescription = "JustForTest",
-                Categories = { Category.Compute },
-                Severity = Severity.Medium,
-                UserImpact = UserImpact.Low,
+                Categories = { SecurityAssessmentResourceCategory.Compute },
+                Severity = SecurityAssessmentSeverity.Medium,
+                UserImpact = SecurityAssessmentUserImpact.Low,
                 ImplementationEffort = ImplementationEffort.Low,
                 Threats =
                 {
-                    Threat.DataExfiltration,
-                    Threat.DataSpillage,
-                    Threat.MaliciousInsider
+                    SecurityThreat.DataExfiltration,
+                    SecurityThreat.DataSpillage,
+                    SecurityThreat.MaliciousInsider
                 },
                 AssessmentType = AssessmentType.CustomerManaged
             };
@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsTrue(flag);
 
             await subAssessmentMetadata.DeleteAsync(WaitUntil.Completed);
+            if (TestEnvironment.Mode == RecordedTestMode.Record)
+            {
+                Thread.Sleep(20000);
+            }
             flag = await _subAssessmentMetadataCollection.ExistsAsync(assessmentMetadataName);
             Assert.IsFalse(flag);
         }
@@ -115,8 +119,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.AreEqual("JustForTest", subAssessmentMetadata.Data.DisplayName);
             Assert.AreEqual("JustForTest", subAssessmentMetadata.Data.Description);
             Assert.AreEqual("JustForTest", subAssessmentMetadata.Data.RemediationDescription);
-            Assert.AreEqual(Severity.Medium, subAssessmentMetadata.Data.Severity);
-            Assert.AreEqual(UserImpact.Low, subAssessmentMetadata.Data.UserImpact);
+            Assert.AreEqual(SecurityAssessmentSeverity.Medium, subAssessmentMetadata.Data.Severity);
+            Assert.AreEqual(SecurityAssessmentUserImpact.Low, subAssessmentMetadata.Data.UserImpact);
             Assert.AreEqual(ImplementationEffort.Low, subAssessmentMetadata.Data.ImplementationEffort);
             Assert.AreEqual(AssessmentType.CustomerManaged, subAssessmentMetadata.Data.AssessmentType);
         }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class ExternalSecuritySolutionTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private ExternalSecuritySolutionCollection _externalSecuritySolutionCollection;
+        private IotSecuritySolutionCollection _externalSecuritySolutionCollection;
 
         public ExternalSecuritySolutionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -27,30 +27,29 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
-            _externalSecuritySolutionCollection = _resourceGroup.GetExternalSecuritySolutions();
+            _externalSecuritySolutionCollection = _resourceGroup.GetIotSecuritySolutions();
         }
 
         [RecordedTest]
         [Ignore("Have not exist externalSecuritySolutions")]
         public async Task Get()
         {
-            string ascLocation = "";
             string externalSecuritySolutionsName = "";
-            var externalSecuritySolutions = await _externalSecuritySolutionCollection.GetAsync(ascLocation, externalSecuritySolutionsName);
+            var externalSecuritySolutions = await _externalSecuritySolutionCollection.GetAsync( externalSecuritySolutionsName);
             Assert.IsNotNull(externalSecuritySolutions);
         }
 
         [RecordedTest]
         public async Task List()
         {
-            var list = await DefaultSubscription.GetExternalSecuritySolutionsByExternalSecuritySolutionAsync().ToEnumerableAsync();
+            var list = await DefaultSubscription.GetExternalSecuritySolutionsAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
 
         [RecordedTest]
         public async Task ListByHomeRegion()
         {
-            var ascLocation = await DefaultSubscription.GetAscLocations().GetAsync("centralus");
+            var ascLocation = await DefaultSubscription.GetSecurityCenterLocations().GetAsync("centralus");
             var list = await ascLocation.Value.GetExternalSecuritySolutionsByHomeRegionAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

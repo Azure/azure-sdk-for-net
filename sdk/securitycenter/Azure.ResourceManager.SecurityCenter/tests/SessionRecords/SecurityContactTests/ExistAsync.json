@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-788fccabbebd5f409140757ca7b8d41c-a47ab1d91b540545-00",
+        "traceparent": "00-c2b749aaf587474eb22e40105af633f6-e0a8df2f238e7e47-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "25a60040d3d01a6034375cd27686d9a5",
+        "x-ms-client-request-id": "b9d9023e526a9f072024cd8d093542a9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Oct 2022 07:49:07 GMT",
+        "Date": "Tue, 25 Oct 2022 07:11:45 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fa5b3274-eefc-4048-9d18-c7a8f081735d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "fa5b3274-eefc-4048-9d18-c7a8f081735d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221020T074907Z:fa5b3274-eefc-4048-9d18-c7a8f081735d"
+        "x-ms-correlation-request-id": "d4cdd856-e714-4493-85ad-e178a9ebf969",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "d4cdd856-e714-4493-85ad-e178a9ebf969",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T071145Z:d4cdd856-e714-4493-85ad-e178a9ebf969"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,180 +56,120 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/newSecurityContact4676?api-version=2017-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/default?api-version=2020-01-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "116",
+        "Content-Length": "143",
         "Content-Type": "application/json",
-        "traceparent": "00-2030ff19a591604d91852965829d1232-d89a9f27dec5a146-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221020.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6f1b28d7bf49ed89e7f73b9285936d2b",
+        "traceparent": "00-65c5072afb7b304c923a9ac214c1cb5e-d41d2d11ce0e7e42-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b372b43a3ad271cf8d431963c1498aa3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "properties": {
-          "email": "john79@contoso.com",
+          "emails": "john439@contoso.com",
           "phone": "18800001111",
-          "alertNotifications": "On",
-          "alertsToAdmins": "Off"
+          "alertNotifications": {
+            "state": "On"
+          },
+          "notificationsByRole": {
+            "state": "Off"
+          }
         }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2017-08-01-preview",
+        "api-supported-versions": "2020-01-01-preview",
         "Cache-Control": "no-cache",
-        "Content-Length": "396",
+        "Content-Length": "429",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Oct 2022 07:49:12 GMT",
+        "Date": "Tue, 25 Oct 2022 07:11:47 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0fb072f7-7e8b-497b-ab80-3ec52d67dfbe",
-        "x-ms-ratelimit-remaining-subscription-resource-requests": "247",
-        "x-ms-request-id": "0fb072f7-7e8b-497b-ab80-3ec52d67dfbe",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221020T074912Z:0fb072f7-7e8b-497b-ab80-3ec52d67dfbe"
+        "x-ms-correlation-request-id": "bec80ac7-85c5-434f-8280-a73398615d44",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "248",
+        "x-ms-request-id": "bec80ac7-85c5-434f-8280-a73398615d44",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T071148Z:bec80ac7-85c5-434f-8280-a73398615d44"
       },
       "ResponseBody": {
         "properties": {
-          "alertNotifications": "On",
-          "alertsToAdmins": "Off",
-          "email": "john79@contoso.com",
-          "phone": "18800001111"
-        },
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/newSecurityContact4676",
-        "name": "newSecurityContact4676",
-        "type": "Microsoft.Security/securityContacts",
-        "etag": "\u00225c000bb9-0000-0d00-0000-6350fd780000\u0022",
-        "location": "West Europe"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/newSecurityContact4676?api-version=2017-08-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-7f266228e3153541b1b3c948481bf5e2-fb93900a4b7fa748-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221020.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6d85acb2c785b298b77f395311f665bc",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "api-supported-versions": "2017-08-01-preview",
-        "Cache-Control": "no-cache",
-        "Content-Length": "396",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Oct 2022 07:49:14 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c14a82bf-0290-443e-b375-268ccc19fc09",
-        "x-ms-ratelimit-remaining-subscription-resource-requests": "745",
-        "x-ms-request-id": "c14a82bf-0290-443e-b375-268ccc19fc09",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221020T074915Z:c14a82bf-0290-443e-b375-268ccc19fc09"
-      },
-      "ResponseBody": {
-        "properties": {
-          "alertNotifications": "On",
-          "alertsToAdmins": "Off",
-          "email": "john79@contoso.com",
-          "phone": "18800001111"
-        },
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/newSecurityContact4676",
-        "name": "newSecurityContact4676",
-        "type": "Microsoft.Security/securityContacts",
-        "etag": "\u00225c000bb9-0000-0d00-0000-6350fd780000\u0022",
-        "location": "West Europe"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts?api-version=2017-08-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-d4afbc746a6d24458a48902319d797ab-5f595044716c254c-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221020.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d4c480aad184e6b69ce3ec69dfa1b2c9",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "api-supported-versions": "2017-08-01-preview",
-        "Cache-Control": "no-cache",
-        "Content-Length": "408",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Oct 2022 07:49:18 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e0acb0ef-5d2d-4014-ac4e-ebcf800cfb6b",
-        "x-ms-ratelimit-remaining-subscription-resource-requests": "744",
-        "x-ms-request-id": "e0acb0ef-5d2d-4014-ac4e-ebcf800cfb6b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221020T074919Z:e0acb0ef-5d2d-4014-ac4e-ebcf800cfb6b"
-      },
-      "ResponseBody": {
-        "value": [
-          {
-            "properties": {
-              "alertNotifications": "On",
-              "alertsToAdmins": "Off",
-              "email": "john79@contoso.com",
-              "phone": "18800001111"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/newSecurityContact4676",
-            "name": "newSecurityContact4676",
-            "type": "Microsoft.Security/securityContacts",
-            "etag": "\u00225c000bb9-0000-0d00-0000-6350fd780000\u0022",
-            "location": "West Europe"
+          "notificationsByRole": {
+            "state": "Off",
+            "roles": []
+          },
+          "emails": "john439@contoso.com",
+          "phone": "18800001111",
+          "alertNotifications": {
+            "state": "On",
+            "minimalSeverity": "High"
           }
-        ]
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/default",
+        "name": "default",
+        "type": "Microsoft.Security/securityContacts",
+        "etag": "\u00223b02cdec-0000-0d00-0000-63578c340000\u0022",
+        "location": "West Europe"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/newSecurityContact4676?api-version=2017-08-01-preview",
-      "RequestMethod": "DELETE",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/default?api-version=2020-01-01-preview",
+      "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-02d2fdb2cd22bb41911f3b289e250247-d9406f95b48cc64d-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221020.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2dd34a65b3200fc58f69b7c98535dcf0",
+        "traceparent": "00-c6a36c3055c1444cb101ab72fd4f82dc-8aa1cfb6ecd5bd4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "208b881db3e390525c29929d6f03c7ef",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 204,
+      "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2017-08-01-preview",
+        "api-supported-versions": "2020-01-01-preview",
         "Cache-Control": "no-cache",
-        "Date": "Thu, 20 Oct 2022 07:49:23 GMT",
+        "Content-Length": "429",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Oct 2022 07:11:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fc74cc63-e7e7-41b5-942d-0e0008bd80ef",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14997",
-        "x-ms-request-id": "fc74cc63-e7e7-41b5-942d-0e0008bd80ef",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221020T074923Z:fc74cc63-e7e7-41b5-942d-0e0008bd80ef"
+        "x-ms-correlation-request-id": "0f4f6b44-675b-4a4a-b88f-35e92f39136c",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "747",
+        "x-ms-request-id": "0f4f6b44-675b-4a4a-b88f-35e92f39136c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T071149Z:0f4f6b44-675b-4a4a-b88f-35e92f39136c"
       },
-      "ResponseBody": null
+      "ResponseBody": {
+        "properties": {
+          "notificationsByRole": {
+            "state": "Off",
+            "roles": []
+          },
+          "emails": "john439@contoso.com",
+          "phone": "18800001111",
+          "alertNotifications": {
+            "state": "On",
+            "minimalSeverity": "High"
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/securityContacts/default",
+        "name": "default",
+        "type": "Microsoft.Security/securityContacts",
+        "etag": "\u00223b02cdec-0000-0d00-0000-63578c340000\u0022",
+        "location": "West Europe"
+      }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1895319783",
+    "RandomSeed": "508026148",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

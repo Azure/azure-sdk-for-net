@@ -13,19 +13,19 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
-    internal class WorkspaceSettingTests : SecurityCenterManagementTestBase
+    internal class SecurityWorkspaceSettingTests : SecurityCenterManagementTestBase
     {
         private const string _workspaceSettingName = "default";
-        private WorkspaceSettingCollection _workspaceSettingCollection;
+        private SecurityWorkspaceSettingCollection _workspaceSettingCollection;
 
-        public WorkspaceSettingTests(bool isAsync) : base(isAsync)
+        public SecurityWorkspaceSettingTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
         public void TestSetUp()
         {
-            _workspaceSettingCollection = DefaultSubscription.GetWorkspaceSettings();
+            _workspaceSettingCollection = DefaultSubscription.GetSecurityWorkspaceSettings();
         }
 
         [TearDown]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             // TODO: Create a workspace
 
-            WorkspaceSettingData data = new WorkspaceSettingData()
+            SecurityWorkspaceSettingData data = new SecurityWorkspaceSettingData()
             {
                 Scope = $"{DefaultSubscription.Id}",
                 WorkspaceId = $"<WORKSPACE_ID>"

@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b17727088110004ba36ac8dbaf1898d3-ee9bafd2074f184c-00",
+        "traceparent": "00-957c60f37c2a47439c329a2aa96e5535-e170468bfd69164b-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "066048af8f037da7925f424115046d16",
+        "x-ms-client-request-id": "bd17caeb26b62c1ec14bd11240aa48ba",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 24 Oct 2022 06:22:23 GMT",
+        "Date": "Tue, 25 Oct 2022 07:53:47 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "568520fd-7b92-4f64-8460-df63e045fe41",
+        "x-ms-correlation-request-id": "b6286279-ce6e-438c-9333-3dfbe2ab884b",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "568520fd-7b92-4f64-8460-df63e045fe41",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062224Z:568520fd-7b92-4f64-8460-df63e045fe41"
+        "x-ms-request-id": "b6286279-ce6e-438c-9333-3dfbe2ab884b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T075347Z:b6286279-ce6e-438c-9333-3dfbe2ab884b"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/246ca9d2-f82d-7e8f-40e1-89f21f617dfb?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/394902d8-4502-4d43-e32c-87aa203b3251?api-version=2021-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "304",
         "Content-Type": "application/json",
-        "traceparent": "00-4c133d3287afac40892b94bc90dc1092-978d56b9e26d3148-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e6d733bfa94b26f6b97284ef84aa485e",
+        "traceparent": "00-60c93396fe528d4998a14d58a81b6f3f-3b7794cedf9a144a-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c5c11f6bc4081896e51b158d2e7f0330",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -92,19 +92,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "541",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 24 Oct 2022 06:22:26 GMT",
+        "Date": "Tue, 25 Oct 2022 07:53:51 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6f18d1fc-11bb-471e-b612-dac6554920b6",
+        "x-ms-correlation-request-id": "8368b071-8c6a-476b-a1e9-24056125d143",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "6f18d1fc-11bb-471e-b612-dac6554920b6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062227Z:6f18d1fc-11bb-471e-b612-dac6554920b6"
+        "x-ms-request-id": "8368b071-8c6a-476b-a1e9-24056125d143",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T075351Z:8368b071-8c6a-476b-a1e9-24056125d143"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/246ca9d2-f82d-7e8f-40e1-89f21f617dfb",
-        "name": "246ca9d2-f82d-7e8f-40e1-89f21f617dfb",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/394902d8-4502-4d43-e32c-87aa203b3251",
+        "name": "394902d8-4502-4d43-e32c-87aa203b3251",
         "type": "Microsoft.Security/assessmentMetadata",
         "properties": {
           "displayName": "JustForTest",
@@ -131,26 +131,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-678cab3a7a40c148b6c03c3e1895d0c3-4be59a32162f1b45-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "db5905e060adb69fb8e2c52206b55e31",
+        "traceparent": "00-2f0f486e0838db458d73cf7b9b17068b-ce4d8993c39a5340-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b7eeb7b062fca62f87c9da8a9f740c86",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1307543",
+        "Content-Length": "1307308",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 24 Oct 2022 06:22:27 GMT",
+        "Date": "Tue, 25 Oct 2022 07:53:52 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "49a3a25c-f2b8-4d2d-b38b-d5e483a60b78",
+        "x-ms-correlation-request-id": "40fce810-1a9f-4450-8acc-e61eb9436974",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "749",
-        "x-ms-request-id": "49a3a25c-f2b8-4d2d-b38b-d5e483a60b78",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062227Z:49a3a25c-f2b8-4d2d-b38b-d5e483a60b78"
+        "x-ms-request-id": "40fce810-1a9f-4450-8acc-e61eb9436974",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T075353Z:40fce810-1a9f-4450-8acc-e61eb9436974"
       },
       "ResponseBody": {
         "value": [
@@ -15378,7 +15378,7 @@
               "displayName": "SSM agent should be installed on your AWS EC2 instances",
               "assessmentType": "BuiltIn",
               "policyDefinitionId": "",
-              "description": "Systems Manager is an AWS service that can be used to control and view your AWS infrastructure. The AWS Systems Manager Agent (SSM Agent) is a software that can be installed and configured on a machine and makes it possible for Systems Manager to update and configure these resources. Security Center leverages the SSM Agent for automatic installation of Azure Arc, that enables greater parity for AWS instances to Azure VMs.",
+              "description": "Systems Manager is an AWS service that can be used to control and view your AWS infrastructure. The AWS Systems Manager Agent (SSM Agent) is a software that can be installed and configured on a machine and makes it possible for Systems Manager to update and configure these resources. Defender for Cloud leverages the SSM Agent for automatic installation of Azure Arc, that enables greater parity for AWS instances to Azure VMs.",
               "remediationDescription": "First, Make sure EC2 instances are managed by Systems Manager: 1.Open \u003Ca target=\u0022_blank\u0022 href=\u0022https://console.aws.amazon.com/systems-manager/\u0022\u003EAWS System Manager\u003C/a\u003E.\u003Cbr\u003E2. Choose Quick setup\u003Cbr\u003E3. keep the default options on the configuration screen.\u003Cbr\u003E4. Choose Set up Systems Manager. \u003Cbr\u003E For directions on installing and configuring the SSM Agent on Windows instances visit \u003Ca target=\u0022_blank\u0022 href=\u0022https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-install-ssm-win.html\u0022\u003E this page \u003C/a\u003E For directions on installing and configuring the SSM Agent on Linux instances visit \u003Ca target=\u0022_blank\u0022 href=\u0022https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-install-ssm-agent.html\u0022\u003E this page \u003C/a\u003E ",
               "categories": [
                 "Compute"
@@ -15440,7 +15440,7 @@
               "displayName": "AWS Security Hub should be enabled for all AWS member accounts",
               "assessmentType": "BuiltIn",
               "policyDefinitionId": "",
-              "description": "AWS Security Hub provides you with a comprehensive view of your security state within AWS and your compliance with security standards and best practices. Integrating it into Security Center enables a comprehensive view across multiple cloud environments. any AWS member account related to an onboarded account should have Security Hub enabled as well.",
+              "description": "AWS Security Hub provides you with a comprehensive view of your security state within AWS and your compliance with security standards and best practices. Integrating it into Defender for Cloud enables a comprehensive view across multiple cloud environments. any AWS member account related to an onboarded account should have Security Hub enabled as well.",
               "remediationDescription": "For instructions on how to remediate this issue, please visit \u003Ca target=\u0022_blank\u0022 href=\u0022https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-settingup.html\u0022\u003EAWS security hub documentation\u003C/a\u003E",
               "categories": [
                 "IdentityAndAccess"
@@ -23061,11 +23061,11 @@
             "name": "4e8c00a2-e8bc-42a8-9e12-99584a51ad10",
             "type": "Microsoft.Security/assessmentMetadata",
             "properties": {
-              "displayName": "API endpoints that are unused should be disabled and removed from API specification documentation",
+              "displayName": "API endpoints that are unused should be disabled and removed from the Azure API Management service",
               "assessmentType": "BuiltIn",
               "policyDefinitionId": "",
               "description": "API endpoints that are no longer in use should be removed from the Azure API Management service as a best practice. API endpoints that are unused (haven\u0027t received traffic for a threshold of 30 days) may pose a risk to an organization. These may be APIs that should have been deprecated from the Azure API Management service, but may have been accidently left as active and they may not be receiving the most up to date security coverage.",
-              "remediationDescription": "Note: Manually verify that the API endpoint is unused and consider any potential impact this may cause before removing the API endpoint from the Azure API Management service. \u003Cbr\u003E1. Navigate to the Azure API Management (APIM) resource for the unhealthy resources within the Azure Portal. \u003Cbr\u003E2. In the left pane, click APIs. \u003Cbr\u003E3. Select the API with the associated API collection name that is hosting the affected API endpoint (in Azure API Management known as \u0022API operation\u0022)\u003Cbr\u003E4. Click the elipses next to the endpoint, click \u0022Delete\u0022 to remove the unused API endpoint",
+              "remediationDescription": "Note: Manually verify that the API endpoint is unused and consider any potential impact this may cause before removing the API endpoint from the Azure API Management service. \u003Cbr\u003E1. Navigate to the Azure API Management resource to locate the unhealthy resources within the Azure Portal \u003Cbr\u003E2. In the left pane, select APIs. \u003Cbr\u003E3. Select the API with the associated API collection name that is hosting the affected API endpoint (in Azure API Management, known as \u0022API operation\u0022)\u003Cbr\u003E4. Select the elipses next to the endpoint, click \u0022Delete\u0022 to remove the unused API endpoint",
               "categories": [
                 "Data"
               ],
@@ -23091,8 +23091,8 @@
               "displayName": "API endpoints in Azure API Management should be authenticated",
               "assessmentType": "BuiltIn",
               "policyDefinitionId": "",
-              "description": "Authentication mechanisms are often implemented incorrectly or missing, allowing attackers to exploit implementation flaws to access data. API endpoints published within API Management should enforce authentication to help minimize this risk.",
-              "remediationDescription": "1. Verify the configuration of the authentication on the API endpoint. For APIs published in Azure API Management, this recommendation assesses the execution of authentication via the Subscription Keys, JWT and Client Certificate configured within Azure API Management. If none of these authentication mechanisms are present, or if none of these authentication mechanisms are executed, the API will receive this recommendation. \u003Cbr\u003E2. After the assessment, if the API is verified and is missing or incorrectly configured authentication, enable \u0026 ensure the proper configuration of authentication for the API endpoint. For Azure API Management, steps and a reference example regarding how to enable authentication can be found here in this document: API Management authentication policies",
+              "description": "Authentication mechanisms are often implemented incorrectly or are missing. This allows attackers to exploit implementation flaws and to access data. API endpoints published within Azure API Management should enforce authentication to help minimize this risk. \u003Ca href=\u0022https://learn.microsoft.com/en-us/azure/api-management/mitigate-owasp-api-threats#broken-user-authentication\u0022 target=\u0022_blank\u0022\u003ELearn More\u003C/a\u003E",
+              "remediationDescription": "1. Verify the configuration of the authentication on the API endpoint. For APIs published in Azure API Management, this recommendation assesses the execution of authentication via the Subscription Keys, JWT and Client Certificate configured within Azure API Management. If none of these authentication mechanisms are present, or if none of these authentication mechanisms are executed, the API will receive this recommendation. \u003Cbr\u003E2. After the assessment, if the API is verified and is missing or incorrectly configured authentication, enable \u0026 ensure the proper configuration of authentication for the API endpoint. For Azure API Management, steps and a reference example regarding how to enable authentication can be found here in this document: \u003Ca href=\u0022https://learn.microsoft.com/en-us/azure/api-management/api-management-authentication-policies\u0022 target=\u0022_blank\u0022\u003EAPI Management authentication policies\u003C/a\u003E",
               "categories": [
                 "Data"
               ],
@@ -23108,8 +23108,8 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/ae5e9339-948e-e11d-fc06-6249fb00126f",
-            "name": "ae5e9339-948e-e11d-fc06-6249fb00126f",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/4d1a60b7-0adb-cd4a-a460-2bf079aaba5a",
+            "name": "4d1a60b7-0adb-cd4a-a460-2bf079aaba5a",
             "type": "Microsoft.Security/assessmentMetadata",
             "properties": {
               "displayName": "JustForTest",
@@ -23130,8 +23130,8 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/31d3673e-83c7-f6ac-73c9-5c35868df81f",
-            "name": "31d3673e-83c7-f6ac-73c9-5c35868df81f",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/71e39879-ad58-12e1-6a27-85bb3ee8db8e",
+            "name": "71e39879-ad58-12e1-6a27-85bb3ee8db8e",
             "type": "Microsoft.Security/assessmentMetadata",
             "properties": {
               "displayName": "JustForTest",
@@ -23152,8 +23152,8 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/d36bfaf6-f43b-0829-a98a-1f873f1a82e5",
-            "name": "d36bfaf6-f43b-0829-a98a-1f873f1a82e5",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/7d81fe2f-20d7-eb6f-fc42-2356ed90de9f",
+            "name": "7d81fe2f-20d7-eb6f-fc42-2356ed90de9f",
             "type": "Microsoft.Security/assessmentMetadata",
             "properties": {
               "displayName": "JustForTest",
@@ -23174,8 +23174,8 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/7a97728e-bd96-a18a-efe6-1600f118ffc7",
-            "name": "7a97728e-bd96-a18a-efe6-1600f118ffc7",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/5d4e4060-73d6-4ab7-ea9a-be2777368dc6",
+            "name": "5d4e4060-73d6-4ab7-ea9a-be2777368dc6",
             "type": "Microsoft.Security/assessmentMetadata",
             "properties": {
               "displayName": "JustForTest",
@@ -23196,8 +23196,8 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/0f3899c5-2078-0a22-dc49-e58d735ca79d",
-            "name": "0f3899c5-2078-0a22-dc49-e58d735ca79d",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/0141c73c-f6ba-e50e-dccb-c2d1d6c472aa",
+            "name": "0141c73c-f6ba-e50e-dccb-c2d1d6c472aa",
             "type": "Microsoft.Security/assessmentMetadata",
             "properties": {
               "displayName": "JustForTest",
@@ -23218,30 +23218,8 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/b7f2fcb4-7e89-2b0c-f0c5-7e5437b52d04",
-            "name": "b7f2fcb4-7e89-2b0c-f0c5-7e5437b52d04",
-            "type": "Microsoft.Security/assessmentMetadata",
-            "properties": {
-              "displayName": "JustForTest",
-              "assessmentType": "CustomerManaged",
-              "description": "JustForTest",
-              "remediationDescription": "JustForTest",
-              "categories": [
-                "Compute"
-              ],
-              "severity": "Medium",
-              "userImpact": "Low",
-              "implementationEffort": "Low",
-              "threats": [
-                "DataExfiltration",
-                "DataSpillage",
-                "MaliciousInsider"
-              ]
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/246ca9d2-f82d-7e8f-40e1-89f21f617dfb",
-            "name": "246ca9d2-f82d-7e8f-40e1-89f21f617dfb",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/394902d8-4502-4d43-e32c-87aa203b3251",
+            "name": "394902d8-4502-4d43-e32c-87aa203b3251",
             "type": "Microsoft.Security/assessmentMetadata",
             "properties": {
               "displayName": "JustForTest",
@@ -23265,14 +23243,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/ae5e9339-948e-e11d-fc06-6249fb00126f?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/4d1a60b7-0adb-cd4a-a460-2bf079aaba5a?api-version=2021-06-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-85a1064bd28f8946afc729e92a2f6d82-eceabf4eaef2234d-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e18247e2862d28cbb2466abb74a0fa95",
+        "traceparent": "00-5046ae9339dece4691eafe4e155d79d7-d912d17b730c834e-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "20a6801983e814b16c3154e72fb51f63",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -23280,27 +23258,27 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 24 Oct 2022 06:22:31 GMT",
+        "Date": "Tue, 25 Oct 2022 07:54:02 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "32040ac4-28bb-4a35-8997-4113892ba369",
+        "x-ms-correlation-request-id": "15a95d7c-2ede-4219-a8f9-e2c080507201",
         "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "32040ac4-28bb-4a35-8997-4113892ba369",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062232Z:32040ac4-28bb-4a35-8997-4113892ba369"
+        "x-ms-request-id": "15a95d7c-2ede-4219-a8f9-e2c080507201",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T075403Z:15a95d7c-2ede-4219-a8f9-e2c080507201"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/31d3673e-83c7-f6ac-73c9-5c35868df81f?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/71e39879-ad58-12e1-6a27-85bb3ee8db8e?api-version=2021-06-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-16c5e88e7ca87d4e831d000d26731dd6-b2f024ebccf15e41-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "19112b98a2075e4e93202e69e3d41f04",
+        "traceparent": "00-1b330fb34c908f45b9a6c18507f27bb2-d5a06c5fb27f5247-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "68f957287a4d0854ef1b3d3fea0b7970",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -23308,27 +23286,27 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 24 Oct 2022 06:22:32 GMT",
+        "Date": "Tue, 25 Oct 2022 07:54:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6ab35826-305a-4bab-8f6d-08cbe717c26d",
+        "x-ms-correlation-request-id": "5b655704-59d4-43b8-949d-34d5c8117db0",
         "x-ms-ratelimit-remaining-subscription-deletes": "14998",
-        "x-ms-request-id": "6ab35826-305a-4bab-8f6d-08cbe717c26d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062233Z:6ab35826-305a-4bab-8f6d-08cbe717c26d"
+        "x-ms-request-id": "5b655704-59d4-43b8-949d-34d5c8117db0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T075405Z:5b655704-59d4-43b8-949d-34d5c8117db0"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/d36bfaf6-f43b-0829-a98a-1f873f1a82e5?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/7d81fe2f-20d7-eb6f-fc42-2356ed90de9f?api-version=2021-06-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-921c17c1d770494bb5569c4f06fba000-12a93d0e994c9342-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3d0c531466285a313a302866f6e44218",
+        "traceparent": "00-9733306fd82ee9439095417fccd2d022-239f89ecbe4bdf44-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ae738f0fe3d82c4706da4bcb0e4876d1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -23336,27 +23314,27 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 24 Oct 2022 06:22:33 GMT",
+        "Date": "Tue, 25 Oct 2022 07:54:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "db1f9052-bdc8-4a4e-96d2-3dd8afa69cf8",
+        "x-ms-correlation-request-id": "60321f74-5b60-45e6-a5a1-0d033811df1d",
         "x-ms-ratelimit-remaining-subscription-deletes": "14997",
-        "x-ms-request-id": "db1f9052-bdc8-4a4e-96d2-3dd8afa69cf8",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062234Z:db1f9052-bdc8-4a4e-96d2-3dd8afa69cf8"
+        "x-ms-request-id": "60321f74-5b60-45e6-a5a1-0d033811df1d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T075407Z:60321f74-5b60-45e6-a5a1-0d033811df1d"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/7a97728e-bd96-a18a-efe6-1600f118ffc7?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/5d4e4060-73d6-4ab7-ea9a-be2777368dc6?api-version=2021-06-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f8c17d9d24d01a4891d827cee1782373-aabb3bb9b7699a4c-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "db892fe844a34029f9234e0c586245dd",
+        "traceparent": "00-c6a62f174014af408a43100120211c48-4dd3d0e548f6084f-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "476276aaa37a9e382b9e30cd45722960",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -23364,27 +23342,27 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 24 Oct 2022 06:22:35 GMT",
+        "Date": "Tue, 25 Oct 2022 07:54:07 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "df5474d1-b451-4e13-8e20-84e15dd5c368",
+        "x-ms-correlation-request-id": "79eb5313-c3db-42cd-9e23-b3cfe694e9a6",
         "x-ms-ratelimit-remaining-subscription-deletes": "14996",
-        "x-ms-request-id": "df5474d1-b451-4e13-8e20-84e15dd5c368",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062235Z:df5474d1-b451-4e13-8e20-84e15dd5c368"
+        "x-ms-request-id": "79eb5313-c3db-42cd-9e23-b3cfe694e9a6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T075408Z:79eb5313-c3db-42cd-9e23-b3cfe694e9a6"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/0f3899c5-2078-0a22-dc49-e58d735ca79d?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/0141c73c-f6ba-e50e-dccb-c2d1d6c472aa?api-version=2021-06-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-134d5c7928a2b542855d10d1b3a10f73-b007b32ae8bca045-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "21a66526bc93326df9b7dfd779e768af",
+        "traceparent": "00-d3c961f6ebebe444ae0e88a5336db97b-1f114dce02f8c640-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a0d7e3b77142448a0fcd62722f89f9a7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -23392,27 +23370,27 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 24 Oct 2022 06:22:35 GMT",
+        "Date": "Tue, 25 Oct 2022 07:54:09 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "22772408-c7be-4f65-9cd3-7dd97d291c9c",
+        "x-ms-correlation-request-id": "da9f15a2-518a-4a18-9d45-080b8a540943",
         "x-ms-ratelimit-remaining-subscription-deletes": "14995",
-        "x-ms-request-id": "22772408-c7be-4f65-9cd3-7dd97d291c9c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062235Z:22772408-c7be-4f65-9cd3-7dd97d291c9c"
+        "x-ms-request-id": "da9f15a2-518a-4a18-9d45-080b8a540943",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T075409Z:da9f15a2-518a-4a18-9d45-080b8a540943"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/b7f2fcb4-7e89-2b0c-f0c5-7e5437b52d04?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/394902d8-4502-4d43-e32c-87aa203b3251?api-version=2021-06-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-86d415e3beb2364bb3424de08a5465fd-ec97a13be48a7f43-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "b38115dd444bcf6029cc4405182501d7",
+        "traceparent": "00-9db013960e708b4287be068582f4ecff-977a07233844e645-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221025.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "73946ba431a96cf656d5823ab27ae694",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -23420,50 +23398,22 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 24 Oct 2022 06:22:36 GMT",
+        "Date": "Tue, 25 Oct 2022 07:54:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b9cc02bb-b303-4a78-8254-c470a6b63298",
+        "x-ms-correlation-request-id": "b8cfecd9-fedf-425a-8b90-95849585a2f0",
         "x-ms-ratelimit-remaining-subscription-deletes": "14994",
-        "x-ms-request-id": "b9cc02bb-b303-4a78-8254-c470a6b63298",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062236Z:b9cc02bb-b303-4a78-8254-c470a6b63298"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/assessmentMetadata/246ca9d2-f82d-7e8f-40e1-89f21f617dfb?api-version=2021-06-01",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-272a77dec8e84341b0331a29e373ca7f-6479809053685f4c-00",
-        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "90404bea213d2b84c256e1ec6451c712",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "0",
-        "Date": "Mon, 24 Oct 2022 06:22:37 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d6fdf8ca-9c4b-4a98-91d4-a38b873f18a1",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14993",
-        "x-ms-request-id": "d6fdf8ca-9c4b-4a98-91d4-a38b873f18a1",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T062237Z:d6fdf8ca-9c4b-4a98-91d4-a38b873f18a1"
+        "x-ms-request-id": "b8cfecd9-fedf-425a-8b90-95849585a2f0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221025T075411Z:b8cfecd9-fedf-425a-8b90-95849585a2f0"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "657966824",
+    "RandomSeed": "1605426707",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
