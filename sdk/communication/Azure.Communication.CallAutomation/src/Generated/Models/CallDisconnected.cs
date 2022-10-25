@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CallDisconnected. </summary>
+    /// <summary> The call disconnected event. </summary>
     public partial class CallDisconnected
     {
         /// <summary> Initializes a new instance of CallDisconnected. </summary>

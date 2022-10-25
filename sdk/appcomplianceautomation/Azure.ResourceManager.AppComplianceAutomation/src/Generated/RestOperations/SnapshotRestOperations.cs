@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
-        internal HttpMessage CreateDownloadRequest(string reportName, string snapshotName, DownloadType downloadType, string reportCreatorTenantId, string offerGuid)
+        internal HttpMessage CreateDownloadRequest(string reportName, string snapshotName, SnapshotDownloadContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -126,17 +126,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             uri.AppendPath(snapshotName, true);
             uri.AppendPath("/download", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (reportCreatorTenantId != null)
-            {
-                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
-            }
-            uri.AppendQuery("downloadType", downloadType.ToString(), true);
-            if (offerGuid != null)
-            {
-                uri.AppendQuery("offerGuid", offerGuid, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -144,18 +139,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <summary> Download compliance needs from snapshot, like: Compliance Report, Resource List. </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="snapshotName"> Snapshot Name. </param>
-        /// <param name="downloadType"> Indicates the download type. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="snapshotName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DownloadAsync(string reportName, string snapshotName, DownloadType downloadType, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DownloadAsync(string reportName, string snapshotName, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDownloadRequest(reportName, snapshotName, downloadType, reportCreatorTenantId, offerGuid);
+            using var message = CreateDownloadRequest(reportName, snapshotName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -170,18 +164,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <summary> Download compliance needs from snapshot, like: Compliance Report, Resource List. </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="snapshotName"> Snapshot Name. </param>
-        /// <param name="downloadType"> Indicates the download type. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="snapshotName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Download(string reportName, string snapshotName, DownloadType downloadType, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
+        public Response Download(string reportName, string snapshotName, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDownloadRequest(reportName, snapshotName, downloadType, reportCreatorTenantId, offerGuid);
+            using var message = CreateDownloadRequest(reportName, snapshotName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

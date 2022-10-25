@@ -2,8 +2,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 {
     public static partial class AppComplianceAutomationExtensions
     {
-        public static Azure.ResourceManager.ArmOperation GetOperationResult(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> GetOperationResultAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.ReportResource GetReportResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppComplianceAutomation.ReportResource> GetReportResource(this Azure.ResourceManager.Resources.TenantResource tenantResource, string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.ReportResource>> GetReportResourceAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -54,8 +52,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string reportName, string snapshotName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppComplianceAutomation.Models.DownloadResponse> Download(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppComplianceAutomation.Models.DownloadType downloadType, string reportCreatorTenantId = null, string offerGuid = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppComplianceAutomation.Models.DownloadResponse>> DownloadAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppComplianceAutomation.Models.DownloadType downloadType, string reportCreatorTenantId = null, string offerGuid = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppComplianceAutomation.Models.DownloadResponse> Download(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppComplianceAutomation.Models.DownloadResponse>> DownloadAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -84,7 +82,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal Assessment() { }
         public string Description { get { throw null; } }
-        public bool? IsPass { get { throw null; } }
+        public Azure.ResourceManager.AppComplianceAutomation.Models.IsPass? IsPass { get { throw null; } }
         public string Name { get { throw null; } }
         public string PolicyId { get { throw null; } }
         public string Remediation { get { throw null; } }
@@ -309,12 +307,30 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.DownloadType left, Azure.ResourceManager.AppComplianceAutomation.Models.DownloadType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IsPass : System.IEquatable<Azure.ResourceManager.AppComplianceAutomation.Models.IsPass>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IsPass(string value) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.IsPass False { get { throw null; } }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.IsPass True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.IsPass other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.IsPass left, Azure.ResourceManager.AppComplianceAutomation.Models.IsPass right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.IsPass (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.IsPass left, Azure.ResourceManager.AppComplianceAutomation.Models.IsPass right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class OverviewStatus
     {
         internal OverviewStatus() { }
-        public int? Failed { get { throw null; } }
-        public int? Manual { get { throw null; } }
-        public int? Passed { get { throw null; } }
+        public int? FailedCount { get { throw null; } }
+        public int? ManualCount { get { throw null; } }
+        public int? PassedCount { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.AppComplianceAutomation.Models.ProvisioningState>
@@ -414,6 +430,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SnapshotDownloadContent
+    {
+        public SnapshotDownloadContent(Azure.ResourceManager.AppComplianceAutomation.Models.DownloadType downloadType) { }
+        public Azure.ResourceManager.AppComplianceAutomation.Models.DownloadType DownloadType { get { throw null; } }
+        public string OfferGuid { get { throw null; } set { } }
+        public string ReportCreatorTenantId { get { throw null; } set { } }
     }
     public partial class SnapshotProperties
     {

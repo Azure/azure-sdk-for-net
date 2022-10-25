@@ -67,42 +67,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return tenantResource.GetReportResources().Get(reportName, cancellationToken);
         }
 
-        /// <summary>
-        /// Query the ongoing operation status.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/operationResults/{operationId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static async Task<ArmOperation> GetOperationResultAsync(this TenantResource tenantResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(tenantResource).GetOperationResultAsync(waitUntil, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Query the ongoing operation status.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/operationResults/{operationId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static ArmOperation GetOperationResult(this TenantResource tenantResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(tenantResource).GetOperationResult(waitUntil, operationId, cancellationToken);
-        }
-
         #region ReportResource
         /// <summary>
         /// Gets an object representing a <see cref="ReportResource" /> along with the instance operations that can be performed on it but with no data.
