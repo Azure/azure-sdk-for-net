@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ApplicationsList. </summary>
         internal ApplicationsList()
         {
-            Value = new ChangeTrackingList<ApplicationData>();
+            Value = new ChangeTrackingList<SecurityApplicationData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationsList. </summary>
         /// <param name="value"> Collection of applications in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal ApplicationsList(IReadOnlyList<ApplicationData> value, string nextLink)
+        internal ApplicationsList(IReadOnlyList<SecurityApplicationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of applications in this page. </summary>
-        public IReadOnlyList<ApplicationData> Value { get; }
+        public IReadOnlyList<SecurityApplicationData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

@@ -79,6 +79,20 @@ The exception includes some contextual information to assist in understanding th
 
   - **ServiceCommunicationProblem**: This indicates that there was an error communicating with the service. The issue may stem from a transient network problem, or a service problem. These are transient errors that will be automatically retried.
 
+As an example of how to handle a `ServiceBusException` and filter by the `Reason`, see the following:
+
+```C# Snippet:ServiceBusExceptionFailureReasonUsage
+try
+{
+    // Receive messages using the receiver client
+}
+catch (ServiceBusException ex) when
+    (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
+{
+    // Take action based on a service timeout
+}
+```
+
 ### Other common exceptions
 
 - **ArgumentException** : An exception deriving from `ArgumentException` is thrown by clients when a parameter provided when interacting with the client is invalid. Information about the specific parameter and the nature of the problem can be found in the `Message`.

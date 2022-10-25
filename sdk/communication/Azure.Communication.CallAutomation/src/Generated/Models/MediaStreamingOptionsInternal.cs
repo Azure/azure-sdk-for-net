@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The MediaStreamingConfiguration. </summary>
+    /// <summary> Configuration of Media streaming. </summary>
     internal partial class MediaStreamingOptionsInternal
     {
         /// <summary> Initializes a new instance of MediaStreamingOptionsInternal. </summary>

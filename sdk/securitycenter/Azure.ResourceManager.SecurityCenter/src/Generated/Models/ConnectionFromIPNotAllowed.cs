@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="valueType"> The value type of the items in the list. </param>
         /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
-        internal ConnectionFromIPNotAllowed(string displayName, string description, bool isEnabled, string ruleType, ValueType? valueType, IList<string> allowlistValues) : base(displayName, description, isEnabled, ruleType, valueType, allowlistValues)
+        internal ConnectionFromIPNotAllowed(string displayName, string description, bool isEnabled, string ruleType, SecurityValueType? valueType, IList<string> allowlistValues) : base(displayName, description, isEnabled, ruleType, valueType, allowlistValues)
         {
             RuleType = ruleType ?? "ConnectionFromIpNotAllowed";
         }

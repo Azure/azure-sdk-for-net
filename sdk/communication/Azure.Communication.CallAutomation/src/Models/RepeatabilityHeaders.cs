@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Function that checks the validility of the repeatability headers.
+        /// Function that checks the validity of the repeatability headers.
         /// RepeatabilityHeaders is only valid when RepeatabilityRequestId and RepeatabilityFirstSent are set to non-default value.
         /// </summary>
         public Boolean IsInvalidRepeatabilityHeaders() {

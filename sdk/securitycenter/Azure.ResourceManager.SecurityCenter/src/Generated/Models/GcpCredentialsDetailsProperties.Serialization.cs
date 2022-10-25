@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("organizationId");
             writer.WriteStringValue(OrganizationId);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(GcpCredentialsDetailsPropertiesType);
+            writer.WriteStringValue(GcpCredentialType);
             writer.WritePropertyName("projectId");
             writer.WriteStringValue(ProjectId);
             writer.WritePropertyName("privateKeyId");

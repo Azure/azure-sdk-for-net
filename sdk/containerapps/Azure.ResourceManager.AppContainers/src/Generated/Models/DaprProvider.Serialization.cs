@@ -35,6 +35,26 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("appPort");
                 writer.WriteNumberValue(AppPort.Value);
             }
+            if (Optional.IsDefined(HttpReadBufferSize))
+            {
+                writer.WritePropertyName("httpReadBufferSize");
+                writer.WriteNumberValue(HttpReadBufferSize.Value);
+            }
+            if (Optional.IsDefined(HttpMaxRequestSize))
+            {
+                writer.WritePropertyName("httpMaxRequestSize");
+                writer.WriteNumberValue(HttpMaxRequestSize.Value);
+            }
+            if (Optional.IsDefined(LogLevel))
+            {
+                writer.WritePropertyName("logLevel");
+                writer.WriteStringValue(LogLevel.Value.ToString());
+            }
+            if (Optional.IsDefined(EnableApiLogging))
+            {
+                writer.WritePropertyName("enableApiLogging");
+                writer.WriteBooleanValue(EnableApiLogging.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -44,6 +64,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> appId = default;
             Optional<AppProtocol> appProtocol = default;
             Optional<int> appPort = default;
+            Optional<int> httpReadBufferSize = default;
+            Optional<int> httpMaxRequestSize = default;
+            Optional<LogLevel> logLevel = default;
+            Optional<bool> enableApiLogging = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -81,8 +105,48 @@ namespace Azure.ResourceManager.AppContainers.Models
                     appPort = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("httpReadBufferSize"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    httpReadBufferSize = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("httpMaxRequestSize"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    httpMaxRequestSize = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("logLevel"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    logLevel = new LogLevel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("enableApiLogging"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enableApiLogging = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new DaprProvider(Optional.ToNullable(enabled), appId.Value, Optional.ToNullable(appProtocol), Optional.ToNullable(appPort));
+            return new DaprProvider(Optional.ToNullable(enabled), appId.Value, Optional.ToNullable(appProtocol), Optional.ToNullable(appPort), Optional.ToNullable(httpReadBufferSize), Optional.ToNullable(httpMaxRequestSize), Optional.ToNullable(logLevel), Optional.ToNullable(enableApiLogging));
         }
     }
 }

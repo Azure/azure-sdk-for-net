@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SuppressionAlertsScope DeserializeSuppressionAlertsScope(JsonElement element)
         {
-            IList<ScopeElement> allOf = default;
+            IList<SuppressionAlertsScopeElement> allOf = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allOf"))
                 {
-                    List<ScopeElement> array = new List<ScopeElement>();
+                    List<SuppressionAlertsScopeElement> array = new List<SuppressionAlertsScopeElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopeElement.DeserializeScopeElement(item));
+                        array.Add(SuppressionAlertsScopeElement.DeserializeSuppressionAlertsScopeElement(item));
                     }
                     allOf = array;
                     continue;

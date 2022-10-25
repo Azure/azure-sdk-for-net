@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The RemoveParticipantsResponse. </summary>
+    /// <summary> The response payload for removing participants of the call. </summary>
     public partial class RemoveParticipantsResult
     {
         /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>

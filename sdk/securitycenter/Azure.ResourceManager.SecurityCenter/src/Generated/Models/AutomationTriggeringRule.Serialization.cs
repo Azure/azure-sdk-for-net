@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static AutomationTriggeringRule DeserializeAutomationTriggeringRule(JsonElement element)
         {
             Optional<string> propertyJPath = default;
-            Optional<PropertyType> propertyType = default;
+            Optional<AutomationTriggeringRulePropertyType> propertyType = default;
             Optional<string> expectedValue = default;
-            Optional<Operator> @operator = default;
+            Optional<AutomationTriggeringRuleOperator> @operator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyJPath"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    propertyType = new PropertyType(property.Value.GetString());
+                    propertyType = new AutomationTriggeringRulePropertyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expectedValue"))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    @operator = new Operator(property.Value.GetString());
+                    @operator = new AutomationTriggeringRuleOperator(property.Value.GetString());
                     continue;
                 }
             }

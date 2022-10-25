@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of GcpCredentialsDetailsProperties. </summary>
         /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
-        /// <param name="gcpCredentialsDetailsPropertiesType"> Type field of the API key (write only). </param>
+        /// <param name="gcpCredentialType"> Type field of the API key (write only). </param>
         /// <param name="projectId"> Project ID field of the API key (write only). </param>
         /// <param name="privateKeyId"> Private key ID field of the API key (write only). </param>
         /// <param name="privateKey"> Private key field of the API key (write only). </param>
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tokenUri"> Token URI field of the API key (write only). </param>
         /// <param name="authProviderX509CertUri"> Auth provider x509 certificate URL field of the API key (write only). </param>
         /// <param name="clientX509CertUri"> Client x509 certificate URL field of the API key (write only). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationId"/>, <paramref name="gcpCredentialsDetailsPropertiesType"/>, <paramref name="projectId"/>, <paramref name="privateKeyId"/>, <paramref name="privateKey"/>, <paramref name="clientEmail"/>, <paramref name="clientId"/>, <paramref name="authUri"/>, <paramref name="tokenUri"/>, <paramref name="authProviderX509CertUri"/> or <paramref name="clientX509CertUri"/> is null. </exception>
-        public GcpCredentialsDetailsProperties(string organizationId, string gcpCredentialsDetailsPropertiesType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri)
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationId"/>, <paramref name="gcpCredentialType"/>, <paramref name="projectId"/>, <paramref name="privateKeyId"/>, <paramref name="privateKey"/>, <paramref name="clientEmail"/>, <paramref name="clientId"/>, <paramref name="authUri"/>, <paramref name="tokenUri"/>, <paramref name="authProviderX509CertUri"/> or <paramref name="clientX509CertUri"/> is null. </exception>
+        public GcpCredentialsDetailsProperties(string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri)
         {
             if (organizationId == null)
             {
                 throw new ArgumentNullException(nameof(organizationId));
             }
-            if (gcpCredentialsDetailsPropertiesType == null)
+            if (gcpCredentialType == null)
             {
-                throw new ArgumentNullException(nameof(gcpCredentialsDetailsPropertiesType));
+                throw new ArgumentNullException(nameof(gcpCredentialType));
             }
             if (projectId == null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             OrganizationId = organizationId;
-            GcpCredentialsDetailsPropertiesType = gcpCredentialsDetailsPropertiesType;
+            GcpCredentialType = gcpCredentialType;
             ProjectId = projectId;
             PrivateKeyId = privateKeyId;
             PrivateKey = privateKey;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
         /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
-        /// <param name="gcpCredentialsDetailsPropertiesType"> Type field of the API key (write only). </param>
+        /// <param name="gcpCredentialType"> Type field of the API key (write only). </param>
         /// <param name="projectId"> Project ID field of the API key (write only). </param>
         /// <param name="privateKeyId"> Private key ID field of the API key (write only). </param>
         /// <param name="privateKey"> Private key field of the API key (write only). </param>
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tokenUri"> Token URI field of the API key (write only). </param>
         /// <param name="authProviderX509CertUri"> Auth provider x509 certificate URL field of the API key (write only). </param>
         /// <param name="clientX509CertUri"> Client x509 certificate URL field of the API key (write only). </param>
-        internal GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<PermissionProperty> grantedPermissions, AuthenticationType authenticationType, string organizationId, string gcpCredentialsDetailsPropertiesType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
+        internal GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<PermissionProperty> grantedPermissions, AuthenticationType authenticationType, string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
         {
             OrganizationId = organizationId;
-            GcpCredentialsDetailsPropertiesType = gcpCredentialsDetailsPropertiesType;
+            GcpCredentialType = gcpCredentialType;
             ProjectId = projectId;
             PrivateKeyId = privateKeyId;
             PrivateKey = privateKey;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The organization ID of the GCP cloud account. </summary>
         public string OrganizationId { get; set; }
         /// <summary> Type field of the API key (write only). </summary>
-        public string GcpCredentialsDetailsPropertiesType { get; set; }
+        public string GcpCredentialType { get; set; }
         /// <summary> Project ID field of the API key (write only). </summary>
         public string ProjectId { get; set; }
         /// <summary> Private key ID field of the API key (write only). </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static FormulaList DeserializeFormulaList(JsonElement element)
         {
-            Optional<IReadOnlyList<FormulaData>> value = default;
+            Optional<IReadOnlyList<DevTestLabFormulaData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FormulaData> array = new List<FormulaData>();
+                    List<DevTestLabFormulaData> array = new List<DevTestLabFormulaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FormulaData.DeserializeFormulaData(item));
+                        array.Add(DevTestLabFormulaData.DeserializeDevTestLabFormulaData(item));
                     }
                     value = array;
                     continue;

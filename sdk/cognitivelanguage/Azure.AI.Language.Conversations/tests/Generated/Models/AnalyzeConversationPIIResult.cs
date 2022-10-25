@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"> The result from PII detection and redaction operation for each conversation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        public AnalyzeConversationPIIResult(DateTimeOffset lastUpdateDateTime, TaskState status, ConversationPIIResults results) : base(lastUpdateDateTime, status)
+        public AnalyzeConversationPIIResult(DateTimeOffset lastUpdateDateTime, State status, ConversationPIIResults results) : base(lastUpdateDateTime, status)
         {
             if (results == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="kind"> Enumeration of supported Conversation Analysis task results. </param>
         /// <param name="taskName"></param>
         /// <param name="results"> The result from PII detection and redaction operation for each conversation. </param>
-        internal AnalyzeConversationPIIResult(DateTimeOffset lastUpdateDateTime, TaskState status, AnalyzeConversationResultsKind kind, string taskName, ConversationPIIResults results) : base(lastUpdateDateTime, status, kind, taskName)
+        internal AnalyzeConversationPIIResult(DateTimeOffset lastUpdateDateTime, State status, AnalyzeConversationResultsKind kind, string taskName, ConversationPIIResults results) : base(lastUpdateDateTime, status, kind, taskName)
         {
             Results = results;
             Kind = kind;

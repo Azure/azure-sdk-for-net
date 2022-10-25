@@ -40,10 +40,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"))
-                {
-                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("619e45a5-41f2-40bd-a20e-98b13944e146"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
-                };
+                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                 CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -53,9 +50,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 Assert.IsNotNull(incomingCallContext);
 
                 // answer the call
-                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback)) {
-                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("1d58fb9f-24a9-4574-86df-6354ce7fa728"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
-                };
+                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
                 AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
 
                 // wait for callConnected
@@ -77,7 +72,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 string operationContext1 = "MyTestOperationcontext";
                 var removeParticipantsOptions = new RemoveParticipantsOptions(new CommunicationIdentifier[] { target }) {
                     OperationContext = operationContext1,
-                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("650e6e14-23d4-400a-b13c-2481af64dd0b"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
                 };
                 Response<RemoveParticipantsResult> removePartResponse = await response.CallConnection.RemoveParticipantsAsync(removeParticipantsOptions);
                 Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
@@ -98,10 +92,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             {
                 if (!string.IsNullOrEmpty(callConnectionId))
                 {
-                    var hangUpOptions = new HangUpOptions(true)
-                    {
-                        RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("fed6e917-f1df-4e21-b7de-c26d0947124b"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
-                    };
+                    var hangUpOptions = new HangUpOptions(true);
                     await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
                 }
             }

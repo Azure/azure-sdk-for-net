@@ -3,6 +3,10 @@
 ## 5.3.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added `FhirVersion` and `DocumentType` properties to `AnalyzeHealthcareEntitiesOptions` and `AnalyzeHealthcareEntitiesAction`.
+- Added `FhirBundle` property to `AnalyzeHealthcareEntitiesResult`.
+- Added `ConfidenceScore` property to `HealthcareEntityRelation`.
+- Added `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
 
 ### Breaking Changes
 

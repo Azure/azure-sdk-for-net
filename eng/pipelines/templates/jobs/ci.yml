@@ -63,9 +63,11 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
+      # Both 'Dump property properties' and 'Update package properties with dev version' serve the same purpose of generating package json.
+      # We decided to only run the later one (update properties) in all pipelines for the following reasons:
+      # 1. 'Update properties' happens after 'build', we will have more information at the 'update properties' step. 
+      # 2. We did not find any usage of package json before 'update properties' in .NET, so it is safe to skip the 'dump properties' for now.
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
       - pwsh: |
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
@@ -97,11 +99,10 @@ jobs:
           arguments: >
             -ServiceDirectory ${{parameters.ServiceDirectory}}
             -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
-            -AddDevVersion
+            -AddDevVersion:$$(SetDevVersion)
           pwsh: true
           workingDirectory: $(Pipeline.Workspace)
         displayName: Update package properties with dev version
-        condition: and(succeeded(),eq(variables['SetDevVersion'],'true'))
 
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:

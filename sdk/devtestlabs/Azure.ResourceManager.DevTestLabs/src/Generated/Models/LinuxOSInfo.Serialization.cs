@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static LinuxOSInfo DeserializeLinuxOSInfo(JsonElement element)
         {
-            Optional<LinuxOSState> linuxOSState = default;
+            Optional<DevTestLabLinuxOSState> linuxOSState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxOsState"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linuxOSState = new LinuxOSState(property.Value.GetString());
+                    linuxOSState = new DevTestLabLinuxOSState(property.Value.GetString());
                     continue;
                 }
             }
