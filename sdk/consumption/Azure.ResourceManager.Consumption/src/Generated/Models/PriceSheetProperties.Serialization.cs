@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static PriceSheetProperties DeserializePriceSheetProperties(JsonElement element)
         {
-            Optional<string> billingPeriodId = default;
+            Optional<ResourceIdentifier> billingPeriodId = default;
             Optional<Guid> meterId = default;
-            Optional<MeterDetails> meterDetails = default;
+            Optional<ConsumptionMeterDetails> meterDetails = default;
             Optional<string> unitOfMeasure = default;
             Optional<decimal> includedQuantity = default;
             Optional<string> partNumber = default;
@@ -28,7 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 if (property.NameEquals("billingPeriodId"))
                 {
-                    billingPeriodId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    billingPeriodId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("meterId"))
@@ -48,7 +53,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    meterDetails = MeterDetails.DeserializeMeterDetails(property.Value);
+                    meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unitOfMeasure"))

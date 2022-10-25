@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> description = default;
             Optional<DateTimeOffset> timeGenerated = default;
             Optional<ResourceDetails> resourceDetails = default;
-            Optional<AdditionalData> additionalData = default;
+            Optional<SecuritySubAssessmentAdditionalInfo> additionalData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            additionalData = AdditionalData.DeserializeAdditionalData(property0.Value);
+                            additionalData = SecuritySubAssessmentAdditionalInfo.DeserializeSecuritySubAssessmentAdditionalInfo(property0.Value);
                             continue;
                         }
                     }

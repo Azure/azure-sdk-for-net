@@ -190,7 +190,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                         RecordingContent = RecordingContent.AudioVideo,
                         RecordingChannel = RecordingChannel.Mixed,
                         RecordingFormat = RecordingFormat.Mp4,
-                        ChannelAffinity = new List<ChannelAffinity> { new() { Channel = 0, Participant = new CommunicationUserIdentifier("test") }}
+                        AudioChannelParticipantOrdering = { new CommunicationUserIdentifier("test") }
                     })
                 },
                 new Func<CallRecording, TestDelegate>?[]
@@ -231,7 +231,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                        RecordingContent = RecordingContent.AudioVideo,
                        RecordingChannel = RecordingChannel.Mixed,
                        RecordingFormat = RecordingFormat.Mp4,
-                       ChannelAffinity = new List<ChannelAffinity> { new() { Channel = 0, Participant = new CommunicationUserIdentifier("test") }}
+                       AudioChannelParticipantOrdering = { new CommunicationUserIdentifier("test") }
                    }).ConfigureAwait(false),
                 },
                 new Func<CallRecording, AsyncTestDelegate>?[]

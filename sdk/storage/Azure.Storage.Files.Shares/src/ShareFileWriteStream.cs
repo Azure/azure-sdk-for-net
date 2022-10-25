@@ -21,12 +21,12 @@ namespace Azure.Storage.Files.Shares
             long position,
             ShareFileRequestConditions conditions,
             IProgress<long> progressHandler,
-            UploadTransferValidationOptions validationOptions
+            UploadTransferValidationOptions transferValidation
             ) : base(
                 position,
                 bufferSize,
                 progressHandler,
-                validationOptions
+                transferValidation
                 )
         {
             ValidateBufferSize(bufferSize);

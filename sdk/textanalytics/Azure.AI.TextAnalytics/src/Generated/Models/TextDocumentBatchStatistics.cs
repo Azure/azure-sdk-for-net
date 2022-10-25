@@ -5,10 +5,28 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
     public partial class TextDocumentBatchStatistics
     {
+
+        /// <summary> Initializes a new instance of TextDocumentBatchStatistics. </summary>
+        /// <param name="documentCount"> Number of documents submitted in the request. </param>
+        /// <param name="validDocumentCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
+        /// <param name="invalidDocumentCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
+        /// <param name="transactionCount"> Number of transactions for the request. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount, IDictionary<string, object> additionalProperties)
+        {
+            DocumentCount = documentCount;
+            ValidDocumentCount = validDocumentCount;
+            InvalidDocumentCount = invalidDocumentCount;
+            TransactionCount = transactionCount;
+            AdditionalProperties = additionalProperties;
+        }
     }
 }

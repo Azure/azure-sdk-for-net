@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "awsAssumeRole": return AwAssumeRoleAuthenticationDetailsProperties.DeserializeAwAssumeRoleAuthenticationDetailsProperties(element);
+                    case "awsAssumeRole": return AwsAssumeRoleAuthenticationDetailsProperties.DeserializeAwsAssumeRoleAuthenticationDetailsProperties(element);
                     case "awsCreds": return AwsCredsAuthenticationDetailsProperties.DeserializeAwsCredsAuthenticationDetailsProperties(element);
                     case "gcpCredentials": return GcpCredentialsDetailsProperties.DeserializeGcpCredentialsDetailsProperties(element);
                 }

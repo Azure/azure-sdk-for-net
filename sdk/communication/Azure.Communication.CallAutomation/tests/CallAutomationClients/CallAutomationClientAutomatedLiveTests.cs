@@ -2,17 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Communication.CallAutomation;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
-using Azure.Communication.Identity;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 {
@@ -47,7 +40,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                CreateCallResult response = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"))).ConfigureAwait(false);
+                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
@@ -56,7 +50,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 Assert.IsNotNull(incomingCallContext);
 
                 // answer the call
-                AnswerCallResult answerResponse = await client.AnswerCallAsync(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
 
                 // wait for callConnected
                 var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
@@ -69,7 +64,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
                 // try hangup
-                await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
+                var hangUpOptions = new HangUpOptions(true);
+                await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                 var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(disconnectedEvent);
                 Assert.IsTrue(disconnectedEvent is CallDisconnected);
@@ -112,7 +108,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                CreateCallResult response = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"))).ConfigureAwait(false);
+                var createCallOptions = new CreateCallOptions(new CallSource(user),
+                    new CommunicationIdentifier[] { target },
+                    new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
@@ -121,7 +120,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 Assert.IsNotNull(incomingCallContext);
 
                 // answer the call
-                Response rejectResponse = await client.RejectCallAsync(incomingCallContext, CallRejectReason.None);
+                var rejectCallOptions = new RejectCallOptions(incomingCallContext);
+                Response rejectResponse = await client.RejectCallAsync(rejectCallOptions);
 
                 // check reject response
                 Assert.IsFalse(rejectResponse.IsError);

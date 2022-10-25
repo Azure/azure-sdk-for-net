@@ -1,5 +1,15 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0 (2022-09-29)
 
 This is the first stable release of the Guest Configuration Management library.
@@ -10,6 +20,7 @@ This is the first stable release of the Guest Configuration Management library.
 - Renamed the model `ConfigurationInfo` to `GuestConfigurationInfo`.
 - Renamed the model `ConfigurationParameter` to `GuestConfigurationParameter`.
 - Renamed the method `GetGuestConfigurationAssignments` to `GetAllGuestConfigurationAssignmentData`.
+- Corrected the extension methods `GetGuestConfigurationHcrpAssignment`, `GetGuestConfigurationHcrpAssignments`, `GetGuestConfigurationVmAssignment`, `GetGuestConfigurationVmAssignments`, `GetGuestConfigurationVmssAssignment` and `GetGuestConfigurationVmssAssignments` to make them extend from `ArmClient`.
 
 ## 1.0.0-beta.2 (2022-09-09)
 

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             Optional<bool> requireHttps = default;
             Optional<AppServiceHttpSettingsRoutes> routes = default;
-            Optional<ForwardProxy> forwardProxy = default;
+            Optional<AppServiceForwardProxy> forwardProxy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requireHttps"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    forwardProxy = ForwardProxy.DeserializeForwardProxy(property.Value);
+                    forwardProxy = AppServiceForwardProxy.DeserializeAppServiceForwardProxy(property.Value);
                     continue;
                 }
             }

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PricingData>> GetAsync(string subscriptionId, string pricingName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityCenterPricingData>> GetAsync(string subscriptionId, string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        PricingData value = default;
+                        SecurityCenterPricingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PricingData.DeserializePricingData(document.RootElement);
+                        value = SecurityCenterPricingData.DeserializeSecurityCenterPricingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PricingData)null, message.Response);
+                    return Response.FromValue((SecurityCenterPricingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PricingData> Get(string subscriptionId, string pricingName, CancellationToken cancellationToken = default)
+        public Response<SecurityCenterPricingData> Get(string subscriptionId, string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
@@ -168,19 +168,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        PricingData value = default;
+                        SecurityCenterPricingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PricingData.DeserializePricingData(document.RootElement);
+                        value = SecurityCenterPricingData.DeserializeSecurityCenterPricingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PricingData)null, message.Response);
+                    return Response.FromValue((SecurityCenterPricingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string pricingName, PricingData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string pricingName, SecurityCenterPricingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="pricingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PricingData>> UpdateAsync(string subscriptionId, string pricingName, PricingData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityCenterPricingData>> UpdateAsync(string subscriptionId, string pricingName, SecurityCenterPricingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        PricingData value = default;
+                        SecurityCenterPricingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PricingData.DeserializePricingData(document.RootElement);
+                        value = SecurityCenterPricingData.DeserializeSecurityCenterPricingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="pricingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PricingData> Update(string subscriptionId, string pricingName, PricingData data, CancellationToken cancellationToken = default)
+        public Response<SecurityCenterPricingData> Update(string subscriptionId, string pricingName, SecurityCenterPricingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        PricingData value = default;
+                        SecurityCenterPricingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PricingData.DeserializePricingData(document.RootElement);
+                        value = SecurityCenterPricingData.DeserializeSecurityCenterPricingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of VirtualNetworkList. </summary>
         internal VirtualNetworkList()
         {
-            Value = new ChangeTrackingList<VirtualNetworkData>();
+            Value = new ChangeTrackingList<DevTestLabVirtualNetworkData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal VirtualNetworkList(IReadOnlyList<VirtualNetworkData> value, string nextLink)
+        internal VirtualNetworkList(IReadOnlyList<DevTestLabVirtualNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<VirtualNetworkData> Value { get; }
+        public IReadOnlyList<DevTestLabVirtualNetworkData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

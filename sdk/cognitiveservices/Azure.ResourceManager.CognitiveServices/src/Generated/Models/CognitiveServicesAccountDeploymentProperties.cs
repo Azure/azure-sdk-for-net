@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Cognitive Services account deployment. </summary>
@@ -13,17 +16,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentProperties. </summary>
         public CognitiveServicesAccountDeploymentProperties()
         {
+            Capabilities = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentProperties. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
         /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. </param>
-        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings)
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="raiPolicyName"> The name of RAI policy. </param>
+        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit)
         {
             ProvisioningState = provisioningState;
             Model = model;
             ScaleSettings = scaleSettings;
+            Capabilities = capabilities;
+            RaiPolicyName = raiPolicyName;
+            CallRateLimit = callRateLimit;
         }
 
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>
@@ -32,5 +42,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesAccountDeploymentModel Model { get; set; }
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
         public CognitiveServicesAccountDeploymentScaleSettings ScaleSettings { get; set; }
+        /// <summary> The capabilities. </summary>
+        public IReadOnlyDictionary<string, string> Capabilities { get; }
+        /// <summary> The name of RAI policy. </summary>
+        public string RaiPolicyName { get; set; }
+        /// <summary> The call rate limit Cognitive Services account. </summary>
+        public ServiceAccountCallRateLimit CallRateLimit { get; }
     }
 }

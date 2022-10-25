@@ -447,7 +447,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName, Connection = TestHubName)] string evt,
                 string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
                 IDictionary<string, object> systemProperties,
-                PartitionContext partitionContext)
+                PartitionContext partitionContext,
+                TriggerPartitionContext triggerPartitionContext)
             {
                 Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
 
@@ -456,6 +457,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 Assert.NotNull(partitionContext.PartitionId);
                 Assert.AreNotEqual(default(LastEnqueuedEventProperties), partitionContext.ReadLastEnqueuedEventProperties());
+
+                Assert.NotNull(triggerPartitionContext.PartitionId);
+                Assert.AreNotEqual(default(LastEnqueuedEventProperties), triggerPartitionContext.ReadLastEnqueuedEventProperties());
+                Assert.True(triggerPartitionContext.IsCheckpointingAfterInvocation);
 
                 _eventWait.Set();
             }
@@ -560,7 +565,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMultipleEvents([EventHubTrigger(TestHubName, Connection = TestHubName)] string[] events,
                 string[] partitionKeyArray, DateTime[] enqueuedTimeUtcArray, IDictionary<string, object>[] propertiesArray,
-                IDictionary<string, object>[] systemPropertiesArray, PartitionContext partitionContext)
+                IDictionary<string, object>[] systemPropertiesArray, PartitionContext partitionContext, TriggerPartitionContext triggerPartitionContext)
             {
                 Assert.AreEqual(events.Length, partitionKeyArray.Length);
                 Assert.AreEqual(events.Length, enqueuedTimeUtcArray.Length);
@@ -574,6 +579,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 Assert.NotNull(partitionContext.PartitionId);
                 Assert.AreNotEqual(default(LastEnqueuedEventProperties), partitionContext.ReadLastEnqueuedEventProperties());
+
+                Assert.NotNull(triggerPartitionContext.PartitionId);
+                Assert.AreNotEqual(default(LastEnqueuedEventProperties), triggerPartitionContext.ReadLastEnqueuedEventProperties());
+                Assert.True(triggerPartitionContext.IsCheckpointingAfterInvocation);
 
                 if (s_processedEventCount == s_eventCount)
                 {

@@ -112,6 +112,11 @@ namespace Microsoft.Azure.Management.Redis
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
+        /// Gets the IAsyncOperationStatusOperations.
+        /// </summary>
+        public virtual IAsyncOperationStatusOperations AsyncOperationStatus { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -359,8 +364,9 @@ namespace Microsoft.Azure.Management.Redis
             LinkedServer = new LinkedServerOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            AsyncOperationStatus = new AsyncOperationStatusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-06-01";
+            ApiVersion = "2022-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("alertType");
                 writer.WriteStringValue(AlertType);
             }
-            if (Optional.IsDefined(ExpirationDateUtc))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateUtc");
-                writer.WriteStringValue(ExpirationDateUtc.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Reason))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<DateTimeOffset> lastModifiedUtc = default;
             Optional<DateTimeOffset> expirationDateUtc = default;
             Optional<string> reason = default;
-            Optional<RuleState> state = default;
+            Optional<AlertsSuppressionRuleState> state = default;
             Optional<string> comment = default;
             Optional<SuppressionAlertsScope> suppressionAlertsScope = default;
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = property0.Value.GetString().ToRuleState();
+                            state = property0.Value.GetString().ToAlertsSuppressionRuleState();
                             continue;
                         }
                         if (property0.NameEquals("comment"))

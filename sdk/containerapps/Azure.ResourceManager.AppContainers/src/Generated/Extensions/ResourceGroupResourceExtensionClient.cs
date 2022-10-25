@@ -44,5 +44,12 @@ namespace Azure.ResourceManager.AppContainers
         {
             return GetCachedClient(Client => new ManagedEnvironmentCollection(Client, Id));
         }
+
+        /// <summary> Gets a collection of ConnectedEnvironmentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ConnectedEnvironmentResources and their operations over a ConnectedEnvironmentResource. </returns>
+        public virtual ConnectedEnvironmentCollection GetConnectedEnvironments()
+        {
+            return GetCachedClient(Client => new ConnectedEnvironmentCollection(Client, Id));
+        }
     }
 }
