@@ -51,5 +51,15 @@ namespace Azure.Security.KeyVault.Administration
         {
             return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId);
         }
+
+        /// <summary> Initializes a new instance of GetSettingsResult. </summary>
+        /// <param name="value"> A response message containing a list of account settings with their associated value. </param>
+        /// <returns> A new <see cref="Administration.GetSettingsResult"/> instance for mocking. </returns>
+        public static GetSettingsResult GetSettingsResult(IEnumerable<KeyVaultSetting> value = null)
+        {
+            value ??= new List<KeyVaultSetting>();
+
+            return new GetSettingsResult(value?.ToList());
+        }
     }
 }

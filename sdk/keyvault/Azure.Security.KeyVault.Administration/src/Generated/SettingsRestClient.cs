@@ -232,7 +232,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
         /// <remarks> Retrieves a list of all the available account settings that can be configured. </remarks>
-        public async Task<Response<SettingsListResult>> GetSettingsAsync(string vaultBaseUrl, CancellationToken cancellationToken = default)
+        public async Task<Response<GetSettingsResult>> GetSettingsAsync(string vaultBaseUrl, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -245,9 +245,9 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 200:
                     {
-                        SettingsListResult value = default;
+                        GetSettingsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SettingsListResult.DeserializeSettingsListResult(document.RootElement);
+                        value = GetSettingsResult.DeserializeGetSettingsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -260,7 +260,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
         /// <remarks> Retrieves a list of all the available account settings that can be configured. </remarks>
-        public Response<SettingsListResult> GetSettings(string vaultBaseUrl, CancellationToken cancellationToken = default)
+        public Response<GetSettingsResult> GetSettings(string vaultBaseUrl, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -273,9 +273,9 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 200:
                     {
-                        SettingsListResult value = default;
+                        GetSettingsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SettingsListResult.DeserializeSettingsListResult(document.RootElement);
+                        value = GetSettingsResult.DeserializeGetSettingsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

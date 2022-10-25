@@ -8,13 +8,12 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class SettingsListResult
+    public partial class GetSettingsResult
     {
-        internal static SettingsListResult DeserializeSettingsListResult(JsonElement element)
+        internal static GetSettingsResult DeserializeGetSettingsResult(JsonElement element)
         {
             Optional<IReadOnlyList<KeyVaultSetting>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +34,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new SettingsListResult(Optional.ToList(value));
+            return new GetSettingsResult(Optional.ToList(value));
         }
     }
 }

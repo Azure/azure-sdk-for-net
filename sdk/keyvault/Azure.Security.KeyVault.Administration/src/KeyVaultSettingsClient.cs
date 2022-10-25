@@ -121,14 +121,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An array of all account settings.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<KeyVaultSetting[]> GetSettings(CancellationToken cancellationToken = default)
+        public virtual Response<GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
             scope.Start();
             try
             {
-                Response<SettingsListResult> response = _restClient.GetSettings(VaultUri.AbsoluteUri, cancellationToken);
-                return Response.FromValue(response.Value.Value.ToArray(), response.GetRawResponse());
+                return _restClient.GetSettings(VaultUri.AbsoluteUri, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -143,14 +142,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An array of all account settings.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<KeyVaultSetting[]>> GetSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
             scope.Start();
             try
             {
-                Response<SettingsListResult> response = await _restClient.GetSettingsAsync(VaultUri.AbsoluteUri, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.ToArray(), response.GetRawResponse());
+                return await _restClient.GetSettingsAsync(VaultUri.AbsoluteUri, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

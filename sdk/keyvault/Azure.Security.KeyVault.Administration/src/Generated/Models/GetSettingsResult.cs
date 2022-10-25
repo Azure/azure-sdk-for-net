@@ -7,22 +7,21 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The settings list result. </summary>
-    internal partial class SettingsListResult
+    public partial class GetSettingsResult
     {
-        /// <summary> Initializes a new instance of SettingsListResult. </summary>
-        internal SettingsListResult()
+        /// <summary> Initializes a new instance of GetSettingsResult. </summary>
+        internal GetSettingsResult()
         {
             Value = new ChangeTrackingList<KeyVaultSetting>();
         }
 
-        /// <summary> Initializes a new instance of SettingsListResult. </summary>
+        /// <summary> Initializes a new instance of GetSettingsResult. </summary>
         /// <param name="value"> A response message containing a list of account settings with their associated value. </param>
-        internal SettingsListResult(IReadOnlyList<KeyVaultSetting> value)
+        internal GetSettingsResult(IReadOnlyList<KeyVaultSetting> value)
         {
             Value = value;
         }
