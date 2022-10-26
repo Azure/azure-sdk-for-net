@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -19,17 +20,55 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         {
         }
 
-        private async Task<SettingCollection> GetSettingCollectionAsync()
+        private async Task<ResourceGroupResource> GetResourceGroupAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup;
+        }
+        #region Workspace
+        private WorkspaceCollection GetWorkspaceCollectionAsync(ResourceGroupResource resourceGroup)
+        {
+            return resourceGroup.GetWorkspaces();
+        }
+        private async Task<WorkspaceResource> GetWorkspaceResourceAsync(ResourceGroupResource resourceGroup)
+        {
+            var workspaceCollection = GetWorkspaceCollectionAsync(resourceGroup);
+            var workspaceName1 = groupName + "-ws";
+            var workspaceInput = GetWorkspaceData();
+            var lrow = await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName1, workspaceInput);
+            WorkspaceResource workspace = lrow.Value;
+            return workspace;
+        }
+        #endregion
+        #region Onboard
+        private SentinelOnboardingStateCollection GetSentinelOnboardingStateCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
+        {
+            return resourceGroup.GetSentinelOnboardingStates(workspaceName);
+        }
+        private async Task<SentinelOnboardingStateResource> GetSentinelOnboardingStateResourceAsync(ResourceGroupResource resourceGroup, string workspaceName)
+        {
+            var onboardCollection = GetSentinelOnboardingStateCollectionAsync(resourceGroup, workspaceName);
+            var onboardName = "default";
+            var onboardInput = ResourceDataHelpers.GetSentinelOnboardingStateData();
+            var lroo = await onboardCollection.CreateOrUpdateAsync(WaitUntil.Completed, onboardName, onboardInput);
+            SentinelOnboardingStateResource onboard1 = lroo.Value;
+            return onboard1;
+        }
+        #endregion
+        private SettingCollection GetSettingCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
+        {
             return resourceGroup.GetSettings(workspaceName);
         }
 
         [TestCase]
         public async Task SettingCollectionApiTests()
         {
+            //0.prepare
+            var resourceGroup = await GetResourceGroupAsync();
+            var workspace = await GetWorkspaceResourceAsync(resourceGroup);
+            SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
             //1.CreateOrUpdate
-            var collection = await GetSettingCollectionAsync();
+            var collection = GetSettingCollectionAsync(resourceGroup, workspace.Data.Name);
             var name = Recording.GenerateAssetName("Settings-");
             var name2 = Recording.GenerateAssetName("Settings-");
             var name3 = Recording.GenerateAssetName("Settings-");

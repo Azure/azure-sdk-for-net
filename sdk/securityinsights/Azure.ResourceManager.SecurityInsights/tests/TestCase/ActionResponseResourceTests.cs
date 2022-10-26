@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, alertRulesName, input);
             var alertRules = lro.Value;
             var actionCollection =  alertRules.GetActionResponses();
-            var actionInput = ResourceDataHelpers.GetActionResponseData();
+            var actionInput = ResourceDataHelpers.GetActionResponseData(resourceGroup.Data.Name);
             var lroa = await actionCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionResopnseName, actionInput);
             return lroa.Value;
         }

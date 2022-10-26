@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.LogicAppResourceId, data2?.LogicAppResourceId);
             Assert.AreEqual(data1.WorkflowId, data2.WorkflowId);
         }
-        public static ActionResponseCreateOrUpdateContent GetActionResponseData()
+        public static ActionResponseCreateOrUpdateContent GetActionResponseData(string resourcegroup)
         {
             var data = new ActionResponseCreateOrUpdateContent()
             {
-                TriggerUri = new Uri("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme1018/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook"),
+                TriggerUri = new Uri("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/" + resourcegroup + "/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook"),
                 LogicAppResourceId = "https://prod-21.westus2.logic.azure.com:443/workflows/e26c9f2e051e40eebaba9ed9b065c491/triggers/When_Azure_Sentinel_incident_creation_rule_was_triggered/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_Azure_Sentinel_incident_creation_rule_was_triggered%2Frun&sv=1.0&sig=6sGE8BueGEYWNZ0mY8-JYrse4mTk3obUBib9BF5PciQ"
             };
             return data;
