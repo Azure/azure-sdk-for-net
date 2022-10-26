@@ -87,7 +87,6 @@ namespace Azure.Core
             {
                 //this is the same as Root but can't return that since this is a ctor
                 Init(null, ResourceType.Tenant, string.Empty, false, SpecialType.None);
-                return;
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.Core
             _initialized = true;
         }
 
-        private void Init()
+        private void Parse()
         {
             ReadOnlySpan<char> remaining = _stringValue.AsSpan();
 
@@ -169,7 +168,7 @@ namespace Azure.Core
         {
             if (!_initialized)
             {
-                Init();
+                Parse();
             }
 
             return value;
@@ -468,6 +467,45 @@ namespace Azure.Core
         public static bool operator >=(ResourceIdentifier left, ResourceIdentifier right)
         {
             return left is null ? right is null : left.CompareTo(right) >= 0;
+        }
+
+        /// <summary>
+        /// Converts the string representation of a ResourceIdentifier to the equivalent <see cref="ResourceIdentifier"/> structure.
+        /// </summary>
+        /// <param name="input"> The id string to convert. </param>
+        /// <returns> A class that contains the value that was parsed. </returns>
+        /// <exception cref="FormatException"> when resourceId is not a valid <see cref="ResourceIdentifier"/> format. </exception>
+        /// <exception cref="ArgumentNullException"> when resourceId is null. </exception>
+        /// <exception cref="ArgumentException"> when resourceId is empty. </exception>
+        public static ResourceIdentifier Parse(string input)
+        {
+            var result = new ResourceIdentifier(input);
+            result.Parse();
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the string representation of a ResourceIdentifier to the equivalent <see cref="ResourceIdentifier"/> structure.
+        /// </summary>
+        /// <param name="input"> The id string to convert. </param>
+        /// <param name="result">
+        /// The structure that will contain the parsed value.
+        /// If the method returns true result contains a valid ResourceIdentifier.
+        /// If the method returns false, result will be null.
+        /// </param>
+        /// <returns> True if the parse operation was successful; otherwise, false. </returns>
+        public static bool TryParse(string input, out ResourceIdentifier? result)
+        {
+            try
+            {
+                result = Parse(input);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
         }
 
         /// <summary>
