@@ -5,6 +5,3 @@ extends:
   parameters:
     ServiceDirectory: eventgrid
     SDKType: client
-    TimeoutInMinutes: 240
-    Clouds: 'Public,Canary'
-    SupportedClouds: 'Public,UsGov,China,Canary'
