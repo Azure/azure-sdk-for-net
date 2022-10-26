@@ -17,36 +17,99 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     {
         private AlertsSuppressionRuleCollection _alertsSuppressionRuleCollection => DefaultSubscription.GetAlertsSuppressionRules();
 
-        public AlertsSuppressionRuleTests(bool isAsync) : base(isAsync)
+        public AlertsSuppressionRuleTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [SetUp]
-        public void TestSetUp()
+        [TearDown]
+        public async Task TestTearDown()
         {
+            var list = await _alertsSuppressionRuleCollection.GetAllAsync().ToEnumerableAsync();
+            foreach (var item in list)
+            {
+                await item.DeleteAsync(WaitUntil.Completed);
+            }
+        }
+
+        private async Task<AlertsSuppressionRuleResource> CreateAlertsSuppressionRule(string alertsSuppressionRuleName)
+        {
+            List<SuppressionAlertsScopeElement> allof = new List<SuppressionAlertsScopeElement>()
+            {
+                new SuppressionAlertsScopeElement()
+                {
+                    Field = "entities.ip.address",
+                    AdditionalProperties  =
+                    {
+                        new KeyValuePair<string, BinaryData>("in",new BinaryData("[\"104.215.95.187\",\"52.164.206.56\"]"))
+                    },
+                },
+            };
+            var data = new AlertsSuppressionRuleData()
+            {
+                AlertType = "IpAnomaly",
+                State = AlertsSuppressionRuleState.Enabled,
+                Reason = "FalsePositive",
+                Comment = "Test VM",
+                SuppressionAlertsScope = new SuppressionAlertsScope(allof),
+            };
+            var alertSuppressionRule = await _alertsSuppressionRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, alertsSuppressionRuleName, data);
+            return alertSuppressionRule.Value;
         }
 
         [RecordedTest]
-        [Ignore("The SDK doesn't support create a AlertsSuppressionRule")]
-        public async Task Update()
+        public async Task CreateOrUpdateUpdate()
         {
-            var data = new AlertsSuppressionRuleData()
-            {
-                AlertType = "VM_EICAR",
-                State = AlertsSuppressionRuleState.Enabled,
-                Reason = "test",
-            };
-            var alertSuppressionRule = await _alertsSuppressionRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, "JustForTest", data);
+            string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
+            var alertSuppressionRule = await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
+            ValidateAlertsSuppressionRule(alertSuppressionRule, alertsSuppressionRuleName);
+        }
 
-            // Delete
-            await alertSuppressionRule.Value.DeleteAsync(WaitUntil.Completed);
+        [RecordedTest]
+        public async Task Exist()
+        {
+            string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
+            await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
+            bool flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
+            Assert.IsTrue(flag);
+        }
+
+        [RecordedTest]
+        public async Task Get()
+        {
+            string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
+            await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
+            var alertSuppressionRule = await _alertsSuppressionRuleCollection.GetAsync(alertsSuppressionRuleName);
+            ValidateAlertsSuppressionRule(alertSuppressionRule, alertsSuppressionRuleName);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
+            string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
+            await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
             var list = await _alertsSuppressionRuleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.IsNotEmpty(list);
+            ValidateAlertsSuppressionRule(list.First(item => item.Data.Name == alertsSuppressionRuleName), alertsSuppressionRuleName);
+        }
+
+        [RecordedTest]
+        public async Task Delete()
+        {
+            string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
+            var alertSuppressionRule = await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
+            bool flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
+            Assert.IsTrue(flag);
+
+            await alertSuppressionRule.DeleteAsync(WaitUntil.Completed);
+            flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
+            Assert.IsFalse(flag);
+        }
+
+        private void ValidateAlertsSuppressionRule(AlertsSuppressionRuleResource alertSuppressionRule, string alertsSuppressionRuleName)
+        {
+            Assert.IsNotNull(alertSuppressionRule);
+            Assert.IsNotNull(alertSuppressionRule.Data.Id);
+            Assert.AreEqual(alertsSuppressionRuleName, alertSuppressionRule.Data.Name);
         }
     }
 }

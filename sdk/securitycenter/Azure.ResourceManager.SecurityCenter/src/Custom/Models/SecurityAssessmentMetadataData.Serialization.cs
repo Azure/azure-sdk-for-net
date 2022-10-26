@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            if (property0.Value.ValueKind == JsonValueKind.String && string.IsNullOrEmpty(property0.Value.GetString()))
+                            if (string.IsNullOrEmpty(property0.Value.GetString()))
                             {
                                 continue;
                             }

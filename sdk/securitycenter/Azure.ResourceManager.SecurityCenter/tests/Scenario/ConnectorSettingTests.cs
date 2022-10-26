@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         /// </summary>
         /// <returns></returns>
         [RecordedTest]
-        [Ignore("System.InvalidOperationException : The requested operation requires an element of type 'Object', but the target element has type 'Array'.")]
+        [Ignore("linked issue: https://github.com/Azure/azure-rest-api-specs/issues/21260")]
         public async Task GetAll()
         {
             var list = await _connectorSettingCollection.GetAllAsync().ToEnumerableAsync();
