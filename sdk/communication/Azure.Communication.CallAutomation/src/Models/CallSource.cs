@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
-        public PhoneNumberIdentifier SourceCallerId { get; set; }
+        public PhoneNumberIdentifier CallerId { get; set; }
         /// <summary> Display name of the caller </summary>
         public string DisplayName { get; set; }
         /// <summary> Gets the identifier. </summary>
