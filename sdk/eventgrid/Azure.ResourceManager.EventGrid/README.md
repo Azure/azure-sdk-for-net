@@ -1,10 +1,10 @@
-# Microsoft Azure Event Grid Management client library for .NET
+# Microsoft Azure Event Grid management client library for .NET
 
 Microsoft Azure Event Grid is a highly scalable, serverless event broker that you can use to integrate applications using events. Events are delivered by Event Grid to subscriber destinations such as applications, Azure services, or any endpoint to which Event Grid has network access. The source of those events can be other applications, SaaS services and Azure services.
 
-This package supports managing Microsoft Azure Event Grid resources.
+This library supports managing Microsoft Azure Event Grid resources.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

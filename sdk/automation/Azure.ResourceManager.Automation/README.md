@@ -1,10 +1,10 @@
-# Microsoft Azure Automation Management client library for .NET
+# Microsoft Azure Automation management client library for .NET
 
 Microsoft Azure Automation delivers a cloud-based automation, operating system updates, and configuration service that supports consistent management across your Azure and non-Azure environments. It includes process automation, configuration management, update management, shared capabilities, and heterogeneous features.
 
-This package supports managing Microsoft Azure Automation resources.
+This library supports managing Microsoft Azure Automation resources.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

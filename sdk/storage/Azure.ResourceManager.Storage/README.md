@@ -1,10 +1,10 @@
-# Microsoft Azure Storage Management client library for .NET
+# Microsoft Azure Storage management client library for .NET
 
 Microsoft Azure Storage is a Microsoft-managed service providing cloud storage that is highly available, secure, durable, scalable, and redundant. 
 
-This package supports managing Microsoft Azure Storage resources, including the creation of new storage accounts.
+This library supports managing Microsoft Azure Storage resources, including the creation of new storage accounts.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

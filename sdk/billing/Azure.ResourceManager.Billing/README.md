@@ -1,10 +1,10 @@
-# Microsoft Azure Billing Management client library for .NET
+# Microsoft Azure Billing management client library for .NET
 
 Microsoft Cost Management is a suite of tools that help organizations monitor, allocate, and optimize the cost of their Microsoft Cloud workloads.
 
-This package supports viewing and managing your billing details.
+This library supports viewing and managing your billing details.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

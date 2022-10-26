@@ -1,10 +1,10 @@
-# Microsoft Azure Security Center Management client library for .NET
+# Microsoft Azure Security Center management client library for .NET
 
 Microsoft Azure Security Center provides security management across hybrid cloud workloads. It offers threat protection for data centers within both cloud workloads and on-premises. 
 
-This package supports managing Microsoft Azure Security Center resources.
+This library supports managing Microsoft Azure Security Center resources.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

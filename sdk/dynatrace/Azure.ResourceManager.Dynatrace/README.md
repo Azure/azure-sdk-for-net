@@ -1,10 +1,10 @@
-# Microsoft Azure Dynatrace Management client library for .NET
+# Microsoft Azure Dynatrace management client library for .NET
 
 Dynatrace is a monitoring solution that provides deep cloud observability, advanced AIOps, and continuous runtime application security capabilities in Microsoft Azure.
 
-This package supports managing Microsoft Azure Dynatrace resources.
+This library supports managing Microsoft Azure Dynatrace resources.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

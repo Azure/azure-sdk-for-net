@@ -1,10 +1,10 @@
-# Microsoft Azure Resources Management client library for .NET
+# Microsoft Azure Resources management client library for .NET
 
 Microsoft Azure Resource Manager is the deployment and management service for Azure. It provides a management layer that enables you to create, update, and delete resources in your Azure account.
 
-This package provides resource deployment capabilities for Microsoft Azure.
+This library provides resource deployment capabilities for Microsoft Azure.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

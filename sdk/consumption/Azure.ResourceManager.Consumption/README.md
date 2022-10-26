@@ -1,10 +1,10 @@
-# Microsoft Azure Consumption Management client library for .NET
+# Microsoft Azure Consumption management client library for .NET
 
 Microsoft Azure Cost Management is a suite of tools that help organizations monitor, allocate, and optimize the cost of their Microsoft Cloud workloads.
 
-This package supports accessing to cost and usage data for your Azure resources.
+This library supports accessing to cost and usage data for your Azure resources.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

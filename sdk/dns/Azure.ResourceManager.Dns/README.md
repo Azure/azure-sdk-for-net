@@ -1,10 +1,10 @@
-# Microsoft Azure DNS Management client library for .NET
+# Microsoft Azure DNS management client library for .NET
 
 Microsoft Azure DNS is a hosting service for DNS domains that provides name resolution by using Microsoft Azure infrastructure. By hosting your domains in Microsoft Azure, you can manage your DNS records by using the same credentials, APIs, tools, and billing as your other Azure services.
 
-This package supports managing Microsoft Azure DNS resources.
+This library supports managing Microsoft Azure DNS resources.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

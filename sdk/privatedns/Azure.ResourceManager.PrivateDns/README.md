@@ -1,10 +1,10 @@
-# Microsoft Azure Private Dns Management client library for .NET
+# Microsoft Azure Private Dns management client library for .NET
 
 Microsoft Azure Private DNS provides a reliable and secure DNS service for your virtual network. Azure Private DNS manages and resolves domain names in the virtual network without the need to configure a custom DNS solution.
 
-This package supports managing Microsoft Azure Private Dns resources.
+This library supports managing Microsoft Azure Private Dns resources.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

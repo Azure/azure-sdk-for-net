@@ -1,10 +1,10 @@
-# Microsoft Azure Storage / File Sync Management client library for .NET
+# Microsoft Azure Storage / File Sync management client library for .NET
 
 Microsoft Azure Storage / File Sync enables centralizing your organization's file shares in Azure Files, while keeping the flexibility, performance, and compatibility of a Microsoft Windows file server.
 
-This package supports managing Microsoft Azure Storage / File Sync resources.
+This library supports managing Microsoft Azure Storage / File Sync resources.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.

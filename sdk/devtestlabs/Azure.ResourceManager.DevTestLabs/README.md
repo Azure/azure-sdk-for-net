@@ -1,10 +1,10 @@
-# Microsoft Azure DevTest Labs Management client library for .NET
+# Microsoft Azure DevTest Labs management client library for .NET
 
 Microsoft Azure DevTest Labs is a service for easily creating, using, and managing infrastructure-as-a-service (IaaS) virtual machines (VMs) and platform-as-a-service (PaaS) environments in labs.
 
-This package supports managing Microsoft Azure DevTest Labs resources.
+This library supports managing Microsoft Azure DevTest Labs resources.
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
