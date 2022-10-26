@@ -22,10 +22,11 @@ using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 {
-    internal sealed partial class QueueListener : IListener, ITaskSeriesCommand, INotificationCommand, IScaleMonitor<QueueTriggerMetrics>
+    internal sealed partial class QueueListener : IListener, ITaskSeriesCommand, INotificationCommand, IScaleMonitor<QueueTriggerMetrics>, ITargetScalerProvider
     {
         private const int NumberOfSamplesToConsider = 5;
 
@@ -46,6 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         private readonly string _functionId;
         private readonly ScaleMonitorDescriptor _scaleMonitorDescriptor;
         private readonly CancellationTokenSource _shutdownCancellationTokenSource;
+        private readonly Lazy<QueueTargetScaler> _targetScaler;
 
         private bool? _queueExists;
         private bool _foundMessageSinceLastDelay;
@@ -134,6 +136,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _shutdownCancellationTokenSource = new CancellationTokenSource();
 
             _concurrencyManager = concurrencyManager;
+
+            _targetScaler = new Lazy<QueueTargetScaler>(
+                    () => new QueueTargetScaler(
+                        functionId,
+                        queue,
+                        queueOptions,
+                        loggerFactory
+                        ));
         }
 
         // for testing
@@ -516,6 +526,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             return GetScaleStatusCore(context.WorkerCount, context.Metrics?.ToArray());
         }
 
+        public ITargetScaler GetTargetScaler()
+        {
+            return _targetScaler != null ? _targetScaler.Value : null;
+        }
         private ScaleStatus GetScaleStatusCore(int workerCount, QueueTriggerMetrics[] metrics)
         {
             ScaleStatus status = new ScaleStatus
