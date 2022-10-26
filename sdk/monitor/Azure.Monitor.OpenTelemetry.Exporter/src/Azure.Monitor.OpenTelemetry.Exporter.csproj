@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--Versions are defined in eng/Packages.Data.props -->
+    <!-- Versions are defined in eng/Packages.Data.props -->
+    <!-- Whenever updating OpenTelemetry dependencies, confirm that Test dependencies are also updated. -->
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="OpenTelemetry" />
