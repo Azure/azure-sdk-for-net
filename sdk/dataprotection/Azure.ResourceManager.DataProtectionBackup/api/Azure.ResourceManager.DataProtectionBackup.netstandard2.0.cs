@@ -795,8 +795,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class DataProtectionBackupNameAvailabilityResult
     {
         internal DataProtectionBackupNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
     }
     public partial class DataProtectionBackupPatch
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class DataProtectionOperationJobExtendedInfo : Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationExtendedInfo
     {
         internal DataProtectionOperationJobExtendedInfo() { }
-        public string JobId { get { throw null; } }
+        public System.Guid? JobId { get { throw null; } }
     }
     public partial class DataProtectionRetentionRule : Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBasePolicyRule
     {
@@ -936,24 +936,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class DataSourceInfo
     {
-        public DataSourceInfo(string resourceId) { }
+        public DataSourceInfo(Azure.Core.ResourceIdentifier resourceId) { }
         public string DataSourceType { get { throw null; } set { } }
         public string ObjectType { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
-        public string ResourceLocation { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } set { } }
         public string ResourceName { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
         public System.Uri ResourceUri { get { throw null; } set { } }
     }
     public partial class DataSourceSetInfo
     {
-        public DataSourceSetInfo(string resourceId) { }
+        public DataSourceSetInfo(Azure.Core.ResourceIdentifier resourceId) { }
         public string DataSourceType { get { throw null; } set { } }
         public string ObjectType { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
-        public string ResourceLocation { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } set { } }
         public string ResourceName { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
         public System.Uri ResourceUri { get { throw null; } set { } }
     }
     public partial class DataStoreInfoBase
@@ -1052,10 +1052,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public RecoveryPointDataStoreDetail() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
         public bool? IsVisible { get { throw null; } set { } }
         public string Metadata { get { throw null; } set { } }
-        public string RecoveryPointDataStoreDetailType { get { throw null; } set { } }
+        public System.Guid? RecoveryPointDataStoreId { get { throw null; } set { } }
+        public string RecoveryPointDataStoreType { get { throw null; } set { } }
         public System.DateTimeOffset? RehydrationExpireOn { get { throw null; } }
         public Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus? RehydrationStatus { get { throw null; } }
         public string State { get { throw null; } set { } }
@@ -1203,10 +1203,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public ScheduleBasedBackupCriteria() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker> AbsoluteCriteria { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDay> DaysOfMonth { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDayOfWeek> DaysOfTheWeek { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDayOfWeek> DaysOfWeek { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupMonth> MonthsOfYear { get { throw null; } }
         public System.Collections.Generic.IList<System.DateTimeOffset> ScheduleTimes { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupWeekNumber> WeeksOfTheMonth { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupWeekNumber> WeeksOfMonth { get { throw null; } }
     }
     public partial class ScheduleBasedBackupTriggerContext : Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupTriggerContext
     {

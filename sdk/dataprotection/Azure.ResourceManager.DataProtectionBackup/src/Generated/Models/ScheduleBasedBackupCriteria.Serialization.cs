@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DaysOfTheWeek))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfTheWeek");
                 writer.WriteStartArray();
-                foreach (var item in DaysOfTheWeek)
+                foreach (var item in DaysOfWeek)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WeeksOfTheMonth))
+            if (Optional.IsCollectionDefined(WeeksOfMonth))
             {
                 writer.WritePropertyName("weeksOfTheMonth");
                 writer.WriteStartArray();
-                foreach (var item in WeeksOfTheMonth)
+                foreach (var item in WeeksOfMonth)
                 {
                     writer.WriteStringValue(item.ToString());
                 }

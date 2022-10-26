@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of DataSourceSetInfo. </summary>
         /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public DataSourceSetInfo(string resourceId)
+        public DataSourceSetInfo(ResourceIdentifier resourceId)
         {
             if (resourceId == null)
             {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceName"> Unique identifier of the resource in the context of parent. </param>
         /// <param name="resourceType"> Resource Type of Datasource. </param>
         /// <param name="resourceUri"> Uri of the resource. </param>
-        internal DataSourceSetInfo(string dataSourceType, string objectType, string resourceId, string resourceLocation, string resourceName, string resourceType, Uri resourceUri)
+        internal DataSourceSetInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, Uri resourceUri)
         {
             DataSourceType = dataSourceType;
             ObjectType = objectType;
@@ -49,13 +50,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Type of Datasource object, used to initialize the right inherited type. </summary>
         public string ObjectType { get; set; }
         /// <summary> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Location of datasource. </summary>
-        public string ResourceLocation { get; set; }
+        public AzureLocation? ResourceLocation { get; set; }
         /// <summary> Unique identifier of the resource in the context of parent. </summary>
         public string ResourceName { get; set; }
         /// <summary> Resource Type of Datasource. </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
         /// <summary> Uri of the resource. </summary>
         public Uri ResourceUri { get; set; }
     }
