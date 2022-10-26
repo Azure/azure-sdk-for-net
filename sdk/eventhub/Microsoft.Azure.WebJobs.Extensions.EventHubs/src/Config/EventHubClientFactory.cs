@@ -52,27 +52,29 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             if (!string.IsNullOrWhiteSpace(connection))
             {
                 var info = ResolveConnectionInformation(connection);
+                var eventHubProducerClientOptions = new EventHubProducerClientOptions
+                {
+                    RetryOptions = _options.ClientRetryOptions,
+                    ConnectionOptions = _options.ConnectionOptions
+                };
+
                 EventHubConnection eventHubConnection;
 
                 if (info.FullyQualifiedEndpoint != null &&
                     info.TokenCredential != null)
                 {
-                    eventHubConnection = new EventHubConnection(info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential);
+                    eventHubConnection = new EventHubConnection(info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential, eventHubProducerClientOptions.ConnectionOptions);
                 }
                 else
                 {
-                    eventHubConnection = new EventHubConnection(NormalizeConnectionString(info.ConnectionString, eventHubName));
+                    eventHubConnection = new EventHubConnection(NormalizeConnectionString(info.ConnectionString, eventHubName), eventHubProducerClientOptions.ConnectionOptions);
                 }
 
                 return _producerCache.GetOrAdd(GenerateCacheKey(eventHubConnection), key =>
                 {
                     return new EventHubProducerClient(
                         eventHubConnection,
-                        new EventHubProducerClientOptions
-                        {
-                            RetryOptions = _options.ClientRetryOptions,
-                            ConnectionOptions = _options.ConnectionOptions
-                        });
+                        eventHubProducerClientOptions);
                 });
             }
 
@@ -121,48 +123,36 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             connection = _nameResolver.ResolveWholeString(connection);
             consumerGroup = _nameResolver.ResolveWholeString(consumerGroup);
 
-            return _consumerCache.GetOrAdd(eventHubName, name =>
+            if (!string.IsNullOrEmpty(connection))
             {
-                EventHubConsumerClient client = null;
-
-                if (!string.IsNullOrEmpty(connection))
+                var info = ResolveConnectionInformation(connection);
+                var eventHubConsumerClientOptions = new EventHubConsumerClientOptions
                 {
-                    var info = ResolveConnectionInformation(connection);
+                    RetryOptions = _options.ClientRetryOptions,
+                    ConnectionOptions = _options.ConnectionOptions
+                };
 
-                    if (info.FullyQualifiedEndpoint != null &&
-                        info.TokenCredential != null)
-                    {
-                        client = new EventHubConsumerClient(
-                            consumerGroup,
-                            info.FullyQualifiedEndpoint,
-                            eventHubName,
-                            info.TokenCredential,
-                            new EventHubConsumerClientOptions
-                            {
-                                RetryOptions = _options.ClientRetryOptions,
-                                ConnectionOptions = _options.ConnectionOptions
-                            });
-                    }
-                    else
-                    {
-                        client = new EventHubConsumerClient(
-                            consumerGroup,
-                            NormalizeConnectionString(info.ConnectionString, eventHubName),
-                            new EventHubConsumerClientOptions
-                            {
-                                RetryOptions = _options.ClientRetryOptions,
-                                ConnectionOptions = _options.ConnectionOptions
-                            });
-                    }
+                EventHubConnection eventHubConnection;
+
+                if (info.FullyQualifiedEndpoint != null &&
+                    info.TokenCredential != null)
+                {
+                    eventHubConnection = new EventHubConnection(info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential, eventHubConsumerClientOptions.ConnectionOptions);
+                }
+                else
+                {
+                    eventHubConnection = new EventHubConnection(NormalizeConnectionString(info.ConnectionString, eventHubName), eventHubConsumerClientOptions.ConnectionOptions);
                 }
 
-                if (client != null)
-                {
-                    return new EventHubConsumerClientImpl(client);
-                }
+                return _consumerCache.GetOrAdd(GenerateCacheKey(eventHubConnection, consumerGroup), key =>
+                    new EventHubConsumerClientImpl(
+                        new EventHubConsumerClient(
+                            consumerGroup,
+                            eventHubConnection,
+                            eventHubConsumerClientOptions)));
+            }
 
-                throw new InvalidOperationException("No event hub receiver named " + eventHubName);
-            });
+            throw new InvalidOperationException("No event hub receiver named " + eventHubName);
         }
 
         internal BlobContainerClient GetCheckpointStoreClient()
@@ -210,7 +200,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return new EventHubsConnectionInformation(fullyQualifiedNamespace, credential);
         }
 
-        private static string GenerateCacheKey(EventHubConnection eventHubConnection) => $"{eventHubConnection.FullyQualifiedNamespace}/{eventHubConnection.EventHubName}";
+        private static string GenerateCacheKey(EventHubConnection eventHubConnection, string consumerGroup = null) =>
+            consumerGroup == null
+            ? $"{eventHubConnection.FullyQualifiedNamespace}/{eventHubConnection.EventHubName}"
+            : $"{eventHubConnection.FullyQualifiedNamespace}/{eventHubConnection.EventHubName}/{consumerGroup}";
 
         private record EventHubsConnectionInformation
         {

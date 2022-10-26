@@ -103,6 +103,37 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
+        public void ConsumersWithSameNameAreProperlyCached()
+        {
+            EventHubOptions options = new EventHubOptions();
+
+            var componentFactoryMock = new Mock<AzureComponentFactory>();
+            componentFactoryMock.Setup(c => c.CreateTokenCredential(
+                    It.Is<IConfiguration>(c => c["fullyQualifiedNamespace"] != null)))
+                .Returns(new DefaultAzureCredential());
+
+            var configuration = ConfigurationUtilities.CreateConfiguration(
+                new KeyValuePair<string, string>("connection1", ConnectionString),
+                new KeyValuePair<string, string>("connection2", AnotherConnectionString),
+                new KeyValuePair<string, string>("connection3:fullyQualifiedNamespace", "test89123-ns-x.servicebus.windows.net"),
+                new KeyValuePair<string, string>("connection4:fullyQualifiedNamespace", "test12345-ns-x.servicebus.windows.net"));
+
+            var factory = ConfigurationUtilities.CreateFactory(configuration, options, componentFactoryMock.Object);
+            var consumer1 = factory.GetEventHubConsumerClient("k1", "connection1", null);
+            var consumer2 = factory.GetEventHubConsumerClient("k1", "connection2", "csg");
+            var consumer3 = factory.GetEventHubConsumerClient("k1", "connection3", "csg");
+            var consumer4 = factory.GetEventHubConsumerClient("k1", "connection4", "csg");
+
+            // Create different consumers for different eventhub namespaces.
+            Assert.AreNotSame(consumer1, consumer2);
+            Assert.AreNotSame(consumer3, consumer4);
+            // Create different consumers for different consumer groups.
+            Assert.AreNotSame(consumer1, consumer3);
+            // Use the same consumer client for the same namespace/eventhub/consumergroup
+            Assert.AreSame(consumer2, consumer4);
+        }
+
+        [Test]
         public void ProducersWithSameNameAreProperlyCached()
         {
             EventHubOptions options = new EventHubOptions();
@@ -175,10 +206,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
             var producer = factory.GetEventHubProducerClient(expectedPathName, "connection");
-            EventHubProducerClientOptions clientOptions = (EventHubProducerClientOptions)typeof(EventHubProducerClient).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
+            EventHubConnection connection = (EventHubConnection)typeof(EventHubProducerClient).GetProperty("Connection", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(producer);
-            Assert.AreEqual(testEndpoint, clientOptions.ConnectionOptions.CustomEndpointAddress);
-            Assert.AreEqual(10, clientOptions.RetryOptions.MaximumRetries);
+            EventHubConnectionOptions connectionOptions = (EventHubConnectionOptions)typeof(EventHubConnection).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(connection);
+
+            Assert.AreEqual(testEndpoint, connectionOptions.CustomEndpointAddress);
+            Assert.AreEqual(expectedPathName, producer.EventHubName);
+
+            EventHubProducerClientOptions producerOptions = (EventHubProducerClientOptions)typeof(EventHubProducerClient).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(producer);
+            Assert.AreEqual(10, producerOptions.RetryOptions.MaximumRetries);
             Assert.AreEqual(expectedPathName, producer.EventHubName);
         }
 
