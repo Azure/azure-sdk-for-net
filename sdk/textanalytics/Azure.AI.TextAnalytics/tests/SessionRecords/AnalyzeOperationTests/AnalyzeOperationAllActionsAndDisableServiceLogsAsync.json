@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "657",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2aa20f5cd04f4159206518f857dbfe06-2de3e7ff69d43588-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "5b0fd2440c388909cffb5c9f5125b846",
+        "traceparent": "00-a575e5b20e89abbe5a3ccda9af8e6dce-3b041a5481ba8280-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9a2a41a6bf8c7f76bdeed513cb2804cd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -67,42 +67,79 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "9ea6018e-50b4-4253-8546-ac73272942b5",
+        "apim-request-id": "fb3e2193-5e60-4ff0-8b67-51120bdcaabe",
         "Content-Length": "0",
-        "Date": "Thu, 21 Jul 2022 23:22:05 GMT",
-        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
+        "Date": "Fri, 14 Oct 2022 22:16:16 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ed6682bd-9a53-47ad-aa09-78506b0ba779?api-version=2022-10-01-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "318"
+        "x-envoy-upstream-service-time": "218"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ed6682bd-9a53-47ad-aa09-78506b0ba779?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "79ddd0964415bc2c825423de35183bf5",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "62c41e6d7c2184aa5a21ee33e75430cb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b7c1c58e-2409-43e2-b082-406c316b2b50",
-        "Content-Length": "280",
+        "apim-request-id": "f5427cc9-6120-44e9-8627-a4d104af992c",
+        "Content-Length": "282",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:05 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
-        "jobId": "a2ce743a-6f22-4c42-a186-ebd5a6e4fd64",
-        "lastUpdatedDateTime": "2022-07-21T23:22:06Z",
-        "createdDateTime": "2022-07-21T23:22:05Z",
-        "expirationDateTime": "2022-07-22T23:22:05Z",
+        "jobId": "ed6682bd-9a53-47ad-aa09-78506b0ba779",
+        "lastUpdateDateTime": "2022-10-14T22:16:17Z",
+        "createdDateTime": "2022-10-14T22:16:17Z",
+        "expirationDateTime": "2022-10-15T22:16:17Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 5,
+          "total": 5,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ed6682bd-9a53-47ad-aa09-78506b0ba779?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ac50904791d8800576d642e4c9019128",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e04cd5b6-07b1-437f-a819-31e9a8e77f61",
+        "Content-Length": "279",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Oct 2022 22:16:18 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
+      },
+      "ResponseBody": {
+        "jobId": "ed6682bd-9a53-47ad-aa09-78506b0ba779",
+        "lastUpdateDateTime": "2022-10-14T22:16:18Z",
+        "createdDateTime": "2022-10-14T22:16:17Z",
+        "expirationDateTime": "2022-10-15T22:16:17Z",
         "status": "running",
         "errors": [],
         "tasks": {
@@ -115,746 +152,31 @@
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ed6682bd-9a53-47ad-aa09-78506b0ba779?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "75925b832b37cb221f74caae5d9cddb8",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a6175ca168e529d796a6406bd1429768",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1e47780d-c002-4259-a129-945df7fafd25",
-        "Content-Length": "280",
+        "apim-request-id": "49cdd1d4-b6f1-4d9c-8878-784b686c1bdc",
+        "Content-Length": "3204",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:06 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:20 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "8"
+        "x-envoy-upstream-service-time": "101"
       },
       "ResponseBody": {
-        "jobId": "a2ce743a-6f22-4c42-a186-ebd5a6e4fd64",
-        "lastUpdatedDateTime": "2022-07-21T23:22:06Z",
-        "createdDateTime": "2022-07-21T23:22:05Z",
-        "expirationDateTime": "2022-07-22T23:22:05Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 0,
-          "failed": 0,
-          "inProgress": 5,
-          "total": 5,
-          "items": []
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "7064a08ccad6ffcca652d8e3e92a53b6",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "f8c5036b-3e28-4a9e-ba4c-f978d47c4840",
-        "Content-Length": "588",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:07 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "32"
-      },
-      "ResponseBody": {
-        "jobId": "a2ce743a-6f22-4c42-a186-ebd5a6e4fd64",
-        "lastUpdatedDateTime": "2022-07-21T23:22:07Z",
-        "createdDateTime": "2022-07-21T23:22:05Z",
-        "expirationDateTime": "2022-07-22T23:22:05Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 1,
-          "failed": 0,
-          "inProgress": 4,
-          "total": 5,
-          "items": [
-            {
-              "kind": "KeyPhraseExtractionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:07.9111662Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "keyPhrases": [
-                      "Elon Musk",
-                      "CEO",
-                      "SpaceX",
-                      "Tesla"
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "keyPhrases": [
-                      "Tesla stock"
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2022-07-01"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "f51b67c042926a0fad1259a17a7e5fe5",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "3ce8f288-e0cc-44b4-8b86-30a07dda10d7",
-        "Content-Length": "1844",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:08 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "53"
-      },
-      "ResponseBody": {
-        "jobId": "a2ce743a-6f22-4c42-a186-ebd5a6e4fd64",
-        "lastUpdatedDateTime": "2022-07-21T23:22:08Z",
-        "createdDateTime": "2022-07-21T23:22:05Z",
-        "expirationDateTime": "2022-07-22T23:22:05Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 2,
-          "failed": 0,
-          "inProgress": 3,
-          "total": 5,
-          "items": [
-            {
-              "kind": "KeyPhraseExtractionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:07.9111662Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "keyPhrases": [
-                      "Elon Musk",
-                      "CEO",
-                      "SpaceX",
-                      "Tesla"
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "keyPhrases": [
-                      "Tesla stock"
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2022-07-01"
-              }
-            },
-            {
-              "kind": "EntityLinkingLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:08.8589068Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "entities": [
-                      {
-                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
-                        "name": "Elon Musk",
-                        "matches": [
-                          {
-                            "text": "Elon Musk",
-                            "offset": 0,
-                            "length": 9,
-                            "confidenceScore": 0.94
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Elon Musk",
-                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
-                        "name": "SpaceX",
-                        "matches": [
-                          {
-                            "text": "SpaceX",
-                            "offset": 24,
-                            "length": 6,
-                            "confidenceScore": 0.63
-                          }
-                        ],
-                        "language": "en",
-                        "id": "SpaceX",
-                        "url": "https://en.wikipedia.org/wiki/SpaceX",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 35,
-                            "length": 5,
-                            "confidenceScore": 0.47
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "entities": [
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 0,
-                            "length": 5,
-                            "confidenceScore": 0.05
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2021-06-01"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "95526a77cbb4b91e8e93cfe5523ee1f4",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "4ec2ebc3-cffb-4683-9cd3-9df2ec4e6478",
-        "Content-Length": "1844",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:09 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "58"
-      },
-      "ResponseBody": {
-        "jobId": "a2ce743a-6f22-4c42-a186-ebd5a6e4fd64",
-        "lastUpdatedDateTime": "2022-07-21T23:22:08Z",
-        "createdDateTime": "2022-07-21T23:22:05Z",
-        "expirationDateTime": "2022-07-22T23:22:05Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 2,
-          "failed": 0,
-          "inProgress": 3,
-          "total": 5,
-          "items": [
-            {
-              "kind": "KeyPhraseExtractionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:07.9111662Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "keyPhrases": [
-                      "Elon Musk",
-                      "CEO",
-                      "SpaceX",
-                      "Tesla"
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "keyPhrases": [
-                      "Tesla stock"
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2022-07-01"
-              }
-            },
-            {
-              "kind": "EntityLinkingLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:08.8589068Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "entities": [
-                      {
-                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
-                        "name": "Elon Musk",
-                        "matches": [
-                          {
-                            "text": "Elon Musk",
-                            "offset": 0,
-                            "length": 9,
-                            "confidenceScore": 0.94
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Elon Musk",
-                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
-                        "name": "SpaceX",
-                        "matches": [
-                          {
-                            "text": "SpaceX",
-                            "offset": 24,
-                            "length": 6,
-                            "confidenceScore": 0.63
-                          }
-                        ],
-                        "language": "en",
-                        "id": "SpaceX",
-                        "url": "https://en.wikipedia.org/wiki/SpaceX",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 35,
-                            "length": 5,
-                            "confidenceScore": 0.47
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "entities": [
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 0,
-                            "length": 5,
-                            "confidenceScore": 0.05
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2021-06-01"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "f6ee1321e781492690f9c2c4702b8428",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "d16409d8-130d-41d8-b7a7-44467ab2a0e8",
-        "Content-Length": "1844",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:11 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "63"
-      },
-      "ResponseBody": {
-        "jobId": "a2ce743a-6f22-4c42-a186-ebd5a6e4fd64",
-        "lastUpdatedDateTime": "2022-07-21T23:22:08Z",
-        "createdDateTime": "2022-07-21T23:22:05Z",
-        "expirationDateTime": "2022-07-22T23:22:05Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 2,
-          "failed": 0,
-          "inProgress": 3,
-          "total": 5,
-          "items": [
-            {
-              "kind": "KeyPhraseExtractionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:07.9111662Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "keyPhrases": [
-                      "Elon Musk",
-                      "CEO",
-                      "SpaceX",
-                      "Tesla"
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "keyPhrases": [
-                      "Tesla stock"
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2022-07-01"
-              }
-            },
-            {
-              "kind": "EntityLinkingLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:08.8589068Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "entities": [
-                      {
-                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
-                        "name": "Elon Musk",
-                        "matches": [
-                          {
-                            "text": "Elon Musk",
-                            "offset": 0,
-                            "length": 9,
-                            "confidenceScore": 0.94
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Elon Musk",
-                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
-                        "name": "SpaceX",
-                        "matches": [
-                          {
-                            "text": "SpaceX",
-                            "offset": 24,
-                            "length": 6,
-                            "confidenceScore": 0.63
-                          }
-                        ],
-                        "language": "en",
-                        "id": "SpaceX",
-                        "url": "https://en.wikipedia.org/wiki/SpaceX",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 35,
-                            "length": 5,
-                            "confidenceScore": 0.47
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "entities": [
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 0,
-                            "length": 5,
-                            "confidenceScore": 0.05
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2021-06-01"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "7e6cf3f2bdd8f402486267fe732a176e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "95a88d08-3437-4ff7-9906-4c6d3a87e561",
-        "Content-Length": "1844",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:12 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "55"
-      },
-      "ResponseBody": {
-        "jobId": "a2ce743a-6f22-4c42-a186-ebd5a6e4fd64",
-        "lastUpdatedDateTime": "2022-07-21T23:22:12Z",
-        "createdDateTime": "2022-07-21T23:22:05Z",
-        "expirationDateTime": "2022-07-22T23:22:05Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 2,
-          "failed": 0,
-          "inProgress": 3,
-          "total": 5,
-          "items": [
-            {
-              "kind": "KeyPhraseExtractionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:07.9111662Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "keyPhrases": [
-                      "Elon Musk",
-                      "CEO",
-                      "SpaceX",
-                      "Tesla"
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "keyPhrases": [
-                      "Tesla stock"
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2022-07-01"
-              }
-            },
-            {
-              "kind": "EntityLinkingLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:08.8589068Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "entities": [
-                      {
-                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
-                        "name": "Elon Musk",
-                        "matches": [
-                          {
-                            "text": "Elon Musk",
-                            "offset": 0,
-                            "length": 9,
-                            "confidenceScore": 0.94
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Elon Musk",
-                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
-                        "name": "SpaceX",
-                        "matches": [
-                          {
-                            "text": "SpaceX",
-                            "offset": 24,
-                            "length": 6,
-                            "confidenceScore": 0.63
-                          }
-                        ],
-                        "language": "en",
-                        "id": "SpaceX",
-                        "url": "https://en.wikipedia.org/wiki/SpaceX",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 35,
-                            "length": 5,
-                            "confidenceScore": 0.47
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "entities": [
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 0,
-                            "length": 5,
-                            "confidenceScore": 0.05
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2021-06-01"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "66806530698f8f64440804bb095a4863",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "ee809b13-42cd-4685-bae0-6cbbe0a667d0",
-        "Content-Length": "2765",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:13 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "83"
-      },
-      "ResponseBody": {
-        "jobId": "a2ce743a-6f22-4c42-a186-ebd5a6e4fd64",
-        "lastUpdatedDateTime": "2022-07-21T23:22:13Z",
-        "createdDateTime": "2022-07-21T23:22:05Z",
-        "expirationDateTime": "2022-07-22T23:22:05Z",
+        "jobId": "ed6682bd-9a53-47ad-aa09-78506b0ba779",
+        "lastUpdateDateTime": "2022-10-14T22:16:19Z",
+        "createdDateTime": "2022-10-14T22:16:17Z",
+        "expirationDateTime": "2022-10-15T22:16:17Z",
         "status": "running",
         "errors": [],
         "tasks": {
@@ -864,297 +186,8 @@
           "total": 5,
           "items": [
             {
-              "kind": "PiiEntityRecognitionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:13.808783Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "redactedText": "********* is the *** of ****** and *****.",
-                    "id": "0",
-                    "entities": [
-                      {
-                        "text": "Elon Musk",
-                        "category": "Person",
-                        "offset": 0,
-                        "length": 9,
-                        "confidenceScore": 0.99
-                      },
-                      {
-                        "text": "CEO",
-                        "category": "PersonType",
-                        "offset": 17,
-                        "length": 3,
-                        "confidenceScore": 0.96
-                      },
-                      {
-                        "text": "SpaceX",
-                        "category": "Organization",
-                        "offset": 24,
-                        "length": 6,
-                        "confidenceScore": 0.98
-                      },
-                      {
-                        "text": "Tesla",
-                        "category": "Organization",
-                        "offset": 35,
-                        "length": 5,
-                        "confidenceScore": 0.98
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "redactedText": "***** stock is up by 400% *********.",
-                    "id": "1",
-                    "entities": [
-                      {
-                        "text": "Tesla",
-                        "category": "Organization",
-                        "offset": 0,
-                        "length": 5,
-                        "confidenceScore": 0.95
-                      },
-                      {
-                        "text": "this year",
-                        "category": "DateTime",
-                        "subcategory": "DateRange",
-                        "offset": 26,
-                        "length": 9,
-                        "confidenceScore": 0.8
-                      }
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2021-01-15"
-              }
-            },
-            {
-              "kind": "KeyPhraseExtractionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:07.9111662Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "keyPhrases": [
-                      "Elon Musk",
-                      "CEO",
-                      "SpaceX",
-                      "Tesla"
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "keyPhrases": [
-                      "Tesla stock"
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2022-07-01"
-              }
-            },
-            {
-              "kind": "EntityLinkingLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:08.8589068Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "entities": [
-                      {
-                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
-                        "name": "Elon Musk",
-                        "matches": [
-                          {
-                            "text": "Elon Musk",
-                            "offset": 0,
-                            "length": 9,
-                            "confidenceScore": 0.94
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Elon Musk",
-                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
-                        "name": "SpaceX",
-                        "matches": [
-                          {
-                            "text": "SpaceX",
-                            "offset": 24,
-                            "length": 6,
-                            "confidenceScore": 0.63
-                          }
-                        ],
-                        "language": "en",
-                        "id": "SpaceX",
-                        "url": "https://en.wikipedia.org/wiki/SpaceX",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 35,
-                            "length": 5,
-                            "confidenceScore": 0.47
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "entities": [
-                      {
-                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
-                        "name": "Tesla, Inc.",
-                        "matches": [
-                          {
-                            "text": "Tesla",
-                            "offset": 0,
-                            "length": 5,
-                            "confidenceScore": 0.05
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Tesla, Inc.",
-                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2021-06-01"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a2ce743a-6f22-4c42-a186-ebd5a6e4fd64?api-version=2022-05-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "5ff2a60f63d2631b11f9ad1f8028d666",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "a587c119-2bcd-474b-a879-87d77d7b35af",
-        "Content-Length": "4445",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:14 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "133"
-      },
-      "ResponseBody": {
-        "jobId": "a2ce743a-6f22-4c42-a186-ebd5a6e4fd64",
-        "lastUpdatedDateTime": "2022-07-21T23:22:14Z",
-        "createdDateTime": "2022-07-21T23:22:05Z",
-        "expirationDateTime": "2022-07-22T23:22:05Z",
-        "status": "succeeded",
-        "errors": [],
-        "tasks": {
-          "completed": 5,
-          "failed": 0,
-          "inProgress": 0,
-          "total": 5,
-          "items": [
-            {
-              "kind": "PiiEntityRecognitionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:13.808783Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "redactedText": "********* is the *** of ****** and *****.",
-                    "id": "0",
-                    "entities": [
-                      {
-                        "text": "Elon Musk",
-                        "category": "Person",
-                        "offset": 0,
-                        "length": 9,
-                        "confidenceScore": 0.99
-                      },
-                      {
-                        "text": "CEO",
-                        "category": "PersonType",
-                        "offset": 17,
-                        "length": 3,
-                        "confidenceScore": 0.96
-                      },
-                      {
-                        "text": "SpaceX",
-                        "category": "Organization",
-                        "offset": 24,
-                        "length": 6,
-                        "confidenceScore": 0.98
-                      },
-                      {
-                        "text": "Tesla",
-                        "category": "Organization",
-                        "offset": 35,
-                        "length": 5,
-                        "confidenceScore": 0.98
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "redactedText": "***** stock is up by 400% *********.",
-                    "id": "1",
-                    "entities": [
-                      {
-                        "text": "Tesla",
-                        "category": "Organization",
-                        "offset": 0,
-                        "length": 5,
-                        "confidenceScore": 0.95
-                      },
-                      {
-                        "text": "this year",
-                        "category": "DateTime",
-                        "subcategory": "DateRange",
-                        "offset": 26,
-                        "length": 9,
-                        "confidenceScore": 0.8
-                      }
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2021-01-15"
-              }
-            },
-            {
               "kind": "EntityRecognitionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:13.8557429Z",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3084413Z",
               "status": "succeeded",
               "results": {
                 "documents": [
@@ -1227,36 +260,8 @@
               }
             },
             {
-              "kind": "KeyPhraseExtractionLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:07.9111662Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "keyPhrases": [
-                      "Elon Musk",
-                      "CEO",
-                      "SpaceX",
-                      "Tesla"
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "1",
-                    "keyPhrases": [
-                      "Tesla stock"
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2022-07-01"
-              }
-            },
-            {
               "kind": "EntityLinkingLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:08.8589068Z",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3221712Z",
               "status": "succeeded",
               "results": {
                 "documents": [
@@ -1343,7 +348,7 @@
             },
             {
               "kind": "SentimentAnalysisLROResults",
-              "lastUpdateDateTime": "2022-07-21T23:22:14.3132053Z",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.2112424Z",
               "status": "succeeded",
               "results": {
                 "documents": [
@@ -1352,16 +357,16 @@
                     "sentiment": "neutral",
                     "confidenceScores": {
                       "positive": 0.01,
-                      "neutral": 0.97,
-                      "negative": 0.02
+                      "neutral": 0.99,
+                      "negative": 0.0
                     },
                     "sentences": [
                       {
                         "sentiment": "neutral",
                         "confidenceScores": {
                           "positive": 0.01,
-                          "neutral": 0.97,
-                          "negative": 0.02
+                          "neutral": 0.99,
+                          "negative": 0.0
                         },
                         "offset": 0,
                         "length": 41,
@@ -1374,17 +379,17 @@
                     "id": "1",
                     "sentiment": "neutral",
                     "confidenceScores": {
-                      "positive": 0.01,
-                      "neutral": 0.96,
-                      "negative": 0.03
+                      "positive": 0.0,
+                      "neutral": 1.0,
+                      "negative": 0.0
                     },
                     "sentences": [
                       {
                         "sentiment": "neutral",
                         "confidenceScores": {
-                          "positive": 0.01,
-                          "neutral": 0.96,
-                          "negative": 0.03
+                          "positive": 0.0,
+                          "neutral": 1.0,
+                          "negative": 0.0
                         },
                         "offset": 0,
                         "length": 36,
@@ -1395,7 +400,1383 @@
                   }
                 ],
                 "errors": [],
-                "modelVersion": "2022-06-01"
+                "modelVersion": "2022-10-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ed6682bd-9a53-47ad-aa09-78506b0ba779?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3acc0abe57d7dbf51944eb4b3ac6bb58",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "01366056-ca05-44db-bad9-55f48e689cf4",
+        "Content-Length": "3204",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Oct 2022 22:16:21 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "75"
+      },
+      "ResponseBody": {
+        "jobId": "ed6682bd-9a53-47ad-aa09-78506b0ba779",
+        "lastUpdateDateTime": "2022-10-14T22:16:19Z",
+        "createdDateTime": "2022-10-14T22:16:17Z",
+        "expirationDateTime": "2022-10-15T22:16:17Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 3,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 5,
+          "items": [
+            {
+              "kind": "EntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3084413Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "Elon Musk",
+                        "category": "Person",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "CEO",
+                        "category": "PersonType",
+                        "offset": 17,
+                        "length": 3,
+                        "confidenceScore": 0.95
+                      },
+                      {
+                        "text": "SpaceX",
+                        "category": "Organization",
+                        "offset": 24,
+                        "length": 6,
+                        "confidenceScore": 0.99
+                      },
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 35,
+                        "length": 5,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 5,
+                        "confidenceScore": 0.98
+                      },
+                      {
+                        "text": "400%",
+                        "category": "Quantity",
+                        "subcategory": "Percentage",
+                        "offset": 21,
+                        "length": 4,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "this year",
+                        "category": "DateTime",
+                        "subcategory": "DateRange",
+                        "offset": 26,
+                        "length": 9,
+                        "confidenceScore": 0.8
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "EntityLinkingLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3221712Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
+                        "name": "Elon Musk",
+                        "matches": [
+                          {
+                            "text": "Elon Musk",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.94
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Elon Musk",
+                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
+                        "name": "SpaceX",
+                        "matches": [
+                          {
+                            "text": "SpaceX",
+                            "offset": 24,
+                            "length": 6,
+                            "confidenceScore": 0.63
+                          }
+                        ],
+                        "language": "en",
+                        "id": "SpaceX",
+                        "url": "https://en.wikipedia.org/wiki/SpaceX",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 35,
+                            "length": 5,
+                            "confidenceScore": 0.47
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 0,
+                            "length": 5,
+                            "confidenceScore": 0.05
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "SentimentAnalysisLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.2112424Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 41,
+                        "text": "Elon Musk is the CEO of SpaceX and Tesla."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.0,
+                      "neutral": 1.0,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.0,
+                          "neutral": 1.0,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 36,
+                        "text": "Tesla stock is up by 400% this year."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-10-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ed6682bd-9a53-47ad-aa09-78506b0ba779?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8a92c68f893cdfe6b9261532519aaf33",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8fbc24e6-fa90-40cf-857b-bb3b0f92e4f7",
+        "Content-Length": "3204",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Oct 2022 22:16:22 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "87"
+      },
+      "ResponseBody": {
+        "jobId": "ed6682bd-9a53-47ad-aa09-78506b0ba779",
+        "lastUpdateDateTime": "2022-10-14T22:16:19Z",
+        "createdDateTime": "2022-10-14T22:16:17Z",
+        "expirationDateTime": "2022-10-15T22:16:17Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 3,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 5,
+          "items": [
+            {
+              "kind": "EntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3084413Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "Elon Musk",
+                        "category": "Person",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "CEO",
+                        "category": "PersonType",
+                        "offset": 17,
+                        "length": 3,
+                        "confidenceScore": 0.95
+                      },
+                      {
+                        "text": "SpaceX",
+                        "category": "Organization",
+                        "offset": 24,
+                        "length": 6,
+                        "confidenceScore": 0.99
+                      },
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 35,
+                        "length": 5,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 5,
+                        "confidenceScore": 0.98
+                      },
+                      {
+                        "text": "400%",
+                        "category": "Quantity",
+                        "subcategory": "Percentage",
+                        "offset": 21,
+                        "length": 4,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "this year",
+                        "category": "DateTime",
+                        "subcategory": "DateRange",
+                        "offset": 26,
+                        "length": 9,
+                        "confidenceScore": 0.8
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "EntityLinkingLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3221712Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
+                        "name": "Elon Musk",
+                        "matches": [
+                          {
+                            "text": "Elon Musk",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.94
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Elon Musk",
+                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
+                        "name": "SpaceX",
+                        "matches": [
+                          {
+                            "text": "SpaceX",
+                            "offset": 24,
+                            "length": 6,
+                            "confidenceScore": 0.63
+                          }
+                        ],
+                        "language": "en",
+                        "id": "SpaceX",
+                        "url": "https://en.wikipedia.org/wiki/SpaceX",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 35,
+                            "length": 5,
+                            "confidenceScore": 0.47
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 0,
+                            "length": 5,
+                            "confidenceScore": 0.05
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "SentimentAnalysisLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.2112424Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 41,
+                        "text": "Elon Musk is the CEO of SpaceX and Tesla."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.0,
+                      "neutral": 1.0,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.0,
+                          "neutral": 1.0,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 36,
+                        "text": "Tesla stock is up by 400% this year."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-10-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ed6682bd-9a53-47ad-aa09-78506b0ba779?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "be25d93f56354950673c8da07c8ceed0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "15df3594-b86d-4d47-be76-f3ab73f9fde1",
+        "Content-Length": "3204",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Oct 2022 22:16:23 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "79"
+      },
+      "ResponseBody": {
+        "jobId": "ed6682bd-9a53-47ad-aa09-78506b0ba779",
+        "lastUpdateDateTime": "2022-10-14T22:16:19Z",
+        "createdDateTime": "2022-10-14T22:16:17Z",
+        "expirationDateTime": "2022-10-15T22:16:17Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 3,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 5,
+          "items": [
+            {
+              "kind": "EntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3084413Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "Elon Musk",
+                        "category": "Person",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "CEO",
+                        "category": "PersonType",
+                        "offset": 17,
+                        "length": 3,
+                        "confidenceScore": 0.95
+                      },
+                      {
+                        "text": "SpaceX",
+                        "category": "Organization",
+                        "offset": 24,
+                        "length": 6,
+                        "confidenceScore": 0.99
+                      },
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 35,
+                        "length": 5,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 5,
+                        "confidenceScore": 0.98
+                      },
+                      {
+                        "text": "400%",
+                        "category": "Quantity",
+                        "subcategory": "Percentage",
+                        "offset": 21,
+                        "length": 4,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "this year",
+                        "category": "DateTime",
+                        "subcategory": "DateRange",
+                        "offset": 26,
+                        "length": 9,
+                        "confidenceScore": 0.8
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "EntityLinkingLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3221712Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
+                        "name": "Elon Musk",
+                        "matches": [
+                          {
+                            "text": "Elon Musk",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.94
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Elon Musk",
+                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
+                        "name": "SpaceX",
+                        "matches": [
+                          {
+                            "text": "SpaceX",
+                            "offset": 24,
+                            "length": 6,
+                            "confidenceScore": 0.63
+                          }
+                        ],
+                        "language": "en",
+                        "id": "SpaceX",
+                        "url": "https://en.wikipedia.org/wiki/SpaceX",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 35,
+                            "length": 5,
+                            "confidenceScore": 0.47
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 0,
+                            "length": 5,
+                            "confidenceScore": 0.05
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "SentimentAnalysisLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.2112424Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 41,
+                        "text": "Elon Musk is the CEO of SpaceX and Tesla."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.0,
+                      "neutral": 1.0,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.0,
+                          "neutral": 1.0,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 36,
+                        "text": "Tesla stock is up by 400% this year."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-10-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ed6682bd-9a53-47ad-aa09-78506b0ba779?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0bdbe7ea0cb0352c24ec81b141c2897e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "54f2c332-10f8-4a91-aac5-598744d9c788",
+        "Content-Length": "3204",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Oct 2022 22:16:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "87"
+      },
+      "ResponseBody": {
+        "jobId": "ed6682bd-9a53-47ad-aa09-78506b0ba779",
+        "lastUpdateDateTime": "2022-10-14T22:16:23Z",
+        "createdDateTime": "2022-10-14T22:16:17Z",
+        "expirationDateTime": "2022-10-15T22:16:17Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 3,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 5,
+          "items": [
+            {
+              "kind": "EntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3084413Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "Elon Musk",
+                        "category": "Person",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "CEO",
+                        "category": "PersonType",
+                        "offset": 17,
+                        "length": 3,
+                        "confidenceScore": 0.95
+                      },
+                      {
+                        "text": "SpaceX",
+                        "category": "Organization",
+                        "offset": 24,
+                        "length": 6,
+                        "confidenceScore": 0.99
+                      },
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 35,
+                        "length": 5,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 5,
+                        "confidenceScore": 0.98
+                      },
+                      {
+                        "text": "400%",
+                        "category": "Quantity",
+                        "subcategory": "Percentage",
+                        "offset": 21,
+                        "length": 4,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "this year",
+                        "category": "DateTime",
+                        "subcategory": "DateRange",
+                        "offset": 26,
+                        "length": 9,
+                        "confidenceScore": 0.8
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "EntityLinkingLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3221712Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
+                        "name": "Elon Musk",
+                        "matches": [
+                          {
+                            "text": "Elon Musk",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.94
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Elon Musk",
+                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
+                        "name": "SpaceX",
+                        "matches": [
+                          {
+                            "text": "SpaceX",
+                            "offset": 24,
+                            "length": 6,
+                            "confidenceScore": 0.63
+                          }
+                        ],
+                        "language": "en",
+                        "id": "SpaceX",
+                        "url": "https://en.wikipedia.org/wiki/SpaceX",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 35,
+                            "length": 5,
+                            "confidenceScore": 0.47
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 0,
+                            "length": 5,
+                            "confidenceScore": 0.05
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "SentimentAnalysisLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.2112424Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 41,
+                        "text": "Elon Musk is the CEO of SpaceX and Tesla."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.0,
+                      "neutral": 1.0,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.0,
+                          "neutral": 1.0,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 36,
+                        "text": "Tesla stock is up by 400% this year."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-10-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ed6682bd-9a53-47ad-aa09-78506b0ba779?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "610bb894fca1392275482300fb45622d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "23ceb2c4-c6bb-4dab-bdc4-b77dda4be516",
+        "Content-Length": "4437",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Oct 2022 22:16:25 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "126"
+      },
+      "ResponseBody": {
+        "jobId": "ed6682bd-9a53-47ad-aa09-78506b0ba779",
+        "lastUpdateDateTime": "2022-10-14T22:16:25Z",
+        "createdDateTime": "2022-10-14T22:16:17Z",
+        "expirationDateTime": "2022-10-15T22:16:17Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 5,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 5,
+          "items": [
+            {
+              "kind": "PiiEntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:25.3369542Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "redactedText": "********* is the *** of ****** and *****.",
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "Elon Musk",
+                        "category": "Person",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.99
+                      },
+                      {
+                        "text": "CEO",
+                        "category": "PersonType",
+                        "offset": 17,
+                        "length": 3,
+                        "confidenceScore": 0.96
+                      },
+                      {
+                        "text": "SpaceX",
+                        "category": "Organization",
+                        "offset": 24,
+                        "length": 6,
+                        "confidenceScore": 0.98
+                      },
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 35,
+                        "length": 5,
+                        "confidenceScore": 0.98
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "redactedText": "***** stock is up by 400% *********.",
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 5,
+                        "confidenceScore": 0.95
+                      },
+                      {
+                        "text": "this year",
+                        "category": "DateTime",
+                        "subcategory": "DateRange",
+                        "offset": 26,
+                        "length": 9,
+                        "confidenceScore": 0.8
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-01-15"
+              }
+            },
+            {
+              "kind": "EntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3084413Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "Elon Musk",
+                        "category": "Person",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "CEO",
+                        "category": "PersonType",
+                        "offset": 17,
+                        "length": 3,
+                        "confidenceScore": 0.95
+                      },
+                      {
+                        "text": "SpaceX",
+                        "category": "Organization",
+                        "offset": 24,
+                        "length": 6,
+                        "confidenceScore": 0.99
+                      },
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 35,
+                        "length": 5,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Tesla",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 5,
+                        "confidenceScore": 0.98
+                      },
+                      {
+                        "text": "400%",
+                        "category": "Quantity",
+                        "subcategory": "Percentage",
+                        "offset": 21,
+                        "length": 4,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "this year",
+                        "category": "DateTime",
+                        "subcategory": "DateRange",
+                        "offset": 26,
+                        "length": 9,
+                        "confidenceScore": 0.8
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "KeyPhraseExtractionLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:25.3480206Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Tesla stock"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-10-01"
+              }
+            },
+            {
+              "kind": "EntityLinkingLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.3221712Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "bingId": "ce6414c0-f9f0-b48b-31f9-42a7dab4db59",
+                        "name": "Elon Musk",
+                        "matches": [
+                          {
+                            "text": "Elon Musk",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.94
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Elon Musk",
+                        "url": "https://en.wikipedia.org/wiki/Elon_Musk",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "627fa43a-d963-2c69-46ae-de521d27f9b9",
+                        "name": "SpaceX",
+                        "matches": [
+                          {
+                            "text": "SpaceX",
+                            "offset": 24,
+                            "length": 6,
+                            "confidenceScore": 0.63
+                          }
+                        ],
+                        "language": "en",
+                        "id": "SpaceX",
+                        "url": "https://en.wikipedia.org/wiki/SpaceX",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 35,
+                            "length": 5,
+                            "confidenceScore": 0.47
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "bingId": "732e1de9-8d5c-15ed-7f0d-7e2169dc9859",
+                        "name": "Tesla, Inc.",
+                        "matches": [
+                          {
+                            "text": "Tesla",
+                            "offset": 0,
+                            "length": 5,
+                            "confidenceScore": 0.05
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Tesla, Inc.",
+                        "url": "https://en.wikipedia.org/wiki/Tesla,_Inc.",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            },
+            {
+              "kind": "SentimentAnalysisLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:16:19.2112424Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 41,
+                        "text": "Elon Musk is the CEO of SpaceX and Tesla."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.0,
+                      "neutral": 1.0,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.0,
+                          "neutral": 1.0,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 36,
+                        "text": "Tesla stock is up by 400% this year."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-10-01"
               }
             }
           ]
@@ -1404,7 +1785,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "750829517",
+    "RandomSeed": "1598033788",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

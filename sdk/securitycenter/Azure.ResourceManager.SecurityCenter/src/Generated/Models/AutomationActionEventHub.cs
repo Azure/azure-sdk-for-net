@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The target Event Hub to which event data will be exported. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="eventHubResourceId"> The target Event Hub Azure Resource ID. </param>
         /// <param name="sasPolicyName"> The target Event Hub SAS policy name. </param>
         /// <param name="connectionString"> The target Event Hub connection string (it will not be included in any response). </param>
-        internal AutomationActionEventHub(ActionType actionType, string eventHubResourceId, string sasPolicyName, string connectionString) : base(actionType)
+        internal AutomationActionEventHub(ActionType actionType, ResourceIdentifier eventHubResourceId, string sasPolicyName, string connectionString) : base(actionType)
         {
             EventHubResourceId = eventHubResourceId;
             SasPolicyName = sasPolicyName;
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The target Event Hub Azure Resource ID. </summary>
-        public string EventHubResourceId { get; set; }
+        public ResourceIdentifier EventHubResourceId { get; set; }
         /// <summary> The target Event Hub SAS policy name. </summary>
         public string SasPolicyName { get; }
         /// <summary> The target Event Hub connection string (it will not be included in any response). </summary>

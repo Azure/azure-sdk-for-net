@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -16,10 +17,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29140")]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
         public void AnalyzeConversation_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
+            List<string> aspects = new();
 
             #region Snippet:AnalyzeConversation_ConversationSummarization
             var data = new
@@ -78,8 +80,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 },
             };
 
-            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
-            analyzeConversationOperation.WaitForCompletion();
+            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
             using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
             JsonElement jobResults = result.RootElement;
@@ -96,21 +97,26 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     {
                         Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
                         Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+#if !SNIPPET
+                        aspects.Add(summary.GetProperty("aspect").GetString());
+#endif
                     }
                     Console.WriteLine();
                 }
             }
             #endregion
 
-            Assert.That(jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray().All(item => item.GetProperty("results").GetProperty("errors").EnumerateArray().IsNullOrEmpty()));
+            Assert.That(aspects, Contains.Item("issue").And.Contains("resolution"));
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [AsyncOnly]
         [RecordedTest]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
         public async Task AnalyzeConversationAsync_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
+            List<string> aspects = new();
 
             var data = new
             {
@@ -169,8 +175,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             #region Snippet:AnalyzeConversationAsync_ConversationSummarization
-            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
-            await analyzeConversationOperation.WaitForCompletionAsync();
+            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
             #endregion
 
             using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
@@ -188,12 +193,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     {
                         Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
                         Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+#if !SNIPPET
+                        aspects.Add(summary.GetProperty("aspect").GetString());
+#endif
                     }
                     Console.WriteLine();
                 }
             }
 
-            Assert.That(jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray().All(item => item.GetProperty("results").GetProperty("errors").EnumerateArray().IsNullOrEmpty()));
+            Assert.That(aspects, Contains.Item("issue").And.Contains("resolution"));
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
     }

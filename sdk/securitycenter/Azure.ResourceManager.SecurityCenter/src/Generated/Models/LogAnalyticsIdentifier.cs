@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents a Log Analytics workspace scope identifier. </summary>
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="workspaceSubscriptionId"> The azure subscription id for the LogAnalytics workspace storing this alert. </param>
         /// <param name="workspaceResourceGroup"> The azure resource group for the LogAnalytics workspace storing this alert. </param>
         /// <param name="agentId"> (optional) The LogAnalytics agent id reporting the event that this alert is based on. </param>
-        internal LogAnalyticsIdentifier(ResourceIdentifierType resourceIdentifierType, string workspaceId, string workspaceSubscriptionId, string workspaceResourceGroup, string agentId) : base(resourceIdentifierType)
+        internal LogAnalyticsIdentifier(ResourceIdentifierType resourceIdentifierType, string workspaceId, string workspaceSubscriptionId, string workspaceResourceGroup, Guid? agentId) : base(resourceIdentifierType)
         {
             WorkspaceId = workspaceId;
             WorkspaceSubscriptionId = workspaceSubscriptionId;
@@ -38,6 +40,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The azure resource group for the LogAnalytics workspace storing this alert. </summary>
         public string WorkspaceResourceGroup { get; }
         /// <summary> (optional) The LogAnalytics agent id reporting the event that this alert is based on. </summary>
-        public string AgentId { get; }
+        public Guid? AgentId { get; }
     }
 }

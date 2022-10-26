@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of TemporalSpanResolution. </summary>
         internal TemporalSpanResolution()
         {
-            ResolutionKind = ResolutionKind.TemporalSpan;
+            ResolutionKind = ResolutionKind.TemporalSpanResolution;
         }
 
         /// <summary> Initializes a new instance of TemporalSpanResolution. </summary>

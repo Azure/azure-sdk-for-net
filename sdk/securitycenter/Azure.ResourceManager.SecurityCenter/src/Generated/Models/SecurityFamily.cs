@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string WafValue = "Waf";
         private const string NgfwValue = "Ngfw";
         private const string SaasWafValue = "SaasWaf";
-        private const string VaValue = "Va";
+        private const string VulnerabilityAssessmentValue = "Va";
 
         /// <summary> Waf. </summary>
         public static SecurityFamily Waf { get; } = new SecurityFamily(WafValue);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> SaasWaf. </summary>
         public static SecurityFamily SaasWaf { get; } = new SecurityFamily(SaasWafValue);
         /// <summary> Va. </summary>
-        public static SecurityFamily Va { get; } = new SecurityFamily(VaValue);
+        public static SecurityFamily VulnerabilityAssessment { get; } = new SecurityFamily(VulnerabilityAssessmentValue);
         /// <summary> Determines if two <see cref="SecurityFamily"/> values are the same. </summary>
         public static bool operator ==(SecurityFamily left, SecurityFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityFamily"/> values are not the same. </summary>

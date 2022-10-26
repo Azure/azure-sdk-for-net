@@ -17,7 +17,10 @@ var cloudEvent = new CloudEvent(
     "/cloudevents/example/source",
     "Example.Employee",
     new Employee { Name = "Homer", Age = 39 });
-ServiceBusMessage message = new ServiceBusMessage(new BinaryData(cloudEvent));
+ServiceBusMessage message = new ServiceBusMessage(new BinaryData(cloudEvent))
+{
+    ContentType = "application/cloudevents+json"
+};
 
 // send the message
 await sender.SendMessageAsync(message);

@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        public AnalyzeConversationSummarizationResult(DateTimeOffset lastUpdateDateTime, TaskState status, SummaryResult results) : base(lastUpdateDateTime, status)
+        public AnalyzeConversationSummarizationResult(DateTimeOffset lastUpdateDateTime, State status, SummaryResult results) : base(lastUpdateDateTime, status)
         {
             if (results == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="kind"> Enumeration of supported Conversation Analysis task results. </param>
         /// <param name="taskName"></param>
         /// <param name="results"></param>
-        internal AnalyzeConversationSummarizationResult(DateTimeOffset lastUpdateDateTime, TaskState status, AnalyzeConversationResultsKind kind, string taskName, SummaryResult results) : base(lastUpdateDateTime, status, kind, taskName)
+        internal AnalyzeConversationSummarizationResult(DateTimeOffset lastUpdateDateTime, State status, AnalyzeConversationResultsKind kind, string taskName, SummaryResult results) : base(lastUpdateDateTime, status, kind, taskName)
         {
             Results = results;
             Kind = kind;

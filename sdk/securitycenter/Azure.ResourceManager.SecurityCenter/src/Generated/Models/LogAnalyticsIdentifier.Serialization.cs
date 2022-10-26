@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> workspaceId = default;
             Optional<string> workspaceSubscriptionId = default;
             Optional<string> workspaceResourceGroup = default;
-            Optional<string> agentId = default;
+            Optional<Guid> agentId = default;
             ResourceIdentifierType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +39,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("agentId"))
                 {
-                    agentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    agentId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -47,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new LogAnalyticsIdentifier(type, workspaceId.Value, workspaceSubscriptionId.Value, workspaceResourceGroup.Value, agentId.Value);
+            return new LogAnalyticsIdentifier(type, workspaceId.Value, workspaceSubscriptionId.Value, workspaceResourceGroup.Value, Optional.ToNullable(agentId));
         }
     }
 }

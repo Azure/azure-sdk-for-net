@@ -12,7 +12,8 @@ namespace Azure.AI.TextAnalytics.Tests
     [ClientTestFixture(
     TextAnalyticsClientOptions.ServiceVersion.V3_0,
     TextAnalyticsClientOptions.ServiceVersion.V3_1,
-    TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+    TextAnalyticsClientOptions.ServiceVersion.V2022_05_01,
+    TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
         internal const int MaxRetriesCount = 12;
@@ -21,12 +22,12 @@ namespace Azure.AI.TextAnalytics.Tests
         /// The version of the REST API to test against.  This will be passed
         /// to the .ctor via ClientTestFixture's values.
         /// </summary>
-        private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
+        protected TextAnalyticsClientOptions.ServiceVersion ServiceVersion { get; }
 
         public TextAnalyticsClientLiveTestBase(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync)
         {
-            _serviceVersion = serviceVersion;
+            ServiceVersion = serviceVersion;
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
@@ -40,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Tests
             bool useTokenCredential = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            options ??= new TextAnalyticsClientOptions(_serviceVersion);
+            options ??= new TextAnalyticsClientOptions(ServiceVersion);
 
             // While we use a persistent resource for live tests, we need to increase our retries.
             // We should remove when having dynamic resource again

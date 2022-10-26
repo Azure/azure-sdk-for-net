@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of PolicyParameters. </summary>
         public PolicyParameters()
         {
-            DataStoreParametersList = new ChangeTrackingList<DataStoreParameters>();
+            DataStoreParametersList = new ChangeTrackingList<DataStoreSettings>();
         }
 
         /// <summary> Initializes a new instance of PolicyParameters. </summary>
         /// <param name="dataStoreParametersList">
         /// Gets or sets the DataStore Parameters
-        /// Please note <see cref="DataStoreParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOperationalStoreParameters"/>.
+        /// Please note <see cref="DataStoreSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OperationalDataStoreSettings"/>.
         /// </param>
-        internal PolicyParameters(IList<DataStoreParameters> dataStoreParametersList)
+        internal PolicyParameters(IList<DataStoreSettings> dataStoreParametersList)
         {
             DataStoreParametersList = dataStoreParametersList;
         }
 
         /// <summary>
         /// Gets or sets the DataStore Parameters
-        /// Please note <see cref="DataStoreParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOperationalStoreParameters"/>.
+        /// Please note <see cref="DataStoreSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OperationalDataStoreSettings"/>.
         /// </summary>
-        public IList<DataStoreParameters> DataStoreParametersList { get; }
+        public IList<DataStoreSettings> DataStoreParametersList { get; }
     }
 }

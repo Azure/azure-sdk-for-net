@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Optional<ConfigurationStatus> configurationStatus = default;
             Optional<RecommendationAction> recommendationAction = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<EnforcementSupport> enforcementSupport = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +68,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enforcementSupport"))

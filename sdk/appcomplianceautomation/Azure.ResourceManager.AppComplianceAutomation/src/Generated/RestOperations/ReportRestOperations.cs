@@ -210,6 +210,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 case 200:
                 case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -233,6 +234,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 case 200:
                 case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

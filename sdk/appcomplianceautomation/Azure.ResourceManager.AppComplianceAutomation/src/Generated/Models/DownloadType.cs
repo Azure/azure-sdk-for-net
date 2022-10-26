@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> The DownloadType. </summary>
+    /// <summary> Indicates the download type. </summary>
     public readonly partial struct DownloadType : IEquatable<DownloadType>
     {
         private readonly string _value;

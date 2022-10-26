@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaServicesPrivateLinkResourceCollection mediaPrivateLinkResourceCollection => _mediaService.GetMediaServicesPrivateLinkResources();
 
-        public MediaPrivateLinkTests(bool isAsync) : base(isAsync)
+        public MediaPrivateLinkTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

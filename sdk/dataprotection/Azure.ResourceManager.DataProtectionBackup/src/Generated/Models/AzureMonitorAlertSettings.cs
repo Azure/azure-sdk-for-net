@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureMonitorAlertSettings. </summary>
-        /// <param name="alertsForAllJobFailures"></param>
-        internal AzureMonitorAlertSettings(AlertsState? alertsForAllJobFailures)
+        /// <param name="alertSettingsForAllJobFailures"></param>
+        internal AzureMonitorAlertSettings(AzureMonitorAlertsState? alertSettingsForAllJobFailures)
         {
-            AlertsForAllJobFailures = alertsForAllJobFailures;
+            AlertSettingsForAllJobFailures = alertSettingsForAllJobFailures;
         }
 
-        /// <summary> Gets or sets the alerts for all job failures. </summary>
-        public AlertsState? AlertsForAllJobFailures { get; set; }
+        /// <summary> Gets or sets the alert settings for all job failures. </summary>
+        public AzureMonitorAlertsState? AlertSettingsForAllJobFailures { get; set; }
     }
 }
