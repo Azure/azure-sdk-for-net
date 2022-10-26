@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,13 +15,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static DataProtectionOperationJobExtendedInfo DeserializeDataProtectionOperationJobExtendedInfo(JsonElement element)
         {
-            Optional<string> jobId = default;
+            Optional<Guid> jobId = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"))
                 {
-                    jobId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    jobId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("objectType"))
@@ -29,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionOperationJobExtendedInfo(objectType, jobId.Value);
+            return new DataProtectionOperationJobExtendedInfo(objectType, Optional.ToNullable(jobId));
         }
     }
 }
