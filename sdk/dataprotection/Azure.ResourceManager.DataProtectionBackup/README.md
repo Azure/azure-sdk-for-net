@@ -1,8 +1,8 @@
-# Azure Data Protection Backup Management client library for .NET
+# Microsoft Azure Data Protection Backup Management client library for .NET
 
 Microsoft Azure Storage provides data protection, helps you to prepare for scenarios where you need to recover data that has been deleted or overwritten.
 
-This package supports managing Azure Data Protection resources.
+This package supports managing Microsoft Azure Data Protection resources.
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

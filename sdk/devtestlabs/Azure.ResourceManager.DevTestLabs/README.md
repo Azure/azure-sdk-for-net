@@ -2,7 +2,7 @@
 
 Microsoft Azure DevTest Labs is a service for easily creating, using, and managing infrastructure-as-a-service (IaaS) virtual machines (VMs) and platform-as-a-service (PaaS) environments in labs.
 
-This package supports managing Azure DevTest Labs resources.
+This package supports managing Microsoft Azure DevTest Labs resources.
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
