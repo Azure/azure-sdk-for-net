@@ -154,6 +154,7 @@ namespace Microsoft.Azure.Batch
             Models.CertificateReference[] certRefs,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metaData,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken);
 
@@ -163,6 +164,7 @@ namespace Microsoft.Azure.Batch
             Models.CertificateReference[] certificateReferences,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metadata,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken);
 

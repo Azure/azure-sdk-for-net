@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<StartTask> StartTaskProperty;
             public readonly PropertyAccessor<int?> TargetDedicatedComputeNodesProperty;
             public readonly PropertyAccessor<int?> TargetLowPriorityComputeNodesProperty;
+            public readonly PropertyAccessor<Common.NodeCommunicationMode?> TargetNodeCommunicationModeProperty;
             public readonly PropertyAccessor<TaskSchedulingPolicy> TaskSchedulingPolicyProperty;
             public readonly PropertyAccessor<int?> TaskSlotsPerNodeProperty;
             public readonly PropertyAccessor<IList<UserAccount>> UserAccountsProperty;
@@ -64,6 +65,7 @@ namespace Microsoft.Azure.Batch
                 this.StartTaskProperty = this.CreatePropertyAccessor<StartTask>(nameof(StartTask), BindingAccess.Read | BindingAccess.Write);
                 this.TargetDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetDedicatedComputeNodes), BindingAccess.Read | BindingAccess.Write);
                 this.TargetLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetLowPriorityComputeNodes), BindingAccess.Read | BindingAccess.Write);
+                this.TargetNodeCommunicationModeProperty = this.CreatePropertyAccessor<Common.NodeCommunicationMode?>(nameof(TargetNodeCommunicationMode), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>(nameof(TaskSchedulingPolicy), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor<int?>(nameof(TaskSlotsPerNode), BindingAccess.Read | BindingAccess.Write);
                 this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>(nameof(UserAccounts), BindingAccess.Read | BindingAccess.Write);
@@ -137,6 +139,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.TargetLowPriorityNodes,
                     nameof(TargetLowPriorityComputeNodes),
                     BindingAccess.Read | BindingAccess.Write);
+                this.TargetNodeCommunicationModeProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Models.NodeCommunicationMode, Common.NodeCommunicationMode>(protocolObject.TargetNodeCommunicationMode),
+                    nameof(TargetNodeCommunicationMode),
+                    BindingAccess.Read);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskSchedulingPolicy, o => new TaskSchedulingPolicy(o)),
                     nameof(TaskSchedulingPolicy),
@@ -384,6 +390,18 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the desired node communication mode for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the default value is default.
+        /// </remarks>
+        public Common.NodeCommunicationMode? TargetNodeCommunicationMode
+        {
+            get { return this.propertyContainer.TargetNodeCommunicationModeProperty.Value; }
+            set { this.propertyContainer.TargetNodeCommunicationModeProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets how tasks are distributed among compute nodes in the pool.
         /// </summary>
         public TaskSchedulingPolicy TaskSchedulingPolicy
@@ -485,6 +503,7 @@ namespace Microsoft.Azure.Batch
                 StartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, (o) => o.GetTransportObject()),
                 TargetDedicatedNodes = this.TargetDedicatedComputeNodes,
                 TargetLowPriorityNodes = this.TargetLowPriorityComputeNodes,
+                TargetNodeCommunicationMode = UtilitiesInternal.MapNullableEnum<Common.NodeCommunicationMode, Models.NodeCommunicationMode>(this.TargetNodeCommunicationMode),
                 TaskSchedulingPolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.TaskSchedulingPolicy, (o) => o.GetTransportObject()),
                 TaskSlotsPerNode = this.TaskSlotsPerNode,
                 UserAccounts = UtilitiesInternal.ConvertToProtocolCollection(this.UserAccounts),
