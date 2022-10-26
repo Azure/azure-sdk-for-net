@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AlertList DeserializeAlertList(JsonElement element)
         {
-            Optional<IReadOnlyList<AlertData>> value = default;
+            Optional<IReadOnlyList<SecurityAlertData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AlertData> array = new List<AlertData>();
+                    List<SecurityAlertData> array = new List<SecurityAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertData.DeserializeAlertData(item));
+                        array.Add(SecurityAlertData.DeserializeSecurityAlertData(item));
                     }
                     value = array;
                     continue;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupInstanceResourceList DeserializeBackupInstanceResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<BackupInstanceResourceData>> value = default;
+            Optional<IReadOnlyList<DataProtectionBackupInstanceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BackupInstanceResourceData> array = new List<BackupInstanceResourceData>();
+                    List<DataProtectionBackupInstanceData> array = new List<DataProtectionBackupInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupInstanceResourceData.DeserializeBackupInstanceResourceData(item));
+                        array.Add(DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(item));
                     }
                     value = array;
                     continue;

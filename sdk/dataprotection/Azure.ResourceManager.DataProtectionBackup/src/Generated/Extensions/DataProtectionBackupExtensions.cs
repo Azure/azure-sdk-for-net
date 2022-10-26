@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BackupVaultResource> GetBackupVaultResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetBackupVaultResourcesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDataProtectionBackupVaultsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BackupVaultResource> GetBackupVaultResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetBackupVaultResources(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDataProtectionBackupVaults(cancellationToken);
         }
 
         /// <summary>
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
-        /// <param name="featureValidationRequestBase"> Feature support request object. </param>
+        /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="featureValidationRequestBase"/> is null. </exception>
-        public static async Task<Response<FeatureValidationResponseBase>> CheckFeatureSupportDataProtectionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FeatureValidationRequestBase featureValidationRequestBase, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(featureValidationRequestBase, nameof(featureValidationRequestBase));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckFeatureSupportDataProtectionAsync(location, featureValidationRequestBase, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckDataProtectionBackupFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
-        /// <param name="featureValidationRequestBase"> Feature support request object. </param>
+        /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="featureValidationRequestBase"/> is null. </exception>
-        public static Response<FeatureValidationResponseBase> CheckFeatureSupportDataProtection(this SubscriptionResource subscriptionResource, AzureLocation location, FeatureValidationRequestBase featureValidationRequestBase, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(featureValidationRequestBase, nameof(featureValidationRequestBase));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckFeatureSupportDataProtection(location, featureValidationRequestBase, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckDataProtectionBackupFeatureSupport(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceGuardResource> GetResourceGuardResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceGuardResource> GetResourceGuardsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetResourceGuardResourcesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetResourceGuardsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceGuardResource> GetResourceGuardResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceGuardResource> GetResourceGuards(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetResourceGuardResources(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetResourceGuards(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
             );
         }
 
-        /// <summary> Gets a collection of BackupVaultResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DataProtectionBackupVaultResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of BackupVaultResources and their operations over a BackupVaultResource. </returns>
-        public static BackupVaultResourceCollection GetBackupVaultResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DataProtectionBackupVaultResources and their operations over a DataProtectionBackupVaultResource. </returns>
+        public static DataProtectionBackupVaultCollection GetDataProtectionBackupVaults(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetBackupVaultResources();
+            return GetExtensionClient(resourceGroupResource).GetDataProtectionBackupVaults();
         }
 
         /// <summary>
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BackupVaultResource>> GetBackupVaultResourceAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataProtectionBackupVaultResource>> GetDataProtectionBackupVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetBackupVaultResources().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDataProtectionBackupVaults().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BackupVaultResource> GetBackupVaultResource(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        public static Response<DataProtectionBackupVaultResource> GetDataProtectionBackupVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetBackupVaultResources().Get(vaultName, cancellationToken);
+            return resourceGroupResource.GetDataProtectionBackupVaults().Get(vaultName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceGuardResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ResourceGuardResources and their operations over a ResourceGuardResource. </returns>
-        public static ResourceGuardResourceCollection GetResourceGuardResources(this ResourceGroupResource resourceGroupResource)
+        public static ResourceGuardCollection GetResourceGuards(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetResourceGuardResources();
+            return GetExtensionClient(resourceGroupResource).GetResourceGuards();
         }
 
         /// <summary>
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ResourceGuardResource>> GetResourceGuardResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGuardResource>> GetResourceGuardAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetResourceGuardResources().GetAsync(resourceGuardsName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetResourceGuards().GetAsync(resourceGuardsName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ResourceGuardResource> GetResourceGuardResource(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGuardResource> GetResourceGuard(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetResourceGuardResources().Get(resourceGuardsName, cancellationToken);
+            return resourceGroupResource.GetResourceGuards().Get(resourceGuardsName, cancellationToken);
         }
 
         /// <summary>
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityBackupVaultAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataProtectionBackupNameAvailabilityResult>> CheckDataProtectionBackupVaultNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).CheckNameAvailabilityBackupVaultAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -230,122 +230,103 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityBackupVault(this ResourceGroupResource resourceGroupResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<DataProtectionBackupNameAvailabilityResult> CheckDataProtectionBackupVaultNameAvailability(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).CheckNameAvailabilityBackupVault(location, content, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailability(location, content, cancellationToken);
         }
 
-        #region BackupVaultResource
+        #region DataProtectionBackupVaultResource
         /// <summary>
-        /// Gets an object representing a <see cref="BackupVaultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="BackupVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataProtectionBackupVaultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataProtectionBackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupVaultResource" /> object. </returns>
-        public static BackupVaultResource GetBackupVaultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionBackupVaultResource" /> object. </returns>
+        public static DataProtectionBackupVaultResource GetDataProtectionBackupVaultResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BackupVaultResource.ValidateResourceId(id);
-                return new BackupVaultResource(client, id);
+                DataProtectionBackupVaultResource.ValidateResourceId(id);
+                return new DataProtectionBackupVaultResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BaseBackupPolicyResource
+        #region DataProtectionBackupPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="BaseBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BaseBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BaseBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataProtectionBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataProtectionBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BaseBackupPolicyResource" /> object. </returns>
-        public static BaseBackupPolicyResource GetBaseBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionBackupPolicyResource" /> object. </returns>
+        public static DataProtectionBackupPolicyResource GetDataProtectionBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BaseBackupPolicyResource.ValidateResourceId(id);
-                return new BaseBackupPolicyResource(client, id);
+                DataProtectionBackupPolicyResource.ValidateResourceId(id);
+                return new DataProtectionBackupPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BackupInstanceResource
+        #region DataProtectionBackupInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="BackupInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="BackupInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataProtectionBackupInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataProtectionBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupInstanceResource" /> object. </returns>
-        public static BackupInstanceResource GetBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource" /> object. </returns>
+        public static DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BackupInstanceResource.ValidateResourceId(id);
-                return new BackupInstanceResource(client, id);
+                DataProtectionBackupInstanceResource.ValidateResourceId(id);
+                return new DataProtectionBackupInstanceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AzureBackupRecoveryPointResource
+        #region DataProtectionBackupRecoveryPointResource
         /// <summary>
-        /// Gets an object representing an <see cref="AzureBackupRecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureBackupRecoveryPointResource.CreateResourceIdentifier" /> to create an <see cref="AzureBackupRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataProtectionBackupRecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataProtectionBackupRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureBackupRecoveryPointResource" /> object. </returns>
-        public static AzureBackupRecoveryPointResource GetAzureBackupRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionBackupRecoveryPointResource" /> object. </returns>
+        public static DataProtectionBackupRecoveryPointResource GetDataProtectionBackupRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AzureBackupRecoveryPointResource.ValidateResourceId(id);
-                return new AzureBackupRecoveryPointResource(client, id);
+                DataProtectionBackupRecoveryPointResource.ValidateResourceId(id);
+                return new DataProtectionBackupRecoveryPointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AzureBackupJobResource
+        #region DataProtectionBackupJobResource
         /// <summary>
-        /// Gets an object representing an <see cref="AzureBackupJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureBackupJobResource.CreateResourceIdentifier" /> to create an <see cref="AzureBackupJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataProtectionBackupJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataProtectionBackupJobResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureBackupJobResource" /> object. </returns>
-        public static AzureBackupJobResource GetAzureBackupJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionBackupJobResource" /> object. </returns>
+        public static DataProtectionBackupJobResource GetDataProtectionBackupJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AzureBackupJobResource.ValidateResourceId(id);
-                return new AzureBackupJobResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DeletedBackupInstanceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DeletedBackupInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DeletedBackupInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedBackupInstanceResource" /> object. </returns>
-        public static DeletedBackupInstanceResource GetDeletedBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DeletedBackupInstanceResource.ValidateResourceId(id);
-                return new DeletedBackupInstanceResource(client, id);
+                DataProtectionBackupJobResource.ValidateResourceId(id);
+                return new DataProtectionBackupJobResource(client, id);
             }
             );
         }
@@ -365,139 +346,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 ResourceGuardResource.ValidateResourceId(id);
                 return new ResourceGuardResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceGuardDisableSoftDeleteRequestResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardDisableSoftDeleteRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardDisableSoftDeleteRequestResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardDisableSoftDeleteRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardDisableSoftDeleteRequestResource" /> object. </returns>
-        public static ResourceGuardDisableSoftDeleteRequestResource GetResourceGuardDisableSoftDeleteRequestResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGuardDisableSoftDeleteRequestResource.ValidateResourceId(id);
-                return new ResourceGuardDisableSoftDeleteRequestResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceGuardDeleteResourceGuardProxyRequestResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardDeleteResourceGuardProxyRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardDeleteResourceGuardProxyRequestResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardDeleteResourceGuardProxyRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardDeleteResourceGuardProxyRequestResource" /> object. </returns>
-        public static ResourceGuardDeleteResourceGuardProxyRequestResource GetResourceGuardDeleteResourceGuardProxyRequestResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGuardDeleteResourceGuardProxyRequestResource.ValidateResourceId(id);
-                return new ResourceGuardDeleteResourceGuardProxyRequestResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceGuardGetBackupSecurityPINRequestResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardGetBackupSecurityPINRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardGetBackupSecurityPINRequestResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardGetBackupSecurityPINRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardGetBackupSecurityPINRequestResource" /> object. </returns>
-        public static ResourceGuardGetBackupSecurityPINRequestResource GetResourceGuardGetBackupSecurityPINRequestResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGuardGetBackupSecurityPINRequestResource.ValidateResourceId(id);
-                return new ResourceGuardGetBackupSecurityPINRequestResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceGuardDeleteProtectedItemRequestResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardDeleteProtectedItemRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardDeleteProtectedItemRequestResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardDeleteProtectedItemRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardDeleteProtectedItemRequestResource" /> object. </returns>
-        public static ResourceGuardDeleteProtectedItemRequestResource GetResourceGuardDeleteProtectedItemRequestResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGuardDeleteProtectedItemRequestResource.ValidateResourceId(id);
-                return new ResourceGuardDeleteProtectedItemRequestResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceGuardUpdateProtectionPolicyRequestResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardUpdateProtectionPolicyRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardUpdateProtectionPolicyRequestResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardUpdateProtectionPolicyRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardUpdateProtectionPolicyRequestResource" /> object. </returns>
-        public static ResourceGuardUpdateProtectionPolicyRequestResource GetResourceGuardUpdateProtectionPolicyRequestResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGuardUpdateProtectionPolicyRequestResource.ValidateResourceId(id);
-                return new ResourceGuardUpdateProtectionPolicyRequestResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceGuardUpdateProtectedItemRequestResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardUpdateProtectedItemRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardUpdateProtectedItemRequestResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardUpdateProtectedItemRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardUpdateProtectedItemRequestResource" /> object. </returns>
-        public static ResourceGuardUpdateProtectedItemRequestResource GetResourceGuardUpdateProtectedItemRequestResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGuardUpdateProtectedItemRequestResource.ValidateResourceId(id);
-                return new ResourceGuardUpdateProtectedItemRequestResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceGuardProxyBaseResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardProxyBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardProxyBaseResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardProxyBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardProxyBaseResource" /> object. </returns>
-        public static ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGuardProxyBaseResource.ValidateResourceId(id);
-                return new ResourceGuardProxyBaseResource(client, id);
             }
             );
         }

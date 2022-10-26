@@ -593,16 +593,30 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
             {
+                var isBatch = (EventBatchMaximumCount > 1);
+
                 foreach (var eventData in eventBatch)
                 {
                     if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
                     {
-                        var attributes = new Dictionary<string, string>(1)
+                        if (isBatch)
                         {
-                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture) }
-                        };
+                            var attributes = new Dictionary<string, string>(1)
+                            {
+                                { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture) }
+                            };
 
-                        diagnosticScope.AddLink(diagnosticId, null, attributes);
+                            // Use links only when the batch size is not set to a single event.
+
+                            diagnosticScope.AddLink(diagnosticId, null, attributes);
+                        }
+                        else
+                        {
+                            diagnosticScope.SetTraceparent(diagnosticId);
+                            diagnosticScope.AddAttribute(
+                                DiagnosticProperty.EnqueuedTimeAttribute,
+                                eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture));
+                        }
                     }
                 }
             }

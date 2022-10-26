@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         private const string AzureValue = "Azure";
-        private const string AWSValue = "AWS";
-        private const string GCPValue = "GCP";
+        private const string AwsValue = "AWS";
+        private const string GcpValue = "GCP";
         private const string GithubValue = "Github";
         private const string AzureDevOpsValue = "AzureDevOps";
 
         /// <summary> Azure. </summary>
         public static CloudName Azure { get; } = new CloudName(AzureValue);
         /// <summary> AWS. </summary>
-        public static CloudName AWS { get; } = new CloudName(AWSValue);
+        public static CloudName Aws { get; } = new CloudName(AwsValue);
         /// <summary> GCP. </summary>
-        public static CloudName GCP { get; } = new CloudName(GCPValue);
+        public static CloudName Gcp { get; } = new CloudName(GcpValue);
         /// <summary> Github. </summary>
         public static CloudName Github { get; } = new CloudName(GithubValue);
         /// <summary> AzureDevOps. </summary>

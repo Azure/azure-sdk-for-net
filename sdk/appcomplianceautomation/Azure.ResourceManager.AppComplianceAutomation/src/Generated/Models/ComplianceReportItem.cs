@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Initializes a new instance of ComplianceReportItem. </summary>
         /// <param name="categoryName"> The category name. </param>
-        /// <param name="controlId"> The control Id. </param>
+        /// <param name="controlId"> The control Id - e.g. &quot;1&quot;. </param>
         /// <param name="controlName"> The control name. </param>
         /// <param name="controlType"> The control type. </param>
         /// <param name="complianceState"> The compliance result&apos;s status. </param>
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="subscriptionId"> The compliance result mapped subscription Id. </param>
         /// <param name="resourceGroup"> The compliance result mapped resource group. </param>
         /// <param name="resourceType"> The compliance result mapped resource type. </param>
-        /// <param name="resourceId"> The compliance result mapped resource Id. </param>
-        /// <param name="statusChangeDate"> The compliance result last changed date. For unavailable date, set it as N/A. </param>
-        internal ComplianceReportItem(string categoryName, string controlId, string controlName, ControlType? controlType, string complianceState, string policyId, string policyDisplayName, string policyDescription, string subscriptionId, string resourceGroup, string resourceType, string resourceId, string statusChangeDate)
+        /// <param name="resourceId"> The compliance result mapped resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </param>
+        /// <param name="statusChangeDate"> The compliance result last changed date - e.g. &quot;2022-10-24T02:55:16.3274379Z&quot;. For unavailable date, set it as &quot;N/A&quot;. </param>
+        internal ComplianceReportItem(string categoryName, string controlId, string controlName, ControlType? controlType, ComplianceState? complianceState, string policyId, string policyDisplayName, string policyDescription, string subscriptionId, string resourceGroup, string resourceType, string resourceId, string statusChangeDate)
         {
             CategoryName = categoryName;
             ControlId = controlId;
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> The category name. </summary>
         public string CategoryName { get; }
-        /// <summary> The control Id. </summary>
+        /// <summary> The control Id - e.g. &quot;1&quot;. </summary>
         public string ControlId { get; }
         /// <summary> The control name. </summary>
         public string ControlName { get; }
         /// <summary> The control type. </summary>
         public ControlType? ControlType { get; }
         /// <summary> The compliance result&apos;s status. </summary>
-        public string ComplianceState { get; }
+        public ComplianceState? ComplianceState { get; }
         /// <summary> The compliance result mapped policy Id. </summary>
         public string PolicyId { get; }
         /// <summary> The policy&apos;s display name. </summary>
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string ResourceGroup { get; }
         /// <summary> The compliance result mapped resource type. </summary>
         public string ResourceType { get; }
-        /// <summary> The compliance result mapped resource Id. </summary>
+        /// <summary> The compliance result mapped resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </summary>
         public string ResourceId { get; }
-        /// <summary> The compliance result last changed date. For unavailable date, set it as N/A. </summary>
+        /// <summary> The compliance result last changed date - e.g. &quot;2022-10-24T02:55:16.3274379Z&quot;. For unavailable date, set it as &quot;N/A&quot;. </summary>
         public string StatusChangeDate { get; }
     }
 }

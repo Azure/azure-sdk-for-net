@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static SecretStoreBasedAuthCredentials DeserializeSecretStoreBasedAuthCredentials(JsonElement element)
         {
-            Optional<SecretStoreResource> secretStoreResource = default;
+            Optional<SecretStoreResourceInfo> secretStoreResource = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    secretStoreResource = SecretStoreResource.DeserializeSecretStoreResource(property.Value);
+                    secretStoreResource = SecretStoreResourceInfo.DeserializeSecretStoreResourceInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"))
