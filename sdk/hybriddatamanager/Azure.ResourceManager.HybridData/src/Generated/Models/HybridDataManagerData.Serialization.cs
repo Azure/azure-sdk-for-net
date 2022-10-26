@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    public partial class DataManagerData : IUtf8JsonSerializable
+    public partial class HybridDataManagerData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridData
             writer.WriteEndObject();
         }
 
-        internal static DataManagerData DeserializeDataManagerData(JsonElement element)
+        internal static HybridDataManagerData DeserializeHybridDataManagerData(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<HybridDataSku> sku = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridData
                     continue;
                 }
             }
-            return new DataManagerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku.Value);
+            return new HybridDataManagerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku.Value);
         }
     }
 }

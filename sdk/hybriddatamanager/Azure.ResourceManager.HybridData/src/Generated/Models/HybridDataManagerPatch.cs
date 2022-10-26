@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.HybridData.Models
 {
     /// <summary> The DataManagerUpdateParameter. </summary>
-    public partial class DataManagerPatch
+    public partial class HybridDataManagerPatch
     {
-        /// <summary> Initializes a new instance of DataManagerPatch. </summary>
-        public DataManagerPatch()
+        /// <summary> Initializes a new instance of HybridDataManagerPatch. </summary>
+        public HybridDataManagerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

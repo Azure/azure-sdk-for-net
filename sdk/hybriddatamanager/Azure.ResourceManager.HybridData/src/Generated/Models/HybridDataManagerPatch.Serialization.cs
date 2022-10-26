@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridData.Models
 {
-    public partial class DataManagerPatch : IUtf8JsonSerializable
+    public partial class HybridDataManagerPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridData
     /// A Class representing a HybridDataPublicKey along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridDataPublicKeyResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetHybridDataPublicKeyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataManagerResource" /> using the GetHybridDataPublicKey method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridDataManagerResource" /> using the GetHybridDataPublicKey method.
     /// </summary>
     public partial class HybridDataPublicKeyResource : ArmResource
     {

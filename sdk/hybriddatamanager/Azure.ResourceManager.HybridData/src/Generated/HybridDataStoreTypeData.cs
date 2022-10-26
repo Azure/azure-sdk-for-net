@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    /// <summary> A class representing the DataStoreType data model. </summary>
-    public partial class DataStoreTypeData : ResourceData
+    /// <summary> A class representing the HybridDataStoreType data model. </summary>
+    public partial class HybridDataStoreTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataStoreTypeData. </summary>
+        /// <summary> Initializes a new instance of HybridDataStoreTypeData. </summary>
         /// <param name="state"> State of the data store type. </param>
-        public DataStoreTypeData(HybridDataState state)
+        public HybridDataStoreTypeData(HybridDataState state)
         {
             State = state;
             SupportedDataServicesAsSink = new ChangeTrackingList<string>();
             SupportedDataServicesAsSource = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataStoreTypeData. </summary>
+        /// <summary> Initializes a new instance of HybridDataStoreTypeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="state"> State of the data store type. </param>
         /// <param name="supportedDataServicesAsSink"> Supported data services where it can be used as a sink. </param>
         /// <param name="supportedDataServicesAsSource"> Supported data services where it can be used as a source. </param>
-        internal DataStoreTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? repositoryType, HybridDataState state, IList<string> supportedDataServicesAsSink, IList<string> supportedDataServicesAsSource) : base(id, name, resourceType, systemData)
+        internal HybridDataStoreTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? repositoryType, HybridDataState state, IList<string> supportedDataServicesAsSink, IList<string> supportedDataServicesAsSource) : base(id, name, resourceType, systemData)
         {
             RepositoryType = repositoryType;
             State = state;

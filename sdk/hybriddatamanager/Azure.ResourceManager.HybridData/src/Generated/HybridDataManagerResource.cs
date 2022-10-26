@@ -21,50 +21,50 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HybridData
 {
     /// <summary>
-    /// A Class representing a DataManager along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataManagerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataManagerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataManager method.
+    /// A Class representing a HybridDataManager along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridDataManagerResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetHybridDataManagerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHybridDataManager method.
     /// </summary>
-    public partial class DataManagerResource : ArmResource
+    public partial class HybridDataManagerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataManagerResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="HybridDataManagerResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataManagerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataManagerClientDiagnostics;
-        private readonly DataManagersRestOperations _dataManagerRestClient;
+        private readonly ClientDiagnostics _hybridDataManagerDataManagersClientDiagnostics;
+        private readonly DataManagersRestOperations _hybridDataManagerDataManagersRestClient;
         private readonly ClientDiagnostics _hybridDataJobDefinitionJobDefinitionsClientDiagnostics;
         private readonly JobDefinitionsRestOperations _hybridDataJobDefinitionJobDefinitionsRestClient;
         private readonly ClientDiagnostics _hybridDataJobJobsClientDiagnostics;
         private readonly JobsRestOperations _hybridDataJobJobsRestClient;
-        private readonly DataManagerData _data;
+        private readonly HybridDataManagerData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DataManagerResource"/> class for mocking. </summary>
-        protected DataManagerResource()
+        /// <summary> Initializes a new instance of the <see cref="HybridDataManagerResource"/> class for mocking. </summary>
+        protected HybridDataManagerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataManagerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "HybridDataManagerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataManagerResource(ArmClient client, DataManagerData data) : this(client, data.Id)
+        internal HybridDataManagerResource(ArmClient client, HybridDataManagerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataManagerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridDataManagerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataManagerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridDataManagerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataManagerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataManagerApiVersion);
-            _dataManagerRestClient = new DataManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataManagerApiVersion);
+            _hybridDataManagerDataManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hybridDataManagerDataManagersApiVersion);
+            _hybridDataManagerDataManagersRestClient = new DataManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataManagerDataManagersApiVersion);
             _hybridDataJobDefinitionJobDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", HybridDataJobDefinitionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(HybridDataJobDefinitionResource.ResourceType, out string hybridDataJobDefinitionJobDefinitionsApiVersion);
             _hybridDataJobDefinitionJobDefinitionsRestClient = new JobDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataJobDefinitionJobDefinitionsApiVersion);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DataManagerData Data
+        public virtual HybridDataManagerData Data
         {
             get
             {
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.HybridData
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DataServiceResources in the DataManager. </summary>
-        /// <returns> An object representing collection of DataServiceResources and their operations over a DataServiceResource. </returns>
-        public virtual DataServiceCollection GetDataServices()
+        /// <summary> Gets a collection of HybridDataServiceResources in the HybridDataManager. </summary>
+        /// <returns> An object representing collection of HybridDataServiceResources and their operations over a HybridDataServiceResource. </returns>
+        public virtual HybridDataServiceCollection GetHybridDataServices()
         {
-            return GetCachedClient(Client => new DataServiceCollection(Client, Id));
+            return GetCachedClient(Client => new HybridDataServiceCollection(Client, Id));
         }
 
         /// <summary>
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="dataServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataServiceResource>> GetDataServiceAsync(string dataServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataServiceResource>> GetHybridDataServiceAsync(string dataServiceName, CancellationToken cancellationToken = default)
         {
-            return await GetDataServices().GetAsync(dataServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridDataServices().GetAsync(dataServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -132,31 +132,16 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="dataServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataServiceResource> GetDataService(string dataServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataServiceResource> GetHybridDataService(string dataServiceName, CancellationToken cancellationToken = default)
         {
-            return GetDataServices().Get(dataServiceName, cancellationToken);
+            return GetHybridDataServices().Get(dataServiceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataStoreResources in the DataManager. </summary>
-        /// <returns> An object representing collection of DataStoreResources and their operations over a DataStoreResource. </returns>
-        public virtual DataStoreCollection GetDataStores()
+        /// <summary> Gets a collection of HybridDataStoreResources in the HybridDataManager. </summary>
+        /// <returns> An object representing collection of HybridDataStoreResources and their operations over a HybridDataStoreResource. </returns>
+        public virtual HybridDataStoreCollection GetHybridDataStores()
         {
-            return GetCachedClient(Client => new DataStoreCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// This method gets the data store/repository by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStores/{dataStoreName}
-        /// Operation Id: DataStores_Get
-        /// </summary>
-        /// <param name="dataStoreName"> The data store/repository name queried. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataStoreName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataStoreResource>> GetDataStoreAsync(string dataStoreName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataStores().GetAsync(dataStoreName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new HybridDataStoreCollection(Client, Id));
         }
 
         /// <summary>
@@ -169,16 +154,31 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="dataStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataStoreName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataStoreResource> GetDataStore(string dataStoreName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataStoreResource>> GetHybridDataStoreAsync(string dataStoreName, CancellationToken cancellationToken = default)
         {
-            return GetDataStores().Get(dataStoreName, cancellationToken);
+            return await GetHybridDataStores().GetAsync(dataStoreName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DataStoreTypeResources in the DataManager. </summary>
-        /// <returns> An object representing collection of DataStoreTypeResources and their operations over a DataStoreTypeResource. </returns>
-        public virtual DataStoreTypeCollection GetDataStoreTypes()
+        /// <summary>
+        /// This method gets the data store/repository by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStores/{dataStoreName}
+        /// Operation Id: DataStores_Get
+        /// </summary>
+        /// <param name="dataStoreName"> The data store/repository name queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataStoreName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HybridDataStoreResource> GetHybridDataStore(string dataStoreName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DataStoreTypeCollection(Client, Id));
+            return GetHybridDataStores().Get(dataStoreName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HybridDataStoreTypeResources in the HybridDataManager. </summary>
+        /// <returns> An object representing collection of HybridDataStoreTypeResources and their operations over a HybridDataStoreTypeResource. </returns>
+        public virtual HybridDataStoreTypeCollection GetHybridDataStoreTypes()
+        {
+            return GetCachedClient(Client => new HybridDataStoreTypeCollection(Client, Id));
         }
 
         /// <summary>
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="dataStoreTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataStoreTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataStoreTypeResource>> GetDataStoreTypeAsync(string dataStoreTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataStoreTypeResource>> GetHybridDataStoreTypeAsync(string dataStoreTypeName, CancellationToken cancellationToken = default)
         {
-            return await GetDataStoreTypes().GetAsync(dataStoreTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridDataStoreTypes().GetAsync(dataStoreTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="dataStoreTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataStoreTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataStoreTypeResource> GetDataStoreType(string dataStoreTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataStoreTypeResource> GetHybridDataStoreType(string dataStoreTypeName, CancellationToken cancellationToken = default)
         {
-            return GetDataStoreTypes().Get(dataStoreTypeName, cancellationToken);
+            return GetHybridDataStoreTypes().Get(dataStoreTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HybridDataPublicKeyResources in the DataManager. </summary>
+        /// <summary> Gets a collection of HybridDataPublicKeyResources in the HybridDataManager. </summary>
         /// <returns> An object representing collection of HybridDataPublicKeyResources and their operations over a HybridDataPublicKeyResource. </returns>
         public virtual HybridDataPublicKeyCollection GetHybridDataPublicKeys()
         {
@@ -254,16 +254,16 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataManagers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataManagerResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataManagerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.Get");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataManagerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridDataManagerDataManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataManagerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataManagerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,16 +278,16 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataManagers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataManagerResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataManagerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.Get");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.Get");
             scope.Start();
             try
             {
-                var response = _dataManagerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _hybridDataManagerDataManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataManagerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataManagerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,12 +305,12 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.Delete");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dataManagerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridDataArmOperation(_dataManagerClientDiagnostics, Pipeline, _dataManagerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _hybridDataManagerDataManagersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridDataArmOperation(_hybridDataManagerDataManagersClientDiagnostics, Pipeline, _hybridDataManagerDataManagersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -331,12 +331,12 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.Delete");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.Delete");
             scope.Start();
             try
             {
-                var response = _dataManagerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HybridDataArmOperation(_dataManagerClientDiagnostics, Pipeline, _dataManagerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _hybridDataManagerDataManagersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new HybridDataArmOperation(_hybridDataManagerDataManagersClientDiagnostics, Pipeline, _hybridDataManagerDataManagersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -358,16 +358,16 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the data manager resource on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataManagerResource>> UpdateAsync(WaitUntil waitUntil, DataManagerPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridDataManagerResource>> UpdateAsync(WaitUntil waitUntil, HybridDataManagerPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.Update");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.Update");
             scope.Start();
             try
             {
-                var response = await _dataManagerRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridDataArmOperation<DataManagerResource>(new DataManagerOperationSource(Client), _dataManagerClientDiagnostics, Pipeline, _dataManagerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _hybridDataManagerDataManagersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridDataArmOperation<HybridDataManagerResource>(new HybridDataManagerOperationSource(Client), _hybridDataManagerDataManagersClientDiagnostics, Pipeline, _hybridDataManagerDataManagersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -389,16 +389,16 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the data manager resource on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DataManagerResource> Update(WaitUntil waitUntil, DataManagerPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridDataManagerResource> Update(WaitUntil waitUntil, HybridDataManagerPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.Update");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.Update");
             scope.Start();
             try
             {
-                var response = _dataManagerRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new HybridDataArmOperation<DataManagerResource>(new DataManagerOperationSource(Client), _dataManagerClientDiagnostics, Pipeline, _dataManagerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _hybridDataManagerDataManagersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
+                var operation = new HybridDataArmOperation<HybridDataManagerResource>(new HybridDataManagerOperationSource(Client), _hybridDataManagerDataManagersClientDiagnostics, Pipeline, _hybridDataManagerDataManagersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.HybridData
         {
             async Task<Page<HybridDataJobDefinitionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
+                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobDefinitions");
                 scope.Start();
                 try
                 {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.HybridData
             }
             async Task<Page<HybridDataJobDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
+                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobDefinitions");
                 scope.Start();
                 try
                 {
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.HybridData
         {
             Page<HybridDataJobDefinitionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
+                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobDefinitions");
                 scope.Start();
                 try
                 {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.HybridData
             }
             Page<HybridDataJobDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("DataManagerResource.GetJobDefinitions");
+                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobDefinitions");
                 scope.Start();
                 try
                 {
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.HybridData
         {
             async Task<Page<HybridDataJobResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobs");
                 scope.Start();
                 try
                 {
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.HybridData
             }
             async Task<Page<HybridDataJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobs");
                 scope.Start();
                 try
                 {
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.HybridData
         {
             Page<HybridDataJobResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobs");
                 scope.Start();
                 try
                 {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.HybridData
             }
             Page<HybridDataJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataManagerResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobs");
                 scope.Start();
                 try
                 {
@@ -591,12 +591,12 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<DataManagerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataManagerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.AddTag");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.AddTag");
             scope.Start();
             try
             {
@@ -605,13 +605,13 @@ namespace Azure.ResourceManager.HybridData
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataManagerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _hybridDataManagerDataManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataManagerPatch();
+                    var patch = new HybridDataManagerPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -637,12 +637,12 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<DataManagerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataManagerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.AddTag");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.AddTag");
             scope.Start();
             try
             {
@@ -651,13 +651,13 @@ namespace Azure.ResourceManager.HybridData
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataManagerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _hybridDataManagerDataManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataManagerPatch();
+                    var patch = new HybridDataManagerPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -682,11 +682,11 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<DataManagerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataManagerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.SetTags");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.SetTags");
             scope.Start();
             try
             {
@@ -696,13 +696,13 @@ namespace Azure.ResourceManager.HybridData
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataManagerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _hybridDataManagerDataManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataManagerPatch();
+                    var patch = new HybridDataManagerPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -723,11 +723,11 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<DataManagerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataManagerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.SetTags");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.SetTags");
             scope.Start();
             try
             {
@@ -737,13 +737,13 @@ namespace Azure.ResourceManager.HybridData
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataManagerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _hybridDataManagerDataManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataManagerPatch();
+                    var patch = new HybridDataManagerPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -764,11 +764,11 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<DataManagerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataManagerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.RemoveTag");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -777,13 +777,13 @@ namespace Azure.ResourceManager.HybridData
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataManagerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _hybridDataManagerDataManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataManagerPatch();
+                    var patch = new HybridDataManagerPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -808,11 +808,11 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<DataManagerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataManagerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dataManagerClientDiagnostics.CreateScope("DataManagerResource.RemoveTag");
+            using var scope = _hybridDataManagerDataManagersClientDiagnostics.CreateScope("HybridDataManagerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -821,13 +821,13 @@ namespace Azure.ResourceManager.HybridData
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataManagerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _hybridDataManagerDataManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataManagerPatch();
+                    var patch = new HybridDataManagerPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
