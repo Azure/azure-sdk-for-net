@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Optional<DateTimeOffset> firstEvaluationDate = default;
             Optional<DateTimeOffset> statusChangeDate = default;
-            AssessmentStatusCode code = default;
+            SecurityAssessmentStatusCode code = default;
             Optional<string> cause = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("code"))
                 {
-                    code = new AssessmentStatusCode(property.Value.GetString());
+                    code = new SecurityAssessmentStatusCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cause"))

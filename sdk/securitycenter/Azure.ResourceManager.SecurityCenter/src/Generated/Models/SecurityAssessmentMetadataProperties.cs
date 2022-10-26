@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="severity"> The severity level of the assessment. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
-        public SecurityAssessmentMetadataProperties(string displayName, SecurityAssessmentSeverity severity, AssessmentType assessmentType)
+        public SecurityAssessmentMetadataProperties(string displayName, SecurityAssessmentSeverity severity, SecurityAssessmentType assessmentType)
         {
             if (displayName == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isPreview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
-        internal SecurityAssessmentMetadataProperties(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, AssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData)
+        internal SecurityAssessmentMetadataProperties(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> True if this assessment is in preview release status. </summary>
         public bool? IsPreview { get; set; }
         /// <summary> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </summary>
-        public AssessmentType AssessmentType { get; set; }
+        public SecurityAssessmentType AssessmentType { get; set; }
         /// <summary> Describes the partner that created the assessment. </summary>
         public SecurityAssessmentMetadataPartner PartnerData { get; set; }
     }

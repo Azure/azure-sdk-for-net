@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public IotSecuritySolutionData(AzureLocation location) : base(location)
         {
             Export = new ChangeTrackingList<IotSecuritySolutionExportOption>();
-            DisabledDataSources = new ChangeTrackingList<DataSource>();
+            DisabledDataSources = new ChangeTrackingList<IotSecuritySolutionDataSource>();
             IotHubs = new ChangeTrackingList<string>();
             AutoDiscoveredResources = new ChangeTrackingList<string>();
             RecommendationsConfiguration = new ChangeTrackingList<RecommendationConfigurationProperties>();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
         /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
         /// <param name="additionalWorkspaces"> List of additional workspaces. </param>
-        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string workspace, string displayName, SecuritySolutionStatus? status, IList<IotSecuritySolutionExportOption> export, IList<DataSource> disabledDataSources, IList<string> iotHubs, UserDefinedResourcesProperties userDefinedResources, IReadOnlyList<string> autoDiscoveredResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus, IList<AdditionalWorkspacesProperties> additionalWorkspaces) : base(id, name, resourceType, systemData, tags, location)
+        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string workspace, string displayName, SecuritySolutionStatus? status, IList<IotSecuritySolutionExportOption> export, IList<IotSecuritySolutionDataSource> disabledDataSources, IList<string> iotHubs, UserDefinedResourcesProperties userDefinedResources, IReadOnlyList<string> autoDiscoveredResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus, IList<AdditionalWorkspacesProperties> additionalWorkspaces) : base(id, name, resourceType, systemData, tags, location)
         {
             Workspace = workspace;
             DisplayName = displayName;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> List of additional options for exporting to workspace data. </summary>
         public IList<IotSecuritySolutionExportOption> Export { get; }
         /// <summary> Disabled data sources. Disabling these data sources compromises the system. </summary>
-        public IList<DataSource> DisabledDataSources { get; }
+        public IList<IotSecuritySolutionDataSource> DisabledDataSources { get; }
         /// <summary> IoT Hub resource IDs. </summary>
         public IList<string> IotHubs { get; }
         /// <summary> Properties of the IoT Security solution&apos;s user defined resources. </summary>

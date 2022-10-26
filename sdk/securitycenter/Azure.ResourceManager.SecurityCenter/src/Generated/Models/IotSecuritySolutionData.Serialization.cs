@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> displayName = default;
             Optional<SecuritySolutionStatus> status = default;
             Optional<IList<IotSecuritySolutionExportOption>> export = default;
-            Optional<IList<DataSource>> disabledDataSources = default;
+            Optional<IList<IotSecuritySolutionDataSource>> disabledDataSources = default;
             Optional<IList<string>> iotHubs = default;
             Optional<UserDefinedResourcesProperties> userDefinedResources = default;
             Optional<IReadOnlyList<string>> autoDiscoveredResources = default;
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DataSource> array = new List<DataSource>();
+                            List<IotSecuritySolutionDataSource> array = new List<IotSecuritySolutionDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new DataSource(item.GetString()));
+                                array.Add(new IotSecuritySolutionDataSource(item.GetString()));
                             }
                             disabledDataSources = array;
                             continue;

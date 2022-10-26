@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tokenUri"> Token URI field of the API key (write only). </param>
         /// <param name="authProviderX509CertUri"> Auth provider x509 certificate URL field of the API key (write only). </param>
         /// <param name="clientX509CertUri"> Client x509 certificate URL field of the API key (write only). </param>
-        internal GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<PermissionProperty> grantedPermissions, AuthenticationType authenticationType, string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
+        internal GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
         {
             OrganizationId = organizationId;
             GcpCredentialType = gcpCredentialType;

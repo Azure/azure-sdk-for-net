@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
-        /// Please note <see cref="ResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="additionalData">
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
         /// </param>
-        internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vulnerabilityId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? generatedOn, ResourceDetails resourceDetails, SecuritySubAssessmentAdditionalInfo additionalData) : base(id, name, resourceType, systemData)
+        internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vulnerabilityId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? generatedOn, SecurityCenterResourceDetails resourceDetails, SecuritySubAssessmentAdditionalInfo additionalData) : base(id, name, resourceType, systemData)
         {
             VulnerabilityId = vulnerabilityId;
             DisplayName = displayName;
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public DateTimeOffset? GeneratedOn { get; }
         /// <summary>
         /// Details of the resource that was assessed
-        /// Please note <see cref="ResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </summary>
-        public ResourceDetails ResourceDetails { get; set; }
+        public SecurityCenterResourceDetails ResourceDetails { get; set; }
         /// <summary>
         /// Details of the sub-assessment
         /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

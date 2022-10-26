@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for DevOps for Azure DevOps offering. </summary>
-    public partial class DefenderForDevOpsAzureDevOpsOffering : CloudOffering
+    public partial class DefenderForDevOpsAzureDevOpsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of DefenderForDevOpsAzureDevOpsOffering. </summary>
         public DefenderForDevOpsAzureDevOpsOffering()

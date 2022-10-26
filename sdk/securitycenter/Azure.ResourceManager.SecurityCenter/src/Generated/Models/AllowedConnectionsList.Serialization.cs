@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AllowedConnectionsList DeserializeAllowedConnectionsList(JsonElement element)
         {
-            Optional<IReadOnlyList<AllowedConnection>> value = default;
+            Optional<IReadOnlyList<SecurityCenterAllowedConnection>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AllowedConnection> array = new List<AllowedConnection>();
+                    List<SecurityCenterAllowedConnection> array = new List<SecurityCenterAllowedConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllowedConnection.DeserializeAllowedConnection(item));
+                        array.Add(SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection(item));
                     }
                     value = array;
                     continue;

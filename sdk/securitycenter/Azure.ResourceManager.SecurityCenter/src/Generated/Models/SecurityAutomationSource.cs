@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityAutomationSource. </summary>
         public SecurityAutomationSource()
         {
-            RuleSets = new ChangeTrackingList<AutomationRuleSet>();
+            RuleSets = new ChangeTrackingList<SecurityAutomationRuleSet>();
         }
 
         /// <summary> Initializes a new instance of SecurityAutomationSource. </summary>
         /// <param name="eventSource"> A valid event source type. </param>
         /// <param name="ruleSets"> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical &apos;or&apos;). </param>
-        internal SecurityAutomationSource(SecurityEventSource? eventSource, IList<AutomationRuleSet> ruleSets)
+        internal SecurityAutomationSource(SecurityEventSource? eventSource, IList<SecurityAutomationRuleSet> ruleSets)
         {
             EventSource = eventSource;
             RuleSets = ruleSets;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> A valid event source type. </summary>
         public SecurityEventSource? EventSource { get; set; }
         /// <summary> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical &apos;or&apos;). </summary>
-        public IList<AutomationRuleSet> RuleSets { get; }
+        public IList<SecurityAutomationRuleSet> RuleSets { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ConnectorSettingList DeserializeConnectorSettingList(JsonElement element)
         {
-            Optional<IReadOnlyList<ConnectorSettingData>> value = default;
+            Optional<IReadOnlyList<SecurityCloudConnectorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectorSettingData> array = new List<ConnectorSettingData>();
+                    List<SecurityCloudConnectorData> array = new List<SecurityCloudConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectorSettingData.DeserializeConnectorSettingData(item));
+                        array.Add(SecurityCloudConnectorData.DeserializeSecurityCloudConnectorData(item));
                     }
                     value = array;
                     continue;

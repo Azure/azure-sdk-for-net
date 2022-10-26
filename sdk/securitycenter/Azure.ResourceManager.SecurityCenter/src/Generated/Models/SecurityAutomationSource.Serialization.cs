@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static SecurityAutomationSource DeserializeSecurityAutomationSource(JsonElement element)
         {
             Optional<SecurityEventSource> eventSource = default;
-            Optional<IList<AutomationRuleSet>> ruleSets = default;
+            Optional<IList<SecurityAutomationRuleSet>> ruleSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSource"))
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AutomationRuleSet> array = new List<AutomationRuleSet>();
+                    List<SecurityAutomationRuleSet> array = new List<SecurityAutomationRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationRuleSet.DeserializeAutomationRuleSet(item));
+                        array.Add(SecurityAutomationRuleSet.DeserializeSecurityAutomationRuleSet(item));
                     }
                     ruleSets = array;
                     continue;
