@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string DefenderForServersGcpValue = "DefenderForServersGcp";
         private const string DefenderForContainersGcpValue = "DefenderForContainersGcp";
         private const string DefenderForDatabasesGcpValue = "DefenderForDatabasesGcp";
+        private const string DefenderCspmAwsValue = "DefenderCspmAws";
+        private const string DefenderCspmGcpValue = "DefenderCspmGcp";
+        private const string DefenderForDevOpsGithubValue = "DefenderForDevOpsGithub";
+        private const string DefenderForDevOpsAzureDevOpsValue = "DefenderForDevOpsAzureDevOps";
 
         /// <summary> CspmMonitorAws. </summary>
         public static OfferingType CspmMonitorAws { get; } = new OfferingType(CspmMonitorAwsValue);
@@ -56,6 +60,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static OfferingType DefenderForContainersGcp { get; } = new OfferingType(DefenderForContainersGcpValue);
         /// <summary> DefenderForDatabasesGcp. </summary>
         public static OfferingType DefenderForDatabasesGcp { get; } = new OfferingType(DefenderForDatabasesGcpValue);
+        /// <summary> DefenderCspmAws. </summary>
+        public static OfferingType DefenderCspmAws { get; } = new OfferingType(DefenderCspmAwsValue);
+        /// <summary> DefenderCspmGcp. </summary>
+        public static OfferingType DefenderCspmGcp { get; } = new OfferingType(DefenderCspmGcpValue);
+        /// <summary> DefenderForDevOpsGithub. </summary>
+        public static OfferingType DefenderForDevOpsGithub { get; } = new OfferingType(DefenderForDevOpsGithubValue);
+        /// <summary> DefenderForDevOpsAzureDevOps. </summary>
+        public static OfferingType DefenderForDevOpsAzureDevOps { get; } = new OfferingType(DefenderForDevOpsAzureDevOpsValue);
         /// <summary> Determines if two <see cref="OfferingType"/> values are the same. </summary>
         public static bool operator ==(OfferingType left, OfferingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OfferingType"/> values are not the same. </summary>

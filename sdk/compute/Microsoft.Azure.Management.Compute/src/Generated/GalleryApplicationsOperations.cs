@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryApplicationName");
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryName");
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -602,7 +602,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 galleryApplication.Validate();
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -858,7 +858,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryApplication");
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1066,7 +1066,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryApplicationName");
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

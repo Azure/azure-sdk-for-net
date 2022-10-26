@@ -20,6 +20,7 @@ namespace Azure.AI.Language.Conversations
                 {
                     case "EntitySubtype": return EntitySubtype.DeserializeEntitySubtype(element);
                     case "ListKey": return ListKey.DeserializeListKey(element);
+                    case "RegexKey": return RegexKey.DeserializeRegexKey(element);
                 }
             }
             ExtraInformationKind extraInformationKind = default;

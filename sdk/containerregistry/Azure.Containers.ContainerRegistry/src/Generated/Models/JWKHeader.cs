@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class JWKHeader
     {
         /// <summary> Initializes a new instance of JWKHeader. </summary>
-        internal JWKHeader()
+        public JWKHeader()
         {
         }
 
@@ -31,14 +31,14 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> crv value. </summary>
-        public string Crv { get; }
+        public string Crv { get; set; }
         /// <summary> kid value. </summary>
-        public string Kid { get; }
+        public string Kid { get; set; }
         /// <summary> kty value. </summary>
-        public string Kty { get; }
+        public string Kty { get; set; }
         /// <summary> x value. </summary>
-        public string X { get; }
+        public string X { get; set; }
         /// <summary> y value. </summary>
-        public string Y { get; }
+        public string Y { get; set; }
     }
 }

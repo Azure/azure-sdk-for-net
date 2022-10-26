@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<DateTimeOffset> hierarchyIdentifierTrialEndDate = default;
             Optional<CloudName> environmentName = default;
             Optional<IList<CloudOffering>> offerings = default;
-            Optional<EnvironmentData> environmentData = default;
+            Optional<SecurityConnectorEnvironment> environmentData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            environmentData = EnvironmentData.DeserializeEnvironmentData(property0.Value);
+                            environmentData = SecurityConnectorEnvironment.DeserializeSecurityConnectorEnvironment(property0.Value);
                             continue;
                         }
                     }

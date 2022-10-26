@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
         /// <param name="sendingLogsStatus"> Flag indicating if resource is sending logs to Dynatrace. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        internal DynatraceMonitoredResourceDetails(ResourceIdentifier id, SendingMetricsStatus? sendingMetricsStatus, string reasonForMetricsStatus, SendingLogsStatus? sendingLogsStatus, string reasonForLogsStatus)
+        internal DynatraceMonitoredResourceDetails(ResourceIdentifier id, MetricsSendingStatus? sendingMetricsStatus, string reasonForMetricsStatus, LogsSendingStatus? sendingLogsStatus, string reasonForLogsStatus)
         {
             Id = id;
             SendingMetricsStatus = sendingMetricsStatus;
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> The ARM id of the resource. </summary>
         public ResourceIdentifier Id { get; }
         /// <summary> Flag indicating if resource is sending metrics to Dynatrace. </summary>
-        public SendingMetricsStatus? SendingMetricsStatus { get; }
+        public MetricsSendingStatus? SendingMetricsStatus { get; }
         /// <summary> Reason for why the resource is sending metrics (or why it is not sending). </summary>
         public string ReasonForMetricsStatus { get; }
         /// <summary> Flag indicating if resource is sending logs to Dynatrace. </summary>
-        public SendingLogsStatus? SendingLogsStatus { get; }
+        public LogsSendingStatus? SendingLogsStatus { get; }
         /// <summary> Reason for why the resource is sending logs (or why it is not sending). </summary>
         public string ReasonForLogsStatus { get; }
     }

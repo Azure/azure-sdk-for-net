@@ -20,40 +20,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _mdeOnboardingsClientDiagnostics;
+        private MdeOnboardingsRestOperations _mdeOnboardingsRestClient;
         private ClientDiagnostics _customAssessmentAutomationClientDiagnostics;
         private CustomAssessmentAutomationsRestOperations _customAssessmentAutomationRestClient;
         private ClientDiagnostics _customEntityStoreAssignmentClientDiagnostics;
         private CustomEntityStoreAssignmentsRestOperations _customEntityStoreAssignmentRestClient;
-        private ClientDiagnostics _iotSecuritySolutionModelIotSecuritySolutionClientDiagnostics;
-        private IotSecuritySolutionRestOperations _iotSecuritySolutionModelIotSecuritySolutionRestClient;
+        private ClientDiagnostics _iotSecuritySolutionClientDiagnostics;
+        private IotSecuritySolutionRestOperations _iotSecuritySolutionRestClient;
         private ClientDiagnostics _tasksClientDiagnostics;
         private TasksRestOperations _tasksRestClient;
-        private ClientDiagnostics _automationClientDiagnostics;
-        private AutomationsRestOperations _automationRestClient;
+        private ClientDiagnostics _securityAutomationAutomationsClientDiagnostics;
+        private AutomationsRestOperations _securityAutomationAutomationsRestClient;
         private ClientDiagnostics _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics;
         private AdaptiveApplicationControlsRestOperations _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient;
-        private ClientDiagnostics _allowedConnectionsResourceAllowedConnectionsClientDiagnostics;
-        private AllowedConnectionsRestOperations _allowedConnectionsResourceAllowedConnectionsRestClient;
-        private ClientDiagnostics _topologyResourceTopologyClientDiagnostics;
-        private TopologyRestOperations _topologyResourceTopologyRestClient;
+        private ClientDiagnostics _allowedConnectionsClientDiagnostics;
+        private AllowedConnectionsRestOperations _allowedConnectionsRestClient;
+        private ClientDiagnostics _topologyClientDiagnostics;
+        private TopologyRestOperations _topologyRestClient;
         private ClientDiagnostics _jitNetworkAccessPolicyClientDiagnostics;
         private JitNetworkAccessPoliciesRestOperations _jitNetworkAccessPolicyRestClient;
-        private ClientDiagnostics _discoveredSecuritySolutionClientDiagnostics;
-        private DiscoveredSecuritySolutionsRestOperations _discoveredSecuritySolutionRestClient;
+        private ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
+        private DiscoveredSecuritySolutionsRestOperations _discoveredSecuritySolutionsRestClient;
         private ClientDiagnostics _securitySolutionsReferenceDataClientDiagnostics;
         private SecuritySolutionsReferenceDataRestOperations _securitySolutionsReferenceDataRestClient;
-        private ClientDiagnostics _externalSecuritySolutionClientDiagnostics;
-        private ExternalSecuritySolutionsRestOperations _externalSecuritySolutionRestClient;
+        private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
+        private ExternalSecuritySolutionsRestOperations _externalSecuritySolutionsRestClient;
         private ClientDiagnostics _secureScoreControlsClientDiagnostics;
         private SecureScoreControlsRestOperations _secureScoreControlsRestClient;
         private ClientDiagnostics _secureScoreControlDefinitionsClientDiagnostics;
         private SecureScoreControlDefinitionsRestOperations _secureScoreControlDefinitionsRestClient;
-        private ClientDiagnostics _securitySolutionClientDiagnostics;
-        private SecuritySolutionsRestOperations _securitySolutionRestClient;
+        private ClientDiagnostics _securitySolutionsClientDiagnostics;
+        private SecuritySolutionsRestOperations _securitySolutionsRestClient;
         private ClientDiagnostics _alertsClientDiagnostics;
         private AlertsRestOperations _alertsRestClient;
-        private ClientDiagnostics _softwareSoftwareInventoriesClientDiagnostics;
-        private SoftwareInventoriesRestOperations _softwareSoftwareInventoriesRestClient;
+        private ClientDiagnostics _softwareInventoryClientDiagnostics;
+        private SoftwareInventoriesRestOperations _softwareInventoryRestClient;
         private ClientDiagnostics _securityConnectorClientDiagnostics;
         private SecurityConnectorsRestOperations _securityConnectorRestClient;
 
@@ -69,40 +71,42 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
+        private ClientDiagnostics MdeOnboardingsClientDiagnostics => _mdeOnboardingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private MdeOnboardingsRestOperations MdeOnboardingsRestClient => _mdeOnboardingsRestClient ??= new MdeOnboardingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CustomAssessmentAutomationClientDiagnostics => _customAssessmentAutomationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", CustomAssessmentAutomationResource.ResourceType.Namespace, Diagnostics);
         private CustomAssessmentAutomationsRestOperations CustomAssessmentAutomationRestClient => _customAssessmentAutomationRestClient ??= new CustomAssessmentAutomationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CustomAssessmentAutomationResource.ResourceType));
         private ClientDiagnostics CustomEntityStoreAssignmentClientDiagnostics => _customEntityStoreAssignmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", CustomEntityStoreAssignmentResource.ResourceType.Namespace, Diagnostics);
         private CustomEntityStoreAssignmentsRestOperations CustomEntityStoreAssignmentRestClient => _customEntityStoreAssignmentRestClient ??= new CustomEntityStoreAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CustomEntityStoreAssignmentResource.ResourceType));
-        private ClientDiagnostics IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics => _iotSecuritySolutionModelIotSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IotSecuritySolutionModelResource.ResourceType.Namespace, Diagnostics);
-        private IotSecuritySolutionRestOperations IotSecuritySolutionModelIotSecuritySolutionRestClient => _iotSecuritySolutionModelIotSecuritySolutionRestClient ??= new IotSecuritySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IotSecuritySolutionModelResource.ResourceType));
+        private ClientDiagnostics IotSecuritySolutionClientDiagnostics => _iotSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IotSecuritySolutionResource.ResourceType.Namespace, Diagnostics);
+        private IotSecuritySolutionRestOperations IotSecuritySolutionRestClient => _iotSecuritySolutionRestClient ??= new IotSecuritySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IotSecuritySolutionResource.ResourceType));
         private ClientDiagnostics TasksClientDiagnostics => _tasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private TasksRestOperations TasksRestClient => _tasksRestClient ??= new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AutomationClientDiagnostics => _automationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AutomationResource.ResourceType.Namespace, Diagnostics);
-        private AutomationsRestOperations AutomationRestClient => _automationRestClient ??= new AutomationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AutomationResource.ResourceType));
+        private ClientDiagnostics SecurityAutomationAutomationsClientDiagnostics => _securityAutomationAutomationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAutomationResource.ResourceType.Namespace, Diagnostics);
+        private AutomationsRestOperations SecurityAutomationAutomationsRestClient => _securityAutomationAutomationsRestClient ??= new AutomationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecurityAutomationResource.ResourceType));
         private ClientDiagnostics AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics => _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AdaptiveApplicationControlGroupResource.ResourceType.Namespace, Diagnostics);
         private AdaptiveApplicationControlsRestOperations AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient => _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient ??= new AdaptiveApplicationControlsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AdaptiveApplicationControlGroupResource.ResourceType));
-        private ClientDiagnostics AllowedConnectionsResourceAllowedConnectionsClientDiagnostics => _allowedConnectionsResourceAllowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AllowedConnectionsResource.ResourceType.Namespace, Diagnostics);
-        private AllowedConnectionsRestOperations AllowedConnectionsResourceAllowedConnectionsRestClient => _allowedConnectionsResourceAllowedConnectionsRestClient ??= new AllowedConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AllowedConnectionsResource.ResourceType));
-        private ClientDiagnostics TopologyResourceTopologyClientDiagnostics => _topologyResourceTopologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", TopologyResource.ResourceType.Namespace, Diagnostics);
-        private TopologyRestOperations TopologyResourceTopologyRestClient => _topologyResourceTopologyRestClient ??= new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TopologyResource.ResourceType));
+        private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private AllowedConnectionsRestOperations AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private TopologyRestOperations TopologyRestClient => _topologyRestClient ??= new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics JitNetworkAccessPolicyClientDiagnostics => _jitNetworkAccessPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", JitNetworkAccessPolicyResource.ResourceType.Namespace, Diagnostics);
         private JitNetworkAccessPoliciesRestOperations JitNetworkAccessPolicyRestClient => _jitNetworkAccessPolicyRestClient ??= new JitNetworkAccessPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitNetworkAccessPolicyResource.ResourceType));
-        private ClientDiagnostics DiscoveredSecuritySolutionClientDiagnostics => _discoveredSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DiscoveredSecuritySolutionResource.ResourceType.Namespace, Diagnostics);
-        private DiscoveredSecuritySolutionsRestOperations DiscoveredSecuritySolutionRestClient => _discoveredSecuritySolutionRestClient ??= new DiscoveredSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DiscoveredSecuritySolutionResource.ResourceType));
+        private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DiscoveredSecuritySolutionsRestOperations DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics securitySolutionsReferenceDataClientDiagnostics => _securitySolutionsReferenceDataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecuritySolutionsReferenceDataRestOperations securitySolutionsReferenceDataRestClient => _securitySolutionsReferenceDataRestClient ??= new SecuritySolutionsReferenceDataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ExternalSecuritySolutionClientDiagnostics => _externalSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ExternalSecuritySolutionResource.ResourceType.Namespace, Diagnostics);
-        private ExternalSecuritySolutionsRestOperations ExternalSecuritySolutionRestClient => _externalSecuritySolutionRestClient ??= new ExternalSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExternalSecuritySolutionResource.ResourceType));
+        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ExternalSecuritySolutionsRestOperations ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SecureScoreControlsClientDiagnostics => _secureScoreControlsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecureScoreControlsRestOperations SecureScoreControlsRestClient => _secureScoreControlsRestClient ??= new SecureScoreControlsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecureScoreControlDefinitionsRestOperations SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SecuritySolutionClientDiagnostics => _securitySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecuritySolutionResource.ResourceType.Namespace, Diagnostics);
-        private SecuritySolutionsRestOperations SecuritySolutionRestClient => _securitySolutionRestClient ??= new SecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecuritySolutionResource.ResourceType));
+        private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SecuritySolutionsRestOperations SecuritySolutionsRestClient => _securitySolutionsRestClient ??= new SecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AlertsRestOperations AlertsRestClient => _alertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SoftwareSoftwareInventoriesClientDiagnostics => _softwareSoftwareInventoriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SoftwareResource.ResourceType.Namespace, Diagnostics);
-        private SoftwareInventoriesRestOperations SoftwareSoftwareInventoriesRestClient => _softwareSoftwareInventoriesRestClient ??= new SoftwareInventoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SoftwareResource.ResourceType));
+        private ClientDiagnostics SoftwareInventoryClientDiagnostics => _softwareInventoryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SoftwareInventoryResource.ResourceType.Namespace, Diagnostics);
+        private SoftwareInventoriesRestOperations SoftwareInventoryRestClient => _softwareInventoryRestClient ??= new SoftwareInventoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SoftwareInventoryResource.ResourceType));
         private ClientDiagnostics SecurityConnectorClientDiagnostics => _securityConnectorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorResource.ResourceType.Namespace, Diagnostics);
         private SecurityConnectorsRestOperations SecurityConnectorRestClient => _securityConnectorRestClient ??= new SecurityConnectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecurityConnectorResource.ResourceType));
 
@@ -112,25 +116,18 @@ namespace Azure.ResourceManager.SecurityCenter
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a MdeOnboardingDataResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <returns> Returns a <see cref="MdeOnboardingDataResource" /> object. </returns>
-        public virtual MdeOnboardingDataResource GetMdeOnboardingData()
+        /// <summary> Gets a collection of SecurityCenterPricingResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecurityCenterPricingResources and their operations over a SecurityCenterPricingResource. </returns>
+        public virtual SecurityCenterPricingCollection GetSecurityCenterPricings()
         {
-            return new MdeOnboardingDataResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Security/mdeOnboardings/default"));
+            return GetCachedClient(Client => new SecurityCenterPricingCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PricingResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of PricingResources and their operations over a PricingResource. </returns>
-        public virtual PricingCollection GetPricings()
+        /// <summary> Gets a collection of SecurityCenterLocationResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecurityCenterLocationResources and their operations over a SecurityCenterLocationResource. </returns>
+        public virtual SecurityCenterLocationCollection GetSecurityCenterLocations()
         {
-            return GetCachedClient(Client => new PricingCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of AscLocationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of AscLocationResources and their operations over a AscLocationResource. </returns>
-        public virtual AscLocationCollection GetAscLocations()
-        {
-            return GetCachedClient(Client => new AscLocationCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityCenterLocationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of AutoProvisioningSettingResources in the SubscriptionResource. </summary>
@@ -147,11 +144,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SecurityContactCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of WorkspaceSettingResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of WorkspaceSettingResources and their operations over a WorkspaceSettingResource. </returns>
-        public virtual WorkspaceSettingCollection GetWorkspaceSettings()
+        /// <summary> Gets a collection of SecurityWorkspaceSettingResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecurityWorkspaceSettingResources and their operations over a SecurityWorkspaceSettingResource. </returns>
+        public virtual SecurityWorkspaceSettingCollection GetSecurityWorkspaceSettings()
         {
-            return GetCachedClient(Client => new WorkspaceSettingCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityWorkspaceSettingCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of RegulatoryComplianceStandardResources in the SubscriptionResource. </summary>
@@ -175,11 +172,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SubscriptionAssessmentMetadataCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SecureScoreItemResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SecureScoreItemResources and their operations over a SecureScoreItemResource. </returns>
-        public virtual SecureScoreItemCollection GetSecureScoreItems()
+        /// <summary> Gets a collection of SecureScoreResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecureScoreResources and their operations over a SecureScoreResource. </returns>
+        public virtual SecureScoreCollection GetSecureScores()
         {
-            return GetCachedClient(Client => new SecureScoreItemCollection(Client, Id));
+            return GetCachedClient(Client => new SecureScoreCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ConnectorSettingResources in the SubscriptionResource. </summary>
@@ -189,11 +186,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new ConnectorSettingCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SettingResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SettingResources and their operations over a SettingResource. </returns>
-        public virtual SettingCollection GetSettings()
+        /// <summary> Gets a collection of SecuritySettingResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecuritySettingResources and their operations over a SecuritySettingResource. </returns>
+        public virtual SecuritySettingCollection GetSecuritySettings()
         {
-            return GetCachedClient(Client => new SettingCollection(Client, Id));
+            return GetCachedClient(Client => new SecuritySettingCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of IngestionSettingResources in the SubscriptionResource. </summary>
@@ -210,11 +207,109 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SubscriptionGovernanceRuleCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SubscriptionApplicationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionApplicationResources and their operations over a SubscriptionApplicationResource. </returns>
-        public virtual SubscriptionApplicationCollection GetSubscriptionApplications()
+        /// <summary> Gets a collection of SubscriptionSecurityApplicationResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SubscriptionSecurityApplicationResources and their operations over a SubscriptionSecurityApplicationResource. </returns>
+        public virtual SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications()
         {
-            return GetCachedClient(Client => new SubscriptionApplicationCollection(Client, Id));
+            return GetCachedClient(Client => new SubscriptionSecurityApplicationCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// The configuration or data needed to onboard the machine to MDE
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings
+        /// Operation Id: MdeOnboardings_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MdeOnboarding> GetMdeOnboardingsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<MdeOnboarding>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = MdeOnboardingsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMdeOnboardings");
+                scope.Start();
+                try
+                {
+                    var response = await MdeOnboardingsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// The configuration or data needed to onboard the machine to MDE
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings
+        /// Operation Id: MdeOnboardings_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MdeOnboarding> GetMdeOnboardings(CancellationToken cancellationToken = default)
+        {
+            Page<MdeOnboarding> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = MdeOnboardingsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMdeOnboardings");
+                scope.Start();
+                try
+                {
+                    var response = MdeOnboardingsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// The default configuration or data needed to onboard the machine to MDE
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default
+        /// Operation Id: MdeOnboardings_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MdeOnboarding>> GetMdeOnboardingAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = MdeOnboardingsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMdeOnboarding");
+            scope.Start();
+            try
+            {
+                var response = await MdeOnboardingsRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The default configuration or data needed to onboard the machine to MDE
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default
+        /// Operation Id: MdeOnboardings_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MdeOnboarding> GetMdeOnboarding(CancellationToken cancellationToken = default)
+        {
+            using var scope = MdeOnboardingsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMdeOnboarding");
+            scope.Start();
+            try
+            {
+                var response = MdeOnboardingsRestClient.Get(Id.SubscriptionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -392,17 +487,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IotSecuritySolutionModelResource> GetIotSecuritySolutionModelsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotSecuritySolutionResource> GetIotSecuritySolutionsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotSecuritySolutionModelResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotSecuritySolutionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutionModels");
+                using var scope = IotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = await IotSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IotSecuritySolutionRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -410,14 +505,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<IotSecuritySolutionModelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IotSecuritySolutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutionModels");
+                using var scope = IotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = await IotSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IotSecuritySolutionRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -435,17 +530,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IotSecuritySolutionModelResource> GetIotSecuritySolutionModels(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotSecuritySolutionResource> GetIotSecuritySolutions(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<IotSecuritySolutionModelResource> FirstPageFunc(int? pageSizeHint)
+            Page<IotSecuritySolutionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutionModels");
+                using var scope = IotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = IotSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IotSecuritySolutionRestClient.ListBySubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -453,14 +548,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<IotSecuritySolutionModelResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IotSecuritySolutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutionModels");
+                using var scope = IotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = IotSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IotSecuritySolutionRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -563,17 +658,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Automations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationResource> GetAutomationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityAutomationResource> GetSecurityAutomationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecurityAutomationResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AutomationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutomations");
+                using var scope = SecurityAutomationAutomationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityAutomations");
                 scope.Start();
                 try
                 {
-                    var response = await AutomationRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SecurityAutomationAutomationsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -581,14 +676,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<AutomationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecurityAutomationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AutomationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutomations");
+                using var scope = SecurityAutomationAutomationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityAutomations");
                 scope.Start();
                 try
                 {
-                    var response = await AutomationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SecurityAutomationAutomationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -605,17 +700,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Automations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationResource> GetAutomations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityAutomationResource> GetSecurityAutomations(CancellationToken cancellationToken = default)
         {
-            Page<AutomationResource> FirstPageFunc(int? pageSizeHint)
+            Page<SecurityAutomationResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AutomationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutomations");
+                using var scope = SecurityAutomationAutomationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityAutomations");
                 scope.Start();
                 try
                 {
-                    var response = AutomationRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SecurityAutomationAutomationsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -623,14 +718,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<AutomationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecurityAutomationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AutomationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutomations");
+                using var scope = SecurityAutomationAutomationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityAutomations");
                 scope.Start();
                 try
                 {
-                    var response = AutomationRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SecurityAutomationAutomationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -705,17 +800,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AllowedConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AllowedConnectionsResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AllowedConnectionsResource> GetAllowedConnectionsResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AllowedConnection> GetAllowedConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AllowedConnectionsResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AllowedConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AllowedConnectionsResourceAllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnectionsResources");
+                using var scope = AllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnections");
                 scope.Start();
                 try
                 {
-                    var response = await AllowedConnectionsResourceAllowedConnectionsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AllowedConnectionsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AllowedConnectionsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -723,14 +818,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<AllowedConnectionsResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AllowedConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AllowedConnectionsResourceAllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnectionsResources");
+                using var scope = AllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnections");
                 scope.Start();
                 try
                 {
-                    var response = await AllowedConnectionsResourceAllowedConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AllowedConnectionsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AllowedConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -747,17 +842,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AllowedConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllowedConnectionsResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AllowedConnectionsResource> GetAllowedConnectionsResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AllowedConnection> GetAllowedConnections(CancellationToken cancellationToken = default)
         {
-            Page<AllowedConnectionsResource> FirstPageFunc(int? pageSizeHint)
+            Page<AllowedConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AllowedConnectionsResourceAllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnectionsResources");
+                using var scope = AllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnections");
                 scope.Start();
                 try
                 {
-                    var response = AllowedConnectionsResourceAllowedConnectionsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AllowedConnectionsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AllowedConnectionsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -765,14 +860,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<AllowedConnectionsResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AllowedConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AllowedConnectionsResourceAllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnectionsResources");
+                using var scope = AllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnections");
                 scope.Start();
                 try
                 {
-                    var response = AllowedConnectionsResourceAllowedConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AllowedConnectionsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AllowedConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -789,17 +884,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Topology_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TopologyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopologyResource> GetTopologyResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityTopologyResource> GetTopologiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TopologyResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecurityTopologyResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = TopologyResourceTopologyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopologyResources");
+                using var scope = TopologyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopologies");
                 scope.Start();
                 try
                 {
-                    var response = await TopologyResourceTopologyRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await TopologyRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -807,14 +902,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<TopologyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecurityTopologyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = TopologyResourceTopologyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopologyResources");
+                using var scope = TopologyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopologies");
                 scope.Start();
                 try
                 {
-                    var response = await TopologyResourceTopologyRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await TopologyRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -831,17 +926,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Topology_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopologyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopologyResource> GetTopologyResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityTopologyResource> GetTopologies(CancellationToken cancellationToken = default)
         {
-            Page<TopologyResource> FirstPageFunc(int? pageSizeHint)
+            Page<SecurityTopologyResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = TopologyResourceTopologyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopologyResources");
+                using var scope = TopologyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopologies");
                 scope.Start();
                 try
                 {
-                    var response = TopologyResourceTopologyRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = TopologyRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -849,14 +944,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<TopologyResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecurityTopologyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = TopologyResourceTopologyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopologyResources");
+                using var scope = TopologyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopologies");
                 scope.Start();
                 try
                 {
-                    var response = TopologyResourceTopologyRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = TopologyRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -957,17 +1052,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: DiscoveredSecuritySolutions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiscoveredSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiscoveredSecuritySolutionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DiscoveredSecuritySolution>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DiscoveredSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiscoveredSecuritySolutions");
+                using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiscoveredSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = await DiscoveredSecuritySolutionRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiscoveredSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DiscoveredSecuritySolutionsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -975,14 +1070,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<DiscoveredSecuritySolutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DiscoveredSecuritySolution>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DiscoveredSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiscoveredSecuritySolutions");
+                using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiscoveredSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = await DiscoveredSecuritySolutionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiscoveredSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DiscoveredSecuritySolutionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -999,17 +1094,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: DiscoveredSecuritySolutions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(CancellationToken cancellationToken = default)
         {
-            Page<DiscoveredSecuritySolutionResource> FirstPageFunc(int? pageSizeHint)
+            Page<DiscoveredSecuritySolution> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DiscoveredSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiscoveredSecuritySolutions");
+                using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiscoveredSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = DiscoveredSecuritySolutionRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiscoveredSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DiscoveredSecuritySolutionsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1017,14 +1112,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<DiscoveredSecuritySolutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DiscoveredSecuritySolution> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DiscoveredSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiscoveredSecuritySolutions");
+                using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiscoveredSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = DiscoveredSecuritySolutionRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiscoveredSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DiscoveredSecuritySolutionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1095,17 +1190,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: ExternalSecuritySolutions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExternalSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutionsByExternalSecuritySolutionAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExternalSecuritySolution> GetExternalSecuritySolutionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExternalSecuritySolutionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ExternalSecuritySolution>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ExternalSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExternalSecuritySolutionsByExternalSecuritySolution");
+                using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExternalSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = await ExternalSecuritySolutionRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExternalSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ExternalSecuritySolutionsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1113,14 +1208,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<ExternalSecuritySolutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ExternalSecuritySolution>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ExternalSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExternalSecuritySolutionsByExternalSecuritySolution");
+                using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExternalSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = await ExternalSecuritySolutionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExternalSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ExternalSecuritySolutionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1137,17 +1232,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: ExternalSecuritySolutions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutionsByExternalSecuritySolution(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExternalSecuritySolution> GetExternalSecuritySolutions(CancellationToken cancellationToken = default)
         {
-            Page<ExternalSecuritySolutionResource> FirstPageFunc(int? pageSizeHint)
+            Page<ExternalSecuritySolution> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ExternalSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExternalSecuritySolutionsByExternalSecuritySolution");
+                using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExternalSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = ExternalSecuritySolutionRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExternalSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ExternalSecuritySolutionsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1155,14 +1250,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<ExternalSecuritySolutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ExternalSecuritySolution> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ExternalSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExternalSecuritySolutionsByExternalSecuritySolution");
+                using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExternalSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = ExternalSecuritySolutionRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExternalSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ExternalSecuritySolutionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1181,7 +1276,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SecureScoreControlDetails>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1224,7 +1319,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecureScoreControlDetails> GetSecureScoreControls(ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecureScoreControlDetails> GetSecureScoreControls(SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Page<SecureScoreControlDetails> FirstPageFunc(int? pageSizeHint)
             {
@@ -1349,17 +1444,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: SecuritySolutions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecuritySolutionResource> GetSecuritySolutionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecuritySolution> GetSecuritySolutionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecuritySolutionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecuritySolution>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecuritySolutions");
+                using var scope = SecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = await SecuritySolutionRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SecuritySolutionsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1367,14 +1462,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<SecuritySolutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecuritySolution>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecuritySolutions");
+                using var scope = SecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = await SecuritySolutionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SecuritySolutionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1391,17 +1486,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: SecuritySolutions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecuritySolutionResource> GetSecuritySolutions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecuritySolution> GetSecuritySolutions(CancellationToken cancellationToken = default)
         {
-            Page<SecuritySolutionResource> FirstPageFunc(int? pageSizeHint)
+            Page<SecuritySolution> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecuritySolutions");
+                using var scope = SecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = SecuritySolutionRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SecuritySolutionsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1409,14 +1504,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<SecuritySolutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecuritySolution> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecuritySolutions");
+                using var scope = SecuritySolutionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecuritySolutions");
                 scope.Start();
                 try
                 {
-                    var response = SecuritySolutionRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SecuritySolutionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1433,10 +1528,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertData> GetAlertsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityAlertData> GetAlertsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AlertData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecurityAlertData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlerts");
                 scope.Start();
@@ -1451,7 +1546,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<AlertData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecurityAlertData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlerts");
                 scope.Start();
@@ -1475,10 +1570,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertData> GetAlerts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityAlertData> GetAlerts(CancellationToken cancellationToken = default)
         {
-            Page<AlertData> FirstPageFunc(int? pageSizeHint)
+            Page<SecurityAlertData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlerts");
                 scope.Start();
@@ -1493,7 +1588,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<AlertData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecurityAlertData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlerts");
                 scope.Start();
@@ -1517,17 +1612,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: SoftwareInventories_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SoftwareResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SoftwareResource> GetSoftwaresAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SoftwareInventoryResource> GetSoftwareInventoriesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SoftwareResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SoftwareInventoryResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SoftwareSoftwareInventoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSoftwares");
+                using var scope = SoftwareInventoryClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSoftwareInventories");
                 scope.Start();
                 try
                 {
-                    var response = await SoftwareSoftwareInventoriesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SoftwareInventoryRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareInventoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1535,14 +1630,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<SoftwareResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SoftwareInventoryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SoftwareSoftwareInventoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSoftwares");
+                using var scope = SoftwareInventoryClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSoftwareInventories");
                 scope.Start();
                 try
                 {
-                    var response = await SoftwareSoftwareInventoriesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SoftwareInventoryRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareInventoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1559,17 +1654,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: SoftwareInventories_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SoftwareResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SoftwareResource> GetSoftwares(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SoftwareInventoryResource> GetSoftwareInventories(CancellationToken cancellationToken = default)
         {
-            Page<SoftwareResource> FirstPageFunc(int? pageSizeHint)
+            Page<SoftwareInventoryResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SoftwareSoftwareInventoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSoftwares");
+                using var scope = SoftwareInventoryClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSoftwareInventories");
                 scope.Start();
                 try
                 {
-                    var response = SoftwareSoftwareInventoriesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SoftwareInventoryRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareInventoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1577,14 +1672,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<SoftwareResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SoftwareInventoryResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SoftwareSoftwareInventoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSoftwares");
+                using var scope = SoftwareInventoryClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSoftwareInventories");
                 scope.Start();
                 try
                 {
-                    var response = SoftwareSoftwareInventoriesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SoftwareInventoryRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareInventoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

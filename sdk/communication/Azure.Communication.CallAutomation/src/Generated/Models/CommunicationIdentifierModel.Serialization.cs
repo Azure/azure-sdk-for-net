@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -47,7 +46,7 @@ namespace Azure.Communication
         internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
         {
             Optional<string> rawId = default;
-            Optional<CommunicationIdentifierModelKindInternal> kind = default;
+            Optional<CommunicationIdentifierModelKind> kind = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
             Optional<PhoneNumberIdentifierModel> phoneNumber = default;
             Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
@@ -65,7 +64,7 @@ namespace Azure.Communication
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new CommunicationIdentifierModelKindInternal(property.Value.GetString());
+                    kind = new CommunicationIdentifierModelKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("communicationUser"))

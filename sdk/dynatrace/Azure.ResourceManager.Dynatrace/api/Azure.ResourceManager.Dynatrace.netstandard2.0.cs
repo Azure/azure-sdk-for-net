@@ -154,6 +154,42 @@ namespace Azure.ResourceManager.Dynatrace
 }
 namespace Azure.ResourceManager.Dynatrace.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AadLogsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AadLogsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ActivityLogsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ActivityLogsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DynatraceAccountCredentialsInfo
     {
         internal DynatraceAccountCredentialsInfo() { }
@@ -215,8 +251,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string ReasonForLogsStatus { get { throw null; } }
         public string ReasonForMetricsStatus { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus? SendingLogsStatus { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus? SendingMetricsStatus { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus? SendingLogsStatus { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus? SendingMetricsStatus { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynatraceMonitoringStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus>
@@ -275,9 +311,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         public DynatraceMonitorResourceLogRules() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag> FilteringTags { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus? SendAadLogs { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus? SendActivityLogs { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus? SendSubscriptionLogs { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus? SendAadLogs { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus? SendActivityLogs { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus? SendSubscriptionLogs { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynatraceMonitorResourceTagAction : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction>
@@ -548,93 +584,57 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendAadLogsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus>
+    public readonly partial struct LogsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SendAadLogsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus other) { throw null; }
+        public LogsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendActivityLogsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus>
+    public readonly partial struct MetricsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SendActivityLogsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus other) { throw null; }
+        public MetricsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendingLogsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus>
+    public readonly partial struct SubscriptionLogsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SendingLogsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus other) { throw null; }
+        public SubscriptionLogsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendingMetricsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SendingMetricsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus left, Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus left, Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendSubscriptionLogsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SendSubscriptionLogsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

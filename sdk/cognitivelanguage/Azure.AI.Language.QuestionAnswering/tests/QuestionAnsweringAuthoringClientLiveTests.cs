@@ -80,13 +80,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
             string testDeploymentName = "production";
-            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Started, testProjectName, testDeploymentName);
-
-            await deploymentOperation.WaitForCompletionAsync();
-            AsyncPageable<BinaryData> deployments = Client.GetDeploymentsAsync(testProjectName);
+            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Completed, testProjectName, testDeploymentName);
+            BinaryData deployment = deploymentOperation.Value;
 
             Assert.True(deploymentOperation.HasCompleted);
-            Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(testDeploymentName)));
+            Assert.That(deployment.ToString(), Contains.Substring(testDeploymentName));
         }
 
         [RecordedTest]
@@ -114,12 +112,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 });
 
             Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
-
-            // BUGBUG: This gets the job state.
-            // AsyncPageable<BinaryData> sources = updateQnasOperation.Value;
-
-            // This works, but is not the intended use case.
-            AsyncPageable<BinaryData> sources = Client.GetQnasAsync(testProjectName);
+            AsyncPageable<BinaryData> sources = updateQnasOperation.Value;
 
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
@@ -152,12 +145,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 });
 
             Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
-
-            // BUGBUG: This gets the job state.
-            // AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
-
-            // This works, but is not the intended use case.
-            AsyncPageable<BinaryData> sources = Client.GetSourcesAsync(testProjectName);
+            AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.AreEqual(200, updateSourcesOperation.GetRawResponse().Status);

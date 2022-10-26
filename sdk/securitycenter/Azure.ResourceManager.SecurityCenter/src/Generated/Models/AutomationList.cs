@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AutomationList. </summary>
         /// <param name="value"> The list of security automations under the given scope. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AutomationList(IEnumerable<AutomationData> value)
+        internal AutomationList(IEnumerable<SecurityAutomationData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AutomationList. </summary>
         /// <param name="value"> The list of security automations under the given scope. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal AutomationList(IReadOnlyList<AutomationData> value, string nextLink)
+        internal AutomationList(IReadOnlyList<SecurityAutomationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of security automations under the given scope. </summary>
-        public IReadOnlyList<AutomationData> Value { get; }
+        public IReadOnlyList<SecurityAutomationData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

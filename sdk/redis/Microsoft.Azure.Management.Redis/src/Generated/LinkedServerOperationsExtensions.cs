@@ -259,6 +259,49 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
+            /// Deletes the linked server from a redis cache (requires Premium SKU).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='linkedServerName'>
+            /// The name of the linked server that is being added to the Redis cache.
+            /// </param>
+            public static void BeginDelete(this ILinkedServerOperations operations, string resourceGroupName, string name, string linkedServerName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, name, linkedServerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the linked server from a redis cache (requires Premium SKU).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='linkedServerName'>
+            /// The name of the linked server that is being added to the Redis cache.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this ILinkedServerOperations operations, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, linkedServerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets the list of linked servers associated with this redis cache (requires
             /// Premium SKU).
             /// </summary>
