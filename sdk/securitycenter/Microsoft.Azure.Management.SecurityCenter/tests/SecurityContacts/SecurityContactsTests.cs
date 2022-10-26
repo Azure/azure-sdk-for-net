@@ -87,20 +87,6 @@ namespace SecurityCenter.Tests
             }
         }
 
-        [Fact]
-        public void SecurityContacts_Update()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var securityCenterClient = GetSecurityCenterClient(context);
-
-                var contact = new SecurityContact("barbra@contoso.com", "", "Off", "Off");
-
-                var securityContact = securityCenterClient.SecurityContacts.Update("default2", contact);
-                ValidateSecurityContact(securityContact);
-            }
-        }
-
         #endregion
 
         #region Validations
