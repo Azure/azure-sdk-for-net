@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("Its approved", result.PrivateLinkServiceConnectionState.Description);
             Assert.Equal(1, result.GroupIds.Count);
             Assert.Equal("abc123", result.GroupIds[0]);
-            Assert.Null(result.PrivateLinkServiceConnectionState.ActionRequired);
+            Assert.Null(result.PrivateLinkServiceConnectionState.ActionsRequired);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("Its approved", result.PrivateLinkServiceConnectionState.Description);
             Assert.Equal(1, result.GroupIds.Count);
             Assert.Equal("abc123", result.GroupIds[0]);
-            Assert.Null(result.PrivateLinkServiceConnectionState.ActionRequired);
+            Assert.Null(result.PrivateLinkServiceConnectionState.ActionsRequired);
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Network/privateEndpoints/privateEndpointName", result.PrivateEndpoint.Id);
             Assert.Equal(PrivateLinkServiceConnectionStatus.Pending, result.PrivateLinkServiceConnectionState.Status);
             Assert.Equal("Its pending", result.PrivateLinkServiceConnectionState.Description);
-            Assert.Null(result.PrivateLinkServiceConnectionState.ActionRequired);
+            Assert.Null(result.PrivateLinkServiceConnectionState.ActionsRequired);
         }
     }
 }
