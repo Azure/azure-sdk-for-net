@@ -77,28 +77,28 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsFalse(flag);
         }
 
-        [TestCase(null)]
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task AddRemoveTag(bool? useTagResource)
-        {
-            SetTagResourceUsage(Client, useTagResource);
-            string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
-            var privateZone = await CreatePrivateZone(_resourceGroup, privateZoneName);
+        //[TestCase(null)]
+        //[TestCase(false)]
+        //[TestCase(true)]
+        //public async Task AddRemoveTag(bool? useTagResource)
+        //{
+        //    SetTagResourceUsage(Client, useTagResource);
+        //    string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
+        //    var privateZone = await CreatePrivateZone(_resourceGroup, privateZoneName);
 
-            // AddTag
-            await privateZone.AddTagAsync("addtagkey", "addtagvalue");
-            privateZone = await _privateZoneResource.GetAsync(privateZoneName);
-            Assert.AreEqual(1, privateZone.Data.Tags.Count);
-            KeyValuePair<string, string> tag = privateZone.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+        //    // AddTag
+        //    await privateZone.AddTagAsync("addtagkey", "addtagvalue");
+        //    privateZone = await _privateZoneResource.GetAsync(privateZoneName);
+        //    Assert.AreEqual(1, privateZone.Data.Tags.Count);
+        //    KeyValuePair<string, string> tag = privateZone.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+        //    Assert.AreEqual("addtagkey", tag.Key);
+        //    Assert.AreEqual("addtagvalue", tag.Value);
 
-            // RemoveTag
-            await privateZone.RemoveTagAsync("addtagkey");
-            privateZone = await _privateZoneResource.GetAsync(privateZoneName);
-            Assert.AreEqual(0, privateZone.Data.Tags.Count);
-        }
+        //    // RemoveTag
+        //    await privateZone.RemoveTagAsync("addtagkey");
+        //    privateZone = await _privateZoneResource.GetAsync(privateZoneName);
+        //    Assert.AreEqual(0, privateZone.Data.Tags.Count);
+        //}
 
         private void ValidatePrivateZone(PrivateZoneResource privateZone, string privateZoneName)
         {

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.PrivateDns
         public RecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            ARecords = new ChangeTrackingList<ARecord>();
-            AaaaRecords = new ChangeTrackingList<AaaaRecord>();
-            MxRecords = new ChangeTrackingList<MxRecord>();
-            PtrRecords = new ChangeTrackingList<PtrRecord>();
-            SrvRecords = new ChangeTrackingList<SrvRecord>();
-            TxtRecords = new ChangeTrackingList<TxtRecord>();
+            ARecords = new ChangeTrackingList<ARecordInfo>();
+            AaaaRecords = new ChangeTrackingList<AaaaRecordInfo>();
+            MxRecords = new ChangeTrackingList<MXRecordInfo>();
+            PtrRecords = new ChangeTrackingList<PtrRecordInfo>();
+            SrvRecords = new ChangeTrackingList<SrvRecordInfo>();
+            TxtRecords = new ChangeTrackingList<TxtRecordInfo>();
         }
 
         /// <summary> Initializes a new instance of RecordSetData. </summary>
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="aRecords"> The list of A records in the record set. </param>
         /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
-        /// <param name="cnameRecord"> The CNAME record in the record set. </param>
+        /// <param name="cnameRecordInfo"> The CNAME record in the record set. </param>
         /// <param name="mxRecords"> The list of MX records in the record set. </param>
         /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
-        /// <param name="soaRecord"> The SOA record in the record set. </param>
+        /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
         /// <param name="srvRecords"> The list of SRV records in the record set. </param>
         /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<ARecord> aRecords, IList<AaaaRecord> aaaaRecords, CnameRecord cnameRecord, IList<MxRecord> mxRecords, IList<PtrRecord> ptrRecords, SoaRecord soaRecord, IList<SrvRecord> srvRecords, IList<TxtRecord> txtRecords) : base(id, name, resourceType, systemData)
+        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<ARecordInfo> aRecords, IList<AaaaRecordInfo> aaaaRecords, CnameRecordInfo cnameRecordInfo, IList<MXRecordInfo> mxRecords, IList<PtrRecordInfo> ptrRecords, SoaRecordInfo soaRecordInfo, IList<SrvRecordInfo> srvRecords, IList<TxtRecordInfo> txtRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.PrivateDns
             IsAutoRegistered = isAutoRegistered;
             ARecords = aRecords;
             AaaaRecords = aaaaRecords;
-            CnameRecord = cnameRecord;
+            CnameRecordInfo = cnameRecordInfo;
             MxRecords = mxRecords;
             PtrRecords = ptrRecords;
-            SoaRecord = soaRecord;
+            SoaRecordInfo = soaRecordInfo;
             SrvRecords = srvRecords;
             TxtRecords = txtRecords;
         }
@@ -74,32 +74,32 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </summary>
         public bool? IsAutoRegistered { get; }
         /// <summary> The list of A records in the record set. </summary>
-        public IList<ARecord> ARecords { get; }
+        public IList<ARecordInfo> ARecords { get; }
         /// <summary> The list of AAAA records in the record set. </summary>
-        public IList<AaaaRecord> AaaaRecords { get; }
+        public IList<AaaaRecordInfo> AaaaRecords { get; }
         /// <summary> The CNAME record in the record set. </summary>
-        internal CnameRecord CnameRecord { get; set; }
+        internal CnameRecordInfo CnameRecordInfo { get; set; }
         /// <summary> The canonical name for this CNAME record. </summary>
         public string Cname
         {
-            get => CnameRecord is null ? default : CnameRecord.Cname;
+            get => CnameRecordInfo is null ? default : CnameRecordInfo.Cname;
             set
             {
-                if (CnameRecord is null)
-                    CnameRecord = new CnameRecord();
-                CnameRecord.Cname = value;
+                if (CnameRecordInfo is null)
+                    CnameRecordInfo = new CnameRecordInfo();
+                CnameRecordInfo.Cname = value;
             }
         }
 
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<MxRecord> MxRecords { get; }
+        public IList<MXRecordInfo> MxRecords { get; }
         /// <summary> The list of PTR records in the record set. </summary>
-        public IList<PtrRecord> PtrRecords { get; }
+        public IList<PtrRecordInfo> PtrRecords { get; }
         /// <summary> The SOA record in the record set. </summary>
-        public SoaRecord SoaRecord { get; set; }
+        public SoaRecordInfo SoaRecordInfo { get; set; }
         /// <summary> The list of SRV records in the record set. </summary>
-        public IList<SrvRecord> SrvRecords { get; }
+        public IList<SrvRecordInfo> SrvRecords { get; }
         /// <summary> The list of TXT records in the record set. </summary>
-        public IList<TxtRecord> TxtRecords { get; }
+        public IList<TxtRecordInfo> TxtRecords { get; }
     }
 }

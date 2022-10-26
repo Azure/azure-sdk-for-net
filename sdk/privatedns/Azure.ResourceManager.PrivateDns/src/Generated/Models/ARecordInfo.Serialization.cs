@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    public partial class ARecord : IUtf8JsonSerializable
+    public partial class ARecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             writer.WriteEndObject();
         }
 
-        internal static ARecord DeserializeARecord(JsonElement element)
+        internal static ARecordInfo DeserializeARecordInfo(JsonElement element)
         {
             Optional<string> ipv4Address = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     continue;
                 }
             }
-            return new ARecord(ipv4Address.Value);
+            return new ARecordInfo(ipv4Address.Value);
         }
     }
 }

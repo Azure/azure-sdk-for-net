@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CnameRecord))
+            if (Optional.IsDefined(CnameRecordInfo))
             {
                 writer.WritePropertyName("cnameRecord");
-                writer.WriteObjectValue(CnameRecord);
+                writer.WriteObjectValue(CnameRecordInfo);
             }
             if (Optional.IsCollectionDefined(MxRecords))
             {
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SoaRecord))
+            if (Optional.IsDefined(SoaRecordInfo))
             {
                 writer.WritePropertyName("soaRecord");
-                writer.WriteObjectValue(SoaRecord);
+                writer.WriteObjectValue(SoaRecordInfo);
             }
             if (Optional.IsCollectionDefined(SrvRecords))
             {
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<long> ttl = default;
             Optional<string> fqdn = default;
             Optional<bool> isAutoRegistered = default;
-            Optional<IList<ARecord>> aRecords = default;
-            Optional<IList<AaaaRecord>> aaaaRecords = default;
-            Optional<CnameRecord> cnameRecord = default;
-            Optional<IList<MxRecord>> mxRecords = default;
-            Optional<IList<PtrRecord>> ptrRecords = default;
-            Optional<SoaRecord> soaRecord = default;
-            Optional<IList<SrvRecord>> srvRecords = default;
-            Optional<IList<TxtRecord>> txtRecords = default;
+            Optional<IList<ARecordInfo>> aRecords = default;
+            Optional<IList<AaaaRecordInfo>> aaaaRecords = default;
+            Optional<CnameRecordInfo> cnameRecordInfo = default;
+            Optional<IList<MXRecordInfo>> mxRecords = default;
+            Optional<IList<PtrRecordInfo>> ptrRecords = default;
+            Optional<SoaRecordInfo> soaRecordInfo = default;
+            Optional<IList<SrvRecordInfo>> srvRecords = default;
+            Optional<IList<TxtRecordInfo>> txtRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ARecord> array = new List<ARecord>();
+                            List<ARecordInfo> array = new List<ARecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ARecord.DeserializeARecord(item));
+                                array.Add(ARecordInfo.DeserializeARecordInfo(item));
                             }
                             aRecords = array;
                             continue;
@@ -243,10 +243,10 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AaaaRecord> array = new List<AaaaRecord>();
+                            List<AaaaRecordInfo> array = new List<AaaaRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AaaaRecord.DeserializeAaaaRecord(item));
+                                array.Add(AaaaRecordInfo.DeserializeAaaaRecordInfo(item));
                             }
                             aaaaRecords = array;
                             continue;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cnameRecord = CnameRecord.DeserializeCnameRecord(property0.Value);
+                            cnameRecordInfo = CnameRecordInfo.DeserializeCnameRecordInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mxRecords"))
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MxRecord> array = new List<MxRecord>();
+                            List<MXRecordInfo> array = new List<MXRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MxRecord.DeserializeMxRecord(item));
+                                array.Add(MXRecordInfo.DeserializeMXRecordInfo(item));
                             }
                             mxRecords = array;
                             continue;
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PtrRecord> array = new List<PtrRecord>();
+                            List<PtrRecordInfo> array = new List<PtrRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PtrRecord.DeserializePtrRecord(item));
+                                array.Add(PtrRecordInfo.DeserializePtrRecordInfo(item));
                             }
                             ptrRecords = array;
                             continue;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            soaRecord = SoaRecord.DeserializeSoaRecord(property0.Value);
+                            soaRecordInfo = SoaRecordInfo.DeserializeSoaRecordInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("srvRecords"))
@@ -308,10 +308,10 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SrvRecord> array = new List<SrvRecord>();
+                            List<SrvRecordInfo> array = new List<SrvRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SrvRecord.DeserializeSrvRecord(item));
+                                array.Add(SrvRecordInfo.DeserializeSrvRecordInfo(item));
                             }
                             srvRecords = array;
                             continue;
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TxtRecord> array = new List<TxtRecord>();
+                            List<TxtRecordInfo> array = new List<TxtRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TxtRecord.DeserializeTxtRecord(item));
+                                array.Add(TxtRecordInfo.DeserializeTxtRecordInfo(item));
                             }
                             txtRecords = array;
                             continue;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.PrivateDns
                     continue;
                 }
             }
-            return new RecordSetData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(aRecords), Optional.ToList(aaaaRecords), cnameRecord.Value, Optional.ToList(mxRecords), Optional.ToList(ptrRecords), soaRecord.Value, Optional.ToList(srvRecords), Optional.ToList(txtRecords));
+            return new RecordSetData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(aRecords), Optional.ToList(aaaaRecords), cnameRecordInfo.Value, Optional.ToList(mxRecords), Optional.ToList(ptrRecords), soaRecordInfo.Value, Optional.ToList(srvRecords), Optional.ToList(txtRecords));
         }
     }
 }

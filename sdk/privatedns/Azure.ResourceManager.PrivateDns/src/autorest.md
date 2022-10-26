@@ -44,5 +44,15 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
+  ARecord: ARecordInfo
+  AaaaRecord: AaaaRecordInfo
+  MxRecord: MXRecordInfo
+  NsRecord: NSRecordInfo
+  PtrRecord: PtrRecordInfo
+  SrvRecord: SrvRecordInfo
+  TxtRecord: TxtRecordInfo
+  CnameRecord: CnameRecordInfo
+  SoaRecord: SoaRecordInfo
+  CaaRecord: CaaRecordInfo
+  
 ```
