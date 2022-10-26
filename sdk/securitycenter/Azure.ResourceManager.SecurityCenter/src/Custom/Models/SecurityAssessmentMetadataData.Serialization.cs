@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<ImplementationEffort> implementationEffort = default;
             Optional<IList<SecurityThreat>> threats = default;
             Optional<bool> preview = default;
-            Optional<AssessmentType> assessmentType = default;
+            Optional<SecurityAssessmentType> assessmentType = default;
             Optional<SecurityAssessmentMetadataPartner> partnerData = default;
             Optional<SecurityAssessmentPublishDates> publishDates = default;
             Optional<string> plannedDeprecationDate = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            assessmentType = new AssessmentType(property0.Value.GetString());
+                            assessmentType = new SecurityAssessmentType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("partnerData"))

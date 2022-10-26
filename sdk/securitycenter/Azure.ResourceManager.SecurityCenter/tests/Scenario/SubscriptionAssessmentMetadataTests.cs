@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     SecurityThreat.DataSpillage,
                     SecurityThreat.MaliciousInsider
                 },
-                AssessmentType = AssessmentType.CustomerManaged
+                AssessmentType = SecurityAssessmentType.CustomerManaged
             };
             var subAssessmentMetadata = await _subAssessmentMetadataCollection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentMetadataName, data);
             return subAssessmentMetadata.Value;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.AreEqual(SecurityAssessmentSeverity.Medium, subAssessmentMetadata.Data.Severity);
             Assert.AreEqual(SecurityAssessmentUserImpact.Low, subAssessmentMetadata.Data.UserImpact);
             Assert.AreEqual(ImplementationEffort.Low, subAssessmentMetadata.Data.ImplementationEffort);
-            Assert.AreEqual(AssessmentType.CustomerManaged, subAssessmentMetadata.Data.AssessmentType);
+            Assert.AreEqual(SecurityAssessmentType.CustomerManaged, subAssessmentMetadata.Data.AssessmentType);
         }
     }
 }
