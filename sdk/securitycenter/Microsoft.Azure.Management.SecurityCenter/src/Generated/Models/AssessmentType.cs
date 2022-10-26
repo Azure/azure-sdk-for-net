@@ -17,17 +17,17 @@ namespace Microsoft.Azure.Management.Security.Models
     public static class AssessmentType
     {
         /// <summary>
-        /// Azure Security Center managed assessments
+        /// Microsoft Defender for Cloud managed assessments
         /// </summary>
         public const string BuiltIn = "BuiltIn";
         /// <summary>
         /// User defined policies that are automatically ingested from Azure
-        /// Policy to Azure Security Center
+        /// Policy to Microsoft Defender for Cloud
         /// </summary>
         public const string CustomPolicy = "CustomPolicy";
         /// <summary>
         /// User assessments pushed directly by the user or other third party
-        /// to Azure Security Center
+        /// to Microsoft Defender for Cloud
         /// </summary>
         public const string CustomerManaged = "CustomerManaged";
         /// <summary>

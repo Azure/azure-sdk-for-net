@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.Security.Models
 {
 
     /// <summary>
-    /// Defines values for AlertsToAdmins.
+    /// Defines values for SecurityAlertNotificationByRoleState.
     /// </summary>
-    public static class AlertsToAdmins
+    public static class SecurityAlertNotificationByRoleState
     {
         /// <summary>
         /// Send notification on new alerts to the subscription's admins

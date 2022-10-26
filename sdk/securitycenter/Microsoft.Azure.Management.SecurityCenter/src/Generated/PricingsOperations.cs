@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.Security
         public SecurityCenterClient Client { get; private set; }
 
         /// <summary>
-        /// Lists Security Center pricing configurations in the subscription.
+        /// Lists Microsoft Defender for Cloud pricing configurations in the
+        /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -87,7 +88,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2018-06-01";
+            string apiVersion = "2022-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -234,7 +235,8 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Gets a provided Security Center pricing configuration in the subscription.
+        /// Gets a provided Microsoft Defender for Cloud pricing configuration in the
+        /// subscription.
         /// </summary>
         /// <param name='pricingName'>
         /// name of the pricing configuration
@@ -277,7 +279,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "pricingName");
             }
-            string apiVersion = "2018-06-01";
+            string apiVersion = "2022-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -426,18 +428,23 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Updates a provided Security Center pricing configuration in the
-        /// subscription.
+        /// Updates a provided Microsoft Defender for Cloud pricing configuration in
+        /// the subscription.
         /// </summary>
         /// <param name='pricingName'>
         /// name of the pricing configuration
         /// </param>
         /// <param name='pricingTier'>
-        /// The pricing tier value. Azure Security Center is provided in two pricing
-        /// tiers: free and standard, with the standard tier available with a trial
-        /// period. The standard tier offers advanced security capabilities, while the
-        /// free tier offers basic security features. Possible values include: 'Free',
-        /// 'Standard'
+        /// The pricing tier value. Microsoft Defender for Cloud is provided in two
+        /// pricing tiers: free and standard, with the standard tier available with a
+        /// trial period. The standard tier offers advanced security capabilities,
+        /// while the free tier offers basic security features. Possible values
+        /// include: 'Free', 'Standard'
+        /// </param>
+        /// <param name='subPlan'>
+        /// The sub-plan selected for a Standard pricing configuration, when more than
+        /// one sub-plan is available. Each sub-plan enables a set of security
+        /// features. When not specified, full plan is applied.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -460,7 +467,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Pricing>> UpdateWithHttpMessagesAsync(string pricingName, string pricingTier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Pricing>> UpdateWithHttpMessagesAsync(string pricingName, string pricingTier, string subPlan = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -481,11 +488,12 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "pricingTier");
             }
-            string apiVersion = "2018-06-01";
+            string apiVersion = "2022-03-01";
             Pricing pricing = new Pricing();
-            if (pricingTier != null)
+            if (pricingTier != null || subPlan != null)
             {
                 pricing.PricingTier = pricingTier;
+                pricing.SubPlan = subPlan;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

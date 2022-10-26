@@ -10,19 +10,26 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using System.Linq;
 
     /// <summary>
-    /// Defines values for AlertNotifications.
+    /// The gcpOrganization data
     /// </summary>
-    public static class AlertNotifications
+    public partial class GcpOrganizationalData
     {
         /// <summary>
-        /// Get notifications on new alerts
+        /// Initializes a new instance of the GcpOrganizationalData class.
         /// </summary>
-        public const string On = "On";
+        public GcpOrganizationalData()
+        {
+            CustomInit();
+        }
+
+
         /// <summary>
-        /// Don't get notifications on new alerts
+        /// An initialization method that performs custom operations like setting defaults
         /// </summary>
-        public const string Off = "Off";
+        partial void CustomInit();
+
     }
 }

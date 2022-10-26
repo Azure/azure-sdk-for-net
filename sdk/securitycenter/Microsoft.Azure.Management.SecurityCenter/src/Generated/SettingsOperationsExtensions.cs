@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Security
     public static partial class SettingsOperationsExtensions
     {
             /// <summary>
-            /// Settings about different configurations in security center
+            /// Settings about different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about different configurations in security center
+            /// Settings about different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,14 +50,14 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings of different configurations in security center
+            /// Settings of different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
             /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
-            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
             /// </param>
             public static Setting Get(this ISettingsOperations operations, string settingName)
             {
@@ -65,14 +65,14 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings of different configurations in security center
+            /// Settings of different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
             /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
-            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -86,14 +86,15 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// updating settings about different configurations in security center
+            /// updating settings about different configurations in Microsoft Defender for
+            /// Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
             /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
-            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
             /// </param>
             /// <param name='setting'>
             /// Setting object
@@ -104,14 +105,15 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// updating settings about different configurations in security center
+            /// updating settings about different configurations in Microsoft Defender for
+            /// Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
             /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
-            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
             /// </param>
             /// <param name='setting'>
             /// Setting object
@@ -128,7 +130,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about different configurations in security center
+            /// Settings about different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -142,7 +144,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about different configurations in security center
+            /// Settings about different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
