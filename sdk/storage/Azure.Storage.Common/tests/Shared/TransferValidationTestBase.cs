@@ -1071,10 +1071,12 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, validationOptions, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, validationOptions, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
@@ -1124,10 +1126,12 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, default, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, default, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
@@ -1183,10 +1187,12 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, overrideValidationOptions, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, overrideValidationOptions, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
@@ -1249,10 +1255,12 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, overrideValidationOptions, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, overrideValidationOptions, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
         #endregion
 
@@ -1300,7 +1308,9 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             checksumPipelineAssertion.CheckResponse = true;
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            var dest = new MemoryStream();
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
@@ -1341,7 +1351,9 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             checksumPipelineAssertion.CheckResponse = true;
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            var dest = new MemoryStream();
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
@@ -1389,7 +1401,9 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             checksumPipelineAssertion.CheckResponse = true;
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            var dest = new MemoryStream();
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
@@ -1444,7 +1458,9 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             checksumPipelineAssertion.CheckResponse = true;
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            var dest = new MemoryStream();
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
         #endregion
 
@@ -1469,7 +1485,8 @@ namespace Azure.Storage.Test.Shared
             var validationOptions = new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            var response = await DownloadPartitionAsync(client, dest, validationOptions, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
@@ -1485,6 +1502,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test, Combinatorial]
@@ -1518,7 +1536,8 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, dest, validationOptions, new HttpRange(length: data.Length));
 
             // Assert
             if (validate)
@@ -1531,6 +1550,8 @@ namespace Azure.Storage.Test.Shared
                 // bad checksum is for caller to find. Don't throw.
                 await DoesNotThrowOrInconclusiveAsync(operation);
             }
+            // data was tamepered. should be different.
+            Assert.IsFalse(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
@@ -1566,7 +1587,8 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, default, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            var response = await DownloadPartitionAsync(client, dest, default, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
@@ -1582,6 +1604,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
@@ -1624,7 +1647,8 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, overrideValidationOptions, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            var response = await DownloadPartitionAsync(client, dest, overrideValidationOptions, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
@@ -1640,6 +1664,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
@@ -1689,12 +1714,14 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, overrideValidationOptions, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            var response = await DownloadPartitionAsync(client, dest, overrideValidationOptions, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
             Assert.False(response.Headers.Contains("Content-MD5"));
             Assert.False(response.Headers.Contains("x-ms-content-crc64"));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
         #endregion
 
@@ -1749,10 +1776,12 @@ namespace Azure.Storage.Test.Shared
             }
 
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, downloadvalidationOptions, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, downloadvalidationOptions, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
         #endregion
 

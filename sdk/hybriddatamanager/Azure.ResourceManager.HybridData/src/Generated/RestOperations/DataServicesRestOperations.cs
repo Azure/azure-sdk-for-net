@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/> or <paramref name="dataServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/> or <paramref name="dataServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridDataServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.HybridData
             {
                 case 200:
                     {
-                        DataServiceData value = default;
+                        HybridDataServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataServiceData.DeserializeDataServiceData(document.RootElement);
+                        value = HybridDataServiceData.DeserializeHybridDataServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataServiceData)null, message.Response);
+                    return Response.FromValue((HybridDataServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/> or <paramref name="dataServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/> or <paramref name="dataServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataServiceData> Get(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, CancellationToken cancellationToken = default)
+        public Response<HybridDataServiceData> Get(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,13 +192,13 @@ namespace Azure.ResourceManager.HybridData
             {
                 case 200:
                     {
-                        DataServiceData value = default;
+                        HybridDataServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataServiceData.DeserializeDataServiceData(document.RootElement);
+                        value = HybridDataServiceData.DeserializeHybridDataServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataServiceData)null, message.Response);
+                    return Response.FromValue((HybridDataServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

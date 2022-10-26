@@ -18,6 +18,7 @@ namespace Azure.Communication.CallAutomation
         public AddParticipantsOptions(IEnumerable<CommunicationIdentifier> participantsToAdd)
         {
             ParticipantsToAdd = participantsToAdd;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>

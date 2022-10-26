@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of SourceLifeCycle. </summary>
         /// <param name="deleteAfter">
         /// Delete Option
-        /// Please note <see cref="DeleteOption"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AbsoluteDeleteOption"/>.
+        /// Please note <see cref="DataProtectionBackupDeleteSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>.
         /// </param>
         /// <param name="sourceDataStore"> DataStoreInfo base. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deleteAfter"/> or <paramref name="sourceDataStore"/> is null. </exception>
-        public SourceLifeCycle(DeleteOption deleteAfter, DataStoreInfoBase sourceDataStore)
+        public SourceLifeCycle(DataProtectionBackupDeleteSetting deleteAfter, DataStoreInfoBase sourceDataStore)
         {
             if (deleteAfter == null)
             {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of SourceLifeCycle. </summary>
         /// <param name="deleteAfter">
         /// Delete Option
-        /// Please note <see cref="DeleteOption"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AbsoluteDeleteOption"/>.
+        /// Please note <see cref="DataProtectionBackupDeleteSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>.
         /// </param>
         /// <param name="sourceDataStore"> DataStoreInfo base. </param>
         /// <param name="targetDataStoreCopySettings"></param>
-        internal SourceLifeCycle(DeleteOption deleteAfter, DataStoreInfoBase sourceDataStore, IList<TargetCopySetting> targetDataStoreCopySettings)
+        internal SourceLifeCycle(DataProtectionBackupDeleteSetting deleteAfter, DataStoreInfoBase sourceDataStore, IList<TargetCopySetting> targetDataStoreCopySettings)
         {
             DeleteAfter = deleteAfter;
             SourceDataStore = sourceDataStore;
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary>
         /// Delete Option
-        /// Please note <see cref="DeleteOption"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AbsoluteDeleteOption"/>.
+        /// Please note <see cref="DataProtectionBackupDeleteSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>.
         /// </summary>
-        public DeleteOption DeleteAfter { get; set; }
+        public DataProtectionBackupDeleteSetting DeleteAfter { get; set; }
         /// <summary> DataStoreInfo base. </summary>
         public DataStoreInfoBase SourceDataStore { get; set; }
         /// <summary> Gets the target data store copy settings. </summary>
