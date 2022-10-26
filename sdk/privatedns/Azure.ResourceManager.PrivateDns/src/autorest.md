@@ -54,5 +54,8 @@ rename-rules:
   CnameRecord: CnameRecordInfo
   SoaRecord: SoaRecordInfo
   CaaRecord: CaaRecordInfo
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/A: ARecord
   
 ```
