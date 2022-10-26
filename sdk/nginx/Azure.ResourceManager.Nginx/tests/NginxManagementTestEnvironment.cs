@@ -8,5 +8,9 @@ namespace Azure.ResourceManager.Nginx.Tests
     public class NginxManagementTestEnvironment : TestEnvironment
     {
         public string NginxSubscriptionId => GetRecordedVariable("SUBSCRIPTION_ID");
+
+        public string KeyVaultSecretId => GetRecordedVariable("KeyVaultSecretId");
+
+        public string ManagedIdentityResourceID => GetRecordedVariable("ManagedIdentityResourceID");
     }
 }

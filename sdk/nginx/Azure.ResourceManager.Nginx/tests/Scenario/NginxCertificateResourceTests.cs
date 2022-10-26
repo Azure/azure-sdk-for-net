@@ -108,11 +108,10 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string keyVirtualPath = "/etc/cert/nginx.key";
             NginxCertificateResource nginxCertificate = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
 
-            KeyVaultSecretId = $"https://{nginxDeployment.Data.Name}-kv.vault.azure.net/secrets/cert";
             NginxCertificateProperties certificateProperties = new NginxCertificateProperties();
             certificateProperties.CertificateVirtualPath = "/etc/cert/app.cert";
             certificateProperties.KeyVirtualPath = "/etc/cert/app.key";
-            certificateProperties.KeyVaultSecretId = KeyVaultSecretId;
+            certificateProperties.KeyVaultSecretId = TestEnvironment.KeyVaultSecretId;
 
             NginxCertificateData nginxCertificateData = new NginxCertificateData(Location);
             nginxCertificateData.Properties = certificateProperties;
