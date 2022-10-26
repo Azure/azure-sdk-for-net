@@ -199,7 +199,7 @@ namespace Azure
         /// Returns the number of elements in this array.
         /// </summary>
         /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Array"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
-        private int Length
+        private object Length
         {
             get => EnsureArray().Count;
         }
@@ -490,28 +490,6 @@ namespace Azure
         }
 
         /// <summary>
-        /// Used by the dynamic meta object to fetch properties. We can't use GetPropertyValue because when the underlying
-        /// value is an array, we want `.Length` to mean "the length of the array" and not "treat the array as an object
-        /// and get the Length property", and we also want the return type to be "int" and not a JsonData wrapping the int.
-        /// </summary>
-        /// <param name="propertyName">The name of the property to get the value of.</param>
-        /// <returns></returns>
-        private object GetDynamicProperty(string propertyName)
-        {
-            if (_kind == JsonValueKind.Array && propertyName == nameof(Length))
-            {
-                return Length;
-            }
-
-            if (EnsureObject().TryGetValue(propertyName, out JsonData? element))
-            {
-                return element;
-            }
-
-            throw new InvalidOperationException($"Property {propertyName} not found");
-        }
-
-        /// <summary>
         /// Gets the value of a property from an object, or <code>null</code> if no such property exists.
         /// </summary>
         /// <param name="propertyName">The name of the property to get</param>
@@ -674,24 +652,38 @@ namespace Azure
 
         private class MetaObject : DynamicMetaObject
         {
-            private static readonly MethodInfo GetDynamicPropertyMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
+            private JsonData _value;
+
+            private static readonly MethodInfo GetPropertyMethod = typeof(JsonData).GetMethod(nameof(GetPropertyValue), BindingFlags.NonPublic | BindingFlags.Instance)!;
             private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
+            private static readonly PropertyInfo LengthProperty = typeof(JsonData).GetProperty(nameof(Length), BindingFlags.NonPublic | BindingFlags.Instance)!;
             private static readonly Dictionary<Type, PropertyInfo> Indexers = GetIndexers();
             private static readonly Dictionary<Type, MethodInfo> CastOperators = GetCastOperators();
             private static readonly MethodInfo EqualsMethod = typeof(JsonData).GetMethod(nameof(EqualsObject), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
+                _value = (JsonData)value;
             }
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
             {
                 var targetObject = Expression.Convert(Expression, LimitType);
+                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+
+                // When the underlying value is an array, we want `.Length` to mean "the length of the array" and not
+                // "treat the array as an object and get the Length property", and we also want the return type to be
+                // "int" and not a JsonData wrapping the int.
+                if (_value.Kind == JsonValueKind.Array && binder.Name == nameof(Length))
+                {
+                    return new DynamicMetaObject(
+                        Expression.Property(targetObject, LengthProperty),
+                        restrictions);
+                }
 
                 var arguments = new Expression[] { Expression.Constant(binder.Name) };
-                var getPropertyCall = Expression.Call(targetObject, GetDynamicPropertyMethod, arguments);
+                var getPropertyCall = Expression.Call(targetObject, GetPropertyMethod, arguments);
 
-                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(getPropertyCall, restrictions);
             }
 
