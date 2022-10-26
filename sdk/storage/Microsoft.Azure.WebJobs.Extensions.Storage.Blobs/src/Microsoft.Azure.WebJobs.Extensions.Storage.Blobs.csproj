@@ -19,11 +19,7 @@
   <ItemGroup>
     <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\**\*.cs" LinkBase="Shared" />
     <Compile Include="$(MicrosoftAzureWebJobsExtensionsClientsSources)\**\*.cs" LinkBase="Shared" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="C:\git\azure-sdk-for-net\sdk\storage\Microsoft.Azure.WebJobs.Extensions.Storage.Common\src\Shared\Listeners\lalalalaa.cs" />
-  </ItemGroup>
+  </ItemGroup>  
 
   <ItemGroup>
     <Compile Include="..\..\..\eventgrid\Microsoft.Azure.WebJobs.Extensions.EventGrid\src\TriggerBinding\HttpRequestProcessor.cs" Link="EventGrid\HttpRequestProcessor.cs" />
