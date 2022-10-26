@@ -66,5 +66,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public const string AdHoc = "AdHoc";
         public const string CH1 = "CH1";
         public const string DSM05 = "DSM05";
+        public const string DUB07 = "DUB07";
+        public const string PNQ01 = "PNQ01";
+        public const string SVG20 = "SVG20";
+        public const string OSA02 = "OSA02";
+        public const string OSA22 = "OSA22";
+        public const string PAR22 = "PAR22";
+        public const string BN7 = "BN7";
+        public const string SN6 = "SN6";
+        public const string BJS20 = "BJS20";
     }
 }

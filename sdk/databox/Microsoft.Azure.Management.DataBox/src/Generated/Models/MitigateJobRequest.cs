@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the MitigateJobRequest class.
         /// </summary>
         /// <param name="customerResolutionCode">Resolution code for the job.
-        /// Possible values include: 'None', 'MoveToCleanUpDevice',
-        /// 'Resume'</param>
+        /// Possible values include: 'None', 'MoveToCleanUpDevice', 'Resume',
+        /// 'Restart', 'ReachOutToOperation'</param>
         public MitigateJobRequest(CustomerResolutionCode customerResolutionCode)
         {
             CustomerResolutionCode = customerResolutionCode;
@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets or sets resolution code for the job. Possible values include:
-        /// 'None', 'MoveToCleanUpDevice', 'Resume'
+        /// 'None', 'MoveToCleanUpDevice', 'Resume', 'Restart',
+        /// 'ReachOutToOperation'
         /// </summary>
         [JsonProperty(PropertyName = "customerResolutionCode")]
         public CustomerResolutionCode CustomerResolutionCode { get; set; }

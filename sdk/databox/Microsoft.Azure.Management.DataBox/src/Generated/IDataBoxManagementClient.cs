@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// </param>
         /// <param name='customerResolutionCode'>
         /// Resolution code for the job. Possible values include: 'None',
-        /// 'MoveToCleanUpDevice', 'Resume'
+        /// 'MoveToCleanUpDevice', 'Resume', 'Restart', 'ReachOutToOperation'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

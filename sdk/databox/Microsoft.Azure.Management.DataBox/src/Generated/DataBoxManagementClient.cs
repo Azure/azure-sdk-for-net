@@ -333,7 +333,7 @@ namespace Microsoft.Azure.Management.DataBox
             Jobs = new JobsOperations(this);
             Service = new ServiceOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-08-01-preview";
+            ApiVersion = "2022-02-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -365,6 +365,8 @@ namespace Microsoft.Azure.Management.DataBox
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopyLogDetails>("copyLogDetailsType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopyLogDetails>("copyLogDetailsType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<GranularCopyLogDetails>("copyLogDetailsType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<GranularCopyLogDetails>("copyLogDetailsType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataAccountDetails>("dataAccountType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataAccountDetails>("dataAccountType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatacenterAddressResponse>("datacenterAddressType"));
@@ -398,7 +400,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// </param>
         /// <param name='customerResolutionCode'>
         /// Resolution code for the job. Possible values include: 'None',
-        /// 'MoveToCleanUpDevice', 'Resume'
+        /// 'MoveToCleanUpDevice', 'Resume', 'Restart', 'ReachOutToOperation'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

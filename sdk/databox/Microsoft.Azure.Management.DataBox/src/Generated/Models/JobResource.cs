@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.DataBox.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;

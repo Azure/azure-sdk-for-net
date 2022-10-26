@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Additional error info.
+    /// This class represents additional info which Resource Providers pass
+    /// when an error occurs.
     /// </summary>
     public partial class AdditionalErrorInfo
     {
@@ -29,12 +30,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the AdditionalErrorInfo class.
         /// </summary>
-        /// <param name="type">Additional error type.</param>
-        /// <param name="info">Additional error info.</param>
-        public AdditionalErrorInfo(string type = default(string), object info = default(object))
+        /// <param name="info">Additional information of the type of
+        /// error.</param>
+        /// <param name="type">Type of error (e.g. CustomerIntervention,
+        /// PolicyViolation, SecurityViolation).</param>
+        public AdditionalErrorInfo(object info = default(object), string type = default(string))
         {
-            Type = type;
             Info = info;
+            Type = type;
             CustomInit();
         }
 
@@ -44,16 +47,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets additional error type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets additional error info.
+        /// Gets or sets additional information of the type of error.
         /// </summary>
         [JsonProperty(PropertyName = "info")]
         public object Info { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of error (e.g. CustomerIntervention,
+        /// PolicyViolation, SecurityViolation).
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

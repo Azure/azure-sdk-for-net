@@ -80,7 +80,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Stage has performed customer action for clean up.
         /// </summary>
         [EnumMember(Value = "CustomerActionPerformedForCleanUp")]
-        CustomerActionPerformedForCleanUp
+        CustomerActionPerformedForCleanUp,
+        /// <summary>
+        /// Stage has performed customer action for clean up.
+        /// </summary>
+        [EnumMember(Value = "CustomerActionPerformed")]
+        CustomerActionPerformed
     }
     internal static class StageStatusEnumExtension
     {
@@ -117,6 +122,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "WaitingForCustomerActionForCleanUp";
                 case StageStatus.CustomerActionPerformedForCleanUp:
                     return "CustomerActionPerformedForCleanUp";
+                case StageStatus.CustomerActionPerformed:
+                    return "CustomerActionPerformed";
             }
             return null;
         }
@@ -149,6 +156,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return StageStatus.WaitingForCustomerActionForCleanUp;
                 case "CustomerActionPerformedForCleanUp":
                     return StageStatus.CustomerActionPerformedForCleanUp;
+                case "CustomerActionPerformed":
+                    return StageStatus.CustomerActionPerformed;
             }
             return null;
         }

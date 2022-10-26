@@ -51,6 +51,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// download the return shipment label</param>
         /// <param name="chainOfCustodySasKey">Shared access key to download
         /// the chain of custody logs</param>
+        /// <param name="deviceErasureDetails">Holds device data erasure
+        /// details</param>
         /// <param name="keyEncryptionKey">Details about which key encryption
         /// type is being used.</param>
         /// <param name="expectedDataSizeInTeraBytes">The expected size of the
@@ -68,8 +70,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// 'TYO01', 'BN1', 'SN5', 'CYS04', 'TYO22', 'YTO21', 'YQB20', 'FRA22',
         /// 'MAA01', 'CPQ02', 'CPQ20', 'SIN20', 'HKG20', 'SG2', 'MEL23',
         /// 'SEL21', 'OSA20', 'SHA03', 'BJB', 'JNB22', 'JNB21', 'MNZ21', 'SN8',
-        /// 'AUH20', 'ZRH20', 'PUS20', 'AdHoc', 'CH1', 'DSM05'</param>
-        public JobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTeraBytes = default(int?), IList<CustomerResolutionCode?> actions = default(IList<CustomerResolutionCode?>), LastMitigationActionOnJob lastMitigationActionOnJob = default(LastMitigationActionOnJob), DatacenterAddressResponse datacenterAddress = default(DatacenterAddressResponse), string dataCenterCode = default(string))
+        /// 'AUH20', 'ZRH20', 'PUS20', 'AdHoc', 'CH1', 'DSM05', 'DUB07',
+        /// 'PNQ01', 'SVG20', 'OSA02', 'OSA22', 'PAR22', 'BN7', 'SN6',
+        /// 'BJS20'</param>
+        public JobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), DeviceErasureDetails deviceErasureDetails = default(DeviceErasureDetails), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTeraBytes = default(int?), IList<CustomerResolutionCode?> actions = default(IList<CustomerResolutionCode?>), LastMitigationActionOnJob lastMitigationActionOnJob = default(LastMitigationActionOnJob), DatacenterAddressResponse datacenterAddress = default(DatacenterAddressResponse), string dataCenterCode = default(string))
         {
             JobStages = jobStages;
             ContactDetails = contactDetails;
@@ -82,6 +86,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
             CopyLogDetails = copyLogDetails;
             ReverseShipmentLabelSasKey = reverseShipmentLabelSasKey;
             ChainOfCustodySasKey = chainOfCustodySasKey;
+            DeviceErasureDetails = deviceErasureDetails;
             KeyEncryptionKey = keyEncryptionKey;
             ExpectedDataSizeInTeraBytes = expectedDataSizeInTeraBytes;
             Actions = actions;
@@ -163,6 +168,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public string ChainOfCustodySasKey { get; private set; }
 
         /// <summary>
+        /// Gets holds device data erasure details
+        /// </summary>
+        [JsonProperty(PropertyName = "deviceErasureDetails")]
+        public DeviceErasureDetails DeviceErasureDetails { get; private set; }
+
+        /// <summary>
         /// Gets or sets details about which key encryption type is being used.
         /// </summary>
         [JsonProperty(PropertyName = "keyEncryptionKey")]
@@ -202,7 +213,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// 'TYO22', 'YTO21', 'YQB20', 'FRA22', 'MAA01', 'CPQ02', 'CPQ20',
         /// 'SIN20', 'HKG20', 'SG2', 'MEL23', 'SEL21', 'OSA20', 'SHA03', 'BJB',
         /// 'JNB22', 'JNB21', 'MNZ21', 'SN8', 'AUH20', 'ZRH20', 'PUS20',
-        /// 'AdHoc', 'CH1', 'DSM05'
+        /// 'AdHoc', 'CH1', 'DSM05', 'DUB07', 'PNQ01', 'SVG20', 'OSA02',
+        /// 'OSA22', 'PAR22', 'BN7', 'SN6', 'BJS20'
         /// </summary>
         [JsonProperty(PropertyName = "dataCenterCode")]
         public string DataCenterCode { get; private set; }

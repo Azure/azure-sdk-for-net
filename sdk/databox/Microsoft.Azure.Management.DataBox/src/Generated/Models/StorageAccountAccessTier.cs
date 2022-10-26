@@ -16,40 +16,40 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ValidationCategory.
+    /// Defines values for StorageAccountAccessTier.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ValidationCategory
+    public enum StorageAccountAccessTier
     {
         /// <summary>
-        /// Identify request of pre-job creation validations.
+        /// Archive Access Tier shares requested by the customer.
         /// </summary>
-        [EnumMember(Value = "JobCreationValidation")]
-        JobCreationValidation
+        [EnumMember(Value = "Archive")]
+        Archive
     }
-    internal static class ValidationCategoryEnumExtension
+    internal static class StorageAccountAccessTierEnumExtension
     {
-        internal static string ToSerializedValue(this ValidationCategory? value)
+        internal static string ToSerializedValue(this StorageAccountAccessTier? value)
         {
-            return value == null ? null : ((ValidationCategory)value).ToSerializedValue();
+            return value == null ? null : ((StorageAccountAccessTier)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this ValidationCategory value)
+        internal static string ToSerializedValue(this StorageAccountAccessTier value)
         {
             switch( value )
             {
-                case ValidationCategory.JobCreationValidation:
-                    return "JobCreationValidation";
+                case StorageAccountAccessTier.Archive:
+                    return "Archive";
             }
             return null;
         }
 
-        internal static ValidationCategory? ParseValidationCategory(this string value)
+        internal static StorageAccountAccessTier? ParseStorageAccountAccessTier(this string value)
         {
             switch( value )
             {
-                case "JobCreationValidation":
-                    return ValidationCategory.JobCreationValidation;
+                case "Archive":
+                    return StorageAccountAccessTier.Archive;
             }
             return null;
         }

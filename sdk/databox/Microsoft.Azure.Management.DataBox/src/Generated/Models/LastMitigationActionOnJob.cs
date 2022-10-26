@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// or by ops</param>
         /// <param name="customerResolution">Resolution code provided by
         /// customer. Possible values include: 'None', 'MoveToCleanUpDevice',
-        /// 'Resume'</param>
+        /// 'Resume', 'Restart', 'ReachOutToOperation'</param>
         public LastMitigationActionOnJob(System.DateTime? actionDateTimeInUtc = default(System.DateTime?), bool? isPerformedByCustomer = default(bool?), CustomerResolutionCode? customerResolution = default(CustomerResolutionCode?))
         {
             ActionDateTimeInUtc = actionDateTimeInUtc;
@@ -66,7 +66,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets or sets resolution code provided by customer. Possible values
-        /// include: 'None', 'MoveToCleanUpDevice', 'Resume'
+        /// include: 'None', 'MoveToCleanUpDevice', 'Resume', 'Restart',
+        /// 'ReachOutToOperation'
         /// </summary>
         [JsonProperty(PropertyName = "customerResolution")]
         public CustomerResolutionCode? CustomerResolution { get; set; }

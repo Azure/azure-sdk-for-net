@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// <summary>
     /// Minimum request requirement of any validation category.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ValidationRequest")]
     public partial class ValidationRequest
     {
         /// <summary>

@@ -13,14 +13,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Minimum fields that must be present in any type of validation request.
+    /// Granular Details for log generated during copy.
     /// </summary>
-    public partial class ValidationInputRequest
+    public partial class GranularCopyLogDetails
     {
         /// <summary>
-        /// Initializes a new instance of the ValidationInputRequest class.
+        /// Initializes a new instance of the GranularCopyLogDetails class.
         /// </summary>
-        public ValidationInputRequest()
+        public GranularCopyLogDetails()
         {
             CustomInit();
         }

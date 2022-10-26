@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         public const string DriveCorrupted = "DriveCorrupted";
         /// <summary>
-        /// Copy failed due to modified  or removed metadata files.
+        /// Copy failed due to modified or removed metadata files.
         /// </summary>
         public const string MetadataFilesModifiedOrRemoved = "MetadataFilesModifiedOrRemoved";
     }

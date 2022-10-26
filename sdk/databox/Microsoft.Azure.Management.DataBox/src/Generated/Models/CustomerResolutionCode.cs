@@ -35,7 +35,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Resume the job to same stage
         /// </summary>
         [EnumMember(Value = "Resume")]
-        Resume
+        Resume,
+        /// <summary>
+        /// Restart whole action.
+        /// </summary>
+        [EnumMember(Value = "Restart")]
+        Restart,
+        /// <summary>
+        /// Reach out to operation for further action.
+        /// </summary>
+        [EnumMember(Value = "ReachOutToOperation")]
+        ReachOutToOperation
     }
     internal static class CustomerResolutionCodeEnumExtension
     {
@@ -54,6 +64,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "MoveToCleanUpDevice";
                 case CustomerResolutionCode.Resume:
                     return "Resume";
+                case CustomerResolutionCode.Restart:
+                    return "Restart";
+                case CustomerResolutionCode.ReachOutToOperation:
+                    return "ReachOutToOperation";
             }
             return null;
         }
@@ -68,6 +82,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return CustomerResolutionCode.MoveToCleanUpDevice;
                 case "Resume":
                     return CustomerResolutionCode.Resume;
+                case "Restart":
+                    return CustomerResolutionCode.Restart;
+                case "ReachOutToOperation":
+                    return CustomerResolutionCode.ReachOutToOperation;
             }
             return null;
         }

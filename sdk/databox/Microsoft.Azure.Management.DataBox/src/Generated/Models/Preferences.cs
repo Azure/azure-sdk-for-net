@@ -37,11 +37,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// shipment logistics of the sku.</param>
         /// <param name="encryptionPreferences">Preferences related to the
         /// Encryption.</param>
-        public Preferences(IList<string> preferredDataCenterRegion = default(IList<string>), TransportPreferences transportPreferences = default(TransportPreferences), EncryptionPreferences encryptionPreferences = default(EncryptionPreferences))
+        /// <param name="storageAccountAccessTierPreferences">Preferences
+        /// related to the Access Tier of storage accounts.</param>
+        public Preferences(IList<string> preferredDataCenterRegion = default(IList<string>), TransportPreferences transportPreferences = default(TransportPreferences), EncryptionPreferences encryptionPreferences = default(EncryptionPreferences), IList<StorageAccountAccessTier?> storageAccountAccessTierPreferences = default(IList<StorageAccountAccessTier?>))
         {
             PreferredDataCenterRegion = preferredDataCenterRegion;
             TransportPreferences = transportPreferences;
             EncryptionPreferences = encryptionPreferences;
+            StorageAccountAccessTierPreferences = storageAccountAccessTierPreferences;
             CustomInit();
         }
 
@@ -68,6 +71,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "encryptionPreferences")]
         public EncryptionPreferences EncryptionPreferences { get; set; }
+
+        /// <summary>
+        /// Gets or sets preferences related to the Access Tier of storage
+        /// accounts.
+        /// </summary>
+        [JsonProperty(PropertyName = "storageAccountAccessTierPreferences")]
+        public IList<StorageAccountAccessTier?> StorageAccountAccessTierPreferences { get; set; }
 
         /// <summary>
         /// Validate the object.

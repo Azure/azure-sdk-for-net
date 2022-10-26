@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataBox
             /// </param>
             /// <param name='customerResolutionCode'>
             /// Resolution code for the job. Possible values include: 'None',
-            /// 'MoveToCleanUpDevice', 'Resume'
+            /// 'MoveToCleanUpDevice', 'Resume', 'Restart', 'ReachOutToOperation'
             /// </param>
             public static void Mitigate(this IDataBoxManagementClient operations, string jobName, string resourceGroupName, CustomerResolutionCode customerResolutionCode)
             {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.DataBox
             /// </param>
             /// <param name='customerResolutionCode'>
             /// Resolution code for the job. Possible values include: 'None',
-            /// 'MoveToCleanUpDevice', 'Resume'
+            /// 'MoveToCleanUpDevice', 'Resume', 'Restart', 'ReachOutToOperation'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
