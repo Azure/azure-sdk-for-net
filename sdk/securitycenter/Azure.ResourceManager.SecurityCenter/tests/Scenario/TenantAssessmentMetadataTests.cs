@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         public TenantAssessmentMetadataTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
+            JsonPathSanitizers.Add("$..description");
+            JsonPathSanitizers.Add("$..remediationDescription");
         }
 
         [SetUp]
