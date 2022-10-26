@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Request body for detaching data disk from a virtual machine. </summary>
@@ -16,6 +18,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Specifies the disk resource ID to detach from virtual machine. </summary>
-        public string ExistingLabDiskId { get; set; }
+        public ResourceIdentifier ExistingLabDiskId { get; set; }
     }
 }

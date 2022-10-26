@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Initializes a new instance of DevTestLabCustomImageVhd. </summary>
         /// <param name="imageName"> The image name. </param>
-        /// <param name="sysPrep"> Indicates whether sysprep has been run on the VHD. </param>
+        /// <param name="isSysPrepEnabled"> Indicates whether sysprep has been run on the VHD. </param>
         /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
-        internal DevTestLabCustomImageVhd(string imageName, bool? sysPrep, DevTestLabCustomImageOSType osType)
+        internal DevTestLabCustomImageVhd(string imageName, bool? isSysPrepEnabled, DevTestLabCustomImageOSType osType)
         {
             ImageName = imageName;
-            SysPrep = sysPrep;
+            IsSysPrepEnabled = isSysPrepEnabled;
             OSType = osType;
         }
 
         /// <summary> The image name. </summary>
         public string ImageName { get; set; }
         /// <summary> Indicates whether sysprep has been run on the VHD. </summary>
-        public bool? SysPrep { get; set; }
+        public bool? IsSysPrepEnabled { get; set; }
         /// <summary> The OS type of the custom image (i.e. Windows, Linux). </summary>
         public DevTestLabCustomImageOSType OSType { get; set; }
     }

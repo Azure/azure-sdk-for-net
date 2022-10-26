@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of BackupVaultResourceList. </summary>
         internal BackupVaultResourceList()
         {
-            Value = new ChangeTrackingList<BackupVaultResourceData>();
+            Value = new ChangeTrackingList<DataProtectionBackupVaultData>();
         }
 
         /// <summary> Initializes a new instance of BackupVaultResourceList. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal BackupVaultResourceList(IReadOnlyList<BackupVaultResourceData> value, string nextLink)
+        internal BackupVaultResourceList(IReadOnlyList<DataProtectionBackupVaultData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<BackupVaultResourceData> Value { get; }
+        public IReadOnlyList<DataProtectionBackupVaultData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </summary>
         public string NextLink { get; }
     }

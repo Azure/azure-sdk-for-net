@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of AzureBackupJobResourceList. </summary>
         internal AzureBackupJobResourceList()
         {
-            Value = new ChangeTrackingList<AzureBackupJobResourceData>();
+            Value = new ChangeTrackingList<DataProtectionBackupJobData>();
         }
 
         /// <summary> Initializes a new instance of AzureBackupJobResourceList. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal AzureBackupJobResourceList(IReadOnlyList<AzureBackupJobResourceData> value, string nextLink)
+        internal AzureBackupJobResourceList(IReadOnlyList<DataProtectionBackupJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<AzureBackupJobResourceData> Value { get; }
+        public IReadOnlyList<DataProtectionBackupJobData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </summary>
         public string NextLink { get; }
     }

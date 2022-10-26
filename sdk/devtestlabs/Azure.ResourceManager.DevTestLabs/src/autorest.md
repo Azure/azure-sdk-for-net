@@ -25,6 +25,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'UniqueIdentifier': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -49,6 +50,7 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   VirtualMachine: Vm
+  SSD: Ssd
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}: DevTestLabSchedule
@@ -58,7 +60,6 @@ request-path-to-resource-name:
 
 operation-name-override:
   PolicySets_EvaluatePolicies: EvaluatePolicies
-#   Labs_ImportVirtualMachine: ImportVm
 
 rename-mapping:
   ArmTemplate: DevTestLabArmTemplate
@@ -72,7 +73,6 @@ rename-mapping:
   LabCost: DevTestLabCost
   Schedule: DevTestLabSchedule
   LabVirtualMachine: DevTestLabVm
-  LabVirtualMachine.properties.disallowPublicIpAddress: IsPublicIpAddressDisallowed
   LabVirtualMachine.properties.computeId: -|arm-id
   LabVirtualMachine.properties.labVirtualNetworkId: -|arm-id
   LabVirtualMachine.properties.environmentId: -|arm-id
@@ -180,6 +180,13 @@ rename-mapping:
   VirtualMachineCreationSource: DevTestLabVmCreationSource
   WeekDetails: DevTestLabWeekDetails
   WindowsOSState: DevTestLabWindowsOSState
+  ArmTemplate.properties.enabled: IsEnabled
+  LabAnnouncementProperties.expired: IsExpired
+  CustomImagePropertiesCustom.sysPrep: IsSysPrepEnabled
+  Disk.properties.managedDiskId: -|arm-id
+  Disk.properties.leasedByLabVmId: -|arm-id
+  LabVirtualMachineCreationParameter.properties.labVirtualNetworkId: -|arm-id
+  DetachDataDiskProperties.existingLabDiskId: -|arm-id
 
 directive:
   - remove-operation: ProviderOperations_List

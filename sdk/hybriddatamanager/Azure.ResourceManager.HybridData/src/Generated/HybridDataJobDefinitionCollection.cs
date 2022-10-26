@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.HybridData
 {
     /// <summary>
     /// A class representing a collection of <see cref="HybridDataJobDefinitionResource" /> and their operations.
-    /// Each <see cref="HybridDataJobDefinitionResource" /> in the collection will belong to the same instance of <see cref="DataServiceResource" />.
-    /// To get a <see cref="HybridDataJobDefinitionCollection" /> instance call the GetHybridDataJobDefinitions method from an instance of <see cref="DataServiceResource" />.
+    /// Each <see cref="HybridDataJobDefinitionResource" /> in the collection will belong to the same instance of <see cref="HybridDataServiceResource" />.
+    /// To get a <see cref="HybridDataJobDefinitionCollection" /> instance call the GetHybridDataJobDefinitions method from an instance of <see cref="HybridDataServiceResource" />.
     /// </summary>
     public partial class HybridDataJobDefinitionCollection : ArmCollection, IEnumerable<HybridDataJobDefinitionResource>, IAsyncEnumerable<HybridDataJobDefinitionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.HybridData
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DataServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataServiceResource.ResourceType), nameof(id));
+            if (id.ResourceType != HybridDataServiceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HybridDataServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

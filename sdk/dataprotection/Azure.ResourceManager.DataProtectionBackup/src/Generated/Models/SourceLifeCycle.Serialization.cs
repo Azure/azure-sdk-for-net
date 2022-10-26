@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static SourceLifeCycle DeserializeSourceLifeCycle(JsonElement element)
         {
-            DeleteOption deleteAfter = default;
+            DataProtectionBackupDeleteSetting deleteAfter = default;
             DataStoreInfoBase sourceDataStore = default;
             Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deleteAfter"))
                 {
-                    deleteAfter = DeleteOption.DeserializeDeleteOption(property.Value);
+                    deleteAfter = DataProtectionBackupDeleteSetting.DeserializeDataProtectionBackupDeleteSetting(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceDataStore"))
