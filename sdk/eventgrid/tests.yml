@@ -3,9 +3,8 @@ trigger: none
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
-    MaxParallel: 4
     ServiceDirectory: eventgrid
-    SDKType: alldata
+    SDKType: client
     TimeoutInMinutes: 240
     Clouds: 'Public,Canary'
     SupportedClouds: 'Public,UsGov,China,Canary'

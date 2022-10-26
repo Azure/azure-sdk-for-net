@@ -33,7 +33,7 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SdkType: alldata
+    SdkType: client
     ServiceDirectory: eventgrid
     ArtifactName: packages
     Artifacts:
