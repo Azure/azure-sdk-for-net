@@ -357,6 +357,86 @@ function New-MgmtPackageFolder() {
     return $projectFolder
 }
 
+function New-CADLPackageFolder() {
+    param(
+        [string]$service,
+        [string]$namespace,
+        [string]$sdkPath = "",
+        [string]$cadlInput ="",
+        [string]$outputJsonFile = "output.json"
+    )
+    $serviceFolder = (Join-Path $sdkPath "sdk" $service)
+    $projectFolder=(Join-Path $sdkPath "sdk" $service $namespace)
+    $ciymlFilePath =(Join-Path $sdkPath "sdk" $service $CI_YAML_FILE)
+    $apifolder = (Join-Path $projectFolder "api")
+    Write-Host "projectFolder:$projectFolder, apifolder:$apifolder"
+    if ((Test-Path -Path $projectFolder) -And (Test-Path -Path $apifolder)) {
+        Write-Host "Path exists!"
+        Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
+    } else {
+        Write-Host "Path doesn't exist. create template."
+        dotnet new -i $sdkPath/sdk/template
+        Write-Host "Create project folder $projectFolder"
+        if (Test-Path -Path $projectFolder) {
+            Remove-Item -Path $projectFolder -ItemType Directory
+        }
+
+        Push-Location $serviceFolder
+        $namespaceArray = $namespace.Split(".")
+        if ( $namespaceArray.Count -lt 3) {
+            Throw "Error: invalid namespace name."
+        }
+
+        $endIndex = $namespaceArray.Count - 2
+        $clientName = $namespaceArray[-1]
+        $groupName = $namespaceArray[1..$endIndex] -join "."
+        $dotnetNewCmd = "dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --force"
+        
+        if (Test-Path -Path $ciymlFilePath) {
+            Write-Host "ci.yml already exists. update it to include the new serviceDirectory."
+            Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
+
+            $dotnetNewCmd = $dotnetNewCmd + " --includeCI false"
+        }
+        # dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
+        Write-Host "Invoke dotnet new command: $dotnetNewCmd"
+        Invoke-Expression $dotnetNewCmd
+
+        $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
+        $fileContent = Get-Content -Path $projFile
+        $fileContent -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>"
+        $startNum = ($fileContent | Select-String -Pattern '</PropertyGroup>').LineNumber[0]
+        $fileContent[$startNum - 2] += ([Environment]::NewLine + "<AutoRestInput>$cadlInput</AutoRestInput>")
+        $fileContent | Out-File $projFile
+        # (Get-Content $projFile) -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>" | -replace "<AutoRestInput>*</AutoRestInput>", "<AutoRestInput>$cadlInput</AutoRestInput>" |Set-Content $projFile
+        Pop-Location
+        # dotnet sln
+        Push-Location $projectFolder
+        if (Test-Path -Path $projectFolder/src/autorest.md) {
+            Remove-Item -Path $projectFolder/src/autorest.md
+        }
+        dotnet sln remove src/$namespace.csproj
+        dotnet sln add src/$namespace.csproj
+        dotnet sln remove tests/$namespace.Tests.csproj
+        dotnet sln add tests/$namespace.Tests.csproj
+        Pop-Location
+  }
+
+  Push-Location $sdkPath
+  $relativeFolderPath = Resolve-Path $projectFolder -Relative
+  Pop-Location
+
+  $outputJson = [PSCustomObject]@{
+    service = $service
+    packageName = $namespace
+    projectFolder = $projectFolder
+    path = @($relativeFolderPath)
+  }
+
+  $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
+  return $projectFolder
+}
+
 function Get-ResourceProviderFromReadme($readmeFile) {
     $readmeFile = $readmeFile -replace "\\", "/"
     $pathArray = $readmeFile.Split("/");
@@ -523,6 +603,7 @@ function GeneratePackage()
         [string]$sdkRootPath,
         [string]$path,
         [string]$downloadUrlPrefix="",
+        [switch]$skipGenerate,
         [object]$generatedSDKPackages
     )
 
@@ -540,7 +621,9 @@ function GeneratePackage()
     # Generate Code
     Write-Host "Start to generate sdk $projectFolder"
     $srcPath = Join-Path $projectFolder 'src'
-    dotnet build /t:GenerateCode $srcPath
+    if (!$skipGenerate) {
+        dotnet build /t:GenerateCode $srcPath
+    }
     if ( !$?) {
         Write-Error "Failed to generate sdk. exit code: $?"
         $result = "failed"
