@@ -246,9 +246,9 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.3.0-alpha-net7.4" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc9.3" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.3" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.3" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc9.8" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.8" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.8" />
     <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.4.0-beta.2" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
