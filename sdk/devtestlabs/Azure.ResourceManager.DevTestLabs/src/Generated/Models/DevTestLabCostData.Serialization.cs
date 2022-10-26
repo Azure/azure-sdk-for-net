@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<DateTimeOffset> endDateTime = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -229,14 +229,19 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("uniqueIdentifier"))
                         {
-                            uniqueIdentifier = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uniqueIdentifier = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevTestLabCostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, targetCost.Value, labCostSummary.Value, Optional.ToList(labCostDetails), Optional.ToList(resourceCosts), currencyCode.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(createdDate), provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabCostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, targetCost.Value, labCostSummary.Value, Optional.ToList(labCostDetails), Optional.ToList(resourceCosts), currencyCode.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

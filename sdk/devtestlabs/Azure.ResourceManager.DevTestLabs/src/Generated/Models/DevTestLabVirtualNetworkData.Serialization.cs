@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<IList<DevTestLabSubnetOverride>> subnetOverrides = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -212,14 +212,19 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("uniqueIdentifier"))
                         {
-                            uniqueIdentifier = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uniqueIdentifier = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevTestLabVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(allowedSubnets), description.Value, externalProviderResourceId.Value, Optional.ToList(externalSubnets), Optional.ToList(subnetOverrides), Optional.ToNullable(createdDate), provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(allowedSubnets), description.Value, externalProviderResourceId.Value, Optional.ToList(externalSubnets), Optional.ToList(subnetOverrides), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

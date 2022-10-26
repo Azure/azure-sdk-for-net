@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="createdByUser"> The creator of the environment. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnvironmentDeployment deploymentProperties, string armTemplateDisplayName, string resourceGroupId, string createdByUser, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnvironmentDeployment deploymentProperties, string armTemplateDisplayName, string resourceGroupId, string createdByUser, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             DeploymentProperties = deploymentProperties;
             ArmTemplateDisplayName = armTemplateDisplayName;
@@ -55,6 +56,6 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public string UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier { get; }
     }
 }
