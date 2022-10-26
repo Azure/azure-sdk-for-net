@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         /// <param name="accountName">The Azure Storage account name.</param>
         /// <param name="azureFileUrl">The Azure Files URL.</param>
-        /// <param name="accountKey">The Azure Storage account key.</param>
         /// <param name="relativeMountPath">The relative path on the compute
         /// node where the file system will be mounted</param>
+        /// <param name="accountKey">The Azure Storage account key.</param>
         /// <param name="mountOptions">Additional command line options to pass
         /// to the mount command.</param>
-        public AzureFileShareConfiguration(string accountName, string azureFileUrl, string accountKey, string relativeMountPath, string mountOptions = default(string))
+        public AzureFileShareConfiguration(string accountName, string azureFileUrl, string relativeMountPath, string accountKey = default(string), string mountOptions = default(string))
         {
             AccountName = accountName;
             AzureFileUrl = azureFileUrl;
@@ -113,10 +113,6 @@ namespace Microsoft.Azure.Management.Batch.Models
             if (AzureFileUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AzureFileUrl");
-            }
-            if (AccountKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccountKey");
             }
             if (RelativeMountPath == null)
             {

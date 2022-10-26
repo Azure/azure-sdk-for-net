@@ -53,6 +53,12 @@ namespace Microsoft.Azure.Management.Batch
         /// <summary>
         /// Lists all of the certificates in the specified account.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
         /// </param>
@@ -93,6 +99,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<IPage<Certificate>>> ListByBatchAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, int? maxresults = default(int?), string select = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
@@ -292,6 +299,12 @@ namespace Microsoft.Azure.Management.Batch
         /// <summary>
         /// Creates a new certificate inside the specified account.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
         /// </param>
@@ -336,6 +349,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<Certificate,CertificateCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string certificateName, CertificateCreateOrUpdateParameters parameters, string ifMatch = default(string), string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
@@ -587,6 +601,12 @@ namespace Microsoft.Azure.Management.Batch
         /// <summary>
         /// Updates the properties of an existing certificate.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
         /// </param>
@@ -626,6 +646,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<Certificate,CertificateUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string certificateName, CertificateCreateOrUpdateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
@@ -864,6 +885,12 @@ namespace Microsoft.Azure.Management.Batch
         /// <summary>
         /// Deletes the specified certificate.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
         /// </param>
@@ -881,6 +908,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationHeaderResponse<CertificateDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
@@ -891,6 +919,12 @@ namespace Microsoft.Azure.Management.Batch
         /// <summary>
         /// Gets information about the specified certificate.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
         /// </param>
@@ -923,6 +957,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<Certificate,CertificateGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
@@ -1149,6 +1184,11 @@ namespace Microsoft.Azure.Management.Batch
         /// delete the certificate, you do not need to run this operation after the
         /// deletion failed. You must make sure that the certificate is not being used
         /// by any resources, and then you can try again to delete the certificate.
+        ///
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -1182,6 +1222,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<Certificate,CertificateCancelDeletionHeaders>> CancelDeletionWithHttpMessagesAsync(string resourceGroupName, string accountName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
@@ -1400,6 +1441,12 @@ namespace Microsoft.Azure.Management.Batch
         /// <summary>
         /// Deletes the specified certificate.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
         /// </param>
@@ -1429,6 +1476,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationHeaderResponse<CertificateDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
@@ -1629,6 +1677,12 @@ namespace Microsoft.Azure.Management.Batch
         /// <summary>
         /// Lists all of the certificates in the specified account.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -1653,6 +1707,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<IPage<Certificate>>> ListByBatchAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
