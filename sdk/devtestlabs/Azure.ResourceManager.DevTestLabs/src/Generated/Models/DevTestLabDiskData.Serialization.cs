@@ -88,15 +88,15 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<SystemData> systemData = default;
             Optional<DevTestLabStorageType> diskType = default;
             Optional<int> diskSizeGiB = default;
-            Optional<string> leasedByLabVmId = default;
+            Optional<ResourceIdentifier> leasedByLabVmId = default;
             Optional<string> diskBlobName = default;
             Optional<Uri> diskUri = default;
             Optional<string> storageAccountId = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> hostCaching = default;
-            Optional<string> managedDiskId = default;
+            Optional<ResourceIdentifier> managedDiskId = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -175,7 +175,12 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("leasedByLabVmId"))
                         {
-                            leasedByLabVmId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            leasedByLabVmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("diskBlobName"))
@@ -215,7 +220,12 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("managedDiskId"))
                         {
-                            managedDiskId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            managedDiskId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -225,14 +235,19 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("uniqueIdentifier"))
                         {
-                            uniqueIdentifier = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uniqueIdentifier = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevTestLabDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(diskType), Optional.ToNullable(diskSizeGiB), leasedByLabVmId.Value, diskBlobName.Value, diskUri.Value, storageAccountId.Value, Optional.ToNullable(createdDate), hostCaching.Value, managedDiskId.Value, provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(diskType), Optional.ToNullable(diskSizeGiB), leasedByLabVmId.Value, diskBlobName.Value, diskUri.Value, storageAccountId.Value, Optional.ToNullable(createdDate), hostCaching.Value, managedDiskId.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

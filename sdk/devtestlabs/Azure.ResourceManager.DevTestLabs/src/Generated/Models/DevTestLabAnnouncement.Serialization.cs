@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("expirationDate");
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Expired))
+            if (Optional.IsDefined(IsExpired))
             {
                 writer.WritePropertyName("expired");
-                writer.WriteBooleanValue(Expired.Value);
+                writer.WriteBooleanValue(IsExpired.Value);
             }
             writer.WriteEndObject();
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DateTimeOffset> expirationDate = default;
             Optional<bool> expired = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"))
@@ -102,11 +102,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (property.NameEquals("uniqueIdentifier"))
                 {
-                    uniqueIdentifier = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    uniqueIdentifier = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new DevTestLabAnnouncement(title.Value, markdown.Value, Optional.ToNullable(enabled), Optional.ToNullable(expirationDate), Optional.ToNullable(expired), provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabAnnouncement(title.Value, markdown.Value, Optional.ToNullable(enabled), Optional.ToNullable(expirationDate), Optional.ToNullable(expired), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }
