@@ -15,7 +15,13 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio Code.
+    /// Enables authentication to Azure Active Directory as the user signed in to Visual Studio Code via
+    /// the 'Azure Account' extension.
+    ///
+    /// It's a <see href="https://github.com/Azure/azure-sdk-for-net/issues/27263">known issue</see> that `VisualStudioCodeCredential`
+    /// doesn't work with <see href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account">Azure Account extension</see>
+    /// versions newer than <b>0.9.11</b>. A long-term fix to this problem is in progress. In the meantime, consider authenticating
+    /// with <see cref="AzureCliCredential"/>.
     /// </summary>
     public class VisualStudioCodeCredential : TokenCredential
     {

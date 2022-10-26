@@ -232,6 +232,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 |Variable name|Value
 |-|-
 |`AZURE_CLIENT_ID`|ID of an Azure AD application
+|`AZURE_TENANT_ID`|ID of the application's Azure AD tenant
 |`AZURE_USERNAME`|a username (usually an email address)
 |`AZURE_PASSWORD`|that user's password
 

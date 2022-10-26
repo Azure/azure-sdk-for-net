@@ -13,18 +13,39 @@ using System.Collections.Generic;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using client secret, or username and password,
-    /// details configured in the following environment variables:
+    /// Enables authentication to Azure Active Directory using a client secret or certificate, or as a user
+    /// with a username and password.
+    /// <para>
+    /// Configuration is attempted in this order, using these environment variables:
+    /// </para>
+    ///
+    /// <b>Service principal with secret:</b>
     /// <list type="table">
     /// <listheader><term>Variable</term><description>Description</description></listheader>
     /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant(directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
+    /// </list>
+    ///
+    /// <b>Service principal with certificate:</b>
+    /// <list type="table">
+    /// <listheader><term>Variable</term><description>Description</description></listheader>
+    /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant(directory) ID.</description></item>
+    /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>A path to certificate and private key pair in PEM or PFX format, which can authenticate the App Registration.</description></item>
-    /// <item><term>AZURE_CLIENT_SEND_CERTIFICATE_CHAIN</term><description>Specifies whether an authentication request will include an x5c header to support subject name / issuer based authentication. When set to `true` or `1`, authentication requests include the x5c header.</description></item>
+    /// <item><term>AZURE_CLIENT_CERTIFICATE_PASSWORD</term><description>(Optional) The password protecting the certificate file (currently only supported for PFX (PKCS12) certificates).</description></item>
+    /// <item><term>AZURE_CLIENT_SEND_CERTIFICATE_CHAIN</term><description>(Optional) Specifies whether an authentication request will include an x5c header to support subject name / issuer based authentication. When set to `true` or `1`, authentication requests include the x5c header.</description></item>
+    /// </list>
+    ///
+    /// <b>Username and password:</b>
+    /// <list type="table">
+    /// <listheader><term>Variable</term><description>Description</description></listheader>
+    /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant(directory) ID.</description></item>
+    /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
+    ///
     /// This credential ultimately uses a <see cref="ClientSecretCredential"/>, <see cref="ClientCertificateCredential"/>, or <see cref="UsernamePasswordCredential"/> to
     /// perform the authentication using these details. Please consult the
     /// documentation of that class for more details.
