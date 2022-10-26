@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the UserAccount class.
         /// </summary>
-        /// <param name="name">The name of the user Account.</param>
+        /// <param name="name">The name of the user Account. Names can contain
+        /// any Unicode characters up to a maximum length of 20.</param>
         /// <param name="password">The password for the user Account.</param>
         /// <param name="elevationLevel">The elevation level of the user
         /// Account.</param>
@@ -54,7 +55,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the user Account.
+        /// Gets or sets the name of the user Account. Names can contain any
+        /// Unicode characters up to a maximum length of 20.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

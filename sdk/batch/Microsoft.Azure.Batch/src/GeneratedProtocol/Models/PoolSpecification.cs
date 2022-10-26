@@ -76,7 +76,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the Pool as metadata.</param>
         /// <param name="mountConfiguration">A list of file systems to mount on
         /// each node in the pool.</param>
-        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
+        /// <param name="targetNodeCommunicationMode">The desired node
+        /// communication mode for the pool.</param>
+        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?))
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -99,6 +101,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             UserAccounts = userAccounts;
             Metadata = metadata;
             MountConfiguration = mountConfiguration;
+            TargetNodeCommunicationMode = targetNodeCommunicationMode;
             CustomInit();
         }
 
@@ -302,6 +305,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// 'certs' directory is created in the user's home directory (e.g.,
         /// /home/{user-name}/certs) and Certificates are placed in that
         /// directory.
+        ///
+        /// Warning: This property is deprecated and will be removed after
+        /// February, 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
         /// </remarks>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
@@ -311,6 +319,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Node in the Pool.
         /// </summary>
         /// <remarks>
+        /// When creating a pool, the package's application ID must be fully
+        /// qualified
+        /// (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}).
         /// Changes to Package references affect all new Nodes joining the
         /// Pool, but do not affect Compute Nodes that are already in the Pool
         /// until they are rebooted or reimaged. There is a maximum of 10
@@ -361,6 +372,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "mountConfiguration")]
         public IList<MountConfiguration> MountConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired node communication mode for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the default value is Default. Possible values include:
+        /// 'default', 'classic', 'simplified'
+        /// </remarks>
+        [JsonProperty(PropertyName = "targetNodeCommunicationMode")]
+        public NodeCommunicationMode? TargetNodeCommunicationMode { get; set; }
 
     }
 }
