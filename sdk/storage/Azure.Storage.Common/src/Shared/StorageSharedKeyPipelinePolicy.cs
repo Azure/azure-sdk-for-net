@@ -111,10 +111,21 @@ namespace Azure.Storage
 #pragma warning restore CA1308 // Normalize strings to uppercase
                 .OrderBy(static h => h.Item1.Trim()))
             {
-                stringBuilder.Append(header.Item1);
-                stringBuilder.Append(':');
-                stringBuilder.Append(header.Value);
-                stringBuilder.Append('\n');
+                if (header.Name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    headers.Add(new HttpHeader(header.Name.ToLowerInvariant(), header.Value));
+                }
+            }
+
+            headers.Sort(static (x, y) => string.CompareOrdinal(x.Name, y.Name));
+
+            foreach (var header in headers)
+            {
+                stringBuilder
+                    .Append(header.Name)
+                    .Append(':')
+                    .Append(header.Value)
+                    .Append('\n');
             }
         }
 
