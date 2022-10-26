@@ -103,13 +103,8 @@ namespace Azure.Storage
         {
             // Grab all the "x-ms-*" headers, trim whitespace, lowercase, sort,
             // and combine them with their values (separated by a colon).
-            foreach (var header in
-                message.Request.Headers
-                .Where(static h => h.Name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
-#pragma warning disable CA1308 // Normalize strings to uppercase
-                .Select(static h => (h.Name.ToLowerInvariant(), h.Value))
-#pragma warning restore CA1308 // Normalize strings to uppercase
-                .OrderBy(static h => h.Item1.Trim()))
+            var headers = new List<HttpHeader>();
+            foreach (var header in message.Request.Headers)
             {
                 if (header.Name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
                 {
