@@ -186,16 +186,15 @@ namespace Azure.Monitor.Ingestion
             var exceptions = new List<Exception>();
 
             scope.Start();
-            int batchCount = 0; // Keep track of the number of batches as they are uploaded
+            int logsFailed = 0; // Keep track of the number of failed logs across batches
 
             // Partition the stream into individual blocks
             foreach (BatchedLogs<T> batch in Batch(logs, options))
             {
-                batchCount++;
                 try
                 {
                     // Because we are uploading in sequence, wait for each batch to upload before starting the next batch
-                    response = CommitBatchListSyncOrAsync(
+                    response = UploadBatchListSyncOrAsync(
                         batch,
                         ruleId,
                         streamName,
@@ -204,13 +203,16 @@ namespace Azure.Monitor.Ingestion
                 }
                 catch (Exception ex)
                 {
+                    scope.Failed(ex);
+                    logsFailed += batch.LogsList.Count;
                     // If we have an error, add error from response into exceptions list which represents the errors from all the batches
+                    exceptions ??= new List<Exception>();
                     exceptions.Add(ex);
                 }
             }
             if (exceptions.Count > 0)
             {
-                throw new AggregateException($"{exceptions.Count} out of the {batchCount} batches uploaded have failed. Please check the InnerExceptions for more details.", exceptions);
+                throw new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
             }
 
             // If no exceptions return response
@@ -254,22 +256,21 @@ namespace Azure.Monitor.Ingestion
             int _maxWorkerCount = (options == null || options.MaxConcurrency <= 0) ? DefaultParallelWorkerCount : options.MaxConcurrency;
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
-            var exceptions = new List<Exception>();
+            List<Exception> exceptions = null;
             scope.Start();
 
             // A list of tasks that are currently executing which will
             // always be smaller than or equal to MaxWorkerCount
             List<Task<Response>> runningTasks = new();
-            // Partition the stream into individual blocks
-            int batchCount = 0; // Keep track of the number of batches as they are uploaded
+            int logsFailed = 0; // Keep track of the number of failed logs across batches
 
+            // Partition the stream into individual blocks
             foreach (BatchedLogs<T> batch in Batch(logs, options))
             {
-                batchCount++;
                 try
                 {
                     // Start staging the next batch (but don't await the Task!)
-                    Task<Response> task = CommitBatchListSyncOrAsync(
+                    Task<Response> task = UploadBatchListSyncOrAsync(
                         batch,
                         ruleId,
                         streamName,
@@ -293,14 +294,21 @@ namespace Azure.Monitor.Ingestion
                                 continue;
                             }
                             // Remove completed task from task list
-                            runningTasks.RemoveAt(i);
+                            if (runningTask.IsCompleted) // remove - duplicate check
+                            {
+                                // runningTask.Exception if not null add to running list
+                                runningTasks.RemoveAt(i);
+                            }
                             i--;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
+                    scope.Failed(ex);
+                    logsFailed += batch.LogsList.Count;
                     // If we have an error, add error from response into exceptions list which represents the errors from all the batches
+                    exceptions ??= new List<Exception>();
                     exceptions.Add(ex);
                 }
             }
@@ -310,14 +318,14 @@ namespace Azure.Monitor.Ingestion
 
             if (exceptions.Count > 0)
             {
-                throw new AggregateException($"{exceptions.Count} out of the {batchCount} batches uploaded have failed. Please check the InnerExceptions for more details.", exceptions);
+                throw new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
             }
 
             // If no exceptions return response
             return runningTasks.Last().Result; //204 - response of last batch with header
         }
 
-        private async Task<Response> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
+        private async Task<Response> UploadBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
         {
             Response response = null;
 
@@ -332,6 +340,11 @@ namespace Azure.Monitor.Ingestion
                 response = _pipeline.ProcessMessage(message, null, cancellationToken);
             }
 
+            if (response.Status != 204) // if any error is thrown log it
+            {
+                RequestFailedException requestFailedException = new RequestFailedException(response);
+                throw requestFailedException;
+            }
             return response;
         }
 
