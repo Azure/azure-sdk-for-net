@@ -19,6 +19,7 @@ namespace Azure.Communication.CallAutomation
         {
             IncomingCallContext = incomingCallContext;
             Target = target;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
