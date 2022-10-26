@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Redis.Tests
             var parameter = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1)) {
                 MinimumTlsVersion = RedisTlsVersion.Tls1_2,
                 ReplicasPerMaster = 2,
-                RedisVersion = "6",
+                RedisVersion = "latest",
                 RedisConfiguration = new RedisCommonConfiguration()
                 {
                     MaxMemoryPolicy = "allkeys-lru",
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.AreEqual(RedisSkuFamily.Premium, response.Data.Sku.Family);
             Assert.AreEqual(RedisTlsVersion.Tls1_2, response.Data.MinimumTlsVersion);
             Assert.AreEqual(2, response.Data.ReplicasPerMaster);
-            Assert.AreEqual("6", response.Data.RedisVersion.Split('.')[0]);
+            Assert.AreEqual("6", response.Data.RedisVersion.Split('.')[0]);// 6 is the current 'latest' version. Will change in the future.
 
             Assert.AreEqual(3, response.Data.Instances.Count);
             for (int i = 0; i < response.Data.Instances.Count; i++)
