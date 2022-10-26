@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    /// <summary> A class representing the DataStore data model. </summary>
-    public partial class DataStoreData : ResourceData
+    /// <summary> A class representing the HybridDataStore data model. </summary>
+    public partial class HybridDataStoreData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataStoreData. </summary>
+        /// <summary> Initializes a new instance of HybridDataStoreData. </summary>
         /// <param name="state"> State of the data source. </param>
         /// <param name="dataStoreTypeId"> The arm id of the data store type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataStoreTypeId"/> is null. </exception>
-        public DataStoreData(HybridDataState state, ResourceIdentifier dataStoreTypeId)
+        public HybridDataStoreData(HybridDataState state, ResourceIdentifier dataStoreTypeId)
         {
             if (dataStoreTypeId == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridData
             CustomerSecrets = new ChangeTrackingList<HybridDataCustomerSecret>();
         }
 
-        /// <summary> Initializes a new instance of DataStoreData. </summary>
+        /// <summary> Initializes a new instance of HybridDataStoreData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="extendedProperties"> A generic json used differently by each data source type. </param>
         /// <param name="dataStoreTypeId"> The arm id of the data store type. </param>
         /// <param name="customerSecrets"> List of customer secrets containing a key identifier and key value. The key identifier is a way for the specific data source to understand the key. Value contains customer secret encrypted by the encryptionKeys. </param>
-        internal DataStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier repositoryId, HybridDataState state, BinaryData extendedProperties, ResourceIdentifier dataStoreTypeId, IList<HybridDataCustomerSecret> customerSecrets) : base(id, name, resourceType, systemData)
+        internal HybridDataStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier repositoryId, HybridDataState state, BinaryData extendedProperties, ResourceIdentifier dataStoreTypeId, IList<HybridDataCustomerSecret> customerSecrets) : base(id, name, resourceType, systemData)
         {
             RepositoryId = repositoryId;
             State = state;

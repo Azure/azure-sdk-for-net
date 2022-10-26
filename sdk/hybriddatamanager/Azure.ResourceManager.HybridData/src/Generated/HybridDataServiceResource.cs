@@ -18,48 +18,48 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridData
 {
     /// <summary>
-    /// A Class representing a DataService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataManagerResource" /> using the GetDataService method.
+    /// A Class representing a HybridDataService along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridDataServiceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetHybridDataServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridDataManagerResource" /> using the GetHybridDataService method.
     /// </summary>
-    public partial class DataServiceResource : ArmResource
+    public partial class HybridDataServiceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataServiceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="HybridDataServiceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataServiceClientDiagnostics;
-        private readonly DataServicesRestOperations _dataServiceRestClient;
+        private readonly ClientDiagnostics _hybridDataServiceDataServicesClientDiagnostics;
+        private readonly DataServicesRestOperations _hybridDataServiceDataServicesRestClient;
         private readonly ClientDiagnostics _hybridDataJobJobsClientDiagnostics;
         private readonly JobsRestOperations _hybridDataJobJobsRestClient;
-        private readonly DataServiceData _data;
+        private readonly HybridDataServiceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DataServiceResource"/> class for mocking. </summary>
-        protected DataServiceResource()
+        /// <summary> Initializes a new instance of the <see cref="HybridDataServiceResource"/> class for mocking. </summary>
+        protected HybridDataServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "HybridDataServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataServiceResource(ArmClient client, DataServiceData data) : this(client, data.Id)
+        internal HybridDataServiceResource(ArmClient client, HybridDataServiceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridDataServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridDataServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataServiceApiVersion);
-            _dataServiceRestClient = new DataServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataServiceApiVersion);
+            _hybridDataServiceDataServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hybridDataServiceDataServicesApiVersion);
+            _hybridDataServiceDataServicesRestClient = new DataServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataServiceDataServicesApiVersion);
             _hybridDataJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", HybridDataJobResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(HybridDataJobResource.ResourceType, out string hybridDataJobJobsApiVersion);
             _hybridDataJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataJobJobsApiVersion);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DataServiceData Data
+        public virtual HybridDataServiceData Data
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridData
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of HybridDataJobDefinitionResources in the DataService. </summary>
+        /// <summary> Gets a collection of HybridDataJobDefinitionResources in the HybridDataService. </summary>
         /// <returns> An object representing collection of HybridDataJobDefinitionResources and their operations over a HybridDataJobDefinitionResource. </returns>
         public virtual HybridDataJobDefinitionCollection GetHybridDataJobDefinitions()
         {
@@ -135,16 +135,16 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataServices_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataServiceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceResource.Get");
+            using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridDataServiceDataServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,16 +159,16 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataServices_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataServiceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataServiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceResource.Get");
+            using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceResource.Get");
             scope.Start();
             try
             {
-                var response = _dataServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _hybridDataServiceDataServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.HybridData
         {
             async Task<Page<HybridDataJobResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataServiceResource.GetJobs");
                 scope.Start();
                 try
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HybridData
             }
             async Task<Page<HybridDataJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataServiceResource.GetJobs");
                 scope.Start();
                 try
                 {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.HybridData
         {
             Page<HybridDataJobResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataServiceResource.GetJobs");
                 scope.Start();
                 try
                 {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HybridData
             }
             Page<HybridDataJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("DataServiceResource.GetJobs");
+                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataServiceResource.GetJobs");
                 scope.Start();
                 try
                 {

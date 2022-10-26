@@ -13,30 +13,35 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    public partial class DataServiceData : IUtf8JsonSerializable
+    public partial class HybridDataStoreTypeData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(RepositoryType))
+            {
+                writer.WritePropertyName("repositoryType");
+                writer.WriteStringValue(RepositoryType.Value);
+            }
             writer.WritePropertyName("state");
             writer.WriteStringValue(State.ToSerialString());
-            if (Optional.IsCollectionDefined(SupportedDataSinkTypes))
+            if (Optional.IsCollectionDefined(SupportedDataServicesAsSink))
             {
-                writer.WritePropertyName("supportedDataSinkTypes");
+                writer.WritePropertyName("supportedDataServicesAsSink");
                 writer.WriteStartArray();
-                foreach (var item in SupportedDataSinkTypes)
+                foreach (var item in SupportedDataServicesAsSink)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedDataSourceTypes))
+            if (Optional.IsCollectionDefined(SupportedDataServicesAsSource))
             {
-                writer.WritePropertyName("supportedDataSourceTypes");
+                writer.WritePropertyName("supportedDataServicesAsSource");
                 writer.WriteStartArray();
-                foreach (var item in SupportedDataSourceTypes)
+                foreach (var item in SupportedDataServicesAsSource)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -46,15 +51,16 @@ namespace Azure.ResourceManager.HybridData
             writer.WriteEndObject();
         }
 
-        internal static DataServiceData DeserializeDataServiceData(JsonElement element)
+        internal static HybridDataStoreTypeData DeserializeHybridDataStoreTypeData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<ResourceType> repositoryType = default;
             HybridDataState state = default;
-            Optional<IList<string>> supportedDataSinkTypes = default;
-            Optional<IList<string>> supportedDataSourceTypes = default;
+            Optional<IList<string>> supportedDataServicesAsSink = default;
+            Optional<IList<string>> supportedDataServicesAsSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -91,12 +97,22 @@ namespace Azure.ResourceManager.HybridData
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("repositoryType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            repositoryType = new ResourceType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("state"))
                         {
                             state = property0.Value.GetString().ToHybridDataState();
                             continue;
                         }
-                        if (property0.NameEquals("supportedDataSinkTypes"))
+                        if (property0.NameEquals("supportedDataServicesAsSink"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -108,10 +124,10 @@ namespace Azure.ResourceManager.HybridData
                             {
                                 array.Add(item.GetString());
                             }
-                            supportedDataSinkTypes = array;
+                            supportedDataServicesAsSink = array;
                             continue;
                         }
-                        if (property0.NameEquals("supportedDataSourceTypes"))
+                        if (property0.NameEquals("supportedDataServicesAsSource"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -123,14 +139,14 @@ namespace Azure.ResourceManager.HybridData
                             {
                                 array.Add(item.GetString());
                             }
-                            supportedDataSourceTypes = array;
+                            supportedDataServicesAsSource = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DataServiceData(id, name, type, systemData.Value, state, Optional.ToList(supportedDataSinkTypes), Optional.ToList(supportedDataSourceTypes));
+            return new HybridDataStoreTypeData(id, name, type, systemData.Value, Optional.ToNullable(repositoryType), state, Optional.ToList(supportedDataServicesAsSink), Optional.ToList(supportedDataServicesAsSource));
         }
     }
 }

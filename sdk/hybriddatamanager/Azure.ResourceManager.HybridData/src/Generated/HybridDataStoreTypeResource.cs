@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridData
 {
     /// <summary>
-    /// A Class representing a DataStoreType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataStoreTypeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataStoreTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataManagerResource" /> using the GetDataStoreType method.
+    /// A Class representing a HybridDataStoreType along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridDataStoreTypeResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetHybridDataStoreTypeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridDataManagerResource" /> using the GetHybridDataStoreType method.
     /// </summary>
-    public partial class DataStoreTypeResource : ArmResource
+    public partial class HybridDataStoreTypeResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataStoreTypeResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="HybridDataStoreTypeResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataManagerName, string dataStoreTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes/{dataStoreTypeName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataStoreTypeClientDiagnostics;
-        private readonly DataStoreTypesRestOperations _dataStoreTypeRestClient;
-        private readonly DataStoreTypeData _data;
+        private readonly ClientDiagnostics _hybridDataStoreTypeDataStoreTypesClientDiagnostics;
+        private readonly DataStoreTypesRestOperations _hybridDataStoreTypeDataStoreTypesRestClient;
+        private readonly HybridDataStoreTypeData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DataStoreTypeResource"/> class for mocking. </summary>
-        protected DataStoreTypeResource()
+        /// <summary> Initializes a new instance of the <see cref="HybridDataStoreTypeResource"/> class for mocking. </summary>
+        protected HybridDataStoreTypeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataStoreTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "HybridDataStoreTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataStoreTypeResource(ArmClient client, DataStoreTypeData data) : this(client, data.Id)
+        internal HybridDataStoreTypeResource(ArmClient client, HybridDataStoreTypeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataStoreTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridDataStoreTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataStoreTypeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridDataStoreTypeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataStoreTypeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataStoreTypeApiVersion);
-            _dataStoreTypeRestClient = new DataStoreTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataStoreTypeApiVersion);
+            _hybridDataStoreTypeDataStoreTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hybridDataStoreTypeDataStoreTypesApiVersion);
+            _hybridDataStoreTypeDataStoreTypesRestClient = new DataStoreTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataStoreTypeDataStoreTypesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DataStoreTypeData Data
+        public virtual HybridDataStoreTypeData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataStoreTypes_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataStoreTypeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataStoreTypeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataStoreTypeClientDiagnostics.CreateScope("DataStoreTypeResource.Get");
+            using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataStoreTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridDataStoreTypeDataStoreTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataStoreTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataStoreTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataStoreTypes_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataStoreTypeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataStoreTypeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataStoreTypeClientDiagnostics.CreateScope("DataStoreTypeResource.Get");
+            using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeResource.Get");
             scope.Start();
             try
             {
-                var response = _dataStoreTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _hybridDataStoreTypeDataStoreTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataStoreTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataStoreTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

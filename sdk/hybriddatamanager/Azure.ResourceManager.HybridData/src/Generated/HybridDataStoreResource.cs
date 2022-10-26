@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridData
 {
     /// <summary>
-    /// A Class representing a DataStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataStoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataStoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataManagerResource" /> using the GetDataStore method.
+    /// A Class representing a HybridDataStore along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridDataStoreResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetHybridDataStoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridDataManagerResource" /> using the GetHybridDataStore method.
     /// </summary>
-    public partial class DataStoreResource : ArmResource
+    public partial class HybridDataStoreResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataStoreResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="HybridDataStoreResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataManagerName, string dataStoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStores/{dataStoreName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataStoreClientDiagnostics;
-        private readonly DataStoresRestOperations _dataStoreRestClient;
-        private readonly DataStoreData _data;
+        private readonly ClientDiagnostics _hybridDataStoreDataStoresClientDiagnostics;
+        private readonly DataStoresRestOperations _hybridDataStoreDataStoresRestClient;
+        private readonly HybridDataStoreData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DataStoreResource"/> class for mocking. </summary>
-        protected DataStoreResource()
+        /// <summary> Initializes a new instance of the <see cref="HybridDataStoreResource"/> class for mocking. </summary>
+        protected HybridDataStoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "HybridDataStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataStoreResource(ArmClient client, DataStoreData data) : this(client, data.Id)
+        internal HybridDataStoreResource(ArmClient client, HybridDataStoreData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridDataStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataStoreResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridDataStoreResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataStoreApiVersion);
-            _dataStoreRestClient = new DataStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataStoreApiVersion);
+            _hybridDataStoreDataStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hybridDataStoreDataStoresApiVersion);
+            _hybridDataStoreDataStoresRestClient = new DataStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataStoreDataStoresApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DataStoreData Data
+        public virtual HybridDataStoreData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataStores_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataStoreResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataStoreResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataStoreClientDiagnostics.CreateScope("DataStoreResource.Get");
+            using var scope = _hybridDataStoreDataStoresClientDiagnostics.CreateScope("HybridDataStoreResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridDataStoreDataStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataStores_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataStoreResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataStoreResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataStoreClientDiagnostics.CreateScope("DataStoreResource.Get");
+            using var scope = _hybridDataStoreDataStoresClientDiagnostics.CreateScope("HybridDataStoreResource.Get");
             scope.Start();
             try
             {
-                var response = _dataStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _hybridDataStoreDataStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataStoreClientDiagnostics.CreateScope("DataStoreResource.Delete");
+            using var scope = _hybridDataStoreDataStoresClientDiagnostics.CreateScope("HybridDataStoreResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dataStoreRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridDataArmOperation(_dataStoreClientDiagnostics, Pipeline, _dataStoreRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _hybridDataStoreDataStoresRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridDataArmOperation(_hybridDataStoreDataStoresClientDiagnostics, Pipeline, _hybridDataStoreDataStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataStoreClientDiagnostics.CreateScope("DataStoreResource.Delete");
+            using var scope = _hybridDataStoreDataStoresClientDiagnostics.CreateScope("HybridDataStoreResource.Delete");
             scope.Start();
             try
             {
-                var response = _dataStoreRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HybridDataArmOperation(_dataStoreClientDiagnostics, Pipeline, _dataStoreRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _hybridDataStoreDataStoresRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new HybridDataArmOperation(_hybridDataStoreDataStoresClientDiagnostics, Pipeline, _hybridDataStoreDataStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="data"> The data store/repository object to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataStoreResource>> UpdateAsync(WaitUntil waitUntil, DataStoreData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridDataStoreResource>> UpdateAsync(WaitUntil waitUntil, HybridDataStoreData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataStoreClientDiagnostics.CreateScope("DataStoreResource.Update");
+            using var scope = _hybridDataStoreDataStoresClientDiagnostics.CreateScope("HybridDataStoreResource.Update");
             scope.Start();
             try
             {
-                var response = await _dataStoreRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridDataArmOperation<DataStoreResource>(new DataStoreOperationSource(Client), _dataStoreClientDiagnostics, Pipeline, _dataStoreRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _hybridDataStoreDataStoresRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridDataArmOperation<HybridDataStoreResource>(new HybridDataStoreOperationSource(Client), _hybridDataStoreDataStoresClientDiagnostics, Pipeline, _hybridDataStoreDataStoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="data"> The data store/repository object to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataStoreResource> Update(WaitUntil waitUntil, DataStoreData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridDataStoreResource> Update(WaitUntil waitUntil, HybridDataStoreData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataStoreClientDiagnostics.CreateScope("DataStoreResource.Update");
+            using var scope = _hybridDataStoreDataStoresClientDiagnostics.CreateScope("HybridDataStoreResource.Update");
             scope.Start();
             try
             {
-                var response = _dataStoreRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new HybridDataArmOperation<DataStoreResource>(new DataStoreOperationSource(Client), _dataStoreClientDiagnostics, Pipeline, _dataStoreRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _hybridDataStoreDataStoresRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new HybridDataArmOperation<HybridDataStoreResource>(new HybridDataStoreOperationSource(Client), _hybridDataStoreDataStoresClientDiagnostics, Pipeline, _hybridDataStoreDataStoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

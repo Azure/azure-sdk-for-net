@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,38 +13,32 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    public partial class DataStoreData : IUtf8JsonSerializable
+    public partial class HybridDataServiceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepositoryId))
-            {
-                writer.WritePropertyName("repositoryId");
-                writer.WriteStringValue(RepositoryId);
-            }
             writer.WritePropertyName("state");
             writer.WriteStringValue(State.ToSerialString());
-            if (Optional.IsDefined(ExtendedProperties))
+            if (Optional.IsCollectionDefined(SupportedDataSinkTypes))
             {
-                writer.WritePropertyName("extendedProperties");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ExtendedProperties);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExtendedProperties.ToString()).RootElement);
-#endif
-            }
-            writer.WritePropertyName("dataStoreTypeId");
-            writer.WriteStringValue(DataStoreTypeId);
-            if (Optional.IsCollectionDefined(CustomerSecrets))
-            {
-                writer.WritePropertyName("customerSecrets");
+                writer.WritePropertyName("supportedDataSinkTypes");
                 writer.WriteStartArray();
-                foreach (var item in CustomerSecrets)
+                foreach (var item in SupportedDataSinkTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SupportedDataSourceTypes))
+            {
+                writer.WritePropertyName("supportedDataSourceTypes");
+                writer.WriteStartArray();
+                foreach (var item in SupportedDataSourceTypes)
+                {
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -53,17 +46,15 @@ namespace Azure.ResourceManager.HybridData
             writer.WriteEndObject();
         }
 
-        internal static DataStoreData DeserializeDataStoreData(JsonElement element)
+        internal static HybridDataServiceData DeserializeHybridDataServiceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> repositoryId = default;
             HybridDataState state = default;
-            Optional<BinaryData> extendedProperties = default;
-            ResourceIdentifier dataStoreTypeId = default;
-            Optional<IList<HybridDataCustomerSecret>> customerSecrets = default;
+            Optional<IList<string>> supportedDataSinkTypes = default;
+            Optional<IList<string>> supportedDataSourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -100,56 +91,46 @@ namespace Azure.ResourceManager.HybridData
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("repositoryId"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            repositoryId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("state"))
                         {
                             state = property0.Value.GetString().ToHybridDataState();
                             continue;
                         }
-                        if (property0.NameEquals("extendedProperties"))
+                        if (property0.NameEquals("supportedDataSinkTypes"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            extendedProperties = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("dataStoreTypeId"))
-                        {
-                            dataStoreTypeId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("customerSecrets"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<HybridDataCustomerSecret> array = new List<HybridDataCustomerSecret>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridDataCustomerSecret.DeserializeHybridDataCustomerSecret(item));
+                                array.Add(item.GetString());
                             }
-                            customerSecrets = array;
+                            supportedDataSinkTypes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("supportedDataSourceTypes"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            supportedDataSourceTypes = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DataStoreData(id, name, type, systemData.Value, repositoryId.Value, state, extendedProperties.Value, dataStoreTypeId, Optional.ToList(customerSecrets));
+            return new HybridDataServiceData(id, name, type, systemData.Value, state, Optional.ToList(supportedDataSinkTypes), Optional.ToList(supportedDataSourceTypes));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridData.Models
     {
         internal static DataManagerList DeserializeDataManagerList(JsonElement element)
         {
-            Optional<IReadOnlyList<DataManagerData>> value = default;
+            Optional<IReadOnlyList<HybridDataManagerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.HybridData.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataManagerData> array = new List<DataManagerData>();
+                    List<HybridDataManagerData> array = new List<HybridDataManagerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataManagerData.DeserializeDataManagerData(item));
+                        array.Add(HybridDataManagerData.DeserializeHybridDataManagerData(item));
                     }
                     value = array;
                     continue;

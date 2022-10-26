@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    /// <summary> A class representing the DataManager data model. </summary>
-    public partial class DataManagerData : TrackedResourceData
+    /// <summary> A class representing the HybridDataManager data model. </summary>
+    public partial class HybridDataManagerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataManagerData. </summary>
+        /// <summary> Initializes a new instance of HybridDataManagerData. </summary>
         /// <param name="location"> The location. </param>
-        public DataManagerData(AzureLocation location) : base(location)
+        public HybridDataManagerData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DataManagerData. </summary>
+        /// <summary> Initializes a new instance of HybridDataManagerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="location"> The location. </param>
         /// <param name="etag"> Etag of the Resource. </param>
         /// <param name="sku"> The sku type. </param>
-        internal DataManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, HybridDataSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridDataManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, HybridDataSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Sku = sku;

@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridData
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataServiceResource" /> and their operations.
-    /// Each <see cref="DataServiceResource" /> in the collection will belong to the same instance of <see cref="DataManagerResource" />.
-    /// To get a <see cref="DataServiceCollection" /> instance call the GetDataServices method from an instance of <see cref="DataManagerResource" />.
+    /// A class representing a collection of <see cref="HybridDataServiceResource" /> and their operations.
+    /// Each <see cref="HybridDataServiceResource" /> in the collection will belong to the same instance of <see cref="HybridDataManagerResource" />.
+    /// To get a <see cref="HybridDataServiceCollection" /> instance call the GetHybridDataServices method from an instance of <see cref="HybridDataManagerResource" />.
     /// </summary>
-    public partial class DataServiceCollection : ArmCollection, IEnumerable<DataServiceResource>, IAsyncEnumerable<DataServiceResource>
+    public partial class HybridDataServiceCollection : ArmCollection, IEnumerable<HybridDataServiceResource>, IAsyncEnumerable<HybridDataServiceResource>
     {
-        private readonly ClientDiagnostics _dataServiceClientDiagnostics;
-        private readonly DataServicesRestOperations _dataServiceRestClient;
+        private readonly ClientDiagnostics _hybridDataServiceDataServicesClientDiagnostics;
+        private readonly DataServicesRestOperations _hybridDataServiceDataServicesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataServiceCollection"/> class for mocking. </summary>
-        protected DataServiceCollection()
+        /// <summary> Initializes a new instance of the <see cref="HybridDataServiceCollection"/> class for mocking. </summary>
+        protected HybridDataServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataServiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridDataServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DataServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridDataServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", DataServiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataServiceResource.ResourceType, out string dataServiceApiVersion);
-            _dataServiceRestClient = new DataServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataServiceApiVersion);
+            _hybridDataServiceDataServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridData", HybridDataServiceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HybridDataServiceResource.ResourceType, out string hybridDataServiceDataServicesApiVersion);
+            _hybridDataServiceDataServicesRestClient = new DataServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridDataServiceDataServicesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.HybridData
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DataManagerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataManagerResource.ResourceType), nameof(id));
+            if (id.ResourceType != HybridDataManagerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HybridDataManagerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataServiceName"/> is null. </exception>
-        public virtual async Task<Response<DataServiceResource>> GetAsync(string dataServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridDataServiceResource>> GetAsync(string dataServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
 
-            using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceCollection.Get");
+            using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataServiceName, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridDataServiceDataServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataServiceName"/> is null. </exception>
-        public virtual Response<DataServiceResource> Get(string dataServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridDataServiceResource> Get(string dataServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
 
-            using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceCollection.Get");
+            using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataServiceName, cancellationToken);
+                var response = _hybridDataServiceDataServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataServiceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataServices_ListByDataManager
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridDataServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridDataServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataServiceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HybridDataServiceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceCollection.GetAll");
+                using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataServiceRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridDataServiceDataServicesRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.HybridData
                     throw;
                 }
             }
-            async Task<Page<DataServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HybridDataServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceCollection.GetAll");
+                using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataServiceRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridDataServiceDataServicesRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataServices_ListByDataManager
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataServiceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridDataServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridDataServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataServiceResource> FirstPageFunc(int? pageSizeHint)
+            Page<HybridDataServiceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceCollection.GetAll");
+                using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataServiceRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridDataServiceDataServicesRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.HybridData
                     throw;
                 }
             }
-            Page<DataServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HybridDataServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceCollection.GetAll");
+                using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataServiceRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridDataServiceDataServicesRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.HybridData
         {
             Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
 
-            using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceCollection.Exists");
+            using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hybridDataServiceDataServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.HybridData
         {
             Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
 
-            using var scope = _dataServiceClientDiagnostics.CreateScope("DataServiceCollection.Exists");
+            using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataServiceName, cancellationToken: cancellationToken);
+                var response = _hybridDataServiceDataServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataServiceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HybridData
             }
         }
 
-        IEnumerator<DataServiceResource> IEnumerable<DataServiceResource>.GetEnumerator()
+        IEnumerator<HybridDataServiceResource> IEnumerable<HybridDataServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.HybridData
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DataServiceResource> IAsyncEnumerable<DataServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HybridDataServiceResource> IAsyncEnumerable<HybridDataServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

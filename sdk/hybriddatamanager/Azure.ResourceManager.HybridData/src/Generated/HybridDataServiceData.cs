@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    /// <summary> A class representing the DataService data model. </summary>
-    public partial class DataServiceData : ResourceData
+    /// <summary> A class representing the HybridDataService data model. </summary>
+    public partial class HybridDataServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataServiceData. </summary>
+        /// <summary> Initializes a new instance of HybridDataServiceData. </summary>
         /// <param name="state"> State of the data service. </param>
-        public DataServiceData(HybridDataState state)
+        public HybridDataServiceData(HybridDataState state)
         {
             State = state;
             SupportedDataSinkTypes = new ChangeTrackingList<string>();
             SupportedDataSourceTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataServiceData. </summary>
+        /// <summary> Initializes a new instance of HybridDataServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridData
         /// <param name="state"> State of the data service. </param>
         /// <param name="supportedDataSinkTypes"> Supported data store types which can be used as a sink. </param>
         /// <param name="supportedDataSourceTypes"> Supported data store types which can be used as a source. </param>
-        internal DataServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridDataState state, IList<string> supportedDataSinkTypes, IList<string> supportedDataSourceTypes) : base(id, name, resourceType, systemData)
+        internal HybridDataServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridDataState state, IList<string> supportedDataSinkTypes, IList<string> supportedDataSourceTypes) : base(id, name, resourceType, systemData)
         {
             State = state;
             SupportedDataSinkTypes = supportedDataSinkTypes;
