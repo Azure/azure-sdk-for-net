@@ -24,11 +24,14 @@ namespace Azure.AI.Language.Conversations
 
         private const string ConversationalPIIResultsValue = "conversationalPIIResults";
         private const string ConversationalSummarizationResultsValue = "conversationalSummarizationResults";
+        private const string ConversationalSentimentResultsValue = "conversationalSentimentResults";
 
         /// <summary> conversationalPIIResults. </summary>
         public static AnalyzeConversationResultsKind ConversationalPIIResults { get; } = new AnalyzeConversationResultsKind(ConversationalPIIResultsValue);
         /// <summary> conversationalSummarizationResults. </summary>
         public static AnalyzeConversationResultsKind ConversationalSummarizationResults { get; } = new AnalyzeConversationResultsKind(ConversationalSummarizationResultsValue);
+        /// <summary> conversationalSentimentResults. </summary>
+        public static AnalyzeConversationResultsKind ConversationalSentimentResults { get; } = new AnalyzeConversationResultsKind(ConversationalSentimentResultsValue);
         /// <summary> Determines if two <see cref="AnalyzeConversationResultsKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeConversationResultsKind left, AnalyzeConversationResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeConversationResultsKind"/> values are not the same. </summary>
