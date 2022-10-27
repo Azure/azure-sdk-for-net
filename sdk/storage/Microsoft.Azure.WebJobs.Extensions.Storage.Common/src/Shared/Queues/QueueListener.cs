@@ -139,7 +139,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             _targetScaler = new Lazy<QueueTargetScaler>(
                     () => new QueueTargetScaler(
-                        functionId,
+                        _functionId,
                         queue,
                         queueOptions,
                         loggerFactory
