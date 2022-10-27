@@ -562,6 +562,180 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Lists available Ssl options for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ApplicationGatewayAvailableSslOptions>> GetAvailableSslOptionsApplicationGatewayAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSslOptionsApplicationGateway");
+            scope.Start();
+            try
+            {
+                var response = await ApplicationGatewayRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists available Ssl options for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ApplicationGatewayAvailableSslOptions> GetAvailableSslOptionsApplicationGateway(CancellationToken cancellationToken = default)
+        {
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSslOptionsApplicationGateway");
+            scope.Start();
+            try
+            {
+                var response = ApplicationGatewayRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all SSL predefined policies for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
+        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetAvailableSslPredefinedPoliciesApplicationGatewaysAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ApplicationGatewaySslPredefinedPolicy>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSslPredefinedPoliciesApplicationGateways");
+                scope.Start();
+                try
+                {
+                    var response = await ApplicationGatewayRestClient.ListAvailableSslPredefinedPoliciesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ApplicationGatewaySslPredefinedPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSslPredefinedPoliciesApplicationGateways");
+                scope.Start();
+                try
+                {
+                    var response = await ApplicationGatewayRestClient.ListAvailableSslPredefinedPoliciesNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists all SSL predefined policies for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
+        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetAvailableSslPredefinedPoliciesApplicationGateways(CancellationToken cancellationToken = default)
+        {
+            Page<ApplicationGatewaySslPredefinedPolicy> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSslPredefinedPoliciesApplicationGateways");
+                scope.Start();
+                try
+                {
+                    var response = ApplicationGatewayRestClient.ListAvailableSslPredefinedPolicies(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ApplicationGatewaySslPredefinedPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSslPredefinedPoliciesApplicationGateways");
+                scope.Start();
+                try
+                {
+                    var response = ApplicationGatewayRestClient.ListAvailableSslPredefinedPoliciesNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
+        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetSslPredefinedPolicyApplicationGatewayAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSslPredefinedPolicyApplicationGateway");
+            scope.Start();
+            try
+            {
+                var response = await ApplicationGatewayRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, predefinedPolicyName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
+        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicyApplicationGateway(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSslPredefinedPolicyApplicationGateway");
+            scope.Start();
+            try
+            {
+                var response = ApplicationGatewayRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets all application security groups in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups
         /// Operation Id: ApplicationSecurityGroups_ListAll

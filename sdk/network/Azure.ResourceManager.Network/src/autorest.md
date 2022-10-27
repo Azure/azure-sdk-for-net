@@ -169,6 +169,11 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}: SecurityRule
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}: DefaultSecurityRule
 
+request-path-is-non-resource:
+- /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+- /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
+- /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+
 override-operation-name:
   ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
@@ -181,9 +186,6 @@ directive:
   - remove-operation: 'GetBastionShareableLink'
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
-  - remove-operation: 'ApplicationGateways_ListAvailableSslOptions'
-  - remove-operation: 'ApplicationGateways_ListAvailableSslPredefinedPolicies'
-  - remove-operation: 'ApplicationGateways_GetSslPredefinedPolicy'
   - from: virtualNetworkGateway.json
     where: $.definitions
     transform: >
