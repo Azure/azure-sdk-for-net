@@ -88,8 +88,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var meterName = $"meterName{uniqueTestId}";
             using var meter = new Meter(meterName, "1.0");
 
+            var exportedMetrics = new List<Metric>();
+
             var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
+                .AddInMemoryExporter(exportedMetrics)
                 .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
 
             if (asView)
@@ -105,10 +108,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var histogram = meter.CreateHistogram<long>("MyHistogram");
             var random = new Random();
             int loop = 20000, sum = 0;
+            double min = double.MaxValue, max = double.MinValue;
             for (int i = 0; i < loop; i++)
             {
                 var value = random.Next(1, 1000);
                 sum += value;
+                min = Math.Min(min, value);
+                max = Math.Max(max, value);
                 histogram.Record(value, new("tag1", "value1"), new("tag2", "value2"));
             }
 
@@ -126,6 +132,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: sum,
                 expectedMetricDataPointCount: loop,
+                expectedMetricDataPointMax:max,
+                expectedMetricDataPointMin:min,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
         }
 
