@@ -42,7 +42,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="size">size</param>
         /// <param name="qosType">qosType</param>
-        public CapacityPoolPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), long? size = default(long?), string qosType = default(string))
+        /// <param name="coolAccess">If enabled (true) the pool can contain
+        /// cool Access enabled volumes.</param>
+        public CapacityPoolPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), long? size = default(long?), string qosType = default(string), bool? coolAccess = default(bool?))
         {
             Location = location;
             Id = id;
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Tags = tags;
             Size = size;
             QosType = qosType;
+            CoolAccess = coolAccess;
             CustomInit();
         }
 
@@ -107,6 +110,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.qosType")]
         public string QosType { get; set; }
+
+        /// <summary>
+        /// Gets or sets if enabled (true) the pool can contain cool Access
+        /// enabled volumes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coolAccess")]
+        public bool? CoolAccess { get; set; }
 
     }
 }

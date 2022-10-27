@@ -289,6 +289,53 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
+            /// Renew identity credentials
+            /// </summary>
+            /// <remarks>
+            /// Renew identity credentials that are used to authenticate to key vault, for
+            /// customer-managed key encryption. If encryption.identity.principalId does
+            /// not match identity.principalId, running this operation will fix it.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            public static void RenewCredentials(this IAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.RenewCredentialsAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Renew identity credentials
+            /// </summary>
+            /// <remarks>
+            /// Renew identity credentials that are used to authenticate to key vault, for
+            /// customer-managed key encryption. If encryption.identity.principalId does
+            /// not match identity.principalId, running this operation will fix it.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RenewCredentialsAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RenewCredentialsWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Create or update a NetApp account
             /// </summary>
             /// <remarks>
@@ -433,6 +480,53 @@ namespace Microsoft.Azure.Management.NetApp
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Renew identity credentials
+            /// </summary>
+            /// <remarks>
+            /// Renew identity credentials that are used to authenticate to key vault, for
+            /// customer-managed key encryption. If encryption.identity.principalId does
+            /// not match identity.principalId, running this operation will fix it.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            public static void BeginRenewCredentials(this IAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.BeginRenewCredentialsAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Renew identity credentials
+            /// </summary>
+            /// <remarks>
+            /// Renew identity credentials that are used to authenticate to key vault, for
+            /// customer-managed key encryption. If encryption.identity.principalId does
+            /// not match identity.principalId, running this operation will fix it.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRenewCredentialsAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRenewCredentialsWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

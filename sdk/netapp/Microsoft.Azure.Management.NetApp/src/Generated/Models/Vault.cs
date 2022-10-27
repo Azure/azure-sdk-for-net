@@ -33,14 +33,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <summary>
         /// Initializes a new instance of the Vault class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="vaultName">Vault Name</param>
-        public Vault(string location, string id = default(string), string name = default(string), string type = default(string), string vaultName = default(string))
+        public Vault(string id = default(string), string name = default(string), string type = default(string), string vaultName = default(string))
         {
-            Location = location;
             Id = id;
             Name = name;
             Type = type;
@@ -52,12 +50,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets resource location
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
 
         /// <summary>
         /// Gets resource Id
@@ -83,18 +75,5 @@ namespace Microsoft.Azure.Management.NetApp.Models
         [JsonProperty(PropertyName = "properties.vaultName")]
         public string VaultName { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-        }
     }
 }

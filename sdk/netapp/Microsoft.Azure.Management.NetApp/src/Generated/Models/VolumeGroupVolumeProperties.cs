@@ -51,6 +51,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="protocolTypes">protocolTypes</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="snapshotId">Snapshot ID</param>
+        /// <param name="deleteBaseSnapshot">If enabled (true) the snapshot the
+        /// volume was created from will be automatically deleted after the
+        /// volume create operation has finished.  Defaults to false</param>
         /// <param name="backupId">Backup ID</param>
         /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
         /// <param name="networkFeatures">Network features</param>
@@ -75,14 +78,25 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="smbEncryption">Enables encryption for in-flight smb3
         /// data. Only applicable for SMB/DualProtocol volume. To be used with
         /// swagger version 2020-08-01 or later</param>
+        /// <param
+        /// name="smbAccessBasedEnumeration">smbAccessBasedEnumeration</param>
+        /// <param name="smbNonBrowsable">smbNonBrowsable</param>
         /// <param name="smbContinuouslyAvailable">Enables continuously
         /// available share property for smb volume. Only applicable for SMB
         /// volume</param>
-        /// <param name="throughputMibps">Maximum throughput in Mibps that can
+        /// <param name="throughputMibps">Maximum throughput in MiB/s that can
         /// be achieved by this volume and this will be accepted as input only
         /// for manual qosType volume</param>
-        /// <param name="encryptionKeySource">Encryption Key Source. Possible
-        /// values are: 'Microsoft.NetApp'</param>
+        /// <param name="encryptionKeySource">Source of key used to encrypt
+        /// data in volume. Applicable if NetApp account has
+        /// encryption.keySource = 'Microsoft.KeyVault'. Possible values
+        /// (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'.
+        /// Possible values include: 'Microsoft.NetApp',
+        /// 'Microsoft.KeyVault'</param>
+        /// <param name="keyVaultPrivateEndpointResourceId">The resource ID of
+        /// private endpoint for KeyVault. It must reside in the same VNET as
+        /// the volume. Only applicable if encryptionKeySource =
+        /// 'Microsoft.KeyVault'.</param>
         /// <param name="ldapEnabled">Specifies whether LDAP is enabled or not
         /// for a given NFS volume.</param>
         /// <param name="coolAccess">Specifies whether Cool Access(tiering) is
@@ -123,11 +137,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="volumeSpecName">Volume spec name is the application
         /// specific designation or identifier for the particular volume in a
         /// volume group for e.g. data, log</param>
+        /// <param name="encrypted">Specifies if the volume is encrypted or
+        /// not. Only available on volumes created or updated after
+        /// 2022-01-01.</param>
         /// <param name="placementRules">Volume placement rules</param>
         /// <param name="enableSubvolumes">Flag indicating whether subvolume
         /// operations are enabled on the volume. Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        public VolumeGroupVolumeProperties(string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), long? maximumNumberOfFiles = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), IList<PlacementKeyValuePairs> placementRules = default(IList<PlacementKeyValuePairs>), string enableSubvolumes = default(string))
+        public VolumeGroupVolumeProperties(string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), bool? deleteBaseSnapshot = default(bool?), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), string smbAccessBasedEnumeration = default(string), string smbNonBrowsable = default(string), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), string keyVaultPrivateEndpointResourceId = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), long? maximumNumberOfFiles = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), bool? encrypted = default(bool?), IList<PlacementKeyValuePairs> placementRules = default(IList<PlacementKeyValuePairs>), string enableSubvolumes = default(string))
         {
             Id = id;
             Name = name;
@@ -141,6 +158,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ProtocolTypes = protocolTypes;
             ProvisioningState = provisioningState;
             SnapshotId = snapshotId;
+            DeleteBaseSnapshot = deleteBaseSnapshot;
             BackupId = backupId;
             BaremetalTenantId = baremetalTenantId;
             SubnetId = subnetId;
@@ -155,9 +173,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
             KerberosEnabled = kerberosEnabled;
             SecurityStyle = securityStyle;
             SmbEncryption = smbEncryption;
+            SmbAccessBasedEnumeration = smbAccessBasedEnumeration;
+            SmbNonBrowsable = smbNonBrowsable;
             SmbContinuouslyAvailable = smbContinuouslyAvailable;
             ThroughputMibps = throughputMibps;
             EncryptionKeySource = encryptionKeySource;
+            KeyVaultPrivateEndpointResourceId = keyVaultPrivateEndpointResourceId;
             LdapEnabled = ldapEnabled;
             CoolAccess = coolAccess;
             CoolnessPeriod = coolnessPeriod;
@@ -173,6 +194,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ProximityPlacementGroup = proximityPlacementGroup;
             T2Network = t2Network;
             VolumeSpecName = volumeSpecName;
+            Encrypted = encrypted;
             PlacementRules = placementRules;
             EnableSubvolumes = enableSubvolumes;
             CustomInit();
@@ -240,8 +262,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         /// <remarks>
         /// Maximum storage quota allowed for a file system in bytes. This is a
-        /// soft quota used for alerting only. Minimum size is 100 GiB. Upper
-        /// limit is 100TiB. Specified in bytes.
+        /// soft quota used for alerting only. Minimum size is 500 GiB. Upper
+        /// limit is 100TiB, 500Tib for LargeVolume. Specified in bytes.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.usageThreshold")]
         public long UsageThreshold { get; set; }
@@ -278,6 +300,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.snapshotId")]
         public string SnapshotId { get; set; }
+
+        /// <summary>
+        /// Gets or sets if enabled (true) the snapshot the volume was created
+        /// from will be automatically deleted after the volume create
+        /// operation has finished.  Defaults to false
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deleteBaseSnapshot")]
+        public bool? DeleteBaseSnapshot { get; set; }
 
         /// <summary>
         /// Gets or sets backup ID
@@ -398,6 +428,28 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public bool? SmbEncryption { get; set; }
 
         /// <summary>
+        /// Gets or sets smbAccessBasedEnumeration
+        /// </summary>
+        /// <remarks>
+        /// Enables access based enumeration share property for SMB Shares.
+        /// Only applicable for SMB/DualProtocol volume. Possible values
+        /// include: 'Disabled', 'Enabled'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.smbAccessBasedEnumeration")]
+        public string SmbAccessBasedEnumeration { get; set; }
+
+        /// <summary>
+        /// Gets or sets smbNonBrowsable
+        /// </summary>
+        /// <remarks>
+        /// Enables non browsable property for SMB Shares. Only applicable for
+        /// SMB/DualProtocol volume. Possible values include: 'Disabled',
+        /// 'Enabled'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.smbNonBrowsable")]
+        public string SmbNonBrowsable { get; set; }
+
+        /// <summary>
         /// Gets or sets enables continuously available share property for smb
         /// volume. Only applicable for SMB volume
         /// </summary>
@@ -405,7 +457,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public bool? SmbContinuouslyAvailable { get; set; }
 
         /// <summary>
-        /// Gets or sets maximum throughput in Mibps that can be achieved by
+        /// Gets or sets maximum throughput in MiB/s that can be achieved by
         /// this volume and this will be accepted as input only for manual
         /// qosType volume
         /// </summary>
@@ -413,11 +465,22 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public double? ThroughputMibps { get; set; }
 
         /// <summary>
-        /// Gets or sets encryption Key Source. Possible values are:
-        /// 'Microsoft.NetApp'
+        /// Gets or sets source of key used to encrypt data in volume.
+        /// Applicable if NetApp account has encryption.keySource =
+        /// 'Microsoft.KeyVault'. Possible values (case-insensitive) are:
+        /// 'Microsoft.NetApp, Microsoft.KeyVault'. Possible values include:
+        /// 'Microsoft.NetApp', 'Microsoft.KeyVault'
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryptionKeySource")]
         public string EncryptionKeySource { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of private endpoint for KeyVault. It
+        /// must reside in the same VNET as the volume. Only applicable if
+        /// encryptionKeySource = 'Microsoft.KeyVault'.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultPrivateEndpointResourceId")]
+        public string KeyVaultPrivateEndpointResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets specifies whether LDAP is enabled or not for a given
@@ -535,6 +598,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string VolumeSpecName { get; set; }
 
         /// <summary>
+        /// Gets specifies if the volume is encrypted or not. Only available on
+        /// volumes created or updated after 2022-01-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encrypted")]
+        public bool? Encrypted { get; private set; }
+
+        /// <summary>
         /// Gets or sets volume placement rules
         /// </summary>
         /// <remarks>
@@ -597,43 +667,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
                     throw new ValidationException(ValidationRules.Pattern, "CreationToken", "^[a-zA-Z][a-zA-Z0-9\\-]{0,79}$");
                 }
             }
-            if (UsageThreshold > 109951162777600)
+            if (UsageThreshold > 549755813888000)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 549755813888000);
             }
             if (UsageThreshold < 107374182400)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
-            }
-            if (SnapshotId != null)
-            {
-                if (SnapshotId.Length > 36)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "SnapshotId", 36);
-                }
-                if (SnapshotId.Length < 36)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "SnapshotId", 36);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(SnapshotId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "SnapshotId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$");
-                }
-            }
-            if (BackupId != null)
-            {
-                if (BackupId.Length > 36)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "BackupId", 36);
-                }
-                if (BackupId.Length < 36)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "BackupId", 36);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(BackupId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "BackupId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$");
-                }
             }
             if (NetworkSiblingSetId != null)
             {
@@ -664,16 +704,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
             {
                 DataProtection.Validate();
             }
-            if (CoolnessPeriod != null)
+            if (CoolnessPeriod > 63)
             {
-                if (CoolnessPeriod > 63)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "CoolnessPeriod", 63);
-                }
-                if (CoolnessPeriod < 7)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "CoolnessPeriod", 7);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "CoolnessPeriod", 63);
+            }
+            if (CoolnessPeriod < 7)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "CoolnessPeriod", 7);
             }
             if (UnixPermissions != null)
             {

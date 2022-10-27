@@ -63,7 +63,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// same group. the fourth for other users not in the group. 0755 -
         /// gives read/write/execute permissions to owner and read/execute to
         /// group and other users.</param>
-        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy), double? throughputMibps = default(double?), VolumePatchPropertiesDataProtection dataProtection = default(VolumePatchPropertiesDataProtection), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string unixPermissions = default(string))
+        /// <param name="coolAccess">Specifies whether Cool Access(tiering) is
+        /// enabled for the volume.</param>
+        /// <param name="coolnessPeriod">Specifies the number of days after
+        /// which data that is not accessed by clients will be tiered.</param>
+        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy), double? throughputMibps = default(double?), VolumePatchPropertiesDataProtection dataProtection = default(VolumePatchPropertiesDataProtection), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string unixPermissions = default(string), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?))
         {
             Location = location;
             Id = id;
@@ -79,6 +83,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
             DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
             DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
             UnixPermissions = unixPermissions;
+            CoolAccess = coolAccess;
+            CoolnessPeriod = coolnessPeriod;
             CustomInit();
         }
 
@@ -133,7 +139,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <remarks>
         /// Maximum storage quota allowed for a file system in bytes. This is a
         /// soft quota used for alerting only. Minimum size is 100 GiB. Upper
-        /// limit is 100TiB. Specified in bytes.
+        /// limit is 100TiB, 500Tib for LargeVolume. Specified in bytes.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.usageThreshold")]
         public long? UsageThreshold { get; set; }
@@ -198,6 +204,20 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string UnixPermissions { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies whether Cool Access(tiering) is enabled for
+        /// the volume.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coolAccess")]
+        public bool? CoolAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the number of days after which data that is
+        /// not accessed by clients will be tiered.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coolnessPeriod")]
+        public int? CoolnessPeriod { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -205,16 +225,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (UsageThreshold != null)
+            if (UsageThreshold > 549755813888000)
             {
-                if (UsageThreshold > 109951162777600)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
-                }
-                if (UsageThreshold < 107374182400)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 549755813888000);
+            }
+            if (UsageThreshold < 107374182400)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
             }
             if (UnixPermissions != null)
             {
@@ -226,6 +243,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 {
                     throw new ValidationException(ValidationRules.MinLength, "UnixPermissions", 4);
                 }
+            }
+            if (CoolnessPeriod > 63)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "CoolnessPeriod", 63);
+            }
+            if (CoolnessPeriod < 7)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "CoolnessPeriod", 7);
             }
         }
     }

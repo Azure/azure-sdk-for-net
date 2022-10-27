@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="activeDirectories">Active Directories</param>
         /// <param name="encryption">Encryption settings</param>
-        public NetAppAccountPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>), AccountEncryption encryption = default(AccountEncryption))
+        /// <param name="disableShowmount">Shows the status of disableShowmount
+        /// for all volumes under the subscription, null equals false</param>
+        public NetAppAccountPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>), AccountEncryption encryption = default(AccountEncryption), bool? disableShowmount = default(bool?))
         {
             Location = location;
             Id = id;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
             Encryption = encryption;
+            DisableShowmount = disableShowmount;
             CustomInit();
         }
 
@@ -109,5 +112,35 @@ namespace Microsoft.Azure.Management.NetApp.Models
         [JsonProperty(PropertyName = "properties.encryption")]
         public AccountEncryption Encryption { get; set; }
 
+        /// <summary>
+        /// Gets shows the status of disableShowmount for all volumes under the
+        /// subscription, null equals false
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableShowmount")]
+        public bool? DisableShowmount { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ActiveDirectories != null)
+            {
+                foreach (var element in ActiveDirectories)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (Encryption != null)
+            {
+                Encryption.Validate();
+            }
+        }
     }
 }

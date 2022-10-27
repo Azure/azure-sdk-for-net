@@ -207,5 +207,45 @@ namespace Microsoft.Azure.Management.NetApp
                 }
             }
 
+            /// <summary>
+            /// Describes region specific information.
+            /// </summary>
+            /// <remarks>
+            /// Provides storage to network proximity and logical zone mapping information.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location
+            /// </param>
+            public static RegionInfo QueryRegionInfo(this INetAppResourceOperations operations, string location)
+            {
+                return operations.QueryRegionInfoAsync(location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Describes region specific information.
+            /// </summary>
+            /// <remarks>
+            /// Provides storage to network proximity and logical zone mapping information.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RegionInfo> QueryRegionInfoAsync(this INetAppResourceOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueryRegionInfoWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

@@ -29,11 +29,19 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <summary>
         /// Initializes a new instance of the AccountEncryption class.
         /// </summary>
-        /// <param name="keySource">Encryption Key Source. Possible values are:
-        /// 'Microsoft.NetApp'.</param>
-        public AccountEncryption(string keySource = default(string))
+        /// <param name="keySource">The encryption keySource (provider).
+        /// Possible values (case-insensitive):  Microsoft.NetApp,
+        /// Microsoft.KeyVault. Possible values include: 'Microsoft.NetApp',
+        /// 'Microsoft.KeyVault'</param>
+        /// <param name="keyVaultProperties">Properties provided by KeVault.
+        /// Applicable if keySource is 'Microsoft.KeyVault'.</param>
+        /// <param name="identity">Identity used to authenticate to KeyVault.
+        /// Applicable if keySource is 'Microsoft.KeyVault'.</param>
+        public AccountEncryption(string keySource = default(string), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), EncryptionIdentity identity = default(EncryptionIdentity))
         {
             KeySource = keySource;
+            KeyVaultProperties = keyVaultProperties;
+            Identity = identity;
             CustomInit();
         }
 
@@ -43,11 +51,39 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets encryption Key Source. Possible values are:
-        /// 'Microsoft.NetApp'.
+        /// Gets or sets the encryption keySource (provider). Possible values
+        /// (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. Possible
+        /// values include: 'Microsoft.NetApp', 'Microsoft.KeyVault'
         /// </summary>
         [JsonProperty(PropertyName = "keySource")]
         public string KeySource { get; set; }
 
+        /// <summary>
+        /// Gets or sets properties provided by KeVault. Applicable if
+        /// keySource is 'Microsoft.KeyVault'.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyVaultProperties")]
+        public KeyVaultProperties KeyVaultProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets identity used to authenticate to KeyVault. Applicable
+        /// if keySource is 'Microsoft.KeyVault'.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public EncryptionIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (KeyVaultProperties != null)
+            {
+                KeyVaultProperties.Validate();
+            }
+        }
     }
 }

@@ -187,6 +187,34 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse<NetAppAccount>> UpdateWithHttpMessagesAsync(NetAppAccountPatch body, string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Renew identity credentials
+        /// </summary>
+        /// <remarks>
+        /// Renew identity credentials that are used to authenticate to key
+        /// vault, for customer-managed key encryption. If
+        /// encryption.identity.principalId does not match
+        /// identity.principalId, running this operation will fix it.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the NetApp account
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RenewCredentialsWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update a NetApp account
         /// </summary>
         /// <remarks>
@@ -274,6 +302,34 @@ namespace Microsoft.Azure.Management.NetApp
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<NetAppAccount>> BeginUpdateWithHttpMessagesAsync(NetAppAccountPatch body, string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Renew identity credentials
+        /// </summary>
+        /// <remarks>
+        /// Renew identity credentials that are used to authenticate to key
+        /// vault, for customer-managed key encryption. If
+        /// encryption.identity.principalId does not match
+        /// identity.principalId, running this operation will fix it.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the NetApp account
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginRenewCredentialsWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Describe all NetApp Accounts in a subscription
         /// </summary>
