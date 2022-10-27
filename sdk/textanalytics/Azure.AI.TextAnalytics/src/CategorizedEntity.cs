@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
@@ -13,12 +15,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct CategorizedEntity
     {
-        internal CategorizedEntity(Entity entity)
-            : this(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length)
+        internal CategorizedEntity(EntityWithResolution entity)
+            : this(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length, entity.Resolutions)
         {
         }
 
-        internal CategorizedEntity(string text, string category, string subcategory, double confidenceScore, int offset, int length)
+        internal CategorizedEntity(string text, string category, string subcategory, double confidenceScore, int offset, int length, IList<BaseResolution> resolutions)
         {
             // We shipped TA 5.0.0 Category == string.Empty if the service returned a null value for Category.
             // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
@@ -28,6 +30,9 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScore = confidenceScore;
             Offset = offset;
             Length = length;
+            Resolutions = (resolutions is not null)
+                ? new ReadOnlyCollection<BaseResolution>(resolutions)
+                : new List<BaseResolution>();
         }
 
         /// <summary>
@@ -37,7 +42,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the entity category inferred by the Language service's
-        /// named entity recognition model.  The list of available categories is
+        /// named entity recognition model. The list of available categories is
         /// described at
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories"/>.
         /// </summary>
@@ -45,8 +50,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the subcategory of the entity inferred by the Language service's
-        /// named entity recognition model.  This property may not have a value if
-        /// a subcategory doesn't exist for this entity.  The list of available categories and
+        /// named entity recognition model. This property may not have a value if
+        /// a subcategory doesn't exist for this entity. The list of available categories and
         /// subcategories is described at
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories"/>.
         /// </summary>
@@ -67,5 +72,10 @@ namespace Azure.AI.TextAnalytics
         /// Gets the length of the matching text in the input document.
         /// </summary>
         public int Length { get; }
+
+        /// <summary>
+        /// Gets the collection of entity resolutions.
+        /// </summary>
+        public IReadOnlyCollection<BaseResolution> Resolutions { get; }
     }
 }

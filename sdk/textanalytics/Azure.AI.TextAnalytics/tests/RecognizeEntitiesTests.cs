@@ -304,6 +304,44 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task RecognizeEntitiesBatchWithResolutionsTest()
+        {
+            TextDocumentInput doc1 = new("0", "The dog is 14 inches tall and weighs 20 lbs.");
+
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions() { ModelVersion = "2022-10-01-preview" };
+            TextAnalyticsClient client = GetClient();
+
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(new List<TextDocumentInput>() { doc1 }, options: options);
+            RecognizeEntitiesResult result = results.FirstOrDefault();
+
+            Assert.NotNull(result);
+            Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+            Assert.False(result.HasError);
+            Assert.That(result.Entities.Any(entity => entity.Resolutions.Any(resolution => resolution is LengthResolution)));
+            Assert.That(result.Entities.Any(entity => entity.Resolutions.Any(resolution => resolution is WeightResolution)));
+
+            foreach (CategorizedEntity entity in result.Entities)
+            {
+                Assert.IsNotNull(entity.Resolutions);
+
+                BaseResolution resolution = entity.Resolutions.FirstOrDefault();
+
+                if (resolution is LengthResolution length)
+                {
+                    Assert.AreEqual(14, length.Value);
+                    Assert.AreEqual(LengthUnit.Inch, length.Unit);
+                }
+
+                if (resolution is WeightResolution weight)
+                {
+                    Assert.AreEqual(20, weight.Value);
+                    Assert.AreEqual(WeightUnit.Pound, weight.Unit);
+                }
+            }
+        }
+
         private void ValidateInDocumenResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);
@@ -321,6 +359,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.IsNotEmpty(entity.SubCategory);
                 }
+
+                Assert.IsNotNull(entity.Resolutions);
             }
         }
 

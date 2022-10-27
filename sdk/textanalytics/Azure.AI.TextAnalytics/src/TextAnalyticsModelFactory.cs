@@ -287,7 +287,7 @@ namespace Azure.AI.TextAnalytics
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
         {
-            return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score));
+            return new CategorizedEntity(new EntityWithResolution(text, category, subCategory, default, default, score, default));
         }
 
         /// <summary>
@@ -300,9 +300,26 @@ namespace Azure.AI.TextAnalytics
         /// <param name="offset">Sets the <see cref="CategorizedEntity.Offset"/> property.</param>
         /// <param name="length">Sets the <see cref="CategorizedEntity.Length"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length)
         {
-            return new CategorizedEntity(new Entity(text, category, subCategory, offset, length, score));
+            return new CategorizedEntity(new EntityWithResolution(text, category, subCategory, offset, length, score, default));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.
+        /// </summary>
+        /// <param name="text">Sets the <see cref="CategorizedEntity.Text"/> property.</param>
+        /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
+        /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
+        /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
+        /// <param name="offset">Sets the <see cref="CategorizedEntity.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="CategorizedEntity.Length"/> property.</param>
+        /// <param name="resolutions">Sets the <see cref="CategorizedEntity.Resolutions"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
+        public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length, IList<BaseResolution> resolutions)
+        {
+            return new CategorizedEntity(new EntityWithResolution(text, category, subCategory, offset, length, score, resolutions));
         }
 
         /// <summary>
