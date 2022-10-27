@@ -1,14 +1,9 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2022-11-01)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added two additional fields to Policy Attestations representing `AssessmentDate` and `Metadata`
 
 ## 1.0.0 (2022-09-29)
 
