@@ -372,6 +372,20 @@ function New-CADLPackageFolder() {
     Write-Host "projectFolder:$projectFolder, apifolder:$apifolder"
     if ((Test-Path -Path $projectFolder) -And (Test-Path -Path $apifolder)) {
         Write-Host "Path exists!"
+        if (Test-Path -Path $projectFolder/src/autorest.md) {
+            Remove-Item -Path $projectFolder/src/autorest.md
+        }
+        $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
+        $fileContent = Get-Content -Path $projFile
+        $match = ($fileContent | Select-String -Pattern "<AutoRestInput>").LineNumber
+        if ($match.count -gt 0) {
+            $fileContent[$match[0] - 1] = "<AutoRestInput>$cadlInput</AutoRestInput>";
+        } else {
+            $startNum = ($fileContent | Select-String -Pattern '</PropertyGroup>').LineNumber[0]
+            $fileContent[$startNum - 2] += ([Environment]::NewLine + "<AutoRestInput>$cadlInput</AutoRestInput>")
+        }
+        $fileContent | Out-File $projFile
+
         Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
     } else {
         Write-Host "Path doesn't exist. create template."

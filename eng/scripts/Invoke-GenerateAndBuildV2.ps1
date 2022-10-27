@@ -111,9 +111,9 @@ if ($inputFileToGen) {
 
 # generate sdk from cadl file
 if ($relatedCadlProjectFolder) {
-    Push-Location $swaggerDir
-    npm install @azure-tools/cadl-csharp
-    Pop-Location
+    # Push-Location $swaggerDir
+    # npm install @azure-tools/cadl-csharp
+    # Pop-Location
     for ($i = 0; $i -le $relatedCadlProjectFolder.Count - 1; $i++) {
         $caldFolder = (Join-Path $swaggerDir $relatedCadlProjectFolder[$i]) -replace "\\", "/"
         $newPackageOutput = "newPackageOutput.json"
@@ -136,8 +136,8 @@ if ($relatedCadlProjectFolder) {
         New-CADLPackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -cadlInput $caldFolder/main.cadl -outputJsonFile $newpackageoutput
         # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --emit @azure-tools/cadl-csharp --output-path $sdkPath .\main.cadl
 
-        node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --output-path $sdkPath --emit @azure-tools/cadl-csharp ./main.cadl
-
+        # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --output-path $sdkPath --emit @azure-tools/cadl-csharp ./main.cadl
+        npx cadl compile --output-path $sdkPath --emit @azure-tools/cadl-csharp ./main.cadl
         GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkPath -path $projectFolder -downloadUrlPrefix "$downloadUrlPrefix" -skipGenerate -generatedSDKPackages $generatedSDKPackages
         Pop-Location
     }
