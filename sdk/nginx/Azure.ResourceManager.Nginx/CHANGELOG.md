@@ -14,7 +14,7 @@ This package follows the [Azure SDK Design Guidelines for .NET](https://azure.gi
 
 This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-## 1.0.0 (2022-11-04)
+## 1.0.0 (2022-11-01)
 
 This is the first stable release of the NGINX for Azure SDK for .NET. 
 
