@@ -45,4 +45,4 @@ if (Test-Path $installScript) {
     Remove-Item $installScript
 }
 
-npm install -g @azure-tools/cadl-csharp
+# npm install -g @azure-tools/cadl-csharp
