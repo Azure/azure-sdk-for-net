@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -188,7 +186,8 @@ namespace Azure.Monitor.Ingestion
             var exceptions = new List<Exception>();
 
             scope.Start();
-            int logsFailed = 0; // Keep track of the number of failed logs across batches
+            // Keep track of the number of failed logs across batches
+            int logsFailed = 0;
 
             // Partition the stream into individual blocks
             foreach (BatchedLogs<T> batch in Batch(logs, options))
@@ -212,8 +211,10 @@ namespace Azure.Monitor.Ingestion
                 {
                     logsFailed += batch.LogsList.Count;
                     // If we have an error, add error from response into exceptions list which represents the errors from all the batches
-                    exceptions ??= new List<Exception>();
-                    exceptions.Add(ex);
+                    exceptions = AddException(
+                    exceptions,
+                    ex,
+                    isRequestFailed: false);
                 }
             }
             if (exceptions.Count > 0)
@@ -269,7 +270,8 @@ namespace Azure.Monitor.Ingestion
             // A list of tasks that are currently executing which will
             // always be smaller than or equal to MaxWorkerCount
             List<Tuple<Task<Response>, int>> runningTasks = new();
-            int logsFailed = 0; // Keep track of the number of failed logs across batches
+            // Keep track of the number of failed logs across batches
+            int logsFailed = 0;
 
             // Partition the stream into individual blocks
             foreach (BatchedLogs<T> batch in Batch(logs, options))
@@ -303,15 +305,20 @@ namespace Azure.Monitor.Ingestion
                             // If current task has an exception, log the exception and add number of logs in this task to failed logs
                             if (runningTask.Exception != null)
                             {
-                                exceptions ??= new List<Exception>();
-                                exceptions.Add(runningTask.Exception);
+                                exceptions = AddException(
+                                    exceptions,
+                                    runningTask.Exception,
+                                    isRequestFailed: false);
                                 logsFailed += runningTasks[i].Item2;
                             }
                             // If current task returned a response that was not a success, log the exception and add number of logs in this task to failed logs
                             if (runningTask.Result.Status != 204)
                             {
-                                exceptions ??= new List<Exception>();
-                                exceptions.Add(new RequestFailedException(runningTask.Result));
+                                exceptions = AddException(
+                                    exceptions,
+                                    runningTask.Exception,
+                                    isRequestFailed: true,
+                                    runningTask.Result);
                                 logsFailed += runningTasks[i].Item2;
                             }
                             // Remove completed task from task list
@@ -323,8 +330,10 @@ namespace Azure.Monitor.Ingestion
                 catch (Exception ex)
                 {
                     // If we have an error, add error from response into exceptions list which represents the errors from all the batches
-                    exceptions ??= new List<Exception>();
-                    exceptions.Add(ex);
+                    exceptions = AddException(
+                                    exceptions,
+                                    ex,
+                                    isRequestFailed: false);
                 }
             }
 
@@ -336,8 +345,10 @@ namespace Azure.Monitor.Ingestion
             catch (Exception ex)
             {
                 // If we have an error, add error from response into exceptions list which represents the errors from all the batches
-                exceptions ??= new List<Exception>();
-                exceptions.Add(ex);
+                exceptions = AddException(
+                                exceptions,
+                                ex,
+                                isRequestFailed: false);
             }
 
             // At this point, all tasks have completed. Examine tasks to see if they have exceptions. If Status code != 204, add RequestFailedException to list of exceptions. Increment logsFailed accordingly
@@ -346,8 +357,10 @@ namespace Azure.Monitor.Ingestion
                 // Check if an exception to log
                 if (task.Item1.Exception != null)
                 {
-                    exceptions ??= new List<Exception>();
-                    exceptions.Add(task.Item1.Exception);
+                    AddException(
+                        exceptions,
+                        task.Item1.Exception,
+                        isRequestFailed: false);
                     logsFailed += task.Item2;
                 }
                 // Check status code
@@ -355,8 +368,11 @@ namespace Azure.Monitor.Ingestion
                 {
                     if (task.Item1.Result.Status != 204)
                     {
-                        exceptions ??= new List<Exception>();
-                        exceptions.Add(new RequestFailedException(task.Item1.Result));
+                        exceptions = AddException(
+                                        exceptions,
+                                        task.Item1.Exception,
+                                        isRequestFailed: true,
+                                        task.Item1.Result);
                     }
                     logsFailed += task.Item2;
                 }
@@ -389,6 +405,20 @@ namespace Azure.Monitor.Ingestion
             }
 
             return response;
+        }
+
+        private static List<Exception> AddException(List<Exception> exceptions, Exception ex, bool isRequestFailed, Response response = null)
+        {
+            exceptions ??= new List<Exception>();
+            if (isRequestFailed)
+            {
+                exceptions.Add(new RequestFailedException(response));
+            }
+            else
+            {
+                exceptions.Add(ex);
+            }
+            return exceptions;
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
