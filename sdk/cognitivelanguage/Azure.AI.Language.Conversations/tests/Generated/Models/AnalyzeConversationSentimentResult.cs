@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations
             }
 
             Results = results;
-            Kind = new AnalyzeConversationResultsKind("ConversationalSentimentResults");
+            Kind = AnalyzeConversationResultsKind.ConversationalSentimentResults;
         }
 
         /// <summary> Initializes a new instance of AnalyzeConversationSentimentResult. </summary>
