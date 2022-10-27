@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PrivateDns
     public partial class MXRecordCollection : ArmCollection, IEnumerable<MXRecordResource>, IAsyncEnumerable<MXRecordResource>
     {
         private readonly ClientDiagnostics _mxRecordRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _mxRecordRecordSetsRestClient;
+        private readonly MXRecordRestOperations _mxRecordRecordSetsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MXRecordCollection"/> class for mocking. </summary>
         protected MXRecordCollection()
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             _mxRecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", MXRecordResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(MXRecordResource.ResourceType, out string mxRecordRecordSetsApiVersion);
-            _mxRecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mxRecordRecordSetsApiVersion);
+            _mxRecordRecordSetsRestClient = new MXRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mxRecordRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MXRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, RecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MXRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, MXRecordData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MXRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, RecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MXRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, MXRecordData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));

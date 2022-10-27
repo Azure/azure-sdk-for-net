@@ -18,60 +18,60 @@ using Azure.ResourceManager.PrivateDns.Models;
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
-    /// A Class representing a MXRecord along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MXRecordResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMXRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetMXRecord method.
+    /// A Class representing a SrvRecord along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SrvRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSrvRecordResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetSrvRecord method.
     /// </summary>
-    public partial class MXRecordResource : ArmResource
+    public partial class SrvRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MXRecordResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SrvRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string relativeRecordSetName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/MX/{relativeRecordSetName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/SRV/{relativeRecordSetName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _mxRecordRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _mxRecordRecordSetsRestClient;
-        private readonly RecordSetData _data;
+        private readonly ClientDiagnostics _srvRecordInfoRecordSetsClientDiagnostics;
+        private readonly SrvRecordRestOperations _srvRecordInfoRecordSetsRestClient;
+        private readonly SrvRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="MXRecordResource"/> class for mocking. </summary>
-        protected MXRecordResource()
+        /// <summary> Initializes a new instance of the <see cref="SrvRecordResource"/> class for mocking. </summary>
+        protected SrvRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MXRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SrvRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MXRecordResource(ArmClient client, RecordSetData data) : this(client, data.Id)
+        internal SrvRecordResource(ArmClient client, SrvRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MXRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SrvRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MXRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SrvRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mxRecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string mxRecordRecordSetsApiVersion);
-            _mxRecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mxRecordRecordSetsApiVersion);
+            _srvRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string srvRecordInfoRecordSetsApiVersion);
+            _srvRecordInfoRecordSetsRestClient = new SrvRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, srvRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/privateDnsZones/MX";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/privateDnsZones/SRV";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RecordSetData Data
+        public virtual SrvRecordData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MXRecordResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SrvRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Get");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _mxRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _srvRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MXRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MXRecordResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SrvRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Get");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _mxRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToRecordType(), Id.Name, cancellationToken);
+                var response = _srvRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MXRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Delete");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _mxRecordRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _srvRecordInfoRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new PrivateDnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Delete");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _mxRecordRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToRecordType(), Id.Name, ifMatch, cancellationToken);
+                var response = _srvRecordInfoRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new PrivateDnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<MXRecordResource>> UpdateAsync(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SrvRecordResource>> UpdateAsync(SrvRecordData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Update");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _mxRecordRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MXRecordResource(Client, response.Value), response.GetRawResponse());
+                var response = await _srvRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<MXRecordResource> Update(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<SrvRecordResource> Update(SrvRecordData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Update");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _mxRecordRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new MXRecordResource(Client, response.Value), response.GetRawResponse());
+                var response = _srvRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, data, ifMatch, cancellationToken);
+                return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
