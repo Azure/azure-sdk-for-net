@@ -320,30 +320,48 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                string digest = OciBlobDescriptor.ComputeDigest(stream);
                 long length = stream.Length;
                 int maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
 
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
+                string digest = default;
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = null;
                 if (length < maxChunkSize)
                 {
+                    digest = OciBlobDescriptor.ComputeDigest(stream);
                     uploadChunkResult = _blobRestClient.UploadChunk(startUploadResult.Headers.Location, stream, cancellationToken: cancellationToken);
                 }
                 else
                 {
                     byte[] buffer = new byte[maxChunkSize];
-                    foreach (var range in GetRanges(length, maxChunkSize))
+                    var ranges = GetRanges(length, maxChunkSize);
+                    using SHA256 sha256 = SHA256.Create();
+
+                    for (int i = 0; i < ranges.Count; i++)
                     {
+                        var range = ranges[i];
+
                         var location = uploadChunkResult?.Headers.Location ?? startUploadResult.Headers.Location;
                         var chunkLength = stream.Read(buffer, 0, (int)range.Length);
+
+                        if (i < ranges.Count - 1)
+                        {
+                            sha256.TransformBlock(buffer, 0, chunkLength, buffer, chunkLength);
+                        }
+                        else
+                        {
+                            sha256.TransformFinalBlock(buffer, 0, chunkLength);
+                        }
+
                         using (Stream chunk = new MemoryStream(buffer))
                         {
                             uploadChunkResult = _blobRestClient.UploadChunk(location, chunk, ToContentRangeString(range), chunkLength.ToString(CultureInfo.InvariantCulture), cancellationToken);
                         }
                     }
+
+                    digest = "sha256:" + OciBlobDescriptor.BytesToString(sha256.Hash);
                 };
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
@@ -373,29 +391,47 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                string digest = OciBlobDescriptor.ComputeDigest(stream);
                 long length = stream.Length;
                 int maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
 
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
+                string digest = default;
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = null;
                 if (length < maxChunkSize)
                 {
+                    digest = OciBlobDescriptor.ComputeDigest(stream);
                     uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
                     byte[] buffer = new byte[maxChunkSize];
-                    foreach (var range in GetRanges(length, maxChunkSize))
+                    var ranges = GetRanges(length, maxChunkSize);
+                    using SHA256 sha256 = SHA256.Create();
+
+                    for (int i = 0; i < ranges.Count; i++)
                     {
+                        var range = ranges[i];
+
                         var location = uploadChunkResult?.Headers.Location ?? startUploadResult.Headers.Location;
                         var chunkLength = await stream.ReadAsync(buffer, 0, (int)range.Length, cancellationToken).ConfigureAwait(false);
+
+                        if (i < ranges.Count - 1)
+                        {
+                            sha256.TransformBlock(buffer, 0, chunkLength, buffer, chunkLength);
+                        }
+                        else
+                        {
+                            sha256.TransformFinalBlock(buffer, 0, chunkLength);
+                        }
+
                         using (Stream chunk = new MemoryStream(buffer))
                         {
                             uploadChunkResult = await _blobRestClient.UploadChunkAsync(location, chunk, ToContentRangeString(range), chunkLength.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
                         }
+
+                        digest = "sha256:" + OciBlobDescriptor.BytesToString(sha256.Hash);
                     }
                 };
 
@@ -422,20 +458,24 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return FormattableString.Invariant($"{range.Offset}-{endRange}");
         }
 
-        private static IEnumerable<HttpRange> GetRanges(long fileSize, long chunkSize)
+        private static IList<HttpRange> GetRanges(long fileSize, long chunkSize)
         {
-            long count = Math.DivRem(fileSize, chunkSize, out long lastChunkSize);
+            int count = (int)Math.DivRem(fileSize, chunkSize, out long lastChunkSize);
+
+            List<HttpRange> ranges = new(count);
 
             for (int i = 0; i < count; i++)
             {
                 if (i == (count - 1) && lastChunkSize > 0)
                 {
-                    yield return new HttpRange(i * chunkSize, lastChunkSize);
-                    yield break;
+                    ranges.Add(new HttpRange(i * chunkSize, lastChunkSize));
+                    break;
                 }
 
-                yield return new HttpRange(i * chunkSize, chunkSize);
+                ranges.Add(new HttpRange(i * chunkSize, chunkSize));
             }
+
+            return ranges;
         }
 
         /// <summary>
@@ -520,7 +560,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             // Validate that the file content did not change in transmission from the registry.
 
-            // TODO: The registry may use a different digest algorithm - we may need to handle that
+            // According to https://docs.docker.com/registry/spec/api/#content-digests, compliant
+            // registry implementations use sha256.
+
             string contentDigest = OciBlobDescriptor.ComputeDigest(content);
             content.Position = 0;
             return digest.Equals(contentDigest, StringComparison.OrdinalIgnoreCase);
@@ -542,6 +584,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
+                // TODO: Compute digest asynchronously, if large.
                 if (!ValidateDigest(blobResult.Value, digest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(blobResult,
@@ -573,6 +616,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
 
+                // TODO: Compute digest asynchronously, if large.
                 if (!ValidateDigest(blobResult.Value, digest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(blobResult,
