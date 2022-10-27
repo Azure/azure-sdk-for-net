@@ -1,0 +1,5 @@
+matrix:
+  scenarios:
+    sendreceive:
+      image: Dockerfile
+      imageBuildDir: "../../../.."

@@ -5,7 +5,7 @@ description: Stress tests for Service Bus for .NET
 
 dependencies:
 - name: stress-test-addons
-  version: 0.1.20
+  version: 0.2.0
   repository: https://stresstestcharts.blob.core.windows.net/helm/
 
 annotations:
