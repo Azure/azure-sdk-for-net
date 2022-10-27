@@ -61,7 +61,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/create-project
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/create-project
 
 Request Body:
 
@@ -161,7 +161,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/create-project
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/create-project
 
 Request Body:
 
@@ -228,7 +228,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project
 
 Response Body:
 
@@ -279,7 +279,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project
 
 Response Body:
 
@@ -327,7 +327,7 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment
 
 Response Body:
 
@@ -374,7 +374,7 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment
 
 Response Body:
 
@@ -434,7 +434,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-delete-from-resources-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-delete-from-resources-status
 
 Response Body:
 
@@ -508,7 +508,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-delete-from-resources-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-delete-from-resources-status
 
 Response Body:
 
@@ -582,7 +582,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-status
 
 Response Body:
 
@@ -656,7 +656,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-status
 
 Response Body:
 
@@ -730,7 +730,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-swap-deployments-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-swap-deployments-status
 
 Response Body:
 
@@ -804,7 +804,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-swap-deployments-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-swap-deployments-status
 
 Response Body:
 
@@ -879,7 +879,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-export-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-export-status
 
 Response Body:
 
@@ -955,7 +955,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-export-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-export-status
 
 Response Body:
 
@@ -1030,7 +1030,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-import-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-import-status
 
 Response Body:
 
@@ -1104,7 +1104,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-import-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-import-status
 
 Response Body:
 
@@ -1164,7 +1164,7 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-trained-model
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-trained-model
 
 Response Body:
 
@@ -1205,7 +1205,7 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-trained-model
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-trained-model
 
 Response Body:
 
@@ -1298,7 +1298,7 @@ Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSp
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-summary
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-summary
 
 Response Body:
 
@@ -1383,7 +1383,7 @@ Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSp
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-summary
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-summary
 
 Response Body:
 
@@ -1456,7 +1456,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-load-snapshot-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-load-snapshot-status
 
 Response Body:
 
@@ -1530,7 +1530,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-load-snapshot-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-load-snapshot-status
 
 Response Body:
 
@@ -1604,7 +1604,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-assign-deployment-resources-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-assign-deployment-resources-status
 
 Response Body:
 
@@ -1678,7 +1678,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-assign-deployment-resources-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-assign-deployment-resources-status
 
 Response Body:
 
@@ -1752,7 +1752,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-unassign-deployment-resources-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-unassign-deployment-resources-status
 
 Response Body:
 
@@ -1826,7 +1826,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-unassign-deployment-resources-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-unassign-deployment-resources-status
 
 Response Body:
 
@@ -1912,7 +1912,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-training-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-training-status
 
 Response Body:
 
@@ -2011,7 +2011,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-training-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-training-status
 
 Response Body:
 
@@ -2098,7 +2098,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project-deletion-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project-deletion-status
 
 Response Body:
 
@@ -2172,7 +2172,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project-deletion-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project-deletion-status
 
 Response Body:
 
@@ -2237,7 +2237,7 @@ await foreach (var data in client.GetProjectsAsync())
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-projects
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-projects
 
 Response Body:
 
@@ -2289,7 +2289,7 @@ foreach (var data in client.GetProjects())
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-projects
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-projects
 
 Response Body:
 
@@ -2338,7 +2338,7 @@ await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployments
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployments
 
 Response Body:
 
@@ -2386,7 +2386,7 @@ foreach (var data in client.GetDeployments("<projectName>"))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployments
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployments
 
 Response Body:
 
@@ -2433,7 +2433,7 @@ await foreach (var data in client.GetTrainedModelsAsync("<projectName>"))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-trained-models
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-trained-models
 
 Response Body:
 
@@ -2475,7 +2475,7 @@ foreach (var data in client.GetTrainedModels("<projectName>"))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-trained-models
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-trained-models
 
 Response Body:
 
@@ -2541,7 +2541,7 @@ await foreach (var data in client.GetModelEvaluationResultsAsync("<projectName>"
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-results
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-results
 
 Response Body:
 
@@ -2616,7 +2616,7 @@ foreach (var data in client.GetModelEvaluationResults("<projectName>", "<trained
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-results
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-results
 
 Response Body:
 
@@ -2675,7 +2675,7 @@ await foreach (var data in client.GetDeploymentResourcesAsync("<projectName>", 1
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployment-resources
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployment-resources
 
 Response Body:
 
@@ -2720,7 +2720,7 @@ foreach (var data in client.GetDeploymentResources("<projectName>", 1234, 1234, 
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployment-resources
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployment-resources
 
 Response Body:
 
@@ -2783,7 +2783,7 @@ await foreach (var data in client.GetTrainingJobsAsync("<projectName>"))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-jobs
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-jobs
 
 Response Body:
 
@@ -2883,7 +2883,7 @@ foreach (var data in client.GetTrainingJobs("<projectName>"))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-jobs
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-jobs
 
 Response Body:
 
@@ -2969,7 +2969,7 @@ await foreach (var data in client.GetAssignedResourceDeploymentsAsync(1234, 1234
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-assigned-resource-deployments
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-assigned-resource-deployments
 
 Response Body:
 
@@ -3024,7 +3024,7 @@ foreach (var data in client.GetAssignedResourceDeployments(1234, 1234, 1234))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-assigned-resource-deployments
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-assigned-resource-deployments
 
 Response Body:
 
@@ -3062,7 +3062,7 @@ await foreach (var data in client.GetSupportedLanguagesAsync("<projectKind>"))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-languages
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-languages
 
 Response Body:
 
@@ -3094,7 +3094,7 @@ foreach (var data in client.GetSupportedLanguages("<projectKind>"))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-languages
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-languages
 
 Response Body:
 
@@ -3141,7 +3141,7 @@ await foreach (var data in client.GetSupportedPrebuiltEntitiesAsync("<language>"
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-prebuilt-entities
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-prebuilt-entities
 
 Response Body:
 
@@ -3189,7 +3189,7 @@ foreach (var data in client.GetSupportedPrebuiltEntities("<language>", true))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-prebuilt-entities
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-prebuilt-entities
 
 Response Body:
 
@@ -3222,7 +3222,7 @@ await foreach (var data in client.GetTrainingConfigVersionsAsync("<projectKind>"
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-config-versions
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-config-versions
 
 Response Body:
 
@@ -3254,7 +3254,7 @@ foreach (var data in client.GetTrainingConfigVersions("<projectKind>"))
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-config-versions
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-config-versions
 
 Response Body:
 
@@ -3305,7 +3305,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-project
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-project
 
 Response Body:
 
@@ -3380,7 +3380,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-project
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-project
 
 Response Body:
 
@@ -3468,7 +3468,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/export
 
 Response Body:
 
@@ -3557,7 +3557,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/export
 
 Response Body:
 
@@ -3735,7 +3735,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/import
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/import
 
 Request Body:
 
@@ -3935,7 +3935,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/import
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/import
 
 Request Body:
 
@@ -4080,7 +4080,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/train
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/train
 
 Request Body:
 
@@ -4230,7 +4230,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/train
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/train
 
 Request Body:
 
@@ -4338,7 +4338,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/swap-deployments
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/swap-deployments
 
 Request Body:
 
@@ -4427,7 +4427,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/swap-deployments
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/swap-deployments
 
 Request Body:
 
@@ -4526,7 +4526,7 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/deploy-project
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/deploy-project
 
 Request Body:
 
@@ -4612,7 +4612,7 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/deploy-project
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/deploy-project
 
 Request Body:
 
@@ -4683,7 +4683,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment
 
 Response Body:
 
@@ -4758,7 +4758,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment
 
 Response Body:
 
@@ -4831,7 +4831,7 @@ Console.WriteLine(response.Status)
 <remarks>
 Below is the JSON schema for the request payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment-from-resources
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment-from-resources
 
 Request Body:
 
@@ -4881,7 +4881,7 @@ Console.WriteLine(response.Status)
 <remarks>
 Below is the JSON schema for the request payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment-from-resources
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment-from-resources
 
 Request Body:
 
@@ -4952,7 +4952,7 @@ Console.WriteLine(response.Status)
 <remarks>
 Below is the JSON schema for the request payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/assign-deployment-resources
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/assign-deployment-resources
 
 Request Body:
 
@@ -4997,7 +4997,7 @@ Console.WriteLine(response.Status)
 <remarks>
 Below is the JSON schema for the request payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/assign-deployment-resources
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/assign-deployment-resources
 
 Request Body:
 
@@ -5038,7 +5038,7 @@ Console.WriteLine(response.Status)
 <remarks>
 Below is the JSON schema for the request payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/unassign-deployment-resources
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/unassign-deployment-resources
 
 Request Body:
 
@@ -5073,7 +5073,7 @@ Console.WriteLine(response.Status)
 <remarks>
 Below is the JSON schema for the request payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/unassign-deployment-resources
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/unassign-deployment-resources
 
 Request Body:
 
@@ -5135,7 +5135,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/cancel-training-job
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/cancel-training-job
 
 Response Body:
 
@@ -5235,7 +5235,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/cancel-training-job
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/cancel-training-job
 
 Response Body:
 
