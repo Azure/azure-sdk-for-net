@@ -1,14 +1,13 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2022-10-27)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Supported following methods:
+- Get available SSL options info
+- Get specified SSL predefined policy
+- Get all SSL predefined policies
 
 ## 1.0.1 (2022-09-13)
 
