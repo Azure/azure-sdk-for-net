@@ -30,9 +30,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
-        internal MXRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
+        /// <param name="mxRecords"> The list of MX records in the record set. </param>
+        internal MXRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<MXRecordInfo> mxRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
         {
-            MXRecords = new ChangeTrackingList<MXRecordInfo>();
+            MXRecords = mxRecords;
         }
 
         /// <summary> The list of MX records in the record set. </summary>

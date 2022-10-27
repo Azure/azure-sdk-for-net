@@ -30,9 +30,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
-        internal PtrRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
+        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
+        internal PtrRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<PtrRecordInfo> ptrRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
         {
-            PtrRecords = new ChangeTrackingList<PtrRecordInfo>();
+            PtrRecords = ptrRecords;
         }
 
         /// <summary> The list of Ptr records in the record set. </summary>

@@ -79,7 +79,10 @@ directive:
       $.SoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
       $.SoaRecord.properties.minimumTtl["x-ms-client-name"] = "minimumTtlInSeconds";
       $.SoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
-
+# Mx Ns => MX NS
+  - from: swagger-document
+    where: $.definitions
+    transform: >
 # $.RecordSet["x-ms-client-name"] = "Record";
 # $.RecordSetProperties["x-ms-client-name"] = "RecordProperties";
 ```
