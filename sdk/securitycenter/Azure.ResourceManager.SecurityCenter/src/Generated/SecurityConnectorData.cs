@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="location"> The location. </param>
         public SecurityConnectorData(AzureLocation location) : base(location)
         {
-            Offerings = new ChangeTrackingList<CloudOffering>();
+            Offerings = new ChangeTrackingList<SecurityCenterCloudOffering>();
         }
 
         /// <summary> Initializes a new instance of SecurityConnectorData. </summary>
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="environmentName"> The multi cloud resource&apos;s cloud name. </param>
         /// <param name="offerings">
         /// A collection of offerings for the security connector.
-        /// Please note <see cref="CloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderFoDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
+        /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
         /// </param>
         /// <param name="environmentData">
         /// The security connector environment data.
-        /// Please note <see cref="EnvironmentData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AWSEnvironmentData"/>, <see cref="AzureDevOpsScopeEnvironmentData"/>, <see cref="GcpProjectEnvironmentData"/> and <see cref="GithubScopeEnvironmentData"/>.
+        /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/> and <see cref="GithubScopeEnvironment"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, CloudName? environmentName, IList<CloudOffering> offerings, EnvironmentData environmentData, string kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, SecurityCenterCloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironment environmentData, string kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             HierarchyIdentifier = hierarchyIdentifier;
             HierarchyIdentifierTrialEndOn = hierarchyIdentifierTrialEndOn;
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </summary>
         public DateTimeOffset? HierarchyIdentifierTrialEndOn { get; }
         /// <summary> The multi cloud resource&apos;s cloud name. </summary>
-        public CloudName? EnvironmentName { get; set; }
+        public SecurityCenterCloudName? EnvironmentName { get; set; }
         /// <summary>
         /// A collection of offerings for the security connector.
-        /// Please note <see cref="CloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderFoDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
+        /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
         /// </summary>
-        public IList<CloudOffering> Offerings { get; }
+        public IList<SecurityCenterCloudOffering> Offerings { get; }
         /// <summary>
         /// The security connector environment data.
-        /// Please note <see cref="EnvironmentData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AWSEnvironmentData"/>, <see cref="AzureDevOpsScopeEnvironmentData"/>, <see cref="GcpProjectEnvironmentData"/> and <see cref="GithubScopeEnvironmentData"/>.
+        /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/> and <see cref="GithubScopeEnvironment"/>.
         /// </summary>
-        public EnvironmentData EnvironmentData { get; set; }
+        public SecurityConnectorEnvironment EnvironmentData { get; set; }
         /// <summary> Kind of the resource. </summary>
         public string Kind { get; set; }
         /// <summary> Entity tag is used for comparing two or more entities from the same requested resource. </summary>

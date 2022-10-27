@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateEvaluatePoliciesRequest(string subscriptionId, string resourceGroupName, string labName, string name, EvaluatePoliciesContent content)
+        internal HttpMessage CreateEvaluatePoliciesRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabEvaluatePoliciesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EvaluatePoliciesResponse>> EvaluatePoliciesAsync(string subscriptionId, string resourceGroupName, string labName, string name, EvaluatePoliciesContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        EvaluatePoliciesResponse value = default;
+                        DevTestLabEvaluatePoliciesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EvaluatePoliciesResponse.DeserializeEvaluatePoliciesResponse(document.RootElement);
+                        value = DevTestLabEvaluatePoliciesResult.DeserializeDevTestLabEvaluatePoliciesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EvaluatePoliciesResponse> EvaluatePolicies(string subscriptionId, string resourceGroupName, string labName, string name, EvaluatePoliciesContent content, CancellationToken cancellationToken = default)
+        public Response<DevTestLabEvaluatePoliciesResult> EvaluatePolicies(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        EvaluatePoliciesResponse value = default;
+                        DevTestLabEvaluatePoliciesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EvaluatePoliciesResponse.DeserializeEvaluatePoliciesResponse(document.RootElement);
+                        value = DevTestLabEvaluatePoliciesResult.DeserializeDevTestLabEvaluatePoliciesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static HybridComputeSettingsProperties DeserializeHybridComputeSettingsProperties(JsonElement element)
         {
             Optional<HybridComputeProvisioningState> hybridComputeProvisioningState = default;
-            AutoProvision autoProvision = default;
+            AutoProvisionState autoProvision = default;
             Optional<string> resourceGroupName = default;
             Optional<string> region = default;
             Optional<ProxyServerProperties> proxyServer = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("autoProvision"))
                 {
-                    autoProvision = new AutoProvision(property.Value.GetString());
+                    autoProvision = new AutoProvisionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceGroupName"))

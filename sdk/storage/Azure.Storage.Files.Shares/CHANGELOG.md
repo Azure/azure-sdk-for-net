@@ -1,6 +1,19 @@
 # Release History
 
-## 12.12.0 (2022-10-11)
+## 12.13.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.12.1 (2022-10-25)
+- Fixed bug where ShareFileClient Download() and DownloadAsync() would return a consumed stream when TransferValidation was enabled.
+
+## 12.12.0 (2022-10-12)
 - Includes all features from 12.12.0-beta.1.
 - Added support for StorageTransferOptions on ShareFile upload (concurrency not supported).
 

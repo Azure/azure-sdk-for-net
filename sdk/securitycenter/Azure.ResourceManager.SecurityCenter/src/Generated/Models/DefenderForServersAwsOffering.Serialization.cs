@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersAwsOffering DeserializeDefenderForServersAwsOffering(JsonElement element)
         {
-            Optional<DefenderForServersAwsOfferingDefenderForServers> defenderForServers = default;
+            Optional<AwsDefenderForServersInfo> defenderForServers = default;
             Optional<DefenderForServersAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingVaAutoProvisioning> vaAutoProvisioning = default;
+            Optional<DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
             Optional<DefenderForServersAwsOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
             Optional<DefenderForServersAwsOfferingSubPlan> subPlan = default;
             Optional<DefenderForServersAwsOfferingVmScanners> vmScanners = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defenderForServers = DefenderForServersAwsOfferingDefenderForServers.DeserializeDefenderForServersAwsOfferingDefenderForServers(property.Value);
+                    defenderForServers = AwsDefenderForServersInfo.DeserializeAwsDefenderForServersInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("arcAutoProvisioning"))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vaAutoProvisioning = DefenderForServersAwsOfferingVaAutoProvisioning.DeserializeDefenderForServersAwsOfferingVaAutoProvisioning(property.Value);
+                    vaAutoProvisioning = DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mdeAutoProvisioning"))

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "251",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1f86f28ba69db0508f0a6a925a82b9e8-673d2671e5cec277-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "0aa6097794c75e28b1412ddb45f9ea8a",
+        "traceparent": "00-53cca0f52ad5c6069812543c3ce2b820-a6716357f655adfb-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "053eabd003baef3773c024f69a1856b6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -35,13 +35,13 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "9ebea4b6-aacc-4fba-8ea5-81b55834fe64",
+        "apim-request-id": "d049e68d-fae1-4698-98f9-179c8e881879",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:26:05 GMT",
+        "Date": "Fri, 14 Oct 2022 22:20:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "4"
+        "x-envoy-upstream-service-time": "5"
       },
       "ResponseBody": {
         "error": {
@@ -56,7 +56,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "453828752",
+    "RandomSeed": "384433539",
     "TEXTANALYTICS_CUSTOM_ENTITIES_DEPLOYMENT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
     "TEXTANALYTICS_CUSTOM_ENTITIES_PROJECT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",

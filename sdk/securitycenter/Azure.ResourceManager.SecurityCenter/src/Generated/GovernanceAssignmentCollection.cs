@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="GovernanceAssignmentResource" /> and their operations.
-    /// Each <see cref="GovernanceAssignmentResource" /> in the collection will belong to the same instance of <see cref="SecurityAssessmentResponseResource" />.
-    /// To get a <see cref="GovernanceAssignmentCollection" /> instance call the GetGovernanceAssignments method from an instance of <see cref="SecurityAssessmentResponseResource" />.
+    /// Each <see cref="GovernanceAssignmentResource" /> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource" />.
+    /// To get a <see cref="GovernanceAssignmentCollection" /> instance call the GetGovernanceAssignments method from an instance of <see cref="SecurityAssessmentResource" />.
     /// </summary>
     public partial class GovernanceAssignmentCollection : ArmCollection, IEnumerable<GovernanceAssignmentResource>, IAsyncEnumerable<GovernanceAssignmentResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SecurityAssessmentResponseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityAssessmentResponseResource.ResourceType), nameof(id));
+            if (id.ResourceType != SecurityAssessmentResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityAssessmentResource.ResourceType), nameof(id));
         }
 
         /// <summary>

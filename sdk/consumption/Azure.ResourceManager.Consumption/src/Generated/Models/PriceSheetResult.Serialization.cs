@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<SystemData> systemData = default;
             Optional<IReadOnlyList<PriceSheetProperties>> pricesheets = default;
             Optional<string> nextLink = default;
-            Optional<MeterDetails> download = default;
+            Optional<ConsumptionMeterDetails> download = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Consumption.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            download = MeterDetails.DeserializeMeterDetails(property0.Value);
+                            download = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property0.Value);
                             continue;
                         }
                     }

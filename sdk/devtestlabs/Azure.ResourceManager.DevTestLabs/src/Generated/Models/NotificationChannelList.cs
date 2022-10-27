@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of NotificationChannelList. </summary>
         internal NotificationChannelList()
         {
-            Value = new ChangeTrackingList<NotificationChannelData>();
+            Value = new ChangeTrackingList<DevTestLabNotificationChannelData>();
         }
 
         /// <summary> Initializes a new instance of NotificationChannelList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal NotificationChannelList(IReadOnlyList<NotificationChannelData> value, string nextLink)
+        internal NotificationChannelList(IReadOnlyList<DevTestLabNotificationChannelData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<NotificationChannelData> Value { get; }
+        public IReadOnlyList<DevTestLabNotificationChannelData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

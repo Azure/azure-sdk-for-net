@@ -30,19 +30,22 @@ var data = new
                     {
                         text = "Hello, how can I help you?",
                         id = "1",
-                        participantId = "Agent",
+                        role = "Agent",
+                        participantId = "Agent_1",
                     },
                     new
                     {
                         text = "How to upgrade Office? I am getting error messages the whole day.",
                         id = "2",
-                        participantId = "Customer",
+                        role = "Customer",
+                        participantId = "Customer_1",
                     },
                     new
                     {
                         text = "Press the upgrade button please. Then sign in and follow the instructions.",
                         id = "3",
-                        participantId = "Agent",
+                        role = "Agent",
+                        participantId = "Agent_1",
                     },
                 },
                 id = "1",
@@ -69,8 +72,7 @@ var data = new
     },
 };
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
-analyzeConversationOperation.WaitForCompletion();
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
 JsonElement jobResults = result.RootElement;
@@ -98,6 +100,5 @@ foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items"
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationSummarization
-Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
-await analyzeConversationOperation.WaitForCompletionAsync();
+Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 ```

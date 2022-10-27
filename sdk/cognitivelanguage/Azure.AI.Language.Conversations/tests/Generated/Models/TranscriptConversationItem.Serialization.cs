@@ -15,35 +15,28 @@ namespace Azure.AI.Language.Conversations
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Itn))
+            writer.WritePropertyName("itn");
+            writer.WriteStringValue(Itn);
+            writer.WritePropertyName("maskedItn");
+            writer.WriteStringValue(MaskedItn);
+            writer.WritePropertyName("text");
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("lexical");
+            writer.WriteStringValue(Lexical);
+            if (Optional.IsCollectionDefined(WordLevelTimings))
             {
-                writer.WritePropertyName("itn");
-                writer.WriteStringValue(Itn);
-            }
-            if (Optional.IsDefined(MaskedItn))
-            {
-                writer.WritePropertyName("maskedItn");
-                writer.WriteStringValue(MaskedItn);
-            }
-            if (Optional.IsDefined(Text))
-            {
-                writer.WritePropertyName("text");
-                writer.WriteStringValue(Text);
-            }
-            if (Optional.IsDefined(Lexical))
-            {
-                writer.WritePropertyName("lexical");
-                writer.WriteStringValue(Lexical);
-            }
-            if (Optional.IsCollectionDefined(AudioTimings))
-            {
-                writer.WritePropertyName("audioTimings");
+                writer.WritePropertyName("wordLevelTimings");
                 writer.WriteStartArray();
-                foreach (var item in AudioTimings)
+                foreach (var item in WordLevelTimings)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ConversationItemLevelTiming))
+            {
+                writer.WritePropertyName("conversationItemLevelTiming");
+                writer.WriteObjectValue(ConversationItemLevelTiming);
             }
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);

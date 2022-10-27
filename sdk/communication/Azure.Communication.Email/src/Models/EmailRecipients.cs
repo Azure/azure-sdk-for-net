@@ -32,7 +32,7 @@ namespace Azure.Communication.Email.Models
                 CC = new ChangeTrackingList<EmailAddress>(new Optional<IList<EmailAddress>>(cc.ToList()));
             }
 
-            if (cc != null)
+            if (bcc != null)
             {
                 BCC = new ChangeTrackingList<EmailAddress>(new Optional<IList<EmailAddress>>(bcc.ToList()));
             }

@@ -18,21 +18,21 @@ namespace Azure.AI.Language.Conversations
             {
                 switch (discriminator.GetString())
                 {
-                    case "Age": return AgeResolution.DeserializeAgeResolution(element);
-                    case "Area": return AreaResolution.DeserializeAreaResolution(element);
-                    case "Boolean": return BooleanResolution.DeserializeBooleanResolution(element);
-                    case "Currency": return CurrencyResolution.DeserializeCurrencyResolution(element);
-                    case "DateTime": return DateTimeResolution.DeserializeDateTimeResolution(element);
-                    case "Information": return InformationResolution.DeserializeInformationResolution(element);
-                    case "Length": return LengthResolution.DeserializeLengthResolution(element);
-                    case "Number": return NumberResolution.DeserializeNumberResolution(element);
-                    case "NumericRange": return NumericRangeResolution.DeserializeNumericRangeResolution(element);
-                    case "Ordinal": return OrdinalResolution.DeserializeOrdinalResolution(element);
-                    case "Speed": return SpeedResolution.DeserializeSpeedResolution(element);
-                    case "Temperature": return TemperatureResolution.DeserializeTemperatureResolution(element);
-                    case "TemporalSpan": return TemporalSpanResolution.DeserializeTemporalSpanResolution(element);
-                    case "Volume": return VolumeResolution.DeserializeVolumeResolution(element);
-                    case "Weight": return WeightResolution.DeserializeWeightResolution(element);
+                    case "AgeResolution": return AgeResolution.DeserializeAgeResolution(element);
+                    case "AreaResolution": return AreaResolution.DeserializeAreaResolution(element);
+                    case "BooleanResolution": return BooleanResolution.DeserializeBooleanResolution(element);
+                    case "CurrencyResolution": return CurrencyResolution.DeserializeCurrencyResolution(element);
+                    case "DateTimeResolution": return DateTimeResolution.DeserializeDateTimeResolution(element);
+                    case "InformationResolution": return InformationResolution.DeserializeInformationResolution(element);
+                    case "LengthResolution": return LengthResolution.DeserializeLengthResolution(element);
+                    case "NumberResolution": return NumberResolution.DeserializeNumberResolution(element);
+                    case "NumericRangeResolution": return NumericRangeResolution.DeserializeNumericRangeResolution(element);
+                    case "OrdinalResolution": return OrdinalResolution.DeserializeOrdinalResolution(element);
+                    case "SpeedResolution": return SpeedResolution.DeserializeSpeedResolution(element);
+                    case "TemperatureResolution": return TemperatureResolution.DeserializeTemperatureResolution(element);
+                    case "TemporalSpanResolution": return TemporalSpanResolution.DeserializeTemporalSpanResolution(element);
+                    case "VolumeResolution": return VolumeResolution.DeserializeVolumeResolution(element);
+                    case "WeightResolution": return WeightResolution.DeserializeWeightResolution(element);
                 }
             }
             ResolutionKind resolutionKind = default;

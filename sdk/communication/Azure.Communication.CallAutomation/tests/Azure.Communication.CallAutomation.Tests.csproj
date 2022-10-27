@@ -23,9 +23,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecordedEvents\" />
+    <Folder Include="SessionRecordedEvents\CallAutomationClientAutomatedLiveTests\" />
     <Folder Include="SessionRecordedEvents\CallConnectionAutomatedLiveTests\" />
+    <Folder Include="SessionRecordedEvents\CallRecordingAutomatedLiveTests\" />
+    <Folder Include="SessionRecords\CallAutomationClientAutomatedLiveTests\" />
     <Folder Include="SessionRecords\CallConnectionAutomatedLiveTests\" />
     <Folder Include="SessionRecords\CallMediaLiveTests\" />
     <Folder Include="SessionRecords\CallConnectionLiveTests\" />
+    <Folder Include="SessionRecords\CallRecordingAutomatedLiveTests\" />
   </ItemGroup>
 </Project>

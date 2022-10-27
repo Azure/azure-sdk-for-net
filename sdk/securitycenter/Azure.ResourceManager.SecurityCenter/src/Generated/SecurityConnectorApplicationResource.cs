@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         private readonly ClientDiagnostics _securityConnectorApplicationClientDiagnostics;
         private readonly SecurityConnectorApplicationsRestOperations _securityConnectorApplicationRestClient;
-        private readonly ApplicationData _data;
+        private readonly SecurityApplicationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityConnectorApplicationResource"/> class for mocking. </summary>
         protected SecurityConnectorApplicationResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "SecurityConnectorApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityConnectorApplicationResource(ArmClient client, ApplicationData data) : this(client, data.Id)
+        internal SecurityConnectorApplicationResource(ArmClient client, SecurityApplicationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApplicationData Data
+        public virtual SecurityApplicationData Data
         {
             get
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityConnectorApplicationResource>> UpdateAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityConnectorApplicationResource>> UpdateAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SecurityConnectorApplicationResource> Update(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityConnectorApplicationResource> Update(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

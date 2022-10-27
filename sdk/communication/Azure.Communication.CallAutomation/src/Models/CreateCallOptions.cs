@@ -23,6 +23,7 @@ namespace Azure.Communication.CallAutomation
             Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
             CallSource = callSource;
             CallbackUri = callbackUri;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -41,9 +42,9 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// The subject.
+        /// The Operation context.
         /// </summary>
-        public string Subject { get; set; }
+        public string OperationContext { get; set; }
 
         /// <summary>
         /// Media Streaming Configuration.
@@ -53,6 +54,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Repeatability Headers.
         /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; } = new RepeatabilityHeaders(Guid.NewGuid(), DateTimeOffset.UtcNow);
+        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
     }
 }

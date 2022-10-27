@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static InformationProtectionAwsOffering DeserializeInformationProtectionAwsOffering(JsonElement element)
         {
-            Optional<InformationProtectionAwsOfferingInformationProtection> informationProtection = default;
+            Optional<AwsInformationProtection> informationProtection = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    informationProtection = InformationProtectionAwsOfferingInformationProtection.DeserializeInformationProtectionAwsOfferingInformationProtection(property.Value);
+                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"))
