@@ -88,11 +88,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var meterName = $"meterName{uniqueTestId}";
             using var meter = new Meter(meterName, "1.0");
 
-            var exportedMetrics = new List<Metric>();
-
             var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddInMemoryExporter(exportedMetrics)
                 .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
 
             if (asView)
