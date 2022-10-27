@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationGatewayAvailableSslOptions>> ListAvailableSslOptionsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> ListAvailableSslOptionsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -1130,9 +1130,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewayAvailableSslOptions value = default;
+                        ApplicationGatewayAvailableSslOptionsInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
+                        value = ApplicationGatewayAvailableSslOptionsInfo.DeserializeApplicationGatewayAvailableSslOptionsInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationGatewayAvailableSslOptions> ListAvailableSslOptions(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewayAvailableSslOptionsInfo> ListAvailableSslOptions(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -1155,9 +1155,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewayAvailableSslOptions value = default;
+                        ApplicationGatewayAvailableSslOptionsInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
+                        value = ApplicationGatewayAvailableSslOptionsInfo.DeserializeApplicationGatewayAvailableSslOptionsInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

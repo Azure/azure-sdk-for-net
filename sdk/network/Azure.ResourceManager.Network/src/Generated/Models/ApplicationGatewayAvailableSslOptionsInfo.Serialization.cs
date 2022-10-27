@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayAvailableSslOptions : IUtf8JsonSerializable
+    public partial class ApplicationGatewayAvailableSslOptionsInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayAvailableSslOptions DeserializeApplicationGatewayAvailableSslOptions(JsonElement element)
+        internal static ApplicationGatewayAvailableSslOptionsInfo DeserializeApplicationGatewayAvailableSslOptionsInfo(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayAvailableSslOptions(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(predefinedPolicies), Optional.ToNullable(defaultPolicy), Optional.ToList(availableCipherSuites), Optional.ToList(availableProtocols));
+            return new ApplicationGatewayAvailableSslOptionsInfo(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(predefinedPolicies), Optional.ToNullable(defaultPolicy), Optional.ToList(availableCipherSuites), Optional.ToList(availableProtocols));
         }
     }
 }

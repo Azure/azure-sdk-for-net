@@ -287,9 +287,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ApplicationGatewayAvailableSslOptions>> GetAvailableSslOptionsApplicationGatewayAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetAvailableSslOptionsInfoAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).GetAvailableSslOptionsApplicationGatewayAsync(cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetAvailableSslOptionsInfoAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -299,9 +299,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ApplicationGatewayAvailableSslOptions> GetAvailableSslOptionsApplicationGateway(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<ApplicationGatewayAvailableSslOptionsInfo> GetAvailableSslOptionsInfo(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAvailableSslOptionsApplicationGateway(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAvailableSslOptionsInfo(cancellationToken);
         }
 
         /// <summary>
@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetAvailableSslPredefinedPoliciesApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAvailableSslPredefinedPoliciesApplicationGatewaysAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSslPredefinedPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationGatewaySslPredefinedPolicy> GetAvailableSslPredefinedPoliciesApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAvailableSslPredefinedPoliciesApplicationGateways(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSslPredefinedPolicies(cancellationToken);
         }
 
         /// <summary>
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public static async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetSslPredefinedPolicyApplicationGatewayAsync(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetSslPredefinedPolicyAsync(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
 
-            return await GetExtensionClient(subscriptionResource).GetSslPredefinedPolicyApplicationGatewayAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetSslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -357,11 +357,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public static Response<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicyApplicationGateway(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public static Response<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicy(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
 
-            return GetExtensionClient(subscriptionResource).GetSslPredefinedPolicyApplicationGateway(predefinedPolicyName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSslPredefinedPolicy(predefinedPolicyName, cancellationToken);
         }
 
         /// <summary>

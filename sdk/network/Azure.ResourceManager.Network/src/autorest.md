@@ -98,6 +98,7 @@ rename-mapping:
   TagsObject: NetworkTagsObject
   EndpointType: ConnectionMonitorEndpointType
   ConnectionState: NetworkConnectionState
+  ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -179,6 +180,9 @@ override-operation-name:
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
   VirtualHubBgpConnections_ListLearnedRoutes: GetLearnedRoutesVirtualHubBgpConnection
   VirtualHubBgpConnections_ListAdvertisedRoutes: GetAdvertisedRoutesVirtualHubBgpConnection
+  ApplicationGateways_ListAvailableSslOptions: GetAvailableSslOptionsInfo
+  ApplicationGateways_ListAvailableSslPredefinedPolicies: GetSslPredefinedPolicies
+  ApplicationGateways_GetSslPredefinedPolicy: GetSslPredefinedPolicy
 
 directive:
   - remove-operation: 'PutBastionShareableLink'

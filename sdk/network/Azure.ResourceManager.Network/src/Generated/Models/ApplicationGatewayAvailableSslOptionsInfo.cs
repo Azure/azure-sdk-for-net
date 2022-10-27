@@ -12,17 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ApplicationGatewayAvailableSslOptions API service call. </summary>
-    public partial class ApplicationGatewayAvailableSslOptions : NetworkTrackedResourceData
+    public partial class ApplicationGatewayAvailableSslOptionsInfo : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptions. </summary>
-        public ApplicationGatewayAvailableSslOptions()
+        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptionsInfo. </summary>
+        public ApplicationGatewayAvailableSslOptionsInfo()
         {
             PredefinedPolicies = new ChangeTrackingList<WritableSubResource>();
             AvailableCipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
             AvailableProtocols = new ChangeTrackingList<ApplicationGatewaySslProtocol>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptions. </summary>
+        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptionsInfo. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultPolicy"> Name of the Ssl predefined policy applied by default to application gateway. </param>
         /// <param name="availableCipherSuites"> List of available Ssl cipher suites. </param>
         /// <param name="availableProtocols"> List of available Ssl protocols. </param>
-        internal ApplicationGatewayAvailableSslOptions(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IList<WritableSubResource> predefinedPolicies, ApplicationGatewaySslPolicyName? defaultPolicy, IList<ApplicationGatewaySslCipherSuite> availableCipherSuites, IList<ApplicationGatewaySslProtocol> availableProtocols) : base(id, name, resourceType, location, tags)
+        internal ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IList<WritableSubResource> predefinedPolicies, ApplicationGatewaySslPolicyName? defaultPolicy, IList<ApplicationGatewaySslCipherSuite> availableCipherSuites, IList<ApplicationGatewaySslProtocol> availableProtocols) : base(id, name, resourceType, location, tags)
         {
             PredefinedPolicies = predefinedPolicies;
             DefaultPolicy = defaultPolicy;
