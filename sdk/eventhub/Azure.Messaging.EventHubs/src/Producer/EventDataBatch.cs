@@ -150,9 +150,9 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   will not be reflected in the batch nor will any state transitions be reflected
         ///   to the original instance.
         ///
-        ///   An important consideration to note is that any <see cref="ReadOnlyMemory{T}" /> or byte array
-        ///   passed to the event or a <see cref="BinaryData" /> instance associated with the event
-        ///   is referenced by the batch and must remain valid and unchanged until the batch is disposed.
+        ///   Note: Any <see cref="ReadOnlyMemory{T}" />, byte array, or <see cref="BinaryData" />
+        ///   instance associated with the event is referenced by the batch and must remain valid and
+        ///   unchanged until the batch is disposed.
         /// </remarks>
         ///
         /// <exception cref="InvalidOperationException">
