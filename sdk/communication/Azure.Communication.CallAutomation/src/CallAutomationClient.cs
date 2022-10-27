@@ -211,7 +211,7 @@ namespace Azure.Communication.CallAutomation
             // validate callbackUri
             if (!IsValidHttpsUri(options.CallbackUri))
             {
-                throw new ArgumentException(CallAutomationErrorMessages.InvalidHttpsUriMessage, nameof(options));
+                throw new ArgumentException(CallAutomationErrorMessages.InvalidHttpsUriMessage);
             }
 
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);

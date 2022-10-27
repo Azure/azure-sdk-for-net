@@ -193,6 +193,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             verifyAddParticipantsResult(response);
         }
 
+        [Test]
+        public void AddParticipantsAsync_EmptyParticipantsToAdd()
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantsAsync(new AddParticipantsOptions(new CommunicationIdentifier[] { })).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage));
+        }
+
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public void AddParticipantsAsync_404NotFound(CommunicationIdentifier[] participantsToAdd)
         {
@@ -321,6 +331,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var response = callConnection.RemoveParticipants(participants);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
+
+        [Test]
+        public void RemoveParticipants_EmptyParticipantsToAdd()
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(new CommunicationIdentifier[] { }).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]

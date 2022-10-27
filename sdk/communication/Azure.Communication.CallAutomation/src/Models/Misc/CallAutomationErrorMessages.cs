@@ -32,5 +32,10 @@ namespace Azure.Communication.CallAutomation
         /// Invalid Https Uri message.
         /// </summary>
         public const string InvalidHttpsUriMessage = "Callback Uri has to be in well-formed, valid https format.";
+
+        /// <summary>
+        /// Invalid CommunicationIdentifierModel collection message.
+        /// </summary>
+        public const string InvalidCommunicationIdentifierModelCollectionMessage = "CommunicationIdentifierModel collection cannot be null or empty.";
     }
 }

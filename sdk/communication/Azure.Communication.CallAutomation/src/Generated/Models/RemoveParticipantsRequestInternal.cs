@@ -17,12 +17,12 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of RemoveParticipantsRequestInternal. </summary>
         /// <param name="participantsToRemove"> The participants to be removed from the call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="participantsToRemove"/> is null or empty. </exception>
         public RemoveParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToRemove)
         {
-            if (participantsToRemove == null)
+            if (participantsToRemove == null || participantsToRemove.Count() == 0)
             {
-                throw new ArgumentNullException(nameof(participantsToRemove));
+                throw new ArgumentNullException(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage, nameof(participantsToRemove));
             }
 
             ParticipantsToRemove = participantsToRemove.ToList();

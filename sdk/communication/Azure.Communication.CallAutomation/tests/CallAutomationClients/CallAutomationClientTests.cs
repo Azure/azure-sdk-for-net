@@ -344,6 +344,24 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
         }
 
+        [TestCaseSource(nameof(TestData_CreateCall_EmptyTargets))]
+        public void CreateCallWithOptions_EmptyTargets(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+            ;
+            CreateCallOptions options = new CreateCallOptions(
+                callSource: source,
+                targets: targets,
+                callbackUri: callbackUri)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage));
+        }
+
         [TestCaseSource(nameof(TestData_CreateCall))]
         public void CreateCallAsync_404NotFound(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
@@ -486,6 +504,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 {
                     new CallSource(new CommunicationUserIdentifier("56789")),
                     new CommunicationIdentifier[] {new CommunicationUserIdentifier("12345") }
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_CreateCall_EmptyTargets()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CallSource(new CommunicationUserIdentifier("56789")),
+                    new CommunicationIdentifier[] {},
+                    new Uri("https://bot.contoso.com/callback")
                 },
             };
         }
