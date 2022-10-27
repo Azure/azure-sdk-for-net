@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="AaaaRecordResource" /> object. </returns>
         public static AaaaRecordResource GetAaaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<AaaaRecordResource>(() =>
             {
                 AaaaRecordResource.ValidateResourceId(id);
                 return new AaaaRecordResource(client, id);

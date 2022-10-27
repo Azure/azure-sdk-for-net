@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> The ETag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
+        /// <param name="ttlInSeconds"> The TTL (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="aRecords"> The list of A records in the record set. </param>
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
         /// <param name="srvRecords"> The list of SRV records in the record set. </param>
         /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<ARecordInfo> aRecords, IList<AaaaRecordInfo> aaaaRecords, CnameRecordInfo cnameRecordInfo, IList<MXRecordInfo> mxRecords, IList<PtrRecordInfo> ptrRecords, SoaRecordInfo soaRecordInfo, IList<SrvRecordInfo> srvRecords, IList<TxtRecordInfo> txtRecords) : base(id, name, resourceType, systemData)
+        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, bool? isAutoRegistered, IList<ARecordInfo> aRecords, IList<AaaaRecordInfo> aaaaRecords, CnameRecordInfo cnameRecordInfo, IList<MXRecordInfo> mxRecords, IList<PtrRecordInfo> ptrRecords, SoaRecordInfo soaRecordInfo, IList<SrvRecordInfo> srvRecords, IList<TxtRecordInfo> txtRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
-            Ttl = ttl;
+            TtlInSeconds = ttlInSeconds;
             Fqdn = fqdn;
             IsAutoRegistered = isAutoRegistered;
             ARecords = aRecords;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> The metadata attached to the record set. </summary>
         public IDictionary<string, string> Metadata { get; }
         /// <summary> The TTL (time-to-live) of the records in the record set. </summary>
-        public long? Ttl { get; set; }
+        public long? TtlInSeconds { get; set; }
         /// <summary> Fully qualified domain name of the record set. </summary>
         public string Fqdn { get; }
         /// <summary> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </summary>

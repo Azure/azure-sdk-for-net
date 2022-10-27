@@ -65,4 +65,21 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/SRV: SrvRecord
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/TXT: TxtRecord
 
+directive:
+  - from: privatedns.json
+    where: $.definitions
+    transform: >
+      $.RecordSetProperties.properties.ttl["x-ms-client-name"] = "TtlInSeconds";
+
+# FooTime => FooTimeInSeconds
+  - from: privatedns.json
+    where: $.definitions
+    transform: >
+      $.SoaRecord.properties.expireTime["x-ms-client-name"] = "expireTimeInSeconds";
+      $.SoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
+      $.SoaRecord.properties.minimumTtl["x-ms-client-name"] = "minimumTtlInSeconds";
+      $.SoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
+
+# $.RecordSet["x-ms-client-name"] = "Record";
+# $.RecordSetProperties["x-ms-client-name"] = "RecordProperties";
 ```

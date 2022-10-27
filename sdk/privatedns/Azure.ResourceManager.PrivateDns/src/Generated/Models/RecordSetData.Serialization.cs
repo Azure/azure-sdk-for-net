@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Ttl))
+            if (Optional.IsDefined(TtlInSeconds))
             {
                 writer.WritePropertyName("ttl");
-                writer.WriteNumberValue(Ttl.Value);
+                writer.WriteNumberValue(TtlInSeconds.Value);
             }
             if (Optional.IsCollectionDefined(ARecords))
             {
