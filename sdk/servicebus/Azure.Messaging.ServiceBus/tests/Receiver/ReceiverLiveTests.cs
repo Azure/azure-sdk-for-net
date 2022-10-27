@@ -79,11 +79,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public async Task ReceiverDrainsOnClosing()
         {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: ShortLockDuration))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 using var cts = new CancellationTokenSource();
-                cts.CancelAfter(TimeSpan.FromSeconds(100));
+                cts.CancelAfter(TimeSpan.FromSeconds(30));
 
                 List<Task> tasks = new();
                 tasks.Add(Send());
@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         await Task.Delay(500);
                         await using var sender = client.CreateSender(scope.QueueName);
-                        await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(1));
+                        await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                     }
                 }
             }
