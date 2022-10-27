@@ -3,12 +3,19 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-
+- ExportRdbContent has a new parameter PreferredDataArchiveAuthMethod
+- ImportRdbContent hasa new paramter PreferredDataArchiveAuthMethod
+- RedisLinkedServerWithPropertyCreateOrUpdateContent has a new parameter GeoReplicatedPrimaryHostName
+- RedisLinkedServerWithPropertyCreateOrUpdateContent has a new parameter PrimaryHostName
+- RedisLinkedServerWithPropertyData has a new parameter GeoReplicatedPrimaryHostName
+- RedisLinkedServerWithPropertyData has a new parameter PrimaryHostName
 ### Breaking Changes
-
+- Deleting a linked server is now a long running operation
+- Updating a cache is now a long running operation
 ### Bugs Fixed
 
 ### Other Changes
+- API version 2022-06-01 will be used in HTTP requests
 
 ## 1.0.2 (2022-10-01)
 
