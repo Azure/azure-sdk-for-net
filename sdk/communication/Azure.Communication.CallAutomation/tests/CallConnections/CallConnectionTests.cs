@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using System;
 
 namespace Azure.Communication.CallAutomation.Tests.CallConnections
 {
@@ -162,6 +163,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.AreEqual(ex?.Status, 404);
         }
 
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_NoCallerId))]
+        public void TransferCallToParticipant_NoCallerIdValidation(CommunicationIdentifier targetParticipant)
+        {
+            var callConnection = CreateMockCallConnection(202);
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(targetParticipant)));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.TransferToParticipantOptionsNullSourceCallerId));
+        }
+
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public async Task AddParticipantsAsync_202Accepted(CommunicationIdentifier[] participantsToAdd)
         {
@@ -200,6 +211,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipants(new AddParticipantsOptions(participantsToAdd)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipants_NoCallerId))]
+        public void AddParticipants_NoCallerId(CommunicationIdentifier[] participantsToAdd)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.AddParticipants(new AddParticipantsOptions(participantsToAdd)));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.AddParticipantsOptionsNullSourceCallerId));
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
@@ -349,6 +370,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
         }
 
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_NoCallerId()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new PhoneNumberIdentifier("+123456")
+                },
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_GetParticipant()
         {
             return new[]
@@ -367,6 +399,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 new object?[]
                 {
                     new CommunicationIdentifier[] { new CommunicationUserIdentifier("userId"), new CommunicationUserIdentifier("userId2") }
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_AddParticipants_NoCallerId()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CommunicationIdentifier[] { new CommunicationUserIdentifier("userId"), new PhoneNumberIdentifier("+1234567") }
                 },
             };
         }
