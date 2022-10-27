@@ -1,4 +1,4 @@
-# Microsoft Azure Cosmos DB Management client library for .NET
+# Microsoft Azure Cosmos DB management client library for .NET
 
 Microsoft Azure Cosmos DB is a fully managed NoSQL database for modern app development. Single-digit millisecond response times, and automatic and instant scalability, guarantee speed at any scale.
 
