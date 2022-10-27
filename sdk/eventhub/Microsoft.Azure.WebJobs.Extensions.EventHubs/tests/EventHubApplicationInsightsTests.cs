@@ -58,6 +58,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         };
 
         [Test]
+        [Ignore("Remove ignore when new EventHubs package is released with updated tracing behavior.")]
         public async Task EventHub_SingleDispatch()
         {
             var (jobHost, host) = BuildHost<EventHubTestSingleDispatchJobs>();
