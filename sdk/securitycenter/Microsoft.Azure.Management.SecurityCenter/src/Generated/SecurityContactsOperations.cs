@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SecurityContact>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<List<SecurityContact>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SecurityContact>>();
+            var _result = new AzureOperationResponse<List<SecurityContact>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -214,7 +214,9 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SecurityContact>>(_responseContent, Client.DeserializationSettings);
+                    var b = Rest.Serialization.SafeJsonConvert.DeserializeObject<List<SecurityContact>>(_responseContent, Client.DeserializationSettings);
+
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<List<SecurityContact>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

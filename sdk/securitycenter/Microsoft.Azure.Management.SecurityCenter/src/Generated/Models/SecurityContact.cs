@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Management.Security.Models
         {
             Emails = emails;
             Phone = phone;
-            AlertNotifications = alertNotifications;
-            NotificationsByRole = notificationsByRole;
+            AlertNotifications = new SecurityContactPropertiesAlertNotifications();
+            NotificationsByRole = new SecurityContactPropertiesNotificationsByRole();
             CustomInit();
         }
 

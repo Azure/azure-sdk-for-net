@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Security
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<SecurityContact> List(this ISecurityContactsOperations operations)
+            public static List<SecurityContact> List(this ISecurityContactsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -41,7 +42,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SecurityContact>> ListAsync(this ISecurityContactsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<List<SecurityContact>> ListAsync(this ISecurityContactsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {

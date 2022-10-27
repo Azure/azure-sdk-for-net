@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/settings/MCAS?api-version=2021-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3MvTUNBUz9hcGktdmVyc2lvbj0yMDIxLTA3LTAx",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/settings/MCAS?api-version=2022-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3MvTUNBUz9hcGktdmVyc2lvbj0yMDIyLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cbdf5578-8f8b-4236-80f4-4aff252163cc"
+          "f8b4a343-46d6-4a07-9107-8b4d16ae4857"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
+          "FxVersion/4.700.22.47601",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.2.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,7 +27,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "748"
+          "749"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -36,22 +36,22 @@
           "1.0"
         ],
         "x-ms-request-id": [
-          "6d0cc71d-910d-457b-9f4b-524664328207"
+          "893f4f98-6a98-4135-b2f4-4e53639aceb7"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "83399b03-bf70-4906-8c85-7c19424a41bc"
+          "d42eb0f9-4dd6-447f-a385-c3362fddeda3"
         ],
         "x-ms-routing-request-id": [
-          "UAECENTRAL:20210803T094834Z:83399b03-bf70-4906-8c85-7c19424a41bc"
+          "GERMANYWESTCENTRAL:20221027T065538Z:d42eb0f9-4dd6-447f-a385-c3362fddeda3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 03 Aug 2021 09:48:34 GMT"
+          "Thu, 27 Oct 2022 06:55:38 GMT"
         ],
         "Content-Length": [
           "212"
@@ -67,22 +67,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/settings/MCAS?api-version=2021-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3MvTUNBUz9hcGktdmVyc2lvbj0yMDIxLTA3LTAx",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/settings/MCAS?api-version=2022-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3MvTUNBUz9hcGktdmVyc2lvbj0yMDIyLTA1LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"DataExportSettings\",\r\n  \"properties\": {\r\n    \"enabled\": true\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "afb4e6e2-e965-4fcb-b829-b9c04ed470dd"
+          "38352f23-98d1-4f66-a1f6-caa078e2bee0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
+          "FxVersion/4.700.22.47601",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.2.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/3.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -108,22 +108,22 @@
           "1.0"
         ],
         "x-ms-request-id": [
-          "0936ba8e-54d9-4fc4-ae35-d2a6d383458c"
+          "75ce323b-8f04-4a75-9019-dcf55a206205"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "30ad3b72-5d1e-4346-8f0e-3738cff16afa"
+          "5886f5c0-aee9-4e64-a3ff-a55189b872f2"
         ],
         "x-ms-routing-request-id": [
-          "UAECENTRAL:20210803T094836Z:30ad3b72-5d1e-4346-8f0e-3738cff16afa"
+          "GERMANYWESTCENTRAL:20221027T065539Z:5886f5c0-aee9-4e64-a3ff-a55189b872f2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 03 Aug 2021 09:48:35 GMT"
+          "Thu, 27 Oct 2022 06:55:39 GMT"
         ],
         "Content-Length": [
           "212"
