@@ -18,10 +18,11 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 
 This is the first stable release of the NGINX for Azure SDK for .NET. 
 
-### Features Added
-
 ### Breaking Changes
 
-### Bugs Fixed
+- New design of track 2 initial commit.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1
+- Upgraded dependent `Azure.Core` to 1.25.0
