@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal LogicExpressionErrorInfo(string code, string message) : base(code)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
             Details = new ChangeTrackingList<LogicExpressionErrorInfo>();
@@ -40,10 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal LogicExpressionErrorInfo(string code, string message, IReadOnlyList<LogicExpressionErrorInfo> details) : base(code)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
+            Argument.AssertNotNull(code, nameof(code));
 
             Message = message;
             Details = details;

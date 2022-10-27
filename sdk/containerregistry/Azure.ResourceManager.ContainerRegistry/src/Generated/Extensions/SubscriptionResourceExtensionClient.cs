@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _registriesClientDiagnostics;
-        private RegistriesRestOperations _registriesRestClient;
         private ClientDiagnostics _containerRegistryRegistriesClientDiagnostics;
         private RegistriesRestOperations _containerRegistryRegistriesRestClient;
 
@@ -37,8 +35,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
         }
 
-        private ClientDiagnostics RegistriesClientDiagnostics => _registriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private RegistriesRestOperations RegistriesRestClient => _registriesRestClient ??= new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ContainerRegistryRegistriesClientDiagnostics => _containerRegistryRegistriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryResource.ResourceType.Namespace, Diagnostics);
         private RegistriesRestOperations ContainerRegistryRegistriesRestClient => _containerRegistryRegistriesRestClient ??= new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerRegistryResource.ResourceType));
 
@@ -57,11 +53,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckContainerRegistryNameAvailability");
+            using var scope = ContainerRegistryRegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckContainerRegistryNameAvailability");
             scope.Start();
             try
             {
-                var response = await RegistriesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await ContainerRegistryRegistriesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -80,11 +76,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckContainerRegistryNameAvailability");
+            using var scope = ContainerRegistryRegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckContainerRegistryNameAvailability");
             scope.Start();
             try
             {
-                var response = RegistriesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = ContainerRegistryRegistriesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

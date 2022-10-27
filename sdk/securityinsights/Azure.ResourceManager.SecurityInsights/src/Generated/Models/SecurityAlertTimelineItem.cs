@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -23,18 +24,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/>, <paramref name="displayName"/> or <paramref name="alertType"/> is null. </exception>
         internal SecurityAlertTimelineItem(string azureResourceId, string displayName, AlertSeverity severity, DateTimeOffset endTimeUtc, DateTimeOffset startTimeUtc, DateTimeOffset timeGenerated, string alertType)
         {
-            if (azureResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(azureResourceId));
-            }
-            if (displayName == null)
-            {
-                throw new ArgumentNullException(nameof(displayName));
-            }
-            if (alertType == null)
-            {
-                throw new ArgumentNullException(nameof(alertType));
-            }
+            Argument.AssertNotNull(azureResourceId, nameof(azureResourceId));
+            Argument.AssertNotNull(displayName, nameof(displayName));
+            Argument.AssertNotNull(alertType, nameof(alertType));
 
             AzureResourceId = azureResourceId;
             DisplayName = displayName;

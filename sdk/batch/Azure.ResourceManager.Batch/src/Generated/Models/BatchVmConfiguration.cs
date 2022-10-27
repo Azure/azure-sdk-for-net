@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/> or <paramref name="nodeAgentSkuId"/> is null. </exception>
         public BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId)
         {
-            if (imageReference == null)
-            {
-                throw new ArgumentNullException(nameof(imageReference));
-            }
-            if (nodeAgentSkuId == null)
-            {
-                throw new ArgumentNullException(nameof(nodeAgentSkuId));
-            }
+            Argument.AssertNotNull(imageReference, nameof(imageReference));
+            Argument.AssertNotNull(nodeAgentSkuId, nameof(nodeAgentSkuId));
 
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,18 +21,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/>, <paramref name="context"/> or <paramref name="objectName"/> is null. </exception>
         public SapOdpResourceDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData context, BinaryData objectName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-            if (objectName == null)
-            {
-                throw new ArgumentNullException(nameof(objectName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(context, nameof(context));
+            Argument.AssertNotNull(objectName, nameof(objectName));
 
             Context = context;
             ObjectName = objectName;

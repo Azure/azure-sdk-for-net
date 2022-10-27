@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateId"/> is null. </exception>
         public CustomDomain(string name, string certificateId)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (certificateId == null)
-            {
-                throw new ArgumentNullException(nameof(certificateId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(certificateId, nameof(certificateId));
 
             Name = name;
             CertificateId = certificateId;

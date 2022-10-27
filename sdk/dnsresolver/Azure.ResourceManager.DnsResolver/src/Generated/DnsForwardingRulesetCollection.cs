@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRulesetRestClient.CreateOrUpdateAsync(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _dnsForwardingRulesetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRulesetRestClient.CreateOrUpdate(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _dnsForwardingRulesetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRulesetRestClient.GetAsync(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRulesetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRulesetRestClient.Get(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var response = _dnsForwardingRulesetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRulesetRestClient.GetAsync(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRulesetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRulesetRestClient.Get(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                var response = _dnsForwardingRulesetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

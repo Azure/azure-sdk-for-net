@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _sqlVmSqlVirtualMachinesRestClient.CreateOrUpdateAsync(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlVmSqlVirtualMachinesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _sqlVmSqlVirtualMachinesRestClient.CreateOrUpdate(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlVmSqlVirtualMachinesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, data, cancellationToken);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _sqlVmSqlVirtualMachinesRestClient.GetAsync(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlVmSqlVirtualMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlVmResource(Client, response.Value), response.GetRawResponse());
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _sqlVmSqlVirtualMachinesRestClient.Get(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken);
+                var response = _sqlVmSqlVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlVmResource(Client, response.Value), response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _sqlVmSqlVirtualMachinesRestClient.GetAsync(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlVmSqlVirtualMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _sqlVmSqlVirtualMachinesRestClient.Get(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
+                var response = _sqlVmSqlVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

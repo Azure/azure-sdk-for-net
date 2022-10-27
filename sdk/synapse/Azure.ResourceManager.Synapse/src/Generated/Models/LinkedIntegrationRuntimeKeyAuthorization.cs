@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public LinkedIntegrationRuntimeKeyAuthorization(SecureString key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             AuthorizationType = "Key";

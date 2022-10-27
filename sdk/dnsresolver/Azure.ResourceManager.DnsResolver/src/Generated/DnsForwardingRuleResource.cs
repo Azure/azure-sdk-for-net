@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRuleForwardingRulesRestClient.GetAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRuleForwardingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRuleResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRuleForwardingRulesRestClient.Get(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _dnsForwardingRuleForwardingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRuleResource(Client, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRuleForwardingRulesRestClient.DeleteAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRuleForwardingRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsResolverArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRuleForwardingRulesRestClient.Delete(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken);
+                var response = _dnsForwardingRuleForwardingRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsResolverArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRuleForwardingRulesRestClient.UpdateAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRuleForwardingRulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DnsForwardingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRuleForwardingRulesRestClient.Update(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
+                var response = _dnsForwardingRuleForwardingRulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken);
                 return Response.FromValue(new DnsForwardingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

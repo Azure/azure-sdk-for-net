@@ -126,6 +126,80 @@ namespace Azure.ResourceManager.EventGrid
             return GetTopicEventSubscriptions().Get(eventSubscriptionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of EventGridTopicPrivateEndpointConnectionResources in the EventGridTopic. </summary>
+        /// <returns> An object representing collection of EventGridTopicPrivateEndpointConnectionResources and their operations over a EventGridTopicPrivateEndpointConnectionResource. </returns>
+        public virtual EventGridTopicPrivateEndpointConnectionCollection GetEventGridTopicPrivateEndpointConnections()
+        {
+            return GetCachedClient(Client => new EventGridTopicPrivateEndpointConnectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridTopicPrivateEndpointConnectionResource>> GetEventGridTopicPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetEventGridTopicPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridTopicPrivateEndpointConnectionResource> GetEventGridTopicPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetEventGridTopicPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EventGridTopicPrivateLinkResources in the EventGridTopic. </summary>
+        /// <returns> An object representing collection of EventGridTopicPrivateLinkResources and their operations over a EventGridTopicPrivateLinkResource. </returns>
+        public virtual EventGridTopicPrivateLinkResourceCollection GetEventGridTopicPrivateLinkResources()
+        {
+            return GetCachedClient(Client => new EventGridTopicPrivateLinkResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
+        /// <param name="privateLinkResourceName"> The name of private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridTopicPrivateLinkResource>> GetEventGridTopicPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetEventGridTopicPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
+        /// <param name="privateLinkResourceName"> The name of private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridTopicPrivateLinkResource> GetEventGridTopicPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            return GetEventGridTopicPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+        }
+
         /// <summary>
         /// Get properties of a topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}

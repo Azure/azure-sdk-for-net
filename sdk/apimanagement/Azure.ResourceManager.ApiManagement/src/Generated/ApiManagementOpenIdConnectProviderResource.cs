@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementOpenIdConnectProviderResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementOpenIdConnectProviderResource(Client, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.DeleteAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new ApiManagementArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.Delete(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, cancellationToken);
+                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
                 var operation = new ApiManagementArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.UpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ApiManagementOpenIdConnectProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.Update(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, patch, cancellationToken);
+                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
                 return Response.FromValue(new ApiManagementOpenIdConnectProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.ListSecretsAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.ListSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.ListSecrets(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.ListSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.GetEntityTagAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.GetEntityTag(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

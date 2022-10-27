@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = await _moverResourceSetMoveCollectionsRestClient.CreateAsync(moverResourceSetName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _moverResourceSetMoveCollectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, moverResourceSetName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourceMoverArmOperation<MoverResourceSetResource>(Response.FromValue(new MoverResourceSetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = _moverResourceSetMoveCollectionsRestClient.Create(moverResourceSetName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
+                var response = _moverResourceSetMoveCollectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, moverResourceSetName, data, cancellationToken);
                 var operation = new ResourceMoverArmOperation<MoverResourceSetResource>(Response.FromValue(new MoverResourceSetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = await _moverResourceSetMoveCollectionsRestClient.GetAsync(moverResourceSetName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _moverResourceSetMoveCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, moverResourceSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MoverResourceSetResource(Client, response.Value), response.GetRawResponse());
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = _moverResourceSetMoveCollectionsRestClient.Get(moverResourceSetName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var response = _moverResourceSetMoveCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, moverResourceSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MoverResourceSetResource(Client, response.Value), response.GetRawResponse());
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = await _moverResourceSetMoveCollectionsRestClient.GetAsync(moverResourceSetName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _moverResourceSetMoveCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, moverResourceSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = _moverResourceSetMoveCollectionsRestClient.Get(moverResourceSetName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                var response = _moverResourceSetMoveCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, moverResourceSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

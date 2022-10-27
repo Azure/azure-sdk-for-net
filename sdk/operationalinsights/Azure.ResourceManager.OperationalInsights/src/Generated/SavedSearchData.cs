@@ -24,18 +24,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="category"/>, <paramref name="displayName"/> or <paramref name="query"/> is null. </exception>
         public SavedSearchData(string category, string displayName, string query)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
-            if (displayName == null)
-            {
-                throw new ArgumentNullException(nameof(displayName));
-            }
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
+            Argument.AssertNotNull(category, nameof(category));
+            Argument.AssertNotNull(displayName, nameof(displayName));
+            Argument.AssertNotNull(query, nameof(query));
 
             Category = category;
             DisplayName = displayName;

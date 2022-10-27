@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _virtualMachineScaleSetRollingUpgradeRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineScaleSetRollingUpgradeRestClient.GetLatestAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualMachineScaleSetRollingUpgradeResource(Client, response.Value), response.GetRawResponse());
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _virtualMachineScaleSetRollingUpgradeRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var response = _virtualMachineScaleSetRollingUpgradeRestClient.GetLatest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualMachineScaleSetRollingUpgradeResource(Client, response.Value), response.GetRawResponse());

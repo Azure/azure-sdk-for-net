@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nodes"/> is null. </exception>
         public NodeTypeActionContent(IEnumerable<string> nodes)
         {
-            if (nodes == null)
-            {
-                throw new ArgumentNullException(nameof(nodes));
-            }
+            Argument.AssertNotNull(nodes, nameof(nodes));
 
             Nodes = nodes.ToList();
         }

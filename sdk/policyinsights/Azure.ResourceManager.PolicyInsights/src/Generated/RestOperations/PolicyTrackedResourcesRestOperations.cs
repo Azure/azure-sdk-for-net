@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListQueryResultsForManagementGroupRequest(PolicyTrackedResourceType policyTrackedResourceType, string managementGroupName, PolicyQuerySettings policyQuerySettings)
+        internal HttpMessage CreateListQueryResultsForManagementGroupRequest(string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Queries policy tracked resources under the management group. </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="managementGroupName"> Management group name. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForManagementGroupAsync(PolicyTrackedResourceType policyTrackedResourceType, string managementGroupName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForManagementGroupAsync(string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateListQueryResultsForManagementGroupRequest(policyTrackedResourceType, managementGroupName, policyQuerySettings);
+            using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyTrackedResourceType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Queries policy tracked resources under the management group. </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="managementGroupName"> Management group name. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForManagementGroup(PolicyTrackedResourceType policyTrackedResourceType, string managementGroupName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForManagementGroup(string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateListQueryResultsForManagementGroupRequest(policyTrackedResourceType, managementGroupName, policyQuerySettings);
+            using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyTrackedResourceType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionRequest(PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, PolicyQuerySettings policyQuerySettings)
+        internal HttpMessage CreateListQueryResultsForSubscriptionRequest(string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,17 +148,17 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Queries policy tracked resources under the subscription. </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForSubscriptionAsync(PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForSubscriptionAsync(string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListQueryResultsForSubscriptionRequest(policyTrackedResourceType, subscriptionId, policyQuerySettings);
+            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyTrackedResourceType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -175,17 +175,17 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Queries policy tracked resources under the subscription. </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForSubscription(PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForSubscription(string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListQueryResultsForSubscriptionRequest(policyTrackedResourceType, subscriptionId, policyQuerySettings);
+            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyTrackedResourceType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupRequest(PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, string resourceGroupName, PolicyQuerySettings policyQuerySettings)
+        internal HttpMessage CreateListQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -231,19 +231,19 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Queries policy tracked resources under the resource group. </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForResourceGroupAsync(PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, string resourceGroupName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForResourceGroupAsync(string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListQueryResultsForResourceGroupRequest(policyTrackedResourceType, subscriptionId, resourceGroupName, policyQuerySettings);
+            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyTrackedResourceType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -260,19 +260,19 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Queries policy tracked resources under the resource group. </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForResourceGroup(PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, string resourceGroupName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForResourceGroup(string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListQueryResultsForResourceGroupRequest(policyTrackedResourceType, subscriptionId, resourceGroupName, policyQuerySettings);
+            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyTrackedResourceType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceRequest(PolicyTrackedResourceType policyTrackedResourceType, string resourceId, PolicyQuerySettings policyQuerySettings)
+        internal HttpMessage CreateListQueryResultsForResourceRequest(string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -316,16 +316,16 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Queries policy tracked resources under the resource. </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForResourceAsync(PolicyTrackedResourceType policyTrackedResourceType, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForResourceAsync(string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListQueryResultsForResourceRequest(policyTrackedResourceType, resourceId, policyQuerySettings);
+            using var message = CreateListQueryResultsForResourceRequest(resourceId, policyTrackedResourceType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -342,16 +342,16 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Queries policy tracked resources under the resource. </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForResource(PolicyTrackedResourceType policyTrackedResourceType, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForResource(string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListQueryResultsForResourceRequest(policyTrackedResourceType, resourceId, policyQuerySettings);
+            using var message = CreateListQueryResultsForResourceRequest(resourceId, policyTrackedResourceType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForManagementGroupNextPageRequest(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string managementGroupName, PolicyQuerySettings policyQuerySettings)
+        internal HttpMessage CreateListQueryResultsForManagementGroupNextPageRequest(string nextLink, string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -383,18 +383,18 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy tracked resources under the management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="managementGroupName"> Management group name. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForManagementGroupNextPageAsync(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string managementGroupName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForManagementGroupNextPageAsync(string nextLink, string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, policyTrackedResourceType, managementGroupName, policyQuerySettings);
+            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyTrackedResourceType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -412,18 +412,18 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy tracked resources under the management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="managementGroupName"> Management group name. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForManagementGroupNextPage(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string managementGroupName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForManagementGroupNextPage(string nextLink, string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, policyTrackedResourceType, managementGroupName, policyQuerySettings);
+            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyTrackedResourceType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionNextPageRequest(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, PolicyQuerySettings policyQuerySettings)
+        internal HttpMessage CreateListQueryResultsForSubscriptionNextPageRequest(string nextLink, string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy tracked resources under the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForSubscriptionNextPageAsync(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForSubscriptionNextPageAsync(string nextLink, string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, policyTrackedResourceType, subscriptionId, policyQuerySettings);
+            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyTrackedResourceType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -484,18 +484,18 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy tracked resources under the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForSubscriptionNextPage(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForSubscriptionNextPage(string nextLink, string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, policyTrackedResourceType, subscriptionId, policyQuerySettings);
+            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyTrackedResourceType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupNextPageRequest(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, string resourceGroupName, PolicyQuerySettings policyQuerySettings)
+        internal HttpMessage CreateListQueryResultsForResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -527,20 +527,20 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy tracked resources under the resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForResourceGroupNextPageAsync(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, string resourceGroupName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, policyTrackedResourceType, subscriptionId, resourceGroupName, policyQuerySettings);
+            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyTrackedResourceType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -558,20 +558,20 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy tracked resources under the resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForResourceGroupNextPage(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string subscriptionId, string resourceGroupName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, policyTrackedResourceType, subscriptionId, resourceGroupName, policyQuerySettings);
+            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyTrackedResourceType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceNextPageRequest(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string resourceId, PolicyQuerySettings policyQuerySettings)
+        internal HttpMessage CreateListQueryResultsForResourceNextPageRequest(string nextLink, string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -603,17 +603,17 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy tracked resources under the resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForResourceNextPageAsync(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyTrackedResourcesQueryResults>> ListQueryResultsForResourceNextPageAsync(string nextLink, string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, policyTrackedResourceType, resourceId, policyQuerySettings);
+            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyTrackedResourceType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -631,17 +631,17 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy tracked resources under the resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForResourceNextPage(string nextLink, PolicyTrackedResourceType policyTrackedResourceType, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public Response<PolicyTrackedResourcesQueryResults> ListQueryResultsForResourceNextPage(string nextLink, string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, policyTrackedResourceType, resourceId, policyQuerySettings);
+            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyTrackedResourceType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

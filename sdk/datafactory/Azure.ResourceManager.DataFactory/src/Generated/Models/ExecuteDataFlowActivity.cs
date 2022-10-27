@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataFlow"/> is null. </exception>
         public ExecuteDataFlowActivity(string name, DataFlowReference dataFlow) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (dataFlow == null)
-            {
-                throw new ArgumentNullException(nameof(dataFlow));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(dataFlow, nameof(dataFlow));
 
             DataFlow = dataFlow;
             ActivityType = "ExecuteDataFlow";

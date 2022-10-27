@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForManagementGroupAsync(policyTrackedResourceType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForManagementGroupAsync(Id.Name, policyTrackedResourceType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForManagementGroupNextPageAsync(nextLink, policyTrackedResourceType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForManagementGroupNextPageAsync(nextLink, Id.Name, policyTrackedResourceType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForManagementGroup(policyTrackedResourceType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForManagementGroup(Id.Name, policyTrackedResourceType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForManagementGroupNextPage(nextLink, policyTrackedResourceType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForManagementGroupNextPage(nextLink, Id.Name, policyTrackedResourceType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForManagementGroupAsync(policyEventType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyEventsRestClient.ListQueryResultsForManagementGroupAsync(Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForManagementGroupNextPageAsync(nextLink, policyEventType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyEventsRestClient.ListQueryResultsForManagementGroupNextPageAsync(nextLink, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = PolicyEventsRestClient.ListQueryResultsForManagementGroup(policyEventType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyEventsRestClient.ListQueryResultsForManagementGroup(Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = PolicyEventsRestClient.ListQueryResultsForManagementGroupNextPage(nextLink, policyEventType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyEventsRestClient.ListQueryResultsForManagementGroupNextPage(nextLink, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForManagementGroupAsync(policyStateType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyStatesRestClient.ListQueryResultsForManagementGroupAsync(Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForManagementGroupNextPageAsync(nextLink, policyStateType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyStatesRestClient.ListQueryResultsForManagementGroupNextPageAsync(nextLink, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = PolicyStatesRestClient.ListQueryResultsForManagementGroup(policyStateType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyStatesRestClient.ListQueryResultsForManagementGroup(Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = PolicyStatesRestClient.ListQueryResultsForManagementGroupNextPage(nextLink, policyStateType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyStatesRestClient.ListQueryResultsForManagementGroupNextPage(nextLink, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await PolicyStatesRestClient.SummarizeForManagementGroupAsync(policyStateSummaryType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyStatesRestClient.SummarizeForManagementGroupAsync(Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = PolicyStatesRestClient.SummarizeForManagementGroup(policyStateSummaryType, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyStatesRestClient.SummarizeForManagementGroup(Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

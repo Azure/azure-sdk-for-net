@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,20 +17,18 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A class representing a collection of <see cref="EventGridTopicPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="EventGridTopicPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="EventGridTopicPrivateEndpointConnectionCollection" /> instance call the GetEventGridTopicPrivateEndpointConnections method from an instance of <see cref="ResourceGroupResource" />.
+    /// Each <see cref="EventGridTopicPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="EventGridTopicResource" />.
+    /// To get an <see cref="EventGridTopicPrivateEndpointConnectionCollection" /> instance call the GetEventGridTopicPrivateEndpointConnections method from an instance of <see cref="EventGridTopicResource" />.
     /// </summary>
-    public partial class EventGridTopicPrivateEndpointConnectionCollection : ArmCollection
+    public partial class EventGridTopicPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<EventGridTopicPrivateEndpointConnectionResource>, IAsyncEnumerable<EventGridTopicPrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _privateEndpointConnectionsRestClient;
-        private readonly string _parentName;
+        private readonly ClientDiagnostics _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="EventGridTopicPrivateEndpointConnectionCollection"/> class for mocking. </summary>
         protected EventGridTopicPrivateEndpointConnectionCollection()
@@ -37,14 +38,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of the <see cref="EventGridTopicPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal EventGridTopicPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id, string parentName) : base(client, id)
+        internal EventGridTopicPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _parentName = parentName;
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridTopicPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EventGridTopicPrivateEndpointConnectionResource.ResourceType, out string eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,8 +50,8 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != EventGridTopicResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventGridTopicResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,24 +60,22 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: PrivateEndpointConnections_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="data"> The private endpoint connection object to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EventGridPrivateEndpointConnectionData>> CreateOrUpdateAsync(WaitUntil waitUntil, string parentName, string privateEndpointConnectionName, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<EventGridTopicPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _privateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<EventGridPrivateEndpointConnectionData>(new EventGridPrivateEndpointConnectionDataOperationSource(), _privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(new EventGridTopicPrivateEndpointConnectionOperationSource(Client), _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,24 +93,22 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: PrivateEndpointConnections_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="data"> The private endpoint connection object to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EventGridPrivateEndpointConnectionData> CreateOrUpdate(WaitUntil waitUntil, string parentName, string privateEndpointConnectionName, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<EventGridTopicPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _privateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new EventGridArmOperation<EventGridPrivateEndpointConnectionData>(new EventGridPrivateEndpointConnectionDataOperationSource(), _privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(new EventGridTopicPrivateEndpointConnectionOperationSource(Client), _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -131,22 +125,22 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<Response<EventGridPrivateEndpointConnectionData>> GetAsync(string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<Response<EventGridTopicPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.Get");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _privateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-                return response;
+                var response = await _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new EventGridTopicPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,22 +154,22 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<EventGridPrivateEndpointConnectionData> Get(string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual Response<EventGridTopicPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.Get");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _privateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, privateEndpointConnectionName, cancellationToken);
-                return response;
+                var response = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, privateEndpointConnectionName, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new EventGridTopicPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,25 +183,20 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections
         /// Operation Id: PrivateEndpointConnections_ListByResource
         /// </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventGridPrivateEndpointConnectionData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventGridPrivateEndpointConnectionData> GetAllAsync(string parentName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventGridTopicPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventGridTopicPrivateEndpointConnectionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
-
-            async Task<Page<EventGridPrivateEndpointConnectionData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventGridTopicPrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.GetAll");
+                using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _privateEndpointConnectionsRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    var response = await _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -215,14 +204,14 @@ namespace Azure.ResourceManager.EventGrid
                     throw;
                 }
             }
-            async Task<Page<EventGridPrivateEndpointConnectionData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<EventGridTopicPrivateEndpointConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.GetAll");
+                using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _privateEndpointConnectionsRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    var response = await _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -238,25 +227,20 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections
         /// Operation Id: PrivateEndpointConnections_ListByResource
         /// </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventGridPrivateEndpointConnectionData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventGridPrivateEndpointConnectionData> GetAll(string parentName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridTopicPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventGridTopicPrivateEndpointConnectionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
-
-            Page<EventGridPrivateEndpointConnectionData> FirstPageFunc(int? pageSizeHint)
+            Page<EventGridTopicPrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.GetAll");
+                using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateEndpointConnectionsRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    var response = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -264,14 +248,14 @@ namespace Azure.ResourceManager.EventGrid
                     throw;
                 }
             }
-            Page<EventGridPrivateEndpointConnectionData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<EventGridTopicPrivateEndpointConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.GetAll");
+                using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateEndpointConnectionsRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    var response = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,21 +271,19 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.Exists");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _privateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,21 +298,19 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.Exists");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _privateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,6 +318,21 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<EventGridTopicPrivateEndpointConnectionResource> IEnumerable<EventGridTopicPrivateEndpointConnectionResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<EventGridTopicPrivateEndpointConnectionResource> IAsyncEnumerable<EventGridTopicPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

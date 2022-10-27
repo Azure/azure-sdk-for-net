@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="justification"/> is null. </exception>
         public RemediationEta(DateTimeOffset eta, string justification)
         {
-            if (justification == null)
-            {
-                throw new ArgumentNullException(nameof(justification));
-            }
+            Argument.AssertNotNull(justification, nameof(justification));
 
             Eta = eta;
             Justification = justification;

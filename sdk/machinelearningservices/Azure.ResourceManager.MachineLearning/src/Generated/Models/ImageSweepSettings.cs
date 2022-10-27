@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="limits"/> is null. </exception>
         public ImageSweepSettings(ImageSweepLimitSettings limits, SamplingAlgorithmType samplingAlgorithm)
         {
-            if (limits == null)
-            {
-                throw new ArgumentNullException(nameof(limits));
-            }
+            Argument.AssertNotNull(limits, nameof(limits));
 
             Limits = limits;
             SamplingAlgorithm = samplingAlgorithm;

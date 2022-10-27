@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourcePostgreSqlSyncTaskInput(PostgreSqlConnectionInfo sourceConnectionInfo)
         {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
+            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
 
             SourceConnectionInfo = sourceConnectionInfo;
         }

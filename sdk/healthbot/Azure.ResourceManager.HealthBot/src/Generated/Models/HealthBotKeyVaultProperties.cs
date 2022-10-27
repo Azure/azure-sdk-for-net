@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HealthBot.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="keyVaultUri"/> is null. </exception>
         public HealthBotKeyVaultProperties(string keyName, Uri keyVaultUri)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (keyVaultUri == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultUri));
-            }
+            Argument.AssertNotNull(keyName, nameof(keyName));
+            Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
 
             KeyName = keyName;
             KeyVaultUri = keyVaultUri;

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Maintenance
         private ApplyUpdatesRestOperations _applyUpdateRestClient;
         private ClientDiagnostics _maintenanceConfigurationClientDiagnostics;
         private MaintenanceConfigurationsRestOperations _maintenanceConfigurationRestClient;
-        private ClientDiagnostics _configurationAssignmentConfigurationAssignmentsWithinSubscriptionClientDiagnostics;
-        private ConfigurationAssignmentsWithinSubscriptionRestOperations _configurationAssignmentConfigurationAssignmentsWithinSubscriptionRestClient;
+        private ClientDiagnostics _configurationAssignmentsWithinSubscriptionClientDiagnostics;
+        private ConfigurationAssignmentsWithinSubscriptionRestOperations _configurationAssignmentsWithinSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Maintenance
         private ApplyUpdatesRestOperations ApplyUpdateRestClient => _applyUpdateRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplyUpdateResource.ResourceType));
         private ClientDiagnostics MaintenanceConfigurationClientDiagnostics => _maintenanceConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
         private MaintenanceConfigurationsRestOperations MaintenanceConfigurationRestClient => _maintenanceConfigurationRestClient ??= new MaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceConfigurationResource.ResourceType));
-        private ClientDiagnostics ConfigurationAssignmentConfigurationAssignmentsWithinSubscriptionClientDiagnostics => _configurationAssignmentConfigurationAssignmentsWithinSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-        private ConfigurationAssignmentsWithinSubscriptionRestOperations ConfigurationAssignmentConfigurationAssignmentsWithinSubscriptionRestClient => _configurationAssignmentConfigurationAssignmentsWithinSubscriptionRestClient ??= new ConfigurationAssignmentsWithinSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigurationAssignmentResource.ResourceType));
+        private ClientDiagnostics ConfigurationAssignmentsWithinSubscriptionClientDiagnostics => _configurationAssignmentsWithinSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ConfigurationAssignmentsWithinSubscriptionRestOperations ConfigurationAssignmentsWithinSubscriptionRestClient => _configurationAssignmentsWithinSubscriptionRestClient ??= new ConfigurationAssignmentsWithinSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.Maintenance
         {
             async Task<Page<ConfigurationAssignmentResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ConfigurationAssignmentConfigurationAssignmentsWithinSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignments");
+                using var scope = ConfigurationAssignmentsWithinSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignments");
                 scope.Start();
                 try
                 {
-                    var response = await ConfigurationAssignmentConfigurationAssignmentsWithinSubscriptionRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ConfigurationAssignmentsWithinSubscriptionRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ConfigurationAssignmentResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.Maintenance
         {
             Page<ConfigurationAssignmentResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ConfigurationAssignmentConfigurationAssignmentsWithinSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignments");
+                using var scope = ConfigurationAssignmentsWithinSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignments");
                 scope.Start();
                 try
                 {
-                    var response = ConfigurationAssignmentConfigurationAssignmentsWithinSubscriptionRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = ConfigurationAssignmentsWithinSubscriptionRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ConfigurationAssignmentResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.GetAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRulesetVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Get(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRulesetVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.DeleteAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation(_dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateDeleteRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation(_dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Delete(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation(_dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateDeleteRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation(_dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.UpdateAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateUpdateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Update(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateUpdateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="deploymentTargetId"/> is null. </exception>
         public StepGroup(string name, string deploymentTargetId)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (deploymentTargetId == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentTargetId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(deploymentTargetId, nameof(deploymentTargetId));
 
             Name = name;
             DependsOnStepGroups = new ChangeTrackingList<string>();
