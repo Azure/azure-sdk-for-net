@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -200,10 +202,14 @@ namespace Azure.Monitor.Ingestion
                         streamName,
                         async: false,
                         cancellationToken).EnsureCompleted();
+
+                    if (response.Status != 204)
+                    {
+                        throw new RequestFailedException(response);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    scope.Failed(ex);
                     logsFailed += batch.LogsList.Count;
                     // If we have an error, add error from response into exceptions list which represents the errors from all the batches
                     exceptions ??= new List<Exception>();
@@ -212,6 +218,7 @@ namespace Azure.Monitor.Ingestion
             }
             if (exceptions.Count > 0)
             {
+                scope.Failed(new AggregateException());
                 throw new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
             }
 
@@ -261,7 +268,7 @@ namespace Azure.Monitor.Ingestion
 
             // A list of tasks that are currently executing which will
             // always be smaller than or equal to MaxWorkerCount
-            List<Task<Response>> runningTasks = new();
+            List<Tuple<Task<Response>, int>> runningTasks = new();
             int logsFailed = 0; // Keep track of the number of failed logs across batches
 
             // Partition the stream into individual blocks
@@ -278,51 +285,92 @@ namespace Azure.Monitor.Ingestion
                         cancellationToken);
 
                     // Add the block to our task and commit lists
-                    runningTasks.Add(task);
+                    runningTasks.Add(Tuple.Create(task, batch.LogsList.Count));
 
                     // If we run out of workers
                     if (runningTasks.Count >= _maxWorkerCount)
                     {
                         // Wait for at least one of them to finish
-                        await Task.WhenAny(runningTasks).ConfigureAwait(false);
+                        await Task.WhenAny(runningTasks.Select(_ => _.Item1).ToList()).ConfigureAwait(false);
                         // Clear any completed blocks from the task list
                         for (int i = 0; i < runningTasks.Count; i++)
                         {
-                            Task<Response> runningTask = runningTasks[i];
+                            Task<Response> runningTask = runningTasks[i].Item1;
                             if (!runningTask.IsCompleted)
                             {
                                 continue;
                             }
-                            // Remove completed task from task list
-                            if (runningTask.IsCompleted) // remove - duplicate check
+                            // If current task has an exception, log the exception and add number of logs in this task to failed logs
+                            if (runningTask.Exception != null)
                             {
-                                // runningTask.Exception if not null add to running list
-                                runningTasks.RemoveAt(i);
+                                exceptions ??= new List<Exception>();
+                                exceptions.Add(runningTask.Exception);
+                                logsFailed += runningTasks[i].Item2;
                             }
+                            // If current task returned a response that was not a success, log the exception and add number of logs in this task to failed logs
+                            if (runningTask.Result.Status != 204)
+                            {
+                                exceptions ??= new List<Exception>();
+                                exceptions.Add(new RequestFailedException(runningTask.Result));
+                                logsFailed += runningTasks[i].Item2;
+                            }
+                            // Remove completed task from task list
+                            runningTasks.RemoveAt(i);
                             i--;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    scope.Failed(ex);
-                    logsFailed += batch.LogsList.Count;
                     // If we have an error, add error from response into exceptions list which represents the errors from all the batches
                     exceptions ??= new List<Exception>();
                     exceptions.Add(ex);
                 }
             }
 
-            // Wait for all the remaining blocks to finish uploading
-            await Task.WhenAll(runningTasks).ConfigureAwait(false);
+            try
+            {
+                // Wait for all the remaining blocks to finish uploading
+                await Task.WhenAll(runningTasks.Select(_ => _.Item1).ToList()).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // If we have an error, add error from response into exceptions list which represents the errors from all the batches
+                exceptions ??= new List<Exception>();
+                exceptions.Add(ex);
+            }
+
+            // At this point, all tasks have completed. Examine tasks to see if they have exceptions. If Status code != 204, add RequestFailedException to list of exceptions. Increment logsFailed accordingly
+            foreach (var task in runningTasks)
+            {
+                // Check if an exception to log
+                if (task.Item1.Exception != null)
+                {
+                    exceptions ??= new List<Exception>();
+                    exceptions.Add(task.Item1.Exception);
+                    logsFailed += task.Item2;
+                }
+                // Check status code
+                else
+                {
+                    if (task.Item1.Result.Status != 204)
+                    {
+                        exceptions ??= new List<Exception>();
+                        exceptions.Add(new RequestFailedException(task.Item1.Result));
+                    }
+                    logsFailed += task.Item2;
+                }
+            }
 
             if (exceptions.Count > 0)
             {
+                // if there's one exception throw just that exception - change language of exception
+                scope.Failed(new AggregateException());
                 throw new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
             }
 
             // If no exceptions return response
-            return runningTasks.Last().Result; //204 - response of last batch with header
+            return runningTasks.Select(_ => _.Item1).ToList().Last().Result; //204 - response of last batch with header
         }
 
         private async Task<Response> UploadBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
@@ -340,11 +388,6 @@ namespace Azure.Monitor.Ingestion
                 response = _pipeline.ProcessMessage(message, null, cancellationToken);
             }
 
-            if (response.Status != 204) // if any error is thrown log it
-            {
-                RequestFailedException requestFailedException = new RequestFailedException(response);
-                throw requestFailedException;
-            }
             return response;
         }
 
