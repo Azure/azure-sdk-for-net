@@ -13,21 +13,29 @@ namespace Azure.Security.KeyVault.Administration
         /// Gets the boolean value of this account setting if <see cref="Type"/> is <see cref="SettingType.Boolean"/>.
         /// </summary>
         /// <returns>A boolean value if <see cref="Type"/> is <see cref="SettingType.Boolean"/>.</returns>
-        /// <exception cref="FormatException">The value is neither "true" or "false" (case-insensitive).</exception>
-        public bool GetBoolean() => bool.Parse(Value);
+        /// <exception cref="InvalidOperationException">The <see cref="Type"/> is not <see cref="SettingType.Boolean"/>, or the value cannot be normalized as a Boolean.</exception>
+        public bool AsBoolean() => CheckType(SettingType.Boolean, () => (bool.TryParse(Value, out bool parsedValue), parsedValue));
 
         /// <summary>
-        /// Tries to get the boolean value of this account setting if <see cref="Type"/> is <see cref="SettingType.Boolean"/>.
+        /// Gets the string value of this account setting. Use <see cref="Type"/> to determine if a more appropriate method like <see cref="AsBoolean"/> should be used instead.
         /// </summary>
-        /// <param name="value">A boolean value if <see cref="Type"/> is <see cref="SettingType.Boolean"/>.</param>
-        /// <returns><c>true</c> the raw string value could be converted to a boolean value; otherwise, <c>false</c>.</returns>
-        public bool TryGetBoolean(out bool value) => bool.TryParse(Value, out value);
+        /// <returns>The string value of this account setting.</returns>
+        public string AsString() => Value;
 
         /// <summary>
         /// Gets the raw string value of this account setting.
         /// </summary>
         /// <returns></returns>
-        public override string ToString() => Value ?? string.Empty;
+        public override string ToString()
+        {
+            string method = nameof(AsString);
+            if (Type == SettingType.Boolean)
+            {
+                method = nameof(AsBoolean);
+            }
+
+            return $"{Name}: {method}()=>{Value}";
+        }
 
         [CodeGenMember("Value")]
         internal string Value { get; }
@@ -37,6 +45,24 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="value">The boolean to convert.</param>
         /// <returns>"true" or "false" appropriately.</returns>
-        internal static string Convert(bool value) => value ? "true" : "false";
+        internal static string ToString(bool value) => value ? "true" : "false";
+
+#pragma warning disable SA1414 // Tuple types in signatures should have element names
+        private T CheckType<T>(SettingType expectedType, Func<(bool IsValid, T ParsedValue)> converter)
+        {
+            if (Type != expectedType)
+            {
+                throw new InvalidOperationException($"Cannot get setting as {SettingType.Boolean}. Setting type is {Type}.");
+            }
+
+            (bool isValid, T parsedValue) = converter();
+            if (isValid)
+            {
+                return parsedValue;
+            }
+
+            throw new InvalidOperationException($"Cannot normalize the setting as {expectedType}. Use AsString() for a textual representation of the setting.");
+        }
+#pragma warning restore SA1414 // Tuple types in signatures should have element names
     }
 }

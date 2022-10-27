@@ -172,7 +172,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return _restClient.UpdateSetting(VaultUri.AbsoluteUri, name, KeyVaultSetting.Convert(value), cancellationToken);
+                return _restClient.UpdateSetting(VaultUri.AbsoluteUri, name, KeyVaultSetting.ToString(value), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -196,7 +196,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return await _restClient.UpdateSettingAsync(VaultUri.AbsoluteUri, name, KeyVaultSetting.Convert(value), cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdateSettingAsync(VaultUri.AbsoluteUri, name, KeyVaultSetting.ToString(value), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
