@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task ApplicationGatewayAvailableSslOptionsInfoTest()
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetAvailableSslOptionsInfoAsync();
+            ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetApplicationGatewayAvailableSslOptionsAsync();
             Assert.NotNull(sslOptionsInfo);
             Assert.AreEqual(sslOptionsInfo.Name, "default");
             Assert.AreEqual(sslOptionsInfo.Id.ResourceType, sslOptionsInfo.ResourceType);
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
 
-            IList<ApplicationGatewaySslPredefinedPolicy> predefinedPolicies = await subscription.GetSslPredefinedPoliciesAsync().ToEnumerableAsync();
+            IList<ApplicationGatewaySslPredefinedPolicy> predefinedPolicies = await subscription.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync().ToEnumerableAsync();
 
             int cnt = 0;
             foreach (var policy in predefinedPolicies)
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(cnt, 5);
 
             string predefinedPolicyName = predefinedPolicies[0].Name;
-            ApplicationGatewaySslPredefinedPolicy predefinedPolicy = await subscription.GetSslPredefinedPolicyAsync(predefinedPolicyName);
+            ApplicationGatewaySslPredefinedPolicy predefinedPolicy = await subscription.GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName);
             Assert.AreEqual(predefinedPolicy.Name, predefinedPolicyName);
             Assert.AreEqual(predefinedPolicy.Id.ResourceType, predefinedPolicy.ResourceType);
         }

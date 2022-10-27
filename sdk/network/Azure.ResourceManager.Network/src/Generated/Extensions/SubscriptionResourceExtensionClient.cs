@@ -567,9 +567,9 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: ApplicationGateways_ListAvailableSslOptions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetAvailableSslOptionsInfoAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSslOptionsInfo");
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslOptions");
             scope.Start();
             try
             {
@@ -589,9 +589,9 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: ApplicationGateways_ListAvailableSslOptions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetAvailableSslOptionsInfo(CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(CancellationToken cancellationToken = default)
         {
-            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSslOptionsInfo");
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslOptions");
             scope.Start();
             try
             {
@@ -612,11 +612,11 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPoliciesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ApplicationGatewaySslPredefinedPolicy>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSslPredefinedPolicies");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslPredefinedPolicies");
                 scope.Start();
                 try
                 {
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ApplicationGatewaySslPredefinedPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSslPredefinedPolicies");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslPredefinedPolicies");
                 scope.Start();
                 try
                 {
@@ -654,11 +654,11 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicies(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(CancellationToken cancellationToken = default)
         {
             Page<ApplicationGatewaySslPredefinedPolicy> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSslPredefinedPolicies");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslPredefinedPolicies");
                 scope.Start();
                 try
                 {
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<ApplicationGatewaySslPredefinedPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSslPredefinedPolicies");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslPredefinedPolicies");
                 scope.Start();
                 try
                 {
@@ -696,9 +696,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetSslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSslPredefinedPolicy");
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewaySslPredefinedPolicy");
             scope.Start();
             try
             {
@@ -719,9 +719,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSslPredefinedPolicy");
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewaySslPredefinedPolicy");
             scope.Start();
             try
             {
