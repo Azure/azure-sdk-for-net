@@ -18,18 +18,16 @@ namespace Azure.Communication.CallAutomation
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CallConnectionsRestClient RestClient { get; }
-        internal ContentRestClient ContentRestClient { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ClientDiagnostics clientDiagnostics)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
-            ContentRestClient = callContentRestClient;
             _clientDiagnostics = clientDiagnostics;
         }
 
@@ -38,7 +36,6 @@ namespace Azure.Communication.CallAutomation
         {
             _clientDiagnostics = null;
             RestClient = null;
-            ContentRestClient = null;
             CallConnectionId = null;
         }
 
@@ -555,7 +552,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallMedia(CallConnectionId, ContentRestClient, _clientDiagnostics);
+                return new CallMedia(CallConnectionId, RestClient, _clientDiagnostics);
             }
             catch (Exception ex)
             {

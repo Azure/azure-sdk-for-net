@@ -16,17 +16,17 @@ namespace Azure.Communication.CallAutomation
     public class CallMedia
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal ContentRestClient ContentRestClient { get; }
+        internal CallConnectionsRestClient CallConnectionsRestClient { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallMedia(string callConnectionId, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallMedia(string callConnectionId, CallConnectionsRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
         {
             CallConnectionId = callConnectionId;
-            ContentRestClient = callContentRestClient;
+            CallConnectionsRestClient = callContentRestClient;
             _clientDiagnostics = clientDiagnostics;
         }
 
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
         protected CallMedia()
         {
             _clientDiagnostics = null;
-            ContentRestClient = null;
+            CallConnectionsRestClient = null;
             CallConnectionId = null;
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Communication.CallAutomation
             {
                 PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
 
-                return await ContentRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                return await CallConnectionsRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace Azure.Communication.CallAutomation
             {
                 PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
 
-                return ContentRestClient.Play(CallConnectionId, request, cancellationToken);
+                return CallConnectionsRestClient.Play(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -167,7 +167,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return await ContentRestClient.CancelAllMediaOperationsAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
+                return await CallConnectionsRestClient.CancelAllMediaOperationsAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -187,7 +187,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return ContentRestClient.CancelAllMediaOperations(CallConnectionId, cancellationToken);
+                return CallConnectionsRestClient.CancelAllMediaOperations(CallConnectionId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -209,7 +209,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
-                return await ContentRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                return await CallConnectionsRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -231,7 +231,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
-                return ContentRestClient.Recognize(CallConnectionId, request, cancellationToken);
+                return CallConnectionsRestClient.Recognize(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
