@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         internal MetadataPermissionsApplicationsItem(string resourceId)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
         }

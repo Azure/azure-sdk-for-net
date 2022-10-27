@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupRules"/> is null. </exception>
         public AdhocBackupTriggerContent(AdhocBackupRules backupRules)
         {
-            if (backupRules == null)
-            {
-                throw new ArgumentNullException(nameof(backupRules));
-            }
+            Argument.AssertNotNull(backupRules, nameof(backupRules));
 
             BackupRules = backupRules;
         }

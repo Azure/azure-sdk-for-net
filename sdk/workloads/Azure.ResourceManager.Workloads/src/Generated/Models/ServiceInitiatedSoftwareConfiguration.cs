@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -21,26 +22,11 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="bomUri"/>, <paramref name="softwareVersion"/>, <paramref name="sapBitsStorageAccountId"/>, <paramref name="sapFqdn"/> or <paramref name="sshPrivateKey"/> is null. </exception>
         public ServiceInitiatedSoftwareConfiguration(Uri bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey)
         {
-            if (bomUri == null)
-            {
-                throw new ArgumentNullException(nameof(bomUri));
-            }
-            if (softwareVersion == null)
-            {
-                throw new ArgumentNullException(nameof(softwareVersion));
-            }
-            if (sapBitsStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(sapBitsStorageAccountId));
-            }
-            if (sapFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(sapFqdn));
-            }
-            if (sshPrivateKey == null)
-            {
-                throw new ArgumentNullException(nameof(sshPrivateKey));
-            }
+            Argument.AssertNotNull(bomUri, nameof(bomUri));
+            Argument.AssertNotNull(softwareVersion, nameof(softwareVersion));
+            Argument.AssertNotNull(sapBitsStorageAccountId, nameof(sapBitsStorageAccountId));
+            Argument.AssertNotNull(sapFqdn, nameof(sapFqdn));
+            Argument.AssertNotNull(sshPrivateKey, nameof(sshPrivateKey));
 
             BomUri = bomUri;
             SoftwareVersion = softwareVersion;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="password"/> is null. </exception>
         public SelectedCertificateInput(string certificateName, string password)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(password, nameof(password));
 
             CertificateName = certificateName;
             Password = password;

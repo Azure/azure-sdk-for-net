@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
         public AmazonRedshiftLinkedService(BinaryData server, BinaryData database)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
+            Argument.AssertNotNull(server, nameof(server));
+            Argument.AssertNotNull(database, nameof(database));
 
             Server = server;
             Database = database;

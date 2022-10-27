@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="vaultBaseUri"/> is null. </exception>
         public FactoryEncryptionConfiguration(string keyName, Uri vaultBaseUri)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (vaultBaseUri == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUri));
-            }
+            Argument.AssertNotNull(keyName, nameof(keyName));
+            Argument.AssertNotNull(vaultBaseUri, nameof(vaultBaseUri));
 
             KeyName = keyName;
             VaultBaseUri = vaultBaseUri;

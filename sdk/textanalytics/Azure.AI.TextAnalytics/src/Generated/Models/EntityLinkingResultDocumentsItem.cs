@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -21,18 +22,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="entities"/> is null. </exception>
         public EntityLinkingResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<LinkedEntity> entities) : base(id, warnings, entities)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(entities, nameof(entities));
         }
 
         /// <summary> Initializes a new instance of EntityLinkingResultDocumentsItem. </summary>

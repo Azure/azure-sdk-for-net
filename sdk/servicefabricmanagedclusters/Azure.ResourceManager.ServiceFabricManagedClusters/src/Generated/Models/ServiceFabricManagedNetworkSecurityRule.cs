@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ServiceFabricManagedNetworkSecurityRule(string name, ServiceFabricManagedNsgProtocol protocol, ServiceFabricManagedNetworkTrafficAccess access, int priority, ServiceFabricManagedNetworkSecurityRuleDirection direction)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Protocol = protocol;

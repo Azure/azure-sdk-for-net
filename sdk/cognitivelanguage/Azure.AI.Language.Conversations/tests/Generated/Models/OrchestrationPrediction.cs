@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -18,10 +19,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="intents"/> is null. </exception>
         internal OrchestrationPrediction(IReadOnlyDictionary<string, TargetIntentResult> intents)
         {
-            if (intents == null)
-            {
-                throw new ArgumentNullException(nameof(intents));
-            }
+            Argument.AssertNotNull(intents, nameof(intents));
 
             Intents = intents;
             ProjectKind = ProjectKind.Orchestration;

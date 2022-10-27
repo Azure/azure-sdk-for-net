@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fabricDiscoveryMachineId"/>, <paramref name="targetResourceGroupId"/> or <paramref name="processServerId"/> is null. </exception>
         public InMageRcmEnableProtectionInput(string fabricDiscoveryMachineId, string targetResourceGroupId, string processServerId)
         {
-            if (fabricDiscoveryMachineId == null)
-            {
-                throw new ArgumentNullException(nameof(fabricDiscoveryMachineId));
-            }
-            if (targetResourceGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceGroupId));
-            }
-            if (processServerId == null)
-            {
-                throw new ArgumentNullException(nameof(processServerId));
-            }
+            Argument.AssertNotNull(fabricDiscoveryMachineId, nameof(fabricDiscoveryMachineId));
+            Argument.AssertNotNull(targetResourceGroupId, nameof(targetResourceGroupId));
+            Argument.AssertNotNull(processServerId, nameof(processServerId));
 
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
             DisksToInclude = new ChangeTrackingList<InMageRcmDiskInput>();

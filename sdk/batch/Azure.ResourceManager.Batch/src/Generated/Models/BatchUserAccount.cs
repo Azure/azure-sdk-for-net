@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="password"/> is null. </exception>
         public BatchUserAccount(string name, string password)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(password, nameof(password));
 
             Name = name;
             Password = password;

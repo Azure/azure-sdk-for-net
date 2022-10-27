@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContainerAppCollection(IEnumerable<ContainerAppData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

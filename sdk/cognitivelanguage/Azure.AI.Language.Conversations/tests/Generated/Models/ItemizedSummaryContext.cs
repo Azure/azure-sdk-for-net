@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -19,10 +20,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="conversationItemId"/> is null. </exception>
         public ItemizedSummaryContext(int offset, int length, string conversationItemId) : base(offset, length)
         {
-            if (conversationItemId == null)
-            {
-                throw new ArgumentNullException(nameof(conversationItemId));
-            }
+            Argument.AssertNotNull(conversationItemId, nameof(conversationItemId));
 
             ConversationItemId = conversationItemId;
         }

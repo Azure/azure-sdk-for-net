@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedAudiences"/> is null. </exception>
         public ProviderHubMetadataProviderAuthentication(IEnumerable<string> allowedAudiences) : base(allowedAudiences)
         {
-            if (allowedAudiences == null)
-            {
-                throw new ArgumentNullException(nameof(allowedAudiences));
-            }
+            Argument.AssertNotNull(allowedAudiences, nameof(allowedAudiences));
         }
 
         /// <summary> Initializes a new instance of ProviderHubMetadataProviderAuthentication. </summary>

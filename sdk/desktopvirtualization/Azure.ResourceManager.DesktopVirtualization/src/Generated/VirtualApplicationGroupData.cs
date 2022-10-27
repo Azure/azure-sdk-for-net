@@ -24,10 +24,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolId"/> is null. </exception>
         public VirtualApplicationGroupData(AzureLocation location, ResourceIdentifier hostPoolId, VirtualApplicationGroupType applicationGroupType) : base(location)
         {
-            if (hostPoolId == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolId));
-            }
+            Argument.AssertNotNull(hostPoolId, nameof(hostPoolId));
 
             HostPoolId = hostPoolId;
             ApplicationGroupType = applicationGroupType;

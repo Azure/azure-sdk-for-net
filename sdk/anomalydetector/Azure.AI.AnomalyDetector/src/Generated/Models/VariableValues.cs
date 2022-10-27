@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -21,18 +22,9 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="timestamps"/> or <paramref name="values"/> is null. </exception>
         public VariableValues(string name, IEnumerable<string> timestamps, IEnumerable<float> values)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (timestamps == null)
-            {
-                throw new ArgumentNullException(nameof(timestamps));
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(timestamps, nameof(timestamps));
+            Argument.AssertNotNull(values, nameof(values));
 
             Name = name;
             Timestamps = timestamps.ToList();

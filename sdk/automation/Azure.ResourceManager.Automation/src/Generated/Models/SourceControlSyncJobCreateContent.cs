@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="commitId"/> is null. </exception>
         public SourceControlSyncJobCreateContent(string commitId)
         {
-            if (commitId == null)
-            {
-                throw new ArgumentNullException(nameof(commitId));
-            }
+            Argument.AssertNotNull(commitId, nameof(commitId));
 
             CommitId = commitId;
         }

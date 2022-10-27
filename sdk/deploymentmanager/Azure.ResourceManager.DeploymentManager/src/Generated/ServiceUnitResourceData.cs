@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceGroup"/> is null. </exception>
         public ServiceUnitResourceData(AzureLocation location, string targetResourceGroup, DeploymentMode deploymentMode) : base(location)
         {
-            if (targetResourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceGroup));
-            }
+            Argument.AssertNotNull(targetResourceGroup, nameof(targetResourceGroup));
 
             TargetResourceGroup = targetResourceGroup;
             DeploymentMode = deploymentMode;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -25,22 +26,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
         public Office365LinkedService(BinaryData office365TenantId, BinaryData servicePrincipalTenantId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey)
         {
-            if (office365TenantId == null)
-            {
-                throw new ArgumentNullException(nameof(office365TenantId));
-            }
-            if (servicePrincipalTenantId == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalTenantId));
-            }
-            if (servicePrincipalId == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalId));
-            }
-            if (servicePrincipalKey == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalKey));
-            }
+            Argument.AssertNotNull(office365TenantId, nameof(office365TenantId));
+            Argument.AssertNotNull(servicePrincipalTenantId, nameof(servicePrincipalTenantId));
+            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
+            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
 
             Office365TenantId = office365TenantId;
             ServicePrincipalTenantId = servicePrincipalTenantId;

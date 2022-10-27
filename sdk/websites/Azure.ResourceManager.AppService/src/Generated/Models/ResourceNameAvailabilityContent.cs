@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceNameAvailabilityContent(string name, CheckNameResourceType resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = resourceType;
