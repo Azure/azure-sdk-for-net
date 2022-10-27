@@ -870,6 +870,7 @@ namespace Azure.Core.Tests
         [TestCase("UnformattedString", Description = "Too Few Elements")]
         [TestCase("/subs/sub1/rgs/rg1/", Description = "No known parts")]
         [TestCase("/subscriptions/sub1/rgs/rg1/", Description = "Subscription not a Guid")]
+        [TestCase("/subscriptions/sub1", Description = "Subscription not a Guid")]
         [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups", Description = "Too few parts")]
         [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets", Description = "Subscription resource with too few parts")]
         [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups/myRg/widgets", Description = "ResourceGroup ID with Too few parts")]
