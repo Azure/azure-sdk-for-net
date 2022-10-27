@@ -22,8 +22,7 @@ namespace Azure.Communication.CallAutomation
 
         internal CallConnectionsRestClient CallConnectionsRestClient { get; }
         internal ServerCallingRestClient ServerCallingRestClient { get; }
-        internal ContentRestClient ContentRestClient { get; }
-        internal ServerCallsRestClient ServerCallsRestClient { get; }
+        internal RecordingRestClient RecordingRestClient { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -82,8 +81,7 @@ namespace Azure.Communication.CallAutomation
             _clientDiagnostics = new ClientDiagnostics(options);
             ServerCallingRestClient = new ServerCallingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallConnectionsRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            ContentRestClient = new ContentRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            ServerCallsRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            RecordingRestClient = new RecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
@@ -102,7 +100,7 @@ namespace Azure.Communication.CallAutomation
             _clientDiagnostics = null;
             CallConnectionsRestClient = null;
             ServerCallingRestClient = null;
-            ContentRestClient = null;
+            RecordingRestClient = null;
         }
 
         /// Answer an incoming call.
@@ -497,7 +495,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient,_clientDiagnostics);
+                return new CallConnection(callConnectionId, CallConnectionsRestClient,_clientDiagnostics);
             }
             catch (Exception ex)
             {
@@ -513,7 +511,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallRecording(_resourceEndpoint, ServerCallsRestClient, ContentRestClient, _clientDiagnostics, _pipeline);
+                return new CallRecording(_resourceEndpoint, RecordingRestClient, _clientDiagnostics, _pipeline);
             }
             catch (Exception ex)
             {
