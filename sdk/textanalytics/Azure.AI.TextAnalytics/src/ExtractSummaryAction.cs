@@ -45,9 +45,9 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get; set; }
 
         /// <summary>
-        /// The default value of this property is 'false'. This means, the Language service logs your input text for 48 hours,
-        /// solely to allow for troubleshooting issues.
-        /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
+        /// Indicates whether the Language service logs your input text for 48 hours, which is solely to allow for troubleshooting issues.
+        /// Setting this property to <c>true</c> disables input logging and may limit our ability to investigate any issues that may occur.
+        /// If not set, the service default is used.
         /// <para>
         /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
         /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.
@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics
         public string ActionName { get; set; }
 
         /// <summary>
-        /// The maximum number of sentences to be returned in the result. The default value is 3.
+        /// The maximum number of sentences to be returned in the result. If not set, the service default is used.
         /// </summary>
         public int? MaxSentenceCount { get; set; }
 
@@ -69,7 +69,7 @@ namespace Azure.AI.TextAnalytics
         /// The order in which the extracted sentences will be returned in the result. Use
         /// <see cref="SummarySentencesOrder.Offset"/> to keep the original order in which the sentences appear
         /// in the input document. Use <see cref="SummarySentencesOrder.Rank"/> to order them according to their relevance
-        /// to the input document, as determined by the service. The default value is <see cref="SummarySentencesOrder.Offset"/>.
+        /// to the input document, as determined by the service. If not set, the service default is used.
         /// </summary>
         public SummarySentencesOrder? OrderBy { get; set; }
     }

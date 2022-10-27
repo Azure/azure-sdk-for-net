@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// The maximum number of sentences to be returned in the result. The default value is 3.
+        /// The maximum number of sentences to be returned in the result. If not set, the service default is used.
         /// </summary>
         public int? MaxSentenceCount { get; set; }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         /// The order in which the extracted sentences will be returned in the result. Use
         /// <see cref="SummarySentencesOrder.Offset"/> to keep the original order in which the sentences appear
         /// in the input document. Use <see cref="SummarySentencesOrder.Rank"/> to order them according to their relevance
-        /// to the input document, as determined by the service. The default value is <see cref="SummarySentencesOrder.Offset"/>.
+        /// to the input document, as determined by the service. If not set, the service default is used.
         /// </summary>
         public SummarySentencesOrder? OrderBy { get; set; }
     }

@@ -2047,7 +2047,7 @@ namespace Azure.AI.TextAnalytics
         /// sentences that collectively represent the most important or relevant information within
         /// the original content.
         /// For a list of languages supported by this operation, see
-        /// <see href="https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/summarization/language-support?tabs=document-summarization"/>.
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
@@ -2065,6 +2065,8 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
         public virtual ExtractSummaryOperation StartExtractSummary(
             IEnumerable<string> documents,
             string language = default,
@@ -2080,7 +2082,7 @@ namespace Azure.AI.TextAnalytics
         /// sentences that collectively represent the most important or relevant information within
         /// the original content.
         /// For a list of languages supported by this operation, see
-        /// <see href="https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/summarization/language-support?tabs=document-summarization"/>.
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
@@ -2097,6 +2099,8 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
         public virtual ExtractSummaryOperation StartExtractSummary(
             IEnumerable<TextDocumentInput> documents,
             ExtractSummaryOptions options,
@@ -2111,7 +2115,7 @@ namespace Azure.AI.TextAnalytics
         /// sentences that collectively represent the most important or relevant information within
         /// the original content.
         /// For a list of languages supported by this operation, see
-        /// <see href="https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/summarization/language-support?tabs=document-summarization"/>.
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
@@ -2129,6 +2133,8 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
         public virtual async Task<ExtractSummaryOperation> StartExtractSummaryAsync(
             IEnumerable<string> documents,
             string language = default,
@@ -2144,7 +2150,7 @@ namespace Azure.AI.TextAnalytics
         /// sentences that collectively represent the most important or relevant information within
         /// the original content.
         /// For a list of languages supported by this operation, see
-        /// <see href="https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/summarization/language-support?tabs=document-summarization"/>.
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
@@ -2161,6 +2167,8 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
         public virtual async Task<ExtractSummaryOperation> StartExtractSummaryAsync(
             IEnumerable<TextDocumentInput> documents,
             ExtractSummaryOptions options = default,
