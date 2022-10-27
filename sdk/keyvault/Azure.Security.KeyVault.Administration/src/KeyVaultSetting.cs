@@ -47,7 +47,6 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns>"true" or "false" appropriately.</returns>
         internal static string ToString(bool value) => value ? "true" : "false";
 
-#pragma warning disable SA1414 // Tuple types in signatures should have element names
         private T CheckType<T>(SettingType expectedType, Func<(bool IsValid, T ParsedValue)> converter)
         {
             if (Type != expectedType)
@@ -63,6 +62,5 @@ namespace Azure.Security.KeyVault.Administration
 
             throw new InvalidOperationException($"Cannot normalize the setting as {expectedType}. Use AsString() for a textual representation of the setting.");
         }
-#pragma warning restore SA1414 // Tuple types in signatures should have element names
     }
 }
