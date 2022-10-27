@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateSimulateRequest(string subscriptionId, AzureLocation ascLocation, AlertSimulatorRequestBody alertSimulatorRequestBody)
+        internal HttpMessage CreateSimulateRequest(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1067,9 +1067,9 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(alertSimulatorRequestBody);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1077,16 +1077,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Simulate security alerts. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="alertSimulatorRequestBody"> Alert Simulator Request Properties. </param>
+        /// <param name="content"> Alert Simulator Request Properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertSimulatorRequestBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SimulateAsync(string subscriptionId, AzureLocation ascLocation, AlertSimulatorRequestBody alertSimulatorRequestBody, CancellationToken cancellationToken = default)
+        public async Task<Response> SimulateAsync(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(alertSimulatorRequestBody, nameof(alertSimulatorRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSimulateRequest(subscriptionId, ascLocation, alertSimulatorRequestBody);
+            using var message = CreateSimulateRequest(subscriptionId, ascLocation, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1100,16 +1100,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Simulate security alerts. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="alertSimulatorRequestBody"> Alert Simulator Request Properties. </param>
+        /// <param name="content"> Alert Simulator Request Properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertSimulatorRequestBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Simulate(string subscriptionId, AzureLocation ascLocation, AlertSimulatorRequestBody alertSimulatorRequestBody, CancellationToken cancellationToken = default)
+        public Response Simulate(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(alertSimulatorRequestBody, nameof(alertSimulatorRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSimulateRequest(subscriptionId, ascLocation, alertSimulatorRequestBody);
+            using var message = CreateSimulateRequest(subscriptionId, ascLocation, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

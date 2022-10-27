@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             {
                 Scopes =
                 {
-                    new AutomationScope()
+                    new SecurityAutomationScope()
                     {
                         Description = "A description that helps to identify this scope",
                         ScopePath = $"{_resourceGroup.Data.Id}"
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 },
                 Actions =
                 {
-                    new AutomationActionLogicApp()
+                    new SecurityAutomationActionLogicApp()
                     {
                         LogicAppResourceId = _workflowId,
                         Uri = new Uri("https://justtestsample.azurewebsites.net"),

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of SecurityAlertData. </summary>
         public SecurityAlertData()
         {
-            ResourceIdentifiers = new ChangeTrackingList<AlertResourceIdentifier>();
+            ResourceIdentifiers = new ChangeTrackingList<SecurityAlertResourceIdentifier>();
             RemediationSteps = new ChangeTrackingList<string>();
             ExtendedLinks = new ChangeTrackingList<IDictionary<string, string>>();
-            Entities = new ChangeTrackingList<AlertEntity>();
+            Entities = new ChangeTrackingList<SecurityAlertEntity>();
             ExtendedProperties = new ChangeTrackingDictionary<string, string>();
             Techniques = new ChangeTrackingList<string>();
             SubTechniques = new ChangeTrackingList<string>();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="endOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
         /// <param name="resourceIdentifiers">
         /// The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert.
-        /// Please note <see cref="AlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityAlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceIdentifier"/> and <see cref="LogAnalyticsIdentifier"/>.
         /// </param>
         /// <param name="remediationSteps"> Manual action items to take to remediate the alert. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="techniques"> kill chain related techniques behind the alert. </param>
         /// <param name="subTechniques"> Kill chain related sub-techniques behind the alert. </param>
         /// <param name="supportingEvidence"> Changing set of properties depending on the supportingEvidence type. </param>
-        internal SecurityAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, string alertType, string systemAlertId, string productComponentName, string alertDisplayName, string description, AlertSeverity? severity, KillChainIntent? intent, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<AlertResourceIdentifier> resourceIdentifiers, IReadOnlyList<string> remediationSteps, string vendorName, AlertStatus? status, IReadOnlyList<IDictionary<string, string>> extendedLinks, Uri alertUri, DateTimeOffset? generatedOn, string productName, DateTimeOffset? processingEndOn, IReadOnlyList<AlertEntity> entities, bool? isIncident, string correlationKey, IDictionary<string, string> extendedProperties, string compromisedEntity, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, SecurityAlertSupportingEvidence supportingEvidence) : base(id, name, resourceType, systemData)
+        internal SecurityAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, string alertType, string systemAlertId, string productComponentName, string alertDisplayName, string description, SecurityAlertSeverity? severity, KillChainIntent? intent, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers, IReadOnlyList<string> remediationSteps, string vendorName, SecurityAlertStatus? status, IReadOnlyList<IDictionary<string, string>> extendedLinks, Uri alertUri, DateTimeOffset? generatedOn, string productName, DateTimeOffset? processingEndOn, IReadOnlyList<SecurityAlertEntity> entities, bool? isIncident, string correlationKey, IDictionary<string, string> extendedProperties, string compromisedEntity, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, SecurityAlertSupportingEvidence supportingEvidence) : base(id, name, resourceType, systemData)
         {
             Version = version;
             AlertType = alertType;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Description of the suspicious activity that was detected. </summary>
         public string Description { get; }
         /// <summary> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </summary>
-        public AlertSeverity? Severity { get; }
+        public SecurityAlertSeverity? Severity { get; }
         /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center&apos;s supported kill chain intents. </summary>
         public KillChainIntent? Intent { get; }
         /// <summary> The UTC time of the first event or activity included in the alert in ISO8601 format. </summary>
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.SecurityCenter
         public DateTimeOffset? EndOn { get; }
         /// <summary>
         /// The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert.
-        /// Please note <see cref="AlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityAlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceIdentifier"/> and <see cref="LogAnalyticsIdentifier"/>.
         /// </summary>
-        public IReadOnlyList<AlertResourceIdentifier> ResourceIdentifiers { get; }
+        public IReadOnlyList<SecurityAlertResourceIdentifier> ResourceIdentifiers { get; }
         /// <summary> Manual action items to take to remediate the alert. </summary>
         public IReadOnlyList<string> RemediationSteps { get; }
         /// <summary> The name of the vendor that raises the alert. </summary>
         public string VendorName { get; }
         /// <summary> The life cycle status of the alert. </summary>
-        public AlertStatus? Status { get; }
+        public SecurityAlertStatus? Status { get; }
         /// <summary> Links related to the alert. </summary>
         public IReadOnlyList<IDictionary<string, string>> ExtendedLinks { get; }
         /// <summary> A direct link to the alert page in Azure Portal. </summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The UTC processing end time of the alert in ISO8601 format. </summary>
         public DateTimeOffset? ProcessingEndOn { get; }
         /// <summary> A list of entities related to the alert. </summary>
-        public IReadOnlyList<AlertEntity> Entities { get; }
+        public IReadOnlyList<SecurityAlertEntity> Entities { get; }
         /// <summary> This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert. </summary>
         public bool? IsIncident { get; }
         /// <summary> Key for corelating related alerts. Alerts with the same correlation key considered to be related. </summary>

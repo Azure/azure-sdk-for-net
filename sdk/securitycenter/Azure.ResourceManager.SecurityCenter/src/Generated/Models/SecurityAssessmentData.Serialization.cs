@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceDetails> resourceDetails = default;
+            Optional<SecurityCenterResourceDetails> resourceDetails = default;
             Optional<string> displayName = default;
             Optional<IDictionary<string, string>> additionalData = default;
             Optional<AssessmentLinks> links = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceDetails = ResourceDetails.DeserializeResourceDetails(property0.Value);
+                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("displayName"))

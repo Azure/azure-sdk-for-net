@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="accountId"> The ID of the cloud account. </param>
         /// <param name="awsAccessKeyId"> Public key element of the AWS credential object (write only). </param>
         /// <param name="awsSecretAccessKey"> Secret key element of the AWS credential object (write only). </param>
-        internal AwsCredsAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<PermissionProperty> grantedPermissions, AuthenticationType authenticationType, string accountId, string awsAccessKeyId, string awsSecretAccessKey) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
+        internal AwsCredsAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, string accountId, string awsAccessKeyId, string awsSecretAccessKey) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
         {
             AccountId = accountId;
             AwsAccessKeyId = awsAccessKeyId;

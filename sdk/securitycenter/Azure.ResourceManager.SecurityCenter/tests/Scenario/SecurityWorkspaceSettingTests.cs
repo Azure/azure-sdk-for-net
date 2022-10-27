@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             SecurityWorkspaceSettingData data = new SecurityWorkspaceSettingData()
             {
                 Scope = $"{DefaultSubscription.Id}",
-                WorkspaceId = $"<WORKSPACE_ID>"
+                WorkspaceId = new ResourceIdentifier($"<WORKSPACE_ID>")
             };
             var workspaceSetting = await _workspaceSettingCollection.CreateOrUpdateAsync(WaitUntil.Completed, _workspaceSettingName, data);
             Assert.IsNotNull(workspaceSetting);

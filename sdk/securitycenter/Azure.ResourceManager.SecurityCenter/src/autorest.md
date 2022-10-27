@@ -30,8 +30,6 @@ rename-mapping:
   Application: SecurityApplication
   Automation: SecurityAutomation
   Compliance: SecurityCompliance
-  Pricing: SecurityCenterPricing
-  PricingTier: SecurityCenterPricingTier
   Scan: SqlVulnerabilityAssessmentScan
   ScanResult: SqlVulnerabilityAssessmentScanResult
   ScanResultProperties: SqlVulnerabilityAssessmentScanResultProperties
@@ -45,11 +43,13 @@ rename-mapping:
   ScanningMode: DefenderForServersScanningMode
   Setting: SecuritySetting
   Software: SoftwareInventory
+  Software.properties.firstSeenAt: -|date-time
   TopologyResource: SecurityTopologyResource
   Alert.properties.endTimeUtc: EndOn
   Alert.properties.startTimeUtc: StartOn
   Alert.properties.timeGeneratedUtc: GeneratedOn
   Alert.properties.processingEndTimeUtc: ProcessingEndOn
+  AlertsSuppressionRule: SecurityAlertsSuppressionRule
   AlertsSuppressionRule.properties.expirationDateUtc: ExpireOn
   AlertsSuppressionRule.properties.lastModifiedUtc: LastModifiedOn
   Compliance.properties.assessmentTimestampUtcDate: AssessedOn
@@ -63,7 +63,7 @@ rename-mapping:
   SecuritySubAssessment.properties.timeGenerated: GeneratedOn
   SecurityTask.properties.creationTimeUtc: CreatedOn
   SecurityTask.properties.lastStateChangeTimeUtc: LastStateChangedOn
-  RuleState: AlertsSuppressionRuleState
+  RuleState: SecurityAlertsSuppressionRuleState
   TopologySingleResource.resourceId: -|arm-id
   TopologySingleResourceChild.resourceId: -|arm-id
   TopologySingleResourceParent.resourceId: -|arm-id
@@ -101,6 +101,7 @@ rename-mapping:
   SecuritySubAssessmentAdditionalData: SecuritySubAssessmentAdditionalInfo
   AlertPropertiesSupportingEvidence: SecurityAlertSupportingEvidence
   AlertPropertiesSupportingEvidence.type: SecurityAlertSupportingEvidenceType
+  AlertSyncSettings: SecurityAlertSyncSettings
   AlertSyncSettings.properties.enabled: IsEnabled
   AssessmentStatusResponse.firstEvaluationDate: FirstEvaluatedOn
   AssessmentStatusResponse: SecurityAssessmentStatusResult
@@ -108,7 +109,7 @@ rename-mapping:
   AwAssumeRoleAuthenticationDetailsProperties: AwsAssumeRoleAuthenticationDetailsProperties
   ContainerRegistryVulnerabilityProperties.patchable: IsPatchable
   CVE: SecurityCve
-  CVSS: SecurityCvss
+  Cvss: SecurityCvss
   DataExportSettings.properties.enabled: IsEnabled
   DefenderFoDatabasesAwsOfferingArcAutoProvisioning: DefenderForDatabasesAwsOfferingArcAutoProvisioning
   DefenderFoDatabasesAwsOfferingArcAutoProvisioning.enabled: IsEnabled
@@ -165,7 +166,7 @@ rename-mapping:
   SecurityAssessmentMetadataResponse.properties.preview: IsPreview
   ConnectableResource: ConnectableResourceInfo
   ConnectedResource: ConnectedResourceInfo
-  TagsResource: TagsResourceInfo
+  TagsResource: SecurityCenterTagsResourceInfo
   SecureScoreItem: SecureScore
   SecurityAssessment: SecurityAssessmentInfo
   SecurityAssessmentResponse: SecurityAssessment
@@ -182,10 +183,54 @@ rename-mapping:
   JitNetworkAccessPolicyVirtualMachine.id: -|arm-id
   JitNetworkAccessRequestVirtualMachine.id: -|arm-id
   LogAnalyticsIdentifier.agentId: -|uuid
-  AllowedConnectionsResource: AllowedConnection
+  AllowedConnectionsResource: SecurityCenterAllowedConnection
   WorkspaceSetting: SecurityWorkspaceSetting
+  WorkspaceSetting.properties.workspaceId: -|arm-id
   MinimalSeverity: SecurityAlertMinimalSeverity
   Roles: SecurityAlertReceivingRole
+  BundleType: SecurityAlertSimulatorBundleType
+  ControlType: SecurityControlType
+  DataSource: IotSecuritySolutionDataSource
+  EnforcementMode: AdaptiveApplicationControlEnforcementMode
+  EnforcementSupport: SecurityCenterVmEnforcementSupportState
+  PermissionProperty: SecurityCenterCloudPermission
+  ProtectionMode: SecurityCenterFileProtectionMode
+  QueryCheck: VulnerabilityAssessmentRuleQueryCheck
+  RecommendationType: IotSecurityRecommendationType
+  ResourceDetails: SecurityCenterResourceDetails
+  ResourceStatus: SecurityAssessmentResourceStatus
+  AutomationAction: SecurityAutomationAction
+  AssessmentType: SecurityAssessmentType
+  AssessmentStatus: SecurityAssessmentStatus
+  AssessmentStatusCode: SecurityAssessmentStatusCode
+  AlertStatus: SecurityAlertStatus
+  AlertEntity: SecurityAlertEntity
+  AlertResourceIdentifier: SecurityAlertResourceIdentifier
+  AlertSeverity: SecurityAlertSeverity
+  AlertSimulatorRequestProperties: SecurityAlertSimulatorRequestProperties
+  AlertSimulatorBundlesRequestProperties: SecurityAlertSimulatorBundlesRequestProperties
+  AlertSimulatorRequestBody: SecurityAlertSimulatorContent
+  AutomationActionEventHub: SecurityAutomationActionEventHub
+  AutomationActionLogicApp: SecurityAutomationActionLogicApp
+  AutomationActionWorkspace: SecurityAutomationActionWorkspace
+  AutomationRuleSet: SecurityAutomationRuleSet
+  AutomationScope: SecurityAutomationScope
+  AutomationTriggeringRule: SecurityAutomationTriggeringRule
+  AutomationTriggeringRuleOperator: SecurityAutomationTriggeringRuleOperator
+  AutomationValidationStatus: SecurityAutomationValidationStatus
+  ConnectorSetting: SecurityCloudConnector
+  LogAnalyticsIdentifier.workspaceId: -|uuid
+  OnPremiseResourceDetails.workspaceId: -|arm-id
+  OnPremiseSqlResourceDetails.workspaceId: -|arm-id
+
+prepend-rp-prefix:
+  - CloudName
+  - Pricing
+  - PricingTier
+  - ConfigurationStatus
+  - CloudOffering
+  - ConnectionType
+  - PublisherInfo
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -318,6 +363,18 @@ directive:
     where: $.definitions.SecurityContactProperties.properties.notificationsByRole.properties.state
     transform: >
         $['x-ms-enum']['name'] = 'SecurityAlertNotificationByRoleState';
+  - from: sqlVulnerabilityAssessmentsBaselineRuleOperations.json
+    where: $.paths..parameters[?(@.name == 'workspaceId')]
+    transform: >
+        $.format = 'uuid';
+  - from: sqlVulnerabilityAssessmentsScanOperations.json
+    where: $.paths..parameters[?(@.name == 'workspaceId')]
+    transform: >
+        $.format = 'uuid';
+  - from: sqlVulnerabilityAssessmentsScanResultsOperations.json
+    where: $.paths..parameters[?(@.name == 'workspaceId')]
+    transform: >
+        $.format = 'uuid';
   # TODO: temporary remove these operations to mitigate the exception from BuildParameterMapping in Autorest.CSharp
   - remove-operation: InformationProtectionPolicies_Get
   - remove-operation: Tasks_UpdateSubscriptionLevelTaskState

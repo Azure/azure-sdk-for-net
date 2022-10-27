@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class ConnectorSettingTests : SecurityCenterManagementTestBase
     {
-        private ConnectorSettingCollection _connectorSettingCollection => DefaultSubscription.GetConnectorSettings();
+        private SecurityCloudConnectorCollection _connectorSettingCollection => DefaultSubscription.GetSecurityCloudConnectors();
 
         public ConnectorSettingTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
