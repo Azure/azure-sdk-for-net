@@ -1152,6 +1152,7 @@ namespace BatchClientIntegrationTests
                         new CloudServiceConfiguration(PoolFixture.OSFamily),
                         targetDedicatedComputeNodes: 0);
 
+                    //Set NodeCommunicationMode to Default
                     pool.TargetNodeCommunicationMode = NodeCommunicationMode.Default;
 
                     await pool.CommitAsync().ConfigureAwait(false);
@@ -1159,13 +1160,14 @@ namespace BatchClientIntegrationTests
                     Assert.NotNull(pool.CurrentNodeCommunicationMode);
                     Assert.Equal(NodeCommunicationMode.Default, pool.TargetNodeCommunicationMode);
 
-                    
+                    //Then to Simplified
                     pool.TargetNodeCommunicationMode = NodeCommunicationMode.Simplified;
                     await pool.CommitAsync().ConfigureAwait(false);
                     pool = batchCli.PoolOperations.GetPool(poolId);
                     Assert.NotNull(pool.CurrentNodeCommunicationMode);
                     Assert.Equal(NodeCommunicationMode.Simplified, pool.TargetNodeCommunicationMode);
 
+                    //Then to Classic
                     pool.TargetNodeCommunicationMode = NodeCommunicationMode.Classic;
                     await pool.CommitChangesAsync().ConfigureAwait(false);
                     await pool.RefreshAsync().ConfigureAwait(false);

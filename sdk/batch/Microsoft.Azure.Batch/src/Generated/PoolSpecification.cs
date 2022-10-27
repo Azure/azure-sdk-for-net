@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Batch
                 this.TargetNodeCommunicationModeProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.NodeCommunicationMode, Common.NodeCommunicationMode>(protocolObject.TargetNodeCommunicationMode),
                     nameof(TargetNodeCommunicationMode),
-                    BindingAccess.Read | BindingAccess.Write);
+                    BindingAccess.Read);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskSchedulingPolicy, o => new TaskSchedulingPolicy(o)),
                     nameof(TaskSchedulingPolicy),

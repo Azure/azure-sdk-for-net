@@ -554,17 +554,12 @@
                     CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
                     AutoPoolSpecification autoPoolSpec = new AutoPoolSpecification();
                     autoPoolSpec.PoolLifetimeOption = PoolLifetimeOption.Job;
-                    List<MetadataItem> originalMetadata = new List<MetadataItem>
-                    {
-                        new MetadataItem("meta1", "value1"),
-                        new MetadataItem("meta2", "value2")
-                    };
+
                     autoPoolSpec.PoolSpecification = new PoolSpecification()
                     {
                         VirtualMachineSize = PoolFixture.VMSize,
                         TargetNodeCommunicationMode = NodeCommunicationMode.Classic,
-                        CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily, "*"),
-                        Metadata = originalMetadata
+                        CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily, "*")
                 };
 
                     job.PoolInformation = new PoolInformation()
@@ -576,11 +571,6 @@
 
                     job = batchCli.JobOperations.GetJob(jobId);
                     Assert.Equal(NodeCommunicationMode.Classic, job.PoolInformation.AutoPoolSpecification.PoolSpecification.TargetNodeCommunicationMode);
-
-
-                    autoPoolSpec.PoolSpecification.Metadata.Add(new MetadataItem("meta3", "value3"));
-                    job.Commit();
-                    Assert.Equal(NodeCommunicationMode.Simplified, job.PoolInformation.AutoPoolSpecification.PoolSpecification.TargetNodeCommunicationMode);
 
                 }
                 finally

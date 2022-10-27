@@ -273,7 +273,7 @@
             "Name": "TargetNodeCommunicationMode",
             "SummaryComment": "The desired node communication mode for the pool.",
             "RemarksComment": "If omitted, the default value is default.",
-            "BoundAccess": "read,write",
+            "BoundAccess": "read",
             "UnboundAccess": "read,write"
           },
           "Value": {
