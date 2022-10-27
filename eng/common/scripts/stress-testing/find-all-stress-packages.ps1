@@ -36,6 +36,8 @@ function FindStressPackages(
     }
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
+        
+        VerifyAddonsVersion $chart
         if (matchesAnnotations $chart $filters) {
             $matrixFilePath = (Join-Path $chartFile.Directory.FullName $MatrixFileName)
             if (Test-Path $matrixFilePath) {
@@ -71,6 +73,16 @@ function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     }
 
     return $true
+}
+
+function VerifyAddonsVersion([hashtable]$chart) {
+    foreach ($dependency in $chart.dependencies) {
+        if ($dependency.name -eq "stress-test-addons" -and
+            $dependency.version -lt "0.2.0") {
+            throw "The stress-test-addons version in use is $($dependency.version), please use versions >= 0.2.0"
+        }
+    }
+    $addonsVer = $chart.dependencies
 }
 
 function GetUsername() {
