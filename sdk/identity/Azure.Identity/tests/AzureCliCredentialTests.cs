@@ -111,6 +111,7 @@ namespace Azure.Identity.Tests
             yield return new object[] { RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] { AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] { "random unknown exception", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " random unknown exception", typeof(AuthenticationFailedException) };
+            yield return new object[] { "AADSTS12345: Some AAD error. To re-authenticate, please run: az login", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: az login", typeof(AuthenticationFailedException) };
         }
 
         [Test]
