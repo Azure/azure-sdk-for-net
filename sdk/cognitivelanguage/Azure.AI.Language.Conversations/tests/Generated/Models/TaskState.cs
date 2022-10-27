@@ -6,58 +6,24 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> The status of the task at the mentioned last update time. </summary>
-    public readonly partial struct TaskState : IEquatable<TaskState>
+    /// <summary> Returns the current state of the task. </summary>
+    public partial class TaskState
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TaskState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TaskState(string value)
+        /// <summary> Initializes a new instance of TaskState. </summary>
+        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        public TaskState(DateTimeOffset lastUpdateDateTime, State status)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            LastUpdateDateTime = lastUpdateDateTime;
+            Status = status;
         }
 
-        private const string NotStartedValue = "notStarted";
-        private const string RunningValue = "running";
-        private const string SucceededValue = "succeeded";
-        private const string FailedValue = "failed";
-        private const string CancelledValue = "cancelled";
-        private const string CancellingValue = "cancelling";
-
-        /// <summary> notStarted. </summary>
-        public static TaskState NotStarted { get; } = new TaskState(NotStartedValue);
-        /// <summary> running. </summary>
-        public static TaskState Running { get; } = new TaskState(RunningValue);
-        /// <summary> succeeded. </summary>
-        public static TaskState Succeeded { get; } = new TaskState(SucceededValue);
-        /// <summary> failed. </summary>
-        public static TaskState Failed { get; } = new TaskState(FailedValue);
-        /// <summary> cancelled. </summary>
-        public static TaskState Cancelled { get; } = new TaskState(CancelledValue);
-        /// <summary> cancelling. </summary>
-        public static TaskState Cancelling { get; } = new TaskState(CancellingValue);
-        /// <summary> Determines if two <see cref="TaskState"/> values are the same. </summary>
-        public static bool operator ==(TaskState left, TaskState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="TaskState"/> values are not the same. </summary>
-        public static bool operator !=(TaskState left, TaskState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TaskState"/>. </summary>
-        public static implicit operator TaskState(string value) => new TaskState(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TaskState other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(TaskState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> The last updated time in UTC for the task. </summary>
+        public DateTimeOffset LastUpdateDateTime { get; set; }
+        /// <summary> The status of the task at the mentioned last update time. </summary>
+        public State Status { get; set; }
     }
 }

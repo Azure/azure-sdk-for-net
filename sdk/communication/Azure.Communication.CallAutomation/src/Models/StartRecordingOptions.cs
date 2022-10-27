@@ -18,6 +18,7 @@ namespace Azure.Communication.CallAutomation
         public StartRecordingOptions(CallLocator callLocator)
         {
             CallLocator = callLocator ?? throw new ArgumentNullException(nameof(callLocator));
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -44,6 +45,11 @@ namespace Azure.Communication.CallAutomation
         /// The recording format.
         /// </summary>
         public RecordingFormat RecordingFormat { get; set; }
+
+        /// <summary>
+        /// Repeatability Headers.
+        /// </summary>
+        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
 
         /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.

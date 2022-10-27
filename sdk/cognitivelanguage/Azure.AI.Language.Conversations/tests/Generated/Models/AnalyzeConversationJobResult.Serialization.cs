@@ -36,6 +36,7 @@ namespace Azure.AI.Language.Conversations
             {
                 switch (discriminator.GetString())
                 {
+                    case "ConversationalSentimentResults": return AnalyzeConversationSentimentResult.DeserializeAnalyzeConversationSentimentResult(element);
                     case "conversationalPIIResults": return AnalyzeConversationPIIResult.DeserializeAnalyzeConversationPIIResult(element);
                     case "conversationalSummarizationResults": return AnalyzeConversationSummarizationResult.DeserializeAnalyzeConversationSummarizationResult(element);
                 }
@@ -43,7 +44,7 @@ namespace Azure.AI.Language.Conversations
             AnalyzeConversationResultsKind kind = default;
             Optional<string> taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
-            TaskState status = default;
+            State status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -63,7 +64,7 @@ namespace Azure.AI.Language.Conversations
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new TaskState(property.Value.GetString());
+                    status = new State(property.Value.GetString());
                     continue;
                 }
             }

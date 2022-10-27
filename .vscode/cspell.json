@@ -125,7 +125,8 @@
     {
       "filename": "**/sdk/automation/**/*.cs",
       "words": [
-        "tfvc"
+        "tfvc",
+        "updation"
       ]
     },
     {
@@ -405,6 +406,12 @@
       "words": [
         "dicom",
         "fhir"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybriddatamanager/**/*.cs",
+      "words": [
+        "Oaep"
       ]
     },
     {

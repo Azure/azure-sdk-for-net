@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="autoProvision"> Describes what kind of security agent provisioning action to take. </param>
-        internal AutoProvisioningSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutoProvision? autoProvision) : base(id, name, resourceType, systemData)
+        internal AutoProvisioningSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutoProvisionState? autoProvision) : base(id, name, resourceType, systemData)
         {
             AutoProvision = autoProvision;
         }
 
         /// <summary> Describes what kind of security agent provisioning action to take. </summary>
-        public AutoProvision? AutoProvision { get; set; }
+        public AutoProvisionState? AutoProvision { get; set; }
     }
 }

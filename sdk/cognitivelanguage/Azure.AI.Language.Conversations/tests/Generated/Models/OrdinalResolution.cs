@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations
             Offset = offset;
             RelativeTo = relativeTo;
             Value = value;
-            ResolutionKind = ResolutionKind.Ordinal;
+            ResolutionKind = ResolutionKind.OrdinalResolution;
         }
 
         /// <summary> Initializes a new instance of OrdinalResolution. </summary>

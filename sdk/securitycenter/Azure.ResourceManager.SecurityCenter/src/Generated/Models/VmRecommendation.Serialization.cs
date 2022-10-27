@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static VmRecommendation DeserializeVmRecommendation(JsonElement element)
         {
-            Optional<ConfigurationStatus> configurationStatus = default;
+            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
             Optional<RecommendationAction> recommendationAction = default;
-            Optional<string> resourceId = default;
-            Optional<EnforcementSupport> enforcementSupport = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<SecurityCenterVmEnforcementSupportState> enforcementSupport = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationStatus"))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configurationStatus = new ConfigurationStatus(property.Value.GetString());
+                    configurationStatus = new SecurityCenterConfigurationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recommendationAction"))
@@ -68,7 +68,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enforcementSupport"))
@@ -78,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enforcementSupport = new EnforcementSupport(property.Value.GetString());
+                    enforcementSupport = new SecurityCenterVmEnforcementSupportState(property.Value.GetString());
                     continue;
                 }
             }

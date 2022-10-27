@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         {
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Length;
+            ResolutionKind = ResolutionKind.LengthResolution;
         }
 
         /// <summary> Initializes a new instance of LengthResolution. </summary>

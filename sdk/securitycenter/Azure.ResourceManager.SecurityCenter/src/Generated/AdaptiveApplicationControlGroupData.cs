@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="vmRecommendations"></param>
         /// <param name="pathRecommendations"></param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal AdaptiveApplicationControlGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EnforcementMode? enforcementMode, ProtectionMode protectionMode, ConfigurationStatus? configurationStatus, RecommendationStatus? recommendationStatus, IReadOnlyList<AdaptiveApplicationControlIssueSummary> issues, SourceSystem? sourceSystem, IList<VmRecommendation> vmRecommendations, IList<PathRecommendation> pathRecommendations, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal AdaptiveApplicationControlGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdaptiveApplicationControlEnforcementMode? enforcementMode, SecurityCenterFileProtectionMode protectionMode, SecurityCenterConfigurationStatus? configurationStatus, RecommendationStatus? recommendationStatus, IReadOnlyList<AdaptiveApplicationControlIssueSummary> issues, AdaptiveApplicationControlGroupSourceSystem? sourceSystem, IList<VmRecommendation> vmRecommendations, IList<PathRecommendation> pathRecommendations, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             EnforcementMode = enforcementMode;
             ProtectionMode = protectionMode;
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The application control policy enforcement/protection mode of the machine group. </summary>
-        public EnforcementMode? EnforcementMode { get; set; }
+        public AdaptiveApplicationControlEnforcementMode? EnforcementMode { get; set; }
         /// <summary> The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux. </summary>
-        public ProtectionMode ProtectionMode { get; set; }
+        public SecurityCenterFileProtectionMode ProtectionMode { get; set; }
         /// <summary> The configuration status of the machines group or machine or rule. </summary>
-        public ConfigurationStatus? ConfigurationStatus { get; }
+        public SecurityCenterConfigurationStatus? ConfigurationStatus { get; }
         /// <summary> The initial recommendation status of the machine group or machine. </summary>
         public RecommendationStatus? RecommendationStatus { get; }
         /// <summary> Gets the issues. </summary>
         public IReadOnlyList<AdaptiveApplicationControlIssueSummary> Issues { get; }
         /// <summary> The source type of the machine group. </summary>
-        public SourceSystem? SourceSystem { get; }
+        public AdaptiveApplicationControlGroupSourceSystem? SourceSystem { get; }
         /// <summary> Gets the vm recommendations. </summary>
         public IList<VmRecommendation> VmRecommendations { get; }
         /// <summary> Gets the path recommendations. </summary>

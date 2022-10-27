@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ConnectorSettingList. </summary>
         internal ConnectorSettingList()
         {
-            Value = new ChangeTrackingList<ConnectorSettingData>();
+            Value = new ChangeTrackingList<SecurityCloudConnectorData>();
         }
 
         /// <summary> Initializes a new instance of ConnectorSettingList. </summary>
         /// <param name="value"> List of all the cloud account connector settings. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal ConnectorSettingList(IReadOnlyList<ConnectorSettingData> value, string nextLink)
+        internal ConnectorSettingList(IReadOnlyList<SecurityCloudConnectorData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of all the cloud account connector settings. </summary>
-        public IReadOnlyList<ConnectorSettingData> Value { get; }
+        public IReadOnlyList<SecurityCloudConnectorData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

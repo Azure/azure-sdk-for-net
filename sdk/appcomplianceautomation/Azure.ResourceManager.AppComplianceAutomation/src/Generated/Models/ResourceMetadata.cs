@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public partial class ResourceMetadata
     {
         /// <summary> Initializes a new instance of ResourceMetadata. </summary>
-        /// <param name="resourceId"> Resource Id. </param>
+        /// <param name="resourceId"> Resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ResourceMetadata(string resourceId)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of ResourceMetadata. </summary>
-        /// <param name="resourceId"> Resource Id. </param>
+        /// <param name="resourceId"> Resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceKind"> Resource kind. </param>
         /// <param name="resourceName"> Resource name. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Tags = tags;
         }
 
-        /// <summary> Resource Id. </summary>
+        /// <summary> Resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </summary>
         public string ResourceId { get; set; }
         /// <summary> Resource type. </summary>
         public string ResourceType { get; set; }

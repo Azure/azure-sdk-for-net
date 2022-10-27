@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         internal static DynatraceMonitoredResourceDetails DeserializeDynatraceMonitoredResourceDetails(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
-            Optional<SendingMetricsStatus> sendingMetrics = default;
+            Optional<MetricsSendingStatus> sendingMetrics = default;
             Optional<string> reasonForMetricsStatus = default;
-            Optional<SendingLogsStatus> sendingLogs = default;
+            Optional<LogsSendingStatus> sendingLogs = default;
             Optional<string> reasonForLogsStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sendingMetrics = new SendingMetricsStatus(property.Value.GetString());
+                    sendingMetrics = new MetricsSendingStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reasonForMetricsStatus"))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sendingLogs = new SendingLogsStatus(property.Value.GetString());
+                    sendingLogs = new LogsSendingStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reasonForLogsStatus"))

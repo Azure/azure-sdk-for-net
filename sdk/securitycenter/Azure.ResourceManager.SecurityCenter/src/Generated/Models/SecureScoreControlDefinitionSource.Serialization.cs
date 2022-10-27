@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecureScoreControlDefinitionSource DeserializeSecureScoreControlDefinitionSource(JsonElement element)
         {
-            Optional<ControlType> sourceType = default;
+            Optional<SecurityControlType> sourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceType"))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceType = new ControlType(property.Value.GetString());
+                    sourceType = new SecurityControlType(property.Value.GetString());
                     continue;
                 }
             }

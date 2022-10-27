@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static AzureBackupRecoveryPointResourceList DeserializeAzureBackupRecoveryPointResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<AzureBackupRecoveryPointResourceData>> value = default;
+            Optional<IReadOnlyList<DataProtectionBackupRecoveryPointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureBackupRecoveryPointResourceData> array = new List<AzureBackupRecoveryPointResourceData>();
+                    List<DataProtectionBackupRecoveryPointData> array = new List<DataProtectionBackupRecoveryPointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureBackupRecoveryPointResourceData.DeserializeAzureBackupRecoveryPointResourceData(item));
+                        array.Add(DataProtectionBackupRecoveryPointData.DeserializeDataProtectionBackupRecoveryPointData(item));
                     }
                     value = array;
                     continue;

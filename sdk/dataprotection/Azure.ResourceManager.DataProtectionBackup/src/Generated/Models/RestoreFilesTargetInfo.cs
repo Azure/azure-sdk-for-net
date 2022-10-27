@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class RestoreFilesTargetInfo : RestoreTargetInfoBase
     {
         /// <summary> Initializes a new instance of RestoreFilesTargetInfo. </summary>
-        /// <param name="recoveryOption"> Recovery Option. </param>
+        /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="targetDetails"> Destination of RestoreAsFiles operation, when destination is not a datasource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetDetails"/> is null. </exception>
-        public RestoreFilesTargetInfo(RecoveryOption recoveryOption, TargetDetails targetDetails) : base(recoveryOption)
+        public RestoreFilesTargetInfo(RecoverySetting recoverySetting, RestoreFilesTargetDetails targetDetails) : base(recoverySetting)
         {
             if (targetDetails == null)
             {
@@ -28,6 +28,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Destination of RestoreAsFiles operation, when destination is not a datasource. </summary>
-        public TargetDetails TargetDetails { get; }
+        public RestoreFilesTargetDetails TargetDetails { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecurityAssessmentList DeserializeSecurityAssessmentList(JsonElement element)
         {
-            Optional<IReadOnlyList<SecurityAssessmentResponseData>> value = default;
+            Optional<IReadOnlyList<SecurityAssessmentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecurityAssessmentResponseData> array = new List<SecurityAssessmentResponseData>();
+                    List<SecurityAssessmentData> array = new List<SecurityAssessmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAssessmentResponseData.DeserializeSecurityAssessmentResponseData(item));
+                        array.Add(SecurityAssessmentData.DeserializeSecurityAssessmentData(item));
                     }
                     value = array;
                     continue;

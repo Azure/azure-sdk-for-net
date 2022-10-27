@@ -43,11 +43,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="userProperties">Activity user properties.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
+        /// <param name="scriptBlockExecutionTimeout">ScriptBlock execution
+        /// timeout. Type: string (or Expression with resultType string),
+        /// pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="scripts">Array of script blocks. Type: array.</param>
         /// <param name="logSettings">Log settings of script activity.</param>
-        public ScriptActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<ScriptActivityScriptBlock> scripts = default(IList<ScriptActivityScriptBlock>), ScriptActivityTypePropertiesLogSettings logSettings = default(ScriptActivityTypePropertiesLogSettings))
+        public ScriptActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object scriptBlockExecutionTimeout = default(object), IList<ScriptActivityScriptBlock> scripts = default(IList<ScriptActivityScriptBlock>), ScriptActivityTypePropertiesLogSettings logSettings = default(ScriptActivityTypePropertiesLogSettings))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
+            ScriptBlockExecutionTimeout = scriptBlockExecutionTimeout;
             Scripts = scripts;
             LogSettings = logSettings;
             CustomInit();
@@ -57,6 +62,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets scriptBlock execution timeout. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.scriptBlockExecutionTimeout")]
+        public object ScriptBlockExecutionTimeout { get; set; }
 
         /// <summary>
         /// Gets or sets array of script blocks. Type: array.

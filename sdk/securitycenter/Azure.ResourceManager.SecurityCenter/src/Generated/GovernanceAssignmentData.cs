@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance assignment. </param>
         /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
         /// <param name="additionalData"> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </param>
-        internal GovernanceAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string owner, DateTimeOffset? remediationDueOn, RemediationEta remediationEta, bool? isGracePeriod, GovernanceEmailNotification governanceEmailNotification, GovernanceAssignmentAdditionalData additionalData) : base(id, name, resourceType, systemData)
+        internal GovernanceAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string owner, DateTimeOffset? remediationDueOn, RemediationEta remediationEta, bool? isGracePeriod, GovernanceEmailNotification governanceEmailNotification, GovernanceAssignmentAdditionalInfo additionalData) : base(id, name, resourceType, systemData)
         {
             Owner = owner;
             RemediationDueOn = remediationDueOn;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </summary>
         public GovernanceEmailNotification GovernanceEmailNotification { get; set; }
         /// <summary> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </summary>
-        public GovernanceAssignmentAdditionalData AdditionalData { get; set; }
+        public GovernanceAssignmentAdditionalInfo AdditionalData { get; set; }
     }
 }
