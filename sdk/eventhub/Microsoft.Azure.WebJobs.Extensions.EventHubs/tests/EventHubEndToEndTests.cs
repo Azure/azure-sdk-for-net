@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [TearDown]
         public void TearDown()
         {
-            _eventWait?.Dispose();
+            _eventWait.Dispose();
         }
 
         [Test]
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_InitialOffsetFromStart()
         {
-            var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
             await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
 
             var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task EventHub_InitialOffsetFromEnd()
         {
             // Send a message to ensure the stream is not empty as we are trying to validate that no messages are delivered in this case
-            var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
             await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
 
             var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task EventHub_InitialOffsetFromEnqueuedTime()
         {
             await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 // send one at a time so they will have slightly different enqueued times
                 await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
@@ -397,9 +397,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 EventHubsTestEnvironment.Instance.EventHubsConnectionString,
                 _eventHubScope.EventHubName);
 
-            var events = consumer.ReadEventsAsync();
-            _initialOffsetEnqueuedTimeUTC = DateTime.UtcNow;
-            await foreach (PartitionEvent evt in events)
+            await foreach (PartitionEvent evt in consumer.ReadEventsAsync())
             {
                 // use the timestamp from the first event for our FromEnqueuedTime
                 _initialOffsetEnqueuedTimeUTC = evt.Data.EnqueuedTime;
@@ -415,9 +413,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         services.Configure<EventHubOptions>(options =>
                         {
                             options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
+
                             // Reads from enqueue time are non-inclusive.  To ensure that we start with the desired event, set the time slightly in the past.
-                            var dto = DateTimeOffset.Parse(_initialOffsetEnqueuedTimeUTC.AddMilliseconds(-250).ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                            options.InitialOffsetOptions.EnqueuedTimeUtc = dto;
+                            options.InitialOffsetOptions.EnqueuedTimeUtc = _initialOffsetEnqueuedTimeUTC.Subtract(TimeSpan.FromMilliseconds(250));
                         });
                     });
                     ConfigureTestEventHub(builder);
@@ -709,7 +707,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.GreaterOrEqual(events.Length, ExpectedEventsCount);
 
                 // there's potentially some level of rewind due to clock differences; allow a small delta when validating.
-                var earliestAllowedOffset = _initialOffsetEnqueuedTimeUTC.AddMilliseconds(-500);
+                var earliestAllowedOffset = _initialOffsetEnqueuedTimeUTC.Subtract(TimeSpan.FromMilliseconds(500));
 
                 foreach (EventData eventData in events)
                 {
@@ -721,7 +719,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         foreach (var result in _results)
                         {
-                            Assert.GreaterOrEqual(DateTimeOffset.Parse(result), _initialOffsetEnqueuedTimeUTC);
+                            Assert.GreaterOrEqual(DateTimeOffset.Parse(result), earliestAllowedOffset);
                         }
                         _eventWait.Set();
                     }
