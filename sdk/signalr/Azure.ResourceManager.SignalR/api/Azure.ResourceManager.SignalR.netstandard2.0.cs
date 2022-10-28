@@ -146,6 +146,7 @@ namespace Azure.ResourceManager.SignalR
         public string PublicNetworkAccess { get { throw null; } set { } }
         public int? PublicPort { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.ResourceLogCategory> ResourceLogCategories { get { throw null; } }
+        public int? ServerlessConnectionTimeoutInSeconds { get { throw null; } set { } }
         public int? ServerPort { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SignalR.SharedPrivateLinkResourceData> SharedPrivateLinkResources { get { throw null; } }
         public Azure.ResourceManager.SignalR.Models.ResourceSku Sku { get { throw null; } set { } }
