@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -49,6 +50,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                         Max = metricPoint.GetHistogramMax();
                     }
 
+                    break;
+                default:
+                    AzureMonitorExporterEventSource.Log.WriteWarning("MetricDataPoint", $"Unsupported MetricType '{metric.MetricType}'");
                     break;
             }
         }
