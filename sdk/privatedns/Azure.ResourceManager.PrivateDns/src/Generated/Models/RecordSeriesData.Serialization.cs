@@ -14,7 +14,7 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class RecordSetData : IUtf8JsonSerializable
+    public partial class RecordSeriesData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PrivateDns
             writer.WriteEndObject();
         }
 
-        internal static RecordSetData DeserializeRecordSetData(JsonElement element)
+        internal static RecordSeriesData DeserializeRecordSeriesData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.PrivateDns
                     continue;
                 }
             }
-            return new RecordSetData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(aRecords), Optional.ToList(aaaaRecords), cnameRecordInfo.Value, Optional.ToList(mxRecords), Optional.ToList(ptrRecords), soaRecordInfo.Value, Optional.ToList(srvRecords), Optional.ToList(txtRecords));
+            return new RecordSeriesData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(aRecords), Optional.ToList(aaaaRecords), cnameRecordInfo.Value, Optional.ToList(mxRecords), Optional.ToList(ptrRecords), soaRecordInfo.Value, Optional.ToList(srvRecords), Optional.ToList(txtRecords));
         }
     }
 }

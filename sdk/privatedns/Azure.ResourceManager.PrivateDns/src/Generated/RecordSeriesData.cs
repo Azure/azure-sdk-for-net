@@ -13,11 +13,11 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the RecordSet data model. </summary>
-    public partial class RecordSetData : ResourceData
+    /// <summary> A class representing the RecordSeries data model. </summary>
+    public partial class RecordSeriesData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecordSetData. </summary>
-        public RecordSetData()
+        /// <summary> Initializes a new instance of RecordSeriesData. </summary>
+        public RecordSeriesData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             ARecords = new ChangeTrackingList<ARecordInfo>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PrivateDns
             TxtRecords = new ChangeTrackingList<TxtRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of RecordSetData. </summary>
+        /// <summary> Initializes a new instance of RecordSeriesData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
         /// <param name="srvRecords"> The list of SRV records in the record set. </param>
         /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, bool? isAutoRegistered, IList<ARecordInfo> aRecords, IList<AaaaRecordInfo> aaaaRecords, CnameRecordInfo cnameRecordInfo, IList<MXRecordInfo> mxRecords, IList<PtrRecordInfo> ptrRecords, SoaRecordInfo soaRecordInfo, IList<SrvRecordInfo> srvRecords, IList<TxtRecordInfo> txtRecords) : base(id, name, resourceType, systemData)
+        internal RecordSeriesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, bool? isAutoRegistered, IList<ARecordInfo> aRecords, IList<AaaaRecordInfo> aaaaRecords, CnameRecordInfo cnameRecordInfo, IList<MXRecordInfo> mxRecords, IList<PtrRecordInfo> ptrRecords, SoaRecordInfo soaRecordInfo, IList<SrvRecordInfo> srvRecords, IList<TxtRecordInfo> txtRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;

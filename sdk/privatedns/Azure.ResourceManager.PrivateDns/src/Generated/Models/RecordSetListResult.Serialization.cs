@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
     {
         internal static RecordSetListResult DeserializeRecordSetListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RecordSetData>> value = default;
+            Optional<IReadOnlyList<RecordSeriesData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RecordSetData> array = new List<RecordSetData>();
+                    List<RecordSeriesData> array = new List<RecordSeriesData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecordSetData.DeserializeRecordSetData(item));
+                        array.Add(RecordSeriesData.DeserializeRecordSeriesData(item));
                     }
                     value = array;
                     continue;

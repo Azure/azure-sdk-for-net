@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -12,12 +13,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.PrivateDns.Tests
 {
-    internal class PrivateDnsTests: PrivateDnsManagementTestBase
+    internal class PrivateDnsTests : PrivateDnsManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private PrivateZoneCollection _privateZoneResource;
 
-        public PrivateDnsTests(bool isAsync) : base(isAsync,RecordedTestMode.Record)
+        public PrivateDnsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             await CreatePrivateZone(_resourceGroup, privateZoneName);
             var list = await _privateZoneResource.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidatePrivateZone(list.First(item=>item.Data.Name == privateZoneName), privateZoneName);
+            ValidatePrivateZone(list.First(item => item.Data.Name == privateZoneName), privateZoneName);
         }
 
         [RecordedTest]
@@ -77,28 +78,47 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsFalse(flag);
         }
 
-        //[TestCase(null)]
-        //[TestCase(false)]
-        //[TestCase(true)]
-        //public async Task AddRemoveTag(bool? useTagResource)
-        //{
-        //    SetTagResourceUsage(Client, useTagResource);
-        //    string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
-        //    var privateZone = await CreatePrivateZone(_resourceGroup, privateZoneName);
+        [RecordedTest]
+        public async Task GetRecordsAsync()
+        {
+            string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
+            var privateZone = await CreatePrivateZone(_resourceGroup, privateZoneName);
 
-        //    // AddTag
-        //    await privateZone.AddTagAsync("addtagkey", "addtagvalue");
-        //    privateZone = await _privateZoneResource.GetAsync(privateZoneName);
-        //    Assert.AreEqual(1, privateZone.Data.Tags.Count);
-        //    KeyValuePair<string, string> tag = privateZone.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-        //    Assert.AreEqual("addtagkey", tag.Key);
-        //    Assert.AreEqual("addtagvalue", tag.Value);
+            var records = await privateZone.GetRecordsAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(records);
+            Assert.IsNotNull(records.First().SoaRecordInfo);
+        }
 
-        //    // RemoveTag
-        //    await privateZone.RemoveTagAsync("addtagkey");
-        //    privateZone = await _privateZoneResource.GetAsync(privateZoneName);
-        //    Assert.AreEqual(0, privateZone.Data.Tags.Count);
-        //}
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddRemoveTag(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
+            var privateZone = await CreatePrivateZone(_resourceGroup, privateZoneName);
+
+            // AddTag
+            await privateZone.AddTagAsync("addtagkey", "addtagvalue");
+            if (TestEnvironment.Mode == RecordedTestMode.Record)
+            {
+                Thread.Sleep(30000);
+            }
+            privateZone = await _privateZoneResource.GetAsync(privateZoneName);
+            Assert.AreEqual(1, privateZone.Data.Tags.Count);
+            KeyValuePair<string, string> tag = privateZone.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+            Assert.AreEqual("addtagkey", tag.Key);
+            Assert.AreEqual("addtagvalue", tag.Value);
+
+            // RemoveTag
+            await privateZone.RemoveTagAsync("addtagkey");
+            if (TestEnvironment.Mode == RecordedTestMode.Record)
+            {
+                Thread.Sleep(30000);
+            }
+            privateZone = await _privateZoneResource.GetAsync(privateZoneName);
+            Assert.AreEqual(0, privateZone.Data.Tags.Count);
+        }
 
         private void ValidatePrivateZone(PrivateZoneResource privateZone, string privateZoneName)
         {

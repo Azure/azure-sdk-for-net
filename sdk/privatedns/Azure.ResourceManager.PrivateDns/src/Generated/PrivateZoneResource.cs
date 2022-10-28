@@ -581,12 +581,12 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecordSetData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecordSetData> GetRecordSetsAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RecordSeriesData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecordSeriesData> GetRecordsAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecordSetData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RecordSeriesData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
+                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecords");
                 scope.Start();
                 try
                 {
@@ -599,9 +599,9 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            async Task<Page<RecordSetData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RecordSeriesData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
+                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecords");
                 scope.Start();
                 try
                 {
@@ -625,12 +625,12 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecordSetData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecordSetData> GetRecordSets(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecordSeriesData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecordSeriesData> GetRecords(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<RecordSetData> FirstPageFunc(int? pageSizeHint)
+            Page<RecordSeriesData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
+                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecords");
                 scope.Start();
                 try
                 {
@@ -643,9 +643,9 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            Page<RecordSetData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RecordSeriesData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
+                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecords");
                 scope.Start();
                 try
                 {

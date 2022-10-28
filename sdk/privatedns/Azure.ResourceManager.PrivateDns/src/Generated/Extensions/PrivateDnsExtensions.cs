@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="ARecordResource" /> object. </returns>
         public static ARecordResource GetARecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<ARecordResource>(() =>
             {
                 ARecordResource.ValidateResourceId(id);
                 return new ARecordResource(client, id);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="CnameRecordResource" /> object. </returns>
         public static CnameRecordResource GetCnameRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<CnameRecordResource>(() =>
             {
                 CnameRecordResource.ValidateResourceId(id);
                 return new CnameRecordResource(client, id);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="MXRecordResource" /> object. </returns>
         public static MXRecordResource GetMXRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<MXRecordResource>(() =>
             {
                 MXRecordResource.ValidateResourceId(id);
                 return new MXRecordResource(client, id);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PtrRecordResource" /> object. </returns>
         public static PtrRecordResource GetPtrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<PtrRecordResource>(() =>
             {
                 PtrRecordResource.ValidateResourceId(id);
                 return new PtrRecordResource(client, id);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="SoaRecordResource" /> object. </returns>
         public static SoaRecordResource GetSoaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<SoaRecordResource>(() =>
             {
                 SoaRecordResource.ValidateResourceId(id);
                 return new SoaRecordResource(client, id);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="SrvRecordResource" /> object. </returns>
         public static SrvRecordResource GetSrvRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<SrvRecordResource>(() =>
             {
                 SrvRecordResource.ValidateResourceId(id);
                 return new SrvRecordResource(client, id);
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="TxtRecordResource" /> object. </returns>
         public static TxtRecordResource GetTxtRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<TxtRecordResource>(() =>
             {
                 TxtRecordResource.ValidateResourceId(id);
                 return new TxtRecordResource(client, id);
