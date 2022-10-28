@@ -47,11 +47,6 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
         /// Repeatability Headers.
         /// </summary>
         public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
