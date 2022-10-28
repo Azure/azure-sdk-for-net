@@ -1824,7 +1824,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private static IList<AnalyzeTextLROTask> CreateTasks(TextAnalyticsActions actions)
+        private IList<AnalyzeTextLROTask> CreateTasks(TextAnalyticsActions actions)
         {
             List<AnalyzeTextLROTask> analyzeTasks = new();
 
@@ -1867,6 +1867,12 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             if (actions.ExtractSummaryActions != null)
             {
                 analyzeTasks.AddRange(Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions));
+            }
+
+            // Validate supported version.
+            if (actions.ExtractSummaryActions != null && actions.ExtractSummaryActions.Count > 0)
+            {
+                Validation.SupportsOperation(nameof(ExtractSummaryAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
             }
 
             return analyzeTasks;
