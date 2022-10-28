@@ -23,14 +23,8 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceId"/> or <paramref name="dataSinkId"/> is null. </exception>
         public HybridDataJobDefinitionData(string dataSourceId, string dataSinkId, HybridDataState state)
         {
-            if (dataSourceId == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceId));
-            }
-            if (dataSinkId == null)
-            {
-                throw new ArgumentNullException(nameof(dataSinkId));
-            }
+            Argument.AssertNotNull(dataSourceId, nameof(dataSourceId));
+            Argument.AssertNotNull(dataSinkId, nameof(dataSinkId));
 
             DataSourceId = dataSourceId;
             DataSinkId = dataSinkId;

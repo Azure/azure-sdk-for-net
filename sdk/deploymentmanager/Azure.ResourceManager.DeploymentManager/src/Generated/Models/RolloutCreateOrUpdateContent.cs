@@ -25,22 +25,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/>, <paramref name="buildVersion"/>, <paramref name="targetServiceTopologyId"/> or <paramref name="stepGroups"/> is null. </exception>
         public RolloutCreateOrUpdateContent(AzureLocation location, Identity identity, string buildVersion, string targetServiceTopologyId, IEnumerable<StepGroup> stepGroups) : base(location)
         {
-            if (identity == null)
-            {
-                throw new ArgumentNullException(nameof(identity));
-            }
-            if (buildVersion == null)
-            {
-                throw new ArgumentNullException(nameof(buildVersion));
-            }
-            if (targetServiceTopologyId == null)
-            {
-                throw new ArgumentNullException(nameof(targetServiceTopologyId));
-            }
-            if (stepGroups == null)
-            {
-                throw new ArgumentNullException(nameof(stepGroups));
-            }
+            Argument.AssertNotNull(identity, nameof(identity));
+            Argument.AssertNotNull(buildVersion, nameof(buildVersion));
+            Argument.AssertNotNull(targetServiceTopologyId, nameof(targetServiceTopologyId));
+            Argument.AssertNotNull(stepGroups, nameof(stepGroups));
 
             Identity = identity;
             BuildVersion = buildVersion;

@@ -20,14 +20,8 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="aspect"/> or <paramref name="text"/> is null. </exception>
         public SummaryResultItem(string aspect, string text)
         {
-            if (aspect == null)
-            {
-                throw new ArgumentNullException(nameof(aspect));
-            }
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(aspect, nameof(aspect));
+            Argument.AssertNotNull(text, nameof(text));
 
             Aspect = aspect;
             Text = text;

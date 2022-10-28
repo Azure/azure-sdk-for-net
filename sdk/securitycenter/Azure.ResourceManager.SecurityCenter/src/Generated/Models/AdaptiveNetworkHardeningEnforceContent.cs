@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> or <paramref name="networkSecurityGroups"/> is null. </exception>
         public AdaptiveNetworkHardeningEnforceContent(IEnumerable<RecommendedSecurityRule> rules, IEnumerable<string> networkSecurityGroups)
         {
-            if (rules == null)
-            {
-                throw new ArgumentNullException(nameof(rules));
-            }
-            if (networkSecurityGroups == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroups));
-            }
+            Argument.AssertNotNull(rules, nameof(rules));
+            Argument.AssertNotNull(networkSecurityGroups, nameof(networkSecurityGroups));
 
             Rules = rules.ToList();
             NetworkSecurityGroups = networkSecurityGroups.ToList();

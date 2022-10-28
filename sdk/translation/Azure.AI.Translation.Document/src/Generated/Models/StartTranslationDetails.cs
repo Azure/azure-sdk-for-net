@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Translation.Document;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.AI.Translation.Document.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
         public StartTranslationDetails(IEnumerable<DocumentTranslationInput> inputs)
         {
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
             Inputs = inputs.ToList();
         }

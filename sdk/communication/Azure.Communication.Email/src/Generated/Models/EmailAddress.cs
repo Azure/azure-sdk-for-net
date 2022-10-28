@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.Email.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication.Email.Models
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public EmailAddress(string email)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
+            Argument.AssertNotNull(email, nameof(email));
 
             Email = email;
         }

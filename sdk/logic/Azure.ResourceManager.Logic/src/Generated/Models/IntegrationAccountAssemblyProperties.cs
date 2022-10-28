@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyName"/> is null. </exception>
         public IntegrationAccountAssemblyProperties(string assemblyName)
         {
-            if (assemblyName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyName));
-            }
+            Argument.AssertNotNull(assemblyName, nameof(assemblyName));
 
             AssemblyName = assemblyName;
         }

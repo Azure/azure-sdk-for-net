@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
         public IdAssetReference(string assetId)
         {
-            if (assetId == null)
-            {
-                throw new ArgumentNullException(nameof(assetId));
-            }
+            Argument.AssertNotNull(assetId, nameof(assetId));
 
             AssetId = assetId;
             ReferenceType = ReferenceType.Id;

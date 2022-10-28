@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -19,18 +20,9 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/>, <paramref name="enginePublicIPId"/> or <paramref name="dataManagementPublicIPId"/> is null. </exception>
         public KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId)
         {
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
-            if (enginePublicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(enginePublicIPId));
-            }
-            if (dataManagementPublicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(dataManagementPublicIPId));
-            }
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            Argument.AssertNotNull(enginePublicIPId, nameof(enginePublicIPId));
+            Argument.AssertNotNull(dataManagementPublicIPId, nameof(dataManagementPublicIPId));
 
             SubnetId = subnetId;
             EnginePublicIPId = enginePublicIPId;

@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
         public AutomationAccountPython2PackageCreateOrUpdateContent(ContentLink contentLink)
         {
-            if (contentLink == null)
-            {
-                throw new ArgumentNullException(nameof(contentLink));
-            }
+            Argument.AssertNotNull(contentLink, nameof(contentLink));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             ContentLink = contentLink;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> or <paramref name="requestor"/> is null. </exception>
         public JitNetworkAccessRequestInfo(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines, DateTimeOffset startOn, string requestor)
         {
-            if (virtualMachines == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachines));
-            }
-            if (requestor == null)
-            {
-                throw new ArgumentNullException(nameof(requestor));
-            }
+            Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
+            Argument.AssertNotNull(requestor, nameof(requestor));
 
             VirtualMachines = virtualMachines.ToList();
             StartOn = startOn;

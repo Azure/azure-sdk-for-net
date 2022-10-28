@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="skuSettings"/> is null. </exception>
         public SkuResourceProperties(IEnumerable<SkuSetting> skuSettings) : base(skuSettings)
         {
-            if (skuSettings == null)
-            {
-                throw new ArgumentNullException(nameof(skuSettings));
-            }
+            Argument.AssertNotNull(skuSettings, nameof(skuSettings));
         }
 
         /// <summary> Initializes a new instance of SkuResourceProperties. </summary>

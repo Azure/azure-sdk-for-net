@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="radiusServerAddress"/> is null. </exception>
         public RadiusServer(string radiusServerAddress)
         {
-            if (radiusServerAddress == null)
-            {
-                throw new ArgumentNullException(nameof(radiusServerAddress));
-            }
+            Argument.AssertNotNull(radiusServerAddress, nameof(radiusServerAddress));
 
             RadiusServerAddress = radiusServerAddress;
         }
