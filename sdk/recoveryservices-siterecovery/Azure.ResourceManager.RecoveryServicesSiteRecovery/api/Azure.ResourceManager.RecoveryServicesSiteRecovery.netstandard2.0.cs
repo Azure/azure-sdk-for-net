@@ -5532,6 +5532,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskInput> DisksToInclude { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.LicenseType? LicenseType { get { throw null; } set { } }
         public string PerformAutoResync { get { throw null; } set { } }
+        public string PerformSqlBulkRegistration { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> SeedDiskTags { get { throw null; } }
         public string SnapshotRunAsAccountId { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SqlServerLicenseType? SqlServerLicenseType { get { throw null; } set { } }

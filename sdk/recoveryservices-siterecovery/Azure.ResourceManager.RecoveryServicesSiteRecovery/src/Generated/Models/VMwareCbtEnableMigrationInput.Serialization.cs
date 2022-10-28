@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("sqlServerLicenseType");
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
+            if (Optional.IsDefined(PerformSqlBulkRegistration))
+            {
+                writer.WritePropertyName("performSqlBulkRegistration");
+                writer.WriteStringValue(PerformSqlBulkRegistration);
+            }
             writer.WritePropertyName("dataMoverRunAsAccountId");
             writer.WriteStringValue(DataMoverRunAsAccountId);
             writer.WritePropertyName("snapshotRunAsAccountId");
