@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Communication.CallAutomation.Models.Misc;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -357,7 +358,16 @@ namespace Azure.Communication.CallAutomation
 
             request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
             request.OperationContext = options.OperationContext;
-            request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
+            if (options.InvitationTimeoutInSeconds != null &&
+                (options.InvitationTimeoutInSeconds < CallAutomationConstants.InputValidation.MinInvitationTimeoutInSeconds ||
+                options.InvitationTimeoutInSeconds > CallAutomationConstants.InputValidation.MaxInvitationTimeoutInSeconds))
+            {
+                throw new ArgumentException(CallAutomationErrorMessages.InvalidInvitationTimeoutInSeconds);
+            }
+            else
+            {
+                request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
+            }
 
             return request;
         }

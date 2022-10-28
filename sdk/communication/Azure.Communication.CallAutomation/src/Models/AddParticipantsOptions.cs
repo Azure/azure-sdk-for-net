@@ -38,6 +38,8 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// Timeout before invitation times out.
+        /// The minimum value is 1 second.
+        /// The maximum value is 180 seconds.
         /// </summary>
         public int? InvitationTimeoutInSeconds { get; set; }
 

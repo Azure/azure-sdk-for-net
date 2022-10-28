@@ -37,5 +37,10 @@ namespace Azure.Communication.CallAutomation
         /// Invalid CommunicationIdentifierModel collection message.
         /// </summary>
         public const string InvalidCommunicationIdentifierModelCollectionMessage = "CommunicationIdentifierModel collection cannot be null or empty.";
+
+        /// <summary>
+        /// Invalid InvitationTimeoutInSeconds message.
+        /// </summary>
+        public const string InvalidInvitationTimeoutInSeconds = "InvitationTimeoutInSeconds has to be between 1 and 180 seconds.";
     }
 }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using System;
+using Azure.Communication.CallAutomation.Models.Misc;
 
 namespace Azure.Communication.CallAutomation.Tests.CallConnections
 {
@@ -201,6 +202,33 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantsAsync(new AddParticipantsOptions(new CommunicationIdentifier[] { })).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage));
+        }
+
+        [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        public void AddParticipantsAsync_ExceedsInvitationTimeOut(CommunicationIdentifier[] participantsToAdd)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
+
+            var options = new AddParticipantsOptions(participantsToAdd) {
+                InvitationTimeoutInSeconds = CallAutomationConstants.InputValidation.MaxInvitationTimeoutInSeconds + 1
+            };
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantsAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidInvitationTimeoutInSeconds));
+        }
+
+        [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        public void AddParticipantsAsync_NegativeInvitationTimeOut(CommunicationIdentifier[] participantsToAdd)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
+
+            var options = new AddParticipantsOptions(participantsToAdd)
+            {
+                InvitationTimeoutInSeconds = 0
+            };
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantsAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidInvitationTimeoutInSeconds));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
