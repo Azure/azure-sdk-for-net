@@ -20,7 +20,7 @@ This is a Public Preview version, so breaking changes are possible in subsequent
 
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.CallAutomation/README.md
-[Overview]: https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/call-automation
-[Demo Video]: https://ignite.microsoft.com/en-US/sessions/14a36f87-d1a2-4882-92a7-70f2c16a306a
-[Incoming Call Concept]: https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/incoming-call-notification
-[Build a customer interaction workflow using Call Automation]: https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/callflows-for-customer-interactions
+[Overview]: https://learn.microsoft.com/azure/communication-services/concepts/voice-video-calling/call-automation
+[Demo Video]: https://ignite.microsoft.com/sessions/14a36f87-d1a2-4882-92a7-70f2c16a306a
+[Incoming Call Concept]: https://learn.microsoft.com/azure/communication-services/concepts/voice-video-calling/incoming-call-notification
+[Build a customer interaction workflow using Call Automation]: https://learn.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/callflows-for-customer-interactions
