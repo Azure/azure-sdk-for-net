@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.Datadog.Models
         public string ApiKey { get { throw null; } set { } }
         public string ApplicationKey { get { throw null; } set { } }
         public string EnterpriseAppId { get { throw null; } set { } }
-        public string Id { get { throw null; } }
+        public string Id { get { throw null; } set { } }
         public string LinkingAuthCode { get { throw null; } set { } }
         public string LinkingClientId { get { throw null; } set { } }
-        public string Name { get { throw null; } }
+        public string Name { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } set { } }
     }
     public partial class DatadogSetPasswordLink

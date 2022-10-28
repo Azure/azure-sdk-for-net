@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> Name of the Datadog organization. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Id of the Datadog organization. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> The auth code used to linking to an existing datadog organization. </summary>
         public string LinkingAuthCode { get; set; }
         /// <summary> The client_id from an existing in exchange for an auth token to link organization. </summary>
