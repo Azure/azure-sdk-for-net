@@ -12,17 +12,29 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 {
-    internal class QueueMetricsProvider
+    /// <summary>
+    /// Provides QueueTriggerMetrics from a specific queue entity.
+    /// </summary>
+    public class QueueMetricsProvider
     {
         private readonly QueueClient _queue;
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// Instantiates a QueueMetricsProvider.
+        /// </summary>
+        /// <param name="queue">The QueueClient to use for metrics polling.</param>
+        /// <param name="loggerFactory">Used to create an ILogger instance.</param>
         public QueueMetricsProvider(QueueClient queue, ILoggerFactory loggerFactory)
         {
             _queue = queue;
             _logger = loggerFactory.CreateLogger<QueueMetricsProvider>();
         }
 
+        /// <summary>
+        /// Retrieves metrics from the queue entity.
+        /// </summary>
+        /// <returns></returns>
         public async Task<QueueTriggerMetrics> GetMetricsAsync()
         {
             int queueLength = 0;

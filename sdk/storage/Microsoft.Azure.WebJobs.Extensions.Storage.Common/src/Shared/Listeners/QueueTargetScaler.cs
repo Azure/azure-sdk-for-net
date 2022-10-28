@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
     /// <summary>
     /// Provides queue length metrics for the <see cref="QueueTargetScaler"/>.
     /// </summary>
-    internal sealed class QueueTargetScaler : ITargetScaler
+    public sealed class QueueTargetScaler : ITargetScaler
     {
         private readonly string _functionId;
         private readonly QueueMetricsProvider _queueMetricsProvider;
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         /// <param name="queueClient"></param>
         /// <param name="options"></param>
         /// <param name="loggerFactory"></param>
-        public QueueTargetScaler(string functionId,QueueClient queueClient, QueuesOptions options, ILoggerFactory loggerFactory)
+        public QueueTargetScaler(string functionId, QueueClient queueClient, QueuesOptions options, ILoggerFactory loggerFactory)
         {
             _functionId = functionId;
             _queueMetricsProvider = new QueueMetricsProvider(queueClient,loggerFactory);
@@ -41,6 +41,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _logger = loggerFactory.CreateLogger<QueueTargetScaler>();
         }
 
+        /// <summary>
+        /// Makes a target scale decision based on most recent metrics for the specified queue.
+        /// </summary>
+        /// <param name="context">The TargetScalerContext, which contains the InstanceConcurrency, or the targetMetric used in target based scaling.</param>
+        /// <returns>Returns a TargetScalerResult with a TargetWorkerCount.</returns>
         public async Task<TargetScalerResult> GetScaleResultAsync(TargetScalerContext context)
         {
             var metrics = await _queueMetricsProvider.GetMetricsAsync().ConfigureAwait(false);
