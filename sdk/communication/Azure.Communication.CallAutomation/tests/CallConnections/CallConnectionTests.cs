@@ -174,6 +174,33 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.True(ex?.Message.Contains("Value cannot be null.\r\nParameter name: SourceCallerId"));
         }
 
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public void TransferCallToParticipant_ExceedsMaxOperationContextLength(CommunicationIdentifier targetParticipant)
+        {
+            var callConnection = CreateMockCallConnection(202);
+
+            var options = new TransferToParticipantOptions(targetParticipant) {
+                OperationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
+            };
+            ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.OperationContextExceedsMaxLength));
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public void TransferCallToParticipant_ExceedsMaxUserToUserInformationLengthLength(CommunicationIdentifier targetParticipant)
+        {
+            var callConnection = CreateMockCallConnection(202);
+
+            var options = new TransferToParticipantOptions(targetParticipant)
+            {
+                UserToUserInformation = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
+            };
+            ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength));
+        }
+
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public async Task AddParticipantsAsync_202Accepted(CommunicationIdentifier[] participantsToAdd)
         {
@@ -369,6 +396,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(new CommunicationIdentifier[] { }).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
+        }
+
+        [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        public void RemoveParticipants_ExceedsMaxOperationContextLength(CommunicationIdentifier[] participants)
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            var operationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength);
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(participants, operationContext).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.OperationContextExceedsMaxLength));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]

@@ -18,11 +18,10 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of AddParticipantsRequestInternal. </summary>
         /// <param name="participantsToAdd"> The participants to invite. </param>
-        /// <exception cref="ArgumentException"> <paramref name="participantsToAdd"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
         public AddParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToAdd)
         {
-            Argument.AssertNotNullOrEmpty(participantsToAdd, nameof(participantsToAdd));
+            Argument.AssertNotNull(participantsToAdd, nameof(participantsToAdd));
 
             ParticipantsToAdd = participantsToAdd.ToList();
         }

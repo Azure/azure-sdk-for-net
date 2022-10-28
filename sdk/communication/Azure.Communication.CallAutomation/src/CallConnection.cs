@@ -268,8 +268,22 @@ namespace Azure.Communication.CallAutomation
             TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
 
             request.TransfereeCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-            request.UserToUserInformation = options.UserToUserInformation;
-            request.OperationContext = options.OperationContext;
+            if (options.UserToUserInformation != null && options.UserToUserInformation.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+            {
+                throw new ArgumentException(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength);
+            }
+            else
+            {
+                request.UserToUserInformation = options.UserToUserInformation;
+            }
+            if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+            {
+                throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+            }
+            else
+            {
+                request.OperationContext = options.OperationContext;
+            }
 
             return request;
         }
@@ -353,6 +367,9 @@ namespace Azure.Communication.CallAutomation
             {
                 Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
             }
+
+            // validate ParticipantsToAdd is not null or empty
+            Argument.AssertNotNullOrEmpty(options.ParticipantsToAdd, nameof(options.ParticipantsToAdd));
 
             AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(options.ParticipantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
 
@@ -507,10 +524,19 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
+                // validate ParticipantsToRemove is not null or empty
+                Argument.AssertNotNullOrEmpty(options.ParticipantsToRemove, nameof(options.ParticipantsToRemove));
+
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
-
-                request.OperationContext = options.OperationContext;
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
 
                 return await RestClient.RemoveParticipantsAsync(
                     CallConnectionId,
@@ -561,7 +587,14 @@ namespace Azure.Communication.CallAutomation
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                request.OperationContext = options.OperationContext;
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
 
                 return RestClient.RemoveParticipants(
                      CallConnectionId,

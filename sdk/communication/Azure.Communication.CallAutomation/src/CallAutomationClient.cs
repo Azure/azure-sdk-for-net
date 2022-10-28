@@ -487,6 +487,9 @@ namespace Azure.Communication.CallAutomation
                 Argument.AssertNotNull(options.CallSource.CallerId, nameof(options.CallSource.CallerId));
             }
 
+            // validate targets is not null or empty
+            Argument.AssertNotNullOrEmpty(options.Targets, nameof(options.Targets));
+
             // validate callbackUri
             if (!IsValidHttpsUri(options.CallbackUri))
             {
