@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -29,50 +30,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="title"/>, <paramref name="publisher"/>, <paramref name="descriptionMarkdown"/>, <paramref name="graphQueriesTableName"/>, <paramref name="graphQueries"/>, <paramref name="sampleQueries"/>, <paramref name="dataTypes"/>, <paramref name="connectivityCriteria"/>, <paramref name="availability"/>, <paramref name="permissions"/> or <paramref name="instructionSteps"/> is null. </exception>
         public CodelessUiConnectorConfigProperties(string title, string publisher, string descriptionMarkdown, string graphQueriesTableName, IEnumerable<CodelessUiConnectorConfigPropertiesGraphQueriesItem> graphQueries, IEnumerable<CodelessUiConnectorConfigPropertiesSampleQueriesItem> sampleQueries, IEnumerable<CodelessUiConnectorConfigPropertiesDataTypesItem> dataTypes, IEnumerable<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> connectivityCriteria, Availability availability, Permissions permissions, IEnumerable<CodelessUiConnectorConfigPropertiesInstructionStepsItem> instructionSteps)
         {
-            if (title == null)
-            {
-                throw new ArgumentNullException(nameof(title));
-            }
-            if (publisher == null)
-            {
-                throw new ArgumentNullException(nameof(publisher));
-            }
-            if (descriptionMarkdown == null)
-            {
-                throw new ArgumentNullException(nameof(descriptionMarkdown));
-            }
-            if (graphQueriesTableName == null)
-            {
-                throw new ArgumentNullException(nameof(graphQueriesTableName));
-            }
-            if (graphQueries == null)
-            {
-                throw new ArgumentNullException(nameof(graphQueries));
-            }
-            if (sampleQueries == null)
-            {
-                throw new ArgumentNullException(nameof(sampleQueries));
-            }
-            if (dataTypes == null)
-            {
-                throw new ArgumentNullException(nameof(dataTypes));
-            }
-            if (connectivityCriteria == null)
-            {
-                throw new ArgumentNullException(nameof(connectivityCriteria));
-            }
-            if (availability == null)
-            {
-                throw new ArgumentNullException(nameof(availability));
-            }
-            if (permissions == null)
-            {
-                throw new ArgumentNullException(nameof(permissions));
-            }
-            if (instructionSteps == null)
-            {
-                throw new ArgumentNullException(nameof(instructionSteps));
-            }
+            Argument.AssertNotNull(title, nameof(title));
+            Argument.AssertNotNull(publisher, nameof(publisher));
+            Argument.AssertNotNull(descriptionMarkdown, nameof(descriptionMarkdown));
+            Argument.AssertNotNull(graphQueriesTableName, nameof(graphQueriesTableName));
+            Argument.AssertNotNull(graphQueries, nameof(graphQueries));
+            Argument.AssertNotNull(sampleQueries, nameof(sampleQueries));
+            Argument.AssertNotNull(dataTypes, nameof(dataTypes));
+            Argument.AssertNotNull(connectivityCriteria, nameof(connectivityCriteria));
+            Argument.AssertNotNull(availability, nameof(availability));
+            Argument.AssertNotNull(permissions, nameof(permissions));
+            Argument.AssertNotNull(instructionSteps, nameof(instructionSteps));
 
             Title = title;
             Publisher = publisher;

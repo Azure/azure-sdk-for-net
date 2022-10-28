@@ -23,22 +23,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/>, <paramref name="selectedDatabases"/> or <paramref name="backupBlobShare"/> is null. </exception>
         public ValidateMigrationInputSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare)
         {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
-            if (selectedDatabases == null)
-            {
-                throw new ArgumentNullException(nameof(selectedDatabases));
-            }
-            if (backupBlobShare == null)
-            {
-                throw new ArgumentNullException(nameof(backupBlobShare));
-            }
+            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
+            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
+            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
+            Argument.AssertNotNull(backupBlobShare, nameof(backupBlobShare));
 
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;

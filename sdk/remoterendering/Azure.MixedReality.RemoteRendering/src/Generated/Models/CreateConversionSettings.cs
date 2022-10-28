@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -17,10 +18,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
         public CreateConversionSettings(AssetConversionOptions settings)
         {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            Argument.AssertNotNull(settings, nameof(settings));
 
             Settings = settings;
         }

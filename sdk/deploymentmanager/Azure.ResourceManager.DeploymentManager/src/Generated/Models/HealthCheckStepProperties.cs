@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="attributes"/> is null. </exception>
         public HealthCheckStepProperties(HealthCheckStepAttributes attributes)
         {
-            if (attributes == null)
-            {
-                throw new ArgumentNullException(nameof(attributes));
-            }
+            Argument.AssertNotNull(attributes, nameof(attributes));
 
             Attributes = attributes;
             StepType = StepType.HealthCheck;

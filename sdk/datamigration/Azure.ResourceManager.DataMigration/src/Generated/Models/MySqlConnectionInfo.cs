@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public MySqlConnectionInfo(string serverName, int port)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
+            Argument.AssertNotNull(serverName, nameof(serverName));
 
             ServerName = serverName;
             Port = port;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="collections"/> is null. </exception>
         public MongoDBDatabaseSettings(IDictionary<string, MongoDBCollectionSettings> collections)
         {
-            if (collections == null)
-            {
-                throw new ArgumentNullException(nameof(collections));
-            }
+            Argument.AssertNotNull(collections, nameof(collections));
 
             Collections = collections;
         }

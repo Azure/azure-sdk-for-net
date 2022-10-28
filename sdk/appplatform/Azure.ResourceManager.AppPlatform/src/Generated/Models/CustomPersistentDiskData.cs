@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageId"/> is null. </exception>
         public CustomPersistentDiskData(string storageId)
         {
-            if (storageId == null)
-            {
-                throw new ArgumentNullException(nameof(storageId));
-            }
+            Argument.AssertNotNull(storageId, nameof(storageId));
 
             StorageId = storageId;
         }

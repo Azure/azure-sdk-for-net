@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -18,10 +19,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
         internal ConversationIntent(string category, float confidence)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
             Confidence = confidence;

@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentNullException"> <paramref name="dataStoreTypeId"/> is null. </exception>
         public HybridDataStoreData(HybridDataState state, ResourceIdentifier dataStoreTypeId)
         {
-            if (dataStoreTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(dataStoreTypeId));
-            }
+            Argument.AssertNotNull(dataStoreTypeId, nameof(dataStoreTypeId));
 
             State = state;
             DataStoreTypeId = dataStoreTypeId;

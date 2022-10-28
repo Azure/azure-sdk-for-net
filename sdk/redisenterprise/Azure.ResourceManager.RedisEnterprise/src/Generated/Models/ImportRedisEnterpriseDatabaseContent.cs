@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasUris"/> is null. </exception>
         public ImportRedisEnterpriseDatabaseContent(IEnumerable<Uri> sasUris)
         {
-            if (sasUris == null)
-            {
-                throw new ArgumentNullException(nameof(sasUris));
-            }
+            Argument.AssertNotNull(sasUris, nameof(sasUris));
 
             SasUris = sasUris.ToList();
         }

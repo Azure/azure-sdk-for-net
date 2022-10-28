@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> is null. </exception>
         public ConnectToTargetSqlMITaskInput(SqlConnectionInfo targetConnectionInfo)
         {
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
+            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
 
             TargetConnectionInfo = targetConnectionInfo;
         }

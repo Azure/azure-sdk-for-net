@@ -21,10 +21,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal TextAnalyticsError(ErrorCodeValue code, string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;

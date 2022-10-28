@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> is null. </exception>
         public MediaImageBase(string start)
         {
-            if (start == null)
-            {
-                throw new ArgumentNullException(nameof(start));
-            }
+            Argument.AssertNotNull(start, nameof(start));
 
             Start = start;
             OdataType = "#Microsoft.Media.Image";
