@@ -498,6 +498,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/renewCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             _userAgent.Apply(message);
             return message;
