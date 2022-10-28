@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filenamePattern"/> is null. </exception>
         public JpgFormat(string filenamePattern) : base(filenamePattern)
         {
-            if (filenamePattern == null)
-            {
-                throw new ArgumentNullException(nameof(filenamePattern));
-            }
+            Argument.AssertNotNull(filenamePattern, nameof(filenamePattern));
 
             OdataType = "#Microsoft.Media.JpgFormat";
         }

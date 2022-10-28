@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -24,14 +25,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetColumnName"/> or <paramref name="trainingDataSettings"/> is null. </exception>
         public NlpVerticalDataSettings(string targetColumnName, TrainingDataSettings trainingDataSettings) : base(targetColumnName, trainingDataSettings)
         {
-            if (targetColumnName == null)
-            {
-                throw new ArgumentNullException(nameof(targetColumnName));
-            }
-            if (trainingDataSettings == null)
-            {
-                throw new ArgumentNullException(nameof(trainingDataSettings));
-            }
+            Argument.AssertNotNull(targetColumnName, nameof(targetColumnName));
+            Argument.AssertNotNull(trainingDataSettings, nameof(trainingDataSettings));
         }
 
         /// <summary> Initializes a new instance of NlpVerticalDataSettings. </summary>

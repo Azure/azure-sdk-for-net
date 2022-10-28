@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "257",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8f16a738604eb13085e377e463855f5e-d69616042ff919d2-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "70cd34dffa94f6a677ed191adcd92448",
+        "traceparent": "00-97fb9e3633cb03b24682e05b7c1934ad-b3b8c68c55b2a3ca-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b45f15a772a9c3fda6d00cf5d9c4fa96",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -35,13 +35,13 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "8b0a6735-7798-40b6-931d-6d36bee44217",
+        "apim-request-id": "eb9f8259-83ad-4df0-9ed4-708d83f14846",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:21:40 GMT",
+        "Date": "Fri, 14 Oct 2022 22:15:56 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "4"
+        "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
         "error": {
@@ -49,14 +49,14 @@
           "message": "Invalid parameter in request",
           "innererror": {
             "code": "InvalidParameterValue",
-            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2019-10-01,2020-07-01,2021-06-01,2022-07-01."
+            "message": "Job task parameter value \u0027InvalidVersion\u0027 is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest, 2019-10-01, 2020-07-01, 2021-06-01, 2022-07-01, 2022-10-01."
           }
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1317191405",
+    "RandomSeed": "103563520",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

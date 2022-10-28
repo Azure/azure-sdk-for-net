@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaAssetFilterCollection assetFilterCollection => _mediaAssetResource.GetMediaAssetFilters();
 
-        public MediaAssetFilterTests(bool isAsync) : base(isAsync)
+        public MediaAssetFilterTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="download"> Pricesheet download details. </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal PriceSheetResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<PriceSheetProperties> pricesheets, string nextLink, MeterDetails download, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal PriceSheetResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<PriceSheetProperties> pricesheets, string nextLink, ConsumptionMeterDetails download, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Pricesheets = pricesheets;
             NextLink = nextLink;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
         /// <summary> Pricesheet download details. </summary>
-        public MeterDetails Download { get; }
+        public ConsumptionMeterDetails Download { get; }
         /// <summary> The etag for the resource. </summary>
         public ETag? ETag { get; }
         /// <summary> Resource tags. </summary>

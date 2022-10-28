@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> or <paramref name="targetLocation"/> is null. </exception>
         public VMwareCbtContainerMappingInput(string storageAccountId, string targetLocation)
         {
-            if (storageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountId));
-            }
-            if (targetLocation == null)
-            {
-                throw new ArgumentNullException(nameof(targetLocation));
-            }
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+            Argument.AssertNotNull(targetLocation, nameof(targetLocation));
 
             StorageAccountId = storageAccountId;
             TargetLocation = targetLocation;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -20,18 +21,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="apiEndpoint"/>, <paramref name="httpMethod"/> or <paramref name="queryTimeFormat"/> is null. </exception>
         public CodelessConnectorPollingRequestProperties(string apiEndpoint, int queryWindowInMin, string httpMethod, string queryTimeFormat)
         {
-            if (apiEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(apiEndpoint));
-            }
-            if (httpMethod == null)
-            {
-                throw new ArgumentNullException(nameof(httpMethod));
-            }
-            if (queryTimeFormat == null)
-            {
-                throw new ArgumentNullException(nameof(queryTimeFormat));
-            }
+            Argument.AssertNotNull(apiEndpoint, nameof(apiEndpoint));
+            Argument.AssertNotNull(httpMethod, nameof(httpMethod));
+            Argument.AssertNotNull(queryTimeFormat, nameof(queryTimeFormat));
 
             ApiEndpoint = apiEndpoint;
             QueryWindowInMin = queryWindowInMin;

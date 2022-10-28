@@ -8,7 +8,7 @@ title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/40f5247a48ff1eec044c8441c422af0628a8a288/specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/analyzeconversations.json
 
 namespace: Azure.AI.Language.Conversations
 model-namespace: false
@@ -35,7 +35,8 @@ directive:
   transform: >
     $["enum"] = [
       "conversationalPIIResults",
-      "conversationalSummarizationResults"
+      "conversationalSummarizationResults",
+      "conversationalSentimentResults"
     ];
 
 - from: swagger-document
@@ -47,6 +48,11 @@ directive:
   where: $.definitions.AnalyzeConversationSummarizationResult
   transform: >
     $["x-ms-discriminator-value"] = "conversationalSummarizationResults";
+
+- from: swagger-document
+  where: $.definitions.AnalyzeConversationSentimentResult
+  transform: >
+    $["x-ms-discriminator-value"] = "conversationalSentimentResults";
 
 # Always default to UTF16 string indices.
 - from: swagger-document

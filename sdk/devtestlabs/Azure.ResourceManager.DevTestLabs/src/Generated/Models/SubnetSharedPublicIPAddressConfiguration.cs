@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>
         public SubnetSharedPublicIPAddressConfiguration()
         {
-            AllowedPorts = new ChangeTrackingList<Port>();
+            AllowedPorts = new ChangeTrackingList<DevTestLabPort>();
         }
 
         /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>
         /// <param name="allowedPorts"> Backend ports that virtual machines on this subnet are allowed to expose. </param>
-        internal SubnetSharedPublicIPAddressConfiguration(IList<Port> allowedPorts)
+        internal SubnetSharedPublicIPAddressConfiguration(IList<DevTestLabPort> allowedPorts)
         {
             AllowedPorts = allowedPorts;
         }
 
         /// <summary> Backend ports that virtual machines on this subnet are allowed to expose. </summary>
-        public IList<Port> AllowedPorts { get; }
+        public IList<DevTestLabPort> AllowedPorts { get; }
     }
 }

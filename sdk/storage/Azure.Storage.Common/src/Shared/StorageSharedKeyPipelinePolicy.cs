@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -55,6 +56,7 @@ namespace Azure.Storage
             message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
+        // If you change this method, make sure live tests are passing before merging PR.
         private string BuildStringToSign(HttpMessage message)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
@@ -76,6 +78,7 @@ namespace Azure.Storage
                 contentLengthString = contentLength.ToString(CultureInfo.InvariantCulture);
             }
             var uri = message.Request.Uri.ToUri();
+
             var stringBuilder = new StringBuilder(uri.AbsolutePath.Length + 64);
             stringBuilder.Append(message.Request.Method.ToString().ToUpperInvariant()).Append('\n');
             stringBuilder.Append(contentEncoding ?? "").Append('\n');
@@ -95,25 +98,33 @@ namespace Azure.Storage
             return stringBuilder.ToString();
         }
 
+        // If you change this method, make sure live tests are passing before merging PR.
         private static void BuildCanonicalizedHeaders(StringBuilder stringBuilder, HttpMessage message)
         {
             // Grab all the "x-ms-*" headers, trim whitespace, lowercase, sort,
             // and combine them with their values (separated by a colon).
-            foreach (var header in
-                message.Request.Headers
-                .Where(static h => h.Name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
-#pragma warning disable CA1308 // Normalize strings to uppercase
-                .Select(static h => (h.Name.ToLowerInvariant(), h.Value))
-#pragma warning restore CA1308 // Normalize strings to uppercase
-                .OrderBy(static h => h.Item1.Trim()))
+            var headers = new List<HttpHeader>();
+            foreach (var header in message.Request.Headers)
             {
-                stringBuilder.Append(header.Item1);
-                stringBuilder.Append(':');
-                stringBuilder.Append(header.Value);
-                stringBuilder.Append('\n');
+                if (header.Name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    headers.Add(new HttpHeader(header.Name.ToLowerInvariant(), header.Value));
+                }
+            }
+
+            headers.Sort(static (x, y) => string.CompareOrdinal(x.Name, y.Name));
+
+            foreach (var header in headers)
+            {
+                stringBuilder
+                    .Append(header.Name)
+                    .Append(':')
+                    .Append(header.Value)
+                    .Append('\n');
             }
         }
 
+        // If you change this method, make sure live tests are passing before merging PR.
         private void BuildCanonicalizedResource(StringBuilder stringBuilder, Uri resource)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authentication-for-the-azure-storage-services

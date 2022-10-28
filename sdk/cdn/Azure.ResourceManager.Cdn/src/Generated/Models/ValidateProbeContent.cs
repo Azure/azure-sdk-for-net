@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="probeUri"/> is null. </exception>
         public ValidateProbeContent(Uri probeUri)
         {
-            if (probeUri == null)
-            {
-                throw new ArgumentNullException(nameof(probeUri));
-            }
+            Argument.AssertNotNull(probeUri, nameof(probeUri));
 
             ProbeUri = probeUri;
         }

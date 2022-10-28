@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public KeyVaultCreateOrUpdateContent(AzureLocation location, KeyVaultProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -20,14 +20,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="time"/> is null. </exception>
         public TelemetryItem(string name, string time)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (time == null)
-            {
-                throw new ArgumentNullException(nameof(time));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(time, nameof(time));
 
             Name = name;
             Time = time;

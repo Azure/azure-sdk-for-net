@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -19,10 +20,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="allocations"/> is null. </exception>
         public WeightedAllocationQueueSelectorAttachment(IEnumerable<QueueWeightedAllocation> allocations)
         {
-            if (allocations == null)
-            {
-                throw new ArgumentNullException(nameof(allocations));
-            }
+            Argument.AssertNotNull(allocations, nameof(allocations));
 
             Allocations = allocations.ToList();
             Kind = "weighted-allocation-queue-selector";

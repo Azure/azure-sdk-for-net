@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -19,10 +20,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="conversations"/> is null. </exception>
         public MultiLanguageConversationAnalysisInput(IEnumerable<Conversation> conversations)
         {
-            if (conversations == null)
-            {
-                throw new ArgumentNullException(nameof(conversations));
-            }
+            Argument.AssertNotNull(conversations, nameof(conversations));
 
             Conversations = conversations.ToList();
         }

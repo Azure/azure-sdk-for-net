@@ -2,19 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Communication.CallAutomation;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
-using Azure.Communication.Identity;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Castle.Core.Logging;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Communication.CallAutomation.Tests.CallConnections
 {
@@ -49,7 +40,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                CreateCallResult response = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"))).ConfigureAwait(false);
+                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                createCallOptions.RepeatabilityHeaders = null;
+                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
@@ -58,7 +51,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 Assert.IsNotNull(incomingCallContext);
 
                 // answer the call
-                AnswerCallResult answerResponse = await client.AnswerCallAsync(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                answerCallOptions.RepeatabilityHeaders = null;
+                AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
 
                 // wait for callConnected
                 var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
@@ -77,7 +72,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
                 // try RemoveParticipants
                 string operationContext1 = "MyTestOperationcontext";
-                Response<RemoveParticipantsResult> removePartResponse = await response.CallConnection.RemoveParticipantsAsync(new CommunicationIdentifier[] { target }, operationContext1);
+                var removeParticipantsOptions = new RemoveParticipantsOptions(new CommunicationIdentifier[] { target }) {
+                    OperationContext = operationContext1,
+                };
+                removeParticipantsOptions.RepeatabilityHeaders = null;
+                Response<RemoveParticipantsResult> removePartResponse = await response.CallConnection.RemoveParticipantsAsync(removeParticipantsOptions);
                 Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
                 Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
 
@@ -96,7 +95,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             {
                 if (!string.IsNullOrEmpty(callConnectionId))
                 {
-                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
                 }
             }
         }

@@ -22,18 +22,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/>, <paramref name="sourceRegion"/> or <paramref name="correlationId"/> is null. </exception>
         public TriggerDataMoveContent(string sourceResourceId, string sourceRegion, DataMoveLevel dataMoveLevel, string correlationId)
         {
-            if (sourceResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceResourceId));
-            }
-            if (sourceRegion == null)
-            {
-                throw new ArgumentNullException(nameof(sourceRegion));
-            }
-            if (correlationId == null)
-            {
-                throw new ArgumentNullException(nameof(correlationId));
-            }
+            Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
+            Argument.AssertNotNull(sourceRegion, nameof(sourceRegion));
+            Argument.AssertNotNull(correlationId, nameof(correlationId));
 
             SourceResourceId = sourceResourceId;
             SourceRegion = sourceRegion;

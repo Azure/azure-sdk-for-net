@@ -1,5 +1,20 @@
 # Release History
 
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+* Add support for exporting Histogram Min and Max ([#32072](https://github.com/Azure/azure-sdk-for-net/pull/32072))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+* Update OpenTelemetry dependencies ([#32047](https://github.com/Azure/azure-sdk-for-net/pull/32047))
+  - OpenTelemetry v1.4.0-beta.2
+
 ## 1.0.0-beta.4 (2022-10-07)
 
 ### Features Added

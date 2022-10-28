@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         {
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Weight;
+            ResolutionKind = ResolutionKind.WeightResolution;
         }
 
         /// <summary> Initializes a new instance of WeightResolution. </summary>

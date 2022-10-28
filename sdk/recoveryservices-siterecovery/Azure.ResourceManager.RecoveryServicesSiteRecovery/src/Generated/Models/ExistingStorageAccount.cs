@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccountId"/> is null. </exception>
         public ExistingStorageAccount(string azureStorageAccountId)
         {
-            if (azureStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(azureStorageAccountId));
-            }
+            Argument.AssertNotNull(azureStorageAccountId, nameof(azureStorageAccountId));
 
             AzureStorageAccountId = azureStorageAccountId;
             ResourceType = "Existing";

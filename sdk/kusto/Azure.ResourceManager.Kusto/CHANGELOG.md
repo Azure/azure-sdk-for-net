@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.0.1 (2022-10-09)
+
+### Bugs Fixed
+
+- Added `KustoDatabasePrincipalAssignmentData.DatabasePrincipalId` to replace the old property `KustoDatabasePrincipalAssignmentData.PrincipalId` to fix the issue https://github.com/Azure/azure-sdk-for-net/issues/31618.
+
 ## 1.0.0 (2022-09-19)
 
 This is the first stable release of the Kusto Management library.

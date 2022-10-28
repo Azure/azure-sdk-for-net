@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -18,14 +19,11 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NumberResolution(NumberKind numberKind, string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             NumberKind = numberKind;
             Value = value;
-            ResolutionKind = ResolutionKind.Number;
+            ResolutionKind = ResolutionKind.NumberResolution;
         }
 
         /// <summary> Initializes a new instance of NumberResolution. </summary>

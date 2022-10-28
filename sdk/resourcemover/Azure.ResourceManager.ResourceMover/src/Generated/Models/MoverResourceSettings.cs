@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         protected MoverResourceSettings(string targetResourceName)
         {
-            if (targetResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceName));
-            }
+            Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
 
             TargetResourceName = targetResourceName;
         }

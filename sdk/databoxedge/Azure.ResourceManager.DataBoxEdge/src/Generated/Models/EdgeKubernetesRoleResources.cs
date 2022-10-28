@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="compute"/> is null. </exception>
         public EdgeKubernetesRoleResources(EdgeKubernetesRoleCompute compute)
         {
-            if (compute == null)
-            {
-                throw new ArgumentNullException(nameof(compute));
-            }
+            Argument.AssertNotNull(compute, nameof(compute));
 
             Compute = compute;
         }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<RemediationEta> remediationEta = default;
             Optional<bool> isGracePeriod = default;
             Optional<GovernanceEmailNotification> governanceEmailNotification = default;
-            Optional<GovernanceAssignmentAdditionalData> additionalData = default;
+            Optional<GovernanceAssignmentAdditionalInfo> additionalData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            additionalData = GovernanceAssignmentAdditionalData.DeserializeGovernanceAssignmentAdditionalData(property0.Value);
+                            additionalData = GovernanceAssignmentAdditionalInfo.DeserializeGovernanceAssignmentAdditionalInfo(property0.Value);
                             continue;
                         }
                     }

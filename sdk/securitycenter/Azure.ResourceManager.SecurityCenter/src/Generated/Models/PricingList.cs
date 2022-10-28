@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -18,24 +19,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of PricingList. </summary>
         /// <param name="value"> List of pricing configurations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PricingList(IEnumerable<PricingData> value)
+        internal PricingList(IEnumerable<SecurityCenterPricingData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of PricingList. </summary>
         /// <param name="value"> List of pricing configurations. </param>
-        internal PricingList(IReadOnlyList<PricingData> value)
+        internal PricingList(IReadOnlyList<SecurityCenterPricingData> value)
         {
             Value = value;
         }
 
         /// <summary> List of pricing configurations. </summary>
-        public IReadOnlyList<PricingData> Value { get; }
+        public IReadOnlyList<SecurityCenterPricingData> Value { get; }
     }
 }

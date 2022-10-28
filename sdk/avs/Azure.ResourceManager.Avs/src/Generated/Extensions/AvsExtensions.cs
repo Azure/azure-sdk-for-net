@@ -35,10 +35,11 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
+        /// <param name="sku"> The sku to check for trial availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,10 +49,11 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
+        /// <param name="sku"> The sku to check for trial availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).CheckAvsTrialAvailability(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
         }
 
         /// <summary>
@@ -264,6 +266,25 @@ namespace Azure.ResourceManager.Avs
             {
                 GlobalReachConnectionResource.ValidateResourceId(id);
                 return new GlobalReachConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkloadNetworkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkloadNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkResource" /> object. </returns>
+        public static WorkloadNetworkResource GetWorkloadNetworkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkloadNetworkResource.ValidateResourceId(id);
+                return new WorkloadNetworkResource(client, id);
             }
             );
         }

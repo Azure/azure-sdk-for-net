@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -19,19 +20,13 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="timex"/> or <paramref name="value"/> is null. </exception>
         internal DateTimeResolution(string timex, DateTimeSubKind dateTimeSubKind, string value)
         {
-            if (timex == null)
-            {
-                throw new ArgumentNullException(nameof(timex));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(timex, nameof(timex));
+            Argument.AssertNotNull(value, nameof(value));
 
             Timex = timex;
             DateTimeSubKind = dateTimeSubKind;
             Value = value;
-            ResolutionKind = ResolutionKind.DateTime;
+            ResolutionKind = ResolutionKind.DateTimeResolution;
         }
 
         /// <summary> Initializes a new instance of DateTimeResolution. </summary>

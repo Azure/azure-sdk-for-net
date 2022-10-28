@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+- Adjusted the frequency that a warning is logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+
+## 5.7.3 (2022-10-11)
+
+### Other Changes
+
 - Added additional heuristics for the `EventProcessorClient` configuration to help discover issues that can impact processor performance and stability; these validations will produce warnings at processor start-up should potential concerns be found.
 
 - Exception messages have been updated to include a link to the Event Hubs troubleshooting guide.

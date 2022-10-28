@@ -125,7 +125,8 @@
     {
       "filename": "**/sdk/automation/**/*.cs",
       "words": [
-        "tfvc"
+        "tfvc",
+        "updation"
       ]
     },
     {
@@ -288,6 +289,12 @@
       ]
     },
     {
+      "filename": "**/sdk/dataprotection/**/*.cs",
+      "words": [
+        "Undelete"
+      ]
+    },
+    {
       "filename": "**/sdk/datashare/**/*.cs",
       "words": [
         "adls",
@@ -399,6 +406,12 @@
       "words": [
         "dicom",
         "fhir"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybriddatamanager/**/*.cs",
+      "words": [
+        "Oaep"
       ]
     },
     {
@@ -897,6 +910,12 @@
         "Msrp",
         "Hana"
         ]
+    },  
+    {
+      "filename": "**/sdk/securitydevops/**/*.cs",
+      "words": [
+        "Orgs"
+      ]
     }
   ],
   "allowCompoundWords": true

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <exception cref="ArgumentNullException"> <paramref name="idProvider"/> is null. </exception>
         public TrustedIdProviderCreateOrUpdateContent(string idProvider)
         {
-            if (idProvider == null)
-            {
-                throw new ArgumentNullException(nameof(idProvider));
-            }
+            Argument.AssertNotNull(idProvider, nameof(idProvider));
 
             IdProvider = idProvider;
         }

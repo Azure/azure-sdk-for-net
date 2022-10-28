@@ -402,7 +402,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void RecordingStateChangedEventParsed_Test()
         {
-            CallRecordingStateChanged @event = CallAutomationModelFactory.CallRecordingStateChanged(
+            RecordingStateChanged @event = CallAutomationModelFactory.RecordingStateChanged(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -411,8 +411,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 startDateTime: DateTimeOffset.UtcNow);
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CallRecordingStateChanged");
-            if (parsedEvent is CallRecordingStateChanged recordingEvent)
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecordingStateChanged");
+            if (parsedEvent is RecordingStateChanged recordingEvent)
             {
                 Assert.AreEqual("recordingId", recordingEvent.RecordingId);
                 Assert.AreEqual("serverCallId", recordingEvent.ServerCallId);

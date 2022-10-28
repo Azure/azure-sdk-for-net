@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -17,10 +18,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
         internal ConversationalTaskResult(AnalyzeConversationResult result)
         {
-            if (result == null)
-            {
-                throw new ArgumentNullException(nameof(result));
-            }
+            Argument.AssertNotNull(result, nameof(result));
 
             Result = result;
             Kind = AnalyzeConversationTaskResultsKind.ConversationResult;

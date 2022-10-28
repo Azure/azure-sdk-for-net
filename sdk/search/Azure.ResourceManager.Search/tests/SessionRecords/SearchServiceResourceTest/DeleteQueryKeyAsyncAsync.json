@@ -1768,39 +1768,39 @@
       },
       "ResponseBody": {
         "name": "queryKey-7884",
-        "key": "UrjVbXUdM6nUSNJA9jViTS5ppqJZNIgPnkUCZnEsu7AzSeBr7u7J"
+        "key": "Sanitized"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test970/providers/Microsoft.Search/searchServices/search9202/deleteQueryKey/UrjVbXUdM6nUSNJA9jViTS5ppqJZNIgPnkUCZnEsu7AzSeBr7u7J?api-version=2020-08-01",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-d6c8d61c3c48df3b8e68bf549d402673-e9562f5da14096fd-00",
-        "User-Agent": "azsdk-net-ResourceManager.Search/1.0.0-alpha.20220920.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "daf681fa27a140b192babbf1e8cb38af",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "daf681fa-27a1-40b1-92ba-bbf1e8cb38af",
-        "Date": "Thu, 22 Sep 2022 02:46:19 GMT",
-        "elapsed-time": "185",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "request-id": "daf681fa-27a1-40b1-92ba-bbf1e8cb38af",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "daf681fa-27a1-40b1-92ba-bbf1e8cb38af",
-        "x-ms-correlation-request-id": "eee6587c-2de5-4602-a1e3-526732a89c6b",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "daf681fa-27a1-40b1-92ba-bbf1e8cb38af",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220922T024619Z:eee6587c-2de5-4602-a1e3-526732a89c6b"
-      },
-      "ResponseBody": null
+        "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test970/providers/Microsoft.Search/searchServices/search9202/deleteQueryKey/Sanitized?api-version=2020-08-01",
+        "RequestMethod": "DELETE",
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "traceparent": "00-d6c8d61c3c48df3b8e68bf549d402673-e9562f5da14096fd-00",
+            "User-Agent": "azsdk-net-ResourceManager.Search/1.0.0-alpha.20220920.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+            "x-ms-client-request-id": "daf681fa27a140b192babbf1e8cb38af",
+            "x-ms-return-client-request-id": "true"
+        },
+        "RequestBody": null,
+        "StatusCode": 204,
+        "ResponseHeaders": {
+            "Cache-Control": "no-cache",
+            "client-request-id": "daf681fa-27a1-40b1-92ba-bbf1e8cb38af",
+            "Date": "Thu, 22 Sep 2022 02:46:19 GMT",
+            "elapsed-time": "185",
+            "Expires": "-1",
+            "Pragma": "no-cache",
+            "request-id": "daf681fa-27a1-40b1-92ba-bbf1e8cb38af",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "X-Content-Type-Options": "nosniff",
+            "x-ms-client-request-id": "daf681fa-27a1-40b1-92ba-bbf1e8cb38af",
+            "x-ms-correlation-request-id": "eee6587c-2de5-4602-a1e3-526732a89c6b",
+            "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+            "x-ms-request-id": "daf681fa-27a1-40b1-92ba-bbf1e8cb38af",
+            "x-ms-routing-request-id": "SOUTHEASTASIA:20220922T024619Z:eee6587c-2de5-4602-a1e3-526732a89c6b"
+        },
+        "ResponseBody": null
     }
   ],
   "Variables": {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryVirtualNetworkId"/> is null. </exception>
         public ExistingRecoveryVirtualNetwork(string recoveryVirtualNetworkId)
         {
-            if (recoveryVirtualNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryVirtualNetworkId));
-            }
+            Argument.AssertNotNull(recoveryVirtualNetworkId, nameof(recoveryVirtualNetworkId));
 
             RecoveryVirtualNetworkId = recoveryVirtualNetworkId;
             ResourceType = "Existing";

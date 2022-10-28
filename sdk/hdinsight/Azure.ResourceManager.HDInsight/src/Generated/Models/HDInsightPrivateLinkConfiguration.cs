@@ -22,18 +22,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="groupId"/> or <paramref name="ipConfigurations"/> is null. </exception>
         public HDInsightPrivateLinkConfiguration(string name, string groupId, IEnumerable<HDInsightIPConfiguration> ipConfigurations)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (ipConfigurations == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurations));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
             Name = name;
             GroupId = groupId;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         public CompleteJobRequest(string assignmentId)
         {
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
+            Argument.AssertNotNull(assignmentId, nameof(assignmentId));
 
             AssignmentId = assignmentId;
         }

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -40,7 +39,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     long histogramCount = metricPoint.GetHistogramCount();
                     // Current schema only supports int values for count
                     // if the value is within integer range we will use it otherwise ignore it.
-                    Count = (histogramCount <= int.MaxValue && histogramCount >= int.MinValue) ? (int?)histogramCount : null;
+                    Count = histogramCount <= int.MaxValue ? (int?)histogramCount : null;
+
+                    if (metricPoint.HasMinMax())
+                    {
+                        Min = metricPoint.GetHistogramMin();
+                        Max = metricPoint.GetHistogramMax();
+                    }
 
                     break;
             }

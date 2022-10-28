@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public LabVirtualMachineCredential(string username)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
+            Argument.AssertNotNull(username, nameof(username));
 
             Username = username;
         }

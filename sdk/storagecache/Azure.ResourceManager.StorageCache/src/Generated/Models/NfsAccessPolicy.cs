@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="accessRules"/> is null. </exception>
         public NfsAccessPolicy(string name, IEnumerable<NfsAccessRule> accessRules)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (accessRules == null)
-            {
-                throw new ArgumentNullException(nameof(accessRules));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(accessRules, nameof(accessRules));
 
             Name = name;
             AccessRules = accessRules.ToList();

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="request"/> is null. </exception>
         public RestHealthCheck(string name, RestRequest request)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(request, nameof(request));
 
             Name = name;
             Request = request;

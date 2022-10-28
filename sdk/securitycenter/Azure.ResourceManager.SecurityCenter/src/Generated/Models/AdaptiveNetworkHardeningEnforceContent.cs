@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -18,23 +19,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="rules"> The rules to enforce. </param>
         /// <param name="networkSecurityGroups"> The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> or <paramref name="networkSecurityGroups"/> is null. </exception>
-        public AdaptiveNetworkHardeningEnforceContent(IEnumerable<Rule> rules, IEnumerable<string> networkSecurityGroups)
+        public AdaptiveNetworkHardeningEnforceContent(IEnumerable<RecommendedSecurityRule> rules, IEnumerable<string> networkSecurityGroups)
         {
-            if (rules == null)
-            {
-                throw new ArgumentNullException(nameof(rules));
-            }
-            if (networkSecurityGroups == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroups));
-            }
+            Argument.AssertNotNull(rules, nameof(rules));
+            Argument.AssertNotNull(networkSecurityGroups, nameof(networkSecurityGroups));
 
             Rules = rules.ToList();
             NetworkSecurityGroups = networkSecurityGroups.ToList();
         }
 
         /// <summary> The rules to enforce. </summary>
-        public IList<Rule> Rules { get; }
+        public IList<RecommendedSecurityRule> Rules { get; }
         /// <summary> The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules. </summary>
         public IList<string> NetworkSecurityGroups { get; }
     }

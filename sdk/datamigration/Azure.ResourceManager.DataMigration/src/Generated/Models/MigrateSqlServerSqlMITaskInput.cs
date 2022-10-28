@@ -23,22 +23,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/>, <paramref name="selectedDatabases"/> or <paramref name="backupBlobShare"/> is null. </exception>
         public MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare) : base(sourceConnectionInfo, targetConnectionInfo)
         {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
-            if (selectedDatabases == null)
-            {
-                throw new ArgumentNullException(nameof(selectedDatabases));
-            }
-            if (backupBlobShare == null)
-            {
-                throw new ArgumentNullException(nameof(backupBlobShare));
-            }
+            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
+            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
+            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
+            Argument.AssertNotNull(backupBlobShare, nameof(backupBlobShare));
 
             SelectedDatabases = selectedDatabases.ToList();
             SelectedLogins = new ChangeTrackingList<string>();
@@ -61,14 +49,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
         internal MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string startedOn, IList<string> selectedLogins, IList<string> selectedAgentJobs, FileShare backupFileShare, BlobShare backupBlobShare, BackupMode? backupMode, string aadDomainName, string encryptedKeyForSecureFields) : base(sourceConnectionInfo, targetConnectionInfo)
         {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
+            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
+            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
 
             SelectedDatabases = selectedDatabases;
             StartedOn = startedOn;

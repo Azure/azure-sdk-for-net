@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="logStorageAccountId"/> is null. </exception>
         public InMageRcmDisksDefaultInput(string logStorageAccountId, DiskAccountType diskType)
         {
-            if (logStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(logStorageAccountId));
-            }
+            Argument.AssertNotNull(logStorageAccountId, nameof(logStorageAccountId));
 
             LogStorageAccountId = logStorageAccountId;
             DiskType = diskType;

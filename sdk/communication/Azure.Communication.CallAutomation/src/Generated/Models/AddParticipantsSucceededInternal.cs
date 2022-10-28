@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The AddParticipantsSucceeded. </summary>
+    /// <summary> The participants successfully added event. </summary>
     internal partial class AddParticipantsSucceededInternal
     {
         /// <summary> Initializes a new instance of AddParticipantsSucceededInternal. </summary>
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="participants"></param>
+        /// <param name="participants"> The list of participants in the call. </param>
         internal AddParticipantsSucceededInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, IReadOnlyList<CommunicationIdentifierModel> participants)
         {
             CallConnectionId = callConnectionId;
@@ -47,7 +47,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; }
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
         public ResultInformation ResultInformation { get; }
-        /// <summary> Gets the participants. </summary>
+        /// <summary> The list of participants in the call. </summary>
         public IReadOnlyList<CommunicationIdentifierModel> Participants { get; }
     }
 }

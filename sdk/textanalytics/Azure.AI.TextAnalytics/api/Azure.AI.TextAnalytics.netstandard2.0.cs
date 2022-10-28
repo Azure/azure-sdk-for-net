@@ -39,6 +39,7 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesActionResult> AnalyzeHealthcareEntitiesResults { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.AnalyzeSentimentActionResult> AnalyzeSentimentResults { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult> ExtractKeyPhrasesResults { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.ExtractSummaryActionResult> ExtractSummaryResults { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.MultiLabelClassifyActionResult> MultiLabelClassifyResults { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeCustomEntitiesActionResult> RecognizeCustomEntitiesResults { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeEntitiesActionResult> RecognizeEntitiesResults { get { throw null; } }
@@ -52,6 +53,8 @@ namespace Azure.AI.TextAnalytics
         public AnalyzeHealthcareEntitiesAction(Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.HealthcareDocumentType? DocumentType { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.WellKnownFhirVersion? FhirVersion { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
@@ -87,12 +90,15 @@ namespace Azure.AI.TextAnalytics
     {
         public AnalyzeHealthcareEntitiesOptions() { }
         public string DisplayName { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.HealthcareDocumentType? DocumentType { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.WellKnownFhirVersion? FhirVersion { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
         internal AnalyzeHealthcareEntitiesResult() { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntity> Entities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntityRelation> EntityRelations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> FhirBundle { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     public partial class AnalyzeHealthcareEntitiesResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult>
@@ -323,6 +329,86 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
+    public partial class ExtractSummaryAction
+    {
+        public ExtractSummaryAction() { }
+        public ExtractSummaryAction(Azure.AI.TextAnalytics.ExtractSummaryOptions options) { }
+        public string ActionName { get { throw null; } set { } }
+        public bool? DisableServiceLogs { get { throw null; } set { } }
+        public int? MaxSentenceCount { get { throw null; } set { } }
+        public string ModelVersion { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.SummarySentencesOrder? OrderBy { get { throw null; } set { } }
+    }
+    public partial class ExtractSummaryActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
+    {
+        internal ExtractSummaryActionResult() { }
+        public Azure.AI.TextAnalytics.ExtractSummaryResultCollection DocumentsResults { get { throw null; } }
+    }
+    public partial class ExtractSummaryOperation : Azure.PageableOperation<Azure.AI.TextAnalytics.ExtractSummaryResultCollection>
+    {
+        protected ExtractSummaryOperation() { }
+        public ExtractSummaryOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
+        public virtual System.DateTimeOffset CreatedOn { get { throw null; } }
+        public virtual string DisplayName { get { throw null; } }
+        public virtual System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public virtual System.DateTimeOffset LastModified { get { throw null; } }
+        public virtual Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Status { get { throw null; } }
+        public virtual void Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Pageable<Azure.AI.TextAnalytics.ExtractSummaryResultCollection> GetValues(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.AsyncPageable<Azure.AI.TextAnalytics.ExtractSummaryResultCollection> GetValuesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.AI.TextAnalytics.ExtractSummaryResultCollection>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.AI.TextAnalytics.ExtractSummaryResultCollection>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ExtractSummaryOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
+    {
+        public ExtractSummaryOptions() { }
+        public string DisplayName { get { throw null; } set { } }
+        public int? MaxSentenceCount { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.SummarySentencesOrder? OrderBy { get { throw null; } set { } }
+    }
+    public partial class ExtractSummaryResult : Azure.AI.TextAnalytics.TextAnalyticsResult
+    {
+        internal ExtractSummaryResult() { }
+        public Azure.AI.TextAnalytics.SummarySentenceCollection Sentences { get { throw null; } }
+    }
+    public partial class ExtractSummaryResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.ExtractSummaryResult>
+    {
+        internal ExtractSummaryResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.ExtractSummaryResult>)) { }
+        public string ModelVersion { get { throw null; } }
+        public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthcareDocumentType : System.IEquatable<Azure.AI.TextAnalytics.HealthcareDocumentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthcareDocumentType(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType ClinicalTrial { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType Consult { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType DischargeSummary { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType HistoryAndPhysical { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType Imaging { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType None { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType Pathology { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType ProcedureNote { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareDocumentType ProgressNote { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.HealthcareDocumentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.HealthcareDocumentType left, Azure.AI.TextAnalytics.HealthcareDocumentType right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.HealthcareDocumentType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.HealthcareDocumentType left, Azure.AI.TextAnalytics.HealthcareDocumentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class HealthcareEntity
     {
         internal HealthcareEntity() { }
@@ -395,6 +481,7 @@ namespace Azure.AI.TextAnalytics
     public partial class HealthcareEntityRelation
     {
         internal HealthcareEntityRelation() { }
+        public double? ConfidenceScore { get { throw null; } }
         public Azure.AI.TextAnalytics.HealthcareEntityRelationType RelationType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntityRelationRole> Roles { get { throw null; } }
     }
@@ -885,6 +972,39 @@ namespace Azure.AI.TextAnalytics
         public bool? IncludeStatistics { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SummarySentence
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public int Length { get { throw null; } }
+        public int Offset { get { throw null; } }
+        public double RankScore { get { throw null; } }
+        public string Text { get { throw null; } }
+    }
+    public partial class SummarySentenceCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.SummarySentence>
+    {
+        internal SummarySentenceCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.SummarySentence>)) { }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SummarySentencesOrder : System.IEquatable<Azure.AI.TextAnalytics.SummarySentencesOrder>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SummarySentencesOrder(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.SummarySentencesOrder Offset { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SummarySentencesOrder Rank { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.SummarySentencesOrder other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.SummarySentencesOrder left, Azure.AI.TextAnalytics.SummarySentencesOrder right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.SummarySentencesOrder (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.SummarySentencesOrder left, Azure.AI.TextAnalytics.SummarySentencesOrder right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetSentiment
     {
         private readonly object _dummy;
@@ -910,6 +1030,7 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.AnalyzeSentimentAction> AnalyzeSentimentActions { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.ExtractKeyPhrasesAction> ExtractKeyPhrasesActions { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.ExtractSummaryAction> ExtractSummaryActions { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.MultiLabelClassifyAction> MultiLabelClassifyActions { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeCustomEntitiesAction> RecognizeCustomEntitiesActions { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeEntitiesAction> RecognizeEntitiesActions { get { throw null; } set { } }
@@ -1003,6 +1124,10 @@ namespace Azure.AI.TextAnalytics
         public virtual Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(System.Collections.Generic.IEnumerable<string> documents, string language = null, Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(System.Collections.Generic.IEnumerable<string> documents, string language = null, Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.TextAnalytics.ExtractSummaryOperation StartExtractSummary(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.ExtractSummaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.TextAnalytics.ExtractSummaryOperation StartExtractSummary(System.Collections.Generic.IEnumerable<string> documents, string language = null, Azure.AI.TextAnalytics.ExtractSummaryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.ExtractSummaryOperation> StartExtractSummaryAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.ExtractSummaryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.ExtractSummaryOperation> StartExtractSummaryAsync(System.Collections.Generic.IEnumerable<string> documents, string language = null, Azure.AI.TextAnalytics.ExtractSummaryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.TextAnalytics.ClassifyDocumentOperation StartMultiLabelClassify(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, string projectName, string deploymentName, Azure.AI.TextAnalytics.MultiLabelClassifyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.TextAnalytics.ClassifyDocumentOperation StartMultiLabelClassify(System.Collections.Generic.IEnumerable<string> documents, string projectName, string deploymentName, string language = null, Azure.AI.TextAnalytics.MultiLabelClassifyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.ClassifyDocumentOperation> StartMultiLabelClassifyAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, string projectName, string deploymentName, Azure.AI.TextAnalytics.MultiLabelClassifyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1020,7 +1145,7 @@ namespace Azure.AI.TextAnalytics
     }
     public partial class TextAnalyticsClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V2022_05_01) { }
+        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview) { }
         public Azure.AI.TextAnalytics.TextAnalyticsAudience? Audience { get { throw null; } set { } }
         public string DefaultCountryHint { get { throw null; } set { } }
         public string DefaultLanguage { get { throw null; } set { } }
@@ -1029,6 +1154,7 @@ namespace Azure.AI.TextAnalytics
             V3_0 = 1,
             V3_1 = 2,
             V2022_05_01 = 3,
+            V2022_10_01_Preview = 4,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1082,11 +1208,14 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.AnalyzeActionsResult AnalyzeActionsResult(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeEntitiesActionResult> recognizeEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentActionResult> analyzeSentimentActionsResults) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.AnalyzeActionsResult AnalyzeActionsResult(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeEntitiesActionResult> recognizeEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentActionResult> analyzeSentimentActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SingleLabelClassifyActionResult> singleLabelClassifyActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.MultiLabelClassifyActionResult> multiLabelClassifyActionResults) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.AnalyzeActionsResult AnalyzeActionsResult(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeEntitiesActionResult> recognizeEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentActionResult> analyzeSentimentActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SingleLabelClassifyActionResult> singleLabelClassifyActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.MultiLabelClassifyActionResult> multiLabelClassifyActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults) { throw null; }
+        public static Azure.AI.TextAnalytics.AnalyzeActionsResult AnalyzeActionsResult(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeEntitiesActionResult> recognizeEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentActionResult> analyzeSentimentActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SingleLabelClassifyActionResult> singleLabelClassifyActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.MultiLabelClassifyActionResult> multiLabelClassifyActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractSummaryActionResult> extractSummaryActionResults) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesActionResult AnalyzeHealthcareEntitiesActionResult(Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesActionResult AnalyzeHealthcareEntitiesActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntity> healthcareEntities, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelation> entityRelations, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings) { throw null; }
+        public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntity> healthcareEntities, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelation> entityRelations, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings, System.Collections.Generic.IDictionary<string, object> fhirBundle) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResultCollection AnalyzeHealthcareEntitiesResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1123,9 +1252,16 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.ExtractKeyPhrasesResult ExtractKeyPhrasesResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractKeyPhrasesResult ExtractKeyPhrasesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.KeyPhraseCollection keyPhrases) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection ExtractKeyPhrasesResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
+        public static Azure.AI.TextAnalytics.ExtractSummaryActionResult ExtractSummaryActionResult(Azure.AI.TextAnalytics.ExtractSummaryResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
+        public static Azure.AI.TextAnalytics.ExtractSummaryActionResult ExtractSummaryActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
+        public static Azure.AI.TextAnalytics.ExtractSummaryResult ExtractSummaryResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.SummarySentenceCollection sentences) { throw null; }
+        public static Azure.AI.TextAnalytics.ExtractSummaryResult ExtractSummaryResult(string id, string code, string message) { throw null; }
+        public static Azure.AI.TextAnalytics.ExtractSummaryResultCollection ExtractSummaryResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractSummaryResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntity HealthcareEntity(string text, string category, int offset, int length, double confidenceScore) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntityAssertion HealthcareEntityAssertion(Azure.AI.TextAnalytics.EntityConditionality? conditionality = default(Azure.AI.TextAnalytics.EntityConditionality?), Azure.AI.TextAnalytics.EntityCertainty? certainty = default(Azure.AI.TextAnalytics.EntityCertainty?), Azure.AI.TextAnalytics.EntityAssociation? association = default(Azure.AI.TextAnalytics.EntityAssociation?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.HealthcareEntityRelation HealthcareEntityRelation(Azure.AI.TextAnalytics.HealthcareEntityRelationType relationType, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelationRole> roles) { throw null; }
+        public static Azure.AI.TextAnalytics.HealthcareEntityRelation HealthcareEntityRelation(Azure.AI.TextAnalytics.HealthcareEntityRelationType relationType, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelationRole> roles, double? confidenceScore) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntityRelationRole HealthcareEntityRelationRole(string text, string category, int offset, int length, double confidenceScore, string entityName) { throw null; }
         public static Azure.AI.TextAnalytics.KeyPhraseCollection KeyPhraseCollection(System.Collections.Generic.IList<string> keyPhrases, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1188,6 +1324,8 @@ namespace Azure.AI.TextAnalytics
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
+        public static Azure.AI.TextAnalytics.SummarySentence SummarySentence(string text, double rankScore, int offset, int length) { throw null; }
+        public static Azure.AI.TextAnalytics.SummarySentenceCollection SummarySentenceCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.SummarySentence> sentences, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.TargetSentiment TargetSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsError TextAnalyticsError(string code, string message, string target = null) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsWarning TextAnalyticsWarning(string code, string message) { throw null; }
@@ -1285,6 +1423,23 @@ namespace Azure.AI.TextAnalytics
         Neutral = 1,
         Negative = 2,
         Mixed = 3,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WellKnownFhirVersion : System.IEquatable<Azure.AI.TextAnalytics.WellKnownFhirVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WellKnownFhirVersion(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.WellKnownFhirVersion V4_0_1 { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.WellKnownFhirVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.WellKnownFhirVersion left, Azure.AI.TextAnalytics.WellKnownFhirVersion right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.WellKnownFhirVersion (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.WellKnownFhirVersion left, Azure.AI.TextAnalytics.WellKnownFhirVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("resourceId");
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(RegistryUri))
+            if (Optional.IsDefined(RegistryAddress))
             {
                 writer.WritePropertyName("registryUri");
-                writer.WriteStringValue(RegistryUri.AbsoluteUri);
+                writer.WriteStringValue(RegistryAddress);
             }
             if (Optional.IsDefined(Credentials))
             {

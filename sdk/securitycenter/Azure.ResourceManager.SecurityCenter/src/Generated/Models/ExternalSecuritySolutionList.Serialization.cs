@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ExternalSecuritySolutionList DeserializeExternalSecuritySolutionList(JsonElement element)
         {
-            Optional<IReadOnlyList<ExternalSecuritySolutionData>> value = default;
+            Optional<IReadOnlyList<ExternalSecuritySolution>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExternalSecuritySolutionData> array = new List<ExternalSecuritySolutionData>();
+                    List<ExternalSecuritySolution> array = new List<ExternalSecuritySolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExternalSecuritySolutionData.DeserializeExternalSecuritySolutionData(item));
+                        array.Add(ExternalSecuritySolution.DeserializeExternalSecuritySolution(item));
                     }
                     value = array;
                     continue;

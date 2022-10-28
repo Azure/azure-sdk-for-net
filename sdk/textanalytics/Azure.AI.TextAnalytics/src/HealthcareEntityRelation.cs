@@ -10,20 +10,30 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public partial class HealthcareEntityRelation
     {
-        internal HealthcareEntityRelation(HealthcareEntityRelationType relationType, IReadOnlyCollection<HealthcareEntityRelationRole> roles)
+        internal HealthcareEntityRelation(
+            HealthcareEntityRelationType relationType,
+            IReadOnlyCollection<HealthcareEntityRelationRole> roles,
+            double? confidenceScore)
         {
             RelationType = relationType;
             Roles = roles;
+            ConfidenceScore = confidenceScore;
         }
 
         /// <summary>
-        /// Determines the relation type between the healthcare entities. <see cref="HealthcareEntityRelationType"/>
+        /// The type of relation between the entities.
         /// </summary>
         public HealthcareEntityRelationType RelationType { get; }
 
         /// <summary>
-        /// Determines the role between the healthcare entities. <see cref="HealthcareEntityRelationRole"/>
+        /// The role of a given entity in the relation.
         /// </summary>
         public IReadOnlyCollection<HealthcareEntityRelationRole> Roles { get; }
+
+        /// <summary>
+        /// The confidence score of the identified relation as a decimal number between 0.0 and 1.0, where a value of 1.0 indicates a 100% certainty that the
+        /// identified relation is accurate.
+        /// </summary>
+        public double? ConfidenceScore { get; }
     }
 }

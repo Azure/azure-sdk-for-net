@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The answer call operation options.
     /// </summary>
-    public class AnswerCallOptions: RepeatabilityHeaders
+    public class AnswerCallOptions
     {
         /// <summary>
         /// Creates a new AnswerCallOptions object.
@@ -19,6 +19,7 @@ namespace Azure.Communication.CallAutomation
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -35,5 +36,10 @@ namespace Azure.Communication.CallAutomation
         /// Media Streaming Configuration.
         /// </summary>
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
+
+        /// <summary>
+        /// Repeatability Headers.
+        /// </summary>
+        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
     }
 }

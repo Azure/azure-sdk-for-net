@@ -37,15 +37,19 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary> Scale of transformation of asset units into meter space. </summary>
         public float Scale { get => ConversionConfiguration.Scale; }
 
+        /// <summary> Whether or not disable automatic detection of FBX scale units. </summary>
+        public bool DisableDetectScaleUnits { get => ConversionConfiguration.DisableDetectScaleUnits; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetConversionOptions"/> class.
         /// </summary>
         /// <param name="inputAssetUri">The path to the Asset in storage to be ingested by the Object Anchors service.</param>
         /// <param name="assetGravity">The asset gravity.</param>
         /// <param name="assetScale">The asset scale.</param>
+        /// <param name="disableDetectScaleUnits">Whether or not disable automatic detection of FBX scale units.</param>
         /// <param name="inputAssetFileType">The model's file type.</param>
-        public AssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, float assetScale)
-            : this(inputAssetUri, inputAssetFileType, new AssetConversionConfiguration(assetGravity, assetScale))
+        public AssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, float assetScale, bool disableDetectScaleUnits = false)
+            : this(inputAssetUri, inputAssetFileType, new AssetConversionConfiguration(assetGravity, assetScale, disableDetectScaleUnits))
         {
         }
 
@@ -55,9 +59,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="inputAssetUri">The path to the Asset to be ingested by the Object Anchors service.</param>
         /// <param name="assetGravity">The asset gravity.</param>
         /// <param name="unit">The unit of measurement, which is translated to a numeric scale for the model.</param>
+        /// <param name="disableDetectScaleUnits">Whether or not disable automatic detection of FBX scale units.</param>
         /// <param name="inputAssetFileType">The model's file type.</param>
-        public AssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, AssetLengthUnit unit)
-            : this(inputAssetUri, inputAssetFileType, new AssetConversionConfiguration(assetGravity, AssetScaleGenerator.GetAssetScale(unit)))
+        public AssetConversionOptions(Uri inputAssetUri, AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, AssetLengthUnit unit, bool disableDetectScaleUnits = false)
+            : this(inputAssetUri, inputAssetFileType, new AssetConversionConfiguration(assetGravity, AssetScaleGenerator.GetAssetScale(unit), disableDetectScaleUnits))
         {
         }
 

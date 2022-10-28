@@ -11,6 +11,7 @@ This is a Public Preview version, so breaking changes are possible in subsequent
 - Play audio in the call.
 - Add and remove participants from the call.
 - Recording download apis.
+- Optimized the logic for deserializing types derived from the `CommunicationIdentifier`.
 
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.CallAutomation/README.md

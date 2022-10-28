@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -20,22 +21,10 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/>, <paramref name="centralServer"/>, <paramref name="applicationServer"/> or <paramref name="databaseServer"/> is null. </exception>
         public ThreeTierConfiguration(string appResourceGroup, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer) : base(appResourceGroup)
         {
-            if (appResourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(appResourceGroup));
-            }
-            if (centralServer == null)
-            {
-                throw new ArgumentNullException(nameof(centralServer));
-            }
-            if (applicationServer == null)
-            {
-                throw new ArgumentNullException(nameof(applicationServer));
-            }
-            if (databaseServer == null)
-            {
-                throw new ArgumentNullException(nameof(databaseServer));
-            }
+            Argument.AssertNotNull(appResourceGroup, nameof(appResourceGroup));
+            Argument.AssertNotNull(centralServer, nameof(centralServer));
+            Argument.AssertNotNull(applicationServer, nameof(applicationServer));
+            Argument.AssertNotNull(databaseServer, nameof(databaseServer));
 
             CentralServer = centralServer;
             ApplicationServer = applicationServer;
