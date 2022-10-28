@@ -8,7 +8,7 @@
   - This property determines how a pool communicates with the Batch service.
   - Possible values: Default, Classic, Simplified.
 - Added properties `CurrentNodeCommunicationMode` and `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `CloudPool`.
-- Added property `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `PoolSpecification`.
+- Added property `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `PoolSpecification`, `PoolAddParameter`, `PoolPatchParameter`, and `PoolUpdatePropertiesParameter`.
 
 ### Other Changes
 
