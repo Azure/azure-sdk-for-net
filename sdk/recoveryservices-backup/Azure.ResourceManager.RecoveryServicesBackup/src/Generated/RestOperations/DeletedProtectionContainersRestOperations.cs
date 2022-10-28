@@ -16,20 +16,20 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    internal partial class BackupProtectionContainersRestOperations
+    internal partial class DeletedProtectionContainersRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of BackupProtectionContainersRestOperations. </summary>
+        /// <summary> Initializes a new instance of DeletedProtectionContainersRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public BackupProtectionContainersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public DeletedProtectionContainersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendPath("/backupProtectionContainers", false);
+            uri.AppendPath("/backupDeletedProtectionContainers", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return message;
         }
 
-        /// <summary> Lists the containers registered to Recovery Services Vault. </summary>
+        /// <summary> Lists the soft deleted containers registered to Recovery Services Vault. </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
-        /// <summary> Lists the containers registered to Recovery Services Vault. </summary>
+        /// <summary> Lists the soft deleted containers registered to Recovery Services Vault. </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return message;
         }
 
-        /// <summary> Lists the containers registered to Recovery Services Vault. </summary>
+        /// <summary> Lists the soft deleted containers registered to Recovery Services Vault. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
-        /// <summary> Lists the containers registered to Recovery Services Vault. </summary>
+        /// <summary> Lists the soft deleted containers registered to Recovery Services Vault. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>

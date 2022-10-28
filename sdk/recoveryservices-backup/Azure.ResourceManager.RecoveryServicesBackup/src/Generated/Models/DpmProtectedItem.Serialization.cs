@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyName");
                 writer.WriteStringValue(PolicyName);
             }
+            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
+            {
+                writer.WritePropertyName("softDeleteRetentionPeriod");
+                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> resourceGuardOperationRequests = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> policyName = default;
+            Optional<int> softDeleteRetentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"))
@@ -312,8 +318,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     policyName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("softDeleteRetentionPeriod"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    softDeleteRetentionPeriod = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new DpmProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, friendlyName.Value, backupEngineName.Value, Optional.ToNullable(protectionState), extendedInfo.Value);
+            return new DpmProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriod), friendlyName.Value, backupEngineName.Value, Optional.ToNullable(protectionState), extendedInfo.Value);
         }
     }
 }

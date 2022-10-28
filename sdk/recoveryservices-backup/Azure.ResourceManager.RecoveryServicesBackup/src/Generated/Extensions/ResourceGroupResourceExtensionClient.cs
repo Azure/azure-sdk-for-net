@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private BackupProtectableItemsRestOperations _backupProtectableItemsRestClient;
         private ClientDiagnostics _backupProtectionContainersClientDiagnostics;
         private BackupProtectionContainersRestOperations _backupProtectionContainersRestClient;
+        private ClientDiagnostics _deletedProtectionContainersClientDiagnostics;
+        private DeletedProtectionContainersRestOperations _deletedProtectionContainersRestClient;
         private ClientDiagnostics _securityPINsClientDiagnostics;
         private SecurityPINsRestOperations _securityPINsRestClient;
 
@@ -99,6 +101,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private BackupProtectableItemsRestOperations BackupProtectableItemsRestClient => _backupProtectableItemsRestClient ??= new BackupProtectableItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BackupProtectionContainersClientDiagnostics => _backupProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BackupProtectionContainersRestOperations BackupProtectionContainersRestClient => _backupProtectionContainersRestClient ??= new BackupProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DeletedProtectionContainersClientDiagnostics => _deletedProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DeletedProtectionContainersRestOperations DeletedProtectionContainersRestClient => _deletedProtectionContainersRestClient ??= new DeletedProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SecurityPINsClientDiagnostics => _securityPINsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecurityPINsRestOperations SecurityPINsRestClient => _securityPINsRestClient ??= new SecurityPINsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -1191,6 +1195,94 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 try
                 {
                     var response = BackupProtectionContainersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists the soft deleted containers registered to Recovery Services Vault.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupDeletedProtectionContainers
+        /// Operation Id: DeletedProtectionContainers_List
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProtectionContainerResource> GetProtectionContainerResourcesByBackupDeletedProtectionContainerAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ProtectionContainerResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = DeletedProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupDeletedProtectionContainer");
+                scope.Start();
+                try
+                {
+                    var response = await DeletedProtectionContainersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ProtectionContainerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = DeletedProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupDeletedProtectionContainer");
+                scope.Start();
+                try
+                {
+                    var response = await DeletedProtectionContainersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists the soft deleted containers registered to Recovery Services Vault.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupDeletedProtectionContainers
+        /// Operation Id: DeletedProtectionContainers_List
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProtectionContainerResource> GetProtectionContainerResourcesByBackupDeletedProtectionContainer(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Page<ProtectionContainerResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = DeletedProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupDeletedProtectionContainer");
+                scope.Start();
+                try
+                {
+                    var response = DeletedProtectionContainersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ProtectionContainerResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = DeletedProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupDeletedProtectionContainer");
+                scope.Start();
+                try
+                {
+                    var response = DeletedProtectionContainersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
