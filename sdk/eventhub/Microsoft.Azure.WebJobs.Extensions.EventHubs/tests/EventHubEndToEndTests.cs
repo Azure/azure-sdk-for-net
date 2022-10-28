@@ -31,16 +31,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private static List<string> _results;
         private static DateTimeOffset _initialOffsetEnqueuedTimeUTC;
 
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
         [SetUp]
         public void SetUp()
         {
             _results = new List<string>();
             _eventWait = new ManualResetEvent(initialState: false);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _eventWait?.Dispose();
         }
 
         [Test]
@@ -317,9 +318,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var (jobHost, host) = BuildHost<EventHubPartitionKeyTestJobs>();
             using (jobHost)
             {
-                _eventWait = new ManualResetEvent(initialState: false);
                 await jobHost.CallAsync(nameof(EventHubPartitionKeyTestJobs.SendEvents_TestHub), new { input = "data" });
-
                 bool result = _eventWait.WaitOne(Timeout);
 
                 Assert.True(result);
@@ -372,8 +371,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 });
             using (jobHost)
             {
-                // We don't expect to get signalled as there should be no messages received with a FromEnd initial offset
-                bool result = _eventWait.WaitOne(Timeout);
+                // We don't expect to get signaled as there should be no messages received with a FromEnd initial offset
+                bool result = _eventWait.WaitOne(1000);
                 Assert.False(result, "An event was received while none were expected.");
 
                 // send a new event which should be received
@@ -417,7 +416,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         {
                             options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
                             // Reads from enqueue time are non-inclusive.  To ensure that we start with the desired event, set the time slightly in the past.
-                            var dto = DateTimeOffset.Parse(_initialOffsetEnqueuedTimeUTC.AddMilliseconds(-150).ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                            var dto = DateTimeOffset.Parse(_initialOffsetEnqueuedTimeUTC.AddMilliseconds(-250).ToString("yyyy-MM-ddTHH:mm:ssZ"));
                             options.InitialOffsetOptions.EnqueuedTimeUtc = dto;
                         });
                     });
@@ -450,8 +449,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 PartitionContext partitionContext,
                 TriggerPartitionContext triggerPartitionContext)
             {
-                Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
-
                 Assert.AreEqual("value1", properties["TestProp1"]);
                 Assert.AreEqual("value2", properties["TestProp2"]);
 
@@ -509,7 +506,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                        string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
                        IDictionary<string, object> systemProperties)
             {
-                Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
                 Assert.AreEqual("data", evt.ToString());
                 _eventWait.Set();
             }
@@ -682,8 +678,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName, Connection = "TestConnection")] string evt, DateTime enqueuedTimeUtc, IDictionary<string, object> properties)
             {
-                Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
-
                 Assert.AreEqual("value1", properties["TestProp1"]);
                 Assert.AreEqual("value2", properties["TestProp2"]);
 
@@ -712,14 +706,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMultipleEvents([EventHubTrigger(TestHubName, Connection = TestHubName)] EventData[] events)
             {
-                Assert.LessOrEqual(events.Length, ExpectedEventsCount);
+                Assert.GreaterOrEqual(events.Length, ExpectedEventsCount);
+
+                // there's potentially some level of rewind due to clock differences; allow a small delta when validating.
+                var earliestAllowedOffset = _initialOffsetEnqueuedTimeUTC.AddMilliseconds(-500);
+
                 foreach (EventData eventData in events)
                 {
                     string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
 
                     _results.Add(eventData.EnqueuedTime.ToString("MM/dd/yyyy hh:mm:ss.fff tt"));
 
-                    if (_results.Count == ExpectedEventsCount)
+                    if (_results.Count >= ExpectedEventsCount)
                     {
                         foreach (var result in _results)
                         {
