@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> hostName = default;
             Optional<IList<DeepCreatedOrigin>> origins = default;
             Optional<IList<DeepCreatedOriginGroup>> originGroups = default;
-            Optional<IReadOnlyList<CdnCustomDomainData>> customDomains = default;
+            Optional<IReadOnlyList<DeepCreatedCustomDomain>> customDomains = default;
             Optional<EndpointResourceState> resourceState = default;
             Optional<CdnEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -443,10 +443,10 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
+                            List<DeepCreatedCustomDomain> array = new List<DeepCreatedCustomDomain>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item));
+                                array.Add(DeepCreatedCustomDomain.DeserializeDeepCreatedCustomDomain(item));
                             }
                             customDomains = array;
                             continue;

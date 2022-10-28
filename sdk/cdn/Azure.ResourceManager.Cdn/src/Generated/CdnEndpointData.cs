@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn
             UriSigningKeys = new ChangeTrackingList<UriSigningKey>();
             Origins = new ChangeTrackingList<DeepCreatedOrigin>();
             OriginGroups = new ChangeTrackingList<DeepCreatedOriginGroup>();
-            CustomDomains = new ChangeTrackingList<CdnCustomDomainData>();
+            CustomDomains = new ChangeTrackingList<DeepCreatedCustomDomain>();
         }
 
         /// <summary> Initializes a new instance of CdnEndpointData. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The custom domains under the endpoint. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
-        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<CdnCustomDomainData> customDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<DeepCreatedCustomDomain> customDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </summary>
         public IList<DeepCreatedOriginGroup> OriginGroups { get; }
         /// <summary> The custom domains under the endpoint. </summary>
-        public IReadOnlyList<CdnCustomDomainData> CustomDomains { get; }
+        public IReadOnlyList<DeepCreatedCustomDomain> CustomDomains { get; }
         /// <summary> Resource status of the endpoint. </summary>
         public EndpointResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the endpoint. </summary>

@@ -62,6 +62,17 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("managedRules");
                 writer.WriteObjectValue(ManagedRules);
             }
+            if (Optional.IsCollectionDefined(ExtendedProperties))
+            {
+                writer.WritePropertyName("extendedProperties");
+                writer.WriteStartObject();
+                foreach (var item in ExtendedProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -81,6 +92,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<CustomRuleList> customRules = default;
             Optional<ManagedRuleSetList> managedRules = default;
             Optional<IReadOnlyList<SubResource>> endpointLinks = default;
+            Optional<IDictionary<string, string>> extendedProperties = default;
             Optional<WebApplicationFirewallPolicyProvisioningState> provisioningState = default;
             Optional<PolicyResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
@@ -209,6 +221,21 @@ namespace Azure.ResourceManager.Cdn
                             endpointLinks = array;
                             continue;
                         }
+                        if (property0.NameEquals("extendedProperties"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            extendedProperties = dictionary;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -233,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState));
+            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToDictionary(extendedProperties), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState));
         }
     }
 }

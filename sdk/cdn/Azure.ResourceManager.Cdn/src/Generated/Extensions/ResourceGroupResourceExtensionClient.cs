@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Cdn
     {
         private ClientDiagnostics _defaultClientDiagnostics;
         private CdnManagementRestOperations _defaultRestClient;
+        private ClientDiagnostics _profileClientDiagnostics;
+        private ProfilesRestOperations _profileRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
@@ -36,6 +38,8 @@ namespace Azure.ResourceManager.Cdn
 
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CdnManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CdnManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ProfileClientDiagnostics => _profileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProfileResource.ResourceType.Namespace, Diagnostics);
+        private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProfileResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -95,6 +99,106 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = DefaultRestClient.CheckEndpointNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/canMigrate
+        /// Operation Id: Profiles_CanMigrate
+        /// </summary>
+        /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CanMigrateResult>> CanMigrateProfileAsync(CanMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = ProfileClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CanMigrateProfile");
+            scope.Start();
+            try
+            {
+                var response = await ProfileRestClient.CanMigrateAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/canMigrate
+        /// Operation Id: Profiles_CanMigrate
+        /// </summary>
+        /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CanMigrateResult> CanMigrateProfile(CanMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = ProfileClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CanMigrateProfile");
+            scope.Start();
+            try
+            {
+                var response = ProfileRestClient.CanMigrate(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The change need to be committed after this.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/migrate
+        /// Operation Id: Profiles_Migrate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties needed to migrate the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<MigrateResult>> MigrateProfileAsync(WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = ProfileClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.MigrateProfile");
+            scope.Start();
+            try
+            {
+                var response = await ProfileRestClient.MigrateAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<MigrateResult>(new MigrateResultOperationSource(), ProfileClientDiagnostics, Pipeline, ProfileRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The change need to be committed after this.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/migrate
+        /// Operation Id: Profiles_Migrate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties needed to migrate the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<MigrateResult> MigrateProfile(WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = ProfileClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.MigrateProfile");
+            scope.Start();
+            try
+            {
+                var response = ProfileRestClient.Migrate(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                var operation = new CdnArmOperation<MigrateResult>(new MigrateResultOperationSource(), ProfileClientDiagnostics, Pipeline, ProfileRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

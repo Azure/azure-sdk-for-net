@@ -36,6 +36,17 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ExtendedProperties))
+            {
+                writer.WritePropertyName("extendedProperties");
+                writer.WriteStartObject();
+                foreach (var item in ExtendedProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
                 if (OriginResponseTimeoutSeconds != null)
@@ -64,6 +75,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<SystemData> systemData = default;
             Optional<ProfileResourceState> resourceState = default;
             Optional<ProfileProvisioningState> provisioningState = default;
+            Optional<IDictionary<string, string>> extendedProperties = default;
             Optional<Guid> frontDoorId = default;
             Optional<int?> originResponseTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
@@ -152,6 +164,21 @@ namespace Azure.ResourceManager.Cdn
                             provisioningState = new ProfileProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("extendedProperties"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            extendedProperties = dictionary;
+                            continue;
+                        }
                         if (property0.NameEquals("frontDoorId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -176,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new ProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, kind.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds));
+            return new ProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, kind.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToDictionary(extendedProperties), Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds));
         }
     }
 }
