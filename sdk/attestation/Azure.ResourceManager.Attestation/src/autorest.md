@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Attestation
 namespace: Azure.ResourceManager.Attestation
-require: https://github.com/Azure/azure-rest-api-specs/blob/4270cc435fd2496bdb2a5f056dbddb463e52c7c2/specification/attestation/resource-manager/readme.md
+require: /mnt/vss/_work/1/s/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
 # This tag is for preview
 tag: package-2021-06-01
 output-folder: $(this-folder)/Generated
