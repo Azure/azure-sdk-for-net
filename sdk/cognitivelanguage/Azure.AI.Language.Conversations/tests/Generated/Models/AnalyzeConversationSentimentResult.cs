@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNull(results, nameof(results));
 
             Results = results;
-            Kind = new AnalyzeConversationResultsKind("ConversationalSentimentResults");
+            Kind = AnalyzeConversationResultsKind.ConversationalSentimentResults;
         }
 
         /// <summary> Initializes a new instance of AnalyzeConversationSentimentResult. </summary>
