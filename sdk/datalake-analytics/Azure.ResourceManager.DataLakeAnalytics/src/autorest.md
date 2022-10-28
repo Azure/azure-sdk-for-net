@@ -9,7 +9,7 @@ csharp: true
 library-name: DataLakeAnalytics
 namespace: Azure.ResourceManager.DataLakeAnalytics
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/066eb8c81e14e0f3b22b6700c67693eef5f79ea9/specification/datalake-analytics/resource-manager/readme.md
+require: /mnt/vss/_work/1/s/azure-rest-api-specs/specification/datalake-analytics/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
