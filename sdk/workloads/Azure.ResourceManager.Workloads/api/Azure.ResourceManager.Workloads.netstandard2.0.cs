@@ -229,12 +229,14 @@ namespace Azure.ResourceManager.Workloads
         public SapMonitorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.Core.AzureLocation? AppLocation { get { throw null; } set { } }
         public Azure.ResponseError Errors { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceArmId { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MonitorSubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MsiArmId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.RoutingPreference? RoutingPreference { get { throw null; } set { } }
+        public string ZoneRedundancyPreference { get { throw null; } set { } }
     }
     public partial class SapMonitorResource : Azure.ResourceManager.ArmResource
     {
@@ -278,6 +280,7 @@ namespace Azure.ResourceManager.Workloads
     {
         public SapProviderInstanceData() { }
         public Azure.ResponseError Errors { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties ProviderSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -693,6 +696,11 @@ namespace Azure.ResourceManager.Workloads.Models
         public string Hostname { get { throw null; } }
         public string IPAddress { get { throw null; } }
         public long? Port { get { throw null; } }
+    }
+    public partial class ExternalInstallationSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SoftwareConfiguration
+    {
+        public ExternalInstallationSoftwareConfiguration() { }
+        public string CentralServerVmId { get { throw null; } set { } }
     }
     public partial class FileshareProfile
     {
@@ -1298,6 +1306,7 @@ namespace Azure.ResourceManager.Workloads.Models
     public partial class SapMonitorPatch
     {
         public SapMonitorPatch() { }
+        public Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class SapNetWeaverProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
@@ -1419,6 +1428,8 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState InfrastructureDeploymentInProgress { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState InfrastructureDeploymentPending { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState RegistrationComplete { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareDetectionFailed { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareDetectionInProgress { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareInstallationFailed { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareInstallationInProgress { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareInstallationPending { get { throw null; } }

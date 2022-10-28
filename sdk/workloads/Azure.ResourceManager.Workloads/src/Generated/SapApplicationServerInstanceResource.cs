@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Application Server Instance.
+        /// Gets the SAP Application Server Instance corresponding to the Virtual Instance for SAP solutions resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}
         /// Operation Id: SAPApplicationServerInstances_Get
         /// </summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Application Server Instance.
+        /// Gets the SAP Application Server Instance corresponding to the Virtual Instance for SAP solutions resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}
         /// Operation Id: SAPApplicationServerInstances_Get
         /// </summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes the SAP Application Server Instance. &lt;br&gt;&lt;br&gt;This operation will be used by service only. Delete by end user will return a Bad Request error.
+        /// Deletes the SAP Application Server Instance resource. &lt;br&gt;&lt;br&gt;This operation will be used by service only. Delete by end user will return a Bad Request error.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}
         /// Operation Id: SAPApplicationServerInstances_Delete
         /// </summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes the SAP Application Server Instance. &lt;br&gt;&lt;br&gt;This operation will be used by service only. Delete by end user will return a Bad Request error.
+        /// Deletes the SAP Application Server Instance resource. &lt;br&gt;&lt;br&gt;This operation will be used by service only. Delete by end user will return a Bad Request error.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}
         /// Operation Id: SAPApplicationServerInstances_Delete
         /// </summary>
@@ -190,12 +190,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Puts the SAP Application Server Instance.
+        /// Puts the SAP Application Server Instance resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}
         /// Operation Id: SAPApplicationServerInstances_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The SAP Application Server instance request body. </param>
+        /// <param name="patch"> The SAP Application Server Instance resource request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SapApplicationServerInstanceResource>> UpdateAsync(WaitUntil waitUntil, SapApplicationServerInstancePatch patch, CancellationToken cancellationToken = default)
@@ -220,12 +220,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Puts the SAP Application Server Instance.
+        /// Puts the SAP Application Server Instance resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}
         /// Operation Id: SAPApplicationServerInstances_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The SAP Application Server instance request body. </param>
+        /// <param name="patch"> The SAP Application Server Instance resource request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SapApplicationServerInstanceResource> Update(WaitUntil waitUntil, SapApplicationServerInstancePatch patch, CancellationToken cancellationToken = default)

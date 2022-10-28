@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Puts the SAP Database Instance. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error.
+        /// Creates the Database resource corresponding to the Virtual Instance for SAP solutions resource. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}
         /// Operation Id: SAPDatabaseInstances_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="data"> The SAP Database Server instance request body. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="data"> Request body of Database resource of a SAP system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> or <paramref name="data"/> is null. </exception>
@@ -87,13 +87,13 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Puts the SAP Database Instance. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error.
+        /// Creates the Database resource corresponding to the Virtual Instance for SAP solutions resource. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT by end user will return a Bad Request error.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}
         /// Operation Id: SAPDatabaseInstances_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="data"> The SAP Database Server instance request body. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="data"> Request body of Database resource of a SAP system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> or <paramref name="data"/> is null. </exception>
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Database Instance.
+        /// Gets the SAP Database Instance resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}
         /// Operation Id: SAPDatabaseInstances_Get
         /// </summary>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Database Instance.
+        /// Gets the SAP Database Instance resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}
         /// Operation Id: SAPDatabaseInstances_Get
         /// </summary>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Lists the SAP Database Instances in an SVI.
+        /// Lists the Database resources associated with a Virtual Instance for SAP solutions resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances
         /// Operation Id: SAPDatabaseInstances_List
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Lists the SAP Database Instances in an SVI.
+        /// Lists the Database resources associated with a Virtual Instance for SAP solutions resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances
         /// Operation Id: SAPDatabaseInstances_List
         /// </summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Workloads
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}
         /// Operation Id: SAPDatabaseInstances_Get
         /// </summary>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Workloads
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}
         /// Operation Id: SAPDatabaseInstances_Get
         /// </summary>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>

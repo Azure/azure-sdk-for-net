@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP sizing recommendations.
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
         /// Operation Id: SAPSizingRecommendations
         /// </summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP sizing recommendations.
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
         /// Operation Id: SAPSizingRecommendations
         /// </summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP supported SKUs.
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
         /// Operation Id: SAPSupportedSku
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP supported SKUs.
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
         /// Operation Id: SAPSupportedSku
         /// </summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Disk Configurations.
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
         /// Operation Id: SAPDiskConfigurations
         /// </summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Disk Configurations.
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
         /// Operation Id: SAPDiskConfigurations
         /// </summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Availability Zone Details.
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
         /// Operation Id: SAPAvailabilityZoneDetails
         /// </summary>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Availability Zone Details.
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
         /// Operation Id: SAPAvailabilityZoneDetails
         /// </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets all Virtual Instances for SAP in the subscription.
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances
         /// Operation Id: SAPVirtualInstances_ListBySubscription
         /// </summary>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets all Virtual Instances for SAP in the subscription.
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances
         /// Operation Id: SAPVirtualInstances_ListBySubscription
         /// </summary>

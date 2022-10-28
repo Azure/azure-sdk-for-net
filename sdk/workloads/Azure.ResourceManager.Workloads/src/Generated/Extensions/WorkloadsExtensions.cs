@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP sizing recommendations.
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
         /// Operation Id: SAPSizingRecommendations
         /// </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP sizing recommendations.
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
         /// Operation Id: SAPSizingRecommendations
         /// </summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP supported SKUs.
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
         /// Operation Id: SAPSupportedSku
         /// </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP supported SKUs.
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
         /// Operation Id: SAPSupportedSku
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Disk Configurations.
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
         /// Operation Id: SAPDiskConfigurations
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Disk Configurations.
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
         /// Operation Id: SAPDiskConfigurations
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Availability Zone Details.
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
         /// Operation Id: SAPAvailabilityZoneDetails
         /// </summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Availability Zone Details.
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
         /// Operation Id: SAPAvailabilityZoneDetails
         /// </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets all Virtual Instances for SAP in the subscription.
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances
         /// Operation Id: SAPVirtualInstances_ListBySubscription
         /// </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets all Virtual Instances for SAP in the subscription.
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances
         /// Operation Id: SAPVirtualInstances_ListBySubscription
         /// </summary>
@@ -302,12 +302,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets an Virtual Instance for SAP.
+        /// Gets a Virtual Instance for SAP solutions resource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}
         /// Operation Id: SAPVirtualInstances_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
@@ -318,12 +318,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets an Virtual Instance for SAP.
+        /// Gets a Virtual Instance for SAP solutions resource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}
         /// Operation Id: SAPVirtualInstances_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>

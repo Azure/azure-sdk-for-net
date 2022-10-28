@@ -10,37 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SoftwareConfiguration : IUtf8JsonSerializable
+    public partial class ExternalInstallationSoftwareConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(CentralServerVmId))
+            {
+                writer.WritePropertyName("centralServerVmId");
+                writer.WriteStringValue(CentralServerVmId);
+            }
             writer.WritePropertyName("softwareInstallationType");
             writer.WriteStringValue(SoftwareInstallationType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static SoftwareConfiguration DeserializeSoftwareConfiguration(JsonElement element)
+        internal static ExternalInstallationSoftwareConfiguration DeserializeExternalInstallationSoftwareConfiguration(JsonElement element)
         {
-            if (element.TryGetProperty("softwareInstallationType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element);
-                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element);
-                    case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element);
-                }
-            }
+            Optional<string> centralServerVmId = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("centralServerVmId"))
+                {
+                    centralServerVmId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("softwareInstallationType"))
                 {
                     softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
                     continue;
                 }
             }
-            return new UnknownSoftwareConfiguration(softwareInstallationType);
+            return new ExternalInstallationSoftwareConfiguration(softwareInstallationType, centralServerVmId.Value);
         }
     }
 }

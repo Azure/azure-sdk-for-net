@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of ThreeTierConfiguration. </summary>
-        /// <param name="deploymentType"> The deployment Type. </param>
+        /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <param name="networkConfiguration"> Network configuration common to all servers. </param>
         /// <param name="centralServer"> The central server configuration. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Network configuration common to all servers. </summary>
         internal NetworkConfiguration NetworkConfiguration { get; set; }
-        /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs. </summary>
+        /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </summary>
         public bool? IsSecondaryIPEnabled
         {
             get => NetworkConfiguration is null ? default : NetworkConfiguration.IsSecondaryIPEnabled;

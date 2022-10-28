@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The Database VM Details. </summary>
+    /// <summary> Database VM details. </summary>
     public partial class DatabaseVmDetails
     {
         /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>

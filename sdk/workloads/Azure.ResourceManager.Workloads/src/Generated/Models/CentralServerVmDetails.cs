@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The Central Server VM Details. </summary>
+    /// <summary> The SAP Central Services Instance VM details. </summary>
     public partial class CentralServerVmDetails
     {
         /// <summary> Initializes a new instance of CentralServerVmDetails. </summary>

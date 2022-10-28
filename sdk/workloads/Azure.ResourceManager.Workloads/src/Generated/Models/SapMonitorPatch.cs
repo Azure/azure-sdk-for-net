@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Tags field of the resource. </summary>
+    /// <summary> Defines the request body for updating SAP monitor resource. </summary>
     public partial class SapMonitorPatch
     {
         /// <summary> Initializes a new instance of SapMonitorPatch. </summary>
@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Workloads.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Tags field of the resource. </summary>
+        /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Managed service identity (user assigned identities). </summary>
+        public UserAssignedServiceIdentity Identity { get; set; }
     }
 }

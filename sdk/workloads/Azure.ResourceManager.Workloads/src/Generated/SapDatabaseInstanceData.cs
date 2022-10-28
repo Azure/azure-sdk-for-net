@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="subnetId"> The database subnet. </param>
-        /// <param name="databaseSid"> The database SID. </param>
-        /// <param name="databaseType"> The SAP database type. </param>
-        /// <param name="ipAddress"> The database IP Address. </param>
-        /// <param name="vmDetails"> The list of virtual machines. </param>
+        /// <param name="subnetId"> Database subnet. </param>
+        /// <param name="databaseSid"> Database SID name. </param>
+        /// <param name="databaseType"> Database type, that is if the DB is HANA, DB2, Oracle, SAP ASE, Max DB or MS SQL Server. </param>
+        /// <param name="ipAddress"> Database IP Address. </param>
+        /// <param name="vmDetails"> The list of virtual machines corresponding to the Database resource. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Defines the Database Instance errors. </param>
+        /// <param name="errors"> Defines the errors related to Database resource. </param>
         internal SapDatabaseInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string databaseSid, string databaseType, string ipAddress, IReadOnlyList<DatabaseVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
         {
             SubnetId = subnetId;
@@ -49,21 +49,21 @@ namespace Azure.ResourceManager.Workloads
             Errors = errors;
         }
 
-        /// <summary> The database subnet. </summary>
+        /// <summary> Database subnet. </summary>
         public ResourceIdentifier SubnetId { get; }
-        /// <summary> The database SID. </summary>
+        /// <summary> Database SID name. </summary>
         public string DatabaseSid { get; }
-        /// <summary> The SAP database type. </summary>
+        /// <summary> Database type, that is if the DB is HANA, DB2, Oracle, SAP ASE, Max DB or MS SQL Server. </summary>
         public string DatabaseType { get; }
-        /// <summary> The database IP Address. </summary>
+        /// <summary> Database IP Address. </summary>
         public string IPAddress { get; }
-        /// <summary> The list of virtual machines. </summary>
+        /// <summary> The list of virtual machines corresponding to the Database resource. </summary>
         public IReadOnlyList<DatabaseVmDetails> VmDetails { get; }
         /// <summary> Defines the SAP Instance status. </summary>
         public SapVirtualInstanceStatus? Status { get; }
         /// <summary> Defines the provisioning states. </summary>
         public SapVirtualInstanceProvisioningState? ProvisioningState { get; }
-        /// <summary> Defines the Database Instance errors. </summary>
+        /// <summary> Defines the errors related to Database resource. </summary>
         internal SapVirtualInstanceError Errors { get; }
         /// <summary> The Virtual Instance for SAP error body. </summary>
         public SapVirtualInstanceErrorDetail ErrorsProperties

@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Workloads
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Update
         /// </summary>
-        /// <param name="patch"> Request body that only contains the new Tags field. </param>
+        /// <param name="patch"> The Update SAP workload monitor request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<SapMonitorResource>> UpdateAsync(SapMonitorPatch patch, CancellationToken cancellationToken = default)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Workloads
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Update
         /// </summary>
-        /// <param name="patch"> Request body that only contains the new Tags field. </param>
+        /// <param name="patch"> The Update SAP workload monitor request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<SapMonitorResource> Update(SapMonitorPatch patch, CancellationToken cancellationToken = default)
