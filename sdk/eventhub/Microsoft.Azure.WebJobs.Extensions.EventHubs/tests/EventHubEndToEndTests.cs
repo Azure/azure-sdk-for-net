@@ -386,7 +386,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task EventHub_InitialOffsetFromEnqueuedTime()
         {
             await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
-            for (int i = 0; i <= 3; i++)
+
+            for (int i = 0; i < 5; i++)
             {
                 // send one at a time so they will have slightly different enqueued times
                 await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
@@ -704,8 +705,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMultipleEvents([EventHubTrigger(TestHubName, Connection = TestHubName)] EventData[] events)
             {
-                Assert.GreaterOrEqual(events.Length, ExpectedEventsCount);
-
                 // there's potentially some level of rewind due to clock differences; allow a small delta when validating.
                 var earliestAllowedOffset = _initialOffsetEnqueuedTimeUTC.Subtract(TimeSpan.FromMilliseconds(500));
 
