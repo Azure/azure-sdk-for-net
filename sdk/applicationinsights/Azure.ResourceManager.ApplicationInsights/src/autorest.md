@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: ApplicationInsights
 namespace: Azure.ResourceManager.ApplicationInsights
-require: https://github.com/Azure/azure-rest-api-specs/blob/b3a0c8c84015cc8a1f4bef06ce579ba2f32d4ece/specification/applicationinsights/resource-manager/readme.md
+require: /mnt/vss/_work/1/s/azure-rest-api-specs/specification/applicationinsights/resource-manager/readme.md
 tag: package-2020-03-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
