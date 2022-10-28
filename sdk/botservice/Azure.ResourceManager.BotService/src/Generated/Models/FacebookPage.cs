@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public FacebookPage(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }

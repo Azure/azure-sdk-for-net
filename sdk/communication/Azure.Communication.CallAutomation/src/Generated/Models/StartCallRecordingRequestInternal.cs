@@ -20,10 +20,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
         public StartCallRecordingRequestInternal(CallLocatorInternal callLocator)
         {
-            if (callLocator == null)
-            {
-                throw new ArgumentNullException(nameof(callLocator));
-            }
+            Argument.AssertNotNull(callLocator, nameof(callLocator));
 
             CallLocator = callLocator;
             AudioChannelParticipantOrdering = new ChangeTrackingList<CommunicationIdentifierModel>();

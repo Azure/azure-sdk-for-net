@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="selector"/> is null. </exception>
         public OwaspCrsExclusionEntry(OwaspCrsExclusionEntryMatchVariable matchVariable, OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator, string selector)
         {
-            if (selector == null)
-            {
-                throw new ArgumentNullException(nameof(selector));
-            }
+            Argument.AssertNotNull(selector, nameof(selector));
 
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;

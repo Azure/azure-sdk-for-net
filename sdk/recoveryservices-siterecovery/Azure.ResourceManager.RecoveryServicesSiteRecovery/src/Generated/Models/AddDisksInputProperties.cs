@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="providerSpecificDetails"/> is null. </exception>
         public AddDisksInputProperties(AddDisksProviderSpecificInput providerSpecificDetails)
         {
-            if (providerSpecificDetails == null)
-            {
-                throw new ArgumentNullException(nameof(providerSpecificDetails));
-            }
+            Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
 
             ProviderSpecificDetails = providerSpecificDetails;
         }

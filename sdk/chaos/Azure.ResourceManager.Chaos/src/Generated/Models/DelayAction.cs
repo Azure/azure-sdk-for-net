@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DelayAction(string name, TimeSpan duration) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Duration = duration;
             ActionType = "delay";

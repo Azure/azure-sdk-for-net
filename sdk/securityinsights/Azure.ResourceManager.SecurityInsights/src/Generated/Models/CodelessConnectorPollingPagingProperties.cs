@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="pagingType"/> is null. </exception>
         public CodelessConnectorPollingPagingProperties(string pagingType)
         {
-            if (pagingType == null)
-            {
-                throw new ArgumentNullException(nameof(pagingType));
-            }
+            Argument.AssertNotNull(pagingType, nameof(pagingType));
 
             PagingType = pagingType;
         }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -21,18 +22,9 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="language"/> or <paramref name="conversationItems"/> is null. </exception>
         public TranscriptConversation(string id, string language, IEnumerable<TranscriptConversationItem> conversationItems) : base(id, language)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (language == null)
-            {
-                throw new ArgumentNullException(nameof(language));
-            }
-            if (conversationItems == null)
-            {
-                throw new ArgumentNullException(nameof(conversationItems));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(conversationItems, nameof(conversationItems));
 
             ConversationItems = conversationItems.ToList();
             Modality = InputModality.Transcript;

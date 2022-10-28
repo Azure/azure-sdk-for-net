@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -19,10 +20,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         public AnalyzeConversationPIIResult(DateTimeOffset lastUpdateDateTime, State status, ConversationPIIResults results) : base(lastUpdateDateTime, status)
         {
-            if (results == null)
-            {
-                throw new ArgumentNullException(nameof(results));
-            }
+            Argument.AssertNotNull(results, nameof(results));
 
             Results = results;
             Kind = AnalyzeConversationResultsKind.ConversationalPIIResults;

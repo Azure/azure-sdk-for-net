@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AvsSku(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

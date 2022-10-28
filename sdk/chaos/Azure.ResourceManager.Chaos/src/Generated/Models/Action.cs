@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected Action(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

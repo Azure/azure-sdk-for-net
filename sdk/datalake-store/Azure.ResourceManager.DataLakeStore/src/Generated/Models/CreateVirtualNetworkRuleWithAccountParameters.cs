@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="subnetId"/> is null. </exception>
         public CreateVirtualNetworkRuleWithAccountParameters(string name, string subnetId)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             Name = name;
             SubnetId = subnetId;

@@ -24,10 +24,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
         public DnsResolverInboundEndpointData(AzureLocation location, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations) : base(location)
         {
-            if (ipConfigurations == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurations));
-            }
+            Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
             IPConfigurations = ipConfigurations.ToList();
         }

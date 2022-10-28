@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="skillsets"/> is null. </exception>
         internal ListSkillsetsResult(IEnumerable<SearchIndexerSkillset> skillsets)
         {
-            if (skillsets == null)
-            {
-                throw new ArgumentNullException(nameof(skillsets));
-            }
+            Argument.AssertNotNull(skillsets, nameof(skillsets));
 
             Skillsets = skillsets.ToList();
         }

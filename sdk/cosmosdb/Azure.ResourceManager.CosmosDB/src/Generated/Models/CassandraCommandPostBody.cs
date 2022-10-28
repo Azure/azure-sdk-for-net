@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="host"/> is null. </exception>
         public CassandraCommandPostBody(string command, string host)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            Argument.AssertNotNull(command, nameof(command));
+            Argument.AssertNotNull(host, nameof(host));
 
             Command = command;
             Arguments = new ChangeTrackingDictionary<string, string>();

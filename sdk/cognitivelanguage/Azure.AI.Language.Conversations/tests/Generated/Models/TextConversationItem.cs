@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -19,18 +20,9 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="participantId"/> or <paramref name="text"/> is null. </exception>
         public TextConversationItem(string id, string participantId, string text) : base(id, participantId)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (participantId == null)
-            {
-                throw new ArgumentNullException(nameof(participantId));
-            }
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(participantId, nameof(participantId));
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }

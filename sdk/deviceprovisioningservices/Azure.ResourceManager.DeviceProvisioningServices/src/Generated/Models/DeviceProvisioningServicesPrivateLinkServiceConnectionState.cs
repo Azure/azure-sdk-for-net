@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
         public DeviceProvisioningServicesPrivateLinkServiceConnectionState(DeviceProvisioningServicesPrivateLinkServiceConnectionStatus status, string description)
         {
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
+            Argument.AssertNotNull(description, nameof(description));
 
             Status = status;
             Description = description;

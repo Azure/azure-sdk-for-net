@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
         public FacebookChannelProperties(string appId, bool isEnabled)
         {
-            if (appId == null)
-            {
-                throw new ArgumentNullException(nameof(appId));
-            }
+            Argument.AssertNotNull(appId, nameof(appId));
 
             Pages = new ChangeTrackingList<FacebookPage>();
             AppId = appId;

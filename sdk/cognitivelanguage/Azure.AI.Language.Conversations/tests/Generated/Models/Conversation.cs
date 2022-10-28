@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -18,14 +19,8 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="language"/> is null. </exception>
         public Conversation(string id, string language)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (language == null)
-            {
-                throw new ArgumentNullException(nameof(language));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(language, nameof(language));
 
             Id = id;
             Language = language;

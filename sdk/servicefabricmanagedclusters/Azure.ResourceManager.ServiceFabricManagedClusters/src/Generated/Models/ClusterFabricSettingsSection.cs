@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
         public ClusterFabricSettingsSection(string name, IEnumerable<ClusterFabricSettingsParameterDescription> parameters)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             Name = name;
             Parameters = parameters.ToList();

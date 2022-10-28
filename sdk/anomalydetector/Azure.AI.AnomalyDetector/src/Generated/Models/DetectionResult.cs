@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <exception cref="ArgumentNullException"> <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
         internal DetectionResult(Guid resultId, DetectionResultSummary summary, IEnumerable<AnomalyState> results)
         {
-            if (summary == null)
-            {
-                throw new ArgumentNullException(nameof(summary));
-            }
-            if (results == null)
-            {
-                throw new ArgumentNullException(nameof(results));
-            }
+            Argument.AssertNotNull(summary, nameof(summary));
+            Argument.AssertNotNull(results, nameof(results));
 
             ResultId = resultId;
             Summary = summary;

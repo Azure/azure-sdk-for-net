@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="teamName"/> is null. </exception>
         public TeamProperties(string teamName)
         {
-            if (teamName == null)
-            {
-                throw new ArgumentNullException(nameof(teamName));
-            }
+            Argument.AssertNotNull(teamName, nameof(teamName));
 
             TeamName = teamName;
             MemberIds = new ChangeTrackingList<Guid>();

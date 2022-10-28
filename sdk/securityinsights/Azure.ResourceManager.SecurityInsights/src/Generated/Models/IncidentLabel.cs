@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public IncidentLabel(string labelName)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
+            Argument.AssertNotNull(labelName, nameof(labelName));
 
             LabelName = labelName;
         }

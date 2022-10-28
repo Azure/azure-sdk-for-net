@@ -22,10 +22,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         internal JobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, State status)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
+            Argument.AssertNotNull(jobId, nameof(jobId));
 
             CreatedDateTime = createdDateTime;
             JobId = jobId;
