@@ -126,6 +126,7 @@ namespace Azure.ResourceManager.Marketplace
     public partial class PrivateStoreCollectionInfoData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateStoreCollectionInfoData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.Rule> AppliedRules { get { throw null; } }
         public System.DateTimeOffset? ApproveAllItemsModifiedOn { get { throw null; } }
         public bool? AreAllItemsApproved { get { throw null; } }
         public bool? AreAllSubscriptionsSelected { get { throw null; } set { } }
@@ -156,6 +157,10 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> GetPrivateStoreOffer(string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> GetPrivateStoreOfferAsync(string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.PrivateStoreOfferCollection GetPrivateStoreOffers() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.Rule> QueryRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.Rule> QueryRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetCollectionRules(Azure.ResourceManager.Marketplace.Models.SetRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetCollectionRulesAsync(Azure.ResourceManager.Marketplace.Models.SetRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult> TransferOffers(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult>> TransferOffersAsync(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -269,6 +274,8 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryOffersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffers(Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffersAsync(Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.Rule> QueryUserRules(Azure.ResourceManager.Marketplace.Models.QueryUserRulesProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.Rule> QueryUserRulesAsync(Azure.ResourceManager.Marketplace.Models.QueryUserRulesProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -592,6 +599,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         public System.Collections.Generic.IList<string> OfferIds { get { throw null; } }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
     }
+    public partial class QueryUserRulesProperties
+    {
+        public QueryUserRulesProperties() { }
+        public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+    }
     public partial class RequestApprovalsDetails
     {
         internal RequestApprovalsDetails() { }
@@ -601,6 +613,36 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> Plans { get { throw null; } }
         public string PublisherId { get { throw null; } }
+    }
+    public partial class Rule
+    {
+        public Rule() { }
+        public Azure.ResourceManager.Marketplace.Models.RuleType? RuleType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuleType : System.IEquatable<Azure.ResourceManager.Marketplace.Models.RuleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuleType(string value) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.RuleType PrivateProducts { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.RuleType TermsAndCondition { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Marketplace.Models.RuleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Marketplace.Models.RuleType left, Azure.ResourceManager.Marketplace.Models.RuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Marketplace.Models.RuleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Marketplace.Models.RuleType left, Azure.ResourceManager.Marketplace.Models.RuleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SetRulesContent
+    {
+        public SetRulesContent() { }
+        public string NextLink { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.Rule> Value { get { throw null; } }
     }
     public partial class StopSellNotifications
     {

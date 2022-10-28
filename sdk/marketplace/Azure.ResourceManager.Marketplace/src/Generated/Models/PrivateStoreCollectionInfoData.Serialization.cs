@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<IList<string>> subscriptionsList = default;
             Optional<bool> enabled = default;
             Optional<long> numberOfOffers = default;
+            Optional<IReadOnlyList<Rule>> appliedRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -190,11 +192,26 @@ namespace Azure.ResourceManager.Marketplace
                             numberOfOffers = property0.Value.GetInt64();
                             continue;
                         }
+                        if (property0.NameEquals("appliedRules"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<Rule> array = new List<Rule>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Rule.DeserializeRule(item));
+                            }
+                            appliedRules = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers));
+            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers), Optional.ToList(appliedRules));
         }
     }
 }

@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.Marketplace
 
         private readonly ClientDiagnostics _privateStoreClientDiagnostics;
         private readonly PrivateStoreRestOperations _privateStoreRestClient;
+        private readonly ClientDiagnostics _defaultClientDiagnostics;
+        private readonly MarketplaceRPServiceRestOperations _defaultRestClient;
         private readonly PrivateStoreData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateStoreResource"/> class for mocking. </summary>
@@ -59,6 +61,8 @@ namespace Azure.ResourceManager.Marketplace
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string privateStoreApiVersion);
             _privateStoreRestClient = new PrivateStoreRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreApiVersion);
+            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _defaultRestClient = new MarketplaceRPServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -981,6 +985,62 @@ namespace Azure.ResourceManager.Marketplace
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// All rules approved in the private store that are relevant for user subscriptions
+        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserRules
+        /// Operation Id: QueryUserRules
+        /// </summary>
+        /// <param name="payload"> The QueryUserRulesProperties to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Rule> QueryUserRulesAsync(QueryUserRulesProperties payload = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<Rule>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _defaultClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserRules");
+                scope.Start();
+                try
+                {
+                    var response = await _defaultRestClient.QueryUserRulesAsync(Guid.Parse(Id.Name), payload, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// All rules approved in the private store that are relevant for user subscriptions
+        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserRules
+        /// Operation Id: QueryUserRules
+        /// </summary>
+        /// <param name="payload"> The QueryUserRulesProperties to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Rule> QueryUserRules(QueryUserRulesProperties payload = null, CancellationToken cancellationToken = default)
+        {
+            Page<Rule> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _defaultClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserRules");
+                scope.Start();
+                try
+                {
+                    var response = _defaultRestClient.QueryUserRules(Guid.Parse(Id.Name), payload, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.Marketplace
 
         private readonly ClientDiagnostics _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics;
         private readonly PrivateStoreCollectionRestOperations _privateStoreCollectionInfoPrivateStoreCollectionRestClient;
+        private readonly ClientDiagnostics _defaultClientDiagnostics;
+        private readonly MarketplaceRPServiceRestOperations _defaultRestClient;
         private readonly PrivateStoreCollectionInfoData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateStoreCollectionInfoResource"/> class for mocking. </summary>
@@ -58,6 +60,8 @@ namespace Azure.ResourceManager.Marketplace
             _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string privateStoreCollectionInfoPrivateStoreCollectionApiVersion);
             _privateStoreCollectionInfoPrivateStoreCollectionRestClient = new PrivateStoreCollectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreCollectionInfoPrivateStoreCollectionApiVersion);
+            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _defaultRestClient = new MarketplaceRPServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -282,6 +286,106 @@ namespace Azure.ResourceManager.Marketplace
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Set rule for specific private store and collection
+        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/setRules
+        /// Operation Id: SetCollectionRules
+        /// </summary>
+        /// <param name="content"> The SetRulesContent to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> SetCollectionRulesAsync(SetRulesContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _defaultClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.SetCollectionRules");
+            scope.Start();
+            try
+            {
+                var response = await _defaultRestClient.SetCollectionRulesAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Set rule for specific private store and collection
+        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/setRules
+        /// Operation Id: SetCollectionRules
+        /// </summary>
+        /// <param name="content"> The SetRulesContent to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response SetCollectionRules(SetRulesContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _defaultClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.SetCollectionRules");
+            scope.Start();
+            try
+            {
+                var response = _defaultRestClient.SetCollectionRules(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a list of all private store rules in the given private store and collection
+        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/queryRules
+        /// Operation Id: QueryRules
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Rule> QueryRulesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<Rule>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _defaultClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.QueryRules");
+                scope.Start();
+                try
+                {
+                    var response = await _defaultRestClient.QueryRulesAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Get a list of all private store rules in the given private store and collection
+        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/queryRules
+        /// Operation Id: QueryRules
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Rule> QueryRules(CancellationToken cancellationToken = default)
+        {
+            Page<Rule> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _defaultClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.QueryRules");
+                scope.Start();
+                try
+                {
+                    var response = _defaultRestClient.QueryRules(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
