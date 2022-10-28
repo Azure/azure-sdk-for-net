@@ -23,7 +23,7 @@ namespace Azure
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
-    internal class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
+    public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
 
@@ -38,33 +38,33 @@ namespace Azure
         /// </summary>
         /// <param name="utf8Json">A UTF8 encoded string representing a JSON value.</param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        public static JsonData Parse(BinaryData utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
+        internal static JsonData Parse(BinaryData utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
 
         /// <summary>
         /// Parses text representing a single JSON value into a <see cref="JsonData"/>.
         /// </summary>
         /// <param name="json">The JSON text to parse</param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        public static JsonData Parse(string json) => new JsonData(JsonDocument.Parse(json));
+        internal static JsonData Parse(string json) => new JsonData(JsonDocument.Parse(json));
 
         /// <summary>
         /// </summary>
         /// <param name="utf8Json">.</param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        public static JsonData Parse(ReadOnlyMemory<byte> utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
+        internal static JsonData Parse(ReadOnlyMemory<byte> utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
 
         /// <summary>
         /// </summary>
         /// <param name="utf8Json">.</param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        public static JsonData Parse(Stream utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
+        internal static JsonData Parse(Stream utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
 
         /// <summary>
         /// </summary>
         /// <param name="utf8Json">.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        public static async Task<JsonData> ParseAsync(Stream utf8Json, CancellationToken cancellationToken) => new JsonData(await JsonDocument.ParseAsync(utf8Json, cancellationToken: cancellationToken).ConfigureAwait(false));
+        internal static async Task<JsonData> ParseAsync(Stream utf8Json, CancellationToken cancellationToken) => new JsonData(await JsonDocument.ParseAsync(utf8Json, cancellationToken: cancellationToken).ConfigureAwait(false));
 
         /// <summary>
         /// Gets or sets a value at the given index in an array.
@@ -392,11 +392,6 @@ namespace Azure
             return base.Equals(obj);
         }
 
-        private object EqualsObject(object? obj)
-        {
-            return base.Equals(obj);
-        }
-
         /// <inheritdoc />
         public bool Equals(JsonData? other)
         {
@@ -659,7 +654,6 @@ namespace Azure
             private static readonly PropertyInfo LengthProperty = typeof(JsonData).GetProperty(nameof(Length), BindingFlags.NonPublic | BindingFlags.Instance)!;
             private static readonly Dictionary<Type, PropertyInfo> Indexers = GetIndexers();
             private static readonly Dictionary<Type, MethodInfo> CastOperators = GetCastOperators();
-            private static readonly MethodInfo EqualsMethod = typeof(JsonData).GetMethod(nameof(EqualsObject), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
@@ -718,21 +712,6 @@ namespace Azure
 
                 convertCall = Expression.Call(targetObject, nameof(To), new Type[] { binder.Type });
                 return new DynamicMetaObject(convertCall, restrictions);
-            }
-
-            public override DynamicMetaObject BindBinaryOperation(BinaryOperationBinder binder, DynamicMetaObject arg)
-            {
-                if (binder.Operation == ExpressionType.Equal)
-                {
-                    Expression targetObject = Expression.Convert(Expression, LimitType);
-                    Expression argObject = Expression.Convert(arg.Expression, typeof(object));
-                    BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-
-                    Expression equalsCall = Expression.Call(targetObject, EqualsMethod, argObject);
-                    return new DynamicMetaObject(equalsCall, restrictions);
-                }
-
-                return base.BindBinaryOperation(binder, arg);
             }
 
             private static Dictionary<Type, PropertyInfo> GetIndexers()
