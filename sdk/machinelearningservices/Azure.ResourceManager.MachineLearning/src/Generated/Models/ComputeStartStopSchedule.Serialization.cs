@@ -16,12 +16,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<string> id = default;
             Optional<ProvisioningStatus> provisioningStatus = default;
+            Optional<ScheduleStatus> status = default;
             Optional<ComputePowerAction> action = default;
+            Optional<TriggerType> triggerType = default;
+            Optional<RecurrenceTrigger> recurrence = default;
+            Optional<CronTrigger> cron = default;
             Optional<ScheduleBase> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        id = null;
+                        continue;
+                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -35,6 +44,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningStatus = new ProvisioningStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    status = new ScheduleStatus(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("action"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -43,6 +62,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     action = new ComputePowerAction(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("triggerType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    triggerType = new TriggerType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recurrence"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recurrence = RecurrenceTrigger.DeserializeRecurrenceTrigger(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("cron"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    cron = CronTrigger.DeserializeCronTrigger(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schedule"))
@@ -56,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ComputeStartStopSchedule(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(action), schedule.Value);
+            return new ComputeStartStopSchedule(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status), Optional.ToNullable(action), Optional.ToNullable(triggerType), recurrence.Value, cron.Value, schedule.Value);
         }
     }
 }

@@ -5,58 +5,32 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Base definition of a schedule
-    /// Please note <see cref="ScheduleBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CronSchedule"/> and <see cref="RecurrenceSchedule"/>.
-    /// </summary>
-    public abstract partial class ScheduleBase
+    /// <summary> The ScheduleBase. </summary>
+    public partial class ScheduleBase
     {
         /// <summary> Initializes a new instance of ScheduleBase. </summary>
-        protected ScheduleBase()
+        internal ScheduleBase()
         {
         }
 
         /// <summary> Initializes a new instance of ScheduleBase. </summary>
-        /// <param name="endOn">
-        /// Specifies end time of schedule in ISO 8601 format.
-        /// If not present, the schedule will run indefinitely
-        /// </param>
-        /// <param name="scheduleStatus"> Specifies the schedule&apos;s status. </param>
-        /// <param name="scheduleType"> [Required] Specifies the schedule type. </param>
-        /// <param name="startOn"> Specifies start time of schedule in ISO 8601 format. </param>
-        /// <param name="timeZone">
-        /// Specifies time zone in which the schedule runs.
-        /// TimeZone should follow Windows time zone format.
-        /// </param>
-        internal ScheduleBase(DateTimeOffset? endOn, ScheduleStatus? scheduleStatus, ScheduleType scheduleType, DateTimeOffset? startOn, string timeZone)
+        /// <param name="id"> A system assigned id for the schedule. </param>
+        /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
+        /// <param name="status"> Is the schedule enabled or disabled?. </param>
+        internal ScheduleBase(string id, ScheduleProvisioningState? provisioningStatus, ScheduleStatus? status)
         {
-            EndOn = endOn;
-            ScheduleStatus = scheduleStatus;
-            ScheduleType = scheduleType;
-            StartOn = startOn;
-            TimeZone = timeZone;
+            Id = id;
+            ProvisioningStatus = provisioningStatus;
+            Status = status;
         }
 
-        /// <summary>
-        /// Specifies end time of schedule in ISO 8601 format.
-        /// If not present, the schedule will run indefinitely
-        /// </summary>
-        public DateTimeOffset? EndOn { get; set; }
-        /// <summary> Specifies the schedule&apos;s status. </summary>
-        public ScheduleStatus? ScheduleStatus { get; set; }
-        /// <summary> [Required] Specifies the schedule type. </summary>
-        internal ScheduleType ScheduleType { get; set; }
-        /// <summary> Specifies start time of schedule in ISO 8601 format. </summary>
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// Specifies time zone in which the schedule runs.
-        /// TimeZone should follow Windows time zone format.
-        /// </summary>
-        public string TimeZone { get; set; }
+        /// <summary> A system assigned id for the schedule. </summary>
+        public string Id { get; }
+        /// <summary> The current deployment state of schedule. </summary>
+        public ScheduleProvisioningState? ProvisioningStatus { get; }
+        /// <summary> Is the schedule enabled or disabled?. </summary>
+        public ScheduleStatus? Status { get; }
     }
 }

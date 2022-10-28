@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -16,22 +19,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public abstract partial class AutoMLVertical
     {
         /// <summary> Initializes a new instance of AutoMLVertical. </summary>
-        protected AutoMLVertical()
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
+        protected AutoMLVertical(MLTableJobInput trainingData)
         {
+            Argument.AssertNotNull(trainingData, nameof(trainingData));
+
+            TrainingData = trainingData;
         }
 
         /// <summary> Initializes a new instance of AutoMLVertical. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="targetColumnName">
+        /// Target column name: This is prediction values column.
+        /// Also known as label column name in context of classification tasks.
+        /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        internal AutoMLVertical(LogVerbosity? logVerbosity, TaskType taskType)
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        internal AutoMLVertical(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData)
         {
             LogVerbosity = logVerbosity;
+            TargetColumnName = targetColumnName;
             TaskType = taskType;
+            TrainingData = trainingData;
         }
 
         /// <summary> Log verbosity for the job. </summary>
         public LogVerbosity? LogVerbosity { get; set; }
+        /// <summary>
+        /// Target column name: This is prediction values column.
+        /// Also known as label column name in context of classification tasks.
+        /// </summary>
+        public string TargetColumnName { get; set; }
         /// <summary> [Required] Task type for AutoMLJob. </summary>
         internal TaskType TaskType { get; set; }
+        /// <summary> [Required] Training data input. </summary>
+        public MLTableJobInput TrainingData { get; set; }
     }
 }

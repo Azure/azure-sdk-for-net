@@ -49,8 +49,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ModelType))
             {
-                writer.WritePropertyName("modelType");
-                writer.WriteStringValue(ModelType.Value.ToString());
+                if (ModelType != null)
+                {
+                    writer.WritePropertyName("modelType");
+                    writer.WriteStringValue(ModelType);
+                }
+                else
+                {
+                    writer.WriteNull("modelType");
+                }
             }
             if (Optional.IsDefined(ModelUri))
             {
@@ -129,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<IDictionary<string, FlavorData>> flavors = default;
             Optional<string> jobName = default;
-            Optional<ModelType> modelType = default;
+            Optional<string> modelType = default;
             Optional<Uri> modelUri = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
@@ -174,10 +181,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        modelType = null;
                         continue;
                     }
-                    modelType = new ModelType(property.Value.GetString());
+                    modelType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("modelUri"))
@@ -265,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ModelVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToDictionary(flavors), jobName.Value, Optional.ToNullable(modelType), modelUri.Value);
+            return new ModelVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToDictionary(flavors), jobName.Value, modelType.Value, modelUri.Value);
         }
     }
 }

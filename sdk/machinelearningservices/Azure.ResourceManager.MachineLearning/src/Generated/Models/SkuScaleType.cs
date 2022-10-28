@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> TODO - SKU scale type. </summary>
+    /// <summary> Node scaling setting for the compute sku. </summary>
     public readonly partial struct SkuScaleType : IEquatable<SkuScaleType>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ManualValue = "Manual";
         private const string NoneValue = "None";
 
-        /// <summary> Automatic. </summary>
+        /// <summary> Automatically scales node count. </summary>
         public static SkuScaleType Automatic { get; } = new SkuScaleType(AutomaticValue);
-        /// <summary> Manual. </summary>
+        /// <summary> Node count scaled upon user request. </summary>
         public static SkuScaleType Manual { get; } = new SkuScaleType(ManualValue);
-        /// <summary> None. </summary>
+        /// <summary> Fixed set of nodes. </summary>
         public static SkuScaleType None { get; } = new SkuScaleType(NoneValue);
         /// <summary> Determines if two <see cref="SkuScaleType"/> values are the same. </summary>
         public static bool operator ==(SkuScaleType left, SkuScaleType right) => left.Equals(right);

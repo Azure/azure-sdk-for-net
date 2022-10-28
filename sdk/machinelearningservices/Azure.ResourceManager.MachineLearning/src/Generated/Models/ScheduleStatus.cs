@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to describe status of schedule. </summary>
+    /// <summary> Is the schedule enabled or disabled?. </summary>
     public readonly partial struct ScheduleStatus : IEquatable<ScheduleStatus>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Schedule is enabled. </summary>
+        /// <summary> Enabled. </summary>
         public static ScheduleStatus Enabled { get; } = new ScheduleStatus(EnabledValue);
-        /// <summary> Schedule is disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static ScheduleStatus Disabled { get; } = new ScheduleStatus(DisabledValue);
         /// <summary> Determines if two <see cref="ScheduleStatus"/> values are the same. </summary>
         public static bool operator ==(ScheduleStatus left, ScheduleStatus right) => left.Equals(right);

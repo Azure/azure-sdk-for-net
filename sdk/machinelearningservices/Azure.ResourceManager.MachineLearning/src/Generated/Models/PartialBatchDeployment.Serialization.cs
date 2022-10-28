@@ -10,35 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class PartialBatchDeployment : IUtf8JsonSerializable
+    internal partial class PartialBatchDeployment : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CodeConfiguration))
-            {
-                if (CodeConfiguration != null)
-                {
-                    writer.WritePropertyName("codeConfiguration");
-                    writer.WriteObjectValue(CodeConfiguration);
-                }
-                else
-                {
-                    writer.WriteNull("codeConfiguration");
-                }
-            }
-            if (Optional.IsDefined(Compute))
-            {
-                if (Compute != null)
-                {
-                    writer.WritePropertyName("compute");
-                    writer.WriteStringValue(Compute);
-                }
-                else
-                {
-                    writer.WriteNull("compute");
-                }
-            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -49,115 +25,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("description");
-                }
-            }
-            if (Optional.IsDefined(EnvironmentId))
-            {
-                if (EnvironmentId != null)
-                {
-                    writer.WritePropertyName("environmentId");
-                    writer.WriteStringValue(EnvironmentId);
-                }
-                else
-                {
-                    writer.WriteNull("environmentId");
-                }
-            }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
-            {
-                if (EnvironmentVariables != null)
-                {
-                    writer.WritePropertyName("environmentVariables");
-                    writer.WriteStartObject();
-                    foreach (var item in EnvironmentVariables)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("environmentVariables");
-                }
-            }
-            if (Optional.IsDefined(ErrorThreshold))
-            {
-                writer.WritePropertyName("errorThreshold");
-                writer.WriteNumberValue(ErrorThreshold.Value);
-            }
-            if (Optional.IsDefined(LoggingLevel))
-            {
-                writer.WritePropertyName("loggingLevel");
-                writer.WriteStringValue(LoggingLevel.Value.ToString());
-            }
-            if (Optional.IsDefined(MaxConcurrencyPerInstance))
-            {
-                writer.WritePropertyName("maxConcurrencyPerInstance");
-                writer.WriteNumberValue(MaxConcurrencyPerInstance.Value);
-            }
-            if (Optional.IsDefined(MiniBatchSize))
-            {
-                writer.WritePropertyName("miniBatchSize");
-                writer.WriteNumberValue(MiniBatchSize.Value);
-            }
-            if (Optional.IsDefined(Model))
-            {
-                if (Model != null)
-                {
-                    writer.WritePropertyName("model");
-                    writer.WriteObjectValue(Model);
-                }
-                else
-                {
-                    writer.WriteNull("model");
-                }
-            }
-            if (Optional.IsDefined(OutputAction))
-            {
-                writer.WritePropertyName("outputAction");
-                writer.WriteStringValue(OutputAction.Value.ToString());
-            }
-            if (Optional.IsDefined(OutputFileName))
-            {
-                if (OutputFileName != null)
-                {
-                    writer.WritePropertyName("outputFileName");
-                    writer.WriteStringValue(OutputFileName);
-                }
-                else
-                {
-                    writer.WriteNull("outputFileName");
-                }
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties");
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
-                }
-            }
-            if (Optional.IsDefined(RetrySettings))
-            {
-                if (RetrySettings != null)
-                {
-                    writer.WritePropertyName("retrySettings");
-                    writer.WriteObjectValue(RetrySettings);
-                }
-                else
-                {
-                    writer.WriteNull("retrySettings");
                 }
             }
             writer.WriteEndObject();

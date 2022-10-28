@@ -16,33 +16,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeStartStopSchedule. </summary>
-        /// <param name="id"> Schedule id. </param>
+        /// <param name="id"> A system assigned id for the schedule. </param>
         /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
-        /// <param name="action"> The compute power action. </param>
-        /// <param name="schedule">
-        /// Base definition of a schedule
-        /// Please note <see cref="ScheduleBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CronSchedule"/> and <see cref="RecurrenceSchedule"/>.
-        /// </param>
-        internal ComputeStartStopSchedule(string id, ProvisioningStatus? provisioningStatus, ComputePowerAction? action, ScheduleBase schedule)
+        /// <param name="status"> Is the schedule enabled or disabled?. </param>
+        /// <param name="action"> [Required] The compute power action. </param>
+        /// <param name="triggerType"> [Required] The schedule trigger type. </param>
+        /// <param name="recurrence"> Required if triggerType is Recurrence. </param>
+        /// <param name="cron"> Required if triggerType is Cron. </param>
+        /// <param name="schedule"> [Deprecated] Not used any more. </param>
+        internal ComputeStartStopSchedule(string id, ProvisioningStatus? provisioningStatus, ScheduleStatus? status, ComputePowerAction? action, TriggerType? triggerType, RecurrenceTrigger recurrence, CronTrigger cron, ScheduleBase schedule)
         {
             Id = id;
             ProvisioningStatus = provisioningStatus;
+            Status = status;
             Action = action;
+            TriggerType = triggerType;
+            Recurrence = recurrence;
+            Cron = cron;
             Schedule = schedule;
         }
 
-        /// <summary> Schedule id. </summary>
+        /// <summary> A system assigned id for the schedule. </summary>
         public string Id { get; }
         /// <summary> The current deployment state of schedule. </summary>
         public ProvisioningStatus? ProvisioningStatus { get; }
-        /// <summary> The compute power action. </summary>
+        /// <summary> Is the schedule enabled or disabled?. </summary>
+        public ScheduleStatus? Status { get; }
+        /// <summary> [Required] The compute power action. </summary>
         public ComputePowerAction? Action { get; }
-        /// <summary>
-        /// Base definition of a schedule
-        /// Please note <see cref="ScheduleBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CronSchedule"/> and <see cref="RecurrenceSchedule"/>.
-        /// </summary>
+        /// <summary> [Required] The schedule trigger type. </summary>
+        public TriggerType? TriggerType { get; }
+        /// <summary> Required if triggerType is Recurrence. </summary>
+        public RecurrenceTrigger Recurrence { get; }
+        /// <summary> Required if triggerType is Cron. </summary>
+        public CronTrigger Cron { get; }
+        /// <summary> [Deprecated] Not used any more. </summary>
         public ScheduleBase Schedule { get; }
     }
 }

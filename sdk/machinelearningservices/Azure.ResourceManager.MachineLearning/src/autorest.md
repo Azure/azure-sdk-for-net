@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: MachineLearning
 namespace: Azure.ResourceManager.MachineLearning
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0bff4d0f259847b1fc97a4ca8f98b8c40d672ba5/specification/machinelearningservices/resource-manager/readme.md
-tag: package-2022-02-01-preview
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9685ef961fe7931fccdd9bf86afac8bca0b3ae88/specification/machinelearningservices/resource-manager/readme.md
+tag: package-2022-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -47,9 +47,10 @@ rename-rules:
   AKS: Aks
   USD: Usd
 
-no-property-type-replacement: 
+no-property-type-replacement:
 - ResourceId
 - VirtualMachineImage
+
 directive:
   - from: swagger-document
     where: $.definitions.ComputeNodesInformation.properties
@@ -106,7 +107,7 @@ directive:
     transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.AmlComputeProperties.properties.virtualMachineImage
-    transform: $["x-nullable"] = true;       
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.TableVerticalValidationDataSettings.properties.cvSplitColumnNames
     transform: $["x-nullable"] = true;

@@ -6,50 +6,50 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Recurrence schedule definition. </summary>
-    public partial class RecurrenceSchedule : ScheduleBase
+    /// <summary> The RecurrenceSchedule. </summary>
+    public partial class RecurrenceSchedule
     {
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
-        /// <param name="frequency"> [Required] Specifies frequency with with which to trigger schedule. </param>
-        /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
-        public RecurrenceSchedule(RecurrenceFrequency frequency, int interval)
+        /// <param name="hours"> [Required] List of hours for the schedule. </param>
+        /// <param name="minutes"> [Required] List of minutes for the schedule. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
+        public RecurrenceSchedule(IEnumerable<int> hours, IEnumerable<int> minutes)
         {
-            Frequency = frequency;
-            Interval = interval;
-            ScheduleType = ScheduleType.Recurrence;
+            Argument.AssertNotNull(hours, nameof(hours));
+            Argument.AssertNotNull(minutes, nameof(minutes));
+
+            Hours = hours.ToList();
+            Minutes = minutes.ToList();
+            MonthDays = new ChangeTrackingList<int>();
+            WeekDays = new ChangeTrackingList<WeekDay>();
         }
 
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
-        /// <param name="endOn">
-        /// Specifies end time of schedule in ISO 8601 format.
-        /// If not present, the schedule will run indefinitely
-        /// </param>
-        /// <param name="scheduleStatus"> Specifies the schedule&apos;s status. </param>
-        /// <param name="scheduleType"> [Required] Specifies the schedule type. </param>
-        /// <param name="startOn"> Specifies start time of schedule in ISO 8601 format. </param>
-        /// <param name="timeZone">
-        /// Specifies time zone in which the schedule runs.
-        /// TimeZone should follow Windows time zone format.
-        /// </param>
-        /// <param name="frequency"> [Required] Specifies frequency with with which to trigger schedule. </param>
-        /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
-        /// <param name="pattern"> Specifies the recurrence schedule pattern. </param>
-        internal RecurrenceSchedule(DateTimeOffset? endOn, ScheduleStatus? scheduleStatus, ScheduleType scheduleType, DateTimeOffset? startOn, string timeZone, RecurrenceFrequency frequency, int interval, RecurrencePattern pattern) : base(endOn, scheduleStatus, scheduleType, startOn, timeZone)
+        /// <param name="hours"> [Required] List of hours for the schedule. </param>
+        /// <param name="minutes"> [Required] List of minutes for the schedule. </param>
+        /// <param name="monthDays"> List of month days for the schedule. </param>
+        /// <param name="weekDays"> List of days for the schedule. </param>
+        internal RecurrenceSchedule(IList<int> hours, IList<int> minutes, IList<int> monthDays, IList<WeekDay> weekDays)
         {
-            Frequency = frequency;
-            Interval = interval;
-            Pattern = pattern;
-            ScheduleType = scheduleType;
+            Hours = hours;
+            Minutes = minutes;
+            MonthDays = monthDays;
+            WeekDays = weekDays;
         }
 
-        /// <summary> [Required] Specifies frequency with with which to trigger schedule. </summary>
-        public RecurrenceFrequency Frequency { get; set; }
-        /// <summary> [Required] Specifies schedule interval in conjunction with frequency. </summary>
-        public int Interval { get; set; }
-        /// <summary> Specifies the recurrence schedule pattern. </summary>
-        public RecurrencePattern Pattern { get; set; }
+        /// <summary> [Required] List of hours for the schedule. </summary>
+        public IList<int> Hours { get; }
+        /// <summary> [Required] List of minutes for the schedule. </summary>
+        public IList<int> Minutes { get; }
+        /// <summary> List of month days for the schedule. </summary>
+        public IList<int> MonthDays { get; set; }
+        /// <summary> List of days for the schedule. </summary>
+        public IList<WeekDay> WeekDays { get; set; }
     }
 }

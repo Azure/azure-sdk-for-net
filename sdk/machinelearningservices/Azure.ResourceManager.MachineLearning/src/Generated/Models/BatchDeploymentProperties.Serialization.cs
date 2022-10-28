@@ -67,15 +67,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(OutputFileName))
             {
-                if (OutputFileName != null)
-                {
-                    writer.WritePropertyName("outputFileName");
-                    writer.WriteStringValue(OutputFileName);
-                }
-                else
-                {
-                    writer.WriteNull("outputFileName");
-                }
+                writer.WritePropertyName("outputFileName");
+                writer.WriteStringValue(OutputFileName);
             }
             if (Optional.IsDefined(Resources))
             {
@@ -187,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<BatchOutputAction> outputAction = default;
             Optional<string> outputFileName = default;
             Optional<DeploymentProvisioningState> provisioningState = default;
-            Optional<ResourceConfiguration> resources = default;
+            Optional<DeploymentResourceConfiguration> resources = default;
             Optional<BatchRetrySettings> retrySettings = default;
             Optional<CodeConfiguration> codeConfiguration = default;
             Optional<string> description = default;
@@ -268,11 +261,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("outputFileName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        outputFileName = null;
-                        continue;
-                    }
                     outputFileName = property.Value.GetString();
                     continue;
                 }
@@ -293,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resources = null;
                         continue;
                     }
-                    resources = ResourceConfiguration.DeserializeResourceConfiguration(property.Value);
+                    resources = DeploymentResourceConfiguration.DeserializeDeploymentResourceConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retrySettings"))

@@ -23,8 +23,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
+                if (Subnet != null)
+                {
+                    writer.WritePropertyName("subnet");
+                    writer.WriteObjectValue(Subnet);
+                }
+                else
+                {
+                    writer.WriteNull("subnet");
+                }
             }
             if (Optional.IsDefined(ApplicationSharingPolicy))
             {
@@ -33,23 +40,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(SshSettings))
             {
-                writer.WritePropertyName("sshSettings");
-                writer.WriteObjectValue(SshSettings);
+                if (SshSettings != null)
+                {
+                    writer.WritePropertyName("sshSettings");
+                    writer.WriteObjectValue(SshSettings);
+                }
+                else
+                {
+                    writer.WriteNull("sshSettings");
+                }
             }
             if (Optional.IsDefined(ComputeInstanceAuthorizationType))
             {
-                writer.WritePropertyName("computeInstanceAuthorizationType");
-                writer.WriteStringValue(ComputeInstanceAuthorizationType.Value.ToString());
+                if (ComputeInstanceAuthorizationType != null)
+                {
+                    writer.WritePropertyName("computeInstanceAuthorizationType");
+                    writer.WriteStringValue(ComputeInstanceAuthorizationType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("computeInstanceAuthorizationType");
+                }
             }
             if (Optional.IsDefined(PersonalComputeInstanceSettings))
             {
-                writer.WritePropertyName("personalComputeInstanceSettings");
-                writer.WriteObjectValue(PersonalComputeInstanceSettings);
+                if (PersonalComputeInstanceSettings != null)
+                {
+                    writer.WritePropertyName("personalComputeInstanceSettings");
+                    writer.WriteObjectValue(PersonalComputeInstanceSettings);
+                }
+                else
+                {
+                    writer.WriteNull("personalComputeInstanceSettings");
+                }
             }
             if (Optional.IsDefined(SetupScriptsSettings))
             {
-                writer.WritePropertyName("setupScripts");
-                writer.WriteObjectValue(SetupScriptsSettings);
+                if (SetupScriptsSettings != null)
+                {
+                    writer.WritePropertyName("setupScripts");
+                    writer.WriteObjectValue(SetupScriptsSettings);
+                }
+                else
+                {
+                    writer.WriteNull("setupScripts");
+                }
             }
             if (Optional.IsDefined(EnableNodePublicIP))
             {
@@ -70,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ComputeInstanceCreatedBy> createdBy = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<ComputeInstanceState> state = default;
-            Optional<ComputeInstanceAuthorizationType> computeInstanceAuthorizationType = default;
+            Optional<ComputeInstanceAuthorizationType?> computeInstanceAuthorizationType = default;
             Optional<PersonalComputeInstanceSettings> personalComputeInstanceSettings = default;
             Optional<SetupScripts> setupScripts = default;
             Optional<ComputeInstanceLastOperation> lastOperation = default;
@@ -91,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        subnet = null;
                         continue;
                     }
                     subnet = ResourceId.DeserializeResourceId(property.Value);
@@ -111,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        sshSettings = null;
                         continue;
                     }
                     sshSettings = ComputeInstanceSshSettings.DeserializeComputeInstanceSshSettings(property.Value);
@@ -181,7 +216,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        computeInstanceAuthorizationType = null;
                         continue;
                     }
                     computeInstanceAuthorizationType = new ComputeInstanceAuthorizationType(property.Value.GetString());
@@ -191,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        personalComputeInstanceSettings = null;
                         continue;
                     }
                     personalComputeInstanceSettings = PersonalComputeInstanceSettings.DeserializePersonalComputeInstanceSettings(property.Value);
@@ -201,7 +236,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        setupScripts = null;
                         continue;
                     }
                     setupScripts = SetupScripts.DeserializeSetupScripts(property.Value);
@@ -211,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        lastOperation = null;
                         continue;
                     }
                     lastOperation = ComputeInstanceLastOperation.DeserializeComputeInstanceLastOperation(property.Value);
@@ -221,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        schedules = null;
                         continue;
                     }
                     schedules = ComputeSchedules.DeserializeComputeSchedules(property.Value);
@@ -241,7 +276,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        containers = null;
                         continue;
                     }
                     List<ComputeInstanceContainer> array = new List<ComputeInstanceContainer>();
@@ -256,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        dataDisks = null;
                         continue;
                     }
                     List<ComputeInstanceDataDisk> array = new List<ComputeInstanceDataDisk>();
@@ -271,7 +306,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        dataMounts = null;
                         continue;
                     }
                     List<ComputeInstanceDataMount> array = new List<ComputeInstanceDataMount>();

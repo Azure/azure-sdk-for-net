@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UriFileValue = "UriFile";
-        private const string UriFolderValue = "UriFolder";
-        private const string MLTableValue = "MLTable";
+        private const string UriFileValue = "uri_file";
+        private const string UriFolderValue = "uri_folder";
+        private const string MltableValue = "mltable";
 
-        /// <summary> UriFile. </summary>
+        /// <summary> uri_file. </summary>
         public static DataType UriFile { get; } = new DataType(UriFileValue);
-        /// <summary> UriFolder. </summary>
+        /// <summary> uri_folder. </summary>
         public static DataType UriFolder { get; } = new DataType(UriFolderValue);
-        /// <summary> MLTable. </summary>
-        public static DataType MLTable { get; } = new DataType(MLTableValue);
+        /// <summary> mltable. </summary>
+        public static DataType Mltable { get; } = new DataType(MltableValue);
         /// <summary> Determines if two <see cref="DataType"/> values are the same. </summary>
         public static bool operator ==(DataType left, DataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataType"/> values are not the same. </summary>

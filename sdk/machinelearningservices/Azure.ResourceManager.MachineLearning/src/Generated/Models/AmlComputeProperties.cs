@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public AmlComputeProperties()
         {
             Errors = new ChangeTrackingList<ErrorResponse>();
-            PropertyBag = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
         /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
         /// <param name="propertyBag"> A property bag containing additional properties. </param>
-        internal AmlComputeProperties(OSType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIP, IDictionary<string, BinaryData> propertyBag)
+        internal AmlComputeProperties(OSType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag)
         {
             OSType = osType;
             VmSize = vmSize;
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// A property bag containing additional properties.
         /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -136,6 +135,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> PropertyBag { get; }
+        public BinaryData PropertyBag { get; set; }
     }
 }

@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string NotRespondingValue = "NotResponding";
         private const string PausedValue = "Paused";
         private const string UnknownValue = "Unknown";
-        private const string ScheduledValue = "Scheduled";
 
         /// <summary> Run hasn&apos;t started yet. </summary>
         public static JobStatus NotStarted { get; } = new JobStatus(NotStartedValue);
@@ -69,8 +68,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static JobStatus Paused { get; } = new JobStatus(PausedValue);
         /// <summary> Default job status if not mapped to all other statuses. </summary>
         public static JobStatus Unknown { get; } = new JobStatus(UnknownValue);
-        /// <summary> The job is in a scheduled state. Job is not in any active state. </summary>
-        public static JobStatus Scheduled { get; } = new JobStatus(ScheduledValue);
         /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
         public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobStatus"/> values are not the same. </summary>

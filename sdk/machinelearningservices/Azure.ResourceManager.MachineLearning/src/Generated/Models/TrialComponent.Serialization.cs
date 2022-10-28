@@ -64,15 +64,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Resources))
             {
-                if (Resources != null)
-                {
-                    writer.WritePropertyName("resources");
-                    writer.WriteObjectValue(Resources);
-                }
-                else
-                {
-                    writer.WriteNull("resources");
-                }
+                writer.WritePropertyName("resources");
+                writer.WriteObjectValue(Resources);
             }
             writer.WriteEndObject();
         }
@@ -84,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<DistributionConfiguration> distribution = default;
             string environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<ResourceConfiguration> resources = default;
+            Optional<JobResourceConfiguration> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeId"))
@@ -143,10 +136,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resources = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resources = ResourceConfiguration.DeserializeResourceConfiguration(property.Value);
+                    resources = JobResourceConfiguration.DeserializeJobResourceConfiguration(property.Value);
                     continue;
                 }
             }

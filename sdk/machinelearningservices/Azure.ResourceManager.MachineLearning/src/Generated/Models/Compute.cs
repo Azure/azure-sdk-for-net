@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The type of compute. </summary>
         internal ComputeType ComputeType { get; set; }
         /// <summary> Location for the underlying compute. </summary>
-        public string ComputeLocation { get; }
+        public string ComputeLocation { get; set; }
         /// <summary> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The description of the Machine Learning compute. </summary>

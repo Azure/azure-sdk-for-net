@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of EndpointDeploymentPropertiesBase. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         internal EndpointDeploymentPropertiesBase(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public CodeConfiguration CodeConfiguration { get; set; }
         /// <summary> Description of the endpoint deployment. </summary>
         public string Description { get; set; }
-        /// <summary> ARM resource ID of the environment specification for the endpoint deployment. </summary>
+        /// <summary> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </summary>
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables configuration for the deployment. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; set; }

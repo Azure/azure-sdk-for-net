@@ -57,7 +57,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tenantId"> The tenant id associated with this workspace. </param>
         /// <param name="storageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
         /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="v1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
+        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri, bool? v1LegacyMode) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.MachineLearning
             TenantId = tenantId;
             StorageHnsEnabled = storageHnsEnabled;
             MlFlowTrackingUri = mlFlowTrackingUri;
+            V1LegacyMode = v1LegacyMode;
         }
 
         /// <summary> The identity of the resource. </summary>
@@ -151,5 +153,7 @@ namespace Azure.ResourceManager.MachineLearning
         public bool? StorageHnsEnabled { get; }
         /// <summary> The URI associated with this workspace that machine learning flow must point at to set up tracking. </summary>
         public Uri MlFlowTrackingUri { get; }
+        /// <summary> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </summary>
+        public bool? V1LegacyMode { get; set; }
     }
 }

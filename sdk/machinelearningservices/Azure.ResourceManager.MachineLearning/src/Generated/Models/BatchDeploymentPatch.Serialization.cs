@@ -15,30 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
-            }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind);
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location.Value);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
                 writer.WriteObjectValue(Properties);
-            }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku");
-                writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

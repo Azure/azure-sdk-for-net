@@ -19,15 +19,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("computeType");
             writer.WriteStringValue(ComputeType.ToString());
+            if (Optional.IsDefined(ComputeLocation))
+            {
+                writer.WritePropertyName("computeLocation");
+                writer.WriteStringValue(ComputeLocation);
+            }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description");
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
+                if (ResourceId != null)
+                {
+                    writer.WritePropertyName("resourceId");
+                    writer.WriteStringValue(ResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("resourceId");
+                }
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
@@ -89,6 +108,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("description"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -116,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        resourceId = null;
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());

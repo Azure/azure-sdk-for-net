@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="autoRebuild"> Defines if image needs to be rebuilt based on base image changes. </param>
         /// <param name="build"> Configuration settings for Docker build context. </param>
         /// <param name="condaFile">
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
@@ -38,8 +39,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
         /// <param name="osType"> The OS type of the environment. </param>
-        internal EnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, BuildContext build, string condaFile, EnvironmentType? environmentType, string image, InferenceContainerProperties inferenceConfig, OperatingSystemType? osType) : base(description, properties, tags, isAnonymous, isArchived)
+        internal EnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, BuildContext build, string condaFile, EnvironmentType? environmentType, string image, InferenceContainerProperties inferenceConfig, OperatingSystemType? osType) : base(description, properties, tags, isAnonymous, isArchived)
         {
+            AutoRebuild = autoRebuild;
             Build = build;
             CondaFile = condaFile;
             EnvironmentType = environmentType;
@@ -48,6 +50,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             OSType = osType;
         }
 
+        /// <summary> Defines if image needs to be rebuilt based on base image changes. </summary>
+        public AutoRebuildSetting? AutoRebuild { get; set; }
         /// <summary> Configuration settings for Docker build context. </summary>
         public BuildContext Build { get; set; }
         /// <summary>

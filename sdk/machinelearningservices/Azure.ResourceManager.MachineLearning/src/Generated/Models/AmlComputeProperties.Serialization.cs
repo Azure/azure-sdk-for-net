@@ -56,8 +56,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(UserAccountCredentials))
             {
-                writer.WritePropertyName("userAccountCredentials");
-                writer.WriteObjectValue(UserAccountCredentials);
+                if (UserAccountCredentials != null)
+                {
+                    writer.WritePropertyName("userAccountCredentials");
+                    writer.WriteObjectValue(UserAccountCredentials);
+                }
+                else
+                {
+                    writer.WriteNull("userAccountCredentials");
+                }
             }
             if (Optional.IsDefined(Subnet))
             {
@@ -78,23 +85,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(EnableNodePublicIP))
             {
-                writer.WritePropertyName("enableNodePublicIp");
-                writer.WriteBooleanValue(EnableNodePublicIP.Value);
-            }
-            if (Optional.IsCollectionDefined(PropertyBag))
-            {
-                writer.WritePropertyName("propertyBag");
-                writer.WriteStartObject();
-                foreach (var item in PropertyBag)
+                if (EnableNodePublicIP != null)
                 {
-                    writer.WritePropertyName(item.Key);
+                    writer.WritePropertyName("enableNodePublicIp");
+                    writer.WriteBooleanValue(EnableNodePublicIP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableNodePublicIp");
+                }
+            }
+            if (Optional.IsDefined(PropertyBag))
+            {
+                if (PropertyBag != null)
+                {
+                    writer.WritePropertyName("propertyBag");
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(PropertyBag);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(PropertyBag.ToString()).RootElement);
 #endif
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("propertyBag");
+                }
             }
             writer.WriteEndObject();
         }
@@ -113,11 +128,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<AllocationState> allocationState = default;
             Optional<DateTimeOffset> allocationStateTransitionTime = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
-            Optional<int> currentNodeCount = default;
-            Optional<int> targetNodeCount = default;
+            Optional<int?> currentNodeCount = default;
+            Optional<int?> targetNodeCount = default;
             Optional<NodeStateCounts> nodeStateCounts = default;
-            Optional<bool> enableNodePublicIP = default;
-            Optional<IDictionary<string, BinaryData>> propertyBag = default;
+            Optional<bool?> enableNodePublicIP = default;
+            Optional<BinaryData> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"))
@@ -179,7 +194,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        userAccountCredentials = null;
                         continue;
                     }
                     userAccountCredentials = UserAccountCredentials.DeserializeUserAccountCredentials(property.Value);
@@ -244,7 +259,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        currentNodeCount = null;
                         continue;
                     }
                     currentNodeCount = property.Value.GetInt32();
@@ -254,7 +269,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        targetNodeCount = null;
                         continue;
                     }
                     targetNodeCount = property.Value.GetInt32();
@@ -264,7 +279,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        nodeStateCounts = null;
                         continue;
                     }
                     nodeStateCounts = NodeStateCounts.DeserializeNodeStateCounts(property.Value);
@@ -274,7 +289,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        enableNodePublicIP = null;
                         continue;
                     }
                     enableNodePublicIP = property.Value.GetBoolean();
@@ -284,19 +299,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        propertyBag = null;
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                    }
-                    propertyBag = dictionary;
+                    propertyBag = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToDictionary(propertyBag));
+            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), propertyBag.Value);
         }
     }
 }
