@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -19,10 +20,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="conversationItems"/> is null. </exception>
         public ConversationSentimentResult(IEnumerable<ConversationSentimentItemResult> conversationItems)
         {
-            if (conversationItems == null)
-            {
-                throw new ArgumentNullException(nameof(conversationItems));
-            }
+            Argument.AssertNotNull(conversationItems, nameof(conversationItems));
 
             ConversationItems = conversationItems.ToList();
         }

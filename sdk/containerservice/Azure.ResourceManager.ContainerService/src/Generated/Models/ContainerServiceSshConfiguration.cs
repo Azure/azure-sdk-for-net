@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publicKeys"/> is null. </exception>
         public ContainerServiceSshConfiguration(IEnumerable<ContainerServiceSshPublicKey> publicKeys)
         {
-            if (publicKeys == null)
-            {
-                throw new ArgumentNullException(nameof(publicKeys));
-            }
+            Argument.AssertNotNull(publicKeys, nameof(publicKeys));
 
             PublicKeys = publicKeys.ToList();
         }

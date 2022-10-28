@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="startRange"/> or <paramref name="endRange"/> is null. </exception>
         public BlobRestoreRange(string startRange, string endRange)
         {
-            if (startRange == null)
-            {
-                throw new ArgumentNullException(nameof(startRange));
-            }
-            if (endRange == null)
-            {
-                throw new ArgumentNullException(nameof(endRange));
-            }
+            Argument.AssertNotNull(startRange, nameof(startRange));
+            Argument.AssertNotNull(endRange, nameof(endRange));
 
             StartRange = startRange;
             EndRange = endRange;

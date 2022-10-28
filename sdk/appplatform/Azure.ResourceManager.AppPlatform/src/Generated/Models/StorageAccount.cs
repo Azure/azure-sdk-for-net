@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="accountKey"/> is null. </exception>
         public StorageAccount(string accountName, string accountKey)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountKey == null)
-            {
-                throw new ArgumentNullException(nameof(accountKey));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(accountKey, nameof(accountKey));
 
             AccountName = accountName;
             AccountKey = accountKey;

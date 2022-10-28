@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public LoadBalancerResourceSettings(string targetResourceName) : base(targetResourceName)
         {
-            if (targetResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceName));
-            }
+            Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             FrontendIPConfigurations = new ChangeTrackingList<LoadBalancerFrontendIPConfigurationResourceSettings>();

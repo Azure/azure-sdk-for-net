@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="skipCbtReset"/> is null. </exception>
         public VMwareCbtResyncInput(string skipCbtReset)
         {
-            if (skipCbtReset == null)
-            {
-                throw new ArgumentNullException(nameof(skipCbtReset));
-            }
+            Argument.AssertNotNull(skipCbtReset, nameof(skipCbtReset));
 
             SkipCbtReset = skipCbtReset;
             InstanceType = "VMwareCbt";

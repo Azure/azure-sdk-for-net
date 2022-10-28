@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -20,14 +21,8 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="intents"/> or <paramref name="entities"/> is null. </exception>
         internal ConversationPrediction(IEnumerable<ConversationIntent> intents, IEnumerable<ConversationEntity> entities)
         {
-            if (intents == null)
-            {
-                throw new ArgumentNullException(nameof(intents));
-            }
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
+            Argument.AssertNotNull(intents, nameof(intents));
+            Argument.AssertNotNull(entities, nameof(entities));
 
             Intents = intents.ToList();
             Entities = entities.ToList();

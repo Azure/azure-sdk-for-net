@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="daysOfMonth"/> is null. </exception>
         public AlertProcessingRuleMonthlyRecurrence(IEnumerable<int> daysOfMonth)
         {
-            if (daysOfMonth == null)
-            {
-                throw new ArgumentNullException(nameof(daysOfMonth));
-            }
+            Argument.AssertNotNull(daysOfMonth, nameof(daysOfMonth));
 
             DaysOfMonth = daysOfMonth.ToList();
             RecurrenceType = RecurrenceType.Monthly;

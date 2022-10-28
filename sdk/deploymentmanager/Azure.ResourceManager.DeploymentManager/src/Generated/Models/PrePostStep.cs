@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="stepId"/> is null. </exception>
         public PrePostStep(string stepId)
         {
-            if (stepId == null)
-            {
-                throw new ArgumentNullException(nameof(stepId));
-            }
+            Argument.AssertNotNull(stepId, nameof(stepId));
 
             StepId = stepId;
         }

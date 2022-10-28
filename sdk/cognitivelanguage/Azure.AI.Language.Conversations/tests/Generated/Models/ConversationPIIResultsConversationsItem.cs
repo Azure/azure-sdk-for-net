@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -21,18 +22,9 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="conversationItems"/>, <paramref name="id"/> or <paramref name="warnings"/> is null. </exception>
         public ConversationPIIResultsConversationsItem(IEnumerable<ConversationPIIItemResult> conversationItems, string id, IEnumerable<InputWarning> warnings) : base(conversationItems)
         {
-            if (conversationItems == null)
-            {
-                throw new ArgumentNullException(nameof(conversationItems));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
+            Argument.AssertNotNull(conversationItems, nameof(conversationItems));
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
 
             Id = id;
             Warnings = warnings.ToList();
