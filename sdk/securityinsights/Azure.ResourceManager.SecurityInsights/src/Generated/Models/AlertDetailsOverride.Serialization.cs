@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -35,6 +36,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("alertSeverityColumnName");
                 writer.WriteStringValue(AlertSeverityColumnName);
             }
+            if (Optional.IsCollectionDefined(AlertDynamicProperties))
+            {
+                writer.WritePropertyName("alertDynamicProperties");
+                writer.WriteStartArray();
+                foreach (var item in AlertDynamicProperties)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -44,6 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> alertDescriptionFormat = default;
             Optional<string> alertTacticsColumnName = default;
             Optional<string> alertSeverityColumnName = default;
+            Optional<IList<AlertPropertyMapping>> alertDynamicProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertDisplayNameFormat"))
@@ -66,8 +78,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     alertSeverityColumnName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("alertDynamicProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<AlertPropertyMapping> array = new List<AlertPropertyMapping>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AlertPropertyMapping.DeserializeAlertPropertyMapping(item));
+                    }
+                    alertDynamicProperties = array;
+                    continue;
+                }
             }
-            return new AlertDetailsOverride(alertDisplayNameFormat.Value, alertDescriptionFormat.Value, alertTacticsColumnName.Value, alertSeverityColumnName.Value);
+            return new AlertDetailsOverride(alertDisplayNameFormat.Value, alertDescriptionFormat.Value, alertTacticsColumnName.Value, alertSeverityColumnName.Value, Optional.ToList(alertDynamicProperties));
         }
     }
 }

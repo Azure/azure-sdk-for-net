@@ -1201,8 +1201,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public AlertDetailsOverride() { }
         public string AlertDescriptionFormat { get { throw null; } set { } }
         public string AlertDisplayNameFormat { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AlertPropertyMapping> AlertDynamicProperties { get { throw null; } }
         public string AlertSeverityColumnName { get { throw null; } set { } }
         public string AlertTacticsColumnName { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlertProperty : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.AlertProperty>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlertProperty(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.AlertProperty AlertLink { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AlertProperty ConfidenceLevel { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AlertProperty ConfidenceScore { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AlertProperty ExtendedLinks { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AlertProperty ProductComponentName { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AlertProperty ProductName { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AlertProperty ProviderName { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AlertProperty RemediationSteps { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AlertProperty Techniques { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AlertProperty other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AlertProperty left, Azure.ResourceManager.SecurityInsights.Models.AlertProperty right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AlertProperty (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.AlertProperty left, Azure.ResourceManager.SecurityInsights.Models.AlertProperty right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AlertPropertyMapping
+    {
+        public AlertPropertyMapping() { }
+        public Azure.ResourceManager.SecurityInsights.Models.AlertProperty? AlertProperty { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
     }
     public partial class AlertRuleTemplateDataSource
     {
@@ -1358,6 +1390,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         protected AutomationRuleAction(int order) { }
         public int Order { get { throw null; } set { } }
     }
+    public partial class AutomationRuleBooleanCondition
+    {
+        public AutomationRuleBooleanCondition() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AutomationRuleCondition> InnerConditions { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator? Operator { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AutomationRuleBooleanConditionSupportedOperator : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AutomationRuleBooleanConditionSupportedOperator(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator And { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator Or { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator left, Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator left, Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class AutomationRuleCondition
     {
         protected AutomationRuleCondition() { }
@@ -1409,6 +1465,48 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public AutomationRulePropertyArrayChangedValuesCondition() { }
         public Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedArrayType? ArrayType { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedChangeType? ChangeType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AutomationRulePropertyArrayConditionSupportedArrayConditionType : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AutomationRulePropertyArrayConditionSupportedArrayConditionType(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType AnyItem { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AutomationRulePropertyArrayConditionSupportedArrayType : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AutomationRulePropertyArrayConditionSupportedArrayType(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType CustomDetails { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType CustomDetailValues { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AutomationRulePropertyArrayValuesCondition
+    {
+        public AutomationRulePropertyArrayValuesCondition() { }
+        public Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType? ArrayConditionType { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType? ArrayType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AutomationRuleCondition> ItemConditions { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationRulePropertyChangedConditionSupportedChangedType : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedChangedType>
@@ -1500,6 +1598,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty HostNetBiosName { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty HostNTDomain { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty HostOSVersion { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IncidentCustomDetailsKey { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IncidentCustomDetailsValue { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IncidentDescription { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IncidentLabel { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IncidentProviderName { get { throw null; } }
@@ -1508,6 +1608,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IncidentStatus { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IncidentTactics { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IncidentTitle { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IncidentUpdatedBySource { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IoTDeviceId { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IoTDeviceModel { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty IoTDeviceName { get { throw null; } }
@@ -1665,6 +1766,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public System.Collections.Generic.IReadOnlyList<string> Labels { get { throw null; } }
         public string Notes { get { throw null; } }
         public System.DateTimeOffset? StartTimeUtc { get { throw null; } }
+    }
+    public partial class BooleanConditionProperties : Azure.ResourceManager.SecurityInsights.Models.AutomationRuleCondition
+    {
+        public BooleanConditionProperties() { }
+        public Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanCondition ConditionProperties { get { throw null; } set { } }
     }
     public partial class ClientInfo
     {
@@ -3259,8 +3365,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     }
     public partial class ManualTriggerRequestBody
     {
-        public ManualTriggerRequestBody() { }
-        public string LogicAppsResourceId { get { throw null; } set { } }
+        public ManualTriggerRequestBody(string logicAppsResourceId) { }
+        public string LogicAppsResourceId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3496,9 +3602,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string DisplayName { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.EntityMapping> EntityMappings { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? EventGroupingAggregationKind { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.IncidentConfiguration IncidentConfiguration { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedUtc { get { throw null; } }
         public string Query { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> SentinelEntitiesMappings { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.AlertSeverity? Severity { get { throw null; } set { } }
         public System.TimeSpan? SuppressionDuration { get { throw null; } set { } }
         public bool? SuppressionEnabled { get { throw null; } set { } }
@@ -3516,9 +3624,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.EntityMapping> EntityMappings { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? EventGroupingAggregationKind { get { throw null; } set { } }
         public System.DateTimeOffset? LastUpdatedDateUTC { get { throw null; } }
         public string Query { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> RequiredDataConnectors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> SentinelEntitiesMappings { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.AlertSeverity? Severity { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.TemplateStatus? Status { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AttackTactic> Tactics { get { throw null; } }
@@ -3720,6 +3830,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public PropertyArrayChangedConditionProperties() { }
         public Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedValuesCondition ConditionProperties { get { throw null; } set { } }
     }
+    public partial class PropertyArrayConditionProperties : Azure.ResourceManager.SecurityInsights.Models.AutomationRuleCondition
+    {
+        public PropertyArrayConditionProperties() { }
+        public Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayValuesCondition ConditionProperties { get { throw null; } set { } }
+    }
     public partial class PropertyChangedConditionProperties : Azure.ResourceManager.SecurityInsights.Models.AutomationRuleCondition
     {
         public PropertyChangedConditionProperties() { }
@@ -3900,6 +4015,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Query { get { throw null; } set { } }
         public System.TimeSpan? QueryFrequency { get { throw null; } set { } }
         public System.TimeSpan? QueryPeriod { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> SentinelEntitiesMappings { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.AlertSeverity? Severity { get { throw null; } set { } }
         public System.TimeSpan? SuppressionDuration { get { throw null; } set { } }
         public bool? SuppressionEnabled { get { throw null; } set { } }
@@ -3925,6 +4041,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public System.TimeSpan? QueryFrequency { get { throw null; } set { } }
         public System.TimeSpan? QueryPeriod { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> RequiredDataConnectors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> SentinelEntitiesMappings { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.AlertSeverity? Severity { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.TemplateStatus? Status { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AttackTactic> Tactics { get { throw null; } }
@@ -3978,9 +4095,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.DateTimeOffset EndTimeUtc { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.KillChainIntent? Intent { get { throw null; } }
         public string ProductName { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.AlertSeverity Severity { get { throw null; } }
         public System.DateTimeOffset StartTimeUtc { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Techniques { get { throw null; } }
         public System.DateTimeOffset TimeGenerated { get { throw null; } }
     }
     public partial class SecurityGroupEntity : Azure.ResourceManager.SecurityInsights.EntityData
@@ -4030,6 +4149,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public SecurityMLAnalyticsSettingsDataSource() { }
         public string ConnectorId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DataTypes { get { throw null; } }
+    }
+    public partial class SentinelEntityMapping
+    {
+        public SentinelEntityMapping() { }
+        public string ColumnName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SettingsStatus : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.SettingsStatus>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -24,6 +25,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             DateTimeOffset startTimeUtc = default;
             DateTimeOffset timeGenerated = default;
             string alertType = default;
+            Optional<KillChainIntent> intent = default;
+            Optional<IReadOnlyList<string>> techniques = default;
             EntityTimelineKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,13 +75,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     alertType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("intent"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    intent = new KillChainIntent(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("techniques"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    techniques = array;
+                    continue;
+                }
                 if (property.NameEquals("kind"))
                 {
                     kind = new EntityTimelineKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new SecurityAlertTimelineItem(kind, azureResourceId, productName.Value, description.Value, displayName, severity, endTimeUtc, startTimeUtc, timeGenerated, alertType);
+            return new SecurityAlertTimelineItem(kind, azureResourceId, productName.Value, description.Value, displayName, severity, endTimeUtc, startTimeUtc, timeGenerated, alertType, Optional.ToNullable(intent), Optional.ToList(techniques));
         }
     }
 }

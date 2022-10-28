@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -13,13 +14,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ManualTriggerRequestBody
     {
         /// <summary> Initializes a new instance of ManualTriggerRequestBody. </summary>
-        public ManualTriggerRequestBody()
+        /// <param name="logicAppsResourceId"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logicAppsResourceId"/> is null. </exception>
+        public ManualTriggerRequestBody(string logicAppsResourceId)
         {
+            Argument.AssertNotNull(logicAppsResourceId, nameof(logicAppsResourceId));
+
+            LogicAppsResourceId = logicAppsResourceId;
         }
 
         /// <summary> Gets or sets the tenant id. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> Gets or sets the logic apps resource id. </summary>
-        public string LogicAppsResourceId { get; set; }
+        /// <summary> Gets the logic apps resource id. </summary>
+        public string LogicAppsResourceId { get; }
     }
 }

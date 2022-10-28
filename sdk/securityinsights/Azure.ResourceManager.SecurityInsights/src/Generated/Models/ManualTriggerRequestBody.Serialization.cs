@@ -20,11 +20,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("tenantId");
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(LogicAppsResourceId))
-            {
-                writer.WritePropertyName("logicAppsResourceId");
-                writer.WriteStringValue(LogicAppsResourceId);
-            }
+            writer.WritePropertyName("logicAppsResourceId");
+            writer.WriteStringValue(LogicAppsResourceId);
             writer.WriteEndObject();
         }
     }

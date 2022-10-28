@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Settings for how to dynamically override alert static details. </summary>
@@ -13,6 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of AlertDetailsOverride. </summary>
         public AlertDetailsOverride()
         {
+            AlertDynamicProperties = new ChangeTrackingList<AlertPropertyMapping>();
         }
 
         /// <summary> Initializes a new instance of AlertDetailsOverride. </summary>
@@ -20,12 +24,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="alertDescriptionFormat"> the format containing columns name(s) to override the alert description. </param>
         /// <param name="alertTacticsColumnName"> the column name to take the alert tactics from. </param>
         /// <param name="alertSeverityColumnName"> the column name to take the alert severity from. </param>
-        internal AlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName)
+        /// <param name="alertDynamicProperties"> List of additional dynamic properties to override. </param>
+        internal AlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName, IList<AlertPropertyMapping> alertDynamicProperties)
         {
             AlertDisplayNameFormat = alertDisplayNameFormat;
             AlertDescriptionFormat = alertDescriptionFormat;
             AlertTacticsColumnName = alertTacticsColumnName;
             AlertSeverityColumnName = alertSeverityColumnName;
+            AlertDynamicProperties = alertDynamicProperties;
         }
 
         /// <summary> the format containing columns name(s) to override the alert name. </summary>
@@ -36,5 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string AlertTacticsColumnName { get; set; }
         /// <summary> the column name to take the alert severity from. </summary>
         public string AlertSeverityColumnName { get; set; }
+        /// <summary> List of additional dynamic properties to override. </summary>
+        public IList<AlertPropertyMapping> AlertDynamicProperties { get; }
     }
 }

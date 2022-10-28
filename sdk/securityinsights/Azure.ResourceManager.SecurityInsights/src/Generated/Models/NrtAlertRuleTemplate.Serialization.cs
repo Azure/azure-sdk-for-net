@@ -113,6 +113,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("alertDetailsOverride");
                 writer.WriteObjectValue(AlertDetailsOverride);
             }
+            if (Optional.IsDefined(EventGroupingSettings))
+            {
+                writer.WritePropertyName("eventGroupingSettings");
+                writer.WriteObjectValue(EventGroupingSettings);
+            }
+            if (Optional.IsCollectionDefined(SentinelEntitiesMappings))
+            {
+                writer.WritePropertyName("sentinelEntitiesMappings");
+                writer.WriteStartArray();
+                foreach (var item in SentinelEntitiesMappings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -139,6 +154,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IDictionary<string, string>> customDetails = default;
             Optional<IList<EntityMapping>> entityMappings = default;
             Optional<AlertDetailsOverride> alertDetailsOverride = default;
+            Optional<EventGroupingSettings> eventGroupingSettings = default;
+            Optional<IList<SentinelEntityMapping>> sentinelEntitiesMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -335,11 +352,36 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             alertDetailsOverride = AlertDetailsOverride.DeserializeAlertDetailsOverride(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("eventGroupingSettings"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            eventGroupingSettings = EventGroupingSettings.DeserializeEventGroupingSettings(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("sentinelEntitiesMappings"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<SentinelEntityMapping> array = new List<SentinelEntityMapping>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SentinelEntityMapping.DeserializeSentinelEntityMapping(item));
+                            }
+                            sentinelEntitiesMappings = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new NrtAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(lastUpdatedDateUTC), Optional.ToNullable(createdDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(tactics), Optional.ToList(techniques), query.Value, Optional.ToNullable(severity), version.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value);
+            return new NrtAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(lastUpdatedDateUTC), Optional.ToNullable(createdDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(tactics), Optional.ToList(techniques), query.Value, Optional.ToNullable(severity), version.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value, eventGroupingSettings.Value, Optional.ToList(sentinelEntitiesMappings));
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Techniques = new ChangeTrackingList<string>();
             CustomDetails = new ChangeTrackingDictionary<string, string>();
             EntityMappings = new ChangeTrackingList<EntityMapping>();
+            SentinelEntitiesMappings = new ChangeTrackingList<SentinelEntityMapping>();
             Kind = AlertRuleKind.NRT;
         }
 
@@ -50,7 +51,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
         /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
         /// <param name="alertDetailsOverride"> The alert details override settings. </param>
-        internal NrtAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, string alertRuleTemplateName, string templateVersion, string description, string query, IList<AttackTactic> tactics, IList<string> techniques, string displayName, bool? enabled, DateTimeOffset? lastModifiedUtc, TimeSpan? suppressionDuration, bool? suppressionEnabled, AlertSeverity? severity, IncidentConfiguration incidentConfiguration, IDictionary<string, string> customDetails, IList<EntityMapping> entityMappings, AlertDetailsOverride alertDetailsOverride) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="eventGroupingSettings"> The event grouping settings. </param>
+        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
+        internal NrtAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, string alertRuleTemplateName, string templateVersion, string description, string query, IList<AttackTactic> tactics, IList<string> techniques, string displayName, bool? enabled, DateTimeOffset? lastModifiedUtc, TimeSpan? suppressionDuration, bool? suppressionEnabled, AlertSeverity? severity, IncidentConfiguration incidentConfiguration, IDictionary<string, string> customDetails, IList<EntityMapping> entityMappings, AlertDetailsOverride alertDetailsOverride, EventGroupingSettings eventGroupingSettings, IList<SentinelEntityMapping> sentinelEntitiesMappings) : base(id, name, resourceType, systemData, kind, etag)
         {
             AlertRuleTemplateName = alertRuleTemplateName;
             TemplateVersion = templateVersion;
@@ -68,6 +71,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             CustomDetails = customDetails;
             EntityMappings = entityMappings;
             AlertDetailsOverride = alertDetailsOverride;
+            EventGroupingSettings = eventGroupingSettings;
+            SentinelEntitiesMappings = sentinelEntitiesMappings;
             Kind = kind;
         }
 
@@ -103,5 +108,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IList<EntityMapping> EntityMappings { get; }
         /// <summary> The alert details override settings. </summary>
         public AlertDetailsOverride AlertDetailsOverride { get; set; }
+        /// <summary> The event grouping settings. </summary>
+        internal EventGroupingSettings EventGroupingSettings { get; set; }
+        /// <summary> The event grouping aggregation kinds. </summary>
+        public EventGroupingAggregationKind? EventGroupingAggregationKind
+        {
+            get => EventGroupingSettings is null ? default : EventGroupingSettings.AggregationKind;
+            set
+            {
+                if (EventGroupingSettings is null)
+                    EventGroupingSettings = new EventGroupingSettings();
+                EventGroupingSettings.AggregationKind = value;
+            }
+        }
+
+        /// <summary> Array of the sentinel entity mappings of the alert rule. </summary>
+        public IList<SentinelEntityMapping> SentinelEntitiesMappings { get; }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="conditions">
         /// The conditions to evaluate to determine if the automation rule should be triggered on a given object.
         /// Please note <see cref="AutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PropertyConditionProperties"/>, <see cref="PropertyArrayChangedConditionProperties"/> and <see cref="PropertyChangedConditionProperties"/>.
+        /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="PropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="PropertyArrayChangedConditionProperties"/> and <see cref="PropertyChangedConditionProperties"/>.
         /// </param>
         internal AutomationRuleTriggeringLogic(bool isEnabled, DateTimeOffset? expirationTimeUtc, TriggersOn triggersOn, TriggersWhen triggersWhen, IList<AutomationRuleCondition> conditions)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary>
         /// The conditions to evaluate to determine if the automation rule should be triggered on a given object.
         /// Please note <see cref="AutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PropertyConditionProperties"/>, <see cref="PropertyArrayChangedConditionProperties"/> and <see cref="PropertyChangedConditionProperties"/>.
+        /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="PropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="PropertyArrayChangedConditionProperties"/> and <see cref="PropertyChangedConditionProperties"/>.
         /// </summary>
         public IList<AutomationRuleCondition> Conditions { get; }
     }

@@ -89,6 +89,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("alertDetailsOverride");
                 writer.WriteObjectValue(AlertDetailsOverride);
             }
+            if (Optional.IsCollectionDefined(SentinelEntitiesMappings))
+            {
+                writer.WritePropertyName("sentinelEntitiesMappings");
+                writer.WriteStartArray();
+                foreach (var item in SentinelEntitiesMappings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(AlertRuleTemplateName))
             {
                 writer.WritePropertyName("alertRuleTemplateName");
@@ -171,6 +181,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IDictionary<string, string>> customDetails = default;
             Optional<IList<EntityMapping>> entityMappings = default;
             Optional<AlertDetailsOverride> alertDetailsOverride = default;
+            Optional<IList<SentinelEntityMapping>> sentinelEntitiesMappings = default;
             Optional<string> alertRuleTemplateName = default;
             Optional<string> templateVersion = default;
             Optional<string> description = default;
@@ -338,6 +349,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             alertDetailsOverride = AlertDetailsOverride.DeserializeAlertDetailsOverride(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("sentinelEntitiesMappings"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<SentinelEntityMapping> array = new List<SentinelEntityMapping>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SentinelEntityMapping.DeserializeSentinelEntityMapping(item));
+                            }
+                            sentinelEntitiesMappings = array;
+                            continue;
+                        }
                         if (property0.NameEquals("alertRuleTemplateName"))
                         {
                             alertRuleTemplateName = property0.Value.GetString();
@@ -442,7 +468,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new ScheduledAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value, alertRuleTemplateName.Value, templateVersion.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(suppressionDuration), Optional.ToNullable(suppressionEnabled), Optional.ToList(tactics), Optional.ToList(techniques), incidentConfiguration.Value);
+            return new ScheduledAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value, Optional.ToList(sentinelEntitiesMappings), alertRuleTemplateName.Value, templateVersion.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(suppressionDuration), Optional.ToNullable(suppressionEnabled), Optional.ToList(tactics), Optional.ToList(techniques), incidentConfiguration.Value);
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             CustomDetails = new ChangeTrackingDictionary<string, string>();
             EntityMappings = new ChangeTrackingList<EntityMapping>();
+            SentinelEntitiesMappings = new ChangeTrackingList<SentinelEntityMapping>();
             Tactics = new ChangeTrackingList<AttackTactic>();
             Techniques = new ChangeTrackingList<string>();
             Kind = AlertRuleKind.Scheduled;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
         /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
         /// <param name="alertDetailsOverride"> The alert details override settings. </param>
+        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
         /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
         /// <param name="templateVersion"> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </param>
         /// <param name="description"> The description of the alert rule. </param>
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="tactics"> The tactics of the alert rule. </param>
         /// <param name="techniques"> The techniques of the alert rule. </param>
         /// <param name="incidentConfiguration"> The settings of the incidents that created from alerts triggered by this analytics rule. </param>
-        internal ScheduledAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, AlertSeverity? severity, TriggerOperator? triggerOperator, int? triggerThreshold, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<EntityMapping> entityMappings, AlertDetailsOverride alertDetailsOverride, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? enabled, DateTimeOffset? lastModifiedUtc, TimeSpan? suppressionDuration, bool? suppressionEnabled, IList<AttackTactic> tactics, IList<string> techniques, IncidentConfiguration incidentConfiguration) : base(id, name, resourceType, systemData, kind, etag)
+        internal ScheduledAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, AlertSeverity? severity, TriggerOperator? triggerOperator, int? triggerThreshold, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<EntityMapping> entityMappings, AlertDetailsOverride alertDetailsOverride, IList<SentinelEntityMapping> sentinelEntitiesMappings, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? enabled, DateTimeOffset? lastModifiedUtc, TimeSpan? suppressionDuration, bool? suppressionEnabled, IList<AttackTactic> tactics, IList<string> techniques, IncidentConfiguration incidentConfiguration) : base(id, name, resourceType, systemData, kind, etag)
         {
             Query = query;
             QueryFrequency = queryFrequency;
@@ -67,6 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             CustomDetails = customDetails;
             EntityMappings = entityMappings;
             AlertDetailsOverride = alertDetailsOverride;
+            SentinelEntitiesMappings = sentinelEntitiesMappings;
             AlertRuleTemplateName = alertRuleTemplateName;
             TemplateVersion = templateVersion;
             Description = description;
@@ -113,6 +116,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IList<EntityMapping> EntityMappings { get; }
         /// <summary> The alert details override settings. </summary>
         public AlertDetailsOverride AlertDetailsOverride { get; set; }
+        /// <summary> Array of the sentinel entity mappings of the alert rule. </summary>
+        public IList<SentinelEntityMapping> SentinelEntitiesMappings { get; }
         /// <summary> The Name of the alert rule template used to create this rule. </summary>
         public string AlertRuleTemplateName { get; set; }
         /// <summary> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </summary>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Holds the alert intent stage(s) mapping for this alert. </summary>
+    /// <summary> The intent of the alert. </summary>
     public readonly partial struct KillChainIntent : IEquatable<KillChainIntent>
     {
         private readonly string _value;

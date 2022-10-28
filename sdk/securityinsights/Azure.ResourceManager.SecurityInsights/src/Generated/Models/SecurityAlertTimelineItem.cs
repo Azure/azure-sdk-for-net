@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             StartTimeUtc = startTimeUtc;
             TimeGenerated = timeGenerated;
             AlertType = alertType;
+            Techniques = new ChangeTrackingList<string>();
             Kind = EntityTimelineKind.SecurityAlert;
         }
 
@@ -49,7 +51,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="startTimeUtc"> The alert start time. </param>
         /// <param name="timeGenerated"> The alert generated time. </param>
         /// <param name="alertType"> The name of the alert type. </param>
-        internal SecurityAlertTimelineItem(EntityTimelineKind kind, string azureResourceId, string productName, string description, string displayName, AlertSeverity severity, DateTimeOffset endTimeUtc, DateTimeOffset startTimeUtc, DateTimeOffset timeGenerated, string alertType) : base(kind)
+        /// <param name="intent"> The intent of the alert. </param>
+        /// <param name="techniques"> The techniques of the alert. </param>
+        internal SecurityAlertTimelineItem(EntityTimelineKind kind, string azureResourceId, string productName, string description, string displayName, AlertSeverity severity, DateTimeOffset endTimeUtc, DateTimeOffset startTimeUtc, DateTimeOffset timeGenerated, string alertType, KillChainIntent? intent, IReadOnlyList<string> techniques) : base(kind)
         {
             AzureResourceId = azureResourceId;
             ProductName = productName;
@@ -60,6 +64,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             StartTimeUtc = startTimeUtc;
             TimeGenerated = timeGenerated;
             AlertType = alertType;
+            Intent = intent;
+            Techniques = techniques;
             Kind = kind;
         }
 
@@ -81,5 +87,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public DateTimeOffset TimeGenerated { get; }
         /// <summary> The name of the alert type. </summary>
         public string AlertType { get; }
+        /// <summary> The intent of the alert. </summary>
+        public KillChainIntent? Intent { get; }
+        /// <summary> The techniques of the alert. </summary>
+        public IReadOnlyList<string> Techniques { get; }
     }
 }
