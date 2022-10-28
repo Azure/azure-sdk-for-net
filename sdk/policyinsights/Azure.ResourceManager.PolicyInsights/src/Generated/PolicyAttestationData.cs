@@ -41,7 +41,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="evidence"> The evidence supporting the compliance state set in this attestation. </param>
         /// <param name="provisioningState"> The status of the attestation. </param>
         /// <param name="lastComplianceStateChangeOn"> The time the compliance state was last changed in this attestation. </param>
-        internal PolicyAttestationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expireOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangeOn) : base(id, name, resourceType, systemData)
+        /// <param name="assessmentOn"> The time the evidence was assessed. </param>
+        /// <param name="metadata"> Additional metadata for this attestation. </param>
+        internal PolicyAttestationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expireOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangeOn, DateTimeOffset? assessmentOn, BinaryData metadata) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.PolicyInsights
             Evidence = evidence;
             ProvisioningState = provisioningState;
             LastComplianceStateChangeOn = lastComplianceStateChangeOn;
+            AssessmentOn = assessmentOn;
+            Metadata = metadata;
         }
 
         /// <summary> The resource ID of the policy assignment that the attestation is setting the state for. </summary>
@@ -72,5 +76,38 @@ namespace Azure.ResourceManager.PolicyInsights
         public string ProvisioningState { get; }
         /// <summary> The time the compliance state was last changed in this attestation. </summary>
         public DateTimeOffset? LastComplianceStateChangeOn { get; }
+        /// <summary> The time the evidence was assessed. </summary>
+        public DateTimeOffset? AssessmentOn { get; set; }
+        /// <summary>
+        /// Additional metadata for this attestation
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Metadata { get; set; }
     }
 }
