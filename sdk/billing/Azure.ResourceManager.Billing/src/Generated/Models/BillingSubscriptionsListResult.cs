@@ -22,15 +22,19 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of BillingSubscriptionsListResult. </summary>
         /// <param name="value"> The list of billing subscriptions. </param>
+        /// <param name="totalCount"> Total number of records. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal BillingSubscriptionsListResult(IReadOnlyList<BillingSubscriptionData> value, string nextLink)
+        internal BillingSubscriptionsListResult(IReadOnlyList<BillingSubscriptionData> value, int? totalCount, string nextLink)
         {
             Value = value;
+            TotalCount = totalCount;
             NextLink = nextLink;
         }
 
         /// <summary> The list of billing subscriptions. </summary>
         public IReadOnlyList<BillingSubscriptionData> Value { get; }
+        /// <summary> Total number of records. </summary>
+        public int? TotalCount { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
