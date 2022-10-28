@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        internal HttpMessage CreateChangeStateRequest(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment)
+        internal HttpMessage CreateChangeStateRequest(string subscriptionId, Guid alertId, ServiceAlertState newState, Comments comment)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStringValue(comment);
+                content.JsonWriter.WriteObjectValue(comment);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceAlertData>> ChangeStateAsync(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAlertData>> ChangeStateAsync(string subscriptionId, Guid alertId, ServiceAlertState newState, Comments comment = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceAlertData> ChangeState(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
+        public Response<ServiceAlertData> ChangeState(string subscriptionId, Guid alertId, ServiceAlertState newState, Comments comment = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 

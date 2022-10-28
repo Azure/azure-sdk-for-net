@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="comment"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, Comments comment = null, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
             scope.Start();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="comment"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, Comments comment = null, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
             scope.Start();
