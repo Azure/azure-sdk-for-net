@@ -82,7 +82,6 @@ function VerifyAddonsVersion([hashtable]$chart) {
             throw "The stress-test-addons version in use is $($dependency.version), please use versions >= 0.2.0"
         }
     }
-    $addonsVer = $chart.dependencies
 }
 
 function GetUsername() {
