@@ -5,7 +5,7 @@
 ### Features Added
 
 * Add support for exporting Histogram Min and Max ([#32072](https://github.com/Azure/azure-sdk-for-net/pull/32072))
-* Add support for exporting UpDownCounter and ObservableUpDownCounter ([TODO]())
+* Add support for exporting UpDownCounter and ObservableUpDownCounter ([#32170](https://github.com/Azure/azure-sdk-for-net/pull/32170))
 
 ### Breaking Changes
 
