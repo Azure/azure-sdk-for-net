@@ -46,7 +46,7 @@ function GenerateScenarioMatrix(
         $values = $valuesYaml | ConvertFrom-Yaml -Ordered
         if (!$values) {$values = @{}}
 
-        if ($values.ContainsKey('Scenarios')) {
+        if ($values.Contains('Scenarios')) {
             throw "Please use matrix generation for stress test scenarios."
         }
     }

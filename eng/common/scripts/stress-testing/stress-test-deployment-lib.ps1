@@ -41,8 +41,13 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
     $clusterName = ($cluster | ConvertFrom-Json).name
 
     $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json
-    $defaultNamespace = $kubeContext.contexts.Where({ $_.name -eq $clusterName }).context.namespace
 
+    $context = $kubeContext.contexts.Where({ $_.name -eq $clusterName }).context
+    $defaultNamespace = $null
+    if ($context.psobject.properties.name -match 'namespace') {
+        $defaultNamespace = $context.namespace
+    }
+    
     RunOrExitOnFailure az aks get-credentials `
         -n "$clusterName" `
         -g "$clusterGroup" `
