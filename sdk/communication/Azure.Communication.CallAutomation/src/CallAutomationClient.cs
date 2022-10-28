@@ -515,7 +515,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        public static bool IsValidHttpsUri(Uri uri) {
+        private static bool IsValidHttpsUri(Uri uri) {
             if (uri == null)
                 return false;
             var uriString = uri.AbsoluteUri;
