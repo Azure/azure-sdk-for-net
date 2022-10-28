@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataShare
 namespace: Azure.ResourceManager.DataShare
-require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/datashare/resource-manager/readme.md
+require: /mnt/vss/_work/1/s/azure-rest-api-specs/specification/datashare/resource-manager/readme.md
 tag: package-2021-08-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
