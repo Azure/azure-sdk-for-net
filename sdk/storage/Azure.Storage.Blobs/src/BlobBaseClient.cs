@@ -3956,6 +3956,60 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        public virtual Response<BlobCopyInfo> SyncCopyFromUri(
+            BlobBaseClient source,
+            BlobCopyFromUriOptions options = default,
+            CancellationToken cancellationToken = default)
+            => SyncCopyFromUriInternal(
+                source: source.Uri,
+                metadata: options?.Metadata,
+                tags: options?.Tags,
+                accessTier: options?.AccessTier,
+                sourceConditions: options?.SourceConditions,
+                destinationConditions: options?.DestinationConditions,
+                destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
+                legalHold: options?.LegalHold,
+                sourceAuthentication: (HttpAuthorization) default, // TODO: change to bearer token
+                copySourceTags: options?.CopySourceTagsMode,
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
+        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
+        /// which is either public or authorized with a shared access signature.
+        ///
+        /// The size of the source blob can be a maximum length of up to 256 MB.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
+        /// Copy Blob From URL</see>.
+        /// </summary>
+        /// <param name="source">
+        /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
+        /// source blob must either be public or must be authorized via a shared access signature. If the
+        /// source blob is public, no authorization is required to perform the operation. If the size of the
+        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// the source blob has to be block blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobCopyInfo}"/> describing the
+        /// state of the copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         public virtual async Task<Response<BlobCopyInfo>> SyncCopyFromUriAsync(
             Uri source,
             BlobCopyFromUriOptions options = default,

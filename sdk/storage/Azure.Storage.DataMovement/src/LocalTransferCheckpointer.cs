@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
@@ -17,6 +19,10 @@ namespace Azure.Storage.DataMovement
     public class LocalTransferCheckpointer : TransferCheckpointer
     {
         internal string _pathToCheckpointer;
+        /// <summary>
+        /// Stores references to the memory mapped files stored by ids
+        /// </summary>
+        internal Dictionary<string, MemoryMappedPlanFile> _memoryMappedFiles;
 
         /// <summary>
         /// Constructor
@@ -39,8 +45,14 @@ namespace Azure.Storage.DataMovement
         /// <exception cref="NotImplementedException"></exception>
         public override Task<Stream> ReadCheckPointStreamAsync(string id)
         {
-            // TODO: Replace to open with MMF
-            return Task.FromResult<Stream>(File.OpenRead(_pathToCheckpointer));
+            if (_memoryMappedFiles.TryGetValue(id, out MemoryMappedPlanFile idMappedFile))
+            {
+                return Task.FromResult<Stream>(idMappedFile.MemoryMappedFileReference.CreateViewStream());
+            }
+            else
+            {
+                throw new ArgumentException($"Checkpointer information from Transfer id {id}, was not found. Cannot read from plan file");
+            }
         }
 
         /// <summary>
@@ -51,11 +63,31 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <param name="offset"></param>
         /// <param name="buffer"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override Task WriteToCheckpointAsync(string id, long offset, byte[] buffer)
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        public override async Task WriteToCheckpointAsync(string id, long offset, byte[] buffer, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (buffer?.Length == 0)
+            {
+                throw new ArgumentException("Buffer cannot be null or empty");
+            }
+
+            if (!_memoryMappedFiles.ContainsKey(id))
+            {
+                // Memory mapped file does not yet exist.
+                MemoryMappedPlanFile idMappedFile = new MemoryMappedPlanFile(id);
+                _memoryMappedFiles.Add(id, idMappedFile);
+            }
+            await _memoryMappedFiles[id].Semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+            using (MemoryMappedViewAccessor accessor = _memoryMappedFiles[id].MemoryMappedFileReference
+                .CreateViewAccessor(offset, buffer.Length, MemoryMappedFileAccess.Write))
+            {
+                accessor.WriteArray(0, buffer, 0, buffer.Length);
+            }
         }
 
         /// <summary>

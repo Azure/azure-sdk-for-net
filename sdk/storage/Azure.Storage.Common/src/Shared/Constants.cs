@@ -737,8 +737,12 @@ namespace Azure.Storage
             /// </summary>
             internal static class PlanFile
             {
-                // TBD
-                internal const string FileExtension = ".plan";
+                // Job Plan file extension. e.g. the file extension will look like {transferid}--{jobpartNumber}.steV{schemaVersion}
+                internal const string FileExtension = ".steV";
+                internal const string JobPlanFileNameDelimiter = "--";
+                internal const string SchemaVersion = "b1"; // TODO: remove b for beta
+                internal const int JobPartLength = 5;
+                internal const int IdSize = 32;
                 // TODO: might change the value
                 internal const long MemoryMappedFileSize = 4 * Constants.MB;
                 internal const int CustomHeaderMaxBytes = 256;
