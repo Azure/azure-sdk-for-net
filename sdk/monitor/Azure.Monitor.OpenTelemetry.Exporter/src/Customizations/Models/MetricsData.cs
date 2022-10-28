@@ -41,6 +41,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 MetricType.LongGauge => true,
                 MetricType.LongSum => true,
                 MetricType.Histogram => true,
+                MetricType.DoubleSumNonMonotonic => true,
+                MetricType.LongSumNonMonotonic => true,
                 _ => false
             };
     }

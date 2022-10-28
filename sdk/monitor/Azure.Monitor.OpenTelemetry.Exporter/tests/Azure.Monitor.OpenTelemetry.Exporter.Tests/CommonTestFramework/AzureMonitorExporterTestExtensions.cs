@@ -50,6 +50,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         }
 
         /// <summary>
+        /// Extension methods to simplify registering of <see cref="AzureMonitorMetricExporter"/> with <see cref="MockTransmitter"/> for unit tests.
+        /// </summary>
+        internal static MeterProviderBuilder AddAzureMonitorMetricExporterForTest(this MeterProviderBuilder builder, out ConcurrentBag<TelemetryItem> telemetryItems, out MetricReader metricReader)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            telemetryItems = new ConcurrentBag<TelemetryItem>();
+
+            metricReader = new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(telemetryItems)));
+
+            return builder.AddReader(metricReader);
+        }
+
+        /// <summary>
         /// Extension methods to simplify registering of <see cref="AzureMonitorTraceExporter"/> with <see cref="MockTransmitter"/> for unit tests.
         /// </summary>
         internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder, out ConcurrentBag<TelemetryItem> telemetryItems)
