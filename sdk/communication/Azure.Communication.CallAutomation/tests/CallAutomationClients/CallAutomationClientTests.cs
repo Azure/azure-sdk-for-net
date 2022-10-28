@@ -306,7 +306,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
             ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.CreateCallOptionsNullCallerId));
+            Assert.True(ex?.Message.Contains("Value cannot be null.\r\nParameter name: CallerId"));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall_NoCallbackUri))]

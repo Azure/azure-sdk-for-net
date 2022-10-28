@@ -20,10 +20,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="targets"> The targets of the call. </param>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targets"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
         public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, CallSourceInternal source, string callbackUri)
         {
-            Argument.AssertNotNull(targets, nameof(targets));
+            Argument.AssertNotNullOrEmpty(targets, nameof(targets));
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 

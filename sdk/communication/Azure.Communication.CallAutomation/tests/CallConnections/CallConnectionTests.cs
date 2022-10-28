@@ -171,7 +171,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
             ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(targetParticipant)));
             Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.TransferToParticipantOptionsNullSourceCallerId));
+            Assert.True(ex?.Message.Contains("Value cannot be null.\r\nParameter name: SourceCallerId"));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
@@ -258,7 +258,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
             ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.AddParticipants(new AddParticipantsOptions(participantsToAdd)));
             Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.AddParticipantsOptionsNullSourceCallerId));
+            Assert.True(ex?.Message.Contains("Value cannot be null.\r\nParameter name: SourceCallerId"));
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
@@ -362,7 +362,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [Test]
-        public void RemoveParticipants_EmptyParticipantsToAdd()
+        public void RemoveParticipants_EmptyParticipantsToRemove()
         {
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
 

@@ -260,9 +260,9 @@ namespace Azure.Communication.CallAutomation
         private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
         {
             // when transfer to a PSTN participant, the SourceCallerId must be provided.
-            if ((options.TargetParticipant is PhoneNumberIdentifier) && options.SourceCallerId == null)
+            if (options.TargetParticipant is PhoneNumberIdentifier)
             {
-                throw new ArgumentNullException(nameof(options.SourceCallerId), CallAutomationErrorMessages.TransferToParticipantOptionsNullSourceCallerId);
+                Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
             }
 
             TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
@@ -349,9 +349,9 @@ namespace Azure.Communication.CallAutomation
         private static AddParticipantsRequestInternal CreateAddParticipantRequest(AddParticipantsOptions options)
         {
             // when add PSTN participants, the SourceCallerId must be provided.
-            if (options.ParticipantsToAdd.Any(participant => participant is PhoneNumberIdentifier) && options.SourceCallerId == null)
+            if (options.ParticipantsToAdd.Any(participant => participant is PhoneNumberIdentifier))
             {
-                throw new ArgumentNullException(nameof(options.SourceCallerId), CallAutomationErrorMessages.AddParticipantsOptionsNullSourceCallerId);
+                Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
             }
 
             AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(options.ParticipantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
@@ -481,6 +481,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"> The Operation Context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentException"> <paramref name="participantsToRemove"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
         public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
@@ -531,6 +532,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"> The Operation Context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentException"> <paramref name="participantsToRemove"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
         public virtual Response<RemoveParticipantsResult> RemoveParticipants(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {

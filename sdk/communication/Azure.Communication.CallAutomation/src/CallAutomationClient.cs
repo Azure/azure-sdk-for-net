@@ -482,9 +482,9 @@ namespace Azure.Communication.CallAutomation
         private static CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
             // when create call to PSTN, the CallSource.CallerId must be provided.
-            if (options.Targets.Any(target => target is PhoneNumberIdentifier) && options.CallSource.CallerId == null)
+            if (options.Targets.Any(target => target is PhoneNumberIdentifier))
             {
-                throw new ArgumentNullException(nameof(options.CallSource.CallerId), CallAutomationErrorMessages.CreateCallOptionsNullCallerId);
+                Argument.AssertNotNull(options.CallSource.CallerId, nameof(options.CallSource.CallerId));
             }
 
             // validate callbackUri
