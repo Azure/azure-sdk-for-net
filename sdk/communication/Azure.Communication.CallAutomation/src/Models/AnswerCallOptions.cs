@@ -33,11 +33,6 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
         /// Repeatability Headers.
         /// </summary>
         public RepeatabilityHeaders RepeatabilityHeaders { get; set; }

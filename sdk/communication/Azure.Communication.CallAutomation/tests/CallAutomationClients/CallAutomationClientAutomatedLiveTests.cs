@@ -149,8 +149,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     if (ex.Status == 404)
                     {
                         // doesn't exist, as expected
-                        Assert.Pass();
                         callConnectionId = null;
+                        Assert.Pass();
                     }
                 }
             }

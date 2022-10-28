@@ -31,6 +31,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The callback uri. </summary>
         public string CallbackUri { get; }
         /// <summary> Media Streaming Configuration. </summary>
-        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        public MediaStreamingConfiguration MediaStreamingConfiguration { get; set; }
     }
 }
