@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> Initializes a new instance of ShortDescription. </summary>
-        /// <param name="problem"> The issue or opportunity identified by the recommendation. </param>
-        /// <param name="solution"> The remediation action suggested by the recommendation. </param>
+        /// <param name="problem"> The issue or opportunity identified by the recommendation and proposed solution. </param>
+        /// <param name="solution"> The issue or opportunity identified by the recommendation and proposed solution. </param>
         internal ShortDescription(string problem, string solution)
         {
             Problem = problem;
             Solution = solution;
         }
 
-        /// <summary> The issue or opportunity identified by the recommendation. </summary>
+        /// <summary> The issue or opportunity identified by the recommendation and proposed solution. </summary>
         public string Problem { get; set; }
-        /// <summary> The remediation action suggested by the recommendation. </summary>
+        /// <summary> The issue or opportunity identified by the recommendation and proposed solution. </summary>
         public string Solution { get; set; }
     }
 }

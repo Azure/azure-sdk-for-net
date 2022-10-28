@@ -66,11 +66,6 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("recommendationTypeId");
                 writer.WriteStringValue(RecommendationTypeId);
             }
-            if (Optional.IsDefined(Risk))
-            {
-                writer.WritePropertyName("risk");
-                writer.WriteStringValue(Risk.Value.ToString());
-            }
             if (Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription");
@@ -189,7 +184,6 @@ namespace Azure.ResourceManager.Advisor
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<IDictionary<string, BinaryData>> metadata = default;
             Optional<string> recommendationTypeId = default;
-            Optional<Risk> risk = default;
             Optional<ShortDescription> shortDescription = default;
             Optional<IList<Guid>> suppressionIds = default;
             Optional<IDictionary<string, string>> extendedProperties = default;
@@ -295,16 +289,6 @@ namespace Azure.ResourceManager.Advisor
                         if (property0.NameEquals("recommendationTypeId"))
                         {
                             recommendationTypeId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("risk"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            risk = new Risk(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("shortDescription"))
@@ -431,7 +415,7 @@ namespace Azure.ResourceManager.Advisor
                     continue;
                 }
             }
-            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), Optional.ToDictionary(metadata), recommendationTypeId.Value, Optional.ToNullable(risk), shortDescription.Value, Optional.ToList(suppressionIds), Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, Optional.ToList(actions), Optional.ToDictionary(remediation), Optional.ToDictionary(exposedMetadataProperties));
+            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), Optional.ToDictionary(metadata), recommendationTypeId.Value, shortDescription.Value, Optional.ToList(suppressionIds), Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, Optional.ToList(actions), Optional.ToDictionary(remediation), Optional.ToDictionary(exposedMetadataProperties));
         }
     }
 }

@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.Advisor
         public string RecommendationTypeId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Remediation { get { throw null; } }
         public Azure.ResourceManager.Advisor.Models.ResourceMetadata ResourceMetadata { get { throw null; } set { } }
-        public Azure.ResourceManager.Advisor.Models.Risk? Risk { get { throw null; } set { } }
         public Azure.ResourceManager.Advisor.Models.ShortDescription ShortDescription { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Guid> SuppressionIds { get { throw null; } }
     }
@@ -266,25 +265,6 @@ namespace Azure.ResourceManager.Advisor.Models
         public string ResourceId { get { throw null; } set { } }
         public string Singular { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Risk : System.IEquatable<Azure.ResourceManager.Advisor.Models.Risk>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Risk(string value) { throw null; }
-        public static Azure.ResourceManager.Advisor.Models.Risk Error { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.Risk None { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.Risk Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Advisor.Models.Risk other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Advisor.Models.Risk left, Azure.ResourceManager.Advisor.Models.Risk right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.Risk (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Advisor.Models.Risk left, Azure.ResourceManager.Advisor.Models.Risk right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Scenario : System.IEquatable<Azure.ResourceManager.Advisor.Models.Scenario>
