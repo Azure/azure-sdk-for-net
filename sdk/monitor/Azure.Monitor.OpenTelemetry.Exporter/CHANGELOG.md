@@ -4,6 +4,8 @@
 
 ### Features Added
 
+* Add support for exporting Histogram Min and Max ([#32072](https://github.com/Azure/azure-sdk-for-net/pull/32072))
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -24,30 +24,12 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="participantId"/>, <paramref name="itn"/>, <paramref name="maskedItn"/>, <paramref name="text"/> or <paramref name="lexical"/> is null. </exception>
         public TranscriptConversationItem(string id, string participantId, string itn, string maskedItn, string text, string lexical) : base(id, participantId)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (participantId == null)
-            {
-                throw new ArgumentNullException(nameof(participantId));
-            }
-            if (itn == null)
-            {
-                throw new ArgumentNullException(nameof(itn));
-            }
-            if (maskedItn == null)
-            {
-                throw new ArgumentNullException(nameof(maskedItn));
-            }
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (lexical == null)
-            {
-                throw new ArgumentNullException(nameof(lexical));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(participantId, nameof(participantId));
+            Argument.AssertNotNull(itn, nameof(itn));
+            Argument.AssertNotNull(maskedItn, nameof(maskedItn));
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(lexical, nameof(lexical));
 
             Itn = itn;
             MaskedItn = maskedItn;

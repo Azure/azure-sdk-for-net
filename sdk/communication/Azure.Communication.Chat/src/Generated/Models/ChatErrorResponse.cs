@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal ChatErrorResponse(ChatError error)
         {
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
+            Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
         }

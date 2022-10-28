@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication.MediaComposition.Models;
+using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
@@ -18,10 +19,7 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public RoomInput(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             Kind = MediaInputType.Room;

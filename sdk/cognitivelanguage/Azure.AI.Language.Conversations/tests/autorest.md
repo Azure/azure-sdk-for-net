@@ -35,7 +35,8 @@ directive:
   transform: >
     $["enum"] = [
       "conversationalPIIResults",
-      "conversationalSummarizationResults"
+      "conversationalSummarizationResults",
+      "conversationalSentimentResults"
     ];
 
 - from: swagger-document
@@ -47,6 +48,11 @@ directive:
   where: $.definitions.AnalyzeConversationSummarizationResult
   transform: >
     $["x-ms-discriminator-value"] = "conversationalSummarizationResults";
+
+- from: swagger-document
+  where: $.definitions.AnalyzeConversationSentimentResult
+  transform: >
+    $["x-ms-discriminator-value"] = "conversationalSentimentResults";
 
 # Always default to UTF16 string indices.
 - from: swagger-document

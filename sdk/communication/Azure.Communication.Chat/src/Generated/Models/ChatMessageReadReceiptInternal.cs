@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -20,14 +21,8 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="senderCommunicationIdentifier"/> or <paramref name="chatMessageId"/> is null. </exception>
         internal ChatMessageReadReceiptInternal(CommunicationIdentifierModel senderCommunicationIdentifier, string chatMessageId, DateTimeOffset readOn)
         {
-            if (senderCommunicationIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(senderCommunicationIdentifier));
-            }
-            if (chatMessageId == null)
-            {
-                throw new ArgumentNullException(nameof(chatMessageId));
-            }
+            Argument.AssertNotNull(senderCommunicationIdentifier, nameof(senderCommunicationIdentifier));
+            Argument.AssertNotNull(chatMessageId, nameof(chatMessageId));
 
             SenderCommunicationIdentifier = senderCommunicationIdentifier;
             ChatMessageId = chatMessageId;

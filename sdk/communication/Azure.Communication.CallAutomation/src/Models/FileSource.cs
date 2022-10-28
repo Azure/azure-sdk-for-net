@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The group call locator. </summary>
+    /// <summary> The File Source. </summary>
     public class FileSource : PlaySource
     {
         /// <summary> The Uri of the file. </summary>

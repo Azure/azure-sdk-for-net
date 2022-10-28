@@ -81,7 +81,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/analyze-conversation
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversation-analysis-runtime/analyze-conversation
 
 Request Body:
 
@@ -209,7 +209,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 <remarks>
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/analyze-conversation
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversation-analysis-runtime/analyze-conversation
 
 Request Body:
 
@@ -310,7 +310,7 @@ Get the status of an analysis job. A job may consist of one or more tasks. Once 
 
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ob-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversation-analysis-runtime/job-status
 
 Response Body:
 
@@ -396,7 +396,7 @@ Get the status of an analysis job. A job may consist of one or more tasks. Once 
 
 Below is the JSON schema for the response payload.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ob-status
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversation-analysis-runtime/job-status
 
 Response Body:
 
@@ -547,7 +547,7 @@ Submit a collection of conversations for analysis. Specify one or more unique ta
 
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ubmit-job
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversation-analysis-runtime/submit-job
 
 Request Body:
 
@@ -722,7 +722,7 @@ Submit a collection of conversations for analysis. Specify one or more unique ta
 
 Below is the JSON schema for the request and response payloads.
 Additional information can be found in the service REST API documentation:
-https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ubmit-job
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversation-analysis-runtime/submit-job
 
 Request Body:
 

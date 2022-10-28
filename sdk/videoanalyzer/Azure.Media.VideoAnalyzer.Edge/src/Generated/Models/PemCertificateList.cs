@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificates"/> is null. </exception>
         public PemCertificateList(IEnumerable<string> certificates)
         {
-            if (certificates == null)
-            {
-                throw new ArgumentNullException(nameof(certificates));
-            }
+            Argument.AssertNotNull(certificates, nameof(certificates));
 
             Certificates = certificates.ToList();
             Type = "#Microsoft.VideoAnalyzer.PemCertificateList";

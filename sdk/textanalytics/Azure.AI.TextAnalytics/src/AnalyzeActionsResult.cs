@@ -20,7 +20,8 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults,
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
-            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults
             )
         {
             ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
@@ -32,6 +33,7 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyResults = singleLabelClassifyActionResults;
             MultiLabelClassifyResults = multiLabelClassifyActionResults;
             AnalyzeHealthcareEntitiesResults = analyzeHealthcareEntitiesActionResults;
+            ExtractSummaryResults = extractSummaryActionResults;
         }
 
         internal AnalyzeActionsResult(
@@ -51,6 +53,7 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyResults = Array.Empty<MultiLabelClassifyActionResult>();
             RecognizeCustomEntitiesResults = Array.Empty<RecognizeCustomEntitiesActionResult>();
             AnalyzeHealthcareEntitiesResults = Array.Empty<AnalyzeHealthcareEntitiesActionResult>();
+            ExtractSummaryResults = Array.Empty<ExtractSummaryActionResult>();
         }
 
         /// <summary>
@@ -97,5 +100,10 @@ namespace Azure.AI.TextAnalytics
         /// Determines the collection of <see cref="AnalyzeHealthcareEntitiesResult"/>.
         /// </summary>
         public IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> AnalyzeHealthcareEntitiesResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryResults { get; }
     }
 }

@@ -20,14 +20,8 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="participantId"/> is null. </exception>
         public ConversationItemBase(string id, string participantId)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (participantId == null)
-            {
-                throw new ArgumentNullException(nameof(participantId));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(participantId, nameof(participantId));
 
             Id = id;
             ParticipantId = participantId;

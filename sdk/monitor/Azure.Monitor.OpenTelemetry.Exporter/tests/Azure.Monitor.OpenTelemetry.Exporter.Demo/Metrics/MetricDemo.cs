@@ -41,13 +41,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
             myFruitCounter.Add(4, new("name", "lemon"), new("color", "yellow"));
 
             // Histogram Example
-            Histogram<long> myHistogram = meter.CreateHistogram<long>("MyHistogram");
+            Histogram<long> myFruitSalePrice = meter.CreateHistogram<long>("MyFruitSalePrice");
 
             var random = new Random();
-            for (int i = 0; i < 1000; i++)
-            {
-                myHistogram.Record(random.Next(1, 1000), new("tag1", "value1"), new("tag2", "value2"));
-            }
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "red"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "green"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "red"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
 
             // Guage Example
             var process = Process.GetCurrentProcess();
