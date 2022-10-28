@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class GetSettingsResult
     {
         internal GetSettingsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.KeyVaultSetting> Value { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.KeyVaultSetting> Settings { get { throw null; } }
     }
     public partial class KeyVaultAccessControlClient
     {
@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Administration
     {
         public static Azure.Security.KeyVault.Administration.KeyVaultBackupOperation BackupOperation(Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id, System.Uri blobContainerUri, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string errorMessage = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultBackupResult BackupResult(System.Uri folderUri, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { throw null; }
-        public static Azure.Security.KeyVault.Administration.GetSettingsResult GetSettingsResult(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultSetting> value = null) { throw null; }
+        public static Azure.Security.KeyVault.Administration.GetSettingsResult GetSettingsResult(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultSetting> settings = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment KeyVaultRoleAssignment(string id = null, string name = null, string type = null, Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties properties = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties KeyVaultRoleAssignmentProperties(Azure.Security.KeyVault.Administration.KeyVaultRoleScope? scope = default(Azure.Security.KeyVault.Administration.KeyVaultRoleScope?), string roleDefinitionId = null, string principalId = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition KeyVaultRoleDefinition(string id = null, string name = null, Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType? type = default(Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType?), string roleName = null, string description = null, Azure.Security.KeyVault.Administration.KeyVaultRoleType? roleType = default(Azure.Security.KeyVault.Administration.KeyVaultRoleType?), System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultPermission> permissions = null, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultRoleScope> assignableScopes = null) { throw null; }
@@ -291,12 +291,12 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultSetting
     {
-        internal KeyVaultSetting() { }
+        public KeyVaultSetting(string name, bool value) { }
         public string Name { get { throw null; } }
         public Azure.Security.KeyVault.Administration.SettingType? Type { get { throw null; } }
-        public bool GetBoolean() { throw null; }
+        public bool AsBoolean() { throw null; }
+        public string AsString() { throw null; }
         public override string ToString() { throw null; }
-        public bool TryGetBoolean(out bool value) { throw null; }
     }
     public partial class KeyVaultSettingsClient
     {
@@ -308,10 +308,8 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting>> GetSettingAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.GetSettingsResult> GetSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.GetSettingsResult>> GetSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting> UpdateSetting(string name, bool value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting> UpdateSetting(string name, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting>> UpdateSettingAsync(string name, bool value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting>> UpdateSettingAsync(string name, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting> UpdateSetting(Azure.Security.KeyVault.Administration.KeyVaultSetting setting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting>> UpdateSettingAsync(Azure.Security.KeyVault.Administration.KeyVaultSetting setting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SettingType : System.IEquatable<Azure.Security.KeyVault.Administration.SettingType>

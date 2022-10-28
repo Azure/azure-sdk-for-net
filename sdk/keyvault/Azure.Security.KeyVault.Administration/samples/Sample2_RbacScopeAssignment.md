@@ -9,7 +9,8 @@ Let's assign a role to a service principal so that it applies to all keys. To do
 
 See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions on how to generate a new service principal and obtain it's object Id.
 You can also get the object Id for your currently signed in account by running the following [Azure CLI][azure_cli] command.
-```
+
+```PowerShell
 az ad signed-in-user show --query objectId
 ```
 
@@ -33,3 +34,6 @@ KeyVaultKey key = await keyClient.GetKeyAsync(keyName);
 
 KeyVaultRoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new KeyVaultRoleScope(key.Id), definitionIdToAssign, servicePrincipalObjectId);
 ```
+
+<!-- LINKS -->
+[azure_cli]: https://docs.microsoft.com/cli/azure
