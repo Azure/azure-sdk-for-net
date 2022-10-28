@@ -7,6 +7,8 @@
 - Added `FhirBundle` property to `AnalyzeHealthcareEntitiesResult`.
 - Added `ConfidenceScore` property to `HealthcareEntityRelation`.
 - Added `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
+- Added `TextAnalyticsActions.ExtractSummaryActions` to perform extractive summarization in a batch of actions.
+- Added `TextAnalyticsClient.StartExtractSummary` and `StartExtractSummaryAsync` to perform extractive summarization on a collection of documents.
 
 ### Breaking Changes
 
