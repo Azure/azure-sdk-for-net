@@ -320,6 +320,14 @@ namespace Azure.ResourceManager.DataBox.Models
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? Status { get { throw null; } }
     }
+    public partial class DataBoxDiskGranularCopyLogDetails : Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails
+    {
+        internal DataBoxDiskGranularCopyLogDetails() { }
+        public Azure.Core.ResourceIdentifier AccountId { get { throw null; } }
+        public string ErrorLogLink { get { throw null; } }
+        public string SerialNumber { get { throw null; } }
+        public string VerboseLogLink { get { throw null; } }
+    }
     public partial class DataBoxDiskGranularCopyProgress : Azure.ResourceManager.DataBox.Models.GranularCopyProgress
     {
         internal DataBoxDiskGranularCopyProgress() { }
@@ -331,6 +339,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxDiskJobDetails(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails) : base (default(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress> CopyProgress { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, int> DisksAndSizeDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails> GranularCopyLogDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress> GranularCopyProgress { get { throw null; } }
         public string Passkey { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, int> PreferredDisks { get { throw null; } }
@@ -789,6 +798,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         AzureBlob = 0,
         AzureFile = 1,
+    }
+    public abstract partial class GranularCopyLogDetails
+    {
+        protected GranularCopyLogDetails() { }
     }
     public partial class GranularCopyProgress
     {
