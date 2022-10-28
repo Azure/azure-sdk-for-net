@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="emailAddress"/> is null. </exception>
         public MonitorEmailReceiver(string name, string emailAddress)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (emailAddress == null)
-            {
-                throw new ArgumentNullException(nameof(emailAddress));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(emailAddress, nameof(emailAddress));
 
             Name = name;
             EmailAddress = emailAddress;

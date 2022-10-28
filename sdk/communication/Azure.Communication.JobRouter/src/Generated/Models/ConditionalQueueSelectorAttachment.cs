@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -27,14 +28,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="labelSelectors"/> is null. </exception>
         public ConditionalQueueSelectorAttachment(RouterRule condition, IEnumerable<QueueSelector> labelSelectors)
         {
-            if (condition == null)
-            {
-                throw new ArgumentNullException(nameof(condition));
-            }
-            if (labelSelectors == null)
-            {
-                throw new ArgumentNullException(nameof(labelSelectors));
-            }
+            Argument.AssertNotNull(condition, nameof(condition));
+            Argument.AssertNotNull(labelSelectors, nameof(labelSelectors));
 
             Condition = condition;
             LabelSelectors = labelSelectors.ToList();

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreUri"/> is null. </exception>
         public AzureDataLakeStoreLinkedService(BinaryData dataLakeStoreUri)
         {
-            if (dataLakeStoreUri == null)
-            {
-                throw new ArgumentNullException(nameof(dataLakeStoreUri));
-            }
+            Argument.AssertNotNull(dataLakeStoreUri, nameof(dataLakeStoreUri));
 
             DataLakeStoreUri = dataLakeStoreUri;
             LinkedServiceType = "AzureDataLakeStore";

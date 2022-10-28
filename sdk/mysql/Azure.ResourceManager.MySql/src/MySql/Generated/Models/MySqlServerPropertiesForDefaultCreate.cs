@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.MySql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="administratorLogin"/> or <paramref name="administratorLoginPassword"/> is null. </exception>
         public MySqlServerPropertiesForDefaultCreate(string administratorLogin, string administratorLoginPassword)
         {
-            if (administratorLogin == null)
-            {
-                throw new ArgumentNullException(nameof(administratorLogin));
-            }
-            if (administratorLoginPassword == null)
-            {
-                throw new ArgumentNullException(nameof(administratorLoginPassword));
-            }
+            Argument.AssertNotNull(administratorLogin, nameof(administratorLogin));
+            Argument.AssertNotNull(administratorLoginPassword, nameof(administratorLoginPassword));
 
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;

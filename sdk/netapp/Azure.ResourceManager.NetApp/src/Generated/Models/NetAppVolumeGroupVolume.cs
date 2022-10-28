@@ -21,14 +21,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppVolumeGroupVolume(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
         {
-            if (creationToken == null)
-            {
-                throw new ArgumentNullException(nameof(creationToken));
-            }
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
+            Argument.AssertNotNull(creationToken, nameof(creationToken));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             CreationToken = creationToken;

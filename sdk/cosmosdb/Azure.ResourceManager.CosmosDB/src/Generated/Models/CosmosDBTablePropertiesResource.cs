@@ -7,6 +7,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public CosmosDBTablePropertiesResource(string tableName) : base(tableName)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNull(tableName, nameof(tableName));
         }
 
         /// <summary> Initializes a new instance of CosmosDBTablePropertiesResource. </summary>
@@ -32,10 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         internal CosmosDBTablePropertiesResource(string tableName, string rid, float? timestamp, ETag? etag) : base(tableName)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNull(tableName, nameof(tableName));
 
             Rid = rid;
             Timestamp = timestamp;

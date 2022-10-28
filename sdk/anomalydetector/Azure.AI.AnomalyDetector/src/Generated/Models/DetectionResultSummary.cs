@@ -20,10 +20,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <exception cref="ArgumentNullException"> <paramref name="setupInfo"/> is null. </exception>
         internal DetectionResultSummary(DetectionStatus status, DetectionRequest setupInfo)
         {
-            if (setupInfo == null)
-            {
-                throw new ArgumentNullException(nameof(setupInfo));
-            }
+            Argument.AssertNotNull(setupInfo, nameof(setupInfo));
 
             Status = status;
             Errors = new ChangeTrackingList<ErrorResponse>();

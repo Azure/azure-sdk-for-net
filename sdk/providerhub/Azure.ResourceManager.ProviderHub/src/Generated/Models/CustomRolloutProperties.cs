@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="specification"/> is null. </exception>
         public CustomRolloutProperties(CustomRolloutPropertiesSpecification specification)
         {
-            if (specification == null)
-            {
-                throw new ArgumentNullException(nameof(specification));
-            }
+            Argument.AssertNotNull(specification, nameof(specification));
 
             Specification = specification;
         }

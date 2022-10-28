@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication.MediaComposition.Models;
+using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
@@ -19,14 +20,8 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>
         public SrtOutput(LayoutResolution resolution, string streamUrl)
         {
-            if (resolution == null)
-            {
-                throw new ArgumentNullException(nameof(resolution));
-            }
-            if (streamUrl == null)
-            {
-                throw new ArgumentNullException(nameof(streamUrl));
-            }
+            Argument.AssertNotNull(resolution, nameof(resolution));
+            Argument.AssertNotNull(streamUrl, nameof(streamUrl));
 
             Resolution = resolution;
             StreamUrl = streamUrl;

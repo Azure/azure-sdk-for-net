@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -19,22 +20,12 @@ namespace Azure.Communication.CallAutomation
         /// <param name="targets"> The targets of the call. </param>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targets"/> is null or empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
         public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, CallSourceInternal source, string callbackUri)
         {
-            if (targets == null || targets.Count() == 0)
-            {
-                throw new ArgumentException(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage, nameof(targets));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (callbackUri == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUri));
-            }
+            Argument.AssertNotNull(targets, nameof(targets));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 
             Targets = targets.ToList();
             Source = source;

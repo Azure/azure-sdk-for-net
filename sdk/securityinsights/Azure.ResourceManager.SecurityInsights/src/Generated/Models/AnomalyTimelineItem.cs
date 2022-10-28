@@ -23,14 +23,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/> or <paramref name="displayName"/> is null. </exception>
         internal AnomalyTimelineItem(string azureResourceId, string displayName, DateTimeOffset endTimeUtc, DateTimeOffset startTimeUtc, DateTimeOffset timeGenerated)
         {
-            if (azureResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(azureResourceId));
-            }
-            if (displayName == null)
-            {
-                throw new ArgumentNullException(nameof(displayName));
-            }
+            Argument.AssertNotNull(azureResourceId, nameof(azureResourceId));
+            Argument.AssertNotNull(displayName, nameof(displayName));
 
             AzureResourceId = azureResourceId;
             DisplayName = displayName;

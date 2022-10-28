@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridData.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.HybridData.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyModulus"/> or <paramref name="keyExponent"/> is null. </exception>
         public HybridDataEncryptionKey(string keyModulus, string keyExponent, int encryptionChunkSizeInBytes)
         {
-            if (keyModulus == null)
-            {
-                throw new ArgumentNullException(nameof(keyModulus));
-            }
-            if (keyExponent == null)
-            {
-                throw new ArgumentNullException(nameof(keyExponent));
-            }
+            Argument.AssertNotNull(keyModulus, nameof(keyModulus));
+            Argument.AssertNotNull(keyExponent, nameof(keyExponent));
 
             KeyModulus = keyModulus;
             KeyExponent = keyExponent;

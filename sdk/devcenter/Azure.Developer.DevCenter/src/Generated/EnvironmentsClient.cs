@@ -97,7 +97,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnvironmentByUserRequest(userId, environmentName, context);
+                using HttpMessage message = CreateGetEnvironmentByUserRequest(environmentName, userId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -125,7 +125,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnvironmentByUserRequest(userId, environmentName, context);
+                using HttpMessage message = CreateGetEnvironmentByUserRequest(environmentName, userId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -155,7 +155,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateEnvironmentRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateUpdateEnvironmentRequest(environmentName, content, userId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -185,7 +185,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateEnvironmentRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateUpdateEnvironmentRequest(environmentName, content, userId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -450,8 +450,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetArtifactsByEnvironmentRequest(userId, environmentName, context)
-                        : CreateGetArtifactsByEnvironmentNextPageRequest(nextLink, userId, environmentName, context);
+                        ? CreateGetArtifactsByEnvironmentRequest(environmentName, userId, context)
+                        : CreateGetArtifactsByEnvironmentNextPageRequest(nextLink, environmentName, userId, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -484,8 +484,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetArtifactsByEnvironmentRequest(userId, environmentName, context)
-                        : CreateGetArtifactsByEnvironmentNextPageRequest(nextLink, userId, environmentName, context);
+                        ? CreateGetArtifactsByEnvironmentRequest(environmentName, userId, context)
+                        : CreateGetArtifactsByEnvironmentNextPageRequest(nextLink, environmentName, userId, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -520,8 +520,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetArtifactsByEnvironmentAndPathRequest(userId, environmentName, artifactPath, context)
-                        : CreateGetArtifactsByEnvironmentAndPathNextPageRequest(nextLink, userId, environmentName, artifactPath, context);
+                        ? CreateGetArtifactsByEnvironmentAndPathRequest(environmentName, artifactPath, userId, context)
+                        : CreateGetArtifactsByEnvironmentAndPathNextPageRequest(nextLink, environmentName, artifactPath, userId, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -556,8 +556,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetArtifactsByEnvironmentAndPathRequest(userId, environmentName, artifactPath, context)
-                        : CreateGetArtifactsByEnvironmentAndPathNextPageRequest(nextLink, userId, environmentName, artifactPath, context);
+                        ? CreateGetArtifactsByEnvironmentAndPathRequest(environmentName, artifactPath, userId, context)
+                        : CreateGetArtifactsByEnvironmentAndPathNextPageRequest(nextLink, environmentName, artifactPath, userId, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -764,7 +764,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateEnvironmentRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateCreateOrUpdateEnvironmentRequest(environmentName, content, userId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CreateOrUpdateEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -795,7 +795,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateEnvironmentRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateCreateOrUpdateEnvironmentRequest(environmentName, content, userId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CreateOrUpdateEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
@@ -824,7 +824,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteEnvironmentRequest(userId, environmentName, context);
+                using HttpMessage message = CreateDeleteEnvironmentRequest(environmentName, userId, context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -853,7 +853,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteEnvironmentRequest(userId, environmentName, context);
+                using HttpMessage message = CreateDeleteEnvironmentRequest(environmentName, userId, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
@@ -884,7 +884,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeployEnvironmentActionRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateDeployEnvironmentActionRequest(environmentName, content, userId, context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeployEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -915,7 +915,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeployEnvironmentActionRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateDeployEnvironmentActionRequest(environmentName, content, userId, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeployEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
@@ -946,7 +946,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteEnvironmentActionRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateDeleteEnvironmentActionRequest(environmentName, content, userId, context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeleteEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -977,7 +977,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteEnvironmentActionRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateDeleteEnvironmentActionRequest(environmentName, content, userId, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeleteEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
@@ -1008,7 +1008,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCustomEnvironmentActionRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateCustomEnvironmentActionRequest(environmentName, content, userId, context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CustomEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1039,7 +1039,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCustomEnvironmentActionRequest(userId, environmentName, content, context);
+                using HttpMessage message = CreateCustomEnvironmentActionRequest(environmentName, content, userId, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CustomEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
@@ -1101,7 +1101,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetEnvironmentByUserRequest(string userId, string environmentName, RequestContext context)
+        internal HttpMessage CreateGetEnvironmentByUserRequest(string environmentName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1125,7 +1125,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateEnvironmentRequest(string userId, string environmentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateEnvironmentRequest(string environmentName, RequestContent content, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -1151,7 +1151,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateEnvironmentRequest(string userId, string environmentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateEnvironmentRequest(string environmentName, RequestContent content, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1177,7 +1177,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateDeleteEnvironmentRequest(string userId, string environmentName, RequestContext context)
+        internal HttpMessage CreateDeleteEnvironmentRequest(string environmentName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202204);
             var request = message.Request;
@@ -1201,7 +1201,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateDeployEnvironmentActionRequest(string userId, string environmentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDeployEnvironmentActionRequest(string environmentName, RequestContent content, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -1228,7 +1228,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateDeleteEnvironmentActionRequest(string userId, string environmentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDeleteEnvironmentActionRequest(string environmentName, RequestContent content, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -1255,7 +1255,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateCustomEnvironmentActionRequest(string userId, string environmentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCustomEnvironmentActionRequest(string environmentName, RequestContent content, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -1282,7 +1282,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetArtifactsByEnvironmentRequest(string userId, string environmentName, RequestContext context)
+        internal HttpMessage CreateGetArtifactsByEnvironmentRequest(string environmentName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1307,7 +1307,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetArtifactsByEnvironmentAndPathRequest(string userId, string environmentName, string artifactPath, RequestContext context)
+        internal HttpMessage CreateGetArtifactsByEnvironmentAndPathRequest(string environmentName, string artifactPath, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1492,7 +1492,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetArtifactsByEnvironmentNextPageRequest(string nextLink, string userId, string environmentName, RequestContext context)
+        internal HttpMessage CreateGetArtifactsByEnvironmentNextPageRequest(string nextLink, string environmentName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1510,7 +1510,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetArtifactsByEnvironmentAndPathNextPageRequest(string nextLink, string userId, string environmentName, string artifactPath, RequestContext context)
+        internal HttpMessage CreateGetArtifactsByEnvironmentAndPathNextPageRequest(string nextLink, string environmentName, string artifactPath, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

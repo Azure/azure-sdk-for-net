@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         internal WorkspacePurgeResponse(string operationId)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNull(operationId, nameof(operationId));
 
             OperationId = operationId;
         }

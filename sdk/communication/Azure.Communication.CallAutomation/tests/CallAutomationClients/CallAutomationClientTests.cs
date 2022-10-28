@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 {
@@ -359,7 +360,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
             ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage));
+            Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]

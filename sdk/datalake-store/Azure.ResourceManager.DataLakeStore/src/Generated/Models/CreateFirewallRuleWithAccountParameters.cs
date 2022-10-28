@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -19,18 +20,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public CreateFirewallRuleWithAccountParameters(string name, string startIPAddress, string endIPAddress)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (startIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(startIPAddress));
-            }
-            if (endIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(endIPAddress));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
+            Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
 
             Name = name;
             StartIPAddress = startIPAddress;

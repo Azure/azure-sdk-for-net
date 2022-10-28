@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="unit"/> is null. </exception>
         public CurrencyResolution(string unit, double value)
         {
-            if (unit == null)
-            {
-                throw new ArgumentNullException(nameof(unit));
-            }
+            Argument.AssertNotNull(unit, nameof(unit));
 
             Unit = unit;
             Value = value;

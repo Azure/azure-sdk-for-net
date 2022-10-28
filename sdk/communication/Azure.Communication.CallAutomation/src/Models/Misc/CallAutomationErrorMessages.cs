@@ -26,17 +26,12 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Error message for null SourceCallerId in TransferToParticipantOptions.
         /// </summary>
-        public const string TransferToParticipantOptionsNullSourceCallerId = "SourceCallerId should be specified when transferring the call to a PSTN target";
+        public const string TransferToParticipantOptionsNullSourceCallerId = "SourceCallerId should be specified in TransferToParticipantOptions when transferring the call to a PSTN target";
 
         /// <summary>
         /// Invalid Https Uri message.
         /// </summary>
         public const string InvalidHttpsUriMessage = "Callback Uri has to be in well-formed, valid https format.";
-
-        /// <summary>
-        /// Invalid CommunicationIdentifierModel collection message.
-        /// </summary>
-        public const string InvalidCommunicationIdentifierModelCollectionMessage = "CommunicationIdentifierModel collection cannot be null or empty.";
 
         /// <summary>
         /// Invalid InvitationTimeoutInSeconds message.

@@ -6,10 +6,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Identitiy;
@@ -29,7 +29,7 @@ namespace Azure.Identity
         internal const string Troubleshoot = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
         internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
-        internal TimeSpan CliProcessTimeout { get; private set;}
+        internal TimeSpan CliProcessTimeout { get; private set; }
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
         private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
@@ -146,10 +146,11 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzureCLINotInstalled);
                 }
 
+                bool isAADSTSError = exception.Message.Contains("AADSTS");
                 bool isLoginError = exception.Message.IndexOf("az login", StringComparison.OrdinalIgnoreCase) != -1 ||
                                     exception.Message.IndexOf("az account set", StringComparison.OrdinalIgnoreCase) != -1;
 
-                if (isLoginError)
+                if (isLoginError && !isAADSTSError)
                 {
                     throw new CredentialUnavailableException(AzNotLogIn);
                 }

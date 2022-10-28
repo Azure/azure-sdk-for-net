@@ -201,7 +201,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
             ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantsAsync(new AddParticipantsOptions(new CommunicationIdentifier[] { })).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage));
+            Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
@@ -368,7 +368,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
             ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(new CommunicationIdentifier[] { }).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage));
+            Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]

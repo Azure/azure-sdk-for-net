@@ -7,6 +7,7 @@
 
 using System;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {

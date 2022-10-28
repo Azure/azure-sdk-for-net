@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -17,13 +18,10 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of AddParticipantsRequestInternal. </summary>
         /// <param name="participantsToAdd"> The participants to invite. </param>
-        /// <exception cref="ArgumentException"> <paramref name="participantsToAdd"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
         public AddParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToAdd)
         {
-            if (participantsToAdd == null || participantsToAdd.Count() == 0)
-            {
-                throw new ArgumentException(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage, nameof(participantsToAdd));
-            }
+            Argument.AssertNotNull(participantsToAdd, nameof(participantsToAdd));
 
             ParticipantsToAdd = participantsToAdd.ToList();
         }

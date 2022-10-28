@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -17,13 +18,10 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of RemoveParticipantsRequestInternal. </summary>
         /// <param name="participantsToRemove"> The participants to be removed from the call. </param>
-        /// <exception cref="ArgumentException"> <paramref name="participantsToRemove"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
         public RemoveParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToRemove)
         {
-            if (participantsToRemove == null || participantsToRemove.Count() == 0)
-            {
-                throw new ArgumentNullException(CallAutomationErrorMessages.InvalidCommunicationIdentifierModelCollectionMessage, nameof(participantsToRemove));
-            }
+            Argument.AssertNotNull(participantsToRemove, nameof(participantsToRemove));
 
             ParticipantsToRemove = participantsToRemove.ToList();
         }

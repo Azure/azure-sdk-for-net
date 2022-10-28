@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="ipAddressRange"/> is null. </exception>
         public IPSecurityRestrictionRule(string name, string ipAddressRange, Action action)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (ipAddressRange == null)
-            {
-                throw new ArgumentNullException(nameof(ipAddressRange));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(ipAddressRange, nameof(ipAddressRange));
 
             Name = name;
             IPAddressRange = ipAddressRange;

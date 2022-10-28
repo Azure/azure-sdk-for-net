@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public DatabaseProfile(DatabaseType databaseType, string sku, DatabaseTier tier)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             DatabaseType = databaseType;
             Sku = sku;

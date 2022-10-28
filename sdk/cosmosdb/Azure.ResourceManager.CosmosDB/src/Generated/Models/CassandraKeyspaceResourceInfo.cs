@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public CassandraKeyspaceResourceInfo(string keyspaceName)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNull(keyspaceName, nameof(keyspaceName));
 
             KeyspaceName = keyspaceName;
         }
