@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         #endregion
         private async Task<WatchlistResource> CreateWatchlistAsync(ResourceGroupResource resourceGroup, string workspaceName, string watchName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetWatchlists(workspaceName);
+            var collection = resourceGroup.GetWatchlists(workspaceName);
             var input = ResourceDataHelpers.GetWatchlistData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, watchName, input);
             return lro.Value;

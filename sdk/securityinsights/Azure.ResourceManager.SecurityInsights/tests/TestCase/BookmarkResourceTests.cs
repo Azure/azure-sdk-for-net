@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         #endregion
         private async Task<BookmarkResource> CreateBookmarkAsync(ResourceGroupResource resourceGroup, string workspaceName, string bookmarkName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetBookmarks(workspaceName);
+            var collection = resourceGroup.GetBookmarks(workspaceName);
             var input = ResourceDataHelpers.GetBookmarkData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bookmarkName, input);
             return lro.Value;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
             //1.Get
-            var bookmarkName = Recording.GenerateAssetName("testBookmark-");
+            var bookmarkName = "6a8d6ea6-04d5-49d7-8169-ffca8b0ced59";
             var bookmark1 = await CreateBookmarkAsync(resourceGroup, workspace.Data.Name, bookmarkName);
             BookmarkResource bookmark2 = await bookmark1.GetAsync();
 

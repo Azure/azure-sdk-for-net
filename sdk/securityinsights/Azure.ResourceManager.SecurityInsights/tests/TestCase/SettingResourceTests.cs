@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
             //1.Get
             var applicationName = Recording.GenerateAssetName("testSettings-");
-            var setting1 = await CreateSettingAsync(applicationName);
+            var setting1 = await CreateSettingAsync(resourceGroup, workspace.Data.Name, applicationName);
             SettingResource setting2 = await setting1.GetAsync();
 
             ResourceDataHelpers.AssertSettingData(setting1.Data, setting2.Data);

@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
             //1.CreateOrUpdate
             var collection = GetBookmarkCollectionAsync(resourceGroup, workspace.Data.Name);
-            var name = Recording.GenerateAssetName("Bookmarks-");
-            var name2 = Recording.GenerateAssetName("Bookmarks-");
-            var name3 = Recording.GenerateAssetName("Bookmarks-");
+            var name = "6a8d6ea6-04d5-49d7-8169-ffca8b0ced59";
+            var name2 = "6a8d6ea6-04d5-49d7-8169-ffca8b0ced61";
+            var name3 = "6a8d6ea6-04d5-49d7-8169-ffca8b0ced62";
             var input = ResourceDataHelpers.GetBookmarkData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BookmarkResource bookmark1 = lro.Value;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             Assert.GreaterOrEqual(count, 3);
             //4Exists
             Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.IsFalse(await collection.ExistsAsync("6a8d6ea6-04d5-49d7-8169-ffca8b0ced60"));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

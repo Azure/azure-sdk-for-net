@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var name = Recording.GenerateAssetName("DataConnectors-");
             var name2 = Recording.GenerateAssetName("DataConnectors-");
             var name3 = Recording.GenerateAssetName("DataConnectors-");
-            var input = ResourceDataHelpers.GetDataConnectorData(workspaceName);
+            var input = ResourceDataHelpers.GetDataConnectorData(DefaultSubscription.Data.Id);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             DataConnectorResource dataConnector1 = lro.Value;
             Assert.AreEqual(name, dataConnector1.Data.Name);

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         #endregion
         private async Task<IncidentResource> CreateIncidentAsync(ResourceGroupResource resourceGroup, string workspaceName, string incidentName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetIncidents(workspaceName);
+            var collection = resourceGroup.GetIncidents(workspaceName);
             var input = ResourceDataHelpers.GetIncidentData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, incidentName, input);
             return lro.Value;

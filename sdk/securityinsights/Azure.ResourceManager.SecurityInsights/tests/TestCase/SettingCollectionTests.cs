@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
             //1.CreateOrUpdate
             var collection = GetSettingCollectionAsync(resourceGroup, workspace.Data.Name);
-            var name = Recording.GenerateAssetName("Settings-");
+            var name = "Ueba";
             var name2 = Recording.GenerateAssetName("Settings-");
             var name3 = Recording.GenerateAssetName("Settings-");
             var input = ResourceDataHelpers.GetSettingData();
