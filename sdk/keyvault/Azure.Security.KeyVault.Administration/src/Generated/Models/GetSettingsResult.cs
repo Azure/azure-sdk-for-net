@@ -16,17 +16,17 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Initializes a new instance of GetSettingsResult. </summary>
         internal GetSettingsResult()
         {
-            Value = new ChangeTrackingList<KeyVaultSetting>();
+            Settings = new ChangeTrackingList<KeyVaultSetting>();
         }
 
         /// <summary> Initializes a new instance of GetSettingsResult. </summary>
-        /// <param name="value"> A response message containing a list of account settings with their associated value. </param>
-        internal GetSettingsResult(IReadOnlyList<KeyVaultSetting> value)
+        /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
+        internal GetSettingsResult(IReadOnlyList<KeyVaultSetting> settings)
         {
-            Value = value;
+            Settings = settings;
         }
 
         /// <summary> A response message containing a list of account settings with their associated value. </summary>
-        public IReadOnlyList<KeyVaultSetting> Value { get; }
+        public IReadOnlyList<KeyVaultSetting> Settings { get; }
     }
 }

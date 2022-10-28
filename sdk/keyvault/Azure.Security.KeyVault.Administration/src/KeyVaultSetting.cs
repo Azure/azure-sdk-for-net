@@ -10,6 +10,26 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultSetting
     {
         /// <summary>
+        /// Creates a new instance of the <see cref="KeyVaultSetting"/> class with the given name and boolean value.
+        /// </summary>
+        /// <param name="name">The name of the account setting.</param>
+        /// <param name="value">The boolean value of the account setting.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        public KeyVaultSetting(string name, bool value)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            Name = name;
+            Type = SettingType.Boolean;
+
+            // bool.ToString() returns "True" or "False", but the service wants "true" or "false".
+            Value = value ? "true" : "false";
+        }
+
+        // TODO: Consider using Azure.Value and making this class mutable: https://github.com/Azure/azure-sdk-for-net/issues/32174
+
+        /// <summary>
         /// Gets the boolean value of this account setting if <see cref="Type"/> is <see cref="SettingType.Boolean"/>.
         /// </summary>
         /// <returns>A boolean value if <see cref="Type"/> is <see cref="SettingType.Boolean"/>.</returns>
@@ -40,13 +60,6 @@ namespace Azure.Security.KeyVault.Administration
         [CodeGenMember("Value")]
         internal string Value { get; }
 
-        /// <summary>
-        /// Helper to convert boolean value to properly-cased "true" or "false" unlike <see cref="bool.ToString()"/>.
-        /// </summary>
-        /// <param name="value">The boolean to convert.</param>
-        /// <returns>"true" or "false" appropriately.</returns>
-        internal static string ToString(bool value) => value ? "true" : "false";
-
         private T CheckType<T>(SettingType expectedType, Func<(bool IsValid, T ParsedValue)> converter)
         {
             if (Type != expectedType)
@@ -60,7 +73,7 @@ namespace Azure.Security.KeyVault.Administration
                 return parsedValue;
             }
 
-            throw new InvalidOperationException($"Cannot normalize the setting as {expectedType}. Use AsString() for a textual representation of the setting.");
+            throw new InvalidOperationException($"Cannot normalize the setting as {expectedType}. Use {nameof(AsString)}() for a textual representation of the setting.");
         }
     }
 }

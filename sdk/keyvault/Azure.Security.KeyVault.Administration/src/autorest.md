@@ -71,3 +71,15 @@ directive:
     from: GetSettings
     to: Settings_GetSettings
 ```
+
+#### Fix GetSettings response based actual response
+
+See https://github.com/Azure/azure-rest-api-specs/issues/21334
+
+``` yaml
+directive:
+- where-model: SettingsListResult
+  rename-property:
+    from: value
+    to: settings
+```

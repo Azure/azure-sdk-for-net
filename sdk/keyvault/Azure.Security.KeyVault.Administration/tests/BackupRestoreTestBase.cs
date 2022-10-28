@@ -31,15 +31,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var client = new KeyVaultBackupClient(
                 Uri,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new KeyVaultAdministrationClientOptions
+                InstrumentClientOptions(new KeyVaultAdministrationClientOptions(ServiceVersion)
                 {
                     Diagnostics =
+                    {
+                        LoggedHeaderNames =
                         {
-                            LoggedHeaderNames =
-                            {
-                                "x-ms-request-id",
-                            },
+                            "x-ms-request-id",
                         },
+                    },
                 }));
 
             return InstrumentClient(client);

@@ -53,13 +53,13 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary> Initializes a new instance of GetSettingsResult. </summary>
-        /// <param name="value"> A response message containing a list of account settings with their associated value. </param>
+        /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
         /// <returns> A new <see cref="Administration.GetSettingsResult"/> instance for mocking. </returns>
-        public static GetSettingsResult GetSettingsResult(IEnumerable<KeyVaultSetting> value = null)
+        public static GetSettingsResult GetSettingsResult(IEnumerable<KeyVaultSetting> settings = null)
         {
-            value ??= new List<KeyVaultSetting>();
+            settings ??= new List<KeyVaultSetting>();
 
-            return new GetSettingsResult(value?.ToList());
+            return new GetSettingsResult(settings?.ToList());
         }
     }
 }

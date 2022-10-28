@@ -15,10 +15,10 @@ namespace Azure.Security.KeyVault.Administration
     {
         internal static GetSettingsResult DeserializeGetSettingsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KeyVaultSetting>> value = default;
+            Optional<IReadOnlyList<KeyVaultSetting>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("settings"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,11 +30,11 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         array.Add(KeyVaultSetting.DeserializeKeyVaultSetting(item));
                     }
-                    value = array;
+                    settings = array;
                     continue;
                 }
             }
-            return new GetSettingsResult(Optional.ToList(value));
+            return new GetSettingsResult(Optional.ToList(settings));
         }
     }
 }

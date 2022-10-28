@@ -9,6 +9,29 @@ namespace Azure.Security.KeyVault.Administration.Tests
     public class KeyVaultSettingTests
     {
         [Test]
+        public void NewNameNullThrows()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new KeyVaultSetting(null, false));
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
+        }
+
+        [Test]
+        public void NewNameEmptyThrows()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => new KeyVaultSetting(string.Empty, false));
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
+        }
+
+        [Test]
+        public void NewBoolean()
+        {
+            KeyVaultSetting setting = new("test", true);
+            Assert.That(setting.Name, Is.EqualTo("test"));
+            Assert.That(setting.Type, Is.EqualTo(SettingType.Boolean));
+            Assert.That(setting.AsBoolean(), Is.True);
+        }
+
+        [Test]
         public void AsBoolean([Values] bool value)
         {
             KeyVaultSetting setting = new("test", value ? "true" : "false", SettingType.Boolean);
