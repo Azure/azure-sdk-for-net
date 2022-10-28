@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Automation
 namespace: Azure.ResourceManager.Automation
-require: https://github.com/Azure/azure-rest-api-specs/blob/d1b0569d8adbd342a1111d6a69764d099f5f717c/specification/automation/resource-manager/readme.md
+require: /mnt/vss/_work/1/s/azure-rest-api-specs/specification/automation/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

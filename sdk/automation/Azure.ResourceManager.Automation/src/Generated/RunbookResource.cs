@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: RunbookDraft_ReplaceContent
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="runbookContent"> The runbook draft content. </param>
+        /// <param name="runbookContent"> The runbook draft content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runbookContent"/> is null. </exception>
         public virtual async Task<ArmOperation> ReplaceContentRunbookDraftAsync(WaitUntil waitUntil, Stream runbookContent, CancellationToken cancellationToken = default)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: RunbookDraft_ReplaceContent
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="runbookContent"> The runbook draft content. </param>
+        /// <param name="runbookContent"> The runbook draft content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runbookContent"/> is null. </exception>
         public virtual ArmOperation ReplaceContentRunbookDraft(WaitUntil waitUntil, Stream runbookContent, CancellationToken cancellationToken = default)
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: RunbookDraft_UndoEdit
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RunbookDraftUndoEditResult>> UndoEditRunbookDraftAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UndoEditRunbookDraftAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _runbookDraftClientDiagnostics.CreateScope("RunbookResource.UndoEditRunbookDraft");
             scope.Start();
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: RunbookDraft_UndoEdit
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RunbookDraftUndoEditResult> UndoEditRunbookDraft(CancellationToken cancellationToken = default)
+        public virtual Response UndoEditRunbookDraft(CancellationToken cancellationToken = default)
         {
             using var scope = _runbookDraftClientDiagnostics.CreateScope("RunbookResource.UndoEditRunbookDraft");
             scope.Start();

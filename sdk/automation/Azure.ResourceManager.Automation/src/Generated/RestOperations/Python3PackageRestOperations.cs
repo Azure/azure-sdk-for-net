@@ -16,20 +16,20 @@ using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    internal partial class Python2PackageRestOperations
+    internal partial class Python3PackageRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Python2PackageRestOperations. </summary>
+        /// <summary> Initializes a new instance of Python3PackageRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public Python2PackageRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public Python3PackageRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/python2Packages/", false);
+            uri.AppendPath("/python3Packages/", false);
             uri.AppendPath(packageName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation
             return message;
         }
 
-        /// <summary> Delete the python 2 package by name. </summary>
+        /// <summary> Delete the python 3 package by name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -79,13 +79,14 @@ namespace Azure.ResourceManager.Automation
             switch (message.Response.Status)
             {
                 case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Delete the python 2 package by name. </summary>
+        /// <summary> Delete the python 3 package by name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.Automation
             switch (message.Response.Status)
             {
                 case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/python2Packages/", false);
+            uri.AppendPath("/python3Packages/", false);
             uri.AppendPath(packageName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -133,7 +135,7 @@ namespace Azure.ResourceManager.Automation
             return message;
         }
 
-        /// <summary> Retrieve the python 2 package identified by package name. </summary>
+        /// <summary> Retrieve the python 3 package identified by package name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -166,7 +168,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Retrieve the python 2 package identified by package name. </summary>
+        /// <summary> Retrieve the python 3 package identified by package name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -212,7 +214,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/python2Packages/", false);
+            uri.AppendPath("/python3Packages/", false);
             uri.AppendPath(packageName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -225,7 +227,7 @@ namespace Azure.ResourceManager.Automation
             return message;
         }
 
-        /// <summary> Create or Update the python 2 package identified by package name. </summary>
+        /// <summary> Create or Update the python 3 package identified by package name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -259,7 +261,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Create or Update the python 2 package identified by package name. </summary>
+        /// <summary> Create or Update the python 3 package identified by package name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -306,7 +308,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/python2Packages/", false);
+            uri.AppendPath("/python3Packages/", false);
             uri.AppendPath(packageName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -319,7 +321,7 @@ namespace Azure.ResourceManager.Automation
             return message;
         }
 
-        /// <summary> Update the python 2 package identified by package name. </summary>
+        /// <summary> Update the python 3 package identified by package name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -352,7 +354,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Update the python 2 package identified by package name. </summary>
+        /// <summary> Update the python 3 package identified by package name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -398,7 +400,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/python2Packages", false);
+            uri.AppendPath("/python3Packages", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -406,7 +408,7 @@ namespace Azure.ResourceManager.Automation
             return message;
         }
 
-        /// <summary> Retrieve a list of python 2 packages. </summary>
+        /// <summary> Retrieve a list of python 3 packages. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -435,7 +437,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Retrieve a list of python 2 packages. </summary>
+        /// <summary> Retrieve a list of python 3 packages. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -478,7 +480,7 @@ namespace Azure.ResourceManager.Automation
             return message;
         }
 
-        /// <summary> Retrieve a list of python 2 packages. </summary>
+        /// <summary> Retrieve a list of python 3 packages. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
@@ -509,7 +511,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Retrieve a list of python 2 packages. </summary>
+        /// <summary> Retrieve a list of python 3 packages. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>

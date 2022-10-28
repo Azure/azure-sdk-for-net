@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the update module operation. </summary>
-    public partial class AutomationAccountPython2PackagePatch
+    public partial class PythonPackageUpdateParameters
     {
-        /// <summary> Initializes a new instance of AutomationAccountPython2PackagePatch. </summary>
-        public AutomationAccountPython2PackagePatch()
+        /// <summary> Initializes a new instance of PythonPackageUpdateParameters. </summary>
+        public PythonPackageUpdateParameters()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

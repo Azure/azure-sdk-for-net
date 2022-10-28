@@ -29,32 +29,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Retrieve a list of accounts within a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts
-        /// Operation Id: AutomationAccount_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AutomationAccountResource> GetAutomationAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAutomationAccountsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a list of accounts within a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts
-        /// Operation Id: AutomationAccount_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AutomationAccountResource> GetAutomationAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAutomationAccounts(cancellationToken);
-        }
-
-        /// <summary>
         /// Retrieve deleted automation account.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts
         /// Operation Id: deletedAutomationAccounts_ListBySubscription
@@ -78,6 +52,32 @@ namespace Azure.ResourceManager.Automation
         public static Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetDeletedAutomationAccountsBySubscription(cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve a list of accounts within a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts
+        /// Operation Id: AutomationAccount_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutomationAccountResource> GetAutomationAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetAutomationAccountsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve a list of accounts within a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts
+        /// Operation Id: AutomationAccount_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutomationAccountResource> GetAutomationAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetAutomationAccounts(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -148,44 +148,6 @@ namespace Azure.ResourceManager.Automation
         }
         #endregion
 
-        #region AutomationAccountPython2PackageResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AutomationAccountPython2PackageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomationAccountPython2PackageResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountPython2PackageResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationAccountPython2PackageResource" /> object. </returns>
-        public static AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AutomationAccountPython2PackageResource.ValidateResourceId(id);
-                return new AutomationAccountPython2PackageResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AutomationAccountModuleResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AutomationAccountModuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomationAccountModuleResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomationAccountModuleResource" /> object. </returns>
-        public static AutomationAccountModuleResource GetAutomationAccountModuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AutomationAccountModuleResource.ValidateResourceId(id);
-                return new AutomationAccountModuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region DscNodeResource
         /// <summary>
         /// Gets an object representing a <see cref="DscNodeResource" /> along with the instance operations that can be performed on it but with no data.
@@ -200,25 +162,6 @@ namespace Azure.ResourceManager.Automation
             {
                 DscNodeResource.ValidateResourceId(id);
                 return new DscNodeResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DscNodeConfigurationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DscNodeConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DscNodeConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscNodeConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DscNodeConfigurationResource" /> object. </returns>
-        public static DscNodeConfigurationResource GetDscNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DscNodeConfigurationResource.ValidateResourceId(id);
-                return new DscNodeConfigurationResource(client, id);
             }
             );
         }
@@ -243,20 +186,115 @@ namespace Azure.ResourceManager.Automation
         }
         #endregion
 
-        #region SourceControlResource
+        #region WatcherResource
         /// <summary>
-        /// Gets an object representing a <see cref="SourceControlResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WatcherResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WatcherResource.CreateResourceIdentifier" /> to create a <see cref="WatcherResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SourceControlResource" /> object. </returns>
-        public static SourceControlResource GetSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WatcherResource" /> object. </returns>
+        public static WatcherResource GetWatcherResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SourceControlResource.ValidateResourceId(id);
-                return new SourceControlResource(client, id);
+                WatcherResource.ValidateResourceId(id);
+                return new WatcherResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SoftwareUpdateConfigurationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SoftwareUpdateConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SoftwareUpdateConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SoftwareUpdateConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource" /> object. </returns>
+        public static SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SoftwareUpdateConfigurationResource.ValidateResourceId(id);
+                return new SoftwareUpdateConfigurationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WebhookResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WebhookResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebhookResource.CreateResourceIdentifier" /> to create a <see cref="WebhookResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WebhookResource" /> object. </returns>
+        public static WebhookResource GetWebhookResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WebhookResource.ValidateResourceId(id);
+                return new WebhookResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AutomationAccountPython3PackageResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomationAccountPython3PackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationAccountPython3PackageResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountPython3PackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutomationAccountPython3PackageResource" /> object. </returns>
+        public static AutomationAccountPython3PackageResource GetAutomationAccountPython3PackageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AutomationAccountPython3PackageResource.ValidateResourceId(id);
+                return new AutomationAccountPython3PackageResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AutomationAccountModuleResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomationAccountModuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationAccountModuleResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutomationAccountModuleResource" /> object. </returns>
+        public static AutomationAccountModuleResource GetAutomationAccountModuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AutomationAccountModuleResource.ValidateResourceId(id);
+                return new AutomationAccountModuleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AutomationAccountPython2PackageResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomationAccountPython2PackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationAccountPython2PackageResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountPython2PackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutomationAccountPython2PackageResource" /> object. </returns>
+        public static AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AutomationAccountPython2PackageResource.ValidateResourceId(id);
+                return new AutomationAccountPython2PackageResource(client, id);
             }
             );
         }
@@ -357,82 +395,6 @@ namespace Azure.ResourceManager.Automation
         }
         #endregion
 
-        #region JobScheduleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="JobScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobScheduleResource.CreateResourceIdentifier" /> to create a <see cref="JobScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobScheduleResource" /> object. </returns>
-        public static JobScheduleResource GetJobScheduleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                JobScheduleResource.ValidateResourceId(id);
-                return new JobScheduleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ScheduleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduleResource" /> object. </returns>
-        public static ScheduleResource GetScheduleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ScheduleResource.ValidateResourceId(id);
-                return new ScheduleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VariableResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VariableResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VariableResource.CreateResourceIdentifier" /> to create a <see cref="VariableResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VariableResource" /> object. </returns>
-        public static VariableResource GetVariableResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VariableResource.ValidateResourceId(id);
-                return new VariableResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WatcherResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WatcherResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WatcherResource.CreateResourceIdentifier" /> to create a <see cref="WatcherResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WatcherResource" /> object. </returns>
-        public static WatcherResource GetWatcherResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WatcherResource.ValidateResourceId(id);
-                return new WatcherResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region DscConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="DscConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
@@ -452,77 +414,20 @@ namespace Azure.ResourceManager.Automation
         }
         #endregion
 
-        #region JobResource
+        #region DscNodeConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DscNodeConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DscNodeConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscNodeConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobResource" /> object. </returns>
-        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DscNodeConfigurationResource" /> object. </returns>
+        public static DscNodeConfigurationResource GetDscNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobResource.ValidateResourceId(id);
-                return new JobResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SoftwareUpdateConfigurationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SoftwareUpdateConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SoftwareUpdateConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SoftwareUpdateConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource" /> object. </returns>
-        public static SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SoftwareUpdateConfigurationResource.ValidateResourceId(id);
-                return new SoftwareUpdateConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RunbookResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RunbookResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RunbookResource.CreateResourceIdentifier" /> to create a <see cref="RunbookResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RunbookResource" /> object. </returns>
-        public static RunbookResource GetRunbookResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RunbookResource.ValidateResourceId(id);
-                return new RunbookResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WebhookResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WebhookResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebhookResource.CreateResourceIdentifier" /> to create a <see cref="WebhookResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebhookResource" /> object. </returns>
-        public static WebhookResource GetWebhookResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WebhookResource.ValidateResourceId(id);
-                return new WebhookResource(client, id);
+                DscNodeConfigurationResource.ValidateResourceId(id);
+                return new DscNodeConfigurationResource(client, id);
             }
             );
         }
@@ -561,6 +466,120 @@ namespace Azure.ResourceManager.Automation
             {
                 HybridRunbookWorkerGroupResource.ValidateResourceId(id);
                 return new HybridRunbookWorkerGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region JobResource
+        /// <summary>
+        /// Gets an object representing a <see cref="JobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobResource" /> object. </returns>
+        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                JobResource.ValidateResourceId(id);
+                return new JobResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region JobScheduleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="JobScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobScheduleResource.CreateResourceIdentifier" /> to create a <see cref="JobScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobScheduleResource" /> object. </returns>
+        public static JobScheduleResource GetJobScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                JobScheduleResource.ValidateResourceId(id);
+                return new JobScheduleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RunbookResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RunbookResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RunbookResource.CreateResourceIdentifier" /> to create a <see cref="RunbookResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RunbookResource" /> object. </returns>
+        public static RunbookResource GetRunbookResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RunbookResource.ValidateResourceId(id);
+                return new RunbookResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ScheduleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScheduleResource" /> object. </returns>
+        public static ScheduleResource GetScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ScheduleResource.ValidateResourceId(id);
+                return new ScheduleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SourceControlResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SourceControlResource" /> object. </returns>
+        public static SourceControlResource GetSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SourceControlResource.ValidateResourceId(id);
+                return new SourceControlResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VariableResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VariableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VariableResource.CreateResourceIdentifier" /> to create a <see cref="VariableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VariableResource" /> object. </returns>
+        public static VariableResource GetVariableResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VariableResource.ValidateResourceId(id);
+                return new VariableResource(client, id);
             }
             );
         }

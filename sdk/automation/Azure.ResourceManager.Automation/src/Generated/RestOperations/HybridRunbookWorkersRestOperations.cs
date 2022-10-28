@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-22";
+            _apiVersion = apiVersion ?? "2022-08-08";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -265,6 +265,7 @@ namespace Azure.ResourceManager.Automation
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         HybridRunbookWorkerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -300,6 +301,7 @@ namespace Azure.ResourceManager.Automation
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         HybridRunbookWorkerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Automation
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _automationAccountClientDiagnostics;
-        private AutomationAccountRestOperations _automationAccountRestClient;
         private ClientDiagnostics _deletedAutomationAccountsClientDiagnostics;
         private DeletedAutomationAccountsRestOperations _deletedAutomationAccountsRestClient;
+        private ClientDiagnostics _automationAccountClientDiagnostics;
+        private AutomationAccountRestOperations _automationAccountRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -37,15 +37,69 @@ namespace Azure.ResourceManager.Automation
         {
         }
 
-        private ClientDiagnostics AutomationAccountClientDiagnostics => _automationAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationAccountResource.ResourceType.Namespace, Diagnostics);
-        private AutomationAccountRestOperations AutomationAccountRestClient => _automationAccountRestClient ??= new AutomationAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AutomationAccountResource.ResourceType));
         private ClientDiagnostics deletedAutomationAccountsClientDiagnostics => _deletedAutomationAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DeletedAutomationAccountsRestOperations deletedAutomationAccountsRestClient => _deletedAutomationAccountsRestClient ??= new DeletedAutomationAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics AutomationAccountClientDiagnostics => _automationAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationAccountResource.ResourceType.Namespace, Diagnostics);
+        private AutomationAccountRestOperations AutomationAccountRestClient => _automationAccountRestClient ??= new AutomationAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AutomationAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// Retrieve deleted automation account.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts
+        /// Operation Id: deletedAutomationAccounts_ListBySubscription
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<DeletedAutomationAccount>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = deletedAutomationAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAutomationAccountsBySubscription");
+                scope.Start();
+                try
+                {
+                    var response = await deletedAutomationAccountsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Retrieve deleted automation account.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts
+        /// Operation Id: deletedAutomationAccounts_ListBySubscription
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(CancellationToken cancellationToken = default)
+        {
+            Page<DeletedAutomationAccount> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = deletedAutomationAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAutomationAccountsBySubscription");
+                scope.Start();
+                try
+                {
+                    var response = deletedAutomationAccountsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -130,60 +184,6 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Retrieve deleted automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts
-        /// Operation Id: deletedAutomationAccounts_ListBySubscription
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DeletedAutomationAccount>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = deletedAutomationAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAutomationAccountsBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = await deletedAutomationAccountsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Retrieve deleted automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts
-        /// Operation Id: deletedAutomationAccounts_ListBySubscription
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(CancellationToken cancellationToken = default)
-        {
-            Page<DeletedAutomationAccount> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = deletedAutomationAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAutomationAccountsBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = deletedAutomationAccountsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }
