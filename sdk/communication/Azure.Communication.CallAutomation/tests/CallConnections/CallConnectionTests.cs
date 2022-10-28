@@ -285,7 +285,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
             ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.AddParticipants(new AddParticipantsOptions(participantsToAdd)));
             Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains("Value cannot be null.\r\nParameter name: SourceCallerId"));
+            Assert.True(ex?.Message.Contains("Value cannot be null."));
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
