@@ -213,10 +213,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private static ParameterBindingData ConvertToParameterBindingData(BlobAttribute blobAttribute)
         {
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
-            var connectionName = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
 
             dynamic blobDetails = new ExpandoObject();
-            blobDetails.Connection = connectionName;
+            blobDetails.Connection = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
             blobDetails.BlobName = blobPath.BlobName;
             blobDetails.ContainerName = blobPath.ContainerName;
 
@@ -225,10 +224,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         private static ParameterBindingData ConvertToParameterBindingData(BlobBaseClient input, BlobTriggerAttribute blobAttribute)
         {
-            var connectionName = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
-
             dynamic blobDetails = new ExpandoObject();
-            blobDetails.Connection = connectionName;
+            blobDetails.Connection = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
             blobDetails.BlobName = input.Name;
             blobDetails.ContainerName = input.BlobContainerName;
 
@@ -238,7 +235,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private static ParameterBindingData CreateParameterBindingData(object blobDetails)
         {
             var blobDetailsBinaryData = new BinaryData(blobDetails);
-            var bindingData = new ParameterBindingData("AzureStorageBlobs", blobDetailsBinaryData, "application/json");
+            var bindingData = new ParameterBindingData("1.0", "AzureStorageBlobs", blobDetailsBinaryData, "application/json");
             return bindingData;
         }
 
