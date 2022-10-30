@@ -376,7 +376,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.False(result, "An event was received while none were expected.");
 
                 // send a new event which should be received
-                await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+                await producer.SendAsync(new EventData[]
+                {
+                    new EventData(new BinaryData("data")),
+                    new EventData(new BinaryData("data")),
+                    new EventData(new BinaryData("data")),
+                    new EventData(new BinaryData("data")),
+                    new EventData(new BinaryData("data"))
+                });
+
                 result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
