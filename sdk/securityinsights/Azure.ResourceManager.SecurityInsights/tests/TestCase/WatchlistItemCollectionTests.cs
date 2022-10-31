@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
             //1.CreateOrUpdate
             var collection = await GetWatchlistItemCollectionAsync(resourceGroup, workspace.Data.Name);
-            var name = Recording.GenerateAssetName("WatchlistItems-");
-            var name2 = Recording.GenerateAssetName("WatchlistItems-");
-            var name3 = Recording.GenerateAssetName("WatchlistItems-");
+            var name = "6d37a904-d199-43ff-892b-53653b784122";
+            var name2 = "6d37a904-d199-43ff-892b-53653b784126";
+            var name3 = "6d37a904-d199-43ff-892b-53653b784128";
             var input = ResourceDataHelpers.GetWatchlistItemData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             WatchlistItemResource item1 = lro.Value;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             Assert.GreaterOrEqual(count, 3);
             //4Exists
             Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.IsFalse(await collection.ExistsAsync("6d37a904-d199-43ff-892b-53653b784123"));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

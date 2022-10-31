@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         #endregion
         private async Task<EntityQueryResource> CreateEntityQueryAsync(ResourceGroupResource resourceGroup, string workspaceName, string name)
         {
-            var collection = (await CreateResourceGroupAsync()).GetEntityQueries(workspaceName);
+            var collection = resourceGroup.GetEntityQueries(workspaceName);
             var input = ResourceDataHelpers.GetEntityQueryData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             return lro.Value;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
             //1.Get
-            var queryName = Recording.GenerateAssetName("testEntityQuery-");
+            var queryName = "6d37a904-d199-43ff-892b-53653b784122";
             var query1 = await CreateEntityQueryAsync(resourceGroup, workspace.Data.Name, queryName);
             EntityQueryResource query2 = await query1.GetAsync();
 
