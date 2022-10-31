@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Ptrdname))
+            if (Optional.IsDefined(PtrDomainName))
             {
                 writer.WritePropertyName("ptrdname");
-                writer.WriteStringValue(Ptrdname);
+                writer.WriteStringValue(PtrDomainName);
             }
             writer.WriteEndObject();
         }

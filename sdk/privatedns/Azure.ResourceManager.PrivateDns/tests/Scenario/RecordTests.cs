@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.PrivateDns.Tests
                 {
                     new PtrRecordInfo()
                     {
-                        Ptrdname = domainNameValue1
+                        PtrDomainName = domainNameValue1
                     },
                     new PtrRecordInfo()
                     {
-                        Ptrdname = domainNameValue2
+                        PtrDomainName = domainNameValue2
                     },
                 }
             };
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             ValidateRecordBaseInfo(ptrRecord.Value.Data, ptrRecordName);
             Assert.AreEqual("privateDnsZones/PTR", ptrRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, ptrRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(domainNameValue1, ptrRecord.Value.Data.PtrRecords[0].Ptrdname);
-            Assert.AreEqual(domainNameValue2, ptrRecord.Value.Data.PtrRecords[1].Ptrdname);
+            Assert.AreEqual(domainNameValue1, ptrRecord.Value.Data.PtrRecords[0].PtrDomainName);
+            Assert.AreEqual(domainNameValue2, ptrRecord.Value.Data.PtrRecords[1].PtrDomainName);
 
             // Exist
             bool flag = await collection.ExistsAsync(ptrRecordName);
@@ -287,8 +287,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             var getResponse = await collection.GetAsync(ptrRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, ptrRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(domainNameValue1, getResponse.Value.Data.PtrRecords[0].Ptrdname);
-            Assert.AreEqual(domainNameValue2, getResponse.Value.Data.PtrRecords[1].Ptrdname);
+            Assert.AreEqual(domainNameValue1, getResponse.Value.Data.PtrRecords[0].PtrDomainName);
+            Assert.AreEqual(domainNameValue2, getResponse.Value.Data.PtrRecords[1].PtrDomainName);
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -425,11 +425,11 @@ namespace Azure.ResourceManager.PrivateDns.Tests
                 {
                     new TxtRecordInfo()
                     {
-                        Value  ={"value1", "value2" }
+                        Values  ={"value1", "value2" }
                     },
                     new TxtRecordInfo()
                     {
-                        Value  ={"value3", "value4", "value5" }
+                        Values  ={"value3", "value4", "value5" }
                     },
                 }
             };

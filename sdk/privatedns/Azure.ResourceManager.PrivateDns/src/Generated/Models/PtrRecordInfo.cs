@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> Initializes a new instance of PtrRecordInfo. </summary>
-        /// <param name="ptrdname"> The PTR target domain name for this PTR record. </param>
-        internal PtrRecordInfo(string ptrdname)
+        /// <param name="ptrDomainName"> The PTR target domain name for this PTR record. </param>
+        internal PtrRecordInfo(string ptrDomainName)
         {
-            Ptrdname = ptrdname;
+            PtrDomainName = ptrDomainName;
         }
 
         /// <summary> The PTR target domain name for this PTR record. </summary>
-        public string Ptrdname { get; set; }
+        public string PtrDomainName { get; set; }
     }
 }

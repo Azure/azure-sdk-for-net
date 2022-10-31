@@ -72,9 +72,13 @@ directive:
   - from: privatedns.json
     where: $.definitions
     transform: >
-      $.RecordSetProperties.properties.ttl["x-ms-client-name"] = "TtlInSeconds";
       $.RecordSet["x-ms-client-name"] = "RecordSeries";
-
+      $.PtrRecord.properties.ptrdname["x-ms-client-name"] = "PtrDomainName";
+      $.RecordSetProperties.properties.ttl["x-ms-client-name"] = "TtlInSeconds";
+      $.TxtRecord.properties.value["x-ms-client-name"] = "values";
+      $.PrivateZoneProperties.properties.maxNumberOfRecordSets["x-ms-client-name"] = "maxNumberOfRecords";
+      $.PrivateZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
+      
 # FooTime => FooTimeInSeconds
   - from: privatedns.json
     where: $.definitions
@@ -83,10 +87,9 @@ directive:
       $.SoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
       $.SoaRecord.properties.minimumTtl["x-ms-client-name"] = "minimumTtlInSeconds";
       $.SoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
+
 # Mx Ns => MX NS
   - from: swagger-document
     where: $.definitions
     transform: >
-# $.RecordSet["x-ms-client-name"] = "Record";
-# $.RecordSetProperties["x-ms-client-name"] = "RecordProperties";
 ```

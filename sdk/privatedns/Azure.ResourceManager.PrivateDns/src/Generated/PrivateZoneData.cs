@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> The ETag of the zone. </param>
-        /// <param name="maxNumberOfRecordSets"> The maximum number of record sets that can be created in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="numberOfRecordSets"> The current number of record sets in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="numberOfRecords"> The current number of record sets in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="maxNumberOfVirtualNetworkLinks"> The maximum number of virtual networks that can be linked to this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="numberOfVirtualNetworkLinks"> The current number of virtual networks that are linked to this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="maxNumberOfVirtualNetworkLinksWithRegistration"> The maximum number of virtual networks that can be linked to this Private DNS zone with registration enabled. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="numberOfVirtualNetworkLinksWithRegistration"> The current number of virtual networks that are linked to this Private DNS zone with registration enabled. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="internalId"> Private zone internal Id. </param>
-        internal PrivateZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecordSets, long? numberOfRecordSets, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, ProvisioningState? provisioningState, string internalId) : base(id, name, resourceType, systemData, tags, location)
+        internal PrivateZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, ProvisioningState? provisioningState, string internalId) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
-            MaxNumberOfRecordSets = maxNumberOfRecordSets;
-            NumberOfRecordSets = numberOfRecordSets;
+            MaxNumberOfRecords = maxNumberOfRecords;
+            NumberOfRecords = numberOfRecords;
             MaxNumberOfVirtualNetworkLinks = maxNumberOfVirtualNetworkLinks;
             NumberOfVirtualNetworkLinks = numberOfVirtualNetworkLinks;
             MaxNumberOfVirtualNetworkLinksWithRegistration = maxNumberOfVirtualNetworkLinksWithRegistration;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> The ETag of the zone. </summary>
         public ETag? ETag { get; set; }
         /// <summary> The maximum number of record sets that can be created in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public long? MaxNumberOfRecordSets { get; }
+        public long? MaxNumberOfRecords { get; }
         /// <summary> The current number of record sets in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public long? NumberOfRecordSets { get; }
+        public long? NumberOfRecords { get; }
         /// <summary> The maximum number of virtual networks that can be linked to this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public long? MaxNumberOfVirtualNetworkLinks { get; }
         /// <summary> The current number of virtual networks that are linked to this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>

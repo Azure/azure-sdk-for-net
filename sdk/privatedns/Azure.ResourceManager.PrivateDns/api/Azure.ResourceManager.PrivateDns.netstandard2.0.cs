@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.PrivateDns
         public PrivateZoneData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string InternalId { get { throw null; } }
-        public long? MaxNumberOfRecordSets { get { throw null; } }
+        public long? MaxNumberOfRecords { get { throw null; } }
         public long? MaxNumberOfVirtualNetworkLinks { get { throw null; } }
         public long? MaxNumberOfVirtualNetworkLinksWithRegistration { get { throw null; } }
-        public long? NumberOfRecordSets { get { throw null; } }
+        public long? NumberOfRecords { get { throw null; } }
         public long? NumberOfVirtualNetworkLinks { get { throw null; } }
         public long? NumberOfVirtualNetworkLinksWithRegistration { get { throw null; } }
         public Azure.ResourceManager.PrivateDns.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
     public partial class PtrRecordInfo
     {
         public PtrRecordInfo() { }
-        public string Ptrdname { get { throw null; } set { } }
+        public string PtrDomainName { get { throw null; } set { } }
     }
     public partial class SoaRecordInfo
     {
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
     public partial class TxtRecordInfo
     {
         public TxtRecordInfo() { }
-        public System.Collections.Generic.IList<string> Value { get { throw null; } }
+        public System.Collections.Generic.IList<string> Values { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualNetworkLinkState : System.IEquatable<Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState>
