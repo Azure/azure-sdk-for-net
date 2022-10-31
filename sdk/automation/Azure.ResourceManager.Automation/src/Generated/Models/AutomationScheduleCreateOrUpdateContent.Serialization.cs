@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("startTime");
             writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(ExpiryOn))
+            if (Optional.IsDefined(ExpireOn))
             {
-                if (ExpiryOn != null)
+                if (ExpireOn != null)
                 {
                     writer.WritePropertyName("expiryTime");
-                    writer.WriteStringValue(ExpiryOn.Value, "O");
+                    writer.WriteStringValue(ExpireOn.Value, "O");
                 }
                 else
                 {

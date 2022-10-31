@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the webhook uri.
         /// Serialized Name: Webhook.properties.uri
         /// </param>
-        /// <param name="expiryOn">
+        /// <param name="expireOn">
         /// Gets or sets the expiry time.
         /// Serialized Name: Webhook.properties.expiryTime
         /// </param>
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the description.
         /// Serialized Name: Webhook.properties.description
         /// </param>
-        internal AutomationWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, Uri uri, DateTimeOffset? expiryOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description) : base(id, name, resourceType, systemData)
+        internal AutomationWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             Uri = uri;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             LastInvokedOn = lastInvokedOn;
             Parameters = parameters;
             Runbook = runbook;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the expiry time.
         /// Serialized Name: Webhook.properties.expiryTime
         /// </summary>
-        public DateTimeOffset? ExpiryOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary>
         /// Gets or sets the last invoked time.
         /// Serialized Name: Webhook.properties.lastInvokedTime

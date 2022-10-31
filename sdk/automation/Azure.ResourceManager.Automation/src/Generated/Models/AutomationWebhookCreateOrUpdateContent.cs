@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the expiry time.
         /// Serialized Name: WebhookCreateOrUpdateParameters.properties.expiryTime
         /// </summary>
-        public DateTimeOffset? ExpiryOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary>
         /// Gets or sets the parameters of the job.
         /// Serialized Name: WebhookCreateOrUpdateParameters.properties.parameters

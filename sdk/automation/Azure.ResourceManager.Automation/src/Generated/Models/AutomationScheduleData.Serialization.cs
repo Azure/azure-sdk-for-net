@@ -25,44 +25,44 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("startTime");
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpiryOn))
+            if (Optional.IsDefined(ExpireOn))
             {
-                if (ExpiryOn != null)
+                if (ExpireOn != null)
                 {
                     writer.WritePropertyName("expiryTime");
-                    writer.WriteStringValue(ExpiryOn.Value, "O");
+                    writer.WriteStringValue(ExpireOn.Value, "O");
                 }
                 else
                 {
                     writer.WriteNull("expiryTime");
                 }
             }
-            if (Optional.IsDefined(ExpiryTimeOffsetMinutes))
+            if (Optional.IsDefined(ExpireInMinutes))
             {
                 writer.WritePropertyName("expiryTimeOffsetMinutes");
-                writer.WriteNumberValue(ExpiryTimeOffsetMinutes.Value);
+                writer.WriteNumberValue(ExpireInMinutes.Value);
             }
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled");
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(NextRun))
+            if (Optional.IsDefined(NextRunOn))
             {
-                if (NextRun != null)
+                if (NextRunOn != null)
                 {
                     writer.WritePropertyName("nextRun");
-                    writer.WriteStringValue(NextRun.Value, "O");
+                    writer.WriteStringValue(NextRunOn.Value, "O");
                 }
                 else
                 {
                     writer.WriteNull("nextRun");
                 }
             }
-            if (Optional.IsDefined(NextRunOffsetMinutes))
+            if (Optional.IsDefined(NextRunInMinutes))
             {
                 writer.WritePropertyName("nextRunOffsetMinutes");
-                writer.WriteNumberValue(NextRunOffsetMinutes.Value);
+                writer.WriteNumberValue(NextRunInMinutes.Value);
             }
             if (Optional.IsDefined(Interval))
             {

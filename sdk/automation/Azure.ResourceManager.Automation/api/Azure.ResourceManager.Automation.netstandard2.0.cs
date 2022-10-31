@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Automation
         public AutomationCertificateData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiryOn { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsExportable { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public System.BinaryData Thumbprint { get { throw null; } }
@@ -663,16 +663,16 @@ namespace Azure.ResourceManager.Automation
         public Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule AdvancedSchedule { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiryOn { get { throw null; } set { } }
-        public double? ExpiryTimeOffsetMinutes { get { throw null; } set { } }
+        public double? ExpireInMinutes { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency? Frequency { get { throw null; } set { } }
         public System.BinaryData Interval { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
-        public System.DateTimeOffset? NextRun { get { throw null; } set { } }
-        public double? NextRunOffsetMinutes { get { throw null; } set { } }
+        public double? NextRunInMinutes { get { throw null; } set { } }
+        public System.DateTimeOffset? NextRunOn { get { throw null; } set { } }
+        public double? StartInMinutes { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
-        public double? StartTimeOffsetMinutes { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
     }
     public partial class AutomationScheduleResource : Azure.ResourceManager.ArmResource
@@ -732,12 +732,12 @@ namespace Azure.ResourceManager.Automation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationSourceControlResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult> GetSourceControlSyncJob(System.Guid sourceControlSyncJobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult>> GetSourceControlSyncJobAsync(System.Guid sourceControlSyncJobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.SourceControlSyncJob> GetSourceControlSyncJobsByAutomationAccount(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.SourceControlSyncJob> GetSourceControlSyncJobsByAutomationAccountAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.SourceControlSyncJob> GetSourceControlSyncJobs(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.SourceControlSyncJob> GetSourceControlSyncJobsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult> GetSourceControlSyncJobStream(System.Guid sourceControlSyncJobId, string streamId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult>> GetSourceControlSyncJobStreamAsync(System.Guid sourceControlSyncJobId, string streamId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream> GetSourceControlSyncJobStreamsBySyncJob(System.Guid sourceControlSyncJobId, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream> GetSourceControlSyncJobStreamsBySyncJobAsync(System.Guid sourceControlSyncJobId, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream> GetSourceControlSyncJobStreams(System.Guid sourceControlSyncJobId, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream> GetSourceControlSyncJobStreamsAsync(System.Guid sourceControlSyncJobId, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationSourceControlResource> Update(Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationSourceControlResource>> UpdateAsync(Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Automation
         public AutomationWebhookData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiryOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? LastInvokedOn { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } set { } }
@@ -1181,8 +1181,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal AgentRegistration() { }
         public string DscMetaConfiguration { get { throw null; } }
-        public string Endpoint { get { throw null; } }
-        public string Id { get { throw null; } }
+        public System.Uri Endpoint { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AgentRegistrationKeys Keys { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Definition { get { throw null; } }
         public string Description { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType> OutputTypes { get { throw null; } }
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.Automation.Models
     public partial class AutomationJobStream
     {
         internal AutomationJobStream() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string JobStreamId { get { throw null; } }
         public string StreamText { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationJobStreamType? StreamType { get { throw null; } }
@@ -1781,7 +1781,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationScheduleCreateOrUpdateContent(string name, System.DateTimeOffset startOn, Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency frequency) { }
         public Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule AdvancedSchedule { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiryOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency Frequency { get { throw null; } }
         public System.BinaryData Interval { get { throw null; } set { } }
         public string Name { get { throw null; } }
@@ -1904,7 +1904,7 @@ namespace Azure.ResourceManager.Automation.Models
     public partial class AutomationWebhookCreateOrUpdateContent
     {
         public AutomationWebhookCreateOrUpdateContent(string name) { }
-        public System.DateTimeOffset? ExpiryOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
@@ -1924,7 +1924,7 @@ namespace Azure.ResourceManager.Automation.Models
     public partial class AzureQueryProperties
     {
         public AzureQueryProperties() { }
-        public System.Collections.Generic.IList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public System.Collections.Generic.IList<string> Scope { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties TagSettings { get { throw null; } set { } }
     }
@@ -1937,7 +1937,7 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal DeletedAutomationAccount() { }
         public string AutomationAccountId { get { throw null; } }
-        public string AutomationAccountResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AutomationAccountResourceId { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string LocationPropertiesLocation { get { throw null; } }
@@ -2397,10 +2397,10 @@ namespace Azure.ResourceManager.Automation.Models
         internal SoftwareUpdateConfigurationCollectionItem() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency? Frequency { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.DateTimeOffset? NextRun { get { throw null; } }
+        public System.DateTimeOffset? NextRunOn { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks Tasks { get { throw null; } }
@@ -2415,7 +2415,7 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationErrorResponse Error { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.Core.ResourceIdentifier JobId { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
@@ -2425,7 +2425,7 @@ namespace Azure.ResourceManager.Automation.Models
         public System.Guid? SourceComputerId { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
-        public string TargetComputer { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetComputerId { get { throw null; } }
         public string TargetComputerType { get { throw null; } }
     }
     public enum SoftwareUpdateConfigurationOperatingSystemType
@@ -2442,7 +2442,7 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public int? FailedCount { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Name { get { throw null; } }
@@ -2471,16 +2471,16 @@ namespace Azure.ResourceManager.Automation.Models
         public Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule AdvancedSchedule { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiryOn { get { throw null; } set { } }
-        public double? ExpiryTimeOffsetMinutes { get { throw null; } set { } }
+        public double? ExpireInMinutes { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency? Frequency { get { throw null; } set { } }
         public long? Interval { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
-        public System.DateTimeOffset? NextRun { get { throw null; } set { } }
-        public double? NextRunOffsetMinutes { get { throw null; } set { } }
+        public double? NextRunInMinutes { get { throw null; } set { } }
+        public System.DateTimeOffset? NextRunOn { get { throw null; } set { } }
+        public double? StartInMinutes { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
-        public double? StartTimeOffsetMinutes { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
     }
     public partial class SoftwareUpdateConfigurationSpecificProperties

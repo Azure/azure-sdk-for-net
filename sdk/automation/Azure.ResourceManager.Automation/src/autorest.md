@@ -87,6 +87,31 @@ rename-mapping:
   DscNode.properties.lastSeen: LastSeenOn
   HybridRunbookWorker.properties.vmResourceId: -|arm-id
   HybridRunbookWorkerCreateParameters.properties.vmResourceId: -|arm-id
+  Certificate.properties.expiryTime: ExpireOn
+  Schedule.properties.startTimeOffsetMinutes: StartInMinutes
+  Schedule.properties.expiryTime: ExpireOn
+  Schedule.properties.expiryTimeOffsetMinutes: ExpireInMinutes
+  Schedule.properties.nextRun: NextRunOn
+  Schedule.properties.nextRunOffsetMinutes: NextRunInMinutes
+  SoftwareUpdateConfigurationCollectionItem.properties.nextRun: NextRunOn
+  SUCScheduleProperties.startTimeOffsetMinutes: StartInMinutes
+  SUCScheduleProperties.expiryTime: ExpireOn
+  SUCScheduleProperties.expiryTimeOffsetMinutes: ExpireInMinutes
+  SUCScheduleProperties.nextRun: NextRunOn
+  SUCScheduleProperties.nextRunOffsetMinutes: NextRunInMinutes
+  Webhook.properties.expiryTime: ExpireOn
+  WebhookCreateOrUpdateParameters.properties.expiryTime: ExpireOn
+  ScheduleCreateOrUpdateParameters.properties.expiryTime: ExpireOn
+  Activity.id: -|arm-id
+  AgentRegistration.id: -|arm-id
+  AgentRegistration.endpoint: -|uri
+  AzureQueryProperties.locations: -|azure-location
+  DeletedAutomationAccount.properties.automationAccountResourceId: -|arm-id
+  JobStream.id: -|arm-id
+  SoftwareUpdateConfigurationCollectionItem.id: -|arm-id
+  SoftwareUpdateConfigurationMachineRun.id: -|arm-id
+  SoftwareUpdateConfigurationMachineRun.properties.targetComputer: TargetComputerId|arm-id
+  SoftwareUpdateConfigurationRun.id: -|arm-id
 
 prepend-rp-prefix:
   - Certificate
@@ -188,6 +213,8 @@ override-operation-name:
   DscCompilationJobStream_ListByJob: GetDscCompilationJobStreams
   ObjectDataTypes_ListFieldsByType: GetFieldsByType
   TestJobStreams_ListByTestJob: GetTestJobStreams
+  SourceControlSyncJob_ListByAutomationAccount: GetSourceControlSyncJobs
+  SourceControlSyncJobStreams_ListBySyncJob: GetSourceControlSyncJobStreams
 operation-positions:
   Job_ListByAutomationAccount: collection
   SoftwareUpdateConfigurations_List: collection
@@ -197,6 +224,7 @@ directive:
     where: $.definitions
     transform: >
         $.updateConfigurationMachineRunProperties.properties.configuredDuration['format'] = 'duration';
+        $.jobNavigation['x-ms-mgmt-referenceType'] = false;
   - from: softwareUpdateConfigurationRun.json
     where: $.definitions
     transform: >

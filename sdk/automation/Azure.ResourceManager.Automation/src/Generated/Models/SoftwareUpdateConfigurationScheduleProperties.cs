@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the start time of the schedule.
         /// Serialized Name: SUCScheduleProperties.startTime
         /// </param>
-        /// <param name="startTimeOffsetMinutes">
+        /// <param name="startInMinutes">
         /// Gets the start time&apos;s offset in minutes.
         /// Serialized Name: SUCScheduleProperties.startTimeOffsetMinutes
         /// </param>
-        /// <param name="expiryOn">
+        /// <param name="expireOn">
         /// Gets or sets the end time of the schedule.
         /// Serialized Name: SUCScheduleProperties.expiryTime
         /// </param>
-        /// <param name="expiryTimeOffsetMinutes">
+        /// <param name="expireInMinutes">
         /// Gets or sets the expiry time&apos;s offset in minutes.
         /// Serialized Name: SUCScheduleProperties.expiryTimeOffsetMinutes
         /// </param>
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets a value indicating whether this schedule is enabled.
         /// Serialized Name: SUCScheduleProperties.isEnabled
         /// </param>
-        /// <param name="nextRun">
+        /// <param name="nextRunOn">
         /// Gets or sets the next run time of the schedule.
         /// Serialized Name: SUCScheduleProperties.nextRun
         /// </param>
-        /// <param name="nextRunOffsetMinutes">
+        /// <param name="nextRunInMinutes">
         /// Gets or sets the next run time&apos;s offset in minutes.
         /// Serialized Name: SUCScheduleProperties.nextRunOffsetMinutes
         /// </param>
@@ -77,15 +77,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the description.
         /// Serialized Name: SUCScheduleProperties.description
         /// </param>
-        internal SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn, double? startTimeOffsetMinutes, DateTimeOffset? expiryOn, double? expiryTimeOffsetMinutes, bool? isEnabled, DateTimeOffset? nextRun, double? nextRunOffsetMinutes, long? interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description)
+        internal SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, long? interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description)
         {
             StartOn = startOn;
-            StartTimeOffsetMinutes = startTimeOffsetMinutes;
-            ExpiryOn = expiryOn;
-            ExpiryTimeOffsetMinutes = expiryTimeOffsetMinutes;
+            StartInMinutes = startInMinutes;
+            ExpireOn = expireOn;
+            ExpireInMinutes = expireInMinutes;
             IsEnabled = isEnabled;
-            NextRun = nextRun;
-            NextRunOffsetMinutes = nextRunOffsetMinutes;
+            NextRunOn = nextRunOn;
+            NextRunInMinutes = nextRunInMinutes;
             Interval = interval;
             Frequency = frequency;
             TimeZone = timeZone;
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets the start time&apos;s offset in minutes.
         /// Serialized Name: SUCScheduleProperties.startTimeOffsetMinutes
         /// </summary>
-        public double? StartTimeOffsetMinutes { get; }
+        public double? StartInMinutes { get; }
         /// <summary>
         /// Gets or sets the end time of the schedule.
         /// Serialized Name: SUCScheduleProperties.expiryTime
         /// </summary>
-        public DateTimeOffset? ExpiryOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary>
         /// Gets or sets the expiry time&apos;s offset in minutes.
         /// Serialized Name: SUCScheduleProperties.expiryTimeOffsetMinutes
         /// </summary>
-        public double? ExpiryTimeOffsetMinutes { get; set; }
+        public double? ExpireInMinutes { get; set; }
         /// <summary>
         /// Gets or sets a value indicating whether this schedule is enabled.
         /// Serialized Name: SUCScheduleProperties.isEnabled
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the next run time of the schedule.
         /// Serialized Name: SUCScheduleProperties.nextRun
         /// </summary>
-        public DateTimeOffset? NextRun { get; set; }
+        public DateTimeOffset? NextRunOn { get; set; }
         /// <summary>
         /// Gets or sets the next run time&apos;s offset in minutes.
         /// Serialized Name: SUCScheduleProperties.nextRunOffsetMinutes
         /// </summary>
-        public double? NextRunOffsetMinutes { get; set; }
+        public double? NextRunInMinutes { get; set; }
         /// <summary>
         /// Gets or sets the interval of the schedule.
         /// Serialized Name: SUCScheduleProperties.interval

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the id.
         /// Serialized Name: AgentRegistration.id
         /// </param>
-        internal AgentRegistration(string dscMetaConfiguration, string endpoint, AgentRegistrationKeys keys, string id)
+        internal AgentRegistration(string dscMetaConfiguration, Uri endpoint, AgentRegistrationKeys keys, ResourceIdentifier id)
         {
             DscMetaConfiguration = dscMetaConfiguration;
             Endpoint = endpoint;
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the dsc server endpoint.
         /// Serialized Name: AgentRegistration.endpoint
         /// </summary>
-        public string Endpoint { get; }
+        public Uri Endpoint { get; }
         /// <summary>
         /// Gets or sets the agent registration keys.
         /// Serialized Name: AgentRegistration.keys
@@ -62,6 +65,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the id.
         /// Serialized Name: AgentRegistration.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

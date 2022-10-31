@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Software update configuration tasks triggered in this run
         /// Serialized Name: SoftwareUpdateConfigurationRun.properties.tasks
         /// </param>
-        internal SoftwareUpdateConfigurationRun(string name, string id, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks)
+        internal SoftwareUpdateConfigurationRun(string name, ResourceIdentifier id, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks)
         {
             Name = name;
             Id = id;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Resource Id of the software update configuration run
         /// Serialized Name: SoftwareUpdateConfigurationRun.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary>
         /// software update configuration triggered this run
         /// Serialized Name: SoftwareUpdateConfigurationRun.properties.softwareUpdateConfiguration

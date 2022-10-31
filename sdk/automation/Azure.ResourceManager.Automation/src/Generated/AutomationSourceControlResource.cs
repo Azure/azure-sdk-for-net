@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SourceControlSyncJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SourceControlSyncJob> GetSourceControlSyncJobsByAutomationAccountAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SourceControlSyncJob> GetSourceControlSyncJobsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SourceControlSyncJob>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobsByAutomationAccount");
+                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobs");
                 scope.Start();
                 try
                 {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Automation
             }
             async Task<Page<SourceControlSyncJob>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobsByAutomationAccount");
+                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobs");
                 scope.Start();
                 try
                 {
@@ -398,11 +398,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SourceControlSyncJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SourceControlSyncJob> GetSourceControlSyncJobsByAutomationAccount(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SourceControlSyncJob> GetSourceControlSyncJobs(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<SourceControlSyncJob> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobsByAutomationAccount");
+                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobs");
                 scope.Start();
                 try
                 {
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Automation
             }
             Page<SourceControlSyncJob> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobsByAutomationAccount");
+                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobs");
                 scope.Start();
                 try
                 {
@@ -442,11 +442,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SourceControlSyncJobStream" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SourceControlSyncJobStream> GetSourceControlSyncJobStreamsBySyncJobAsync(Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SourceControlSyncJobStream> GetSourceControlSyncJobStreamsAsync(Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SourceControlSyncJobStream>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreamsBySyncJob");
+                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreams");
                 scope.Start();
                 try
                 {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Automation
             }
             async Task<Page<SourceControlSyncJobStream>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreamsBySyncJob");
+                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreams");
                 scope.Start();
                 try
                 {
@@ -486,11 +486,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SourceControlSyncJobStream" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SourceControlSyncJobStream> GetSourceControlSyncJobStreamsBySyncJob(Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SourceControlSyncJobStream> GetSourceControlSyncJobStreams(Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
             Page<SourceControlSyncJobStream> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreamsBySyncJob");
+                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreams");
                 scope.Start();
                 try
                 {
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Automation
             }
             Page<SourceControlSyncJobStream> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreamsBySyncJob");
+                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreams");
                 scope.Start();
                 try
                 {

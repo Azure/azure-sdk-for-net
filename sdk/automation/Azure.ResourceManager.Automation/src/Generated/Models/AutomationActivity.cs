@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the description.
         /// Serialized Name: Activity.properties.description
         /// </param>
-        internal AutomationActivity(string id, string name, string definition, IReadOnlyList<AutomationActivityParameterSet> parameterSets, IReadOnlyList<AutomationActivityOutputType> outputTypes, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description)
+        internal AutomationActivity(ResourceIdentifier id, string name, string definition, IReadOnlyList<AutomationActivityParameterSet> parameterSets, IReadOnlyList<AutomationActivityOutputType> outputTypes, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description)
         {
             Id = id;
             Name = name;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the id of the resource.
         /// Serialized Name: Activity.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary>
         /// Gets the name of the activity.
         /// Serialized Name: Activity.name

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the values of the job stream.
         /// Serialized Name: JobStream.properties.value
         /// </param>
-        internal AutomationJobStream(string id, string jobStreamId, DateTimeOffset? time, AutomationJobStreamType? streamType, string streamText, string summary, IReadOnlyDictionary<string, BinaryData> value)
+        internal AutomationJobStream(ResourceIdentifier id, string jobStreamId, DateTimeOffset? time, AutomationJobStreamType? streamType, string streamText, string summary, IReadOnlyDictionary<string, BinaryData> value)
         {
             Id = id;
             JobStreamId = jobStreamId;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the id of the resource.
         /// Serialized Name: JobStream.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary>
         /// Gets or sets the id of the job stream.
         /// Serialized Name: JobStream.properties.jobStreamId

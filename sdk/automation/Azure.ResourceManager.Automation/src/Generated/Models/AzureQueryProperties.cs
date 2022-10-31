@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AzureQueryProperties()
         {
             Scope = new ChangeTrackingList<string>();
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of AzureQueryProperties. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Tag settings for the VM.
         /// Serialized Name: AzureQueryProperties.tagSettings
         /// </param>
-        internal AzureQueryProperties(IList<string> scope, IList<string> locations, QueryTagSettingsProperties tagSettings)
+        internal AzureQueryProperties(IList<string> scope, IList<AzureLocation> locations, QueryTagSettingsProperties tagSettings)
         {
             Scope = scope;
             Locations = locations;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// List of locations to scope the query to.
         /// Serialized Name: AzureQueryProperties.locations
         /// </summary>
-        public IList<string> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
         /// <summary>
         /// Tag settings for the VM.
         /// Serialized Name: AzureQueryProperties.tagSettings

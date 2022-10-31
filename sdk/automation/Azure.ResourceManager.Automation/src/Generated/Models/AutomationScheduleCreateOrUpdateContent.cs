@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the end time of the schedule.
         /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.expiryTime
         /// </summary>
-        public DateTimeOffset? ExpiryOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary>
         /// Gets or sets the interval of the schedule.
         /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.interval

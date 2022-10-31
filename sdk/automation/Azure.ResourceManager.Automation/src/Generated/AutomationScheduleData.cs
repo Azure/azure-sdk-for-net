@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the start time of the schedule.
         /// Serialized Name: Schedule.properties.startTime
         /// </param>
-        /// <param name="startTimeOffsetMinutes">
+        /// <param name="startInMinutes">
         /// Gets the start time&apos;s offset in minutes.
         /// Serialized Name: Schedule.properties.startTimeOffsetMinutes
         /// </param>
-        /// <param name="expiryOn">
+        /// <param name="expireOn">
         /// Gets or sets the end time of the schedule.
         /// Serialized Name: Schedule.properties.expiryTime
         /// </param>
-        /// <param name="expiryTimeOffsetMinutes">
+        /// <param name="expireInMinutes">
         /// Gets or sets the expiry time&apos;s offset in minutes.
         /// Serialized Name: Schedule.properties.expiryTimeOffsetMinutes
         /// </param>
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets a value indicating whether this schedule is enabled.
         /// Serialized Name: Schedule.properties.isEnabled
         /// </param>
-        /// <param name="nextRun">
+        /// <param name="nextRunOn">
         /// Gets or sets the next run time of the schedule.
         /// Serialized Name: Schedule.properties.nextRun
         /// </param>
-        /// <param name="nextRunOffsetMinutes">
+        /// <param name="nextRunInMinutes">
         /// Gets or sets the next run time&apos;s offset in minutes.
         /// Serialized Name: Schedule.properties.nextRunOffsetMinutes
         /// </param>
@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the description.
         /// Serialized Name: Schedule.properties.description
         /// </param>
-        internal AutomationScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, double? startTimeOffsetMinutes, DateTimeOffset? expiryOn, double? expiryTimeOffsetMinutes, bool? isEnabled, DateTimeOffset? nextRun, double? nextRunOffsetMinutes, BinaryData interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
+        internal AutomationScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, BinaryData interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
-            StartTimeOffsetMinutes = startTimeOffsetMinutes;
-            ExpiryOn = expiryOn;
-            ExpiryTimeOffsetMinutes = expiryTimeOffsetMinutes;
+            StartInMinutes = startInMinutes;
+            ExpireOn = expireOn;
+            ExpireInMinutes = expireInMinutes;
             IsEnabled = isEnabled;
-            NextRun = nextRun;
-            NextRunOffsetMinutes = nextRunOffsetMinutes;
+            NextRunOn = nextRunOn;
+            NextRunInMinutes = nextRunInMinutes;
             Interval = interval;
             Frequency = frequency;
             TimeZone = timeZone;
@@ -108,17 +108,17 @@ namespace Azure.ResourceManager.Automation
         /// Gets the start time&apos;s offset in minutes.
         /// Serialized Name: Schedule.properties.startTimeOffsetMinutes
         /// </summary>
-        public double? StartTimeOffsetMinutes { get; }
+        public double? StartInMinutes { get; }
         /// <summary>
         /// Gets or sets the end time of the schedule.
         /// Serialized Name: Schedule.properties.expiryTime
         /// </summary>
-        public DateTimeOffset? ExpiryOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary>
         /// Gets or sets the expiry time&apos;s offset in minutes.
         /// Serialized Name: Schedule.properties.expiryTimeOffsetMinutes
         /// </summary>
-        public double? ExpiryTimeOffsetMinutes { get; set; }
+        public double? ExpireInMinutes { get; set; }
         /// <summary>
         /// Gets or sets a value indicating whether this schedule is enabled.
         /// Serialized Name: Schedule.properties.isEnabled
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the next run time of the schedule.
         /// Serialized Name: Schedule.properties.nextRun
         /// </summary>
-        public DateTimeOffset? NextRun { get; set; }
+        public DateTimeOffset? NextRunOn { get; set; }
         /// <summary>
         /// Gets or sets the next run time&apos;s offset in minutes.
         /// Serialized Name: Schedule.properties.nextRunOffsetMinutes
         /// </summary>
-        public double? NextRunOffsetMinutes { get; set; }
+        public double? NextRunInMinutes { get; set; }
         /// <summary>
         /// Gets or sets the interval of the schedule.
         /// Serialized Name: Schedule.properties.interval

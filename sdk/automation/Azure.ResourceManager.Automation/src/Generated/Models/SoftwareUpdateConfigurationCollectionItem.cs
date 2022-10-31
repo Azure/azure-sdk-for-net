@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -57,11 +58,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// Provisioning state for the software update configuration, which only appears in the response.
         /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.provisioningState
         /// </param>
-        /// <param name="nextRun">
+        /// <param name="nextRunOn">
         /// ext run time of the update.
         /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.nextRun
         /// </param>
-        internal SoftwareUpdateConfigurationCollectionItem(string name, string id, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRun)
+        internal SoftwareUpdateConfigurationCollectionItem(string name, ResourceIdentifier id, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRunOn)
         {
             Name = name;
             Id = id;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             ProvisioningState = provisioningState;
-            NextRun = nextRun;
+            NextRunOn = nextRunOn;
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Resource Id of the software update configuration
         /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary>
         /// Update specific properties of the software update configuration.
         /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.updateConfiguration
@@ -124,6 +125,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// ext run time of the update.
         /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.nextRun
         /// </summary>
-        public DateTimeOffset? NextRun { get; }
+        public DateTimeOffset? NextRunOn { get; }
     }
 }

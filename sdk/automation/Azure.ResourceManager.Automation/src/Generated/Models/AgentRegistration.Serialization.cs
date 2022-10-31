@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,9 @@ namespace Azure.ResourceManager.Automation.Models
         internal static AgentRegistration DeserializeAgentRegistration(JsonElement element)
         {
             Optional<string> dscMetaConfiguration = default;
-            Optional<string> endpoint = default;
+            Optional<Uri> endpoint = default;
             Optional<AgentRegistrationKeys> keys = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dscMetaConfiguration"))
@@ -27,7 +28,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (property.NameEquals("endpoint"))
                 {
-                    endpoint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endpoint = null;
+                        continue;
+                    }
+                    endpoint = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keys"))
@@ -42,7 +48,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

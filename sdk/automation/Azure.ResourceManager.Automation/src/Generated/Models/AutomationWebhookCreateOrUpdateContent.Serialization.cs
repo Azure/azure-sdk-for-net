@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("uri");
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExpiryOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime");
-                writer.WriteStringValue(ExpiryOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Parameters))
             {

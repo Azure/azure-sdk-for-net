@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets the thumbprint of the certificate.
         /// Serialized Name: Certificate.properties.thumbprint
         /// </param>
-        /// <param name="expiryOn">
+        /// <param name="expireOn">
         /// Gets the expiry time of the certificate.
         /// Serialized Name: Certificate.properties.expiryTime
         /// </param>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the description.
         /// Serialized Name: Certificate.properties.description
         /// </param>
-        internal AutomationCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData thumbprint, DateTimeOffset? expiryOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
+        internal AutomationCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData thumbprint, DateTimeOffset? expireOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
             Thumbprint = thumbprint;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             IsExportable = isExportable;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets the expiry time of the certificate.
         /// Serialized Name: Certificate.properties.expiryTime
         /// </summary>
-        public DateTimeOffset? ExpiryOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary>
         /// Gets the is exportable flag of the certificate.
         /// Serialized Name: Certificate.properties.isExportable

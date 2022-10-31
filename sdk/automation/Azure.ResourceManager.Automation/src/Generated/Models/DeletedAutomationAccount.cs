@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets the deletion time.
         /// Serialized Name: DeletedAutomationAccount.properties.deletionTime
         /// </param>
-        internal DeletedAutomationAccount(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string automationAccountResourceId, string automationAccountId, string locationPropertiesLocation, DateTimeOffset? deletedOn) : base(id, name, resourceType, systemData)
+        internal DeletedAutomationAccount(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier automationAccountResourceId, string automationAccountId, string locationPropertiesLocation, DateTimeOffset? deletedOn) : base(id, name, resourceType, systemData)
         {
             Location = location;
             AutomationAccountResourceId = automationAccountResourceId;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the Automation Account Resource Id.
         /// Serialized Name: DeletedAutomationAccount.properties.automationAccountResourceId
         /// </summary>
-        public string AutomationAccountResourceId { get; }
+        public ResourceIdentifier AutomationAccountResourceId { get; }
         /// <summary>
         /// Gets or sets the Automation Account Id.
         /// Serialized Name: DeletedAutomationAccount.properties.automationAccountId

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Resource Id of the software update configuration machine run
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.id
         /// </param>
-        /// <param name="targetComputer">
+        /// <param name="targetComputerId">
         /// name of the updated computer
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.properties.targetComputer
         /// </param>
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// Details of provisioning error
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.properties.error
         /// </param>
-        internal SoftwareUpdateConfigurationMachineRun(string name, string id, string targetComputer, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, SubResource job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationErrorResponse error)
+        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, SubResource job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationErrorResponse error)
         {
             Name = name;
             Id = id;
-            TargetComputer = targetComputer;
+            TargetComputerId = targetComputerId;
             TargetComputerType = targetComputerType;
             SoftwareUpdateConfiguration = softwareUpdateConfiguration;
             Status = status;
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// Resource Id of the software update configuration machine run
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary>
         /// name of the updated computer
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.properties.targetComputer
         /// </summary>
-        public string TargetComputer { get; }
+        public ResourceIdentifier TargetComputerId { get; }
         /// <summary>
         /// type of the updated computer.
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.properties.targetComputerType

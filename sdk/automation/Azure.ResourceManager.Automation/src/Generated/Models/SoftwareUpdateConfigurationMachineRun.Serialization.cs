@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Automation.Models
         internal static SoftwareUpdateConfigurationMachineRun DeserializeSoftwareUpdateConfigurationMachineRun(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> targetComputer = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> targetComputer = default;
             Optional<string> targetComputerType = default;
             Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
             Optional<string> status = default;
@@ -43,7 +43,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -57,7 +62,12 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("targetComputer"))
                         {
-                            targetComputer = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetComputer = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetComputerType"))
