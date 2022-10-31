@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="workloadProfileType"/> is null. </exception>
         public WorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount)
         {
-            if (workloadProfileType == null)
-            {
-                throw new ArgumentNullException(nameof(workloadProfileType));
-            }
+            Argument.AssertNotNull(workloadProfileType, nameof(workloadProfileType));
 
             WorkloadProfileType = workloadProfileType;
             MinimumCount = minimumCount;

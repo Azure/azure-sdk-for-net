@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
         public DynamicsLinkedService(BinaryData deploymentType, BinaryData authenticationType)
         {
-            if (deploymentType == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentType));
-            }
-            if (authenticationType == null)
-            {
-                throw new ArgumentNullException(nameof(authenticationType));
-            }
+            Argument.AssertNotNull(deploymentType, nameof(deploymentType));
+            Argument.AssertNotNull(authenticationType, nameof(authenticationType));
 
             DeploymentType = deploymentType;
             AuthenticationType = authenticationType;
