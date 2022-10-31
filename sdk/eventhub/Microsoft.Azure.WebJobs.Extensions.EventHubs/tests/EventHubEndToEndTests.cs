@@ -644,7 +644,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             // so that we get coverage for receiving events from the same partition in multiple chunks
             private const int EventsPerPartition = 15;
             private const int PartitionCount = 5;
-            private const int TotalEventsCount = EventsPerPartition * PartitionCount;
+            private const string PartitionKeyPrefix = "test_pk";
 
             public static async Task SendEvents_TestHub(
                 string input,
@@ -660,7 +660,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 for (int i = 0; i < PartitionCount; i++)
                 {
                     evt = new EventData(Encoding.UTF8.GetBytes(input));
-                    tasks.Add(client.SendAsync(Enumerable.Repeat(evt, EventsPerPartition), new SendEventOptions() { PartitionKey = "test_pk" + i }));
+                    tasks.Add(client.SendAsync(Enumerable.Repeat(evt, EventsPerPartition), new SendEventOptions() { PartitionKey = PartitionKeyPrefix + i }));
                 }
 
                 await Task.WhenAll(tasks);
@@ -671,15 +671,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 foreach (EventData eventData in events)
                 {
                     string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
-
                     _results.Add(eventData.PartitionKey);
-                    _results.Sort();
 
-                    // count is 1 more because we sent an event without PK
-                    if (_results.Count == TotalEventsCount + 1 && _results[TotalEventsCount] == "test_pk4")
-                    {
-                        _eventWait.Set();
-                    }
+                    Assert.True(eventData.PartitionKey.StartsWith(PartitionKeyPrefix));
+                }
+
+                // The size of the batch read may not contain all events sent.  If any
+                // were read, the format of the partition key was read and verified.
+
+                if (_results.Count > 0)
+                {
+                   _eventWait.Set();
                 }
             }
         }
