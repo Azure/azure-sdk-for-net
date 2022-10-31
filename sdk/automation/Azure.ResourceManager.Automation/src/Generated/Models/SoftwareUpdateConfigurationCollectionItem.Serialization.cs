@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             Optional<string> name = default;
             Optional<string> id = default;
-            Optional<UpdateConfiguration> updateConfiguration = default;
+            Optional<SoftwareUpdateConfigurationSpecificProperties> updateConfiguration = default;
             Optional<SoftwareUpdateConfigurationTasks> tasks = default;
             Optional<AutomationScheduleFrequency> frequency = default;
             Optional<DateTimeOffset> startTime = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updateConfiguration = UpdateConfiguration.DeserializeUpdateConfiguration(property0.Value);
+                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tasks"))

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// Target operating system for the software update configuration.
     /// Serialized Name: OperatingSystemType
     /// </summary>
-    public enum UpdateConfigurationOperatingSystemType
+    public enum SoftwareUpdateConfigurationOperatingSystemType
     {
         /// <summary>
         /// Windows

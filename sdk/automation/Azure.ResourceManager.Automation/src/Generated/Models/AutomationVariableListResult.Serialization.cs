@@ -12,9 +12,9 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class VariableListResult
+    internal partial class AutomationVariableListResult
     {
-        internal static VariableListResult DeserializeVariableListResult(JsonElement element)
+        internal static AutomationVariableListResult DeserializeAutomationVariableListResult(JsonElement element)
         {
             Optional<IReadOnlyList<AutomationVariableData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new VariableListResult(Optional.ToList(value), nextLink.Value);
+            return new AutomationVariableListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

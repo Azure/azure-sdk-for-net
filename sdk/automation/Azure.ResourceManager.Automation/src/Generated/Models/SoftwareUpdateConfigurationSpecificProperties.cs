@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Automation.Models
     /// Update specific properties of the software update configuration.
     /// Serialized Name: UpdateConfiguration
     /// </summary>
-    public partial class UpdateConfiguration
+    public partial class SoftwareUpdateConfigurationSpecificProperties
     {
-        /// <summary> Initializes a new instance of UpdateConfiguration. </summary>
+        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationSpecificProperties. </summary>
         /// <param name="operatingSystem">
         /// operating system of target machines
         /// Serialized Name: UpdateConfiguration.operatingSystem
         /// </param>
-        public UpdateConfiguration(UpdateConfigurationOperatingSystemType operatingSystem)
+        public SoftwareUpdateConfigurationSpecificProperties(SoftwareUpdateConfigurationOperatingSystemType operatingSystem)
         {
             OperatingSystem = operatingSystem;
             AzureVirtualMachines = new ChangeTrackingList<string>();
             NonAzureComputerNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of UpdateConfiguration. </summary>
+        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationSpecificProperties. </summary>
         /// <param name="operatingSystem">
         /// operating system of target machines
         /// Serialized Name: UpdateConfiguration.operatingSystem
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Group targets for the software update configuration.
         /// Serialized Name: UpdateConfiguration.targets
         /// </param>
-        internal UpdateConfiguration(UpdateConfigurationOperatingSystemType operatingSystem, WindowsProperties windows, LinuxUpdateConfigurationProperties linux, TimeSpan? duration, IList<string> azureVirtualMachines, IList<string> nonAzureComputerNames, SoftwareUpdateConfigurationTargetProperties targets)
+        internal SoftwareUpdateConfigurationSpecificProperties(SoftwareUpdateConfigurationOperatingSystemType operatingSystem, WindowsUpdateConfigurationProperties windows, LinuxUpdateConfigurationProperties linux, TimeSpan? duration, IList<string> azureVirtualMachines, IList<string> nonAzureComputerNames, SoftwareUpdateConfigurationTargetProperties targets)
         {
             OperatingSystem = operatingSystem;
             Windows = windows;
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// operating system of target machines
         /// Serialized Name: UpdateConfiguration.operatingSystem
         /// </summary>
-        public UpdateConfigurationOperatingSystemType OperatingSystem { get; set; }
+        public SoftwareUpdateConfigurationOperatingSystemType OperatingSystem { get; set; }
         /// <summary>
         /// Windows specific update configuration.
         /// Serialized Name: UpdateConfiguration.windows
         /// </summary>
-        public WindowsProperties Windows { get; set; }
+        public WindowsUpdateConfigurationProperties Windows { get; set; }
         /// <summary>
         /// Linux specific update configuration.
         /// Serialized Name: UpdateConfiguration.linux

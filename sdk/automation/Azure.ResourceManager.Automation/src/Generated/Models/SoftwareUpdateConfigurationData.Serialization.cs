@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            UpdateConfiguration updateConfiguration = default;
+            SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
             SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
             Optional<string> provisioningState = default;
             Optional<AutomationErrorResponse> error = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         if (property0.NameEquals("updateConfiguration"))
                         {
-                            updateConfiguration = UpdateConfiguration.DeserializeUpdateConfiguration(property0.Value);
+                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scheduleInfo"))

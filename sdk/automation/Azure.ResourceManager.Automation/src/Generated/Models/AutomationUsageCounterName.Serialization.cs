@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class UsageCounterName
+    public partial class AutomationUsageCounterName
     {
-        internal static UsageCounterName DeserializeUsageCounterName(JsonElement element)
+        internal static AutomationUsageCounterName DeserializeAutomationUsageCounterName(JsonElement element)
         {
             Optional<string> value = default;
             Optional<string> localizedValue = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new UsageCounterName(value.Value, localizedValue.Value);
+            return new AutomationUsageCounterName(value.Value, localizedValue.Value);
         }
     }
 }

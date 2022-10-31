@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class UpdateConfigurationNavigation
+    internal partial class SoftwareUpdateConfigurationNavigation
     {
-        internal static UpdateConfigurationNavigation DeserializeUpdateConfigurationNavigation(JsonElement element)
+        internal static SoftwareUpdateConfigurationNavigation DeserializeSoftwareUpdateConfigurationNavigation(JsonElement element)
         {
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new UpdateConfigurationNavigation(name.Value);
+            return new SoftwareUpdateConfigurationNavigation(name.Value);
         }
     }
 }

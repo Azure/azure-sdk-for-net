@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class UpdateConfiguration : IUtf8JsonSerializable
+    public partial class SoftwareUpdateConfigurationSpecificProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteEndObject();
         }
 
-        internal static UpdateConfiguration DeserializeUpdateConfiguration(JsonElement element)
+        internal static SoftwareUpdateConfigurationSpecificProperties DeserializeSoftwareUpdateConfigurationSpecificProperties(JsonElement element)
         {
-            UpdateConfigurationOperatingSystemType operatingSystem = default;
-            Optional<WindowsProperties> windows = default;
+            SoftwareUpdateConfigurationOperatingSystemType operatingSystem = default;
+            Optional<WindowsUpdateConfigurationProperties> windows = default;
             Optional<LinuxUpdateConfigurationProperties> linux = default;
             Optional<TimeSpan> duration = default;
             Optional<IList<string>> azureVirtualMachines = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 if (property.NameEquals("operatingSystem"))
                 {
-                    operatingSystem = property.Value.GetString().ToUpdateConfigurationOperatingSystemType();
+                    operatingSystem = property.Value.GetString().ToSoftwareUpdateConfigurationOperatingSystemType();
                     continue;
                 }
                 if (property.NameEquals("windows"))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    windows = WindowsProperties.DeserializeWindowsProperties(property.Value);
+                    windows = WindowsUpdateConfigurationProperties.DeserializeWindowsUpdateConfigurationProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linux"))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new UpdateConfiguration(operatingSystem, windows.Value, linux.Value, Optional.ToNullable(duration), Optional.ToList(azureVirtualMachines), Optional.ToList(nonAzureComputerNames), targets.Value);
+            return new SoftwareUpdateConfigurationSpecificProperties(operatingSystem, windows.Value, linux.Value, Optional.ToNullable(duration), Optional.ToList(azureVirtualMachines), Optional.ToList(nonAzureComputerNames), targets.Value);
         }
     }
 }

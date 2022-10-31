@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class UsageListResult
+    internal partial class AutomationUsageListResult
     {
-        internal static UsageListResult DeserializeUsageListResult(JsonElement element)
+        internal static AutomationUsageListResult DeserializeAutomationUsageListResult(JsonElement element)
         {
             Optional<IReadOnlyList<AutomationUsage>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new UsageListResult(Optional.ToList(value));
+            return new AutomationUsageListResult(Optional.ToList(value));
         }
     }
 }

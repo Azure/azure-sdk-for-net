@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Automation
         /// Serialized Name: SoftwareUpdateConfiguration.properties.scheduleInfo
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateConfiguration"/> or <paramref name="scheduleInfo"/> is null. </exception>
-        public SoftwareUpdateConfigurationData(UpdateConfiguration updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo)
+        public SoftwareUpdateConfigurationData(SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo)
         {
             if (updateConfiguration == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automation
         /// Tasks information for the Software update configuration.
         /// Serialized Name: SoftwareUpdateConfiguration.properties.tasks
         /// </param>
-        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UpdateConfiguration updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationErrorResponse error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks) : base(id, name, resourceType, systemData)
+        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationErrorResponse error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks) : base(id, name, resourceType, systemData)
         {
             UpdateConfiguration = updateConfiguration;
             ScheduleInfo = scheduleInfo;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automation
         /// update specific properties for the Software update configuration
         /// Serialized Name: SoftwareUpdateConfiguration.properties.updateConfiguration
         /// </summary>
-        public UpdateConfiguration UpdateConfiguration { get; set; }
+        public SoftwareUpdateConfigurationSpecificProperties UpdateConfiguration { get; set; }
         /// <summary>
         /// Schedule information for the Software update configuration
         /// Serialized Name: SoftwareUpdateConfiguration.properties.scheduleInfo

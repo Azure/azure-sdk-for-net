@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SourceControlSyncJobById>> GetSourceControlSyncJobAsync(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceControlSyncJobResult>> GetSourceControlSyncJobAsync(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
         {
             using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
             scope.Start();
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SourceControlSyncJobById> GetSourceControlSyncJob(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
+        public virtual Response<SourceControlSyncJobResult> GetSourceControlSyncJob(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
         {
             using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
             scope.Start();
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamId"/> is null. </exception>
-        public virtual async Task<Response<SourceControlSyncJobStreamById>> GetSourceControlSyncJobStreamAsync(Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceControlSyncJobStreamResult>> GetSourceControlSyncJobStreamAsync(Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamId, nameof(streamId));
 
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamId"/> is null. </exception>
-        public virtual Response<SourceControlSyncJobStreamById> GetSourceControlSyncJobStream(Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
+        public virtual Response<SourceControlSyncJobStreamResult> GetSourceControlSyncJobStream(Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamId, nameof(streamId));
 

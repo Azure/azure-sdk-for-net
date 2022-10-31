@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.Automation.Models
     /// Windows specific update configuration.
     /// Serialized Name: WindowsProperties
     /// </summary>
-    public partial class WindowsProperties
+    public partial class WindowsUpdateConfigurationProperties
     {
-        /// <summary> Initializes a new instance of WindowsProperties. </summary>
-        public WindowsProperties()
+        /// <summary> Initializes a new instance of WindowsUpdateConfigurationProperties. </summary>
+        public WindowsUpdateConfigurationProperties()
         {
             ExcludedKbNumbers = new ChangeTrackingList<string>();
             IncludedKbNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WindowsProperties. </summary>
+        /// <summary> Initializes a new instance of WindowsUpdateConfigurationProperties. </summary>
         /// <param name="includedUpdateClassifications">
         /// Update classification included in the software update configuration. A comma separated string with required values
         /// Serialized Name: WindowsProperties.includedUpdateClassifications
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Reboot setting for the software update configuration.
         /// Serialized Name: WindowsProperties.rebootSetting
         /// </param>
-        internal WindowsProperties(WindowsUpdateClass? includedUpdateClassifications, IList<string> excludedKbNumbers, IList<string> includedKbNumbers, string rebootSetting)
+        internal WindowsUpdateConfigurationProperties(WindowsUpdateClass? includedUpdateClassifications, IList<string> excludedKbNumbers, IList<string> includedKbNumbers, string rebootSetting)
         {
             IncludedUpdateClassifications = includedUpdateClassifications;
             ExcludedKbNumbers = excludedKbNumbers;

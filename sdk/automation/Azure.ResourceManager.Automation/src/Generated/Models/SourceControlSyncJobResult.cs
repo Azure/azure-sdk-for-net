@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Automation.Models
     /// Definition of the source control sync job.
     /// Serialized Name: SourceControlSyncJobById
     /// </summary>
-    public partial class SourceControlSyncJobById
+    public partial class SourceControlSyncJobResult
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJobById. </summary>
-        internal SourceControlSyncJobById()
+        /// <summary> Initializes a new instance of SourceControlSyncJobResult. </summary>
+        internal SourceControlSyncJobResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobById. </summary>
+        /// <summary> Initializes a new instance of SourceControlSyncJobResult. </summary>
         /// <param name="id">
         /// The id of the job.
         /// Serialized Name: SourceControlSyncJobById.id
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// The exceptions that occurred while running the sync job.
         /// Serialized Name: SourceControlSyncJobById.properties.exception
         /// </param>
-        internal SourceControlSyncJobById(string id, string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, string exception)
+        internal SourceControlSyncJobResult(string id, string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, string exception)
         {
             Id = id;
             SourceControlSyncJobId = sourceControlSyncJobId;

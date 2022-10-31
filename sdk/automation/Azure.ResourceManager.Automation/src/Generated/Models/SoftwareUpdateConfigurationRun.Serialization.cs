@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             Optional<string> name = default;
             Optional<string> id = default;
-            Optional<UpdateConfigurationNavigation> softwareUpdateConfiguration = default;
+            Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
             Optional<string> status = default;
             Optional<TimeSpan> configuredDuration = default;
             Optional<string> osType = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            softwareUpdateConfiguration = UpdateConfigurationNavigation.DeserializeUpdateConfigurationNavigation(property0.Value);
+                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"))

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Automation.Models
     /// The response model for the list webhook operation.
     /// Serialized Name: WebhookListResult
     /// </summary>
-    internal partial class WebhookListResult
+    internal partial class AutomationWebhookListResult
     {
-        /// <summary> Initializes a new instance of WebhookListResult. </summary>
-        internal WebhookListResult()
+        /// <summary> Initializes a new instance of AutomationWebhookListResult. </summary>
+        internal AutomationWebhookListResult()
         {
             Value = new ChangeTrackingList<AutomationWebhookData>();
         }
 
-        /// <summary> Initializes a new instance of WebhookListResult. </summary>
+        /// <summary> Initializes a new instance of AutomationWebhookListResult. </summary>
         /// <param name="value">
         /// Gets or sets a list of webhooks.
         /// Serialized Name: WebhookListResult.value
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the next link.
         /// Serialized Name: WebhookListResult.nextLink
         /// </param>
-        internal WebhookListResult(IReadOnlyList<AutomationWebhookData> value, string nextLink)
+        internal AutomationWebhookListResult(IReadOnlyList<AutomationWebhookData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

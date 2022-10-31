@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class TypeField
+    public partial class AutomationModuleField
     {
-        internal static TypeField DeserializeTypeField(JsonElement element)
+        internal static AutomationModuleField DeserializeAutomationModuleField(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> type = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new TypeField(name.Value, type.Value);
+            return new AutomationModuleField(name.Value, type.Value);
         }
     }
 }

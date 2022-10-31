@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class WindowsProperties : IUtf8JsonSerializable
+    public partial class WindowsUpdateConfigurationProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteEndObject();
         }
 
-        internal static WindowsProperties DeserializeWindowsProperties(JsonElement element)
+        internal static WindowsUpdateConfigurationProperties DeserializeWindowsUpdateConfigurationProperties(JsonElement element)
         {
             Optional<WindowsUpdateClass> includedUpdateClassifications = default;
             Optional<IList<string>> excludedKbNumbers = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new WindowsProperties(Optional.ToNullable(includedUpdateClassifications), Optional.ToList(excludedKbNumbers), Optional.ToList(includedKbNumbers), rebootSetting.Value);
+            return new WindowsUpdateConfigurationProperties(Optional.ToNullable(includedUpdateClassifications), Optional.ToList(excludedKbNumbers), Optional.ToList(includedKbNumbers), rebootSetting.Value);
         }
     }
 }

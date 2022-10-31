@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Automation.Models
     /// Definition of the source control sync job stream by id.
     /// Serialized Name: SourceControlSyncJobStreamById
     /// </summary>
-    public partial class SourceControlSyncJobStreamById
+    public partial class SourceControlSyncJobStreamResult
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJobStreamById. </summary>
-        internal SourceControlSyncJobStreamById()
+        /// <summary> Initializes a new instance of SourceControlSyncJobStreamResult. </summary>
+        internal SourceControlSyncJobStreamResult()
         {
             Value = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobStreamById. </summary>
+        /// <summary> Initializes a new instance of SourceControlSyncJobStreamResult. </summary>
         /// <param name="id">
         /// Resource id.
         /// Serialized Name: SourceControlSyncJobStreamById.id
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// The values of the job stream.
         /// Serialized Name: SourceControlSyncJobStreamById.properties.value
         /// </param>
-        internal SourceControlSyncJobStreamById(string id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value)
+        internal SourceControlSyncJobStreamResult(string id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value)
         {
             Id = id;
             SourceControlSyncJobStreamId = sourceControlSyncJobStreamId;

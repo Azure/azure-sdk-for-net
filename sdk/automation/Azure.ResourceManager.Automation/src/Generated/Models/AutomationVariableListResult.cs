@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Automation.Models
     /// The response model for the list variables operation.
     /// Serialized Name: VariableListResult
     /// </summary>
-    internal partial class VariableListResult
+    internal partial class AutomationVariableListResult
     {
-        /// <summary> Initializes a new instance of VariableListResult. </summary>
-        internal VariableListResult()
+        /// <summary> Initializes a new instance of AutomationVariableListResult. </summary>
+        internal AutomationVariableListResult()
         {
             Value = new ChangeTrackingList<AutomationVariableData>();
         }
 
-        /// <summary> Initializes a new instance of VariableListResult. </summary>
+        /// <summary> Initializes a new instance of AutomationVariableListResult. </summary>
         /// <param name="value">
         /// Gets or sets a list of variables.
         /// Serialized Name: VariableListResult.value
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the next link.
         /// Serialized Name: VariableListResult.nextLink
         /// </param>
-        internal VariableListResult(IReadOnlyList<AutomationVariableData> value, string nextLink)
+        internal AutomationVariableListResult(IReadOnlyList<AutomationVariableData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

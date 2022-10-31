@@ -8,15 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class WebhookListResult
+    internal partial class SourceControlSyncJobStreamListResult
     {
-        internal static WebhookListResult DeserializeWebhookListResult(JsonElement element)
+        internal static SourceControlSyncJobStreamListResult DeserializeSourceControlSyncJobStreamListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AutomationWebhookData>> value = default;
+            Optional<IReadOnlyList<SourceControlSyncJobStream>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AutomationWebhookData> array = new List<AutomationWebhookData>();
+                    List<SourceControlSyncJobStream> array = new List<SourceControlSyncJobStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationWebhookData.DeserializeAutomationWebhookData(item));
+                        array.Add(SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new WebhookListResult(Optional.ToList(value), nextLink.Value);
+            return new SourceControlSyncJobStreamListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

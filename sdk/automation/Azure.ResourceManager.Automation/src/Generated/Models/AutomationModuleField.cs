@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.Automation.Models
     /// Information about a field of a type.
     /// Serialized Name: TypeField
     /// </summary>
-    public partial class TypeField
+    public partial class AutomationModuleField
     {
-        /// <summary> Initializes a new instance of TypeField. </summary>
-        internal TypeField()
+        /// <summary> Initializes a new instance of AutomationModuleField. </summary>
+        internal AutomationModuleField()
         {
         }
 
-        /// <summary> Initializes a new instance of TypeField. </summary>
+        /// <summary> Initializes a new instance of AutomationModuleField. </summary>
         /// <param name="name">
         /// Gets or sets the name of the field.
         /// Serialized Name: TypeField.name
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the type of the field.
         /// Serialized Name: TypeField.type
         /// </param>
-        internal TypeField(string name, string typeFieldType)
+        internal AutomationModuleField(string name, string typeFieldType)
         {
             Name = name;
             TypeFieldType = typeFieldType;

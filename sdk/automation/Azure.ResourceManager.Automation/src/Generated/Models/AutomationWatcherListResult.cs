@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Automation.Models
     /// The response model for the list watcher operation.
     /// Serialized Name: WatcherListResult
     /// </summary>
-    internal partial class WatcherListResult
+    internal partial class AutomationWatcherListResult
     {
-        /// <summary> Initializes a new instance of WatcherListResult. </summary>
-        internal WatcherListResult()
+        /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
+        internal AutomationWatcherListResult()
         {
             Value = new ChangeTrackingList<AutomationWatcherData>();
         }
 
-        /// <summary> Initializes a new instance of WatcherListResult. </summary>
+        /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
         /// <param name="value">
         /// Gets or sets a list of watchers.
         /// Serialized Name: WatcherListResult.value
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the next link.
         /// Serialized Name: WatcherListResult.nextLink
         /// </param>
-        internal WatcherListResult(IReadOnlyList<AutomationWatcherData> value, string nextLink)
+        internal AutomationWatcherListResult(IReadOnlyList<AutomationWatcherData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

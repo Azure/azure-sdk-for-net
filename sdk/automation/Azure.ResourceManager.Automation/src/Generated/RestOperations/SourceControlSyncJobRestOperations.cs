@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlSyncJobById>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
+        public async Task<Response<SourceControlSyncJobResult>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -179,9 +179,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlSyncJobById value = default;
+                        SourceControlSyncJobResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlSyncJobById.DeserializeSourceControlSyncJobById(document.RootElement);
+                        value = SourceControlSyncJobResult.DeserializeSourceControlSyncJobResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlSyncJobById> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
+        public Response<SourceControlSyncJobResult> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlSyncJobById value = default;
+                        SourceControlSyncJobResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlSyncJobById.DeserializeSourceControlSyncJobById(document.RootElement);
+                        value = SourceControlSyncJobResult.DeserializeSourceControlSyncJobResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

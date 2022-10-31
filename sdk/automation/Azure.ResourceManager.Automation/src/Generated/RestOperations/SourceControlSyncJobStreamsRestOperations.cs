@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlSyncJobStreamsListBySyncJob>> ListBySyncJobAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SourceControlSyncJobStreamListResult>> ListBySyncJobAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlSyncJobStreamsListBySyncJob value = default;
+                        SourceControlSyncJobStreamListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlSyncJobStreamsListBySyncJob.DeserializeSourceControlSyncJobStreamsListBySyncJob(document.RootElement);
+                        value = SourceControlSyncJobStreamListResult.DeserializeSourceControlSyncJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlSyncJobStreamsListBySyncJob> ListBySyncJob(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SourceControlSyncJobStreamListResult> ListBySyncJob(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlSyncJobStreamsListBySyncJob value = default;
+                        SourceControlSyncJobStreamListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlSyncJobStreamsListBySyncJob.DeserializeSourceControlSyncJobStreamsListBySyncJob(document.RootElement);
+                        value = SourceControlSyncJobStreamListResult.DeserializeSourceControlSyncJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="streamId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="streamId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlSyncJobStreamById>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
+        public async Task<Response<SourceControlSyncJobStreamResult>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlSyncJobStreamById value = default;
+                        SourceControlSyncJobStreamResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlSyncJobStreamById.DeserializeSourceControlSyncJobStreamById(document.RootElement);
+                        value = SourceControlSyncJobStreamResult.DeserializeSourceControlSyncJobStreamResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="streamId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="streamId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlSyncJobStreamById> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
+        public Response<SourceControlSyncJobStreamResult> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlSyncJobStreamById value = default;
+                        SourceControlSyncJobStreamResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlSyncJobStreamById.DeserializeSourceControlSyncJobStreamById(document.RootElement);
+                        value = SourceControlSyncJobStreamResult.DeserializeSourceControlSyncJobStreamResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlSyncJobStreamsListBySyncJob>> ListBySyncJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SourceControlSyncJobStreamListResult>> ListBySyncJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -265,9 +265,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlSyncJobStreamsListBySyncJob value = default;
+                        SourceControlSyncJobStreamListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlSyncJobStreamsListBySyncJob.DeserializeSourceControlSyncJobStreamsListBySyncJob(document.RootElement);
+                        value = SourceControlSyncJobStreamListResult.DeserializeSourceControlSyncJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlSyncJobStreamsListBySyncJob> ListBySyncJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SourceControlSyncJobStreamListResult> ListBySyncJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -300,9 +300,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlSyncJobStreamsListBySyncJob value = default;
+                        SourceControlSyncJobStreamListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlSyncJobStreamsListBySyncJob.DeserializeSourceControlSyncJobStreamsListBySyncJob(document.RootElement);
+                        value = SourceControlSyncJobStreamListResult.DeserializeSourceControlSyncJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

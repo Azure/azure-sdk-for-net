@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class TypeFieldListResult
+    internal partial class AutomationModuleFieldListResult
     {
-        internal static TypeFieldListResult DeserializeTypeFieldListResult(JsonElement element)
+        internal static AutomationModuleFieldListResult DeserializeAutomationModuleFieldListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TypeField>> value = default;
+            Optional<IReadOnlyList<AutomationModuleField>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TypeField> array = new List<TypeField>();
+                    List<AutomationModuleField> array = new List<AutomationModuleField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TypeField.DeserializeTypeField(item));
+                        array.Add(AutomationModuleField.DeserializeAutomationModuleField(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new TypeFieldListResult(Optional.ToList(value));
+            return new AutomationModuleFieldListResult(Optional.ToList(value));
         }
     }
 }

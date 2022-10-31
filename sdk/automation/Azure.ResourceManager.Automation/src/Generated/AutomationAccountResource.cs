@@ -1601,12 +1601,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TypeField> GetFieldsByTypeObjectDataTypesAsync(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationModuleField> GetFieldsByTypeObjectDataTypesAsync(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            async Task<Page<TypeField>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AutomationModuleField>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountResource.GetFieldsByTypeObjectDataTypes");
                 scope.Start();
@@ -1633,12 +1633,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> A collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TypeField> GetFieldsByTypeObjectDataTypes(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationModuleField> GetFieldsByTypeObjectDataTypes(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Page<TypeField> FirstPageFunc(int? pageSizeHint)
+            Page<AutomationModuleField> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountResource.GetFieldsByTypeObjectDataTypes");
                 scope.Start();

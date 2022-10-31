@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// The token type. Must be either PersonalAccessToken or Oauth.
         /// Serialized Name: SourceControlSecurityTokenProperties.tokenType
         /// </summary>
-        public TokenType? TokenType { get; set; }
+        public SourceControlTokenType? TokenType { get; set; }
     }
 }

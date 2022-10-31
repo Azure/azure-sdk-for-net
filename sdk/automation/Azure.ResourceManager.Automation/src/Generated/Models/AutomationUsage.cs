@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the throttle status.
         /// Serialized Name: Usage.throttleStatus
         /// </param>
-        internal AutomationUsage(string id, UsageCounterName name, string unit, double? currentValue, long? limit, string throttleStatus)
+        internal AutomationUsage(string id, AutomationUsageCounterName name, string unit, double? currentValue, long? limit, string throttleStatus)
         {
             Id = id;
             Name = name;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the usage counter name.
         /// Serialized Name: Usage.name
         /// </summary>
-        public UsageCounterName Name { get; }
+        public AutomationUsageCounterName Name { get; }
         /// <summary>
         /// Gets or sets the usage unit name.
         /// Serialized Name: Usage.unit

@@ -59,7 +59,7 @@ rename-mapping:
   NodeCount: DscNodeCount
   NodeCountProperties: DscNodeCountProperties
   NodeCounts: DscNodeCountListResult
-  OperatingSystemType: UpdateConfigurationOperatingSystemType
+  OperatingSystemType: SoftwareUpdateConfigurationOperatingSystemType
   ProvisioningState: SourceControlProvisioningState
   SourceType: SourceControlSourceType
   SkuNameEnum: AutomationSkuName
@@ -74,6 +74,16 @@ rename-mapping:
   TaskProperties: SoftwareUpdateConfigurationTaskProperties
   TestJob: RunbookTestJob
   TestJobCreateParameters: RunbookTestJobCreateContent
+  TokenType: SourceControlTokenType
+  TypeField: AutomationModuleField
+  TypeFieldListResult: AutomationModuleFieldListResult
+  UpdateConfiguration: SoftwareUpdateConfigurationSpecificProperties
+  UpdateConfigurationNavigation: SoftwareUpdateConfigurationNavigation
+  WindowsProperties: WindowsUpdateConfigurationProperties
+  WorkerType: HybridWorkerType
+  SourceControlSyncJobById: SourceControlSyncJobResult
+  SourceControlSyncJobStreamById: SourceControlSyncJobStreamResult
+  SourceControlSyncJobStreamsListBySyncJob: SourceControlSyncJobStreamListResult
 
 prepend-rp-prefix:
   - Certificate
@@ -91,8 +101,11 @@ prepend-rp-prefix:
   - SourceControl
   - SourceControlListResult
   - Variable
+  - VariableListResult
   - Watcher
+  - WatcherListResult
   - Webhook
+  - WebhookListResult
   - Activity
   - ActivityListResult
   - ActivityOutputType
@@ -126,6 +139,8 @@ prepend-rp-prefix:
   - ModuleErrorInfo
   - ModuleListResult
   - ScheduleFrequency
+  - UsageListResult
+  - UsageCounterName
 
 format-by-name-rules:
   'tenantId': 'uuid'

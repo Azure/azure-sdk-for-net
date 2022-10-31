@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation
             Optional<DateTimeOffset> registeredDateTime = default;
             Optional<DateTimeOffset> lastSeenDateTime = default;
             Optional<string> vmResourceId = default;
-            Optional<WorkerType> workerType = default;
+            Optional<HybridWorkerType> workerType = default;
             Optional<string> workerName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            workerType = new WorkerType(property0.Value.GetString());
+                            workerType = new HybridWorkerType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("workerName"))

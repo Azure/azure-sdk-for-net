@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SourceControlSyncJobStreamById
+    public partial class SourceControlSyncJobStreamResult
     {
-        internal static SourceControlSyncJobStreamById DeserializeSourceControlSyncJobStreamById(JsonElement element)
+        internal static SourceControlSyncJobStreamResult DeserializeSourceControlSyncJobStreamResult(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> sourceControlSyncJobStreamId = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SourceControlSyncJobStreamById(id.Value, sourceControlSyncJobStreamId.Value, summary.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, Optional.ToDictionary(value));
+            return new SourceControlSyncJobStreamResult(id.Value, sourceControlSyncJobStreamId.Value, summary.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, Optional.ToDictionary(value));
         }
     }
 }

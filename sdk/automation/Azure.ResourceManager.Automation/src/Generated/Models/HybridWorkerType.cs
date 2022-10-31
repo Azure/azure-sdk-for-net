@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// Type of the HybridWorker.
     /// Serialized Name: WorkerType
     /// </summary>
-    public readonly partial struct WorkerType : IEquatable<WorkerType>
+    public readonly partial struct HybridWorkerType : IEquatable<HybridWorkerType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="WorkerType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridWorkerType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkerType(string value)
+        public HybridWorkerType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.Automation.Models
         /// HybridV1
         /// Serialized Name: WorkerType.HybridV1
         /// </summary>
-        public static WorkerType HybridV1 { get; } = new WorkerType(HybridV1Value);
+        public static HybridWorkerType HybridV1 { get; } = new HybridWorkerType(HybridV1Value);
         /// <summary>
         /// HybridV2
         /// Serialized Name: WorkerType.HybridV2
         /// </summary>
-        public static WorkerType HybridV2 { get; } = new WorkerType(HybridV2Value);
-        /// <summary> Determines if two <see cref="WorkerType"/> values are the same. </summary>
-        public static bool operator ==(WorkerType left, WorkerType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="WorkerType"/> values are not the same. </summary>
-        public static bool operator !=(WorkerType left, WorkerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkerType"/>. </summary>
-        public static implicit operator WorkerType(string value) => new WorkerType(value);
+        public static HybridWorkerType HybridV2 { get; } = new HybridWorkerType(HybridV2Value);
+        /// <summary> Determines if two <see cref="HybridWorkerType"/> values are the same. </summary>
+        public static bool operator ==(HybridWorkerType left, HybridWorkerType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="HybridWorkerType"/> values are not the same. </summary>
+        public static bool operator !=(HybridWorkerType left, HybridWorkerType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="HybridWorkerType"/>. </summary>
+        public static implicit operator HybridWorkerType(string value) => new HybridWorkerType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is WorkerType other && Equals(other);
+        public override bool Equals(object obj) => obj is HybridWorkerType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(WorkerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HybridWorkerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

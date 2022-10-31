@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// ext run time of the update.
         /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.nextRun
         /// </param>
-        internal SoftwareUpdateConfigurationCollectionItem(string name, string id, UpdateConfiguration updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRun)
+        internal SoftwareUpdateConfigurationCollectionItem(string name, string id, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRun)
         {
             Name = name;
             Id = id;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Update specific properties of the software update configuration.
         /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.updateConfiguration
         /// </summary>
-        public UpdateConfiguration UpdateConfiguration { get; }
+        public SoftwareUpdateConfigurationSpecificProperties UpdateConfiguration { get; }
         /// <summary>
         /// Pre and Post Tasks defined
         /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.tasks

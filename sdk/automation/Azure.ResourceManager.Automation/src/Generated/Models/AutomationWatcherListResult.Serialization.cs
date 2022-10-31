@@ -12,9 +12,9 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class WatcherListResult
+    internal partial class AutomationWatcherListResult
     {
-        internal static WatcherListResult DeserializeWatcherListResult(JsonElement element)
+        internal static AutomationWatcherListResult DeserializeAutomationWatcherListResult(JsonElement element)
         {
             Optional<IReadOnlyList<AutomationWatcherData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new WatcherListResult(Optional.ToList(value), nextLink.Value);
+            return new AutomationWatcherListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

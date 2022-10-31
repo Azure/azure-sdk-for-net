@@ -14,20 +14,20 @@ namespace Azure.ResourceManager.Automation.Models
     /// The response model for the list fields operation.
     /// Serialized Name: TypeFieldListResult
     /// </summary>
-    internal partial class TypeFieldListResult
+    internal partial class AutomationModuleFieldListResult
     {
-        /// <summary> Initializes a new instance of TypeFieldListResult. </summary>
-        internal TypeFieldListResult()
+        /// <summary> Initializes a new instance of AutomationModuleFieldListResult. </summary>
+        internal AutomationModuleFieldListResult()
         {
-            Value = new ChangeTrackingList<TypeField>();
+            Value = new ChangeTrackingList<AutomationModuleField>();
         }
 
-        /// <summary> Initializes a new instance of TypeFieldListResult. </summary>
+        /// <summary> Initializes a new instance of AutomationModuleFieldListResult. </summary>
         /// <param name="value">
         /// Gets or sets a list of fields.
         /// Serialized Name: TypeFieldListResult.value
         /// </param>
-        internal TypeFieldListResult(IReadOnlyList<TypeField> value)
+        internal AutomationModuleFieldListResult(IReadOnlyList<AutomationModuleField> value)
         {
             Value = value;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets a list of fields.
         /// Serialized Name: TypeFieldListResult.value
         /// </summary>
-        public IReadOnlyList<TypeField> Value { get; }
+        public IReadOnlyList<AutomationModuleField> Value { get; }
     }
 }

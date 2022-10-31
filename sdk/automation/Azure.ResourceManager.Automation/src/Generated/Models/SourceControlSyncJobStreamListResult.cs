@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.Automation.Models
     /// The response model for the list source control sync job streams operation.
     /// Serialized Name: SourceControlSyncJobStreamsListBySyncJob
     /// </summary>
-    internal partial class SourceControlSyncJobStreamsListBySyncJob
+    internal partial class SourceControlSyncJobStreamListResult
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJobStreamsListBySyncJob. </summary>
-        internal SourceControlSyncJobStreamsListBySyncJob()
+        /// <summary> Initializes a new instance of SourceControlSyncJobStreamListResult. </summary>
+        internal SourceControlSyncJobStreamListResult()
         {
             Value = new ChangeTrackingList<SourceControlSyncJobStream>();
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobStreamsListBySyncJob. </summary>
+        /// <summary> Initializes a new instance of SourceControlSyncJobStreamListResult. </summary>
         /// <param name="value">
         /// The list of source control sync job streams.
         /// Serialized Name: SourceControlSyncJobStreamsListBySyncJob.value
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// The next link.
         /// Serialized Name: SourceControlSyncJobStreamsListBySyncJob.nextLink
         /// </param>
-        internal SourceControlSyncJobStreamsListBySyncJob(IReadOnlyList<SourceControlSyncJobStream> value, string nextLink)
+        internal SourceControlSyncJobStreamListResult(IReadOnlyList<SourceControlSyncJobStream> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

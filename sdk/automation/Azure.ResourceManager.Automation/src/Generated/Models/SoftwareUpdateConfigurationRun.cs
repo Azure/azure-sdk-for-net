@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Software update configuration tasks triggered in this run
         /// Serialized Name: SoftwareUpdateConfigurationRun.properties.tasks
         /// </param>
-        internal SoftwareUpdateConfigurationRun(string name, string id, UpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks)
+        internal SoftwareUpdateConfigurationRun(string name, string id, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks)
         {
             Name = name;
             Id = id;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// software update configuration triggered this run
         /// Serialized Name: SoftwareUpdateConfigurationRun.properties.softwareUpdateConfiguration
         /// </summary>
-        internal UpdateConfigurationNavigation SoftwareUpdateConfiguration { get; }
+        internal SoftwareUpdateConfigurationNavigation SoftwareUpdateConfiguration { get; }
         /// <summary>
         /// Name of the software update configuration triggered the software update configuration run
         /// Serialized Name: UpdateConfigurationNavigation.name

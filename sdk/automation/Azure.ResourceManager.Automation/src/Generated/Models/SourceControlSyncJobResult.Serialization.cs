@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SourceControlSyncJobById
+    public partial class SourceControlSyncJobResult
     {
-        internal static SourceControlSyncJobById DeserializeSourceControlSyncJobById(JsonElement element)
+        internal static SourceControlSyncJobResult DeserializeSourceControlSyncJobResult(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> sourceControlSyncJobId = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SourceControlSyncJobById(id.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), exception.Value);
+            return new SourceControlSyncJobResult(id.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), exception.Value);
         }
     }
 }

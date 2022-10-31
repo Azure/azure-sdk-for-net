@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> id = default;
             Optional<string> targetComputer = default;
             Optional<string> targetComputerType = default;
-            Optional<UpdateConfigurationNavigation> softwareUpdateConfiguration = default;
+            Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
             Optional<string> status = default;
             Optional<string> osType = default;
             Optional<Guid> correlationId = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            softwareUpdateConfiguration = UpdateConfigurationNavigation.DeserializeUpdateConfigurationNavigation(property0.Value);
+                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"))

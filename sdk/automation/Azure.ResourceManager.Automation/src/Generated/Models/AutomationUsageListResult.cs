@@ -14,20 +14,20 @@ namespace Azure.ResourceManager.Automation.Models
     /// The response model for the get usage operation.
     /// Serialized Name: UsageListResult
     /// </summary>
-    internal partial class UsageListResult
+    internal partial class AutomationUsageListResult
     {
-        /// <summary> Initializes a new instance of UsageListResult. </summary>
-        internal UsageListResult()
+        /// <summary> Initializes a new instance of AutomationUsageListResult. </summary>
+        internal AutomationUsageListResult()
         {
             Value = new ChangeTrackingList<AutomationUsage>();
         }
 
-        /// <summary> Initializes a new instance of UsageListResult. </summary>
+        /// <summary> Initializes a new instance of AutomationUsageListResult. </summary>
         /// <param name="value">
         /// Gets or sets usage.
         /// Serialized Name: UsageListResult.value
         /// </param>
-        internal UsageListResult(IReadOnlyList<AutomationUsage> value)
+        internal AutomationUsageListResult(IReadOnlyList<AutomationUsage> value)
         {
             Value = value;
         }

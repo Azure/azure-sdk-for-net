@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Details of provisioning error
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.properties.error
         /// </param>
-        internal SoftwareUpdateConfigurationMachineRun(string name, string id, string targetComputer, string targetComputerType, UpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, SubResource job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationErrorResponse error)
+        internal SoftwareUpdateConfigurationMachineRun(string name, string id, string targetComputer, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, SubResource job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationErrorResponse error)
         {
             Name = name;
             Id = id;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// software update configuration triggered this run
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.properties.softwareUpdateConfiguration
         /// </summary>
-        internal UpdateConfigurationNavigation SoftwareUpdateConfiguration { get; }
+        internal SoftwareUpdateConfigurationNavigation SoftwareUpdateConfiguration { get; }
         /// <summary>
         /// Name of the software update configuration triggered the software update configuration run
         /// Serialized Name: UpdateConfigurationNavigation.name
