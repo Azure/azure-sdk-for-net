@@ -37,4 +37,4 @@ await client.UpdateSettingAsync(updated);
 ```
 
 <!-- LINKS -->
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
