@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of RunAs credential to use for hybrid worker. </summary>
+    /// <summary>
+    /// Definition of RunAs credential to use for hybrid worker.
+    /// Serialized Name: RunAsCredentialAssociationProperty
+    /// </summary>
     internal partial class RunAsCredentialAssociationProperty
     {
         /// <summary> Initializes a new instance of RunAsCredentialAssociationProperty. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of RunAsCredentialAssociationProperty. </summary>
-        /// <param name="name"> Gets or sets the name of the credential. </param>
+        /// <param name="name">
+        /// Gets or sets the name of the credential.
+        /// Serialized Name: RunAsCredentialAssociationProperty.name
+        /// </param>
         internal RunAsCredentialAssociationProperty(string name)
         {
             Name = name;
         }
 
-        /// <summary> Gets or sets the name of the credential. </summary>
+        /// <summary>
+        /// Gets or sets the name of the credential.
+        /// Serialized Name: RunAsCredentialAssociationProperty.name
+        /// </summary>
         public string Name { get; set; }
     }
 }

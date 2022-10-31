@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The dsc extensionHandler property associated with the node. </summary>
+    /// <summary>
+    /// The dsc extensionHandler property associated with the node
+    /// Serialized Name: DscNodeExtensionHandlerAssociationProperty
+    /// </summary>
     public partial class DscNodeExtensionHandlerAssociationProperty
     {
         /// <summary> Initializes a new instance of DscNodeExtensionHandlerAssociationProperty. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscNodeExtensionHandlerAssociationProperty. </summary>
-        /// <param name="name"> Gets or sets the name of the extension handler. </param>
-        /// <param name="version"> Gets or sets the version of the extension handler. </param>
+        /// <param name="name">
+        /// Gets or sets the name of the extension handler.
+        /// Serialized Name: DscNodeExtensionHandlerAssociationProperty.name
+        /// </param>
+        /// <param name="version">
+        /// Gets or sets the version of the extension handler.
+        /// Serialized Name: DscNodeExtensionHandlerAssociationProperty.version
+        /// </param>
         internal DscNodeExtensionHandlerAssociationProperty(string name, string version)
         {
             Name = name;
             Version = version;
         }
 
-        /// <summary> Gets or sets the name of the extension handler. </summary>
+        /// <summary>
+        /// Gets or sets the name of the extension handler.
+        /// Serialized Name: DscNodeExtensionHandlerAssociationProperty.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the version of the extension handler. </summary>
+        /// <summary>
+        /// Gets or sets the version of the extension handler.
+        /// Serialized Name: DscNodeExtensionHandlerAssociationProperty.version
+        /// </summary>
         public string Version { get; set; }
     }
 }

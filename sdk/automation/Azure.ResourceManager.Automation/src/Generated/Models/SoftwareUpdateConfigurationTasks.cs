@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Task properties of the software update configuration. </summary>
+    /// <summary>
+    /// Task properties of the software update configuration.
+    /// Serialized Name: SoftwareUpdateConfigurationTasks
+    /// </summary>
     public partial class SoftwareUpdateConfigurationTasks
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTasks. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTasks. </summary>
-        /// <param name="preTask"> Pre task properties. </param>
-        /// <param name="postTask"> Post task properties. </param>
-        internal SoftwareUpdateConfigurationTasks(TaskProperties preTask, TaskProperties postTask)
+        /// <param name="preTask">
+        /// Pre task properties.
+        /// Serialized Name: SoftwareUpdateConfigurationTasks.preTask
+        /// </param>
+        /// <param name="postTask">
+        /// Post task properties.
+        /// Serialized Name: SoftwareUpdateConfigurationTasks.postTask
+        /// </param>
+        internal SoftwareUpdateConfigurationTasks(SoftwareUpdateConfigurationTaskProperties preTask, SoftwareUpdateConfigurationTaskProperties postTask)
         {
             PreTask = preTask;
             PostTask = postTask;
         }
 
-        /// <summary> Pre task properties. </summary>
-        public TaskProperties PreTask { get; set; }
-        /// <summary> Post task properties. </summary>
-        public TaskProperties PostTask { get; set; }
+        /// <summary>
+        /// Pre task properties.
+        /// Serialized Name: SoftwareUpdateConfigurationTasks.preTask
+        /// </summary>
+        public SoftwareUpdateConfigurationTaskProperties PreTask { get; set; }
+        /// <summary>
+        /// Post task properties.
+        /// Serialized Name: SoftwareUpdateConfigurationTasks.postTask
+        /// </summary>
+        public SoftwareUpdateConfigurationTaskProperties PostTask { get; set; }
     }
 }

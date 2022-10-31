@@ -11,7 +11,10 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> A list of private endpoint connections. </summary>
+    /// <summary>
+    /// A list of private endpoint connections
+    /// Serialized Name: PrivateEndpointConnectionListResult
+    /// </summary>
     internal partial class AutomationPrivateEndpointConnectionListResult
     {
         /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionListResult. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionListResult. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
+        /// <param name="value">
+        /// Array of private endpoint connections
+        /// Serialized Name: PrivateEndpointConnectionListResult.value
+        /// </param>
         internal AutomationPrivateEndpointConnectionListResult(IReadOnlyList<AutomationPrivateEndpointConnectionData> value)
         {
             Value = value;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
+        /// <summary>
+        /// Array of private endpoint connections
+        /// Serialized Name: PrivateEndpointConnectionListResult.value
+        /// </summary>
         public IReadOnlyList<AutomationPrivateEndpointConnectionData> Value { get; }
     }
 }

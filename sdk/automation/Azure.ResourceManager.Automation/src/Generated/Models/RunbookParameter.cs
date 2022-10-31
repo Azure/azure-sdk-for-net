@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of the runbook parameter type. </summary>
+    /// <summary>
+    /// Definition of the runbook parameter type.
+    /// Serialized Name: RunbookParameter
+    /// </summary>
     public partial class RunbookParameter
     {
         /// <summary> Initializes a new instance of RunbookParameter. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of RunbookParameter. </summary>
-        /// <param name="runbookParameterType"> Gets or sets the type of the parameter. </param>
-        /// <param name="isMandatory"> Gets or sets a Boolean value to indicate whether the parameter is mandatory or not. </param>
-        /// <param name="position"> Get or sets the position of the parameter. </param>
-        /// <param name="defaultValue"> Gets or sets the default value of parameter. </param>
+        /// <param name="runbookParameterType">
+        /// Gets or sets the type of the parameter.
+        /// Serialized Name: RunbookParameter.type
+        /// </param>
+        /// <param name="isMandatory">
+        /// Gets or sets a Boolean value to indicate whether the parameter is mandatory or not.
+        /// Serialized Name: RunbookParameter.isMandatory
+        /// </param>
+        /// <param name="position">
+        /// Get or sets the position of the parameter.
+        /// Serialized Name: RunbookParameter.position
+        /// </param>
+        /// <param name="defaultValue">
+        /// Gets or sets the default value of parameter.
+        /// Serialized Name: RunbookParameter.defaultValue
+        /// </param>
         internal RunbookParameter(string runbookParameterType, bool? isMandatory, int? position, string defaultValue)
         {
             RunbookParameterType = runbookParameterType;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.Automation.Models
             DefaultValue = defaultValue;
         }
 
-        /// <summary> Gets or sets the type of the parameter. </summary>
+        /// <summary>
+        /// Gets or sets the type of the parameter.
+        /// Serialized Name: RunbookParameter.type
+        /// </summary>
         public string RunbookParameterType { get; set; }
-        /// <summary> Gets or sets a Boolean value to indicate whether the parameter is mandatory or not. </summary>
+        /// <summary>
+        /// Gets or sets a Boolean value to indicate whether the parameter is mandatory or not.
+        /// Serialized Name: RunbookParameter.isMandatory
+        /// </summary>
         public bool? IsMandatory { get; set; }
-        /// <summary> Get or sets the position of the parameter. </summary>
+        /// <summary>
+        /// Get or sets the position of the parameter.
+        /// Serialized Name: RunbookParameter.position
+        /// </summary>
         public int? Position { get; set; }
-        /// <summary> Gets or sets the default value of parameter. </summary>
+        /// <summary>
+        /// Gets or sets the default value of parameter.
+        /// Serialized Name: RunbookParameter.defaultValue
+        /// </summary>
         public string DefaultValue { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> result of listing all software update configuration. </summary>
+    /// <summary>
+    /// result of listing all software update configuration
+    /// Serialized Name: SoftwareUpdateConfigurationListResult
+    /// </summary>
     internal partial class SoftwareUpdateConfigurationListResult
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationListResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationListResult. </summary>
-        /// <param name="value"> outer object returned when listing all software update configurations. </param>
+        /// <param name="value">
+        /// outer object returned when listing all software update configurations
+        /// Serialized Name: SoftwareUpdateConfigurationListResult.value
+        /// </param>
         internal SoftwareUpdateConfigurationListResult(IReadOnlyList<SoftwareUpdateConfigurationCollectionItem> value)
         {
             Value = value;
         }
 
-        /// <summary> outer object returned when listing all software update configurations. </summary>
+        /// <summary>
+        /// outer object returned when listing all software update configurations
+        /// Serialized Name: SoftwareUpdateConfigurationListResult.value
+        /// </summary>
         public IReadOnlyList<SoftwareUpdateConfigurationCollectionItem> Value { get; }
     }
 }

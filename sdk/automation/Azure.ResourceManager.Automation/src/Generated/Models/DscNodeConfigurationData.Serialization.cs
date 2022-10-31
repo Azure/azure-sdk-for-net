@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("nodeCount");
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Optional.IsDefined(IncrementNodeConfigurationBuild))
+            if (Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
             {
                 writer.WritePropertyName("incrementNodeConfigurationBuild");
-                writer.WriteBooleanValue(IncrementNodeConfigurationBuild.Value);
+                writer.WriteBooleanValue(IsIncrementNodeConfigurationBuildRequired.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> lastModifiedBy = default;
-            Optional<ErrorResponse> error = default;
+            Optional<AutomationErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            error = ErrorResponse.DeserializeErrorResponse(property0.Value);
+                            error = AutomationErrorResponse.DeserializeAutomationErrorResponse(property0.Value);
                             continue;
                         }
                     }

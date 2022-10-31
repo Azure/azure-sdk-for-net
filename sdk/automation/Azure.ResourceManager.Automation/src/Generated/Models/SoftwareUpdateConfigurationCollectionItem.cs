@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Software update configuration collection item properties. </summary>
+    /// <summary>
+    /// Software update configuration collection item properties.
+    /// Serialized Name: SoftwareUpdateConfigurationCollectionItem
+    /// </summary>
     public partial class SoftwareUpdateConfigurationCollectionItem
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationCollectionItem. </summary>
@@ -18,17 +21,47 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationCollectionItem. </summary>
-        /// <param name="name"> Name of the software update configuration. </param>
-        /// <param name="id"> Resource Id of the software update configuration. </param>
-        /// <param name="updateConfiguration"> Update specific properties of the software update configuration. </param>
-        /// <param name="tasks"> Pre and Post Tasks defined. </param>
-        /// <param name="frequency"> execution frequency of the schedule associated with the software update configuration. </param>
-        /// <param name="startOn"> the start time of the update. </param>
-        /// <param name="createdOn"> Creation time of the software update configuration, which only appears in the response. </param>
-        /// <param name="lastModifiedOn"> Last time software update configuration was modified, which only appears in the response. </param>
-        /// <param name="provisioningState"> Provisioning state for the software update configuration, which only appears in the response. </param>
-        /// <param name="nextRun"> ext run time of the update. </param>
-        internal SoftwareUpdateConfigurationCollectionItem(string name, string id, UpdateConfiguration updateConfiguration, SoftwareUpdateConfigurationTasks tasks, ScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRun)
+        /// <param name="name">
+        /// Name of the software update configuration.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.name
+        /// </param>
+        /// <param name="id">
+        /// Resource Id of the software update configuration
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.id
+        /// </param>
+        /// <param name="updateConfiguration">
+        /// Update specific properties of the software update configuration.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.updateConfiguration
+        /// </param>
+        /// <param name="tasks">
+        /// Pre and Post Tasks defined
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.tasks
+        /// </param>
+        /// <param name="frequency">
+        /// execution frequency of the schedule associated with the software update configuration
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.frequency
+        /// </param>
+        /// <param name="startOn">
+        /// the start time of the update.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.startTime
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation time of the software update configuration, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.creationTime
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// Last time software update configuration was modified, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.lastModifiedTime
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state for the software update configuration, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.provisioningState
+        /// </param>
+        /// <param name="nextRun">
+        /// ext run time of the update.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.nextRun
+        /// </param>
+        internal SoftwareUpdateConfigurationCollectionItem(string name, string id, UpdateConfiguration updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRun)
         {
             Name = name;
             Id = id;
@@ -42,25 +75,55 @@ namespace Azure.ResourceManager.Automation.Models
             NextRun = nextRun;
         }
 
-        /// <summary> Name of the software update configuration. </summary>
+        /// <summary>
+        /// Name of the software update configuration.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Resource Id of the software update configuration. </summary>
+        /// <summary>
+        /// Resource Id of the software update configuration
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Update specific properties of the software update configuration. </summary>
+        /// <summary>
+        /// Update specific properties of the software update configuration.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.updateConfiguration
+        /// </summary>
         public UpdateConfiguration UpdateConfiguration { get; }
-        /// <summary> Pre and Post Tasks defined. </summary>
+        /// <summary>
+        /// Pre and Post Tasks defined
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.tasks
+        /// </summary>
         public SoftwareUpdateConfigurationTasks Tasks { get; }
-        /// <summary> execution frequency of the schedule associated with the software update configuration. </summary>
-        public ScheduleFrequency? Frequency { get; }
-        /// <summary> the start time of the update. </summary>
+        /// <summary>
+        /// execution frequency of the schedule associated with the software update configuration
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.frequency
+        /// </summary>
+        public AutomationScheduleFrequency? Frequency { get; }
+        /// <summary>
+        /// the start time of the update.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> Creation time of the software update configuration, which only appears in the response. </summary>
+        /// <summary>
+        /// Creation time of the software update configuration, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Last time software update configuration was modified, which only appears in the response. </summary>
+        /// <summary>
+        /// Last time software update configuration was modified, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.lastModifiedTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Provisioning state for the software update configuration, which only appears in the response. </summary>
+        /// <summary>
+        /// Provisioning state for the software update configuration, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> ext run time of the update. </summary>
+        /// <summary>
+        /// ext run time of the update.
+        /// Serialized Name: SoftwareUpdateConfigurationCollectionItem.properties.nextRun
+        /// </summary>
         public DateTimeOffset? NextRun { get; }
     }
 }

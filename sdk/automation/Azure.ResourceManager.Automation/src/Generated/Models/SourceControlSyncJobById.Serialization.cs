@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> id = default;
             Optional<string> sourceControlSyncJobId = default;
             Optional<DateTimeOffset> creationTime = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SourceControlProvisioningState> provisioningState = default;
             Optional<DateTimeOffset?> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
-            Optional<SyncType> syncType = default;
+            Optional<SourceControlSyncType> syncType = default;
             Optional<string> exception = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new SourceControlProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            syncType = new SyncType(property0.Value.GetString());
+                            syncType = new SourceControlSyncType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("exception"))

@@ -11,13 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the create or update configuration operation. </summary>
+    /// <summary>
+    /// The parameters supplied to the create or update configuration operation.
+    /// Serialized Name: DscConfigurationCreateOrUpdateParameters
+    /// </summary>
     public partial class DscConfigurationCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of DscConfigurationCreateOrUpdateContent. </summary>
-        /// <param name="source"> Gets or sets the source. </param>
+        /// <param name="source">
+        /// Gets or sets the source.
+        /// Serialized Name: DscConfigurationCreateOrUpdateParameters.properties.source
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public DscConfigurationCreateOrUpdateContent(ContentSource source)
+        public DscConfigurationCreateOrUpdateContent(AutomationContentSource source)
         {
             if (source == null)
             {
@@ -29,21 +35,45 @@ namespace Azure.ResourceManager.Automation.Models
             Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameter>();
         }
 
-        /// <summary> Gets or sets name of the resource. </summary>
+        /// <summary>
+        /// Gets or sets name of the resource.
+        /// Serialized Name: DscConfigurationCreateOrUpdateParameters.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the location of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the location of the resource.
+        /// Serialized Name: DscConfigurationCreateOrUpdateParameters.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> Gets or sets the tags attached to the resource. </summary>
+        /// <summary>
+        /// Gets or sets the tags attached to the resource.
+        /// Serialized Name: DscConfigurationCreateOrUpdateParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets verbose log option. </summary>
-        public bool? LogVerbose { get; set; }
-        /// <summary> Gets or sets progress log option. </summary>
-        public bool? LogProgress { get; set; }
-        /// <summary> Gets or sets the source. </summary>
-        public ContentSource Source { get; }
-        /// <summary> Gets or sets the configuration parameters. </summary>
+        /// <summary>
+        /// Gets or sets verbose log option.
+        /// Serialized Name: DscConfigurationCreateOrUpdateParameters.properties.logVerbose
+        /// </summary>
+        public bool? IsLogVerboseEnabled { get; set; }
+        /// <summary>
+        /// Gets or sets progress log option.
+        /// Serialized Name: DscConfigurationCreateOrUpdateParameters.properties.logProgress
+        /// </summary>
+        public bool? IsLogProgressEnabled { get; set; }
+        /// <summary>
+        /// Gets or sets the source.
+        /// Serialized Name: DscConfigurationCreateOrUpdateParameters.properties.source
+        /// </summary>
+        public AutomationContentSource Source { get; }
+        /// <summary>
+        /// Gets or sets the configuration parameters.
+        /// Serialized Name: DscConfigurationCreateOrUpdateParameters.properties.parameters
+        /// </summary>
         public IDictionary<string, DscConfigurationParameter> Parameters { get; }
-        /// <summary> Gets or sets the description of the configuration. </summary>
+        /// <summary>
+        /// Gets or sets the description of the configuration.
+        /// Serialized Name: DscConfigurationCreateOrUpdateParameters.properties.description
+        /// </summary>
         public string Description { get; set; }
     }
 }

@@ -16,10 +16,16 @@ namespace Azure.ResourceManager.Automation
     public partial class SoftwareUpdateConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationData. </summary>
-        /// <param name="updateConfiguration"> update specific properties for the Software update configuration. </param>
-        /// <param name="scheduleInfo"> Schedule information for the Software update configuration. </param>
+        /// <param name="updateConfiguration">
+        /// update specific properties for the Software update configuration
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.updateConfiguration
+        /// </param>
+        /// <param name="scheduleInfo">
+        /// Schedule information for the Software update configuration
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.scheduleInfo
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateConfiguration"/> or <paramref name="scheduleInfo"/> is null. </exception>
-        public SoftwareUpdateConfigurationData(UpdateConfiguration updateConfiguration, SUCScheduleProperties scheduleInfo)
+        public SoftwareUpdateConfigurationData(UpdateConfiguration updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo)
         {
             if (updateConfiguration == null)
             {
@@ -39,16 +45,43 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="updateConfiguration"> update specific properties for the Software update configuration. </param>
-        /// <param name="scheduleInfo"> Schedule information for the Software update configuration. </param>
-        /// <param name="provisioningState"> Provisioning state for the software update configuration, which only appears in the response. </param>
-        /// <param name="error"> Details of provisioning error. </param>
-        /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
-        /// <param name="createdBy"> CreatedBy property, which only appears in the response. </param>
-        /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
-        /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
-        /// <param name="tasks"> Tasks information for the Software update configuration. </param>
-        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UpdateConfiguration updateConfiguration, SUCScheduleProperties scheduleInfo, string provisioningState, ErrorResponse error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks) : base(id, name, resourceType, systemData)
+        /// <param name="updateConfiguration">
+        /// update specific properties for the Software update configuration
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.updateConfiguration
+        /// </param>
+        /// <param name="scheduleInfo">
+        /// Schedule information for the Software update configuration
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.scheduleInfo
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state for the software update configuration, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.provisioningState
+        /// </param>
+        /// <param name="error">
+        /// Details of provisioning error
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.error
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation time of the resource, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.creationTime
+        /// </param>
+        /// <param name="createdBy">
+        /// CreatedBy property, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.createdBy
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// Last time resource was modified, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.lastModifiedTime
+        /// </param>
+        /// <param name="lastModifiedBy">
+        /// LastModifiedBy property, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.lastModifiedBy
+        /// </param>
+        /// <param name="tasks">
+        /// Tasks information for the Software update configuration.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.tasks
+        /// </param>
+        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UpdateConfiguration updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationErrorResponse error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks) : base(id, name, resourceType, systemData)
         {
             UpdateConfiguration = updateConfiguration;
             ScheduleInfo = scheduleInfo;
@@ -61,23 +94,50 @@ namespace Azure.ResourceManager.Automation
             Tasks = tasks;
         }
 
-        /// <summary> update specific properties for the Software update configuration. </summary>
+        /// <summary>
+        /// update specific properties for the Software update configuration
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.updateConfiguration
+        /// </summary>
         public UpdateConfiguration UpdateConfiguration { get; set; }
-        /// <summary> Schedule information for the Software update configuration. </summary>
-        public SUCScheduleProperties ScheduleInfo { get; set; }
-        /// <summary> Provisioning state for the software update configuration, which only appears in the response. </summary>
+        /// <summary>
+        /// Schedule information for the Software update configuration
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.scheduleInfo
+        /// </summary>
+        public SoftwareUpdateConfigurationScheduleProperties ScheduleInfo { get; set; }
+        /// <summary>
+        /// Provisioning state for the software update configuration, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> Details of provisioning error. </summary>
-        public ErrorResponse Error { get; set; }
-        /// <summary> Creation time of the resource, which only appears in the response. </summary>
+        /// <summary>
+        /// Details of provisioning error
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.error
+        /// </summary>
+        public AutomationErrorResponse Error { get; set; }
+        /// <summary>
+        /// Creation time of the resource, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> CreatedBy property, which only appears in the response. </summary>
+        /// <summary>
+        /// CreatedBy property, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.createdBy
+        /// </summary>
         public string CreatedBy { get; }
-        /// <summary> Last time resource was modified, which only appears in the response. </summary>
+        /// <summary>
+        /// Last time resource was modified, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.lastModifiedTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> LastModifiedBy property, which only appears in the response. </summary>
+        /// <summary>
+        /// LastModifiedBy property, which only appears in the response.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.lastModifiedBy
+        /// </summary>
         public string LastModifiedBy { get; }
-        /// <summary> Tasks information for the Software update configuration. </summary>
+        /// <summary>
+        /// Tasks information for the Software update configuration.
+        /// Serialized Name: SoftwareUpdateConfiguration.properties.tasks
+        /// </summary>
         public SoftwareUpdateConfigurationTasks Tasks { get; set; }
     }
 }

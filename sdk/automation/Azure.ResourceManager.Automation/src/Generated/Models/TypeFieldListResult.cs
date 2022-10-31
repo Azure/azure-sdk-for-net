@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list fields operation. </summary>
+    /// <summary>
+    /// The response model for the list fields operation.
+    /// Serialized Name: TypeFieldListResult
+    /// </summary>
     internal partial class TypeFieldListResult
     {
         /// <summary> Initializes a new instance of TypeFieldListResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of TypeFieldListResult. </summary>
-        /// <param name="value"> Gets or sets a list of fields. </param>
+        /// <param name="value">
+        /// Gets or sets a list of fields.
+        /// Serialized Name: TypeFieldListResult.value
+        /// </param>
         internal TypeFieldListResult(IReadOnlyList<TypeField> value)
         {
             Value = value;
         }
 
-        /// <summary> Gets or sets a list of fields. </summary>
+        /// <summary>
+        /// Gets or sets a list of fields.
+        /// Serialized Name: TypeFieldListResult.value
+        /// </summary>
         public IReadOnlyList<TypeField> Value { get; }
     }
 }

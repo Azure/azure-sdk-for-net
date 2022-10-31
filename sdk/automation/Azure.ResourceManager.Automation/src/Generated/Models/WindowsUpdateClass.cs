@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Update classification included in the software update configuration. A comma separated string with required values. </summary>
+    /// <summary>
+    /// Update classification included in the software update configuration. A comma separated string with required values
+    /// Serialized Name: WindowsUpdateClasses
+    /// </summary>
     public readonly partial struct WindowsUpdateClass : IEquatable<WindowsUpdateClass>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.Automation.Models
         private const string ToolsValue = "Tools";
         private const string UpdatesValue = "Updates";
 
-        /// <summary> Unclassified. </summary>
+        /// <summary>
+        /// Unclassified
+        /// Serialized Name: WindowsUpdateClasses.Unclassified
+        /// </summary>
         public static WindowsUpdateClass Unclassified { get; } = new WindowsUpdateClass(UnclassifiedValue);
-        /// <summary> Critical. </summary>
+        /// <summary>
+        /// Critical
+        /// Serialized Name: WindowsUpdateClasses.Critical
+        /// </summary>
         public static WindowsUpdateClass Critical { get; } = new WindowsUpdateClass(CriticalValue);
-        /// <summary> Security. </summary>
+        /// <summary>
+        /// Security
+        /// Serialized Name: WindowsUpdateClasses.Security
+        /// </summary>
         public static WindowsUpdateClass Security { get; } = new WindowsUpdateClass(SecurityValue);
-        /// <summary> UpdateRollup. </summary>
+        /// <summary>
+        /// UpdateRollup
+        /// Serialized Name: WindowsUpdateClasses.UpdateRollup
+        /// </summary>
         public static WindowsUpdateClass UpdateRollup { get; } = new WindowsUpdateClass(UpdateRollupValue);
-        /// <summary> FeaturePack. </summary>
+        /// <summary>
+        /// FeaturePack
+        /// Serialized Name: WindowsUpdateClasses.FeaturePack
+        /// </summary>
         public static WindowsUpdateClass FeaturePack { get; } = new WindowsUpdateClass(FeaturePackValue);
-        /// <summary> ServicePack. </summary>
+        /// <summary>
+        /// ServicePack
+        /// Serialized Name: WindowsUpdateClasses.ServicePack
+        /// </summary>
         public static WindowsUpdateClass ServicePack { get; } = new WindowsUpdateClass(ServicePackValue);
-        /// <summary> Definition. </summary>
+        /// <summary>
+        /// Definition
+        /// Serialized Name: WindowsUpdateClasses.Definition
+        /// </summary>
         public static WindowsUpdateClass Definition { get; } = new WindowsUpdateClass(DefinitionValue);
-        /// <summary> Tools. </summary>
+        /// <summary>
+        /// Tools
+        /// Serialized Name: WindowsUpdateClasses.Tools
+        /// </summary>
         public static WindowsUpdateClass Tools { get; } = new WindowsUpdateClass(ToolsValue);
-        /// <summary> Updates. </summary>
+        /// <summary>
+        /// Updates
+        /// Serialized Name: WindowsUpdateClasses.Updates
+        /// </summary>
         public static WindowsUpdateClass Updates { get; } = new WindowsUpdateClass(UpdatesValue);
         /// <summary> Determines if two <see cref="WindowsUpdateClass"/> values are the same. </summary>
         public static bool operator ==(WindowsUpdateClass left, WindowsUpdateClass right) => left.Equals(right);

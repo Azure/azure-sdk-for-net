@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the create hybrid runbook worker group operation. </summary>
+    /// <summary>
+    /// The parameters supplied to the create hybrid runbook worker group operation.
+    /// Serialized Name: HybridRunbookWorkerGroupCreateOrUpdateParameters
+    /// </summary>
     public partial class HybridRunbookWorkerGroupCreateOrUpdateParameters
     {
         /// <summary> Initializes a new instance of HybridRunbookWorkerGroupCreateOrUpdateParameters. </summary>
@@ -15,11 +18,20 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary> Gets or sets the name of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the name of the resource.
+        /// Serialized Name: HybridRunbookWorkerGroupCreateOrUpdateParameters.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Sets the credential of a worker group. </summary>
+        /// <summary>
+        /// Sets the credential of a worker group.
+        /// Serialized Name: HybridRunbookWorkerGroupCreateOrUpdateParameters.properties.credential
+        /// </summary>
         internal RunAsCredentialAssociationProperty Credential { get; set; }
-        /// <summary> Gets or sets the name of the credential. </summary>
+        /// <summary>
+        /// Gets or sets the name of the credential.
+        /// Serialized Name: RunAsCredentialAssociationProperty.name
+        /// </summary>
         public string CredentialName
         {
             get => Credential is null ? default : Credential.Name;

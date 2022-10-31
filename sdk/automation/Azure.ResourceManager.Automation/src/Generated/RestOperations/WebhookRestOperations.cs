@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="webhookName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WebhookData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationWebhookData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -233,13 +233,13 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WebhookData value = default;
+                        AutomationWebhookData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WebhookData.DeserializeWebhookData(document.RootElement);
+                        value = AutomationWebhookData.DeserializeAutomationWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WebhookData)null, message.Response);
+                    return Response.FromValue((AutomationWebhookData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="webhookName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WebhookData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, CancellationToken cancellationToken = default)
+        public Response<AutomationWebhookData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -266,19 +266,19 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WebhookData value = default;
+                        AutomationWebhookData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WebhookData.DeserializeWebhookData(document.RootElement);
+                        value = AutomationWebhookData.DeserializeAutomationWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WebhookData)null, message.Response);
+                    return Response.FromValue((AutomationWebhookData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, WebhookCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, AutomationWebhookCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="webhookName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WebhookData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, WebhookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationWebhookData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, AutomationWebhookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -328,9 +328,9 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                 case 201:
                     {
-                        WebhookData value = default;
+                        AutomationWebhookData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WebhookData.DeserializeWebhookData(document.RootElement);
+                        value = AutomationWebhookData.DeserializeAutomationWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="webhookName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WebhookData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, WebhookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<AutomationWebhookData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, AutomationWebhookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -362,9 +362,9 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                 case 201:
                     {
-                        WebhookData value = default;
+                        AutomationWebhookData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WebhookData.DeserializeWebhookData(document.RootElement);
+                        value = AutomationWebhookData.DeserializeAutomationWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, WebhookPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, AutomationWebhookPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="webhookName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WebhookData>> UpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, WebhookPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationWebhookData>> UpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, AutomationWebhookPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -421,9 +421,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WebhookData value = default;
+                        AutomationWebhookData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WebhookData.DeserializeWebhookData(document.RootElement);
+                        value = AutomationWebhookData.DeserializeAutomationWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="webhookName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WebhookData> Update(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, WebhookPatch patch, CancellationToken cancellationToken = default)
+        public Response<AutomationWebhookData> Update(string subscriptionId, string resourceGroupName, string automationAccountName, string webhookName, AutomationWebhookPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -454,9 +454,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WebhookData value = default;
+                        AutomationWebhookData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WebhookData.DeserializeWebhookData(document.RootElement);
+                        value = AutomationWebhookData.DeserializeAutomationWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

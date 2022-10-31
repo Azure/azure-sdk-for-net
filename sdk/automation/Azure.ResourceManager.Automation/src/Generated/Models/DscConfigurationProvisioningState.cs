@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Gets or sets the provisioning state of the configuration. </summary>
+    /// <summary>
+    /// Gets or sets the provisioning state of the configuration.
+    /// Serialized Name: DscConfigurationProvisioningState
+    /// </summary>
     public readonly partial struct DscConfigurationProvisioningState : IEquatable<DscConfigurationProvisioningState>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: DscConfigurationProvisioningState.Succeeded
+        /// </summary>
         public static DscConfigurationProvisioningState Succeeded { get; } = new DscConfigurationProvisioningState(SucceededValue);
         /// <summary> Determines if two <see cref="DscConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DscConfigurationProvisioningState left, DscConfigurationProvisioningState right) => left.Equals(right);

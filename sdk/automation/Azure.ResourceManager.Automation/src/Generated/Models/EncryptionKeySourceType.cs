@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Encryption Key Source. </summary>
+    /// <summary>
+    /// Encryption Key Source
+    /// Serialized Name: EncryptionKeySourceType
+    /// </summary>
     public enum EncryptionKeySourceType
     {
-        /// <summary> Microsoft.Automation. </summary>
+        /// <summary>
+        /// Microsoft.Automation
+        /// Serialized Name: EncryptionKeySourceType.Microsoft.Automation
+        /// </summary>
         MicrosoftAutomation,
-        /// <summary> Microsoft.Keyvault. </summary>
+        /// <summary>
+        /// Microsoft.Keyvault
+        /// Serialized Name: EncryptionKeySourceType.Microsoft.Keyvault
+        /// </summary>
         MicrosoftKeyvault
     }
 }

@@ -28,16 +28,46 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastSeen"> Gets or sets the last seen time of the node. </param>
-        /// <param name="registrationOn"> Gets or sets the registration time of the node. </param>
-        /// <param name="ip"> Gets or sets the ip of the node. </param>
-        /// <param name="accountId"> Gets or sets the account id of the node. </param>
-        /// <param name="status"> Gets or sets the status of the node. </param>
-        /// <param name="nodeId"> Gets or sets the node id. </param>
-        /// <param name="etag"> Gets or sets the etag of the resource. </param>
-        /// <param name="totalCount"> Gets the total number of records matching filter criteria. </param>
-        /// <param name="extensionHandler"> Gets or sets the list of extensionHandler properties for a Node. </param>
-        /// <param name="namePropertiesNodeConfigurationName"> Gets or sets the name of the dsc node configuration. </param>
+        /// <param name="lastSeen">
+        /// Gets or sets the last seen time of the node.
+        /// Serialized Name: DscNode.properties.lastSeen
+        /// </param>
+        /// <param name="registrationOn">
+        /// Gets or sets the registration time of the node.
+        /// Serialized Name: DscNode.properties.registrationTime
+        /// </param>
+        /// <param name="ip">
+        /// Gets or sets the ip of the node.
+        /// Serialized Name: DscNode.properties.ip
+        /// </param>
+        /// <param name="accountId">
+        /// Gets or sets the account id of the node.
+        /// Serialized Name: DscNode.properties.accountId
+        /// </param>
+        /// <param name="status">
+        /// Gets or sets the status of the node.
+        /// Serialized Name: DscNode.properties.status
+        /// </param>
+        /// <param name="nodeId">
+        /// Gets or sets the node id.
+        /// Serialized Name: DscNode.properties.nodeId
+        /// </param>
+        /// <param name="etag">
+        /// Gets or sets the etag of the resource.
+        /// Serialized Name: DscNode.properties.etag
+        /// </param>
+        /// <param name="totalCount">
+        /// Gets the total number of records matching filter criteria.
+        /// Serialized Name: DscNode.properties.totalCount
+        /// </param>
+        /// <param name="extensionHandler">
+        /// Gets or sets the list of extensionHandler properties for a Node.
+        /// Serialized Name: DscNode.properties.extensionHandler
+        /// </param>
+        /// <param name="namePropertiesNodeConfigurationName">
+        /// Gets or sets the name of the dsc node configuration.
+        /// Serialized Name: DscNode.properties.nodeConfiguration.name
+        /// </param>
         internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeen, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName) : base(id, name, resourceType, systemData)
         {
             LastSeen = lastSeen;
@@ -52,25 +82,55 @@ namespace Azure.ResourceManager.Automation
             NamePropertiesNodeConfigurationName = namePropertiesNodeConfigurationName;
         }
 
-        /// <summary> Gets or sets the last seen time of the node. </summary>
+        /// <summary>
+        /// Gets or sets the last seen time of the node.
+        /// Serialized Name: DscNode.properties.lastSeen
+        /// </summary>
         public DateTimeOffset? LastSeen { get; set; }
-        /// <summary> Gets or sets the registration time of the node. </summary>
+        /// <summary>
+        /// Gets or sets the registration time of the node.
+        /// Serialized Name: DscNode.properties.registrationTime
+        /// </summary>
         public DateTimeOffset? RegistrationOn { get; set; }
-        /// <summary> Gets or sets the ip of the node. </summary>
+        /// <summary>
+        /// Gets or sets the ip of the node.
+        /// Serialized Name: DscNode.properties.ip
+        /// </summary>
         public string IP { get; set; }
-        /// <summary> Gets or sets the account id of the node. </summary>
+        /// <summary>
+        /// Gets or sets the account id of the node.
+        /// Serialized Name: DscNode.properties.accountId
+        /// </summary>
         public string AccountId { get; set; }
-        /// <summary> Gets or sets the status of the node. </summary>
+        /// <summary>
+        /// Gets or sets the status of the node.
+        /// Serialized Name: DscNode.properties.status
+        /// </summary>
         public string Status { get; set; }
-        /// <summary> Gets or sets the node id. </summary>
+        /// <summary>
+        /// Gets or sets the node id.
+        /// Serialized Name: DscNode.properties.nodeId
+        /// </summary>
         public string NodeId { get; set; }
-        /// <summary> Gets or sets the etag of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the etag of the resource.
+        /// Serialized Name: DscNode.properties.etag
+        /// </summary>
         public ETag? ETag { get; set; }
-        /// <summary> Gets the total number of records matching filter criteria. </summary>
+        /// <summary>
+        /// Gets the total number of records matching filter criteria.
+        /// Serialized Name: DscNode.properties.totalCount
+        /// </summary>
         public int? TotalCount { get; set; }
-        /// <summary> Gets or sets the list of extensionHandler properties for a Node. </summary>
+        /// <summary>
+        /// Gets or sets the list of extensionHandler properties for a Node.
+        /// Serialized Name: DscNode.properties.extensionHandler
+        /// </summary>
         public IList<DscNodeExtensionHandlerAssociationProperty> ExtensionHandler { get; }
-        /// <summary> Gets or sets the name of the dsc node configuration. </summary>
+        /// <summary>
+        /// Gets or sets the name of the dsc node configuration.
+        /// Serialized Name: DscNode.properties.nodeConfiguration.name
+        /// </summary>
         public string NamePropertiesNodeConfigurationName { get; set; }
     }
 }

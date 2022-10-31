@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Automation key permissions. </summary>
+    /// <summary>
+    /// Automation key permissions.
+    /// Serialized Name: AutomationKeyPermissions
+    /// </summary>
     public readonly partial struct AutomationKeyPermission : IEquatable<AutomationKeyPermission>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Automation.Models
         private const string ReadValue = "Read";
         private const string FullValue = "Full";
 
-        /// <summary> Read. </summary>
+        /// <summary>
+        /// Read
+        /// Serialized Name: AutomationKeyPermissions.Read
+        /// </summary>
         public static AutomationKeyPermission Read { get; } = new AutomationKeyPermission(ReadValue);
-        /// <summary> Full. </summary>
+        /// <summary>
+        /// Full
+        /// Serialized Name: AutomationKeyPermissions.Full
+        /// </summary>
         public static AutomationKeyPermission Full { get; } = new AutomationKeyPermission(FullValue);
         /// <summary> Determines if two <see cref="AutomationKeyPermission"/> values are the same. </summary>
         public static bool operator ==(AutomationKeyPermission left, AutomationKeyPermission right) => left.Equals(right);

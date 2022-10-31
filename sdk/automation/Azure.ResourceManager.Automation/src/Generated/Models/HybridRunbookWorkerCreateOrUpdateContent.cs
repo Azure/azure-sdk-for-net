@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the create hybrid runbook worker operation. </summary>
+    /// <summary>
+    /// The parameters supplied to the create hybrid runbook worker operation.
+    /// Serialized Name: HybridRunbookWorkerCreateParameters
+    /// </summary>
     public partial class HybridRunbookWorkerCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of HybridRunbookWorkerCreateOrUpdateContent. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary> Gets or sets the name of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the name of the resource.
+        /// Serialized Name: HybridRunbookWorkerCreateParameters.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Azure Resource Manager Id for a virtual machine. </summary>
+        /// <summary>
+        /// Azure Resource Manager Id for a virtual machine.
+        /// Serialized Name: HybridRunbookWorkerCreateParameters.properties.vmResourceId
+        /// </summary>
         public string VmResourceId { get; set; }
     }
 }

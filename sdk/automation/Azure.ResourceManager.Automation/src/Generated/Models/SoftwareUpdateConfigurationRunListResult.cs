@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> result of listing all software update configuration runs. </summary>
+    /// <summary>
+    /// result of listing all software update configuration runs
+    /// Serialized Name: SoftwareUpdateConfigurationRunListResult
+    /// </summary>
     internal partial class SoftwareUpdateConfigurationRunListResult
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunListResult. </summary>
-        /// <param name="value"> outer object returned when listing all software update configuration runs. </param>
-        /// <param name="nextLink"> link to next page of results. </param>
+        /// <param name="value">
+        /// outer object returned when listing all software update configuration runs
+        /// Serialized Name: SoftwareUpdateConfigurationRunListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// link to next page of results.
+        /// Serialized Name: SoftwareUpdateConfigurationRunListResult.nextLink
+        /// </param>
         internal SoftwareUpdateConfigurationRunListResult(IReadOnlyList<SoftwareUpdateConfigurationRun> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> outer object returned when listing all software update configuration runs. </summary>
+        /// <summary>
+        /// outer object returned when listing all software update configuration runs
+        /// Serialized Name: SoftwareUpdateConfigurationRunListResult.value
+        /// </summary>
         public IReadOnlyList<SoftwareUpdateConfigurationRun> Value { get; }
-        /// <summary> link to next page of results. </summary>
+        /// <summary>
+        /// link to next page of results.
+        /// Serialized Name: SoftwareUpdateConfigurationRunListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

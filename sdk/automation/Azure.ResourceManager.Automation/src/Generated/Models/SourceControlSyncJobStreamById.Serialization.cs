@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> sourceControlSyncJobStreamId = default;
             Optional<string> summary = default;
             Optional<DateTimeOffset?> time = default;
-            Optional<StreamType> streamType = default;
+            Optional<SourceControlStreamType> streamType = default;
             Optional<string> streamText = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            streamType = new StreamType(property0.Value.GetString());
+                            streamType = new SourceControlStreamType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("streamText"))

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of the DSC Report Resource. </summary>
+    /// <summary>
+    /// Definition of the DSC Report Resource.
+    /// Serialized Name: DscReportResource
+    /// </summary>
     public partial class DscReportResource
     {
         /// <summary> Initializes a new instance of DscReportResource. </summary>
@@ -21,16 +24,46 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscReportResource. </summary>
-        /// <param name="resourceId"> Gets or sets the ID of the resource. </param>
-        /// <param name="sourceInfo"> Gets or sets the source info of the resource. </param>
-        /// <param name="dependsOn"> Gets or sets the Resource Navigation values for resources the resource depends on. </param>
-        /// <param name="moduleName"> Gets or sets the module name of the resource. </param>
-        /// <param name="moduleVersion"> Gets or sets the module version of the resource. </param>
-        /// <param name="resourceName"> Gets or sets the name of the resource. </param>
-        /// <param name="error"> Gets or sets the error of the resource. </param>
-        /// <param name="status"> Gets or sets the status of the resource. </param>
-        /// <param name="durationInSeconds"> Gets or sets the duration in seconds for the resource. </param>
-        /// <param name="startOn"> Gets or sets the start date of the resource. </param>
+        /// <param name="resourceId">
+        /// Gets or sets the ID of the resource.
+        /// Serialized Name: DscReportResource.resourceId
+        /// </param>
+        /// <param name="sourceInfo">
+        /// Gets or sets the source info of the resource.
+        /// Serialized Name: DscReportResource.sourceInfo
+        /// </param>
+        /// <param name="dependsOn">
+        /// Gets or sets the Resource Navigation values for resources the resource depends on.
+        /// Serialized Name: DscReportResource.dependsOn
+        /// </param>
+        /// <param name="moduleName">
+        /// Gets or sets the module name of the resource.
+        /// Serialized Name: DscReportResource.moduleName
+        /// </param>
+        /// <param name="moduleVersion">
+        /// Gets or sets the module version of the resource.
+        /// Serialized Name: DscReportResource.moduleVersion
+        /// </param>
+        /// <param name="resourceName">
+        /// Gets or sets the name of the resource.
+        /// Serialized Name: DscReportResource.resourceName
+        /// </param>
+        /// <param name="error">
+        /// Gets or sets the error of the resource.
+        /// Serialized Name: DscReportResource.error
+        /// </param>
+        /// <param name="status">
+        /// Gets or sets the status of the resource.
+        /// Serialized Name: DscReportResource.status
+        /// </param>
+        /// <param name="durationInSeconds">
+        /// Gets or sets the duration in seconds for the resource.
+        /// Serialized Name: DscReportResource.durationInSeconds
+        /// </param>
+        /// <param name="startOn">
+        /// Gets or sets the start date of the resource.
+        /// Serialized Name: DscReportResource.startDate
+        /// </param>
         internal DscReportResource(string resourceId, string sourceInfo, IReadOnlyList<DscReportResourceNavigation> dependsOn, string moduleName, string moduleVersion, string resourceName, string error, string status, double? durationInSeconds, DateTimeOffset? startOn)
         {
             ResourceId = resourceId;
@@ -45,25 +78,55 @@ namespace Azure.ResourceManager.Automation.Models
             StartOn = startOn;
         }
 
-        /// <summary> Gets or sets the ID of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the ID of the resource.
+        /// Serialized Name: DscReportResource.resourceId
+        /// </summary>
         public string ResourceId { get; }
-        /// <summary> Gets or sets the source info of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the source info of the resource.
+        /// Serialized Name: DscReportResource.sourceInfo
+        /// </summary>
         public string SourceInfo { get; }
-        /// <summary> Gets or sets the Resource Navigation values for resources the resource depends on. </summary>
+        /// <summary>
+        /// Gets or sets the Resource Navigation values for resources the resource depends on.
+        /// Serialized Name: DscReportResource.dependsOn
+        /// </summary>
         public IReadOnlyList<DscReportResourceNavigation> DependsOn { get; }
-        /// <summary> Gets or sets the module name of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the module name of the resource.
+        /// Serialized Name: DscReportResource.moduleName
+        /// </summary>
         public string ModuleName { get; }
-        /// <summary> Gets or sets the module version of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the module version of the resource.
+        /// Serialized Name: DscReportResource.moduleVersion
+        /// </summary>
         public string ModuleVersion { get; }
-        /// <summary> Gets or sets the name of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the name of the resource.
+        /// Serialized Name: DscReportResource.resourceName
+        /// </summary>
         public string ResourceName { get; }
-        /// <summary> Gets or sets the error of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the error of the resource.
+        /// Serialized Name: DscReportResource.error
+        /// </summary>
         public string Error { get; }
-        /// <summary> Gets or sets the status of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the status of the resource.
+        /// Serialized Name: DscReportResource.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> Gets or sets the duration in seconds for the resource. </summary>
+        /// <summary>
+        /// Gets or sets the duration in seconds for the resource.
+        /// Serialized Name: DscReportResource.durationInSeconds
+        /// </summary>
         public double? DurationInSeconds { get; }
-        /// <summary> Gets or sets the start date of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the start date of the resource.
+        /// Serialized Name: DscReportResource.startDate
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
     }
 }

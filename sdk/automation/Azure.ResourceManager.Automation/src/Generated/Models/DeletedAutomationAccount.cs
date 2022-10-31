@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of the deleted automation account type. </summary>
+    /// <summary>
+    /// Definition of the deleted automation account type.
+    /// Serialized Name: DeletedAutomationAccount
+    /// </summary>
     public partial class DeletedAutomationAccount : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedAutomationAccount. </summary>
@@ -24,11 +27,26 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Gets or sets the location of the resource. </param>
-        /// <param name="automationAccountResourceId"> Gets or sets the Automation Account Resource Id. </param>
-        /// <param name="automationAccountId"> Gets or sets the Automation Account Id. </param>
-        /// <param name="locationPropertiesLocation"> Gets or sets the location of the resource. </param>
-        /// <param name="deletedOn"> Gets the deletion time. </param>
+        /// <param name="location">
+        /// Gets or sets the location of the resource.
+        /// Serialized Name: DeletedAutomationAccount.location
+        /// </param>
+        /// <param name="automationAccountResourceId">
+        /// Gets or sets the Automation Account Resource Id.
+        /// Serialized Name: DeletedAutomationAccount.properties.automationAccountResourceId
+        /// </param>
+        /// <param name="automationAccountId">
+        /// Gets or sets the Automation Account Id.
+        /// Serialized Name: DeletedAutomationAccount.properties.automationAccountId
+        /// </param>
+        /// <param name="locationPropertiesLocation">
+        /// Gets or sets the location of the resource.
+        /// Serialized Name: DeletedAutomationAccount.properties.location
+        /// </param>
+        /// <param name="deletedOn">
+        /// Gets the deletion time.
+        /// Serialized Name: DeletedAutomationAccount.properties.deletionTime
+        /// </param>
         internal DeletedAutomationAccount(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string automationAccountResourceId, string automationAccountId, string locationPropertiesLocation, DateTimeOffset? deletedOn) : base(id, name, resourceType, systemData)
         {
             Location = location;
@@ -38,15 +56,30 @@ namespace Azure.ResourceManager.Automation.Models
             DeletedOn = deletedOn;
         }
 
-        /// <summary> Gets or sets the location of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the location of the resource.
+        /// Serialized Name: DeletedAutomationAccount.location
+        /// </summary>
         public AzureLocation? Location { get; }
-        /// <summary> Gets or sets the Automation Account Resource Id. </summary>
+        /// <summary>
+        /// Gets or sets the Automation Account Resource Id.
+        /// Serialized Name: DeletedAutomationAccount.properties.automationAccountResourceId
+        /// </summary>
         public string AutomationAccountResourceId { get; }
-        /// <summary> Gets or sets the Automation Account Id. </summary>
+        /// <summary>
+        /// Gets or sets the Automation Account Id.
+        /// Serialized Name: DeletedAutomationAccount.properties.automationAccountId
+        /// </summary>
         public string AutomationAccountId { get; }
-        /// <summary> Gets or sets the location of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the location of the resource.
+        /// Serialized Name: DeletedAutomationAccount.properties.location
+        /// </summary>
         public string LocationPropertiesLocation { get; }
-        /// <summary> Gets the deletion time. </summary>
+        /// <summary>
+        /// Gets the deletion time.
+        /// Serialized Name: DeletedAutomationAccount.properties.deletionTime
+        /// </summary>
         public DateTimeOffset? DeletedOn { get; }
     }
 }

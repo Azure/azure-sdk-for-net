@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Update classifications included in the software update configuration. </summary>
+    /// <summary>
+    /// Update classifications included in the software update configuration.
+    /// Serialized Name: LinuxUpdateClasses
+    /// </summary>
     public readonly partial struct LinuxUpdateClass : IEquatable<LinuxUpdateClass>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Automation.Models
         private const string SecurityValue = "Security";
         private const string OtherValue = "Other";
 
-        /// <summary> Unclassified. </summary>
+        /// <summary>
+        /// Unclassified
+        /// Serialized Name: LinuxUpdateClasses.Unclassified
+        /// </summary>
         public static LinuxUpdateClass Unclassified { get; } = new LinuxUpdateClass(UnclassifiedValue);
-        /// <summary> Critical. </summary>
+        /// <summary>
+        /// Critical
+        /// Serialized Name: LinuxUpdateClasses.Critical
+        /// </summary>
         public static LinuxUpdateClass Critical { get; } = new LinuxUpdateClass(CriticalValue);
-        /// <summary> Security. </summary>
+        /// <summary>
+        /// Security
+        /// Serialized Name: LinuxUpdateClasses.Security
+        /// </summary>
         public static LinuxUpdateClass Security { get; } = new LinuxUpdateClass(SecurityValue);
-        /// <summary> Other. </summary>
+        /// <summary>
+        /// Other
+        /// Serialized Name: LinuxUpdateClasses.Other
+        /// </summary>
         public static LinuxUpdateClass Other { get; } = new LinuxUpdateClass(OtherValue);
         /// <summary> Determines if two <see cref="LinuxUpdateClass"/> values are the same. </summary>
         public static bool operator ==(LinuxUpdateClass left, LinuxUpdateClass right) => left.Equals(right);

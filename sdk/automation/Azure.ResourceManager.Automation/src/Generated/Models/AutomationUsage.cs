@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of Usage. </summary>
+    /// <summary>
+    /// Definition of Usage.
+    /// Serialized Name: Usage
+    /// </summary>
     public partial class AutomationUsage
     {
         /// <summary> Initializes a new instance of AutomationUsage. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationUsage. </summary>
-        /// <param name="id"> Gets or sets the id of the resource. </param>
-        /// <param name="name"> Gets or sets the usage counter name. </param>
-        /// <param name="unit"> Gets or sets the usage unit name. </param>
-        /// <param name="currentValue"> Gets or sets the current usage value. </param>
-        /// <param name="limit"> Gets or sets max limit. -1 for unlimited. </param>
-        /// <param name="throttleStatus"> Gets or sets the throttle status. </param>
+        /// <param name="id">
+        /// Gets or sets the id of the resource.
+        /// Serialized Name: Usage.id
+        /// </param>
+        /// <param name="name">
+        /// Gets or sets the usage counter name.
+        /// Serialized Name: Usage.name
+        /// </param>
+        /// <param name="unit">
+        /// Gets or sets the usage unit name.
+        /// Serialized Name: Usage.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// Gets or sets the current usage value.
+        /// Serialized Name: Usage.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// Gets or sets max limit. -1 for unlimited
+        /// Serialized Name: Usage.limit
+        /// </param>
+        /// <param name="throttleStatus">
+        /// Gets or sets the throttle status.
+        /// Serialized Name: Usage.throttleStatus
+        /// </param>
         internal AutomationUsage(string id, UsageCounterName name, string unit, double? currentValue, long? limit, string throttleStatus)
         {
             Id = id;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.Automation.Models
             ThrottleStatus = throttleStatus;
         }
 
-        /// <summary> Gets or sets the id of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the id of the resource.
+        /// Serialized Name: Usage.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Gets or sets the usage counter name. </summary>
+        /// <summary>
+        /// Gets or sets the usage counter name.
+        /// Serialized Name: Usage.name
+        /// </summary>
         public UsageCounterName Name { get; }
-        /// <summary> Gets or sets the usage unit name. </summary>
+        /// <summary>
+        /// Gets or sets the usage unit name.
+        /// Serialized Name: Usage.unit
+        /// </summary>
         public string Unit { get; }
-        /// <summary> Gets or sets the current usage value. </summary>
+        /// <summary>
+        /// Gets or sets the current usage value.
+        /// Serialized Name: Usage.currentValue
+        /// </summary>
         public double? CurrentValue { get; }
-        /// <summary> Gets or sets max limit. -1 for unlimited. </summary>
+        /// <summary>
+        /// Gets or sets max limit. -1 for unlimited
+        /// Serialized Name: Usage.limit
+        /// </summary>
         public long? Limit { get; }
-        /// <summary> Gets or sets the throttle status. </summary>
+        /// <summary>
+        /// Gets or sets the throttle status.
+        /// Serialized Name: Usage.throttleStatus
+        /// </summary>
         public string ThrottleStatus { get; }
     }
 }

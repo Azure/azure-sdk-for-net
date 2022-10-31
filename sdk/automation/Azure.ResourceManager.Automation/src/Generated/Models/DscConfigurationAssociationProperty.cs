@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The Dsc configuration property associated with the entity. </summary>
+    /// <summary>
+    /// The Dsc configuration property associated with the entity.
+    /// Serialized Name: DscConfigurationAssociationProperty
+    /// </summary>
     public partial class DscConfigurationAssociationProperty
     {
         /// <summary> Initializes a new instance of DscConfigurationAssociationProperty. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscConfigurationAssociationProperty. </summary>
-        /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
+        /// <param name="configurationName">
+        /// Gets or sets the name of the Dsc configuration.
+        /// Serialized Name: DscConfigurationAssociationProperty.name
+        /// </param>
         internal DscConfigurationAssociationProperty(string configurationName)
         {
             ConfigurationName = configurationName;
         }
 
-        /// <summary> Gets or sets the name of the Dsc configuration. </summary>
+        /// <summary>
+        /// Gets or sets the name of the Dsc configuration.
+        /// Serialized Name: DscConfigurationAssociationProperty.name
+        /// </summary>
         public string ConfigurationName { get; set; }
     }
 }

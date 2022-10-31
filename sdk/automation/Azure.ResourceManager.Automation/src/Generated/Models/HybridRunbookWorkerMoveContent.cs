@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Parameters supplied to move hybrid worker operation. </summary>
+    /// <summary>
+    /// Parameters supplied to move hybrid worker operation.
+    /// Serialized Name: HybridRunbookWorkerMoveParameters
+    /// </summary>
     public partial class HybridRunbookWorkerMoveContent
     {
         /// <summary> Initializes a new instance of HybridRunbookWorkerMoveContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary> Gets or sets the target hybrid runbook worker group. </summary>
+        /// <summary>
+        /// Gets or sets the target hybrid runbook worker group.
+        /// Serialized Name: HybridRunbookWorkerMoveParameters.hybridRunbookWorkerGroupName
+        /// </summary>
         public string HybridRunbookWorkerGroupName { get; set; }
     }
 }

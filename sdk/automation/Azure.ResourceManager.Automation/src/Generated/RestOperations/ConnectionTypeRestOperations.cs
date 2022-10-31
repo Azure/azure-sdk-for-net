@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="connectionTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionTypeData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationConnectionTypeData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        ConnectionTypeData value = default;
+                        AutomationConnectionTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionTypeData.DeserializeConnectionTypeData(document.RootElement);
+                        value = AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectionTypeData)null, message.Response);
+                    return Response.FromValue((AutomationConnectionTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="connectionTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionTypeData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, CancellationToken cancellationToken = default)
+        public Response<AutomationConnectionTypeData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,19 +189,19 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        ConnectionTypeData value = default;
+                        AutomationConnectionTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConnectionTypeData.DeserializeConnectionTypeData(document.RootElement);
+                        value = AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectionTypeData)null, message.Response);
+                    return Response.FromValue((AutomationConnectionTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, ConnectionTypeCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, AutomationConnectionTypeCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="connectionTypeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionTypeData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, ConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationConnectionTypeData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, AutomationConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 201:
                     {
-                        ConnectionTypeData value = default;
+                        AutomationConnectionTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionTypeData.DeserializeConnectionTypeData(document.RootElement);
+                        value = AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="connectionTypeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionTypeData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, ConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<AutomationConnectionTypeData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationAccountName, string connectionTypeName, AutomationConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,9 +283,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 201:
                     {
-                        ConnectionTypeData value = default;
+                        AutomationConnectionTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConnectionTypeData.DeserializeConnectionTypeData(document.RootElement);
+                        value = AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionTypeListResult>> ListByAutomationAccountAsync(string subscriptionId, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationConnectionTypeListResult>> ListByAutomationAccountAsync(string subscriptionId, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -333,9 +333,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        ConnectionTypeListResult value = default;
+                        AutomationConnectionTypeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionTypeListResult.DeserializeConnectionTypeListResult(document.RootElement);
+                        value = AutomationConnectionTypeListResult.DeserializeAutomationConnectionTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionTypeListResult> ListByAutomationAccount(string subscriptionId, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default)
+        public Response<AutomationConnectionTypeListResult> ListByAutomationAccount(string subscriptionId, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -362,9 +362,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        ConnectionTypeListResult value = default;
+                        AutomationConnectionTypeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConnectionTypeListResult.DeserializeConnectionTypeListResult(document.RootElement);
+                        value = AutomationConnectionTypeListResult.DeserializeAutomationConnectionTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionTypeListResult>> ListByAutomationAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationConnectionTypeListResult>> ListByAutomationAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        ConnectionTypeListResult value = default;
+                        AutomationConnectionTypeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionTypeListResult.DeserializeConnectionTypeListResult(document.RootElement);
+                        value = AutomationConnectionTypeListResult.DeserializeAutomationConnectionTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionTypeListResult> ListByAutomationAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default)
+        public Response<AutomationConnectionTypeListResult> ListByAutomationAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -438,9 +438,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        ConnectionTypeListResult value = default;
+                        AutomationConnectionTypeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConnectionTypeListResult.DeserializeConnectionTypeListResult(document.RootElement);
+                        value = AutomationConnectionTypeListResult.DeserializeAutomationConnectionTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

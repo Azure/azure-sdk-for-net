@@ -11,27 +11,42 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list webhook operation. </summary>
+    /// <summary>
+    /// The response model for the list webhook operation.
+    /// Serialized Name: WebhookListResult
+    /// </summary>
     internal partial class WebhookListResult
     {
         /// <summary> Initializes a new instance of WebhookListResult. </summary>
         internal WebhookListResult()
         {
-            Value = new ChangeTrackingList<WebhookData>();
+            Value = new ChangeTrackingList<AutomationWebhookData>();
         }
 
         /// <summary> Initializes a new instance of WebhookListResult. </summary>
-        /// <param name="value"> Gets or sets a list of webhooks. </param>
-        /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal WebhookListResult(IReadOnlyList<WebhookData> value, string nextLink)
+        /// <param name="value">
+        /// Gets or sets a list of webhooks.
+        /// Serialized Name: WebhookListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Gets or sets the next link.
+        /// Serialized Name: WebhookListResult.nextLink
+        /// </param>
+        internal WebhookListResult(IReadOnlyList<AutomationWebhookData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets or sets a list of webhooks. </summary>
-        public IReadOnlyList<WebhookData> Value { get; }
-        /// <summary> Gets or sets the next link. </summary>
+        /// <summary>
+        /// Gets or sets a list of webhooks.
+        /// Serialized Name: WebhookListResult.value
+        /// </summary>
+        public IReadOnlyList<AutomationWebhookData> Value { get; }
+        /// <summary>
+        /// Gets or sets the next link.
+        /// Serialized Name: WebhookListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

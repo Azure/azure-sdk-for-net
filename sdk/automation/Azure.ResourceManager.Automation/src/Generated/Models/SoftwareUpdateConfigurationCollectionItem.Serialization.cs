@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> id = default;
             Optional<UpdateConfiguration> updateConfiguration = default;
             Optional<SoftwareUpdateConfigurationTasks> tasks = default;
-            Optional<ScheduleFrequency> frequency = default;
+            Optional<AutomationScheduleFrequency> frequency = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            frequency = new ScheduleFrequency(property0.Value.GetString());
+                            frequency = new AutomationScheduleFrequency(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"))

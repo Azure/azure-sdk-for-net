@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the update dsc node operation. </summary>
+    /// <summary>
+    /// The parameters supplied to the update dsc node operation.
+    /// Serialized Name: DscNodeUpdateParameters
+    /// </summary>
     public partial class DscNodePatch
     {
         /// <summary> Initializes a new instance of DscNodePatch. </summary>
@@ -15,11 +18,17 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary> Gets or sets the id of the dsc node. </summary>
+        /// <summary>
+        /// Gets or sets the id of the dsc node.
+        /// Serialized Name: DscNodeUpdateParameters.nodeId
+        /// </summary>
         public string NodeId { get; set; }
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Serialized Name: DscNodeUpdateParameters.properties. </summary>
         internal DscNodeUpdateParametersProperties Properties { get; set; }
-        /// <summary> Gets or sets the name of the dsc node configuration. </summary>
+        /// <summary>
+        /// Gets or sets the name of the dsc node configuration.
+        /// Serialized Name: DscNodeUpdateParametersProperties.nodeConfiguration.name
+        /// </summary>
         public string DscNodeUpdateParametersName
         {
             get => Properties is null ? default : Properties.Name;

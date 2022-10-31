@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The token type. Must be either PersonalAccessToken or Oauth. </summary>
+    /// <summary>
+    /// The token type. Must be either PersonalAccessToken or Oauth.
+    /// Serialized Name: TokenType
+    /// </summary>
     public readonly partial struct TokenType : IEquatable<TokenType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Automation.Models
         private const string PersonalAccessTokenValue = "PersonalAccessToken";
         private const string OauthValue = "Oauth";
 
-        /// <summary> PersonalAccessToken. </summary>
+        /// <summary>
+        /// PersonalAccessToken
+        /// Serialized Name: TokenType.PersonalAccessToken
+        /// </summary>
         public static TokenType PersonalAccessToken { get; } = new TokenType(PersonalAccessTokenValue);
-        /// <summary> Oauth. </summary>
+        /// <summary>
+        /// Oauth
+        /// Serialized Name: TokenType.Oauth
+        /// </summary>
         public static TokenType Oauth { get; } = new TokenType(OauthValue);
         /// <summary> Determines if two <see cref="TokenType"/> values are the same. </summary>
         public static bool operator ==(TokenType left, TokenType right) => left.Equals(right);

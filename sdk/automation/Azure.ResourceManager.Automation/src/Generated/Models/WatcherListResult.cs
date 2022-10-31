@@ -11,27 +11,42 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list watcher operation. </summary>
+    /// <summary>
+    /// The response model for the list watcher operation.
+    /// Serialized Name: WatcherListResult
+    /// </summary>
     internal partial class WatcherListResult
     {
         /// <summary> Initializes a new instance of WatcherListResult. </summary>
         internal WatcherListResult()
         {
-            Value = new ChangeTrackingList<WatcherData>();
+            Value = new ChangeTrackingList<AutomationWatcherData>();
         }
 
         /// <summary> Initializes a new instance of WatcherListResult. </summary>
-        /// <param name="value"> Gets or sets a list of watchers. </param>
-        /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal WatcherListResult(IReadOnlyList<WatcherData> value, string nextLink)
+        /// <param name="value">
+        /// Gets or sets a list of watchers.
+        /// Serialized Name: WatcherListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Gets or sets the next link.
+        /// Serialized Name: WatcherListResult.nextLink
+        /// </param>
+        internal WatcherListResult(IReadOnlyList<AutomationWatcherData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets or sets a list of watchers. </summary>
-        public IReadOnlyList<WatcherData> Value { get; }
-        /// <summary> Gets or sets the next link. </summary>
+        /// <summary>
+        /// Gets or sets a list of watchers.
+        /// Serialized Name: WatcherListResult.value
+        /// </summary>
+        public IReadOnlyList<AutomationWatcherData> Value { get; }
+        /// <summary>
+        /// Gets or sets the next link.
+        /// Serialized Name: WatcherListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

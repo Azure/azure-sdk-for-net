@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The DscNodeUpdateParametersProperties. </summary>
+    /// <summary>
+    /// The DscNodeUpdateParametersProperties.
+    /// Serialized Name: DscNodeUpdateParametersProperties
+    /// </summary>
     internal partial class DscNodeUpdateParametersProperties
     {
         /// <summary> Initializes a new instance of DscNodeUpdateParametersProperties. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary> Gets or sets the name of the dsc node configuration. </summary>
+        /// <summary>
+        /// Gets or sets the name of the dsc node configuration.
+        /// Serialized Name: DscNodeUpdateParametersProperties.nodeConfiguration.name
+        /// </summary>
         public string Name { get; set; }
     }
 }

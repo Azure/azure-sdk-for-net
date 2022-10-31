@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of the dsc node report type. </summary>
+    /// <summary>
+    /// Definition of the dsc node report type.
+    /// Serialized Name: DscNodeReport
+    /// </summary>
     public partial class DscNodeReport
     {
         /// <summary> Initializes a new instance of DscNodeReport. </summary>
@@ -24,25 +27,82 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscNodeReport. </summary>
-        /// <param name="endOn"> Gets or sets the end time of the node report. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the lastModifiedTime of the node report. </param>
-        /// <param name="startOn"> Gets or sets the start time of the node report. </param>
-        /// <param name="dscNodeReportType"> Gets or sets the type of the node report. </param>
-        /// <param name="reportId"> Gets or sets the id of the node report. </param>
-        /// <param name="status"> Gets or sets the status of the node report. </param>
-        /// <param name="refreshMode"> Gets or sets the refreshMode of the node report. </param>
-        /// <param name="rebootRequested"> Gets or sets the rebootRequested of the node report. </param>
-        /// <param name="reportFormatVersion"> Gets or sets the reportFormatVersion of the node report. </param>
-        /// <param name="configurationVersion"> Gets or sets the configurationVersion of the node report. </param>
-        /// <param name="id"> Gets or sets the id. </param>
-        /// <param name="errors"> Gets or sets the errors for the node report. </param>
-        /// <param name="resources"> Gets or sets the resource for the node report. </param>
-        /// <param name="metaConfiguration"> Gets or sets the metaConfiguration of the node at the time of the report. </param>
-        /// <param name="hostName"> Gets or sets the hostname of the node that sent the report. </param>
-        /// <param name="ipV4Addresses"> Gets or sets the IPv4 address of the node that sent the report. </param>
-        /// <param name="ipV6Addresses"> Gets or sets the IPv6 address of the node that sent the report. </param>
-        /// <param name="numberOfResources"> Gets or sets the number of resource in the node report. </param>
-        /// <param name="rawErrors"> Gets or sets the unparsed errors for the node report. </param>
+        /// <param name="endOn">
+        /// Gets or sets the end time of the node report.
+        /// Serialized Name: DscNodeReport.endTime
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// Gets or sets the lastModifiedTime of the node report.
+        /// Serialized Name: DscNodeReport.lastModifiedTime
+        /// </param>
+        /// <param name="startOn">
+        /// Gets or sets the start time of the node report.
+        /// Serialized Name: DscNodeReport.startTime
+        /// </param>
+        /// <param name="dscNodeReportType">
+        /// Gets or sets the type of the node report.
+        /// Serialized Name: DscNodeReport.type
+        /// </param>
+        /// <param name="reportId">
+        /// Gets or sets the id of the node report.
+        /// Serialized Name: DscNodeReport.reportId
+        /// </param>
+        /// <param name="status">
+        /// Gets or sets the status of the node report.
+        /// Serialized Name: DscNodeReport.status
+        /// </param>
+        /// <param name="refreshMode">
+        /// Gets or sets the refreshMode of the node report.
+        /// Serialized Name: DscNodeReport.refreshMode
+        /// </param>
+        /// <param name="rebootRequested">
+        /// Gets or sets the rebootRequested of the node report.
+        /// Serialized Name: DscNodeReport.rebootRequested
+        /// </param>
+        /// <param name="reportFormatVersion">
+        /// Gets or sets the reportFormatVersion of the node report.
+        /// Serialized Name: DscNodeReport.reportFormatVersion
+        /// </param>
+        /// <param name="configurationVersion">
+        /// Gets or sets the configurationVersion of the node report.
+        /// Serialized Name: DscNodeReport.configurationVersion
+        /// </param>
+        /// <param name="id">
+        /// Gets or sets the id.
+        /// Serialized Name: DscNodeReport.id
+        /// </param>
+        /// <param name="errors">
+        /// Gets or sets the errors for the node report.
+        /// Serialized Name: DscNodeReport.errors
+        /// </param>
+        /// <param name="resources">
+        /// Gets or sets the resource for the node report.
+        /// Serialized Name: DscNodeReport.resources
+        /// </param>
+        /// <param name="metaConfiguration">
+        /// Gets or sets the metaConfiguration of the node at the time of the report.
+        /// Serialized Name: DscNodeReport.metaConfiguration
+        /// </param>
+        /// <param name="hostName">
+        /// Gets or sets the hostname of the node that sent the report.
+        /// Serialized Name: DscNodeReport.hostName
+        /// </param>
+        /// <param name="ipV4Addresses">
+        /// Gets or sets the IPv4 address of the node that sent the report.
+        /// Serialized Name: DscNodeReport.iPV4Addresses
+        /// </param>
+        /// <param name="ipV6Addresses">
+        /// Gets or sets the IPv6 address of the node that sent the report.
+        /// Serialized Name: DscNodeReport.iPV6Addresses
+        /// </param>
+        /// <param name="numberOfResources">
+        /// Gets or sets the number of resource in the node report.
+        /// Serialized Name: DscNodeReport.numberOfResources
+        /// </param>
+        /// <param name="rawErrors">
+        /// Gets or sets the unparsed errors for the node report.
+        /// Serialized Name: DscNodeReport.rawErrors
+        /// </param>
         internal DscNodeReport(DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? startOn, string dscNodeReportType, string reportId, string status, string refreshMode, string rebootRequested, string reportFormatVersion, string configurationVersion, string id, IReadOnlyList<DscReportError> errors, IReadOnlyList<DscReportResource> resources, DscMetaConfiguration metaConfiguration, string hostName, IReadOnlyList<string> ipV4Addresses, IReadOnlyList<string> ipV6Addresses, int? numberOfResources, string rawErrors)
         {
             EndOn = endOn;
@@ -66,43 +126,100 @@ namespace Azure.ResourceManager.Automation.Models
             RawErrors = rawErrors;
         }
 
-        /// <summary> Gets or sets the end time of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the end time of the node report.
+        /// Serialized Name: DscNodeReport.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary> Gets or sets the lastModifiedTime of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the lastModifiedTime of the node report.
+        /// Serialized Name: DscNodeReport.lastModifiedTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Gets or sets the start time of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the start time of the node report.
+        /// Serialized Name: DscNodeReport.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> Gets or sets the type of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the type of the node report.
+        /// Serialized Name: DscNodeReport.type
+        /// </summary>
         public string DscNodeReportType { get; }
-        /// <summary> Gets or sets the id of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the id of the node report.
+        /// Serialized Name: DscNodeReport.reportId
+        /// </summary>
         public string ReportId { get; }
-        /// <summary> Gets or sets the status of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the status of the node report.
+        /// Serialized Name: DscNodeReport.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> Gets or sets the refreshMode of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the refreshMode of the node report.
+        /// Serialized Name: DscNodeReport.refreshMode
+        /// </summary>
         public string RefreshMode { get; }
-        /// <summary> Gets or sets the rebootRequested of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the rebootRequested of the node report.
+        /// Serialized Name: DscNodeReport.rebootRequested
+        /// </summary>
         public string RebootRequested { get; }
-        /// <summary> Gets or sets the reportFormatVersion of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the reportFormatVersion of the node report.
+        /// Serialized Name: DscNodeReport.reportFormatVersion
+        /// </summary>
         public string ReportFormatVersion { get; }
-        /// <summary> Gets or sets the configurationVersion of the node report. </summary>
+        /// <summary>
+        /// Gets or sets the configurationVersion of the node report.
+        /// Serialized Name: DscNodeReport.configurationVersion
+        /// </summary>
         public string ConfigurationVersion { get; }
-        /// <summary> Gets or sets the id. </summary>
+        /// <summary>
+        /// Gets or sets the id.
+        /// Serialized Name: DscNodeReport.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Gets or sets the errors for the node report. </summary>
+        /// <summary>
+        /// Gets or sets the errors for the node report.
+        /// Serialized Name: DscNodeReport.errors
+        /// </summary>
         public IReadOnlyList<DscReportError> Errors { get; }
-        /// <summary> Gets or sets the resource for the node report. </summary>
+        /// <summary>
+        /// Gets or sets the resource for the node report.
+        /// Serialized Name: DscNodeReport.resources
+        /// </summary>
         public IReadOnlyList<DscReportResource> Resources { get; }
-        /// <summary> Gets or sets the metaConfiguration of the node at the time of the report. </summary>
+        /// <summary>
+        /// Gets or sets the metaConfiguration of the node at the time of the report.
+        /// Serialized Name: DscNodeReport.metaConfiguration
+        /// </summary>
         public DscMetaConfiguration MetaConfiguration { get; }
-        /// <summary> Gets or sets the hostname of the node that sent the report. </summary>
+        /// <summary>
+        /// Gets or sets the hostname of the node that sent the report.
+        /// Serialized Name: DscNodeReport.hostName
+        /// </summary>
         public string HostName { get; }
-        /// <summary> Gets or sets the IPv4 address of the node that sent the report. </summary>
+        /// <summary>
+        /// Gets or sets the IPv4 address of the node that sent the report.
+        /// Serialized Name: DscNodeReport.iPV4Addresses
+        /// </summary>
         public IReadOnlyList<string> IPV4Addresses { get; }
-        /// <summary> Gets or sets the IPv6 address of the node that sent the report. </summary>
+        /// <summary>
+        /// Gets or sets the IPv6 address of the node that sent the report.
+        /// Serialized Name: DscNodeReport.iPV6Addresses
+        /// </summary>
         public IReadOnlyList<string> IPV6Addresses { get; }
-        /// <summary> Gets or sets the number of resource in the node report. </summary>
+        /// <summary>
+        /// Gets or sets the number of resource in the node report.
+        /// Serialized Name: DscNodeReport.numberOfResources
+        /// </summary>
         public int? NumberOfResources { get; }
-        /// <summary> Gets or sets the unparsed errors for the node report. </summary>
+        /// <summary>
+        /// Gets or sets the unparsed errors for the node report.
+        /// Serialized Name: DscNodeReport.rawErrors
+        /// </summary>
         public string RawErrors { get; }
     }
 }

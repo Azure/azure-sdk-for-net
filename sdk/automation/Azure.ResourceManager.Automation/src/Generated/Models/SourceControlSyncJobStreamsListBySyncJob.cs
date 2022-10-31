@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list source control sync job streams operation. </summary>
+    /// <summary>
+    /// The response model for the list source control sync job streams operation.
+    /// Serialized Name: SourceControlSyncJobStreamsListBySyncJob
+    /// </summary>
     internal partial class SourceControlSyncJobStreamsListBySyncJob
     {
         /// <summary> Initializes a new instance of SourceControlSyncJobStreamsListBySyncJob. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SourceControlSyncJobStreamsListBySyncJob. </summary>
-        /// <param name="value"> The list of source control sync job streams. </param>
-        /// <param name="nextLink"> The next link. </param>
+        /// <param name="value">
+        /// The list of source control sync job streams.
+        /// Serialized Name: SourceControlSyncJobStreamsListBySyncJob.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The next link.
+        /// Serialized Name: SourceControlSyncJobStreamsListBySyncJob.nextLink
+        /// </param>
         internal SourceControlSyncJobStreamsListBySyncJob(IReadOnlyList<SourceControlSyncJobStream> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of source control sync job streams. </summary>
+        /// <summary>
+        /// The list of source control sync job streams.
+        /// Serialized Name: SourceControlSyncJobStreamsListBySyncJob.value
+        /// </summary>
         public IReadOnlyList<SourceControlSyncJobStream> Value { get; }
-        /// <summary> The next link. </summary>
+        /// <summary>
+        /// The next link.
+        /// Serialized Name: SourceControlSyncJobStreamsListBySyncJob.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

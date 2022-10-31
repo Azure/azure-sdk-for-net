@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Gets or sets the agent registration key name - primary or secondary. </summary>
+    /// <summary>
+    /// Gets or sets the agent registration key name - primary or secondary.
+    /// Serialized Name: AgentRegistrationKeyName
+    /// </summary>
     public readonly partial struct AgentRegistrationKeyName : IEquatable<AgentRegistrationKeyName>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Automation.Models
         private const string PrimaryValue = "primary";
         private const string SecondaryValue = "secondary";
 
-        /// <summary> primary. </summary>
+        /// <summary>
+        /// primary
+        /// Serialized Name: AgentRegistrationKeyName.primary
+        /// </summary>
         public static AgentRegistrationKeyName Primary { get; } = new AgentRegistrationKeyName(PrimaryValue);
-        /// <summary> secondary. </summary>
+        /// <summary>
+        /// secondary
+        /// Serialized Name: AgentRegistrationKeyName.secondary
+        /// </summary>
         public static AgentRegistrationKeyName Secondary { get; } = new AgentRegistrationKeyName(SecondaryValue);
         /// <summary> Determines if two <see cref="AgentRegistrationKeyName"/> values are the same. </summary>
         public static bool operator ==(AgentRegistrationKeyName left, AgentRegistrationKeyName right) => left.Equals(right);

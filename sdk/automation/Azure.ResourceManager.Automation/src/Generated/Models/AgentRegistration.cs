@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of the agent registration information type. </summary>
+    /// <summary>
+    /// Definition of the agent registration information type.
+    /// Serialized Name: AgentRegistration
+    /// </summary>
     public partial class AgentRegistration
     {
         /// <summary> Initializes a new instance of AgentRegistration. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AgentRegistration. </summary>
-        /// <param name="dscMetaConfiguration"> Gets or sets the dsc meta configuration. </param>
-        /// <param name="endpoint"> Gets or sets the dsc server endpoint. </param>
-        /// <param name="keys"> Gets or sets the agent registration keys. </param>
-        /// <param name="id"> Gets or sets the id. </param>
+        /// <param name="dscMetaConfiguration">
+        /// Gets or sets the dsc meta configuration.
+        /// Serialized Name: AgentRegistration.dscMetaConfiguration
+        /// </param>
+        /// <param name="endpoint">
+        /// Gets or sets the dsc server endpoint.
+        /// Serialized Name: AgentRegistration.endpoint
+        /// </param>
+        /// <param name="keys">
+        /// Gets or sets the agent registration keys.
+        /// Serialized Name: AgentRegistration.keys
+        /// </param>
+        /// <param name="id">
+        /// Gets or sets the id.
+        /// Serialized Name: AgentRegistration.id
+        /// </param>
         internal AgentRegistration(string dscMetaConfiguration, string endpoint, AgentRegistrationKeys keys, string id)
         {
             DscMetaConfiguration = dscMetaConfiguration;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.Automation.Models
             Id = id;
         }
 
-        /// <summary> Gets or sets the dsc meta configuration. </summary>
+        /// <summary>
+        /// Gets or sets the dsc meta configuration.
+        /// Serialized Name: AgentRegistration.dscMetaConfiguration
+        /// </summary>
         public string DscMetaConfiguration { get; }
-        /// <summary> Gets or sets the dsc server endpoint. </summary>
+        /// <summary>
+        /// Gets or sets the dsc server endpoint.
+        /// Serialized Name: AgentRegistration.endpoint
+        /// </summary>
         public string Endpoint { get; }
-        /// <summary> Gets or sets the agent registration keys. </summary>
+        /// <summary>
+        /// Gets or sets the agent registration keys.
+        /// Serialized Name: AgentRegistration.keys
+        /// </summary>
         public AgentRegistrationKeys Keys { get; }
-        /// <summary> Gets or sets the id. </summary>
+        /// <summary>
+        /// Gets or sets the id.
+        /// Serialized Name: AgentRegistration.id
+        /// </summary>
         public string Id { get; }
     }
 }

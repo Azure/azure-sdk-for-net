@@ -11,12 +11,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Update specific properties of the software update configuration. </summary>
+    /// <summary>
+    /// Update specific properties of the software update configuration.
+    /// Serialized Name: UpdateConfiguration
+    /// </summary>
     public partial class UpdateConfiguration
     {
         /// <summary> Initializes a new instance of UpdateConfiguration. </summary>
-        /// <param name="operatingSystem"> operating system of target machines. </param>
-        public UpdateConfiguration(OperatingSystemType operatingSystem)
+        /// <param name="operatingSystem">
+        /// operating system of target machines
+        /// Serialized Name: UpdateConfiguration.operatingSystem
+        /// </param>
+        public UpdateConfiguration(UpdateConfigurationOperatingSystemType operatingSystem)
         {
             OperatingSystem = operatingSystem;
             AzureVirtualMachines = new ChangeTrackingList<string>();
@@ -24,14 +30,35 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of UpdateConfiguration. </summary>
-        /// <param name="operatingSystem"> operating system of target machines. </param>
-        /// <param name="windows"> Windows specific update configuration. </param>
-        /// <param name="linux"> Linux specific update configuration. </param>
-        /// <param name="duration"> Maximum time allowed for the software update configuration run. Duration needs to be specified using the format PT[n]H[n]M[n]S as per ISO8601. </param>
-        /// <param name="azureVirtualMachines"> List of azure resource Ids for azure virtual machines targeted by the software update configuration. </param>
-        /// <param name="nonAzureComputerNames"> List of names of non-azure machines targeted by the software update configuration. </param>
-        /// <param name="targets"> Group targets for the software update configuration. </param>
-        internal UpdateConfiguration(OperatingSystemType operatingSystem, WindowsProperties windows, LinuxProperties linux, TimeSpan? duration, IList<string> azureVirtualMachines, IList<string> nonAzureComputerNames, TargetProperties targets)
+        /// <param name="operatingSystem">
+        /// operating system of target machines
+        /// Serialized Name: UpdateConfiguration.operatingSystem
+        /// </param>
+        /// <param name="windows">
+        /// Windows specific update configuration.
+        /// Serialized Name: UpdateConfiguration.windows
+        /// </param>
+        /// <param name="linux">
+        /// Linux specific update configuration.
+        /// Serialized Name: UpdateConfiguration.linux
+        /// </param>
+        /// <param name="duration">
+        /// Maximum time allowed for the software update configuration run. Duration needs to be specified using the format PT[n]H[n]M[n]S as per ISO8601
+        /// Serialized Name: UpdateConfiguration.duration
+        /// </param>
+        /// <param name="azureVirtualMachines">
+        /// List of azure resource Ids for azure virtual machines targeted by the software update configuration.
+        /// Serialized Name: UpdateConfiguration.azureVirtualMachines
+        /// </param>
+        /// <param name="nonAzureComputerNames">
+        /// List of names of non-azure machines targeted by the software update configuration.
+        /// Serialized Name: UpdateConfiguration.nonAzureComputerNames
+        /// </param>
+        /// <param name="targets">
+        /// Group targets for the software update configuration.
+        /// Serialized Name: UpdateConfiguration.targets
+        /// </param>
+        internal UpdateConfiguration(UpdateConfigurationOperatingSystemType operatingSystem, WindowsProperties windows, LinuxUpdateConfigurationProperties linux, TimeSpan? duration, IList<string> azureVirtualMachines, IList<string> nonAzureComputerNames, SoftwareUpdateConfigurationTargetProperties targets)
         {
             OperatingSystem = operatingSystem;
             Windows = windows;
@@ -42,19 +69,40 @@ namespace Azure.ResourceManager.Automation.Models
             Targets = targets;
         }
 
-        /// <summary> operating system of target machines. </summary>
-        public OperatingSystemType OperatingSystem { get; set; }
-        /// <summary> Windows specific update configuration. </summary>
+        /// <summary>
+        /// operating system of target machines
+        /// Serialized Name: UpdateConfiguration.operatingSystem
+        /// </summary>
+        public UpdateConfigurationOperatingSystemType OperatingSystem { get; set; }
+        /// <summary>
+        /// Windows specific update configuration.
+        /// Serialized Name: UpdateConfiguration.windows
+        /// </summary>
         public WindowsProperties Windows { get; set; }
-        /// <summary> Linux specific update configuration. </summary>
-        public LinuxProperties Linux { get; set; }
-        /// <summary> Maximum time allowed for the software update configuration run. Duration needs to be specified using the format PT[n]H[n]M[n]S as per ISO8601. </summary>
+        /// <summary>
+        /// Linux specific update configuration.
+        /// Serialized Name: UpdateConfiguration.linux
+        /// </summary>
+        public LinuxUpdateConfigurationProperties Linux { get; set; }
+        /// <summary>
+        /// Maximum time allowed for the software update configuration run. Duration needs to be specified using the format PT[n]H[n]M[n]S as per ISO8601
+        /// Serialized Name: UpdateConfiguration.duration
+        /// </summary>
         public TimeSpan? Duration { get; set; }
-        /// <summary> List of azure resource Ids for azure virtual machines targeted by the software update configuration. </summary>
+        /// <summary>
+        /// List of azure resource Ids for azure virtual machines targeted by the software update configuration.
+        /// Serialized Name: UpdateConfiguration.azureVirtualMachines
+        /// </summary>
         public IList<string> AzureVirtualMachines { get; }
-        /// <summary> List of names of non-azure machines targeted by the software update configuration. </summary>
+        /// <summary>
+        /// List of names of non-azure machines targeted by the software update configuration.
+        /// Serialized Name: UpdateConfiguration.nonAzureComputerNames
+        /// </summary>
         public IList<string> NonAzureComputerNames { get; }
-        /// <summary> Group targets for the software update configuration. </summary>
-        public TargetProperties Targets { get; set; }
+        /// <summary>
+        /// Group targets for the software update configuration.
+        /// Serialized Name: UpdateConfiguration.targets
+        /// </summary>
+        public SoftwareUpdateConfigurationTargetProperties Targets { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             Optional<IList<string>> scope = default;
             Optional<IList<string>> locations = default;
-            Optional<TagSettingsProperties> tagSettings = default;
+            Optional<QueryTagSettingsProperties> tagSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tagSettings = TagSettingsProperties.DeserializeTagSettingsProperties(property.Value);
+                    tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value);
                     continue;
                 }
             }

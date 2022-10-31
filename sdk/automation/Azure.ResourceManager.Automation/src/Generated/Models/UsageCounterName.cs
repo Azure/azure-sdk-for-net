@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of usage counter name. </summary>
+    /// <summary>
+    /// Definition of usage counter name.
+    /// Serialized Name: UsageCounterName
+    /// </summary>
     public partial class UsageCounterName
     {
         /// <summary> Initializes a new instance of UsageCounterName. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of UsageCounterName. </summary>
-        /// <param name="value"> Gets or sets the usage counter name. </param>
-        /// <param name="localizedValue"> Gets or sets the localized usage counter name. </param>
+        /// <param name="value">
+        /// Gets or sets the usage counter name.
+        /// Serialized Name: UsageCounterName.value
+        /// </param>
+        /// <param name="localizedValue">
+        /// Gets or sets the localized usage counter name.
+        /// Serialized Name: UsageCounterName.localizedValue
+        /// </param>
         internal UsageCounterName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;
         }
 
-        /// <summary> Gets or sets the usage counter name. </summary>
+        /// <summary>
+        /// Gets or sets the usage counter name.
+        /// Serialized Name: UsageCounterName.value
+        /// </summary>
         public string Value { get; }
-        /// <summary> Gets or sets the localized usage counter name. </summary>
+        /// <summary>
+        /// Gets or sets the localized usage counter name.
+        /// Serialized Name: UsageCounterName.localizedValue
+        /// </summary>
         public string LocalizedValue { get; }
     }
 }

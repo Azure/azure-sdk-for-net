@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Azure query for the update configuration. </summary>
+    /// <summary>
+    /// Azure query for the update configuration.
+    /// Serialized Name: AzureQueryProperties
+    /// </summary>
     public partial class AzureQueryProperties
     {
         /// <summary> Initializes a new instance of AzureQueryProperties. </summary>
@@ -21,21 +24,39 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AzureQueryProperties. </summary>
-        /// <param name="scope"> List of Subscription or Resource Group ARM Ids. </param>
-        /// <param name="locations"> List of locations to scope the query to. </param>
-        /// <param name="tagSettings"> Tag settings for the VM. </param>
-        internal AzureQueryProperties(IList<string> scope, IList<string> locations, TagSettingsProperties tagSettings)
+        /// <param name="scope">
+        /// List of Subscription or Resource Group ARM Ids.
+        /// Serialized Name: AzureQueryProperties.scope
+        /// </param>
+        /// <param name="locations">
+        /// List of locations to scope the query to.
+        /// Serialized Name: AzureQueryProperties.locations
+        /// </param>
+        /// <param name="tagSettings">
+        /// Tag settings for the VM.
+        /// Serialized Name: AzureQueryProperties.tagSettings
+        /// </param>
+        internal AzureQueryProperties(IList<string> scope, IList<string> locations, QueryTagSettingsProperties tagSettings)
         {
             Scope = scope;
             Locations = locations;
             TagSettings = tagSettings;
         }
 
-        /// <summary> List of Subscription or Resource Group ARM Ids. </summary>
+        /// <summary>
+        /// List of Subscription or Resource Group ARM Ids.
+        /// Serialized Name: AzureQueryProperties.scope
+        /// </summary>
         public IList<string> Scope { get; }
-        /// <summary> List of locations to scope the query to. </summary>
+        /// <summary>
+        /// List of locations to scope the query to.
+        /// Serialized Name: AzureQueryProperties.locations
+        /// </summary>
         public IList<string> Locations { get; }
-        /// <summary> Tag settings for the VM. </summary>
-        public TagSettingsProperties TagSettings { get; set; }
+        /// <summary>
+        /// Tag settings for the VM.
+        /// Serialized Name: AzureQueryProperties.tagSettings
+        /// </summary>
+        public QueryTagSettingsProperties TagSettings { get; set; }
     }
 }

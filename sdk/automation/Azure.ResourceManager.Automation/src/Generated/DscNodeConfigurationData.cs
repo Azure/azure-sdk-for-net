@@ -25,29 +25,59 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
-        /// <param name="createdOn"> Gets or sets creation time. </param>
-        /// <param name="configuration"> Gets or sets the configuration of the node. </param>
-        /// <param name="source"> Source of node configuration. </param>
-        /// <param name="nodeCount"> Number of nodes with this node configuration assigned. </param>
-        /// <param name="incrementNodeConfigurationBuild"> If a new build version of NodeConfiguration is required. </param>
-        internal DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, DscConfigurationAssociationProperty configuration, string source, long? nodeCount, bool? incrementNodeConfigurationBuild) : base(id, name, resourceType, systemData)
+        /// <param name="lastModifiedOn">
+        /// Gets or sets the last modified time.
+        /// Serialized Name: DscNodeConfiguration.properties.lastModifiedTime
+        /// </param>
+        /// <param name="createdOn">
+        /// Gets or sets creation time.
+        /// Serialized Name: DscNodeConfiguration.properties.creationTime
+        /// </param>
+        /// <param name="configuration">
+        /// Gets or sets the configuration of the node.
+        /// Serialized Name: DscNodeConfiguration.properties.configuration
+        /// </param>
+        /// <param name="source">
+        /// Source of node configuration.
+        /// Serialized Name: DscNodeConfiguration.properties.source
+        /// </param>
+        /// <param name="nodeCount">
+        /// Number of nodes with this node configuration assigned
+        /// Serialized Name: DscNodeConfiguration.properties.nodeCount
+        /// </param>
+        /// <param name="isIncrementNodeConfigurationBuildRequired">
+        /// If a new build version of NodeConfiguration is required.
+        /// Serialized Name: DscNodeConfiguration.properties.incrementNodeConfigurationBuild
+        /// </param>
+        internal DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, DscConfigurationAssociationProperty configuration, string source, long? nodeCount, bool? isIncrementNodeConfigurationBuildRequired) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             CreatedOn = createdOn;
             Configuration = configuration;
             Source = source;
             NodeCount = nodeCount;
-            IncrementNodeConfigurationBuild = incrementNodeConfigurationBuild;
+            IsIncrementNodeConfigurationBuildRequired = isIncrementNodeConfigurationBuildRequired;
         }
 
-        /// <summary> Gets or sets the last modified time. </summary>
+        /// <summary>
+        /// Gets or sets the last modified time.
+        /// Serialized Name: DscNodeConfiguration.properties.lastModifiedTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary> Gets or sets creation time. </summary>
+        /// <summary>
+        /// Gets or sets creation time.
+        /// Serialized Name: DscNodeConfiguration.properties.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> Gets or sets the configuration of the node. </summary>
+        /// <summary>
+        /// Gets or sets the configuration of the node.
+        /// Serialized Name: DscNodeConfiguration.properties.configuration
+        /// </summary>
         internal DscConfigurationAssociationProperty Configuration { get; set; }
-        /// <summary> Gets or sets the name of the Dsc configuration. </summary>
+        /// <summary>
+        /// Gets or sets the name of the Dsc configuration.
+        /// Serialized Name: DscConfigurationAssociationProperty.name
+        /// </summary>
         public string ConfigurationName
         {
             get => Configuration is null ? default : Configuration.ConfigurationName;
@@ -59,11 +89,20 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Source of node configuration. </summary>
+        /// <summary>
+        /// Source of node configuration.
+        /// Serialized Name: DscNodeConfiguration.properties.source
+        /// </summary>
         public string Source { get; set; }
-        /// <summary> Number of nodes with this node configuration assigned. </summary>
+        /// <summary>
+        /// Number of nodes with this node configuration assigned
+        /// Serialized Name: DscNodeConfiguration.properties.nodeCount
+        /// </summary>
         public long? NodeCount { get; set; }
-        /// <summary> If a new build version of NodeConfiguration is required. </summary>
-        public bool? IncrementNodeConfigurationBuild { get; set; }
+        /// <summary>
+        /// If a new build version of NodeConfiguration is required.
+        /// Serialized Name: DscNodeConfiguration.properties.incrementNodeConfigurationBuild
+        /// </summary>
+        public bool? IsIncrementNodeConfigurationBuildRequired { get; set; }
     }
 }

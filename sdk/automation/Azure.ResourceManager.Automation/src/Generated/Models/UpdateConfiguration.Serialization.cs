@@ -64,18 +64,18 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static UpdateConfiguration DeserializeUpdateConfiguration(JsonElement element)
         {
-            OperatingSystemType operatingSystem = default;
+            UpdateConfigurationOperatingSystemType operatingSystem = default;
             Optional<WindowsProperties> windows = default;
-            Optional<LinuxProperties> linux = default;
+            Optional<LinuxUpdateConfigurationProperties> linux = default;
             Optional<TimeSpan> duration = default;
             Optional<IList<string>> azureVirtualMachines = default;
             Optional<IList<string>> nonAzureComputerNames = default;
-            Optional<TargetProperties> targets = default;
+            Optional<SoftwareUpdateConfigurationTargetProperties> targets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operatingSystem"))
                 {
-                    operatingSystem = property.Value.GetString().ToOperatingSystemType();
+                    operatingSystem = property.Value.GetString().ToUpdateConfigurationOperatingSystemType();
                     continue;
                 }
                 if (property.NameEquals("windows"))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linux = LinuxProperties.DeserializeLinuxProperties(property.Value);
+                    linux = LinuxUpdateConfigurationProperties.DeserializeLinuxUpdateConfigurationProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("duration"))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targets = TargetProperties.DeserializeTargetProperties(property.Value);
+                    targets = SoftwareUpdateConfigurationTargetProperties.DeserializeSoftwareUpdateConfigurationTargetProperties(property.Value);
                     continue;
                 }
             }

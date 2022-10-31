@@ -31,20 +31,59 @@ namespace Azure.ResourceManager.Automation
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Gets or sets the etag of the resource. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="sku"> Gets or sets the SKU of account. </param>
-        /// <param name="lastModifiedBy"> Gets or sets the last modified by. </param>
-        /// <param name="state"> Gets status of account. </param>
-        /// <param name="createdOn"> Gets the creation time. </param>
-        /// <param name="lastModifiedOn"> Gets the last modified time. </param>
-        /// <param name="description"> Gets or sets the description. </param>
-        /// <param name="encryption"> Encryption properties for the automation account. </param>
-        /// <param name="privateEndpointConnections"> List of Automation operations supported by the Automation resource provider. </param>
-        /// <param name="publicNetworkAccess"> Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet. </param>
-        /// <param name="disableLocalAuth"> Indicates whether requests using non-AAD authentication are blocked. </param>
-        /// <param name="automationHybridServiceUri"> URL of automation hybrid service which is used for hybrid worker on-boarding. </param>
-        internal AutomationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, AutomationSku sku, string lastModifiedBy, AutomationAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, Models.EncryptionProperties encryption, IList<AutomationPrivateEndpointConnectionData> privateEndpointConnections, bool? publicNetworkAccess, bool? disableLocalAuth, Uri automationHybridServiceUri) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="etag">
+        /// Gets or sets the etag of the resource.
+        /// Serialized Name: AutomationAccount.etag
+        /// </param>
+        /// <param name="identity">
+        /// Identity for the resource.
+        /// Serialized Name: AutomationAccount.identity
+        /// </param>
+        /// <param name="sku">
+        /// Gets or sets the SKU of account.
+        /// Serialized Name: AutomationAccount.properties.sku
+        /// </param>
+        /// <param name="lastModifiedBy">
+        /// Gets or sets the last modified by.
+        /// Serialized Name: AutomationAccount.properties.lastModifiedBy
+        /// </param>
+        /// <param name="state">
+        /// Gets status of account.
+        /// Serialized Name: AutomationAccount.properties.state
+        /// </param>
+        /// <param name="createdOn">
+        /// Gets the creation time.
+        /// Serialized Name: AutomationAccount.properties.creationTime
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// Gets the last modified time.
+        /// Serialized Name: AutomationAccount.properties.lastModifiedTime
+        /// </param>
+        /// <param name="description">
+        /// Gets or sets the description.
+        /// Serialized Name: AutomationAccount.properties.description
+        /// </param>
+        /// <param name="encryption">
+        /// Encryption properties for the automation account
+        /// Serialized Name: AutomationAccount.properties.encryption
+        /// </param>
+        /// <param name="privateEndpointConnections">
+        /// List of Automation operations supported by the Automation resource provider.
+        /// Serialized Name: AutomationAccount.properties.privateEndpointConnections
+        /// </param>
+        /// <param name="isPublicNetworkAccessAllowed">
+        /// Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet
+        /// Serialized Name: AutomationAccount.properties.publicNetworkAccess
+        /// </param>
+        /// <param name="isLocalAuthDisabled">
+        /// Indicates whether requests using non-AAD authentication are blocked
+        /// Serialized Name: AutomationAccount.properties.disableLocalAuth
+        /// </param>
+        /// <param name="automationHybridServiceUri">
+        /// URL of automation hybrid service which is used for hybrid worker on-boarding.
+        /// Serialized Name: AutomationAccount.properties.automationHybridServiceUrl
+        /// </param>
+        internal AutomationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, AutomationSku sku, string lastModifiedBy, AutomationAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, AutomationEncryptionProperties encryption, IList<AutomationPrivateEndpointConnectionData> privateEndpointConnections, bool? isPublicNetworkAccessAllowed, bool? isLocalAuthDisabled, Uri automationHybridServiceUri) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Identity = identity;
@@ -56,36 +95,75 @@ namespace Azure.ResourceManager.Automation
             Description = description;
             Encryption = encryption;
             PrivateEndpointConnections = privateEndpointConnections;
-            PublicNetworkAccess = publicNetworkAccess;
-            DisableLocalAuth = disableLocalAuth;
+            IsPublicNetworkAccessAllowed = isPublicNetworkAccessAllowed;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
             AutomationHybridServiceUri = automationHybridServiceUri;
         }
 
-        /// <summary> Gets or sets the etag of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the etag of the resource.
+        /// Serialized Name: AutomationAccount.etag
+        /// </summary>
         public ETag? ETag { get; set; }
-        /// <summary> Identity for the resource. </summary>
+        /// <summary>
+        /// Identity for the resource.
+        /// Serialized Name: AutomationAccount.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Gets or sets the SKU of account. </summary>
+        /// <summary>
+        /// Gets or sets the SKU of account.
+        /// Serialized Name: AutomationAccount.properties.sku
+        /// </summary>
         public AutomationSku Sku { get; set; }
-        /// <summary> Gets or sets the last modified by. </summary>
+        /// <summary>
+        /// Gets or sets the last modified by.
+        /// Serialized Name: AutomationAccount.properties.lastModifiedBy
+        /// </summary>
         public string LastModifiedBy { get; set; }
-        /// <summary> Gets status of account. </summary>
+        /// <summary>
+        /// Gets status of account.
+        /// Serialized Name: AutomationAccount.properties.state
+        /// </summary>
         public AutomationAccountState? State { get; }
-        /// <summary> Gets the creation time. </summary>
+        /// <summary>
+        /// Gets the creation time.
+        /// Serialized Name: AutomationAccount.properties.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Gets the last modified time. </summary>
+        /// <summary>
+        /// Gets the last modified time.
+        /// Serialized Name: AutomationAccount.properties.lastModifiedTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Gets or sets the description. </summary>
+        /// <summary>
+        /// Gets or sets the description.
+        /// Serialized Name: AutomationAccount.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Encryption properties for the automation account. </summary>
-        public Models.EncryptionProperties Encryption { get; set; }
-        /// <summary> List of Automation operations supported by the Automation resource provider. </summary>
+        /// <summary>
+        /// Encryption properties for the automation account
+        /// Serialized Name: AutomationAccount.properties.encryption
+        /// </summary>
+        public AutomationEncryptionProperties Encryption { get; set; }
+        /// <summary>
+        /// List of Automation operations supported by the Automation resource provider.
+        /// Serialized Name: AutomationAccount.properties.privateEndpointConnections
+        /// </summary>
         public IList<AutomationPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet. </summary>
-        public bool? PublicNetworkAccess { get; set; }
-        /// <summary> Indicates whether requests using non-AAD authentication are blocked. </summary>
-        public bool? DisableLocalAuth { get; set; }
-        /// <summary> URL of automation hybrid service which is used for hybrid worker on-boarding. </summary>
+        /// <summary>
+        /// Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet
+        /// Serialized Name: AutomationAccount.properties.publicNetworkAccess
+        /// </summary>
+        public bool? IsPublicNetworkAccessAllowed { get; set; }
+        /// <summary>
+        /// Indicates whether requests using non-AAD authentication are blocked
+        /// Serialized Name: AutomationAccount.properties.disableLocalAuth
+        /// </summary>
+        public bool? IsLocalAuthDisabled { get; set; }
+        /// <summary>
+        /// URL of automation hybrid service which is used for hybrid worker on-boarding.
+        /// Serialized Name: AutomationAccount.properties.automationHybridServiceUrl
+        /// </summary>
         public Uri AutomationHybridServiceUri { get; set; }
     }
 }

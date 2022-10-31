@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The SourceControlSecurityTokenProperties. </summary>
+    /// <summary>
+    /// The SourceControlSecurityTokenProperties.
+    /// Serialized Name: SourceControlSecurityTokenProperties
+    /// </summary>
     public partial class SourceControlSecurityTokenProperties
     {
         /// <summary> Initializes a new instance of SourceControlSecurityTokenProperties. </summary>
@@ -15,11 +18,20 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary> The access token. </summary>
+        /// <summary>
+        /// The access token.
+        /// Serialized Name: SourceControlSecurityTokenProperties.accessToken
+        /// </summary>
         public string AccessToken { get; set; }
-        /// <summary> The refresh token. </summary>
+        /// <summary>
+        /// The refresh token.
+        /// Serialized Name: SourceControlSecurityTokenProperties.refreshToken
+        /// </summary>
         public string RefreshToken { get; set; }
-        /// <summary> The token type. Must be either PersonalAccessToken or Oauth. </summary>
+        /// <summary>
+        /// The token type. Must be either PersonalAccessToken or Oauth.
+        /// Serialized Name: SourceControlSecurityTokenProperties.tokenType
+        /// </summary>
         public TokenType? TokenType { get; set; }
     }
 }

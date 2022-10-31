@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Raw Graphical Runbook content. </summary>
+    /// <summary>
+    /// Raw Graphical Runbook content
+    /// Serialized Name: RawGraphicalRunbookContent
+    /// </summary>
     public partial class RawGraphicalRunbookContent
     {
         /// <summary> Initializes a new instance of RawGraphicalRunbookContent. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of RawGraphicalRunbookContent. </summary>
-        /// <param name="schemaVersion"> Schema version of the serializer. </param>
-        /// <param name="runbookDefinition"> Serialized Graphical runbook. </param>
-        /// <param name="runbookType"> Runbook Type. </param>
+        /// <param name="schemaVersion">
+        /// Schema version of the serializer.
+        /// Serialized Name: RawGraphicalRunbookContent.schemaVersion
+        /// </param>
+        /// <param name="runbookDefinition">
+        /// Serialized Graphical runbook
+        /// Serialized Name: RawGraphicalRunbookContent.runbookDefinition
+        /// </param>
+        /// <param name="runbookType">
+        /// Runbook Type
+        /// Serialized Name: RawGraphicalRunbookContent.runbookType
+        /// </param>
         internal RawGraphicalRunbookContent(string schemaVersion, string runbookDefinition, GraphRunbookType? runbookType)
         {
             SchemaVersion = schemaVersion;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Automation.Models
             RunbookType = runbookType;
         }
 
-        /// <summary> Schema version of the serializer. </summary>
+        /// <summary>
+        /// Schema version of the serializer.
+        /// Serialized Name: RawGraphicalRunbookContent.schemaVersion
+        /// </summary>
         public string SchemaVersion { get; set; }
-        /// <summary> Serialized Graphical runbook. </summary>
+        /// <summary>
+        /// Serialized Graphical runbook
+        /// Serialized Name: RawGraphicalRunbookContent.runbookDefinition
+        /// </summary>
         public string RunbookDefinition { get; set; }
-        /// <summary> Runbook Type. </summary>
+        /// <summary>
+        /// Runbook Type
+        /// Serialized Name: RawGraphicalRunbookContent.runbookType
+        /// </summary>
         public GraphRunbookType? RunbookType { get; set; }
     }
 }

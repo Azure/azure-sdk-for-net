@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> result of listing all software update configuration machine runs. </summary>
+    /// <summary>
+    /// result of listing all software update configuration machine runs
+    /// Serialized Name: SoftwareUpdateConfigurationMachineRunListResult
+    /// </summary>
     internal partial class SoftwareUpdateConfigurationMachineRunListResult
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationMachineRunListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationMachineRunListResult. </summary>
-        /// <param name="value"> outer object returned when listing all software update configuration machine runs. </param>
-        /// <param name="nextLink"> link to next page of results. </param>
+        /// <param name="value">
+        /// outer object returned when listing all software update configuration machine runs
+        /// Serialized Name: SoftwareUpdateConfigurationMachineRunListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// link to next page of results.
+        /// Serialized Name: SoftwareUpdateConfigurationMachineRunListResult.nextLink
+        /// </param>
         internal SoftwareUpdateConfigurationMachineRunListResult(IReadOnlyList<SoftwareUpdateConfigurationMachineRun> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> outer object returned when listing all software update configuration machine runs. </summary>
+        /// <summary>
+        /// outer object returned when listing all software update configuration machine runs
+        /// Serialized Name: SoftwareUpdateConfigurationMachineRunListResult.value
+        /// </summary>
         public IReadOnlyList<SoftwareUpdateConfigurationMachineRun> Value { get; }
-        /// <summary> link to next page of results. </summary>
+        /// <summary>
+        /// link to next page of results.
+        /// Serialized Name: SoftwareUpdateConfigurationMachineRunListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Gets or sets the provisioning state of the runbook. </summary>
+    /// <summary>
+    /// Gets or sets the provisioning state of the runbook.
+    /// Serialized Name: RunbookProvisioningState
+    /// </summary>
     public readonly partial struct RunbookProvisioningState : IEquatable<RunbookProvisioningState>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: RunbookProvisioningState.Succeeded
+        /// </summary>
         public static RunbookProvisioningState Succeeded { get; } = new RunbookProvisioningState(SucceededValue);
         /// <summary> Determines if two <see cref="RunbookProvisioningState"/> values are the same. </summary>
         public static bool operator ==(RunbookProvisioningState left, RunbookProvisioningState right) => left.Equals(right);

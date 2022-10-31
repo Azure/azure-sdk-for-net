@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the create compilation job operation. </summary>
+    /// <summary>
+    /// The parameters supplied to the create compilation job operation.
+    /// Serialized Name: DscCompilationJobCreateParameters
+    /// </summary>
     public partial class DscCompilationJobCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of DscCompilationJobCreateOrUpdateContent. </summary>
-        /// <param name="configuration"> Gets or sets the configuration. </param>
+        /// <param name="configuration">
+        /// Gets or sets the configuration.
+        /// Serialized Name: DscCompilationJobCreateParameters.properties.configuration
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
         public DscCompilationJobCreateOrUpdateContent(DscConfigurationAssociationProperty configuration)
         {
@@ -29,23 +35,44 @@ namespace Azure.ResourceManager.Automation.Models
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Gets or sets name of the resource. </summary>
+        /// <summary>
+        /// Gets or sets name of the resource.
+        /// Serialized Name: DscCompilationJobCreateParameters.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the location of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the location of the resource.
+        /// Serialized Name: DscCompilationJobCreateParameters.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> Gets or sets the tags attached to the resource. </summary>
+        /// <summary>
+        /// Gets or sets the tags attached to the resource.
+        /// Serialized Name: DscCompilationJobCreateParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets the configuration. </summary>
+        /// <summary>
+        /// Gets or sets the configuration.
+        /// Serialized Name: DscCompilationJobCreateParameters.properties.configuration
+        /// </summary>
         internal DscConfigurationAssociationProperty Configuration { get; }
-        /// <summary> Gets or sets the name of the Dsc configuration. </summary>
+        /// <summary>
+        /// Gets or sets the name of the Dsc configuration.
+        /// Serialized Name: DscConfigurationAssociationProperty.name
+        /// </summary>
         public string ConfigurationName
         {
             get => Configuration?.ConfigurationName;
         }
 
-        /// <summary> Gets or sets the parameters of the job. </summary>
+        /// <summary>
+        /// Gets or sets the parameters of the job.
+        /// Serialized Name: DscCompilationJobCreateParameters.properties.parameters
+        /// </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary> If a new build version of NodeConfiguration is required. </summary>
-        public bool? IncrementNodeConfigurationBuild { get; set; }
+        /// <summary>
+        /// If a new build version of NodeConfiguration is required.
+        /// Serialized Name: DscCompilationJobCreateParameters.properties.incrementNodeConfigurationBuild
+        /// </summary>
+        public bool? IsIncrementNodeConfigurationBuildRequired { get; set; }
     }
 }

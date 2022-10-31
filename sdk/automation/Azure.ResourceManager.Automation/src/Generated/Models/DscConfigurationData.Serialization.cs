@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(LogVerbose))
+            if (Optional.IsDefined(IsLogVerboseEnabled))
             {
                 writer.WritePropertyName("logVerbose");
-                writer.WriteBooleanValue(LogVerbose.Value);
+                writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automation
             Optional<DscConfigurationProvisioningState> provisioningState = default;
             Optional<int> jobCount = default;
             Optional<IDictionary<string, DscConfigurationParameter>> parameters = default;
-            Optional<ContentSource> source = default;
+            Optional<AutomationContentSource> source = default;
             Optional<DscConfigurationState> state = default;
             Optional<bool> logVerbose = default;
             Optional<DateTimeOffset> creationTime = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            source = ContentSource.DeserializeContentSource(property0.Value);
+                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("state"))

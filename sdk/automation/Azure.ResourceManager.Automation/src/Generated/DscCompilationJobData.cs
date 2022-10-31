@@ -27,21 +27,63 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="configuration"> Gets or sets the configuration. </param>
-        /// <param name="startedBy"> Gets the compilation job started by. </param>
-        /// <param name="jobId"> Gets the id of the job. </param>
-        /// <param name="createdOn"> Gets the creation time of the job. </param>
-        /// <param name="provisioningState"> The current provisioning state of the job. </param>
-        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
-        /// <param name="status"> Gets or sets the status of the job. </param>
-        /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
-        /// <param name="startOn"> Gets the start time of the job. </param>
-        /// <param name="endOn"> Gets the end time of the job. </param>
-        /// <param name="exception"> Gets the exception of the job. </param>
-        /// <param name="lastModifiedOn"> Gets the last modified time of the job. </param>
-        /// <param name="lastStatusModifiedOn"> Gets the last status modified time of the job. </param>
-        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        internal DscCompilationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscConfigurationAssociationProperty configuration, string startedBy, Guid? jobId, DateTimeOffset? createdOn, JobProvisioningState? provisioningState, string runOn, JobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters) : base(id, name, resourceType, systemData)
+        /// <param name="configuration">
+        /// Gets or sets the configuration.
+        /// Serialized Name: DscCompilationJob.properties.configuration
+        /// </param>
+        /// <param name="startedBy">
+        /// Gets the compilation job started by.
+        /// Serialized Name: DscCompilationJob.properties.startedBy
+        /// </param>
+        /// <param name="jobId">
+        /// Gets the id of the job.
+        /// Serialized Name: DscCompilationJob.properties.jobId
+        /// </param>
+        /// <param name="createdOn">
+        /// Gets the creation time of the job.
+        /// Serialized Name: DscCompilationJob.properties.creationTime
+        /// </param>
+        /// <param name="provisioningState">
+        /// The current provisioning state of the job.
+        /// Serialized Name: DscCompilationJob.properties.provisioningState
+        /// </param>
+        /// <param name="runOn">
+        /// Gets or sets the runOn which specifies the group name where the job is to be executed.
+        /// Serialized Name: DscCompilationJob.properties.runOn
+        /// </param>
+        /// <param name="status">
+        /// Gets or sets the status of the job.
+        /// Serialized Name: DscCompilationJob.properties.status
+        /// </param>
+        /// <param name="statusDetails">
+        /// Gets or sets the status details of the job.
+        /// Serialized Name: DscCompilationJob.properties.statusDetails
+        /// </param>
+        /// <param name="startOn">
+        /// Gets the start time of the job.
+        /// Serialized Name: DscCompilationJob.properties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// Gets the end time of the job.
+        /// Serialized Name: DscCompilationJob.properties.endTime
+        /// </param>
+        /// <param name="exception">
+        /// Gets the exception of the job.
+        /// Serialized Name: DscCompilationJob.properties.exception
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// Gets the last modified time of the job.
+        /// Serialized Name: DscCompilationJob.properties.lastModifiedTime
+        /// </param>
+        /// <param name="lastStatusModifiedOn">
+        /// Gets the last status modified time of the job.
+        /// Serialized Name: DscCompilationJob.properties.lastStatusModifiedTime
+        /// </param>
+        /// <param name="parameters">
+        /// Gets or sets the parameters of the job.
+        /// Serialized Name: DscCompilationJob.properties.parameters
+        /// </param>
+        internal DscCompilationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscConfigurationAssociationProperty configuration, string startedBy, Guid? jobId, DateTimeOffset? createdOn, JobProvisioningState? provisioningState, string runOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters) : base(id, name, resourceType, systemData)
         {
             Configuration = configuration;
             StartedBy = startedBy;
@@ -59,9 +101,15 @@ namespace Azure.ResourceManager.Automation
             Parameters = parameters;
         }
 
-        /// <summary> Gets or sets the configuration. </summary>
+        /// <summary>
+        /// Gets or sets the configuration.
+        /// Serialized Name: DscCompilationJob.properties.configuration
+        /// </summary>
         internal DscConfigurationAssociationProperty Configuration { get; set; }
-        /// <summary> Gets or sets the name of the Dsc configuration. </summary>
+        /// <summary>
+        /// Gets or sets the name of the Dsc configuration.
+        /// Serialized Name: DscConfigurationAssociationProperty.name
+        /// </summary>
         public string ConfigurationName
         {
             get => Configuration is null ? default : Configuration.ConfigurationName;
@@ -73,31 +121,70 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Gets the compilation job started by. </summary>
+        /// <summary>
+        /// Gets the compilation job started by.
+        /// Serialized Name: DscCompilationJob.properties.startedBy
+        /// </summary>
         public string StartedBy { get; }
-        /// <summary> Gets the id of the job. </summary>
+        /// <summary>
+        /// Gets the id of the job.
+        /// Serialized Name: DscCompilationJob.properties.jobId
+        /// </summary>
         public Guid? JobId { get; }
-        /// <summary> Gets the creation time of the job. </summary>
+        /// <summary>
+        /// Gets the creation time of the job.
+        /// Serialized Name: DscCompilationJob.properties.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The current provisioning state of the job. </summary>
+        /// <summary>
+        /// The current provisioning state of the job.
+        /// Serialized Name: DscCompilationJob.properties.provisioningState
+        /// </summary>
         public JobProvisioningState? ProvisioningState { get; set; }
-        /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
+        /// <summary>
+        /// Gets or sets the runOn which specifies the group name where the job is to be executed.
+        /// Serialized Name: DscCompilationJob.properties.runOn
+        /// </summary>
         public string RunOn { get; set; }
-        /// <summary> Gets or sets the status of the job. </summary>
-        public JobStatus? Status { get; set; }
-        /// <summary> Gets or sets the status details of the job. </summary>
+        /// <summary>
+        /// Gets or sets the status of the job.
+        /// Serialized Name: DscCompilationJob.properties.status
+        /// </summary>
+        public AutomationJobStatus? Status { get; set; }
+        /// <summary>
+        /// Gets or sets the status details of the job.
+        /// Serialized Name: DscCompilationJob.properties.statusDetails
+        /// </summary>
         public string StatusDetails { get; set; }
-        /// <summary> Gets the start time of the job. </summary>
+        /// <summary>
+        /// Gets the start time of the job.
+        /// Serialized Name: DscCompilationJob.properties.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> Gets the end time of the job. </summary>
+        /// <summary>
+        /// Gets the end time of the job.
+        /// Serialized Name: DscCompilationJob.properties.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary> Gets the exception of the job. </summary>
+        /// <summary>
+        /// Gets the exception of the job.
+        /// Serialized Name: DscCompilationJob.properties.exception
+        /// </summary>
         public string Exception { get; }
-        /// <summary> Gets the last modified time of the job. </summary>
+        /// <summary>
+        /// Gets the last modified time of the job.
+        /// Serialized Name: DscCompilationJob.properties.lastModifiedTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Gets the last status modified time of the job. </summary>
+        /// <summary>
+        /// Gets the last status modified time of the job.
+        /// Serialized Name: DscCompilationJob.properties.lastStatusModifiedTime
+        /// </summary>
         public DateTimeOffset? LastStatusModifiedOn { get; }
-        /// <summary> Gets or sets the parameters of the job. </summary>
+        /// <summary>
+        /// Gets or sets the parameters of the job.
+        /// Serialized Name: DscCompilationJob.properties.parameters
+        /// </summary>
         public IDictionary<string, string> Parameters { get; }
     }
 }

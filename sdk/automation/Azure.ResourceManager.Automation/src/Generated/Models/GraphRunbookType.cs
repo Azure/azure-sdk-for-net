@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Runbook Type. </summary>
+    /// <summary>
+    /// Runbook Type
+    /// Serialized Name: GraphRunbookType
+    /// </summary>
     public readonly partial struct GraphRunbookType : IEquatable<GraphRunbookType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Automation.Models
         private const string GraphPowerShellValue = "GraphPowerShell";
         private const string GraphPowerShellWorkflowValue = "GraphPowerShellWorkflow";
 
-        /// <summary> GraphPowerShell. </summary>
+        /// <summary>
+        /// GraphPowerShell
+        /// Serialized Name: GraphRunbookType.GraphPowerShell
+        /// </summary>
         public static GraphRunbookType GraphPowerShell { get; } = new GraphRunbookType(GraphPowerShellValue);
-        /// <summary> GraphPowerShellWorkflow. </summary>
+        /// <summary>
+        /// GraphPowerShellWorkflow
+        /// Serialized Name: GraphRunbookType.GraphPowerShellWorkflow
+        /// </summary>
         public static GraphRunbookType GraphPowerShellWorkflow { get; } = new GraphRunbookType(GraphPowerShellWorkflowValue);
         /// <summary> Determines if two <see cref="GraphRunbookType"/> values are the same. </summary>
         public static bool operator ==(GraphRunbookType left, GraphRunbookType right) => left.Equals(right);

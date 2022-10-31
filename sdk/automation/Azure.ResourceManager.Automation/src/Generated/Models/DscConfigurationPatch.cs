@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the create or update configuration operation. </summary>
+    /// <summary>
+    /// The parameters supplied to the create or update configuration operation.
+    /// Serialized Name: DscConfigurationUpdateParameters
+    /// </summary>
     public partial class DscConfigurationPatch
     {
         /// <summary> Initializes a new instance of DscConfigurationPatch. </summary>
@@ -20,19 +23,40 @@ namespace Azure.ResourceManager.Automation.Models
             Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameter>();
         }
 
-        /// <summary> Gets or sets name of the resource. </summary>
+        /// <summary>
+        /// Gets or sets name of the resource.
+        /// Serialized Name: DscConfigurationUpdateParameters.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the tags attached to the resource. </summary>
+        /// <summary>
+        /// Gets or sets the tags attached to the resource.
+        /// Serialized Name: DscConfigurationUpdateParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets verbose log option. </summary>
-        public bool? LogVerbose { get; set; }
-        /// <summary> Gets or sets progress log option. </summary>
-        public bool? LogProgress { get; set; }
-        /// <summary> Gets or sets the source. </summary>
-        public ContentSource Source { get; set; }
-        /// <summary> Gets or sets the configuration parameters. </summary>
+        /// <summary>
+        /// Gets or sets verbose log option.
+        /// Serialized Name: DscConfigurationUpdateParameters.properties.logVerbose
+        /// </summary>
+        public bool? IsLogVerboseEnabled { get; set; }
+        /// <summary>
+        /// Gets or sets progress log option.
+        /// Serialized Name: DscConfigurationUpdateParameters.properties.logProgress
+        /// </summary>
+        public bool? IsLogProgressEnabled { get; set; }
+        /// <summary>
+        /// Gets or sets the source.
+        /// Serialized Name: DscConfigurationUpdateParameters.properties.source
+        /// </summary>
+        public AutomationContentSource Source { get; set; }
+        /// <summary>
+        /// Gets or sets the configuration parameters.
+        /// Serialized Name: DscConfigurationUpdateParameters.properties.parameters
+        /// </summary>
         public IDictionary<string, DscConfigurationParameter> Parameters { get; }
-        /// <summary> Gets or sets the description of the configuration. </summary>
+        /// <summary>
+        /// Gets or sets the description of the configuration.
+        /// Serialized Name: DscConfigurationUpdateParameters.properties.description
+        /// </summary>
         public string Description { get; set; }
     }
 }

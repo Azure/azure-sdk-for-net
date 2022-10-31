@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of the configuration parameter type. </summary>
+    /// <summary>
+    /// Definition of the configuration parameter type.
+    /// Serialized Name: DscConfigurationParameter
+    /// </summary>
     public partial class DscConfigurationParameter
     {
         /// <summary> Initializes a new instance of DscConfigurationParameter. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscConfigurationParameter. </summary>
-        /// <param name="dscConfigurationParameterType"> Gets or sets the type of the parameter. </param>
-        /// <param name="isMandatory"> Gets or sets a Boolean value to indicate whether the parameter is mandatory or not. </param>
-        /// <param name="position"> Get or sets the position of the parameter. </param>
-        /// <param name="defaultValue"> Gets or sets the default value of parameter. </param>
+        /// <param name="dscConfigurationParameterType">
+        /// Gets or sets the type of the parameter.
+        /// Serialized Name: DscConfigurationParameter.type
+        /// </param>
+        /// <param name="isMandatory">
+        /// Gets or sets a Boolean value to indicate whether the parameter is mandatory or not.
+        /// Serialized Name: DscConfigurationParameter.isMandatory
+        /// </param>
+        /// <param name="position">
+        /// Get or sets the position of the parameter.
+        /// Serialized Name: DscConfigurationParameter.position
+        /// </param>
+        /// <param name="defaultValue">
+        /// Gets or sets the default value of parameter.
+        /// Serialized Name: DscConfigurationParameter.defaultValue
+        /// </param>
         internal DscConfigurationParameter(string dscConfigurationParameterType, bool? isMandatory, int? position, string defaultValue)
         {
             DscConfigurationParameterType = dscConfigurationParameterType;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.Automation.Models
             DefaultValue = defaultValue;
         }
 
-        /// <summary> Gets or sets the type of the parameter. </summary>
+        /// <summary>
+        /// Gets or sets the type of the parameter.
+        /// Serialized Name: DscConfigurationParameter.type
+        /// </summary>
         public string DscConfigurationParameterType { get; set; }
-        /// <summary> Gets or sets a Boolean value to indicate whether the parameter is mandatory or not. </summary>
+        /// <summary>
+        /// Gets or sets a Boolean value to indicate whether the parameter is mandatory or not.
+        /// Serialized Name: DscConfigurationParameter.isMandatory
+        /// </summary>
         public bool? IsMandatory { get; set; }
-        /// <summary> Get or sets the position of the parameter. </summary>
+        /// <summary>
+        /// Get or sets the position of the parameter.
+        /// Serialized Name: DscConfigurationParameter.position
+        /// </summary>
         public int? Position { get; set; }
-        /// <summary> Gets or sets the default value of parameter. </summary>
+        /// <summary>
+        /// Gets or sets the default value of parameter.
+        /// Serialized Name: DscConfigurationParameter.defaultValue
+        /// </summary>
         public string DefaultValue { get; set; }
     }
 }

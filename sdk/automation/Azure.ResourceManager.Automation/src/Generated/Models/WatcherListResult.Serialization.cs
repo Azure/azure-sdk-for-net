@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static WatcherListResult DeserializeWatcherListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<WatcherData>> value = default;
+            Optional<IReadOnlyList<AutomationWatcherData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WatcherData> array = new List<WatcherData>();
+                    List<AutomationWatcherData> array = new List<AutomationWatcherData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WatcherData.DeserializeWatcherData(item));
+                        array.Add(AutomationWatcherData.DeserializeAutomationWatcherData(item));
                     }
                     value = array;
                     continue;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static WebhookListResult DeserializeWebhookListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<WebhookData>> value = default;
+            Optional<IReadOnlyList<AutomationWebhookData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WebhookData> array = new List<WebhookData>();
+                    List<AutomationWebhookData> array = new List<AutomationWebhookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebhookData.DeserializeWebhookData(item));
+                        array.Add(AutomationWebhookData.DeserializeAutomationWebhookData(item));
                     }
                     value = array;
                     continue;

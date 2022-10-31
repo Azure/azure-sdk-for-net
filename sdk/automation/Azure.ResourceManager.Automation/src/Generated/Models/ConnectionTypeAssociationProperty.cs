@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The connection type property associated with the entity. </summary>
+    /// <summary>
+    /// The connection type property associated with the entity.
+    /// Serialized Name: ConnectionTypeAssociationProperty
+    /// </summary>
     public partial class ConnectionTypeAssociationProperty
     {
         /// <summary> Initializes a new instance of ConnectionTypeAssociationProperty. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of ConnectionTypeAssociationProperty. </summary>
-        /// <param name="name"> Gets or sets the name of the connection type. </param>
+        /// <param name="name">
+        /// Gets or sets the name of the connection type.
+        /// Serialized Name: ConnectionTypeAssociationProperty.name
+        /// </param>
         internal ConnectionTypeAssociationProperty(string name)
         {
             Name = name;
         }
 
-        /// <summary> Gets or sets the name of the connection type. </summary>
+        /// <summary>
+        /// Gets or sets the name of the connection type.
+        /// Serialized Name: ConnectionTypeAssociationProperty.name
+        /// </summary>
         public string Name { get; set; }
     }
 }

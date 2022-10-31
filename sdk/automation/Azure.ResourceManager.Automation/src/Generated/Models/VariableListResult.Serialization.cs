@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static VariableListResult DeserializeVariableListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VariableData>> value = default;
+            Optional<IReadOnlyList<AutomationVariableData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VariableData> array = new List<VariableData>();
+                    List<AutomationVariableData> array = new List<AutomationVariableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VariableData.DeserializeVariableData(item));
+                        array.Add(AutomationVariableData.DeserializeAutomationVariableData(item));
                     }
                     value = array;
                     continue;

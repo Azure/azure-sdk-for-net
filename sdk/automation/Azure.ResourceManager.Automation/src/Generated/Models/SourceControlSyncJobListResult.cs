@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list source control sync jobs operation. </summary>
+    /// <summary>
+    /// The response model for the list source control sync jobs operation.
+    /// Serialized Name: SourceControlSyncJobListResult
+    /// </summary>
     internal partial class SourceControlSyncJobListResult
     {
         /// <summary> Initializes a new instance of SourceControlSyncJobListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SourceControlSyncJobListResult. </summary>
-        /// <param name="value"> The list of source control sync jobs. </param>
-        /// <param name="nextLink"> The next link. </param>
+        /// <param name="value">
+        /// The list of source control sync jobs.
+        /// Serialized Name: SourceControlSyncJobListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The next link.
+        /// Serialized Name: SourceControlSyncJobListResult.nextLink
+        /// </param>
         internal SourceControlSyncJobListResult(IReadOnlyList<SourceControlSyncJob> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of source control sync jobs. </summary>
+        /// <summary>
+        /// The list of source control sync jobs.
+        /// Serialized Name: SourceControlSyncJobListResult.value
+        /// </summary>
         public IReadOnlyList<SourceControlSyncJob> Value { get; }
-        /// <summary> The next link. </summary>
+        /// <summary>
+        /// The next link.
+        /// Serialized Name: SourceControlSyncJobListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

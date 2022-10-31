@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the create or update node configuration operation. </summary>
+    /// <summary>
+    /// The parameters supplied to the create or update node configuration operation.
+    /// Serialized Name: DscNodeConfigurationCreateOrUpdateParameters
+    /// </summary>
     public partial class DscNodeConfigurationCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of DscNodeConfigurationCreateOrUpdateContent. </summary>
@@ -19,15 +22,30 @@ namespace Azure.ResourceManager.Automation.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Name of the node configuration. </summary>
+        /// <summary>
+        /// Name of the node configuration.
+        /// Serialized Name: DscNodeConfigurationCreateOrUpdateParameters.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the tags attached to the resource. </summary>
+        /// <summary>
+        /// Gets or sets the tags attached to the resource.
+        /// Serialized Name: DscNodeConfigurationCreateOrUpdateParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets the source. </summary>
-        public ContentSource Source { get; set; }
-        /// <summary> Gets or sets the configuration of the node. </summary>
+        /// <summary>
+        /// Gets or sets the source.
+        /// Serialized Name: DscNodeConfigurationCreateOrUpdateParameters.properties.source
+        /// </summary>
+        public AutomationContentSource Source { get; set; }
+        /// <summary>
+        /// Gets or sets the configuration of the node.
+        /// Serialized Name: DscNodeConfigurationCreateOrUpdateParameters.properties.configuration
+        /// </summary>
         internal DscConfigurationAssociationProperty Configuration { get; set; }
-        /// <summary> Gets or sets the name of the Dsc configuration. </summary>
+        /// <summary>
+        /// Gets or sets the name of the Dsc configuration.
+        /// Serialized Name: DscConfigurationAssociationProperty.name
+        /// </summary>
         public string ConfigurationName
         {
             get => Configuration is null ? default : Configuration.ConfigurationName;
@@ -39,7 +57,10 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        /// <summary> If a new build version of NodeConfiguration is required. </summary>
-        public bool? IncrementNodeConfigurationBuild { get; set; }
+        /// <summary>
+        /// If a new build version of NodeConfiguration is required.
+        /// Serialized Name: DscNodeConfigurationCreateOrUpdateParameters.properties.incrementNodeConfigurationBuild
+        /// </summary>
+        public bool? IsIncrementNodeConfigurationBuildRequired { get; set; }
     }
 }

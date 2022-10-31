@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Automation
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             UpdateConfiguration updateConfiguration = default;
-            SUCScheduleProperties scheduleInfo = default;
+            SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
             Optional<string> provisioningState = default;
-            Optional<ErrorResponse> error = default;
+            Optional<AutomationErrorResponse> error = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("scheduleInfo"))
                         {
-                            scheduleInfo = SUCScheduleProperties.DeserializeSUCScheduleProperties(property0.Value);
+                            scheduleInfo = SoftwareUpdateConfigurationScheduleProperties.DeserializeSoftwareUpdateConfigurationScheduleProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            error = ErrorResponse.DeserializeErrorResponse(property0.Value);
+                            error = AutomationErrorResponse.DeserializeAutomationErrorResponse(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"))

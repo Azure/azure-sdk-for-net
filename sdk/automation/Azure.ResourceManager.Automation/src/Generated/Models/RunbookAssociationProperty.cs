@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The runbook property associated with the entity. </summary>
+    /// <summary>
+    /// The runbook property associated with the entity.
+    /// Serialized Name: RunbookAssociationProperty
+    /// </summary>
     public partial class RunbookAssociationProperty
     {
         /// <summary> Initializes a new instance of RunbookAssociationProperty. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of RunbookAssociationProperty. </summary>
-        /// <param name="name"> Gets or sets the name of the runbook. </param>
+        /// <param name="name">
+        /// Gets or sets the name of the runbook.
+        /// Serialized Name: RunbookAssociationProperty.name
+        /// </param>
         internal RunbookAssociationProperty(string name)
         {
             Name = name;
         }
 
-        /// <summary> Gets or sets the name of the runbook. </summary>
+        /// <summary>
+        /// Gets or sets the name of the runbook.
+        /// Serialized Name: RunbookAssociationProperty.name
+        /// </summary>
         public string Name { get; set; }
     }
 }

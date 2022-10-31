@@ -25,12 +25,30 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="ip"> Gets or sets the assigned machine IP address. </param>
-        /// <param name="registeredOn"> Gets or sets the registration time of the worker machine. </param>
-        /// <param name="lastSeenOn"> Last Heartbeat from the Worker. </param>
-        /// <param name="vmResourceId"> Azure Resource Manager Id for a virtual machine. </param>
-        /// <param name="workerType"> Type of the HybridWorker. </param>
-        /// <param name="workerName"> Name of the HybridWorker. </param>
+        /// <param name="ip">
+        /// Gets or sets the assigned machine IP address.
+        /// Serialized Name: HybridRunbookWorker.properties.ip
+        /// </param>
+        /// <param name="registeredOn">
+        /// Gets or sets the registration time of the worker machine.
+        /// Serialized Name: HybridRunbookWorker.properties.registeredDateTime
+        /// </param>
+        /// <param name="lastSeenOn">
+        /// Last Heartbeat from the Worker
+        /// Serialized Name: HybridRunbookWorker.properties.lastSeenDateTime
+        /// </param>
+        /// <param name="vmResourceId">
+        /// Azure Resource Manager Id for a virtual machine.
+        /// Serialized Name: HybridRunbookWorker.properties.vmResourceId
+        /// </param>
+        /// <param name="workerType">
+        /// Type of the HybridWorker.
+        /// Serialized Name: HybridRunbookWorker.properties.workerType
+        /// </param>
+        /// <param name="workerName">
+        /// Name of the HybridWorker.
+        /// Serialized Name: HybridRunbookWorker.properties.workerName
+        /// </param>
         internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, string vmResourceId, WorkerType? workerType, string workerName) : base(id, name, resourceType, systemData)
         {
             IP = ip;
@@ -41,17 +59,35 @@ namespace Azure.ResourceManager.Automation
             WorkerName = workerName;
         }
 
-        /// <summary> Gets or sets the assigned machine IP address. </summary>
+        /// <summary>
+        /// Gets or sets the assigned machine IP address.
+        /// Serialized Name: HybridRunbookWorker.properties.ip
+        /// </summary>
         public string IP { get; set; }
-        /// <summary> Gets or sets the registration time of the worker machine. </summary>
+        /// <summary>
+        /// Gets or sets the registration time of the worker machine.
+        /// Serialized Name: HybridRunbookWorker.properties.registeredDateTime
+        /// </summary>
         public DateTimeOffset? RegisteredOn { get; set; }
-        /// <summary> Last Heartbeat from the Worker. </summary>
+        /// <summary>
+        /// Last Heartbeat from the Worker
+        /// Serialized Name: HybridRunbookWorker.properties.lastSeenDateTime
+        /// </summary>
         public DateTimeOffset? LastSeenOn { get; set; }
-        /// <summary> Azure Resource Manager Id for a virtual machine. </summary>
+        /// <summary>
+        /// Azure Resource Manager Id for a virtual machine.
+        /// Serialized Name: HybridRunbookWorker.properties.vmResourceId
+        /// </summary>
         public string VmResourceId { get; set; }
-        /// <summary> Type of the HybridWorker. </summary>
+        /// <summary>
+        /// Type of the HybridWorker.
+        /// Serialized Name: HybridRunbookWorker.properties.workerType
+        /// </summary>
         public WorkerType? WorkerType { get; set; }
-        /// <summary> Name of the HybridWorker. </summary>
+        /// <summary>
+        /// Name of the HybridWorker.
+        /// Serialized Name: HybridRunbookWorker.properties.workerName
+        /// </summary>
         public string WorkerName { get; set; }
     }
 }

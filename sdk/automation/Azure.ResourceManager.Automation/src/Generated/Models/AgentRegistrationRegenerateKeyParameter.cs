@@ -7,17 +7,26 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the regenerate keys operation. </summary>
+    /// <summary>
+    /// The parameters supplied to the regenerate keys operation.
+    /// Serialized Name: AgentRegistrationRegenerateKeyParameter
+    /// </summary>
     public partial class AgentRegistrationRegenerateKeyParameter
     {
         /// <summary> Initializes a new instance of AgentRegistrationRegenerateKeyParameter. </summary>
-        /// <param name="keyName"> Gets or sets the agent registration key name - primary or secondary. </param>
+        /// <param name="keyName">
+        /// Gets or sets the agent registration key name - primary or secondary.
+        /// Serialized Name: AgentRegistrationRegenerateKeyParameter.keyName
+        /// </param>
         public AgentRegistrationRegenerateKeyParameter(AgentRegistrationKeyName keyName)
         {
             KeyName = keyName;
         }
 
-        /// <summary> Gets or sets the agent registration key name - primary or secondary. </summary>
+        /// <summary>
+        /// Gets or sets the agent registration key name - primary or secondary.
+        /// Serialized Name: AgentRegistrationRegenerateKeyParameter.keyName
+        /// </summary>
         public AgentRegistrationKeyName KeyName { get; }
     }
 }

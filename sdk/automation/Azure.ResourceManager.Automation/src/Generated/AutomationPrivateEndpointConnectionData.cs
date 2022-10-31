@@ -27,9 +27,18 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="groupIds"> Gets the groupIds. </param>
-        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="privateEndpoint">
+        /// Private endpoint which the connection belongs to.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </param>
+        /// <param name="groupIds">
+        /// Gets the groupIds.
+        /// Serialized Name: PrivateEndpointConnection.properties.groupIds
+        /// </param>
+        /// <param name="connectionState">
+        /// Connection State of the Private Endpoint Connection.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </param>
         internal AutomationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IList<string> groupIds, AutomationPrivateLinkServiceConnectionStateProperty connectionState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
@@ -37,7 +46,10 @@ namespace Azure.ResourceManager.Automation
             ConnectionState = connectionState;
         }
 
-        /// <summary> Private endpoint which the connection belongs to. </summary>
+        /// <summary>
+        /// Private endpoint which the connection belongs to.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
@@ -51,9 +63,15 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Gets the groupIds. </summary>
+        /// <summary>
+        /// Gets the groupIds.
+        /// Serialized Name: PrivateEndpointConnection.properties.groupIds
+        /// </summary>
         public IList<string> GroupIds { get; }
-        /// <summary> Connection State of the Private Endpoint Connection. </summary>
+        /// <summary>
+        /// Connection State of the Private Endpoint Connection.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </summary>
         public AutomationPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of the source control sync job stream by id. </summary>
+    /// <summary>
+    /// Definition of the source control sync job stream by id.
+    /// Serialized Name: SourceControlSyncJobStreamById
+    /// </summary>
     public partial class SourceControlSyncJobStreamById
     {
         /// <summary> Initializes a new instance of SourceControlSyncJobStreamById. </summary>
@@ -21,14 +24,35 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SourceControlSyncJobStreamById. </summary>
-        /// <param name="id"> Resource id. </param>
-        /// <param name="sourceControlSyncJobStreamId"> The sync job stream id. </param>
-        /// <param name="summary"> The summary of the sync job stream. </param>
-        /// <param name="time"> The time of the sync job stream. </param>
-        /// <param name="streamType"> The type of the sync job stream. </param>
-        /// <param name="streamText"> The text of the sync job stream. </param>
-        /// <param name="value"> The values of the job stream. </param>
-        internal SourceControlSyncJobStreamById(string id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, StreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value)
+        /// <param name="id">
+        /// Resource id.
+        /// Serialized Name: SourceControlSyncJobStreamById.id
+        /// </param>
+        /// <param name="sourceControlSyncJobStreamId">
+        /// The sync job stream id.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.sourceControlSyncJobStreamId
+        /// </param>
+        /// <param name="summary">
+        /// The summary of the sync job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.summary
+        /// </param>
+        /// <param name="time">
+        /// The time of the sync job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.time
+        /// </param>
+        /// <param name="streamType">
+        /// The type of the sync job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.streamType
+        /// </param>
+        /// <param name="streamText">
+        /// The text of the sync job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.streamText
+        /// </param>
+        /// <param name="value">
+        /// The values of the job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.value
+        /// </param>
+        internal SourceControlSyncJobStreamById(string id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value)
         {
             Id = id;
             SourceControlSyncJobStreamId = sourceControlSyncJobStreamId;
@@ -39,20 +63,39 @@ namespace Azure.ResourceManager.Automation.Models
             Value = value;
         }
 
-        /// <summary> Resource id. </summary>
+        /// <summary>
+        /// Resource id.
+        /// Serialized Name: SourceControlSyncJobStreamById.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The sync job stream id. </summary>
+        /// <summary>
+        /// The sync job stream id.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.sourceControlSyncJobStreamId
+        /// </summary>
         public string SourceControlSyncJobStreamId { get; }
-        /// <summary> The summary of the sync job stream. </summary>
+        /// <summary>
+        /// The summary of the sync job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.summary
+        /// </summary>
         public string Summary { get; }
-        /// <summary> The time of the sync job stream. </summary>
+        /// <summary>
+        /// The time of the sync job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.time
+        /// </summary>
         public DateTimeOffset? Time { get; }
-        /// <summary> The type of the sync job stream. </summary>
-        public StreamType? StreamType { get; }
-        /// <summary> The text of the sync job stream. </summary>
+        /// <summary>
+        /// The type of the sync job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.streamType
+        /// </summary>
+        public SourceControlStreamType? StreamType { get; }
+        /// <summary>
+        /// The text of the sync job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.streamText
+        /// </summary>
         public string StreamText { get; }
         /// <summary>
         /// The values of the job stream.
+        /// Serialized Name: SourceControlSyncJobStreamById.properties.value
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

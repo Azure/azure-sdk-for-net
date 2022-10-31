@@ -11,27 +11,42 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list variables operation. </summary>
+    /// <summary>
+    /// The response model for the list variables operation.
+    /// Serialized Name: VariableListResult
+    /// </summary>
     internal partial class VariableListResult
     {
         /// <summary> Initializes a new instance of VariableListResult. </summary>
         internal VariableListResult()
         {
-            Value = new ChangeTrackingList<VariableData>();
+            Value = new ChangeTrackingList<AutomationVariableData>();
         }
 
         /// <summary> Initializes a new instance of VariableListResult. </summary>
-        /// <param name="value"> Gets or sets a list of variables. </param>
-        /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal VariableListResult(IReadOnlyList<VariableData> value, string nextLink)
+        /// <param name="value">
+        /// Gets or sets a list of variables.
+        /// Serialized Name: VariableListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Gets or sets the next link.
+        /// Serialized Name: VariableListResult.nextLink
+        /// </param>
+        internal VariableListResult(IReadOnlyList<AutomationVariableData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets or sets a list of variables. </summary>
-        public IReadOnlyList<VariableData> Value { get; }
-        /// <summary> Gets or sets the next link. </summary>
+        /// <summary>
+        /// Gets or sets a list of variables.
+        /// Serialized Name: VariableListResult.value
+        /// </summary>
+        public IReadOnlyList<AutomationVariableData> Value { get; }
+        /// <summary>
+        /// Gets or sets the next link.
+        /// Serialized Name: VariableListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

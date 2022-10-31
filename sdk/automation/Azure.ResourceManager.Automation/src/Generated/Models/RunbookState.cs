@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Gets or sets the state of the runbook. </summary>
+    /// <summary>
+    /// Gets or sets the state of the runbook.
+    /// Serialized Name: RunbookState
+    /// </summary>
     public readonly partial struct RunbookState : IEquatable<RunbookState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Automation.Models
         private const string EditValue = "Edit";
         private const string PublishedValue = "Published";
 
-        /// <summary> New. </summary>
+        /// <summary>
+        /// New
+        /// Serialized Name: RunbookState.New
+        /// </summary>
         public static RunbookState New { get; } = new RunbookState(NewValue);
-        /// <summary> Edit. </summary>
+        /// <summary>
+        /// Edit
+        /// Serialized Name: RunbookState.Edit
+        /// </summary>
         public static RunbookState Edit { get; } = new RunbookState(EditValue);
-        /// <summary> Published. </summary>
+        /// <summary>
+        /// Published
+        /// Serialized Name: RunbookState.Published
+        /// </summary>
         public static RunbookState Published { get; } = new RunbookState(PublishedValue);
         /// <summary> Determines if two <see cref="RunbookState"/> values are the same. </summary>
         public static bool operator ==(RunbookState left, RunbookState right) => left.Equals(right);

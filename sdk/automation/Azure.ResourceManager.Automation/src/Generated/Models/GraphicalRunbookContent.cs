@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Graphical Runbook Content. </summary>
+    /// <summary>
+    /// Graphical Runbook Content
+    /// Serialized Name: GraphicalRunbookContent
+    /// </summary>
     public partial class GraphicalRunbookContent
     {
         /// <summary> Initializes a new instance of GraphicalRunbookContent. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of GraphicalRunbookContent. </summary>
-        /// <param name="rawContent"> Raw graphical Runbook content. </param>
-        /// <param name="graphRunbookJson"> Graphical Runbook content as JSON. </param>
+        /// <param name="rawContent">
+        /// Raw graphical Runbook content.
+        /// Serialized Name: GraphicalRunbookContent.rawContent
+        /// </param>
+        /// <param name="graphRunbookJson">
+        /// Graphical Runbook content as JSON
+        /// Serialized Name: GraphicalRunbookContent.graphRunbookJson
+        /// </param>
         internal GraphicalRunbookContent(RawGraphicalRunbookContent rawContent, string graphRunbookJson)
         {
             RawContent = rawContent;
             GraphRunbookJson = graphRunbookJson;
         }
 
-        /// <summary> Raw graphical Runbook content. </summary>
+        /// <summary>
+        /// Raw graphical Runbook content.
+        /// Serialized Name: GraphicalRunbookContent.rawContent
+        /// </summary>
         public RawGraphicalRunbookContent RawContent { get; set; }
-        /// <summary> Graphical Runbook content as JSON. </summary>
+        /// <summary>
+        /// Graphical Runbook content as JSON
+        /// Serialized Name: GraphicalRunbookContent.graphRunbookJson
+        /// </summary>
         public string GraphRunbookJson { get; set; }
     }
 }
