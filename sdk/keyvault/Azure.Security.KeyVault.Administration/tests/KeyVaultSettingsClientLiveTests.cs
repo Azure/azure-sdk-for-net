@@ -22,5 +22,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Settings, Is.Not.Empty);
         }
+
+        // GetSetting and UpdateSetting are tested in samples/Sample4_UpdateSettings.cs.
     }
 }
