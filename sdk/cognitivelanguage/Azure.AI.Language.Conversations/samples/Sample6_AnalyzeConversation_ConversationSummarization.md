@@ -58,16 +58,27 @@ var data = new
     {
         new
         {
+            taskName = "Issue task",
+            kind = "ConversationalSummarizationTask",
             parameters = new
             {
                 summaryAspects = new[]
                 {
                     "issue",
+                }
+            },
+        },
+        new
+        {
+            taskName = "Resolution task",
+            kind = "ConversationalSummarizationTask",
+            parameters = new
+            {
+                summaryAspects = new[]
+                {
                     "resolution",
                 }
             },
-            kind = "ConversationalSummarizationTask",
-            taskName = "1",
         },
     },
 };
@@ -78,9 +89,8 @@ using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Valu
 JsonElement jobResults = result.RootElement;
 foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
 {
+    Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
     JsonElement results = task.GetProperty("results");
-
-    Console.WriteLine("Conversations:");
     foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
     {
         Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
