@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Configuration of Media streaming. </summary>
-    public partial class MediaStreamingConfiguration
+    internal partial class MediaStreamingOptionsInternal
     {
-        /// <summary> Initializes a new instance of MediaStreamingConfiguration. </summary>
+        /// <summary> Initializes a new instance of MediaStreamingOptionsInternal. </summary>
         /// <param name="transportUrl"> Transport URL for media streaming. </param>
         /// <param name="transportType"> The type of transport to be used for media streaming, eg. Websocket. </param>
         /// <param name="contentType"> Content type to stream, eg. audio, audio/video. </param>
         /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> is null. </exception>
-        public MediaStreamingConfiguration(string transportUrl, MediaStreamingTransportType transportType, MediaStreamingContentType contentType, MediaStreamingAudioChannelType audioChannelType)
+        public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannelTypeInternal audioChannelType)
         {
             Argument.AssertNotNull(transportUrl, nameof(transportUrl));
 
@@ -32,10 +32,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Transport URL for media streaming. </summary>
         public string TransportUrl { get; }
         /// <summary> The type of transport to be used for media streaming, eg. Websocket. </summary>
-        public MediaStreamingTransportType TransportType { get; }
+        public MediaStreamingTransport TransportType { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
-        public MediaStreamingContentType ContentType { get; }
+        public MediaStreamingContent ContentType { get; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
-        public MediaStreamingAudioChannelType AudioChannelType { get; }
+        public MediaStreamingAudioChannelTypeInternal AudioChannelType { get; }
     }
 }
