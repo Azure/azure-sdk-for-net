@@ -21,59 +21,59 @@ param (
     [Parameter(Mandatory = $true, Position = 0)]
     [string] $ServiceDirectory,
 
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $TestApplicationId,
 
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [string] $TestApplicationSecret,
 
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $TestApplicationOid,
 
-    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
     # Azure SDK Developer Playground subscription is assumed if not set
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $SubscriptionId,
 
-    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $ProvisionerApplicationId,
 
-    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $false)]
+    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $false, ValueFromPipelineByPropertyName = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $ProvisionerApplicationOid,
 
-    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
     [string] $ProvisionerApplicationSecret,
 
     [Parameter()]
     [ValidateRange(1, 7*24)]
     [int] $DeleteAfterHours = 120,
 
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [string] $Location = '',
 
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud', 'Dogfood')]
     [string] $Environment = 'AzureCloud',
 
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidateSet('test', 'perf')]
     [string] $ResourceType = 'test',
 
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [hashtable] $ArmTemplateParameters,
 
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [hashtable] $AdditionalParameters,
 
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNull()]
     [hashtable] $EnvironmentVariables = @{},
 
