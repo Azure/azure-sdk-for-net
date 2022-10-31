@@ -360,7 +360,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(uploadManifestResult.Value.Digest, properties.Value.Digest);
 
             // Clean up
-            //await registryClient.DeleteRepositoryAsync(name);
+            await registryClient.DeleteRepositoryAsync(name);
         }
 
         private async Task<UploadManifestResult> Push(ContainerRegistryBlobClient client)
