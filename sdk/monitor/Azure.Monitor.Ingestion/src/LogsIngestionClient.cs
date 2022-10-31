@@ -401,19 +401,9 @@ namespace Azure.Monitor.Ingestion
         {
             if (exceptions.Count > 0)
             {
-                // if there's one exception throw just that exception
-                if (exceptions.Count == 1)
-                {
-                    var ex = exceptions[0];
+                var ex = new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
                     scope.Failed(ex);
                     throw ex;
-                }
-                else
-                {
-                    var ex = new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
-                    scope.Failed(ex);
-                    throw ex;
-                }
             }
         }
 
