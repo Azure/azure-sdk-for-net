@@ -27,7 +27,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     [LiveOnly(true)]
     public class EventHubEndToEndTests : WebJobsEventHubTestBase
     {
-
         private static readonly TimeSpan NoEventReadTimeout = TimeSpan.FromSeconds(5);
 
         private static EventWaitHandle _eventWait;
