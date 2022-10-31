@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class ActionResponseResourceTests : SecurityInsightsManagementTestBase
     {
         public ActionResponseResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

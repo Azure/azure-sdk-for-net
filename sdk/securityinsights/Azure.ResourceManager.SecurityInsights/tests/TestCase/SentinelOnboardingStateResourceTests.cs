@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class SentinelOnboardingStateResourceTests : SecurityInsightsManagementTestBase
     {
         public SentinelOnboardingStateResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

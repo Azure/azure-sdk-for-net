@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class MetadataModelResourceTests : SecurityInsightsManagementTestBase
     {
         public MetadataModelResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
