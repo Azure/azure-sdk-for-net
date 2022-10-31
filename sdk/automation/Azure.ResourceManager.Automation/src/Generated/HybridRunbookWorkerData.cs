@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automation
         /// Name of the HybridWorker.
         /// Serialized Name: HybridRunbookWorker.properties.workerName
         /// </param>
-        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, string vmResourceId, HybridWorkerType? workerType, string workerName) : base(id, name, resourceType, systemData)
+        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, ResourceIdentifier vmResourceId, HybridWorkerType? workerType, string workerName) : base(id, name, resourceType, systemData)
         {
             IP = ip;
             RegisteredOn = registeredOn;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Automation
         /// Azure Resource Manager Id for a virtual machine.
         /// Serialized Name: HybridRunbookWorker.properties.vmResourceId
         /// </summary>
-        public string VmResourceId { get; set; }
+        public ResourceIdentifier VmResourceId { get; set; }
         /// <summary>
         /// Type of the HybridWorker.
         /// Serialized Name: HybridRunbookWorker.properties.workerType

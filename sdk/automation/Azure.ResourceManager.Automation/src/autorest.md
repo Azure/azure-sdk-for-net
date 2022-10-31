@@ -84,6 +84,9 @@ rename-mapping:
   SourceControlSyncJobById: SourceControlSyncJobResult
   SourceControlSyncJobStreamById: SourceControlSyncJobStreamResult
   SourceControlSyncJobStreamsListBySyncJob: SourceControlSyncJobStreamListResult
+  DscNode.properties.lastSeen: LastSeenOn
+  HybridRunbookWorker.properties.vmResourceId: -|arm-id
+  HybridRunbookWorkerCreateParameters.properties.vmResourceId: -|arm-id
 
 prepend-rp-prefix:
   - Certificate
@@ -148,6 +151,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'thumbprint': 'any'
 
 rename-rules:
   CPU: Cpu
@@ -178,6 +182,12 @@ request-path-to-parent:
 override-operation-name:
   Job_ListByAutomationAccount: GetAll
   ObjectDataTypes_ListFieldsByModuleAndType: GetFieldsByModuleAndType
+  Keys_ListByAutomationAccount: GetAutomationAccountKeys
+  SoftwareUpdateConfigurationMachineRuns_GetById: GetSoftwareUpdateConfigurationMachineRun
+  SoftwareUpdateConfigurationRuns_GetById: GetSoftwareUpdateConfigurationRun
+  DscCompilationJobStream_ListByJob: GetDscCompilationJobStreams
+  ObjectDataTypes_ListFieldsByType: GetFieldsByType
+  TestJobStreams_ListByTestJob: GetTestJobStreams
 operation-positions:
   Job_ListByAutomationAccount: collection
   SoftwareUpdateConfigurations_List: collection

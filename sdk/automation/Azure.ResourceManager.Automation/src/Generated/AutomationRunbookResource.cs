@@ -603,11 +603,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationJobStream> GetTestJobStreamsByTestJobAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AutomationJobStream> GetTestJobStreamsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<AutomationJobStream>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreamsByTestJob");
+                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreams");
                 scope.Start();
                 try
                 {
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Automation
             }
             async Task<Page<AutomationJobStream>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreamsByTestJob");
+                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreams");
                 scope.Start();
                 try
                 {
@@ -646,11 +646,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationJobStream> GetTestJobStreamsByTestJob(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AutomationJobStream> GetTestJobStreams(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<AutomationJobStream> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreamsByTestJob");
+                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreams");
                 scope.Start();
                 try
                 {
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Automation
             }
             Page<AutomationJobStream> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreamsByTestJob");
+                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreams");
                 scope.Start();
                 try
                 {

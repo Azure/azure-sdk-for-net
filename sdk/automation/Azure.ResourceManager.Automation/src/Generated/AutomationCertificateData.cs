@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the description.
         /// Serialized Name: Certificate.properties.description
         /// </param>
-        internal AutomationCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprint, DateTimeOffset? expiryOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
+        internal AutomationCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData thumbprint, DateTimeOffset? expiryOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
             Thumbprint = thumbprint;
             ExpiryOn = expiryOn;
@@ -61,8 +61,35 @@ namespace Azure.ResourceManager.Automation
         /// <summary>
         /// Gets the thumbprint of the certificate.
         /// Serialized Name: Certificate.properties.thumbprint
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
-        public string Thumbprint { get; }
+        public BinaryData Thumbprint { get; }
         /// <summary>
         /// Gets the expiry time of the certificate.
         /// Serialized Name: Certificate.properties.expiryTime

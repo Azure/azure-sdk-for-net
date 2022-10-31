@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary>
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// Azure Resource Manager Id for a virtual machine.
         /// Serialized Name: HybridRunbookWorkerCreateParameters.properties.vmResourceId
         /// </summary>
-        public string VmResourceId { get; set; }
+        public ResourceIdentifier VmResourceId { get; set; }
     }
 }

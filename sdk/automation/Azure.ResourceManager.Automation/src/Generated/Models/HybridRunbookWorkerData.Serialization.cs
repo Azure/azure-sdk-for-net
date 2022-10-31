@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automation
             Optional<string> ip = default;
             Optional<DateTimeOffset> registeredDateTime = default;
             Optional<DateTimeOffset> lastSeenDateTime = default;
-            Optional<string> vmResourceId = default;
+            Optional<ResourceIdentifier> vmResourceId = default;
             Optional<HybridWorkerType> workerType = default;
             Optional<string> workerName = default;
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,12 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("vmResourceId"))
                         {
-                            vmResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            vmResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("workerType"))

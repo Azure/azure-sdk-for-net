@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastSeen">
+        /// <param name="lastSeenOn">
         /// Gets or sets the last seen time of the node.
         /// Serialized Name: DscNode.properties.lastSeen
         /// </param>
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the name of the dsc node configuration.
         /// Serialized Name: DscNode.properties.nodeConfiguration.name
         /// </param>
-        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeen, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName) : base(id, name, resourceType, systemData)
+        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeenOn, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName) : base(id, name, resourceType, systemData)
         {
-            LastSeen = lastSeen;
+            LastSeenOn = lastSeenOn;
             RegistrationOn = registrationOn;
             IP = ip;
             AccountId = accountId;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the last seen time of the node.
         /// Serialized Name: DscNode.properties.lastSeen
         /// </summary>
-        public DateTimeOffset? LastSeen { get; set; }
+        public DateTimeOffset? LastSeenOn { get; set; }
         /// <summary>
         /// Gets or sets the registration time of the node.
         /// Serialized Name: DscNode.properties.registrationTime

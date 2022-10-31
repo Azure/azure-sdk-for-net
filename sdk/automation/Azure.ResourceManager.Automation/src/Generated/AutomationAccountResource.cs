@@ -1290,11 +1290,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="jobId"> The job id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationJobStream> GetDscCompilationJobStreamsByJobAsync(Guid jobId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AutomationJobStream> GetDscCompilationJobStreamsAsync(Guid jobId, CancellationToken cancellationToken = default)
         {
             async Task<Page<AutomationJobStream>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _dscCompilationJobStreamClientDiagnostics.CreateScope("AutomationAccountResource.GetDscCompilationJobStreamsByJob");
+                using var scope = _dscCompilationJobStreamClientDiagnostics.CreateScope("AutomationAccountResource.GetDscCompilationJobStreams");
                 scope.Start();
                 try
                 {
@@ -1318,11 +1318,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="jobId"> The job id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationJobStream> GetDscCompilationJobStreamsByJob(Guid jobId, CancellationToken cancellationToken = default)
+        public virtual Pageable<AutomationJobStream> GetDscCompilationJobStreams(Guid jobId, CancellationToken cancellationToken = default)
         {
             Page<AutomationJobStream> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _dscCompilationJobStreamClientDiagnostics.CreateScope("AutomationAccountResource.GetDscCompilationJobStreamsByJob");
+                using var scope = _dscCompilationJobStreamClientDiagnostics.CreateScope("AutomationAccountResource.GetDscCompilationJobStreams");
                 scope.Start();
                 try
                 {
@@ -1510,9 +1510,9 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: Keys_ListByAutomationAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AutomationKeyListResult>> GetByAutomationAccountKeyAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationKeyListResult>> GetAutomationAccountKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetByAutomationAccountKey");
+            using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeys");
             scope.Start();
             try
             {
@@ -1532,9 +1532,9 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: Keys_ListByAutomationAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AutomationKeyListResult> GetByAutomationAccountKey(CancellationToken cancellationToken = default)
+        public virtual Response<AutomationKeyListResult> GetAutomationAccountKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetByAutomationAccountKey");
+            using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeys");
             scope.Start();
             try
             {
@@ -1602,13 +1602,13 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <returns> An async collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationModuleField> GetFieldsByTypeObjectDataTypesAsync(string typeName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AutomationModuleField> GetFieldsByTypeAsync(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             async Task<Page<AutomationModuleField>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountResource.GetFieldsByTypeObjectDataTypes");
+                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountResource.GetFieldsByType");
                 scope.Start();
                 try
                 {
@@ -1634,13 +1634,13 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <returns> A collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationModuleField> GetFieldsByTypeObjectDataTypes(string typeName, CancellationToken cancellationToken = default)
+        public virtual Pageable<AutomationModuleField> GetFieldsByType(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             Page<AutomationModuleField> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountResource.GetFieldsByTypeObjectDataTypes");
+                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountResource.GetFieldsByType");
                 scope.Start();
                 try
                 {
@@ -1716,9 +1716,9 @@ namespace Azure.ResourceManager.Automation
         /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SoftwareUpdateConfigurationRun>> GetByIdSoftwareUpdateConfigurationRunAsync(Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SoftwareUpdateConfigurationRun>> GetSoftwareUpdateConfigurationRunAsync(Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetByIdSoftwareUpdateConfigurationRun");
+            using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRun");
             scope.Start();
             try
             {
@@ -1740,9 +1740,9 @@ namespace Azure.ResourceManager.Automation
         /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SoftwareUpdateConfigurationRun> GetByIdSoftwareUpdateConfigurationRun(Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRun(Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetByIdSoftwareUpdateConfigurationRun");
+            using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRun");
             scope.Start();
             try
             {
@@ -1826,9 +1826,9 @@ namespace Azure.ResourceManager.Automation
         /// <param name="softwareUpdateConfigurationMachineRunId"> The Id of the software update configuration machine run. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SoftwareUpdateConfigurationMachineRun>> GetByIdSoftwareUpdateConfigurationMachineRunAsync(Guid softwareUpdateConfigurationMachineRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SoftwareUpdateConfigurationMachineRun>> GetSoftwareUpdateConfigurationMachineRunAsync(Guid softwareUpdateConfigurationMachineRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetByIdSoftwareUpdateConfigurationMachineRun");
+            using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRun");
             scope.Start();
             try
             {
@@ -1850,9 +1850,9 @@ namespace Azure.ResourceManager.Automation
         /// <param name="softwareUpdateConfigurationMachineRunId"> The Id of the software update configuration machine run. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SoftwareUpdateConfigurationMachineRun> GetByIdSoftwareUpdateConfigurationMachineRun(Guid softwareUpdateConfigurationMachineRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRun(Guid softwareUpdateConfigurationMachineRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetByIdSoftwareUpdateConfigurationMachineRun");
+            using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRun");
             scope.Start();
             try
             {
