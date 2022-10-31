@@ -4,9 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -138,7 +136,8 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             var policy = new ConcurrencyCounterPolicy(10);
             LogsIngestionClient client = CreateClient(policy);
-            LogsIngestionClient.SingleUploadThreshold = 100; // make batch size smaller for Uploads for test recording size
+            // make batch size smaller for Uploads for test recording size
+            LogsIngestionClient.SingleUploadThreshold = 100;
 
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
