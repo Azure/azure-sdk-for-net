@@ -24,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
     public class EventHubsClientFactoryTests
     {
         private const string ConnectionString = "Endpoint=sb://test89123-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey";
+        private const string AnotherConnectionString = "Endpoint=sb://test12345-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey";
         private const string ConnectionStringWithEventHub = "Endpoint=sb://test89123-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey;EntityPath=path2";
 
         // Validate that if connection string has EntityPath, that takes precedence over the parameter.
@@ -99,6 +100,71 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             Assert.AreSame(producer, producer2);
             Assert.AreSame(consumer, consumer2);
+        }
+
+        [Test]
+        public void ConsumersWithSameNameAreProperlyCached()
+        {
+            EventHubOptions options = new EventHubOptions();
+
+            var componentFactoryMock = new Mock<AzureComponentFactory>();
+            componentFactoryMock.Setup(c => c.CreateTokenCredential(
+                    It.Is<IConfiguration>(c => c["fullyQualifiedNamespace"] != null)))
+                .Returns(new DefaultAzureCredential());
+
+            var configuration = ConfigurationUtilities.CreateConfiguration(
+                new KeyValuePair<string, string>("connection1", ConnectionString),
+                new KeyValuePair<string, string>("connection2", AnotherConnectionString),
+                new KeyValuePair<string, string>("connection3:fullyQualifiedNamespace", "test89123-ns-x.servicebus.windows.net"),
+                new KeyValuePair<string, string>("connection4:fullyQualifiedNamespace", "test12345-ns-x.servicebus.windows.net"));
+
+            var factory = ConfigurationUtilities.CreateFactory(configuration, options, componentFactoryMock.Object);
+            var consumer1 = factory.GetEventHubConsumerClient("k1", "connection1", null);
+            var consumer2 = factory.GetEventHubConsumerClient("k1", "connection2", "csg");
+            var consumer3 = factory.GetEventHubConsumerClient("k1", "connection3", "csg");
+            var consumer4 = factory.GetEventHubConsumerClient("k1", "connection4", "csg");
+
+            // Create different consumers for different eventhub namespaces.
+            Assert.AreNotSame(consumer1, consumer2);
+            Assert.AreNotSame(consumer3, consumer4);
+            // Create different consumers for different consumer groups.
+            Assert.AreNotSame(consumer1, consumer3);
+            // Use the same consumer client for the same namespace/eventhub/consumergroup
+            Assert.AreSame(consumer2, consumer4);
+        }
+
+        [Test]
+        public void ProducersWithSameNameAreProperlyCached()
+        {
+            EventHubOptions options = new EventHubOptions();
+
+            var componentFactoryMock = new Mock<AzureComponentFactory>();
+            componentFactoryMock.Setup(c => c.CreateTokenCredential(
+                    It.Is<IConfiguration>(c => c["fullyQualifiedNamespace"] != null)))
+                .Returns(new DefaultAzureCredential());
+
+            var configuration = ConfigurationUtilities.CreateConfiguration(
+                new KeyValuePair<string, string>("connection1", ConnectionString),
+                new KeyValuePair<string, string>("connection2", AnotherConnectionString),
+                new KeyValuePair<string, string>("connection3:fullyQualifiedNamespace", "test89123-ns-x.servicebus.windows.net"),
+                new KeyValuePair<string, string>("connection4:fullyQualifiedNamespace", "test12345-ns-x.servicebus.windows.net"));
+
+            var factory = ConfigurationUtilities.CreateFactory(configuration, options, componentFactoryMock.Object);
+            var producer1 = factory.GetEventHubProducerClient("k1", "connection1");
+            var producer2 = factory.GetEventHubProducerClient("k1", "connection2");
+            var producer3 = factory.GetEventHubProducerClient("k1", "connection3");
+            var producer4 = factory.GetEventHubProducerClient("k1", "connection4");
+
+            Assert.AreEqual("k1", producer1.EventHubName);
+            Assert.AreEqual("k1", producer2.EventHubName);
+            Assert.AreNotSame(producer1, producer2);
+
+            Assert.AreEqual("k1", producer3.EventHubName);
+            Assert.AreEqual("k1", producer4.EventHubName);
+            Assert.AreNotSame(producer3, producer4);
+
+            Assert.AreSame(producer1, producer3);
+            Assert.AreSame(producer2, producer4);
         }
 
         [Test]
