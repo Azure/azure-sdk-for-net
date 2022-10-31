@@ -25,6 +25,6 @@ COPY --from=build-env /app/artifacts/bin/Azure.Messaging.ServiceBus.Stress/Relea
 
 WORKDIR /app/artifacts/bin/Azure.Messaging.ServiceBus.Stress/Release/net6.0
 
-# The default is running just the "EventProducerTest"
+# The default is running just the "SendReceiveTest"
 ENTRYPOINT ["dotnet Azure.Messaging.ServiceBus.Stress.dll", "--test"]
 CMD ["SendRec"]
