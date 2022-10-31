@@ -304,7 +304,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var name = "oci-artifact-large";
             var sizeInMiB = 32;
             var tag = $"big-{sizeInMiB}";
-            var size = 1024 * 1024 * sizeInMiB;
+            var size = (1024 * 1024 * sizeInMiB) + 17;
             var client = CreateBlobClient(name);
 
             // Act

@@ -348,20 +348,19 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                         if (i < ranges.Count - 1)
                         {
-                            sha256.TransformBlock(buffer, 0, chunkLength, buffer, chunkLength);
+                            sha256.TransformBlock(buffer, 0, chunkLength, buffer, 0);
                         }
                         else
                         {
                             sha256.TransformFinalBlock(buffer, 0, chunkLength);
+                            digest = "sha256:" + OciBlobDescriptor.BytesToString(sha256.Hash);
                         }
 
-                        using (Stream chunk = new MemoryStream(buffer))
+                        using (Stream chunk = new MemoryStream(buffer, 0, chunkLength))
                         {
                             uploadChunkResult = _blobRestClient.UploadChunk(location, chunk, ToContentRangeString(range), chunkLength.ToString(CultureInfo.InvariantCulture), cancellationToken);
                         }
                     }
-
-                    digest = "sha256:" + OciBlobDescriptor.BytesToString(sha256.Hash);
                 };
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
@@ -419,19 +418,18 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                         if (i < ranges.Count - 1)
                         {
-                            sha256.TransformBlock(buffer, 0, chunkLength, buffer, chunkLength);
+                            sha256.TransformBlock(buffer, 0, chunkLength, buffer, 0);
                         }
                         else
                         {
                             sha256.TransformFinalBlock(buffer, 0, chunkLength);
+                            digest = "sha256:" + OciBlobDescriptor.BytesToString(sha256.Hash);
                         }
 
-                        using (Stream chunk = new MemoryStream(buffer))
+                        using (Stream chunk = new MemoryStream(buffer, 0, chunkLength))
                         {
                             uploadChunkResult = await _blobRestClient.UploadChunkAsync(location, chunk, ToContentRangeString(range), chunkLength.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
                         }
-
-                        digest = "sha256:" + OciBlobDescriptor.BytesToString(sha256.Hash);
                     }
                 };
 
@@ -464,15 +462,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             List<HttpRange> ranges = new(count);
 
-            for (int i = 0; i < count; i++)
+            int i = 0;
+            for (; i < count; i++)
             {
-                if (i == (count - 1) && lastChunkSize > 0)
-                {
-                    ranges.Add(new HttpRange(i * chunkSize, lastChunkSize));
-                    break;
-                }
-
                 ranges.Add(new HttpRange(i * chunkSize, chunkSize));
+            }
+
+            if (lastChunkSize > 0)
+            {
+                ranges.Add(new HttpRange(i * chunkSize, lastChunkSize));
             }
 
             return ranges;
