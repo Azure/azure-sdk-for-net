@@ -22,6 +22,7 @@ $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 
 $autorestConfig = $inputJson.autorestConfig
+$relatedCadlProjectFolder = $inputJson.relatedCadlProjectFolder
 
 $autorestConfigYaml = ""
 if ($autorestConfig -ne "") {
@@ -62,6 +63,37 @@ if ($commitid -ne "") {
 $generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
 Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 
+if ($relatedCadlProjectFolder) {
+  $caldFolder = (Join-Path $swaggerDir $relatedCadlProjectFolder) -replace "\\", "/"
+  $newPackageOutput = "newPackageOutput.json"
+
+  Push-Location $caldFolder
+  $cadlProjectYaml = Get-Content -Path "$caldFolder/cadl-project.yaml" -Raw
+
+  Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+  $yml = ConvertFrom-YAML $cadlProjectYaml
+  $sdkFolder = $yml["emitters"]["@azure-tools/cadl-csharp"]["sdk-folder"]
+  $projectFolder = (Join-Path $sdkPath $sdkFolder)
+  $projectFolder = $projectFolder -replace "\\", "/"
+  if ($projectFolder) {
+      $directories = $projectFolder.Split("/");
+      $count = $directories.Count
+      $projectFolder = $directories[0 .. ($count-2)] -join "/"
+      $service = $directories[-3];
+      $namespace = $directories[-2];
+  }
+  New-CADLPackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -cadlInput $caldFolder/main.cadl -outputJsonFile $newpackageoutput
+  # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --emit @azure-tools/cadl-csharp --output-path $sdkPath .\main.cadl
+
+  # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --output-path $sdkPath --emit @azure-tools/cadl-csharp ./main.cadl
+  npm install
+  npx cadl compile --output-path $sdkPath --emit @azure-tools/cadl-csharp .
+  if ( !$?) {
+      Throw "Failed to generate sdk for cadl. exit code: $?"
+  }
+  GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkPath -path $projectFolder -downloadUrlPrefix "$downloadUrlPrefix" -skipGenerate -generatedSDKPackages $generatedSDKPackages
+  Pop-Location
+}
 $outputJson = [PSCustomObject]@{
   packages = $generatedSDKPackages
 }

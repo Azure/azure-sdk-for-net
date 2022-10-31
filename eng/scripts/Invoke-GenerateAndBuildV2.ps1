@@ -139,6 +139,9 @@ if ($relatedCadlProjectFolder) {
         # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --output-path $sdkPath --emit @azure-tools/cadl-csharp ./main.cadl
         npm install
         npx cadl compile --output-path $sdkPath --emit @azure-tools/cadl-csharp .
+        if ( !$?) {
+            Throw "Failed to generate sdk for cadl. exit code: $?"
+        }
         GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkPath -path $projectFolder -downloadUrlPrefix "$downloadUrlPrefix" -skipGenerate -generatedSDKPackages $generatedSDKPackages
         Pop-Location
     }

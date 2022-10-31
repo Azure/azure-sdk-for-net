@@ -418,7 +418,7 @@ function New-CADLPackageFolder() {
 
         $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
         $fileContent = Get-Content -Path $projFile
-        $fileContent -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>"
+        $fileContent = $fileContent -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>"
         $startNum = ($fileContent | Select-String -Pattern '</PropertyGroup>').LineNumber[0]
         $fileContent[$startNum - 2] += ([Environment]::NewLine + "<AutoRestInput>$cadlInput</AutoRestInput>")
         $fileContent | Out-File $projFile
