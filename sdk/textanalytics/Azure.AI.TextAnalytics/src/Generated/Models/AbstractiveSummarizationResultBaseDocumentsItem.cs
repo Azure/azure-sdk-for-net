@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -21,18 +22,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="summaries"/> is null. </exception>
         public AbstractiveSummarizationResultBaseDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<AbstractiveSummary> summaries) : base(id, warnings, summaries)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (summaries == null)
-            {
-                throw new ArgumentNullException(nameof(summaries));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(summaries, nameof(summaries));
         }
 
         /// <summary> Initializes a new instance of AbstractiveSummarizationResultBaseDocumentsItem. </summary>

@@ -26,10 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SignalRFeature(FeatureFlag flag, string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Flag = flag;
             Value = value;

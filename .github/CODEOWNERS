@@ -192,6 +192,9 @@
 # ServiceLabel: %Commerce %Service Attention
 #/<NotInRepo>/            @ms-premp @qiaozha
 
+# PRLabel: %Communication
+/sdk/communication/                                     @acsdevx-msft
+
 # PRLabel: %Communication - Calling Server
 /sdk/communication/Azure.Communication.CallingServer/   @minwoolee-msft
 
@@ -199,10 +202,10 @@
 /sdk/communication/Azure.Communication.Chat/   @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/          @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+/sdk/communication/Azure.Communication.Common/          @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft
 
 # PRLabel: %Communication - Network Traversal
 /sdk/communication/Azure.Communication.NetworkTraversal/ @ajpeacock0 @nathpete-msft
@@ -218,9 +221,6 @@
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/
-
-# PRLabel: %Communication
-/sdk/communication/                                     @acsdevx-msft
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute

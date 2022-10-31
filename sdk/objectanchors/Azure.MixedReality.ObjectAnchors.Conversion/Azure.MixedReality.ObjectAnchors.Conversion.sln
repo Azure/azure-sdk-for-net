@@ -1,7 +1,7 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.MixedReality.ObjectAnchors.Conversion", "src\Azure.MixedReality.ObjectAnchors.Conversion.csproj", "{F2DECE5E-D006-41CC-A4F2-2ACE91D18E16}"
 EndProject

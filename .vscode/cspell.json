@@ -125,7 +125,8 @@
     {
       "filename": "**/sdk/automation/**/*.cs",
       "words": [
-        "tfvc"
+        "tfvc",
+        "updation"
       ]
     },
     {

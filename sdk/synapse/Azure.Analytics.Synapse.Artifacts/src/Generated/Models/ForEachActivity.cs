@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,18 +22,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/> or <paramref name="activities"/> is null. </exception>
         public ForEachActivity(string name, Expression items, IEnumerable<Activity> activities) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-            if (activities == null)
-            {
-                throw new ArgumentNullException(nameof(activities));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(items, nameof(items));
+            Argument.AssertNotNull(activities, nameof(activities));
 
             Items = items;
             Activities = activities.ToList();

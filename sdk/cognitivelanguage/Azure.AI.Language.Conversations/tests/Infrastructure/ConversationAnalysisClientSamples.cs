@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
@@ -24,7 +23,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(
-                    new ConversationsClientOptions(ServiceVersion)));
+                    new ConversationsClientOptions(ServiceVersion)
+                    {
+                        Retry =
+                        {
+                            MaxRetries = 10,
+                        },
+                    }));
         }
     }
 }

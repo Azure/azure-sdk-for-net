@@ -85,6 +85,19 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
+        internal int RetryNumber { get; set; }
+
+        internal int ResponseNumber { get; set; }
+
+        internal Exception? LastException { get; set; }
+
+        internal DateTimeOffset ProcessingStartTime { get; set; }
+
+        /// <summary>
+        /// The processing context for the message.
+        /// </summary>
+        public ProcessingContext ProcessingContext => new(this);
+
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {
             if (context == null)

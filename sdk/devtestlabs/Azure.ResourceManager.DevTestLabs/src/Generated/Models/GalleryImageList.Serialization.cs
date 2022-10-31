@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static GalleryImageList DeserializeGalleryImageList(JsonElement element)
         {
-            Optional<IReadOnlyList<GalleryImage>> value = default;
+            Optional<IReadOnlyList<DevTestLabGalleryImage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GalleryImage> array = new List<GalleryImage>();
+                    List<DevTestLabGalleryImage> array = new List<DevTestLabGalleryImage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryImage.DeserializeGalleryImage(item));
+                        array.Add(DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage(item));
                     }
                     value = array;
                     continue;

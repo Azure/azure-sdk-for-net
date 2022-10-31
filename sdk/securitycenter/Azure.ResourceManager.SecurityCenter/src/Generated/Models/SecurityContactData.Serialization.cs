@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Email))
+            if (Optional.IsDefined(Emails))
             {
-                writer.WritePropertyName("email");
-                writer.WriteStringValue(Email);
+                writer.WritePropertyName("emails");
+                writer.WriteStringValue(Emails);
             }
             if (Optional.IsDefined(Phone))
             {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(AlertNotifications))
             {
                 writer.WritePropertyName("alertNotifications");
-                writer.WriteStringValue(AlertNotifications.Value.ToString());
+                writer.WriteObjectValue(AlertNotifications);
             }
-            if (Optional.IsDefined(AlertsToAdmins))
+            if (Optional.IsDefined(NotificationsByRole))
             {
-                writer.WritePropertyName("alertsToAdmins");
-                writer.WriteStringValue(AlertsToAdmins.Value.ToString());
+                writer.WritePropertyName("notificationsByRole");
+                writer.WriteObjectValue(NotificationsByRole);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> email = default;
+            Optional<string> emails = default;
             Optional<string> phone = default;
-            Optional<AlertNotification> alertNotifications = default;
-            Optional<AlertsToAdmin> alertsToAdmins = default;
+            Optional<SecurityContactPropertiesAlertNotifications> alertNotifications = default;
+            Optional<SecurityContactPropertiesNotificationsByRole> notificationsByRole = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("email"))
+                        if (property0.NameEquals("emails"))
                         {
-                            email = property0.Value.GetString();
+                            emails = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("phone"))
@@ -106,24 +106,24 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            alertNotifications = new AlertNotification(property0.Value.GetString());
+                            alertNotifications = SecurityContactPropertiesAlertNotifications.DeserializeSecurityContactPropertiesAlertNotifications(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("alertsToAdmins"))
+                        if (property0.NameEquals("notificationsByRole"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            alertsToAdmins = new AlertsToAdmin(property0.Value.GetString());
+                            notificationsByRole = SecurityContactPropertiesNotificationsByRole.DeserializeSecurityContactPropertiesNotificationsByRole(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SecurityContactData(id, name, type, systemData.Value, email.Value, phone.Value, Optional.ToNullable(alertNotifications), Optional.ToNullable(alertsToAdmins));
+            return new SecurityContactData(id, name, type, systemData.Value, emails.Value, phone.Value, alertNotifications.Value, notificationsByRole.Value);
         }
     }
 }

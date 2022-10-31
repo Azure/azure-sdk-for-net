@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static PolicyParameters DeserializePolicyParameters(JsonElement element)
         {
-            Optional<IList<DataStoreParameters>> dataStoreParametersList = default;
+            Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataStoreParametersList"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataStoreParameters> array = new List<DataStoreParameters>();
+                    List<DataStoreSettings> array = new List<DataStoreSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStoreParameters.DeserializeDataStoreParameters(item));
+                        array.Add(DataStoreSettings.DeserializeDataStoreSettings(item));
                     }
                     dataStoreParametersList = array;
                     continue;

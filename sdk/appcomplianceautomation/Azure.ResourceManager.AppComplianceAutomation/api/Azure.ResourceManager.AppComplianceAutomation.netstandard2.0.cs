@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal ComplianceReportItem() { }
         public string CategoryName { get { throw null; } }
-        public string ComplianceState { get { throw null; } }
+        public Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState? ComplianceState { get { throw null; } }
         public string ControlId { get { throw null; } }
         public string ControlName { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.ControlType? ControlType { get { throw null; } }
@@ -183,6 +183,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         internal ComplianceResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.Category> Categories { get { throw null; } }
         public string ComplianceName { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComplianceState : System.IEquatable<Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComplianceState(string value) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState Healthy { get { throw null; } }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState Unhealthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState left, Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState left, Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class Control
     {
@@ -338,7 +356,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.AppComplianceAutomation.Models.ProvisioningState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.ProvisioningState Canceled { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ProvisioningState Creating { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ProvisioningState Deleting { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ProvisioningState Failed { get { throw null; } }

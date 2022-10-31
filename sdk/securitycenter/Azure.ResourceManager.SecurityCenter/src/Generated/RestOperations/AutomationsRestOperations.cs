@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutomationData>> GetAsync(string subscriptionId, string resourceGroupName, string automationName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAutomationData>> GetAsync(string subscriptionId, string resourceGroupName, string automationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AutomationData value = default;
+                        SecurityAutomationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AutomationData.DeserializeAutomationData(document.RootElement);
+                        value = SecurityAutomationData.DeserializeSecurityAutomationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AutomationData)null, message.Response);
+                    return Response.FromValue((SecurityAutomationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutomationData> Get(string subscriptionId, string resourceGroupName, string automationName, CancellationToken cancellationToken = default)
+        public Response<SecurityAutomationData> Get(string subscriptionId, string resourceGroupName, string automationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -247,19 +247,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AutomationData value = default;
+                        SecurityAutomationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AutomationData.DeserializeAutomationData(document.RootElement);
+                        value = SecurityAutomationData.DeserializeSecurityAutomationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AutomationData)null, message.Response);
+                    return Response.FromValue((SecurityAutomationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationName, AutomationData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationName, SecurityAutomationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutomationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationName, AutomationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAutomationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationName, SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                 case 201:
                     {
-                        AutomationData value = default;
+                        SecurityAutomationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AutomationData.DeserializeAutomationData(document.RootElement);
+                        value = SecurityAutomationData.DeserializeSecurityAutomationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutomationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationName, AutomationData data, CancellationToken cancellationToken = default)
+        public Response<SecurityAutomationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationName, SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                 case 201:
                     {
-                        AutomationData value = default;
+                        SecurityAutomationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AutomationData.DeserializeAutomationData(document.RootElement);
+                        value = SecurityAutomationData.DeserializeSecurityAutomationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string automationName, AutomationData data)
+        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string automationName, SecurityAutomationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutomationValidationStatus>> ValidateAsync(string subscriptionId, string resourceGroupName, string automationName, AutomationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAutomationValidationStatus>> ValidateAsync(string subscriptionId, string resourceGroupName, string automationName, SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -461,9 +461,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AutomationValidationStatus value = default;
+                        SecurityAutomationValidationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AutomationValidationStatus.DeserializeAutomationValidationStatus(document.RootElement);
+                        value = SecurityAutomationValidationStatus.DeserializeSecurityAutomationValidationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutomationValidationStatus> Validate(string subscriptionId, string resourceGroupName, string automationName, AutomationData data, CancellationToken cancellationToken = default)
+        public Response<SecurityAutomationValidationStatus> Validate(string subscriptionId, string resourceGroupName, string automationName, SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -492,9 +492,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AutomationValidationStatus value = default;
+                        SecurityAutomationValidationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AutomationValidationStatus.DeserializeAutomationValidationStatus(document.RootElement);
+                        value = SecurityAutomationValidationStatus.DeserializeSecurityAutomationValidationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

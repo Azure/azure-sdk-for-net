@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.HybridData
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataManagerResource> GetDataManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HybridDataManagerResource> GetHybridDataManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDataManagersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHybridDataManagersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.HybridData
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataManagerResource> GetDataManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HybridDataManagerResource> GetHybridDataManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDataManagers(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHybridDataManagers(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.HybridData
             );
         }
 
-        /// <summary> Gets a collection of DataManagerResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of HybridDataManagerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DataManagerResources and their operations over a DataManagerResource. </returns>
-        public static DataManagerCollection GetDataManagers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HybridDataManagerResources and their operations over a HybridDataManagerResource. </returns>
+        public static HybridDataManagerCollection GetHybridDataManagers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDataManagers();
+            return GetExtensionClient(resourceGroupResource).GetHybridDataManagers();
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="dataManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataManagerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DataManagerResource>> GetDataManagerAsync(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HybridDataManagerResource>> GetHybridDataManagerAsync(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataManagers().GetAsync(dataManagerName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetHybridDataManagers().GetAsync(dataManagerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,44 +97,44 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentException"> <paramref name="dataManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataManagerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DataManagerResource> GetDataManager(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
+        public static Response<HybridDataManagerResource> GetHybridDataManager(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataManagers().Get(dataManagerName, cancellationToken);
+            return resourceGroupResource.GetHybridDataManagers().Get(dataManagerName, cancellationToken);
         }
 
-        #region DataManagerResource
+        #region HybridDataManagerResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataManagerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataManagerResource.CreateResourceIdentifier" /> to create a <see cref="DataManagerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridDataManagerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridDataManagerResource.CreateResourceIdentifier" /> to create a <see cref="HybridDataManagerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataManagerResource" /> object. </returns>
-        public static DataManagerResource GetDataManagerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridDataManagerResource" /> object. </returns>
+        public static HybridDataManagerResource GetHybridDataManagerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataManagerResource.ValidateResourceId(id);
-                return new DataManagerResource(client, id);
+                HybridDataManagerResource.ValidateResourceId(id);
+                return new HybridDataManagerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataServiceResource
+        #region HybridDataServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataServiceResource.CreateResourceIdentifier" /> to create a <see cref="DataServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridDataServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridDataServiceResource.CreateResourceIdentifier" /> to create a <see cref="HybridDataServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataServiceResource" /> object. </returns>
-        public static DataServiceResource GetDataServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridDataServiceResource" /> object. </returns>
+        public static HybridDataServiceResource GetHybridDataServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataServiceResource.ValidateResourceId(id);
-                return new DataServiceResource(client, id);
+                HybridDataServiceResource.ValidateResourceId(id);
+                return new HybridDataServiceResource(client, id);
             }
             );
         }
@@ -178,39 +178,39 @@ namespace Azure.ResourceManager.HybridData
         }
         #endregion
 
-        #region DataStoreResource
+        #region HybridDataStoreResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataStoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataStoreResource.CreateResourceIdentifier" /> to create a <see cref="DataStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridDataStoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridDataStoreResource.CreateResourceIdentifier" /> to create a <see cref="HybridDataStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataStoreResource" /> object. </returns>
-        public static DataStoreResource GetDataStoreResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridDataStoreResource" /> object. </returns>
+        public static HybridDataStoreResource GetHybridDataStoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataStoreResource.ValidateResourceId(id);
-                return new DataStoreResource(client, id);
+                HybridDataStoreResource.ValidateResourceId(id);
+                return new HybridDataStoreResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataStoreTypeResource
+        #region HybridDataStoreTypeResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataStoreTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataStoreTypeResource.CreateResourceIdentifier" /> to create a <see cref="DataStoreTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridDataStoreTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridDataStoreTypeResource.CreateResourceIdentifier" /> to create a <see cref="HybridDataStoreTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataStoreTypeResource" /> object. </returns>
-        public static DataStoreTypeResource GetDataStoreTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridDataStoreTypeResource" /> object. </returns>
+        public static HybridDataStoreTypeResource GetHybridDataStoreTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataStoreTypeResource.ValidateResourceId(id);
-                return new DataStoreTypeResource(client, id);
+                HybridDataStoreTypeResource.ValidateResourceId(id);
+                return new HybridDataStoreTypeResource(client, id);
             }
             );
         }

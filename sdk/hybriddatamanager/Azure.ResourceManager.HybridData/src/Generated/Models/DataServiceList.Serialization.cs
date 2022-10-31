@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridData.Models
     {
         internal static DataServiceList DeserializeDataServiceList(JsonElement element)
         {
-            Optional<IReadOnlyList<DataServiceData>> value = default;
+            Optional<IReadOnlyList<HybridDataServiceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.HybridData.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataServiceData> array = new List<DataServiceData>();
+                    List<HybridDataServiceData> array = new List<HybridDataServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataServiceData.DeserializeDataServiceData(item));
+                        array.Add(HybridDataServiceData.DeserializeHybridDataServiceData(item));
                     }
                     value = array;
                     continue;

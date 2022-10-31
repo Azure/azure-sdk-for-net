@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
         public MarketoLinkedService(object endpoint, object clientId)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(clientId, nameof(clientId));
 
             Endpoint = endpoint;
             ClientId = clientId;

@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static RecommendationConfigurationProperties DeserializeRecommendationConfigurationProperties(JsonElement element)
         {
-            RecommendationType recommendationType = default;
+            IotSecurityRecommendationType recommendationType = default;
             Optional<string> name = default;
             RecommendationConfigStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recommendationType"))
                 {
-                    recommendationType = new RecommendationType(property.Value.GetString());
+                    recommendationType = new IotSecurityRecommendationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))

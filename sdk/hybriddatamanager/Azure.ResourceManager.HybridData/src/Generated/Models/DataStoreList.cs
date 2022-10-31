@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HybridData.Models
         /// <summary> Initializes a new instance of DataStoreList. </summary>
         internal DataStoreList()
         {
-            Value = new ChangeTrackingList<DataStoreData>();
+            Value = new ChangeTrackingList<HybridDataStoreData>();
         }
 
         /// <summary> Initializes a new instance of DataStoreList. </summary>
         /// <param name="value"> List of data stores. </param>
         /// <param name="nextLink"> Link for the next set of data stores. </param>
-        internal DataStoreList(IReadOnlyList<DataStoreData> value, string nextLink)
+        internal DataStoreList(IReadOnlyList<HybridDataStoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of data stores. </summary>
-        public IReadOnlyList<DataStoreData> Value { get; }
+        public IReadOnlyList<HybridDataStoreData> Value { get; }
         /// <summary> Link for the next set of data stores. </summary>
         public string NextLink { get; }
     }

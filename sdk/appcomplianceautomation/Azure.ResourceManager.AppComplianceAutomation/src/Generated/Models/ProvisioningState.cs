@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
+        private const string CanceledValue = "Canceled";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
         /// <summary> Failed. </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-        /// <summary> Cancelled. </summary>
-        public static ProvisioningState Cancelled { get; } = new ProvisioningState(CancelledValue);
+        /// <summary> Canceled. </summary>
+        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
         /// <summary> Creating. </summary>
         public static ProvisioningState Creating { get; } = new ProvisioningState(CreatingValue);
         /// <summary> Deleting. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
@@ -15,17 +17,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public abstract partial class RestoreTargetInfoBase
     {
         /// <summary> Initializes a new instance of RestoreTargetInfoBase. </summary>
-        /// <param name="recoveryOption"> Recovery Option. </param>
-        protected RestoreTargetInfoBase(RecoveryOption recoveryOption)
+        /// <param name="recoverySetting"> Recovery Option. </param>
+        protected RestoreTargetInfoBase(RecoverySetting recoverySetting)
         {
-            RecoveryOption = recoveryOption;
+            RecoverySetting = recoverySetting;
         }
 
         /// <summary> Type of Datasource object, used to initialize the right inherited type. </summary>
         internal string ObjectType { get; set; }
         /// <summary> Recovery Option. </summary>
-        public RecoveryOption RecoveryOption { get; }
+        public RecoverySetting RecoverySetting { get; }
         /// <summary> Target Restore region. </summary>
-        public string RestoreLocation { get; set; }
+        public AzureLocation? RestoreLocation { get; set; }
     }
 }

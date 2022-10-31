@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DaysOfTheWeek))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfTheWeek");
                 writer.WriteStartArray();
-                foreach (var item in DaysOfTheWeek)
+                foreach (var item in DaysOfWeek)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WeeksOfTheMonth))
+            if (Optional.IsCollectionDefined(WeeksOfMonth))
             {
                 writer.WritePropertyName("weeksOfTheMonth");
                 writer.WriteStartArray();
-                foreach (var item in WeeksOfTheMonth)
+                foreach (var item in WeeksOfMonth)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ScheduleBasedBackupCriteria DeserializeScheduleBasedBackupCriteria(JsonElement element)
         {
-            Optional<IList<AbsoluteMarker>> absoluteCriteria = default;
-            Optional<IList<Day>> daysOfMonth = default;
-            Optional<IList<DayOfWeek>> daysOfTheWeek = default;
-            Optional<IList<Month>> monthsOfYear = default;
+            Optional<IList<BackupAbsoluteMarker>> absoluteCriteria = default;
+            Optional<IList<DataProtectionBackupDay>> daysOfMonth = default;
+            Optional<IList<DataProtectionBackupDayOfWeek>> daysOfTheWeek = default;
+            Optional<IList<DataProtectionBackupMonth>> monthsOfYear = default;
             Optional<IList<DateTimeOffset>> scheduleTimes = default;
-            Optional<IList<WeekNumber>> weeksOfTheMonth = default;
+            Optional<IList<DataProtectionBackupWeekNumber>> weeksOfTheMonth = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AbsoluteMarker> array = new List<AbsoluteMarker>();
+                    List<BackupAbsoluteMarker> array = new List<BackupAbsoluteMarker>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AbsoluteMarker(item.GetString()));
+                        array.Add(new BackupAbsoluteMarker(item.GetString()));
                     }
                     absoluteCriteria = array;
                     continue;
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Day> array = new List<Day>();
+                    List<DataProtectionBackupDay> array = new List<DataProtectionBackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Day.DeserializeDay(item));
+                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item));
                     }
                     daysOfMonth = array;
                     continue;
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<DataProtectionBackupDayOfWeek> array = new List<DataProtectionBackupDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new DayOfWeek(item.GetString()));
+                        array.Add(new DataProtectionBackupDayOfWeek(item.GetString()));
                     }
                     daysOfTheWeek = array;
                     continue;
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Month> array = new List<Month>();
+                    List<DataProtectionBackupMonth> array = new List<DataProtectionBackupMonth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Month(item.GetString()));
+                        array.Add(new DataProtectionBackupMonth(item.GetString()));
                     }
                     monthsOfYear = array;
                     continue;
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WeekNumber> array = new List<WeekNumber>();
+                    List<DataProtectionBackupWeekNumber> array = new List<DataProtectionBackupWeekNumber>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new WeekNumber(item.GetString()));
+                        array.Add(new DataProtectionBackupWeekNumber(item.GetString()));
                     }
                     weeksOfTheMonth = array;
                     continue;

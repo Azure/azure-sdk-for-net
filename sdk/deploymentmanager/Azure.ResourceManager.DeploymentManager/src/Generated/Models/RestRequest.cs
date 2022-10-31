@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
@@ -23,14 +24,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="authentication"/> is null. </exception>
         public RestRequest(RestRequestMethod method, Uri uri, RestRequestAuthentication authentication)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (authentication == null)
-            {
-                throw new ArgumentNullException(nameof(authentication));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(authentication, nameof(authentication));
 
             Method = method;
             Uri = uri;

@@ -16,21 +16,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of DefenderForServersAwsOfferingArcAutoProvisioning. </summary>
-        /// <param name="enabled"> Is arc auto provisioning enabled. </param>
+        /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        /// <param name="servicePrincipalSecretMetadata"> Metadata of Service Principal secret for autoprovisioning. </param>
-        internal DefenderForServersAwsOfferingArcAutoProvisioning(bool? enabled, string cloudRoleArn, DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata servicePrincipalSecretMetadata)
+        internal DefenderForServersAwsOfferingArcAutoProvisioning(bool? isEnabled, string cloudRoleArn)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             CloudRoleArn = cloudRoleArn;
-            ServicePrincipalSecretMetadata = servicePrincipalSecretMetadata;
         }
 
         /// <summary> Is arc auto provisioning enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
-        /// <summary> Metadata of Service Principal secret for autoprovisioning. </summary>
-        public DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata ServicePrincipalSecretMetadata { get; set; }
     }
 }

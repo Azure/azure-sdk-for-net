@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of ResourceGuardResourceList. </summary>
         internal ResourceGuardResourceList()
         {
-            Value = new ChangeTrackingList<ResourceGuardResourceData>();
+            Value = new ChangeTrackingList<ResourceGuardData>();
         }
 
         /// <summary> Initializes a new instance of ResourceGuardResourceList. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal ResourceGuardResourceList(IReadOnlyList<ResourceGuardResourceData> value, string nextLink)
+        internal ResourceGuardResourceList(IReadOnlyList<ResourceGuardData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<ResourceGuardResourceData> Value { get; }
+        public IReadOnlyList<ResourceGuardData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </summary>
         public string NextLink { get; }
     }

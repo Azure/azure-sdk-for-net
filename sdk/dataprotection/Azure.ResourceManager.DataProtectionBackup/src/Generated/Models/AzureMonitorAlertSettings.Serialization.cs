@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertsForAllJobFailures))
+            if (Optional.IsDefined(AlertSettingsForAllJobFailures))
             {
                 writer.WritePropertyName("alertsForAllJobFailures");
-                writer.WriteStringValue(AlertsForAllJobFailures.Value.ToString());
+                writer.WriteStringValue(AlertSettingsForAllJobFailures.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static AzureMonitorAlertSettings DeserializeAzureMonitorAlertSettings(JsonElement element)
         {
-            Optional<AlertsState> alertsForAllJobFailures = default;
+            Optional<AzureMonitorAlertsState> alertsForAllJobFailures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsForAllJobFailures"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    alertsForAllJobFailures = new AlertsState(property.Value.GetString());
+                    alertsForAllJobFailures = new AzureMonitorAlertsState(property.Value.GetString());
                     continue;
                 }
             }

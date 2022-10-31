@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SystemData> systemData = default;
             Optional<IotSeverityMetrics> metrics = default;
             Optional<long> unhealthyDeviceCount = default;
-            Optional<IReadOnlyList<IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>> devicesMetrics = default;
+            Optional<IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics>> devicesMetrics = default;
             Optional<IList<IotSecurityAlertedDevice>> topAlertedDevices = default;
             Optional<IList<IotSecurityDeviceAlert>> mostPrevalentDeviceAlerts = default;
             Optional<IList<IotSecurityDeviceRecommendation>> mostPrevalentDeviceRecommendations = default;
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> array = new List<IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>();
+                            List<IotSecuritySolutionAnalyticsModelDevicesMetrics> array = new List<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem.DeserializeIotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem(item));
+                                array.Add(IotSecuritySolutionAnalyticsModelDevicesMetrics.DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(item));
                             }
                             devicesMetrics = array;
                             continue;

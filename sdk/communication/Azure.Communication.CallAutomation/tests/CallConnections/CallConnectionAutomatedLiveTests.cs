@@ -41,6 +41,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
                 // create call and assert response
                 var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                createCallOptions.RepeatabilityHeaders = null;
                 CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -51,6 +52,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
                 // answer the call
                 var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                answerCallOptions.RepeatabilityHeaders = null;
                 AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
 
                 // wait for callConnected
@@ -73,6 +75,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 var removeParticipantsOptions = new RemoveParticipantsOptions(new CommunicationIdentifier[] { target }) {
                     OperationContext = operationContext1,
                 };
+                removeParticipantsOptions.RepeatabilityHeaders = null;
                 Response<RemoveParticipantsResult> removePartResponse = await response.CallConnection.RemoveParticipantsAsync(removeParticipantsOptions);
                 Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
                 Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
@@ -92,8 +95,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             {
                 if (!string.IsNullOrEmpty(callConnectionId))
                 {
-                    var hangUpOptions = new HangUpOptions(true);
-                    await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
                 }
             }
         }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="lookbackPeriod"/> is null. </exception>
         public MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(DataTypeState state, string lookbackPeriod) : base(state)
         {
-            if (lookbackPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(lookbackPeriod));
-            }
+            Argument.AssertNotNull(lookbackPeriod, nameof(lookbackPeriod));
 
             LookbackPeriod = lookbackPeriod;
         }
