@@ -12,65 +12,68 @@ using System.Security.Cryptography;
 namespace Azure.Messaging.ServiceBus.Stress;
 
 /// <summary>
-///   The role responsible for running a <see cref="ServiceBusReceiver" \>, and testing its performance over
+///   The role responsible for running a <see cref="ServiceBusProcessor" \>, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
 ///   <see cref="TelemetryClient" \>. The metrics collected are garbage collection information, any exceptions
-///   thrown or heard, and how many messages are received and read. It stops reading messages and cleans up resources
+///   thrown or heard, and how many messages are received and processed. It stops reading messages and cleans up resources
 ///   at the end of the test run.
 /// </summary>
 ///
-internal class Receiver
+internal class Processor
 {
-    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Receiver" /> instance.</summary>
+    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Processor" /> instance.</summary>
     private Metrics _metrics { get; }
 
     /// <summary>The <see cref="TestParameters" /> used to run this test.</summary>
     private TestParameters _testParameters { get; }
 
-    /// <summary>The <see cref="ReceiverConfiguration" /> used to configure the instance of this role.</summary>
-    private ReceiverConfiguration _receiverConfiguration { get; }
+    /// <summary>The <see cref="ProcessorConfiguration" /> used to configure the instance of this role.</summary>
+    private ProcessorConfiguration _processorConfiguration { get; }
 
     /// <summary>Holds the set of messages that have been read by this instance. The key is the event's unique Id set by the sender.</summary>
     private ConcurrentDictionary<string, byte> _readMessages { get; }
 
     /// <summary>
-    ///   Initializes a new <see cref="Receiver" \> instance.
+    ///   Initializes a new <see cref="Processor" \> instance.
     /// </summary>
     ///
     /// <param name="testParameters">The <see cref="TestParameters"/> used to configure the test scenario run.</param>
-    /// <param name="receiverConfiguration">The <see cref="ReceiverConfiguration"/> instance used to configure this instance of <see cref="Receiver" />.</param>
+    /// <param name="processorConfiguration">The <see cref="processorConfiguration"/> instance used to configure this instance of <see cref="Receiver" />.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send metrics to Application Insights.</param>
     ///
     public Receiver(TestParameters testParameters,
-                     ReceiverConfiguration receiverConfiguration,
+                     ProcessorConfiguration processorConfiguration,
                      Metrics metrics)
     {
         _testParameters = testParameters;
-        _receiverConfiguration = receiverConfiguration;
+        _processorConfiguration = processorConfiguration;
         _metrics = metrics;
         //_readMessages = readEvents;     /// <param name="readEvents">The dictionary holding the key values of the unique Id's of all the events that have been read so far.</param>
     }
 
     /// <summary>
-    ///   Starts an instance of a <see cref="Receiver"/> role. This role creates an <see cref="ServiceBusReceiver"/>
+    ///   Starts an instance of a <see cref="Processor"/> role. This role creates a <see cref="ServiceBusProcessor"/>
     ///   and monitors it while it reads messages that have been sent to this test's Service Bus queue by independent
     ///   <see cref="Sender"/> role(s).
     /// </summary>
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunAsync(CancellationToken cancellationToken)
+    public async Task RunAsync(Func<ProcessMessageEventArgs, Task> messageHandler, Func<ProcessErrorEventArgs, Task> errorHandler, CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-        var receiver = client.CreateReceiver(_testParameters.QueueName);
+        // TODO add options
+        await using var processor = client.CreateProcessor(_testParameters.QueueName);
 
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                var message = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
-                _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);
-                // TODO: check event
+                processor.ProcessMessageAsync += messageHandler;
+                processor.ProcessErrorAsync += errorHandler;
+
+                await processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                await Task.Delay(Timeout.Infinite, cancellationToken).ConfigureAwait(false);
             }
             catch (TaskCanceledException)
             {
@@ -88,6 +91,29 @@ internal class Receiver
                 // TODO: determine metrics
                 //_metrics.Client.GetMetric(Metrics.ConsumerRestarted).TrackValue(1);
                 _metrics.Client.TrackException(ex);
+            }
+            finally
+            {
+                // Constrain stopping the processor, just in case it has issues.  It should not be allowed
+                // to hang, it should be abandoned so that processing can restart.
+
+                using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(25));
+
+                try
+                {
+                    if (processor != null)
+                    {
+                        _metrics.Client.TrackEvent("Stopping processing events");
+                        await processor.StopProcessingAsync(cancellationSource.Token).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _metrics.Client.GetMetric(Metrics.ProcessorRestarted).TrackValue(1);
+                    _metrics.Client.TrackException(ex);
+                }
+                processor.ProcessMessageAsync -= messageHandler;
+                processor.ProcessErrorAsync -= errorHandler;
             }
         }
     }

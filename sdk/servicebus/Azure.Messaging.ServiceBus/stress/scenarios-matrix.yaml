@@ -3,3 +3,4 @@ matrix:
     sendreceive:
       image: Dockerfile
       imageBuildDir: "../../../.."
+      scenarioName: "SendRec"

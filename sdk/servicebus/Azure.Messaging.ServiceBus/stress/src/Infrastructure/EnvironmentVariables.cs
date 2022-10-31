@@ -32,7 +32,7 @@ public static class EnvironmentVariables
     ///   for the Service Bus send and receive test.
     /// </summary>
     ///
-    public const string ServiceBusSendReceiveTest = "SERVICE_BUS_SEND_RECEIVE_TEST";
+    public const string ServiceBusSendReceiveTest = "SERVICEBUS_QUEUE_SENDRECEIVE";
 
     // Job Index Information
 

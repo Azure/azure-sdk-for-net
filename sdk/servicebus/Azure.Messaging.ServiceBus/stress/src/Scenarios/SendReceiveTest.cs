@@ -24,7 +24,7 @@ public class SendReceiveTest
     private Metrics _metrics;
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles = {Role.Sender};
+    private static Role[] _roles = {Role.Sender, Role.Receiver};
 
     /// <summary>
     ///  Initializes a new <see cref="SendReceiveTest"/> instance.
@@ -86,6 +86,11 @@ public class SendReceiveTest
                 var senderConfiguration = new SenderConfiguration();
                 var sender = new Sender(_testParameters, senderConfiguration, _metrics);
                 return Task.Run(() => sender.RunAsync(cancellationToken));
+
+            case Role.Receiver:
+                var receiverConfiguration = new ReceiverConfiguration();
+                var receiver = new Receiver(_testParameters, receiverConfiguration, _metrics);
+                return Task.Run(() => receiver.RunAsync(cancellationToken));
 
             default:
                 throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
