@@ -403,84 +403,6 @@ namespace Azure.Communication.CallAutomation
         public bool ForEveryone { get { throw null; } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaStreamingAudioChannelType : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingAudioChannelType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaStreamingAudioChannelType(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingAudioChannelType Mixed { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingAudioChannelType Unmixed { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.MediaStreamingAudioChannelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.MediaStreamingAudioChannelType left, Azure.Communication.CallAutomation.MediaStreamingAudioChannelType right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.MediaStreamingAudioChannelType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingAudioChannelType left, Azure.Communication.CallAutomation.MediaStreamingAudioChannelType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MediaStreamingAudioData : Azure.Communication.CallAutomation.MediaStreamingPackageBase
-    {
-        internal MediaStreamingAudioData() { }
-        public string Data { get { throw null; } }
-        public bool IsSilent { get { throw null; } }
-        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
-        public System.DateTime Timestamp { get { throw null; } }
-    }
-    public partial class MediaStreamingConfiguration
-    {
-        public MediaStreamingConfiguration(string transportUrl, Azure.Communication.CallAutomation.MediaStreamingTransportType transportType, Azure.Communication.CallAutomation.MediaStreamingContentType contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannelType audioChannelType) { }
-        public Azure.Communication.CallAutomation.MediaStreamingAudioChannelType AudioChannelType { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingContentType ContentType { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingTransportType TransportType { get { throw null; } }
-        public string TransportUrl { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaStreamingContentType : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingContentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaStreamingContentType(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingContentType Audio { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.MediaStreamingContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.MediaStreamingContentType left, Azure.Communication.CallAutomation.MediaStreamingContentType right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.MediaStreamingContentType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingContentType left, Azure.Communication.CallAutomation.MediaStreamingContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public abstract partial class MediaStreamingPackageBase
-    {
-        protected MediaStreamingPackageBase() { }
-    }
-    public static partial class MediaStreamingPackageParser
-    {
-        public static Azure.Communication.CallAutomation.MediaStreamingPackageBase Parse(System.BinaryData json) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingPackageBase Parse(byte[] receivedBytes) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingPackageBase Parse(string stringJson) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaStreamingTransportType : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingTransportType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaStreamingTransportType(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingTransportType Websocket { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.MediaStreamingTransportType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.MediaStreamingTransportType left, Azure.Communication.CallAutomation.MediaStreamingTransportType right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.MediaStreamingTransportType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingTransportType left, Azure.Communication.CallAutomation.MediaStreamingTransportType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ParticipantsUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal ParticipantsUpdated() { }
@@ -729,22 +651,5 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
         public string UserToUserInformation { get { throw null; } set { } }
-    }
-}
-namespace Azure.Communication.CallAutomation.Models.MediaStreaming
-{
-    public partial class MediaStreamingMetadata : Azure.Communication.CallAutomation.MediaStreamingPackageBase
-    {
-        public MediaStreamingMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("channels")]
-        public int Channels { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("encoding")]
-        public string Encoding { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("length")]
-        public int Length { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
-        public string MediaSubscriptionId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
-        public int SampleRate { get { throw null; } set { } }
     }
 }
