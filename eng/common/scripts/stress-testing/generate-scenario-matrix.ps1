@@ -24,7 +24,11 @@ function GenerateScenarioMatrix(
         -Filters $Filters `
         -Replace $Replace `
         -NonSparseParameters $NonSparseParameters
+
+    Write-Host "=================================================="
+    Write-Host "Generated matrix for $matrixFilePath"
     Write-Host $prettyMatrix
+    Write-Host "=================================================="
     $prettyMatrix = $prettyMatrix | ConvertFrom-Json
 
     $scenariosMatrix = @()
@@ -47,7 +51,7 @@ function GenerateScenarioMatrix(
         if (!$values) {$values = @{}}
 
         if ($values.Contains('Scenarios')) {
-            throw "Please use matrix generation for stress test scenarios."
+            throw "Please remove the 'Scenarios' key from $valuesConfig as it is deprecated."
         }
     }
 
