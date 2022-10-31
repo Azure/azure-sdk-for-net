@@ -27,6 +27,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     [LiveOnly(true)]
     public class EventHubEndToEndTests : WebJobsEventHubTestBase
     {
+
+        private static readonly TimeSpan NoEventReadTimeout = TimeSpan.FromSeconds(5);
+
         private static EventWaitHandle _eventWait;
         private static List<string> _results;
         private static DateTimeOffset _initialOffsetEnqueuedTimeUTC;
@@ -372,20 +375,28 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (jobHost)
             {
                 // We don't expect to get signaled as there should be no messages received with a FromEnd initial offset
-                bool result = _eventWait.WaitOne(1000);
+                bool result = _eventWait.WaitOne(NoEventReadTimeout);
                 Assert.False(result, "An event was received while none were expected.");
 
-                // send a new event which should be received
-                await producer.SendAsync(new EventData[]
+                // send events which should be received.  To ensure that the test is
+                // resilient to any errors where the link needs to be reestablished,
+                // continue sending events until cancellation takes place.
+
+                using var cts = new CancellationTokenSource();
+
+                var sendTask = Task.Run(async () =>
                 {
-                    new EventData(new BinaryData("data")),
-                    new EventData(new BinaryData("data")),
-                    new EventData(new BinaryData("data")),
-                    new EventData(new BinaryData("data")),
-                    new EventData(new BinaryData("data"))
+                    while (!cts.IsCancellationRequested)
+                    {
+                        await producer.SendAsync(new[] { new EventData("data") }, cts.Token).ConfigureAwait(false);
+                    }
                 });
 
                 result = _eventWait.WaitOne(Timeout);
+
+                cts.Cancel();
+                try { await sendTask; } catch { /* Ignore, we're not testing sends */ }
+
                 Assert.True(result);
             }
         }
