@@ -266,11 +266,27 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task DetectLanguageBatchWithScriptTest()
+        {
+            string document = "Tumhara naam kya hai?";
+
+            TextAnalyticsClient client = GetClient();
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions() { ModelVersion = "2022-04-10-preview" };
+
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(new List<string>() { document }, options: options);
+
+            Assert.AreEqual(ScriptKind.Latin, results[0].PrimaryLanguage.Script);
+            ValidateBatchDocumentsResult(results);
+        }
+
         private void ValidateInDocumenResult(DetectedLanguage language)
         {
             Assert.That(language.Name, Is.Not.Null.And.Not.Empty);
             Assert.That(language.Iso6391Name, Is.Not.Null.And.Not.Empty);
             Assert.GreaterOrEqual(language.ConfidenceScore, 0.0);
+            Assert.LessOrEqual(language.ConfidenceScore, 1.0);
             Assert.IsNotNull(language.Warnings);
         }
 

@@ -1,0 +1,70 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "172",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-2615cf99f43b06b26679cba871b851c6-8a51d86655dbb9c9-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221030.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "38f55ec3027054683d28a89a13c4c4db",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Tumhara naam kya hai?",
+              "countryHint": "us"
+            }
+          ]
+        },
+        "parameters": {
+          "modelVersion": "2022-04-10-preview"
+        },
+        "kind": "LanguageDetection"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e640d404-1894-40ea-a8d3-b12fb16ba861",
+        "Content-Length": "228",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
+        "Date": "Mon, 31 Oct 2022 17:33:22 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "28",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "kind": "LanguageDetectionResults",
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "detectedLanguage": {
+                "name": "Hindi",
+                "iso6391Name": "hi",
+                "confidenceScore": 1.0,
+                "script": "Latin"
+              },
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2022-04-10-preview"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1628020894",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}
