@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -24,10 +25,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="rule"/> is null. </exception>
         public RuleEngineWorkerSelectorAttachment(RouterRule rule)
         {
-            if (rule == null)
-            {
-                throw new ArgumentNullException(nameof(rule));
-            }
+            Argument.AssertNotNull(rule, nameof(rule));
 
             Rule = rule;
             Kind = "rule-engine";

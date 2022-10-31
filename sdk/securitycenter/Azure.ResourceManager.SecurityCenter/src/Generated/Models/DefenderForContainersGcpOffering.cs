@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The containers GCP offering. </summary>
-    public partial class DefenderForContainersGcpOffering : CloudOffering
+    public partial class DefenderForContainersGcpOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of DefenderForContainersGcpOffering. </summary>
         public DefenderForContainersGcpOffering()

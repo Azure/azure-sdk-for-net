@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="meterId"/> is null. </exception>
         public SkuCost(string meterId)
         {
-            if (meterId == null)
-            {
-                throw new ArgumentNullException(nameof(meterId));
-            }
+            Argument.AssertNotNull(meterId, nameof(meterId));
 
             MeterId = meterId;
         }

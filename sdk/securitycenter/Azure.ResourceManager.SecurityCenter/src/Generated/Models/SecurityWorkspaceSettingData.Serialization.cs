@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> workspaceId = default;
+            Optional<ResourceIdentifier> workspaceId = default;
             Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -78,7 +78,12 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         if (property0.NameEquals("workspaceId"))
                         {
-                            workspaceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            workspaceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scope"))

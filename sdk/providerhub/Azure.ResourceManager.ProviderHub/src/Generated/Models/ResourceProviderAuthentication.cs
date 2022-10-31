@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedAudiences"/> is null. </exception>
         public ResourceProviderAuthentication(IEnumerable<string> allowedAudiences)
         {
-            if (allowedAudiences == null)
-            {
-                throw new ArgumentNullException(nameof(allowedAudiences));
-            }
+            Argument.AssertNotNull(allowedAudiences, nameof(allowedAudiences));
 
             AllowedAudiences = allowedAudiences.ToList();
         }

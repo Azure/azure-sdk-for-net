@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("expiryTime");
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(RecoveryPointDataStoreId))
             {
                 writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(RecoveryPointDataStoreId.Value);
             }
             if (Optional.IsDefined(Metadata))
             {
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(RecoveryPointDataStoreDetailType))
+            if (Optional.IsDefined(RecoveryPointDataStoreType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(RecoveryPointDataStoreDetailType);
+                writer.WriteStringValue(RecoveryPointDataStoreType);
             }
             if (Optional.IsDefined(IsVisible))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> expiryTime = default;
-            Optional<string> id = default;
+            Optional<Guid> id = default;
             Optional<string> metaData = default;
             Optional<string> state = default;
             Optional<string> type = default;
@@ -89,7 +89,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("metaData"))
@@ -138,7 +143,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new RecoveryPointDataStoreDetail(Optional.ToNullable(creationTime), Optional.ToNullable(expiryTime), id.Value, metaData.Value, state.Value, type.Value, Optional.ToNullable(visible), Optional.ToNullable(rehydrationExpiryTime), Optional.ToNullable(rehydrationStatus));
+            return new RecoveryPointDataStoreDetail(Optional.ToNullable(creationTime), Optional.ToNullable(expiryTime), Optional.ToNullable(id), metaData.Value, state.Value, type.Value, Optional.ToNullable(visible), Optional.ToNullable(rehydrationExpiryTime), Optional.ToNullable(rehydrationStatus));
         }
     }
 }

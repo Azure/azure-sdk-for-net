@@ -21,14 +21,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="managedByTenantId"/> or <paramref name="authorizations"/> is null. </exception>
         internal MarketplaceRegistrationDefinitionProperties(string managedByTenantId, IEnumerable<Authorization> authorizations)
         {
-            if (managedByTenantId == null)
-            {
-                throw new ArgumentNullException(nameof(managedByTenantId));
-            }
-            if (authorizations == null)
-            {
-                throw new ArgumentNullException(nameof(authorizations));
-            }
+            Argument.AssertNotNull(managedByTenantId, nameof(managedByTenantId));
+            Argument.AssertNotNull(authorizations, nameof(authorizations));
 
             ManagedByTenantId = managedByTenantId;
             Authorizations = authorizations.ToList();

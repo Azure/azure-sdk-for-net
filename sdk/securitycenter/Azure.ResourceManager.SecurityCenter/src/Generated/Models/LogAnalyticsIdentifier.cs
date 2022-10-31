@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents a Log Analytics workspace scope identifier. </summary>
-    public partial class LogAnalyticsIdentifier : AlertResourceIdentifier
+    public partial class LogAnalyticsIdentifier : SecurityAlertResourceIdentifier
     {
         /// <summary> Initializes a new instance of LogAnalyticsIdentifier. </summary>
         internal LogAnalyticsIdentifier()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="workspaceSubscriptionId"> The azure subscription id for the LogAnalytics workspace storing this alert. </param>
         /// <param name="workspaceResourceGroup"> The azure resource group for the LogAnalytics workspace storing this alert. </param>
         /// <param name="agentId"> (optional) The LogAnalytics agent id reporting the event that this alert is based on. </param>
-        internal LogAnalyticsIdentifier(ResourceIdentifierType resourceIdentifierType, string workspaceId, string workspaceSubscriptionId, string workspaceResourceGroup, Guid? agentId) : base(resourceIdentifierType)
+        internal LogAnalyticsIdentifier(ResourceIdentifierType resourceIdentifierType, Guid? workspaceId, string workspaceSubscriptionId, string workspaceResourceGroup, Guid? agentId) : base(resourceIdentifierType)
         {
             WorkspaceId = workspaceId;
             WorkspaceSubscriptionId = workspaceSubscriptionId;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The LogAnalytics workspace id that stores this alert. </summary>
-        public string WorkspaceId { get; }
+        public Guid? WorkspaceId { get; }
         /// <summary> The azure subscription id for the LogAnalytics workspace storing this alert. </summary>
         public string WorkspaceSubscriptionId { get; }
         /// <summary> The azure resource group for the LogAnalytics workspace storing this alert. </summary>

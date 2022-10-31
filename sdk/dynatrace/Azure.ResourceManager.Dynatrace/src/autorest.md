@@ -87,5 +87,10 @@ rename-mapping:
   EnvironmentInfo: DynatraceEnvironmentInfo
   EnvironmentInfo.logsIngestionEndpoint: -|Uri
   SSOStatus: DynatraceSsoStatus
+  SendAadLogsStatus: AadLogsSendingStatus
+  SendSubscriptionLogsStatus: SubscriptionLogsSendingStatus
+  SendActivityLogsStatus: ActivityLogsSendingStatus
+  SendingLogsStatus: LogsSendingStatus
+  SendingMetricsStatus: MetricsSendingStatus
 
 ```

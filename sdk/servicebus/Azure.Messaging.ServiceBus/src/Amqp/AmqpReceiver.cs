@@ -1336,9 +1336,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             RequestResponseLockedMessages.Dispose();
 
-            if (_receiveLink?.TryGetOpenedObject(out var _) == true)
+            if (_receiveLink?.TryGetOpenedObject(out var link) == true)
             {
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                // Allow in-flight messages to drain so that they do not remain locked by the service after closing the link.
+                // This should be updated when the AMQP library adds deterministic support for draining via an async method to remove the
+                // somewhat arbitrary delay and to also work for prefetch.
+
+                if (!_isSessionReceiver && !link.Settings.AutoSendFlow && link.LinkCredit > 0)
+                {
+                    link.IssueCredit(link.LinkCredit, true, AmqpConstants.NullBinary);
+                    await Task.Delay(200, cancellationToken).ConfigureAwait(false);
+                }
+
                 await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
 

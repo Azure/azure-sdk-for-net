@@ -21,14 +21,8 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultBaseUri"/> or <paramref name="keyVaultSecretName"/> is null. </exception>
         public CustomCertificateData(Uri keyVaultBaseUri, string keyVaultSecretName)
         {
-            if (keyVaultBaseUri == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultBaseUri));
-            }
-            if (keyVaultSecretName == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultSecretName));
-            }
+            Argument.AssertNotNull(keyVaultBaseUri, nameof(keyVaultBaseUri));
+            Argument.AssertNotNull(keyVaultSecretName, nameof(keyVaultSecretName));
 
             KeyVaultBaseUri = keyVaultBaseUri;
             KeyVaultSecretName = keyVaultSecretName;

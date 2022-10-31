@@ -22,14 +22,8 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocation"/> or <paramref name="targetSubscriptionId"/> is null. </exception>
         public ServiceResourceData(AzureLocation location, string targetLocation, string targetSubscriptionId) : base(location)
         {
-            if (targetLocation == null)
-            {
-                throw new ArgumentNullException(nameof(targetLocation));
-            }
-            if (targetSubscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(targetSubscriptionId));
-            }
+            Argument.AssertNotNull(targetLocation, nameof(targetLocation));
+            Argument.AssertNotNull(targetSubscriptionId, nameof(targetSubscriptionId));
 
             TargetLocation = targetLocation;
             TargetSubscriptionId = targetSubscriptionId;

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-10-28)
+
+### Bugs Fixed
+- Fix the issue that `expiresAfter` might be 0
 
 ## 1.1.0-beta.1 (2022-08-06)
 

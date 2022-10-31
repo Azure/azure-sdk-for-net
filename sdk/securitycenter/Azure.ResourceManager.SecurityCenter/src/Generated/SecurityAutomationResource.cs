@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> The security automation resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<AutomationValidationStatus>> ValidateAsync(SecurityAutomationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityAutomationValidationStatus>> ValidateAsync(SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> The security automation resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<AutomationValidationStatus> Validate(SecurityAutomationData data, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityAutomationValidationStatus> Validate(SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

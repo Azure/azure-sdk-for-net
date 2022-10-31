@@ -248,7 +248,7 @@ function DeployStressPackage(
                 }
             }
         }
-        $genVal.scenarios = foreach ($scenario in $genVal.scenarios) {
+        $genVal.scenarios = @( foreach ($scenario in $genVal.scenarios) {
             $dockerPath = Join-Path $pkg.Directory $scenario.image
             if ("image" -notin $scenario) {
                 $dockerPath = $dockerFilePath
@@ -257,7 +257,7 @@ function DeployStressPackage(
                 $scenario.imageTag = $imageTag
             }
             $scenario
-        }
+        } )
 
         $genVal | ConvertTo-Yaml | Out-File -FilePath $genValFile
     }

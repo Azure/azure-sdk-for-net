@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public VMwareCbtUpdateDiskInput(string diskId)
         {
-            if (diskId == null)
-            {
-                throw new ArgumentNullException(nameof(diskId));
-            }
+            Argument.AssertNotNull(diskId, nameof(diskId));
 
             DiskId = diskId;
         }

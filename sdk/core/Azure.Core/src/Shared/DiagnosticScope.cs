@@ -94,6 +94,12 @@ namespace Azure.Core.Pipeline
             }
         }
 
+        /// <summary>
+        /// Adds a link to the scope. This must be called before <see cref="Start"/> has been called for the DiagnosticScope.
+        /// </summary>
+        /// <param name="traceparent">The traceparent for the link.</param>
+        /// <param name="tracestate">The tracestate for the link.</param>
+        /// <param name="attributes">Optional attributes to associate with the link.</param>
         public void AddLink(string traceparent, string tracestate, IDictionary<string, string>? attributes = null)
         {
             _activityAdapter?.AddLink(traceparent, tracestate, attributes);
@@ -108,6 +114,15 @@ namespace Azure.Core.Pipeline
         public void SetStartTime(DateTime dateTime)
         {
             _activityAdapter?.SetStartTime(dateTime);
+        }
+
+        /// <summary>
+        /// Sets the trace parent for the current scope.
+        /// </summary>
+        /// <param name="traceparent">The trace parent to set for the current scope.</param>
+        public void SetTraceparent(string traceparent)
+        {
+            _activityAdapter?.SetTraceparent(traceparent);
         }
 
         public void Dispose()
@@ -176,6 +191,7 @@ namespace Azure.Core.Pipeline
             private ICollection<KeyValuePair<string,object>>? _tagCollection;
             private DateTimeOffset _startTime;
             private List<Activity>? _links;
+            private string? _traceparent;
 
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
@@ -303,6 +319,11 @@ namespace Azure.Core.Pipeline
                         }
                     }
 
+                    if (_traceparent != null)
+                    {
+                        _currentActivity.SetParentId(_traceparent);
+                    }
+
                     _currentActivity.Start();
                 }
 
@@ -331,6 +352,12 @@ namespace Azure.Core.Pipeline
             public void MarkFailed(Exception exception)
             {
                 _diagnosticSource?.Write(_activityName + ".Exception", exception);
+            }
+
+            public void SetTraceparent(string traceparent)
+            {
+                _traceparent = traceparent;
+                _currentActivity?.SetParentId(traceparent);
             }
 
             public void Dispose()

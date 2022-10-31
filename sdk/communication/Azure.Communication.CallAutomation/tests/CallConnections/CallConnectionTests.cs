@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using System;
+using Azure.Communication.CallAutomation.Models.Misc;
 
 namespace Azure.Communication.CallAutomation.Tests.CallConnections
 {
@@ -162,6 +164,43 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.AreEqual(ex?.Status, 404);
         }
 
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_NoCallerId))]
+        public void TransferCallToParticipant_NoCallerIdValidation(CommunicationIdentifier targetParticipant)
+        {
+            var callConnection = CreateMockCallConnection(202);
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(targetParticipant)));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains("Value cannot be null."));
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public void TransferCallToParticipant_ExceedsMaxOperationContextLength(CommunicationIdentifier targetParticipant)
+        {
+            var callConnection = CreateMockCallConnection(202);
+
+            var options = new TransferToParticipantOptions(targetParticipant) {
+                OperationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
+            };
+            ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.OperationContextExceedsMaxLength));
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public void TransferCallToParticipant_ExceedsMaxUserToUserInformationLengthLength(CommunicationIdentifier targetParticipant)
+        {
+            var callConnection = CreateMockCallConnection(202);
+
+            var options = new TransferToParticipantOptions(targetParticipant)
+            {
+                UserToUserInformation = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
+            };
+            ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength));
+        }
+
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public async Task AddParticipantsAsync_202Accepted(CommunicationIdentifier[] participantsToAdd)
         {
@@ -182,6 +221,43 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             verifyAddParticipantsResult(response);
         }
 
+        [Test]
+        public void AddParticipantsAsync_EmptyParticipantsToAdd()
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantsAsync(new AddParticipantsOptions(new CommunicationIdentifier[] { })).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
+        }
+
+        [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        public void AddParticipantsAsync_ExceedsInvitationTimeOut(CommunicationIdentifier[] participantsToAdd)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
+
+            var options = new AddParticipantsOptions(participantsToAdd) {
+                InvitationTimeoutInSeconds = CallAutomationConstants.InputValidation.MaxInvitationTimeoutInSeconds + 1
+            };
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantsAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidInvitationTimeoutInSeconds));
+        }
+
+        [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        public void AddParticipantsAsync_NegativeInvitationTimeOut(CommunicationIdentifier[] participantsToAdd)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
+
+            var options = new AddParticipantsOptions(participantsToAdd)
+            {
+                InvitationTimeoutInSeconds = 0
+            };
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.AddParticipantsAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidInvitationTimeoutInSeconds));
+        }
+
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public void AddParticipantsAsync_404NotFound(CommunicationIdentifier[] participantsToAdd)
         {
@@ -200,6 +276,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipants(new AddParticipantsOptions(participantsToAdd)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipants_NoCallerId))]
+        public void AddParticipants_NoCallerId(CommunicationIdentifier[] participantsToAdd)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.AddParticipants(new AddParticipantsOptions(participantsToAdd)));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains("Value cannot be null."));
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
@@ -302,6 +388,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
 
+        [Test]
+        public void RemoveParticipants_EmptyParticipantsToRemove()
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(new CommunicationIdentifier[] { }).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
+        }
+
+        [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
+        public void RemoveParticipants_ExceedsMaxOperationContextLength(CommunicationIdentifier[] participants)
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            var operationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength);
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(participants, operationContext).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.OperationContextExceedsMaxLength));
+        }
+
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public void RemoveParticipantsAsync_404NotFound(CommunicationIdentifier[] participants)
         {
@@ -349,6 +456,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
         }
 
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_NoCallerId()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new PhoneNumberIdentifier("+123456")
+                },
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_GetParticipant()
         {
             return new[]
@@ -367,6 +485,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 new object?[]
                 {
                     new CommunicationIdentifier[] { new CommunicationUserIdentifier("userId"), new CommunicationUserIdentifier("userId2") }
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_AddParticipants_NoCallerId()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CommunicationIdentifier[] { new CommunicationUserIdentifier("userId"), new PhoneNumberIdentifier("+1234567") }
                 },
             };
         }

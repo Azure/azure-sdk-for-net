@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         public FusionSourceSettings(bool enabled, string sourceName)
         {
-            if (sourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceName));
-            }
+            Argument.AssertNotNull(sourceName, nameof(sourceName));
 
             Enabled = enabled;
             SourceName = sourceName;

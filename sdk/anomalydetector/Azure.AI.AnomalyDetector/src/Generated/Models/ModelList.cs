@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <exception cref="ArgumentNullException"> <paramref name="models"/> is null. </exception>
         internal ModelList(IEnumerable<ModelSnapshot> models, int currentCount, int maxCount)
         {
-            if (models == null)
-            {
-                throw new ArgumentNullException(nameof(models));
-            }
+            Argument.AssertNotNull(models, nameof(models));
 
             Models = models.ToList();
             CurrentCount = currentCount;

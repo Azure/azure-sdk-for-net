@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("labVirtualNetworkId");
                 writer.WriteStringValue(LabVirtualNetworkId);
             }
-            if (Optional.IsDefined(IsPublicIPAddressDisallowed))
+            if (Optional.IsDefined(DisallowPublicIPAddress))
             {
                 writer.WritePropertyName("disallowPublicIpAddress");
-                writer.WriteBooleanValue(IsPublicIPAddressDisallowed.Value);
+                writer.WriteBooleanValue(DisallowPublicIPAddress.Value);
             }
             if (Optional.IsCollectionDefined(Artifacts))
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
             Optional<string> lastKnownPowerState = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -539,14 +539,19 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("uniqueIdentifier"))
                         {
-                            uniqueIdentifier = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uniqueIdentifier = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevTestLabVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, createdByUserId.Value, createdByUser.Value, Optional.ToNullable(createdDate), computeId.Value, customImageId.Value, osType.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), fqdn.Value, labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), artifactDeploymentStatus.Value, galleryImageReference.Value, planId.Value, computeVm.Value, networkInterface.Value, applicableSchedule.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, Optional.ToNullable(vmCreationSource), environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), lastKnownPowerState.Value, provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, createdByUserId.Value, createdByUser.Value, Optional.ToNullable(createdDate), computeId.Value, customImageId.Value, osType.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), fqdn.Value, labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), artifactDeploymentStatus.Value, galleryImageReference.Value, planId.Value, computeVm.Value, networkInterface.Value, applicableSchedule.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, Optional.ToNullable(vmCreationSource), environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), lastKnownPowerState.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

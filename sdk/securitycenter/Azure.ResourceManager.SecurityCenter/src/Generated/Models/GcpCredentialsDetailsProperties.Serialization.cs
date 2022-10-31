@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Uri authProviderX509CertUrl = default;
             Uri clientX509CertUrl = default;
             Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<PermissionProperty>> grantedPermissions = default;
+            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PermissionProperty> array = new List<PermissionProperty>();
+                    List<SecurityCenterCloudPermission> array = new List<SecurityCenterCloudPermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new PermissionProperty(item.GetString()));
+                        array.Add(new SecurityCenterCloudPermission(item.GetString()));
                     }
                     grantedPermissions = array;
                     continue;

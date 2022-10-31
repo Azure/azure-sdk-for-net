@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static LogAnalyticsIdentifier DeserializeLogAnalyticsIdentifier(JsonElement element)
         {
-            Optional<string> workspaceId = default;
+            Optional<Guid> workspaceId = default;
             Optional<string> workspaceSubscriptionId = default;
             Optional<string> workspaceResourceGroup = default;
             Optional<Guid> agentId = default;
@@ -24,7 +24,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 if (property.NameEquals("workspaceId"))
                 {
-                    workspaceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    workspaceId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("workspaceSubscriptionId"))
@@ -53,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new LogAnalyticsIdentifier(type, workspaceId.Value, workspaceSubscriptionId.Value, workspaceResourceGroup.Value, Optional.ToNullable(agentId));
+            return new LogAnalyticsIdentifier(type, Optional.ToNullable(workspaceId), workspaceSubscriptionId.Value, workspaceResourceGroup.Value, Optional.ToNullable(agentId));
         }
     }
 }

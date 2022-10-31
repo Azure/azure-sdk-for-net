@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azCliVersion"/> is null. </exception>
         public AzureCliScript(AzureLocation location, TimeSpan retentionInterval, string azCliVersion) : base(location)
         {
-            if (azCliVersion == null)
-            {
-                throw new ArgumentNullException(nameof(azCliVersion));
-            }
+            Argument.AssertNotNull(azCliVersion, nameof(azCliVersion));
 
             SupportingScriptUris = new ChangeTrackingList<Uri>();
             EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();

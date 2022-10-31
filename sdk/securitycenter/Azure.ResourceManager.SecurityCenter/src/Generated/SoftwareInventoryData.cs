@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -32,8 +33,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="endOfSupportStatus"> End of support status. </param>
         /// <param name="endOfSupportDate"> The end of support date in case the product is upcoming end of support. </param>
         /// <param name="numberOfKnownVulnerabilities"> Number of weaknesses. </param>
-        /// <param name="firstSeenAt"> First time that the software was seen in the device. </param>
-        internal SoftwareInventoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceId, string osPlatform, string vendor, string softwareName, string version, EndOfSupportStatus? endOfSupportStatus, string endOfSupportDate, int? numberOfKnownVulnerabilities, string firstSeenAt) : base(id, name, resourceType, systemData)
+        /// <param name="firstSeenOn"> First time that the software was seen in the device. </param>
+        internal SoftwareInventoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceId, string osPlatform, string vendor, string softwareName, string version, EndOfSupportStatus? endOfSupportStatus, string endOfSupportDate, int? numberOfKnownVulnerabilities, DateTimeOffset? firstSeenOn) : base(id, name, resourceType, systemData)
         {
             DeviceId = deviceId;
             OSPlatform = osPlatform;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter
             EndOfSupportStatus = endOfSupportStatus;
             EndOfSupportDate = endOfSupportDate;
             NumberOfKnownVulnerabilities = numberOfKnownVulnerabilities;
-            FirstSeenAt = firstSeenAt;
+            FirstSeenOn = firstSeenOn;
         }
 
         /// <summary> Unique identifier for the virtual machine in the service. </summary>
@@ -63,6 +64,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Number of weaknesses. </summary>
         public int? NumberOfKnownVulnerabilities { get; set; }
         /// <summary> First time that the software was seen in the device. </summary>
-        public string FirstSeenAt { get; set; }
+        public DateTimeOffset? FirstSeenOn { get; set; }
     }
 }

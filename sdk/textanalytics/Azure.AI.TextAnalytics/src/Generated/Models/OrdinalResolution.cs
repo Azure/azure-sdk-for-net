@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="offset"/> or <paramref name="value"/> is null. </exception>
         public OrdinalResolution(string offset, RelativeTo relativeTo, string value)
         {
-            if (offset == null)
-            {
-                throw new ArgumentNullException(nameof(offset));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(offset, nameof(offset));
+            Argument.AssertNotNull(value, nameof(value));
 
             Offset = offset;
             RelativeTo = relativeTo;

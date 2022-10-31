@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="createdOn"> The artifact source&apos;s creation date. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, Uri uri, DevTestLabSourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, DevTestLabEnableStatus? status, DateTimeOffset? createdOn, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, Uri uri, DevTestLabSourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, DevTestLabEnableStatus? status, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
             Uri = uri;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public string UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier { get; }
     }
 }

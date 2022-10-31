@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Core.TestFramework.Models
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
         public StartInformation(string xRecordingFile)
         {
-            if (xRecordingFile == null)
-            {
-                throw new ArgumentNullException(nameof(xRecordingFile));
-            }
+            Argument.AssertNotNull(xRecordingFile, nameof(xRecordingFile));
 
             XRecordingFile = xRecordingFile;
         }

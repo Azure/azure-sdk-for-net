@@ -17,6 +17,7 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(CommunicationIdentifier targetParticipant)
         {
             TargetParticipant = targetParticipant;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>

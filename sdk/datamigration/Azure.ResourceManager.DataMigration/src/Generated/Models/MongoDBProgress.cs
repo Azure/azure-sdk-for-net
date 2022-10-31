@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -30,14 +31,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="elapsedTime"/> or <paramref name="errors"/> is null. </exception>
         protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, MongoDBMigrationState state, long totalBytes, long totalDocuments)
         {
-            if (elapsedTime == null)
-            {
-                throw new ArgumentNullException(nameof(elapsedTime));
-            }
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
+            Argument.AssertNotNull(elapsedTime, nameof(elapsedTime));
+            Argument.AssertNotNull(errors, nameof(errors));
 
             BytesCopied = bytesCopied;
             DocumentsCopied = documentsCopied;

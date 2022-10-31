@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The play completed event.
+    /// The Recognize failed event.
     /// </summary>
     [CodeGenModel("RecognizeFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class RecognizeFailed : CallAutomationEventWithReasonCodeName

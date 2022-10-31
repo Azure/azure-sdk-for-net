@@ -32,16 +32,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
             }
         }
-
-        internal static bool IsSupportedType(MetricType metricType) =>
-            metricType switch
-            {
-                MetricType.DoubleGauge => true,
-                MetricType.DoubleSum => true,
-                MetricType.LongGauge => true,
-                MetricType.LongSum => true,
-                MetricType.Histogram => true,
-                _ => false
-            };
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="interactionFieldName"/> or <paramref name="relationshipFieldName"/> is null. </exception>
         public RelationshipLinkFieldMapping(string interactionFieldName, string relationshipFieldName)
         {
-            if (interactionFieldName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionFieldName));
-            }
-            if (relationshipFieldName == null)
-            {
-                throw new ArgumentNullException(nameof(relationshipFieldName));
-            }
+            Argument.AssertNotNull(interactionFieldName, nameof(interactionFieldName));
+            Argument.AssertNotNull(relationshipFieldName, nameof(relationshipFieldName));
 
             InteractionFieldName = interactionFieldName;
             RelationshipFieldName = relationshipFieldName;

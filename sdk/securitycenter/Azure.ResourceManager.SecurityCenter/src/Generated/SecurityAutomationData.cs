@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="location"> The location. </param>
         public SecurityAutomationData(AzureLocation location) : base(location)
         {
-            Scopes = new ChangeTrackingList<AutomationScope>();
+            Scopes = new ChangeTrackingList<SecurityAutomationScope>();
             Sources = new ChangeTrackingList<SecurityAutomationSource>();
-            Actions = new ChangeTrackingList<AutomationAction>();
+            Actions = new ChangeTrackingList<SecurityAutomationAction>();
         }
 
         /// <summary> Initializes a new instance of SecurityAutomationData. </summary>
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
         /// <param name="actions">
         /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
-        /// Please note <see cref="AutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationActionEventHub"/>, <see cref="AutomationActionLogicApp"/> and <see cref="AutomationActionWorkspace"/>.
+        /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, bool? isEnabled, IList<AutomationScope> scopes, IList<SecurityAutomationSource> sources, IList<AutomationAction> actions, string kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, bool? isEnabled, IList<SecurityAutomationScope> scopes, IList<SecurityAutomationSource> sources, IList<SecurityAutomationAction> actions, string kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             IsEnabled = isEnabled;
@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Indicates whether the security automation is enabled. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </summary>
-        public IList<AutomationScope> Scopes { get; }
+        public IList<SecurityAutomationScope> Scopes { get; }
         /// <summary> A collection of the source event types which evaluate the security automation set of rules. </summary>
         public IList<SecurityAutomationSource> Sources { get; }
         /// <summary>
         /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
-        /// Please note <see cref="AutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationActionEventHub"/>, <see cref="AutomationActionLogicApp"/> and <see cref="AutomationActionWorkspace"/>.
+        /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </summary>
-        public IList<AutomationAction> Actions { get; }
+        public IList<SecurityAutomationAction> Actions { get; }
         /// <summary> Kind of the resource. </summary>
         public string Kind { get; set; }
         /// <summary> Entity tag is used for comparing two or more entities from the same requested resource. </summary>

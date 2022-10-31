@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The information protection for AWS offering. </summary>
-    public partial class InformationProtectionAwsOffering : CloudOffering
+    public partial class InformationProtectionAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of InformationProtectionAwsOffering. </summary>
         public InformationProtectionAwsOffering()

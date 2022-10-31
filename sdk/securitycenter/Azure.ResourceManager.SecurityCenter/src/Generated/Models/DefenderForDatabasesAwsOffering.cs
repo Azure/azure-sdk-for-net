@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Databases AWS offering. </summary>
-    public partial class DefenderForDatabasesAwsOffering : CloudOffering
+    public partial class DefenderForDatabasesAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of DefenderForDatabasesAwsOffering. </summary>
         public DefenderForDatabasesAwsOffering()

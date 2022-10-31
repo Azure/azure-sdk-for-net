@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="tasks"/> is null. </exception>
         public AnalyzeTextJobsInput(MultiLanguageAnalysisInput analysisInput, IEnumerable<AnalyzeTextLROTask> tasks)
         {
-            if (analysisInput == null)
-            {
-                throw new ArgumentNullException(nameof(analysisInput));
-            }
-            if (tasks == null)
-            {
-                throw new ArgumentNullException(nameof(tasks));
-            }
+            Argument.AssertNotNull(analysisInput, nameof(analysisInput));
+            Argument.AssertNotNull(tasks, nameof(tasks));
 
             AnalysisInput = analysisInput;
             Tasks = tasks.ToList();

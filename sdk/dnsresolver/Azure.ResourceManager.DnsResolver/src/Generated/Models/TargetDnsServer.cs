@@ -7,6 +7,7 @@
 
 using System;
 using System.Net;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
         public TargetDnsServer(IPAddress ipAddress)
         {
-            if (ipAddress == null)
-            {
-                throw new ArgumentNullException(nameof(ipAddress));
-            }
+            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
 
             IPAddress = ipAddress;
         }

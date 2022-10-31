@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.Search.Documents.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         internal IndexingResult(string key, bool succeeded, int status)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             Succeeded = succeeded;

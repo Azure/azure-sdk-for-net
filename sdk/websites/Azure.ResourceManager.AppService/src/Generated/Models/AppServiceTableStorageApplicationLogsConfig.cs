@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasUri"/> is null. </exception>
         public AppServiceTableStorageApplicationLogsConfig(Uri sasUri)
         {
-            if (sasUri == null)
-            {
-                throw new ArgumentNullException(nameof(sasUri));
-            }
+            Argument.AssertNotNull(sasUri, nameof(sasUri));
 
             SasUri = sasUri;
         }
