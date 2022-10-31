@@ -399,11 +399,11 @@ namespace Azure.Monitor.Ingestion
 
         private static void ThrowException<T>(IEnumerable<T> logs, DiagnosticScope scope, List<Exception> exceptions, int logsFailed)
         {
-            if (exceptions.Count > 0)
+            if (exceptions?.Count > 0)
             {
                 var ex = new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
-                    scope.Failed(ex);
-                    throw ex;
+                scope.Failed(ex);
+                throw ex;
             }
         }
 
