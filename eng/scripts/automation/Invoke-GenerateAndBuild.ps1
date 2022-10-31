@@ -44,13 +44,13 @@ if ($autorestConfig) {
 
 $generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
 
+# $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
+$sdkPath =  (Join-Path $PSScriptRoot .. .. ..)
+$sdkPath = Resolve-Path $sdkPath
+$sdkPath = $sdkPath -replace "\\", "/"
+
 if ($readmeFile) {
   Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
-
-  # $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
-  $sdkPath =  (Join-Path $PSScriptRoot .. .. ..)
-  $sdkPath = Resolve-Path $sdkPath
-  $sdkPath = $sdkPath -replace "\\", "/"
 
   $readme = ""
   if ($commitid -ne "") {
