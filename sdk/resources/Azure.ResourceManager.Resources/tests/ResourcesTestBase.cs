@@ -100,19 +100,19 @@ namespace Azure.ResourceManager.Resources.Tests
             return tmpDeploymentProperties;
         }
 
-        protected static ArmDeploymentProperties CreateDeploymentPropertiesUsingString()
+        protected static ArmDeploymentProperties CreateDeploymentPropertiesUsingString(bool useFullParameterFile = false)
         {
             ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
             tmpDeploymentProperties.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             "Scenario",
             "DeploymentTemplates",
-            $"storage-template.json")));
+            "storage-template.json")));
             tmpDeploymentProperties.Parameters = BinaryData.FromString(File.ReadAllText(Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             "Scenario",
             "DeploymentTemplates",
-            $"storage-parameters.json")));
+            useFullParameterFile ? "storage-unbroken-parameters.json" : "storage-parameters.json")));
             return tmpDeploymentProperties;
         }
 

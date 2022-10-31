@@ -83,6 +83,23 @@ namespace Azure.ResourceManager.Resources.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task CreateOrUpdateWithFullParametersFile()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-1-");
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
+            ResourceGroupResource rg = lro.Value;
+            string deployExName = Recording.GenerateAssetName("deployEx-C-");
+            var deploymentData = CreateDeploymentData(CreateDeploymentPropertiesUsingString(true));
+            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployExName, deploymentData)).Value;
+            Assert.AreEqual(deployExName, deployment.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployExName, null));
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task List()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
