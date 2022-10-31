@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
@@ -16,12 +17,29 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("RequestStatistics")]
     public partial class TextDocumentBatchStatistics
     {
-        internal TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount)
+        internal TextDocumentBatchStatistics(
+            int documentCount,
+            int validDocumentCount,
+            int invalidDocumentCount,
+            long transactionCount)
+            : this(documentCount, validDocumentCount, invalidDocumentCount, transactionCount, default)
+        {
+        }
+
+        internal TextDocumentBatchStatistics(
+            int documentCount,
+            int validDocumentCount,
+            int invalidDocumentCount,
+            long transactionCount,
+            IDictionary<string, object> additionalProperties)
         {
             DocumentCount = documentCount;
             ValidDocumentCount = validDocumentCount;
             InvalidDocumentCount = invalidDocumentCount;
             TransactionCount = transactionCount;
+            AdditionalProperties = (additionalProperties is not null)
+                ? new ReadOnlyDictionary<string, object>(additionalProperties)
+                : new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -54,9 +72,9 @@ namespace Azure.AI.TextAnalytics
         public long TransactionCount { get; }
 
         /// <summary>
-        /// Gets the additional properties
+        /// Gets the additional properties.
         /// </summary>
         [CodeGenMember("AdditionalProperties")]
-        internal IDictionary<string, object> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

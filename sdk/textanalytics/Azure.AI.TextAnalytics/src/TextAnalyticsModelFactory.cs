@@ -36,9 +36,33 @@ namespace Azure.AI.TextAnalytics
         /// <param name="invalidDocumentCount">Sets the <see cref="TextDocumentBatchStatistics.InvalidDocumentCount"/> property.</param>
         /// <param name="transactionCount">Sets the <see cref="TextDocumentBatchStatistics.TransactionCount"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.TextDocumentBatchStatistics"/> for mocking purposes.</returns>
-        public static TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TextDocumentBatchStatistics TextDocumentBatchStatistics(
+            int documentCount,
+            int validDocumentCount,
+            int invalidDocumentCount,
+            long transactionCount)
         {
             return new TextDocumentBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.TextDocumentBatchStatistics"/> for mocking purposes.
+        /// </summary>
+        /// <param name="documentCount">Sets the <see cref="TextDocumentBatchStatistics.DocumentCount"/> property.</param>
+        /// <param name="validDocumentCount">Sets the <see cref="TextDocumentBatchStatistics.ValidDocumentCount"/> property.</param>
+        /// <param name="invalidDocumentCount">Sets the <see cref="TextDocumentBatchStatistics.InvalidDocumentCount"/> property.</param>
+        /// <param name="transactionCount">Sets the <see cref="TextDocumentBatchStatistics.TransactionCount"/> property.</param>
+        /// <param name="additionalProperties">Sets the <see cref="TextDocumentBatchStatistics.AdditionalProperties"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.TextDocumentBatchStatistics"/> for mocking purposes.</returns>
+        public static TextDocumentBatchStatistics TextDocumentBatchStatistics(
+            int documentCount,
+            int validDocumentCount,
+            int invalidDocumentCount,
+            long transactionCount,
+            IDictionary<string, object> additionalProperties)
+        {
+            return new TextDocumentBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount, additionalProperties);
         }
 
         /// <summary>

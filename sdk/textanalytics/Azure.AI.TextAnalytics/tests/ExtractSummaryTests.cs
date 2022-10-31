@@ -285,6 +285,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.Greater(results.Statistics.TransactionCount, 0);
                 Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
                 Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.IsNotNull(results.Statistics.AdditionalProperties);
             }
             else
             {

@@ -250,10 +250,11 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.Greater(results.Statistics.DocumentCount, 0);
+            Assert.Greater(results.Statistics.TransactionCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            Assert.IsNotNull(results.Statistics.AdditionalProperties);
         }
 
         [RecordedTest]
@@ -272,10 +273,11 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.Greater(results.Statistics.DocumentCount, 0);
+            Assert.Greater(results.Statistics.TransactionCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            Assert.IsNotNull(results.Statistics.AdditionalProperties);
         }
 
         [RecordedTest]
@@ -294,10 +296,11 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.Greater(results.Statistics.DocumentCount, 0);
+            Assert.Greater(results.Statistics.TransactionCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            Assert.IsNotNull(results.Statistics.AdditionalProperties);
         }
 
         [RecordedTest]
@@ -316,10 +319,11 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.Greater(results.Statistics.DocumentCount, 0);
+            Assert.Greater(results.Statistics.TransactionCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            Assert.IsNotNull(results.Statistics.AdditionalProperties);
         }
 
         [RecordedTest]
@@ -383,10 +387,11 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
 
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.Greater(results.Statistics.DocumentCount, 0);
+            Assert.Greater(results.Statistics.TransactionCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            Assert.IsNotNull(results.Statistics.AdditionalProperties);
         }
 
         [RecordedTest]

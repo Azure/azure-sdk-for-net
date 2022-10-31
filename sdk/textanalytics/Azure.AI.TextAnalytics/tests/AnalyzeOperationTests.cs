@@ -661,6 +661,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, documentsResults.Statistics.TransactionCount);
             Assert.AreEqual(2, documentsResults.Statistics.ValidDocumentCount);
             Assert.AreEqual(1, documentsResults.Statistics.InvalidDocumentCount);
+            Assert.IsNotNull(documentsResults.Statistics.AdditionalProperties);
 
             Assert.AreEqual(51, documentsResults[0].Statistics.CharacterCount);
             Assert.AreEqual(1, documentsResults[0].Statistics.TransactionCount);

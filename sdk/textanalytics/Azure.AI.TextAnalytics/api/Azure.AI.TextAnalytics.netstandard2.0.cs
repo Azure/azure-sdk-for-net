@@ -1820,7 +1820,9 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, Azure.AI.TextAnalytics.TemporalModifier? modifier) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsError TextAnalyticsError(string code, string message, string target = null) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsWarning TextAnalyticsWarning(string code, string message) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount) { throw null; }
+        public static Azure.AI.TextAnalytics.TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount, System.Collections.Generic.IDictionary<string, object> additionalProperties) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentStatistics TextDocumentStatistics(int characterCount, int transactionCount) { throw null; }
         public static Azure.AI.TextAnalytics.VolumeResolution VolumeResolution(Azure.AI.TextAnalytics.VolumeUnit unit, double value) { throw null; }
         public static Azure.AI.TextAnalytics.WeightResolution WeightResolution(Azure.AI.TextAnalytics.WeightUnit unit, double value) { throw null; }
@@ -1893,6 +1895,7 @@ namespace Azure.AI.TextAnalytics
     public partial class TextDocumentBatchStatistics
     {
         internal TextDocumentBatchStatistics() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> AdditionalProperties { get { throw null; } }
         public int DocumentCount { get { throw null; } }
         public int InvalidDocumentCount { get { throw null; } }
         public long TransactionCount { get { throw null; } }
