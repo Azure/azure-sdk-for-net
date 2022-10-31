@@ -62,7 +62,16 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            Assert.ThrowsAsync<RequestFailedException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false); });
+            // Make the request
+            var exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false); });
+            Assert.AreEqual(1, exceptions.InnerExceptions.Count);
+            Assert.AreEqual("1 out of the 801 logs failed to upload", exceptions.Message.Split('.')[0]);
+            foreach (RequestFailedException exception in exceptions.InnerExceptions)
+            {
+                Assert.AreEqual("ContentLengthLimitExceeded", exception.ErrorCode);
+                Assert.IsNull(exception.InnerException);
+                Assert.AreEqual(413, exception.Status);
+            }
         }
 
         [Test]
