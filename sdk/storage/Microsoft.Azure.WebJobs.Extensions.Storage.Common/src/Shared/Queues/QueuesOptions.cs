@@ -20,7 +20,10 @@ namespace Microsoft.Azure.WebJobs.Host
     /// </summary>
     public class QueuesOptions : IOptionsFormatter
 #else
-    internal class QueuesOptions : IOptionsFormatter
+    /// <summary>
+    /// Class containg options parameters for Storage Queues.
+    /// </summary>
+    public class QueuesOptions : IOptionsFormatter
 #endif
     {
         private const int DefaultMaxDequeueCount = 5;
