@@ -25,7 +25,7 @@ $autorestConfig = $inputJson.autorestConfig
 $relatedCadlProjectFolder = $inputJson.relatedCadlProjectFolder
 
 $autorestConfigYaml = ""
-if ($autorestConfig -ne "") {
+if ($autorestConfig) {
     $autorestConfig | Set-Content "config.md"
     $autorestConfigYaml = Get-Content -Path .\config.md
     $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber
@@ -42,26 +42,28 @@ if ($autorestConfig -ne "") {
     }
 }
 
-Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
-
-# $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
-$sdkPath =  (Join-Path $PSScriptRoot .. .. ..)
-$sdkPath = Resolve-Path $sdkPath
-$sdkPath = $sdkPath -replace "\\", "/"
-
-$readme = ""
-if ($commitid -ne "") {
-  if ($repoHttpsUrl -ne "") {
-    $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
-  } else {
-    $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
-  }
-} else {
-  $readme = (Join-Path $swaggerDir $readmeFile)
-}
-
 $generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
-Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+
+if ($readmeFile) {
+  Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
+
+  # $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
+  $sdkPath =  (Join-Path $PSScriptRoot .. .. ..)
+  $sdkPath = Resolve-Path $sdkPath
+  $sdkPath = $sdkPath -replace "\\", "/"
+
+  $readme = ""
+  if ($commitid -ne "") {
+    if ($repoHttpsUrl -ne "") {
+      $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
+    } else {
+      $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
+    }
+  } else {
+    $readme = (Join-Path $swaggerDir $readmeFile)
+  }
+  Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+}
 
 if ($relatedCadlProjectFolder) {
   $caldFolder = (Join-Path $swaggerDir $relatedCadlProjectFolder) -replace "\\", "/"
