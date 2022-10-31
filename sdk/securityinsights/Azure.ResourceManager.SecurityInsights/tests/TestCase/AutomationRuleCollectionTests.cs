@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var name = Recording.GenerateAssetName("AutomationRules-");
             var name2 = Recording.GenerateAssetName("AutomationRules-");
             var name3 = Recording.GenerateAssetName("AutomationRules-");
-            var input = ResourceDataHelpers.GetAutomationRuleData();
+            var input = ResourceDataHelpers.GetAutomationRuleData(resourceGroup.Data.Name);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             AutomationRuleResource automation1 = lro.Value;
             Assert.AreEqual(name, automation1.Data.Name);

@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         {
             var data = new ActionResponseCreateOrUpdateContent()
             {
-                TriggerUri = new Uri("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/" + resourcegroup + "/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook"),
-                LogicAppResourceId = "https://prod-21.westus2.logic.azure.com:443/workflows/e26c9f2e051e40eebaba9ed9b065c491/triggers/When_Azure_Sentinel_incident_creation_rule_was_triggered/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_Azure_Sentinel_incident_creation_rule_was_triggered%2Frun&sv=1.0&sig=6sGE8BueGEYWNZ0mY8-JYrse4mTk3obUBib9BF5PciQ"
+                TriggerUri = new Uri("https://prod-21.westus2.logic.azure.com:443/workflows/e26c9f2e051e40eebaba9ed9b065c491/triggers/When_Azure_Sentinel_incident_creation_rule_was_triggered/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_Azure_Sentinel_incident_creation_rule_was_triggered%2Frun&sv=1.0&sig=6sGE8BueGEYWNZ0mY8-JYrse4mTk3obUBib9BF5PciQ"),
+                LogicAppResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/" + resourcegroup + "/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook"
             };
             return data;
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.Order, data2.Order);
             Assert.AreEqual(data1.LastModifiedTimeUtc, data2.LastModifiedTimeUtc);
         }
-        public static AutomationRuleData GetAutomationRuleData()
+        public static AutomationRuleData GetAutomationRuleData(string resourcegroup)
         {
             var trigger = new AutomationRuleTriggeringLogic(false, TriggersOn.Alerts, TriggersWhen.Created);
             IEnumerable<AutomationRuleRunPlaybookAction> action = new List<AutomationRuleRunPlaybookAction>()
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
                 {
                     ActionConfiguration = new PlaybookActionProperties()
                     {
-                        LogicAppResourceId = "/subscriptions/9023f5b5-df22-4313-8fbf-b4b75af8a6d9/resourceGroups/asi-sdk-tests-rg/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook",
+                        LogicAppResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/" + resourcegroup + "/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook",
                         TenantId = Guid.Parse("d23e3eef-eed0-428f-a2d5-bc48c268e31d")
                     }
                 }
