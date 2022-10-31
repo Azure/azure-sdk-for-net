@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PrivateDns
             Metadata = new ChangeTrackingDictionary<string, string>();
             ARecords = new ChangeTrackingList<ARecordInfo>();
             AaaaRecords = new ChangeTrackingList<AaaaRecordInfo>();
-            MxRecords = new ChangeTrackingList<MXRecordInfo>();
+            MXRecords = new ChangeTrackingList<MXRecordInfo>();
             PtrRecords = new ChangeTrackingList<PtrRecordInfo>();
             SrvRecords = new ChangeTrackingList<SrvRecordInfo>();
             TxtRecords = new ChangeTrackingList<TxtRecordInfo>();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PrivateDns
             ARecords = aRecords;
             AaaaRecords = aaaaRecords;
             CnameRecordInfo = cnameRecordInfo;
-            MxRecords = mxRecords;
+            MXRecords = mxRecords;
             PtrRecords = ptrRecords;
             SoaRecordInfo = soaRecordInfo;
             SrvRecords = srvRecords;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<MXRecordInfo> MxRecords { get; }
+        public IList<MXRecordInfo> MXRecords { get; }
         /// <summary> The list of PTR records in the record set. </summary>
         public IList<PtrRecordInfo> PtrRecords { get; }
         /// <summary> The SOA record in the record set. </summary>

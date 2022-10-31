@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.PrivateDns
         public string Fqdn { get { throw null; } }
         public bool? IsAutoRegistered { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.MXRecordInfo> MxRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.MXRecordInfo> MXRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PtrRecordInfo> PtrRecords { get { throw null; } }
         public Azure.ResourceManager.PrivateDns.Models.SoaRecordInfo SoaRecordInfo { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.SrvRecordInfo> SrvRecords { get { throw null; } }

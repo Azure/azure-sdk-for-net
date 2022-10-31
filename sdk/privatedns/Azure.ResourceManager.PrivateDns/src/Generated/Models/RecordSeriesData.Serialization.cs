@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("cnameRecord");
                 writer.WriteObjectValue(CnameRecordInfo);
             }
-            if (Optional.IsCollectionDefined(MxRecords))
+            if (Optional.IsCollectionDefined(MXRecords))
             {
                 writer.WritePropertyName("mxRecords");
                 writer.WriteStartArray();
-                foreach (var item in MxRecords)
+                foreach (var item in MXRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
