@@ -3,14 +3,14 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>, System.Collections.IEnumerable
     {
         protected TrafficManagerEndpointCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string endpointType, string endpointName, Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string endpointType, string endpointName, Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> Get(string endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> Get(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> GetAll() { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> GetAllAsync() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetAsync(string endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerEndpointData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData
     {
         public TrafficManagerEndpointData() { }
+        public Azure.ResourceManager.TrafficManager.Models.AlwaysServe? AlwaysServe { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo> CustomHeaders { get { throw null; } }
         public string EndpointLocation { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus? EndpointMonitorStatus { get { throw null; } set { } }
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.TrafficManager
         protected TrafficManagerEndpointResource() { }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -144,8 +145,8 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> GetTrafficManagerEndpoint(string endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(string endpointType, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> GetTrafficManagerEndpoint(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerEndpointCollection GetTrafficManagerEndpoints() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource> GetTrafficManagerHeatMap(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType heatMapType, System.Collections.Generic.IEnumerable<double> topLeft = null, System.Collections.Generic.IEnumerable<double> botRight = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource>> GetTrafficManagerHeatMapAsync(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType heatMapType, System.Collections.Generic.IEnumerable<double> topLeft = null, System.Collections.Generic.IEnumerable<double> botRight = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -197,6 +198,24 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType left, Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType left, Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlwaysServe : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.AlwaysServe>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlwaysServe(string value) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.AlwaysServe Disabled { get { throw null; } }
+        public static Azure.ResourceManager.TrafficManager.Models.AlwaysServe Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.TrafficManager.Models.AlwaysServe other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.AlwaysServe left, Azure.ResourceManager.TrafficManager.Models.AlwaysServe right) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrafficManager.Models.AlwaysServe (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.AlwaysServe left, Azure.ResourceManager.TrafficManager.Models.AlwaysServe right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ExpectedStatusCodeRangeInfo

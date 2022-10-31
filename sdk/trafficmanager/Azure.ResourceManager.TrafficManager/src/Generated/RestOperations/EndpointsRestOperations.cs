@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
@@ -32,11 +33,11 @@ namespace Azure.ResourceManager.TrafficManager
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2018-08-01";
+            _apiVersion = apiVersion ?? "2022-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, TrafficManagerEndpointData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(endpointType, true);
+            uri.AppendPath(endpointType.ToSerialString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(endpointName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -65,21 +66,20 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Update a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be updated. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be updated. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TrafficManagerEndpointData>> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<TrafficManagerEndpointData>> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -100,21 +100,20 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Update a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be updated. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be updated. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TrafficManagerEndpointData> Update(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<TrafficManagerEndpointData> Update(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(endpointType, true);
+            uri.AppendPath(endpointType.ToSerialString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(endpointName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -159,20 +158,19 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Gets a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TrafficManagerEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<TrafficManagerEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, endpointType, endpointName);
@@ -194,20 +192,19 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Gets a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TrafficManagerEndpointData> Get(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<TrafficManagerEndpointData> Get(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, endpointType, endpointName);
@@ -228,7 +225,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, TrafficManagerEndpointData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -242,7 +239,7 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(endpointType, true);
+            uri.AppendPath(endpointType.ToSerialString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(endpointName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -257,21 +254,20 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Create or update a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be created or updated. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TrafficManagerEndpointData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<TrafficManagerEndpointData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -293,21 +289,20 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Create or update a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be created or updated. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TrafficManagerEndpointData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<TrafficManagerEndpointData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -328,7 +323,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -342,7 +337,7 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(endpointType, true);
+            uri.AppendPath(endpointType.ToSerialString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(endpointName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -353,20 +348,19 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Deletes a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be deleted. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, endpointType, endpointName);
@@ -382,20 +376,19 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Deletes a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be deleted. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, endpointType, endpointName);
