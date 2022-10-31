@@ -142,6 +142,10 @@ public class Program
     public static TestScenario StringToTestScenario(string testScenario) => testScenario switch
     {
         "SendReceiveTest" or "SendRec" => TestScenario.SendReceiveTest,
+        "SendReceiveBatchesTest" or "SendRecBatch" => TestScenario.SendReceiveBatchesTest,
+        "SessionSendReceiveTest" or "SessionSendRec" => TestScenario.SessionSendReceiveTest,
+        "SessionSendProcessTest" or "SessionSendProc" => TestScenario.SessionSendProcessTest,
+        "SendProcessTest" or "SendProc" => TestScenario.SendProcessTest,
         _ => throw new ArgumentNullException(),
     };
 

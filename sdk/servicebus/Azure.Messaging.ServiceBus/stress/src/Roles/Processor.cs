@@ -41,7 +41,7 @@ internal class Processor
     /// <param name="processorConfiguration">The <see cref="processorConfiguration"/> instance used to configure this instance of <see cref="Receiver" />.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send metrics to Application Insights.</param>
     ///
-    public Receiver(TestParameters testParameters,
+    public Processor(TestParameters testParameters,
                      ProcessorConfiguration processorConfiguration,
                      Metrics metrics)
     {

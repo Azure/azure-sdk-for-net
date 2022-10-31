@@ -18,4 +18,10 @@ internal class ReceiverConfiguration
     /// </summary>
     ///
     public TimeSpan MaximumWaitTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    ///   If the <see cref="ServiceBusSender" /> should use batches to send.
+    /// </summary>
+    ///
+    public bool UseBatches = false;
 }

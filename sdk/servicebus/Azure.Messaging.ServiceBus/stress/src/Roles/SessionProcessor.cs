@@ -41,7 +41,7 @@ internal class SessionProcessor
     /// <param name="sessionProcessorConfiguration">The <see cref="SessionProcessorConfiguration"/> instance used to configure this instance of <see cref="Receiver" />.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send metrics to Application Insights.</param>
     ///
-    public Receiver(TestParameters testParameters,
+    public SessionProcessor(TestParameters testParameters,
                      SessionProcessorConfiguration sessionProcessorConfiguration,
                      Metrics metrics)
     {

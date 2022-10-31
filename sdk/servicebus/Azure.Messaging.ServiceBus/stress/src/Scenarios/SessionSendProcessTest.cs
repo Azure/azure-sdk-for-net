@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///   The test scenario responsible for running all of the roles needed for the send receive test scenario.
 /// <summary/>
 ///
-public class SessionSendReceiveTest
+public class SessionSendProcessTest
 {
     /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
     private readonly TestParameters _testParameters;
@@ -24,24 +24,24 @@ public class SessionSendReceiveTest
     private Metrics _metrics;
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles = {Role.SessionSender, Role.SessionReceiver};
+    private static Role[] _roles = {Role.SessionSender, Role.SessionProcessor};
 
     /// <summary>
-    ///  Initializes a new <see cref="SendReceiveTest"/> instance.
+    ///  Initializes a new <see cref="SessionSendProcessTest"/> instance.
     /// </summary>
     ///
     /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
     /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
-    public SessionSendReceiveTest(TestParameters testParameters,
+    public SessionSendProcessTest(TestParameters testParameters,
                                 Metrics metrics,
                                 string jobIndex = default)
     {
         _testParameters = testParameters;
         _jobIndex = jobIndex;
         _metrics = metrics;
-        _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-sb-session-send-receive-{Guid.NewGuid().ToString()}";
+        _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-sb-session-send-process-{Guid.NewGuid().ToString()}";
     }
 
     /// <summary>
@@ -82,15 +82,15 @@ public class SessionSendReceiveTest
     {
         switch (role)
         {
-            case Role.Sender:
-                var senderConfiguration = new SessionSenderConfiguration();
-                var sender = new SessionSender(_testParameters, senderConfiguration, _metrics);
-                return Task.Run(() => sender.RunAsync(cancellationToken));
+            case Role.SessionSender:
+                var sessionSenderConfiguration = new SessionSenderConfiguration();
+                var sessionSender = new SessionSender(_testParameters, sessionSenderConfiguration, _metrics);
+                return Task.Run(() => sessionSender.RunAsync(cancellationToken));
 
-            case Role.Receiver:
-                var receiverConfiguration = new SessionReceiverConfiguration();
-                var receiver = new SessionReceiver(_testParameters, receiverConfiguration, _metrics);
-                return Task.Run(() => receiver.RunAsync(cancellationToken));
+            case Role.SessionProcessor:
+                var sessionProcessorConfiguration = new SessionProcessorConfiguration();
+                var sessionProcessor = new SessionProcessor(_testParameters, sessionProcessorConfiguration, _metrics);
+                return Task.Run(() => sessionProcessor.RunAsync(null, null, cancellationToken));
 
             default:
                 throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");

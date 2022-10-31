@@ -10,5 +10,9 @@ namespace Azure.Messaging.ServiceBus.Stress;
 public enum Role
 {
     Sender,
-    Receiver
+    Receiver,
+    SessionSender,
+    SessionReceiver,
+    Processor,
+    SessionProcessor
 }

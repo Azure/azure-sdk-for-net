@@ -68,6 +68,10 @@ internal class Receiver
         {
             try
             {
+                if (_receiverConfiguration.UseBatches)
+                {
+                    // TODO
+                }
                 var message = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
                 _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);
                 // TODO: check event

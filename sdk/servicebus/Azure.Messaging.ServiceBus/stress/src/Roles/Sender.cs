@@ -126,6 +126,11 @@ internal class Sender
         {
             await sender.SendMessagesAsync(messages, cancellationToken).ConfigureAwait(false);
 
+            if (_senderConfiguration.UseBatches)
+            {
+                // TODO: create batch and send
+            }
+
             _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(50);
         }
         catch (TaskCanceledException)

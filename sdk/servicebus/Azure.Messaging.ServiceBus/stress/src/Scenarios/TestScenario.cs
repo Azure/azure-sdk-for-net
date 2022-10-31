@@ -9,5 +9,9 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///
 public enum TestScenario
 {
-    SendReceiveTest
+    SendReceiveTest,
+    SendReceiveBatchesTest,
+    SessionSendReceiveTest,
+    SendProcessTest,
+    SessionSendProcessTest
 }

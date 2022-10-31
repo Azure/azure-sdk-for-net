@@ -16,6 +16,12 @@ internal class SenderConfiguration
     // Test Configuration Values
 
     /// <summary>
+    ///   If the <see cref="ServiceBusSender" /> should use batches to send.
+    /// </summary>
+    ///
+    public bool UseBatches = false;
+
+    /// <summary>
     ///   The number of concurrent sends going to the same <see cref="ServiceBusSender" />.
     /// </summary>
     ///

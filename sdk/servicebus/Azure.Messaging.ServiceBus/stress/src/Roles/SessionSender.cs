@@ -24,7 +24,7 @@ internal class SessionSender
     private readonly Metrics _metrics;
 
     /// <summary>The <see cref="SessionSenderConfiguration"/> used to configure the instance of this role.</summary>
-    private readonly sessionSenderConfiguration _sessionSenderConfiguration;
+    private readonly SessionSenderConfiguration _sessionSenderConfiguration;
 
     /// <summary>The <see cref="TestParameters"/> used to configure this test run.</summary>
     private readonly TestParameters _testParameters;
@@ -37,7 +37,7 @@ internal class SessionSender
     /// <param name="sessionSenderConfiguration">The <see cref="SessionSenderConfiguration" /> instance used to configure this instance of <see cref="Sender" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     ///
-    public Sender(TestParameters testParameters,
+    public SessionSender(TestParameters testParameters,
                              SessionSenderConfiguration sessionSenderConfiguration,
                              Metrics metrics)
     {
@@ -70,7 +70,7 @@ internal class SessionSender
             {
                 // Start concurrent sending tasks
 
-                for (var index = 0; index < _senderConfiguration.ConcurrentSends; ++index)
+                for (var index = 0; index < _sessionSenderConfiguration.ConcurrentSends; ++index)
                 {
                     sendTasks.Add(Task.Run(async () =>
                     {
@@ -78,9 +78,9 @@ internal class SessionSender
                         {
                             await PerformSend(sender, cancellationToken).ConfigureAwait(false);
 
-                            if ((_senderConfiguration.SendingDelay.HasValue) && (_senderConfiguration.SendingDelay.Value > TimeSpan.Zero))
+                            if ((_sessionSenderConfiguration.SendingDelay.HasValue) && (_sessionSenderConfiguration.SendingDelay.Value > TimeSpan.Zero))
                             {
-                                await Task.Delay(_senderConfiguration.SendingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
+                                await Task.Delay(_sessionSenderConfiguration.SendingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
                             }
                         }
                     }));
