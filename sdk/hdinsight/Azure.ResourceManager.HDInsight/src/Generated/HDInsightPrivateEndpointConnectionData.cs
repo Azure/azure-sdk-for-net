@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public HDInsightPrivateEndpointConnectionData(HDInsightPrivateLinkServiceConnectionState connectionState)
         {
-            if (connectionState == null)
-            {
-                throw new ArgumentNullException(nameof(connectionState));
-            }
+            Argument.AssertNotNull(connectionState, nameof(connectionState));
 
             ConnectionState = connectionState;
         }

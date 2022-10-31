@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             // Update
             var data = new AdaptiveApplicationControlGroupData()
             {
-                ProtectionMode = new ProtectionMode()
+                ProtectionMode = new SecurityCenterFileProtectionMode()
                 {
                     Exe = "Audit",
                     Msi = "None",

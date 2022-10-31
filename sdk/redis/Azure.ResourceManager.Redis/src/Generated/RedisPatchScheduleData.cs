@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleEntries"/> is null. </exception>
         public RedisPatchScheduleData(IEnumerable<RedisPatchScheduleSetting> scheduleEntries)
         {
-            if (scheduleEntries == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleEntries));
-            }
+            Argument.AssertNotNull(scheduleEntries, nameof(scheduleEntries));
 
             ScheduleEntries = scheduleEntries.ToList();
         }

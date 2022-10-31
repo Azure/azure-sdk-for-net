@@ -39,12 +39,16 @@ function GenerateScenarioMatrix(
         $scenariosMatrix += $entry
     }
 
-    $valuesYaml = Get-Content -Raw (Join-Path (Split-Path $matrixFilePath) 'values.yaml')
-    $values = $valuesYaml | ConvertFrom-Yaml -Ordered
-    if (!$values) {$values = @{}}
+    $valuesConfig = Join-Path (Split-Path $matrixFilePath) 'values.yaml'
+    $values = [ordered]@{}
+    if (Test-Path $valuesConfig) {
+        $valuesYaml = Get-Content -Raw $valuesConfig
+        $values = $valuesYaml | ConvertFrom-Yaml -Ordered
+        if (!$values) {$values = @{}}
 
-    if ($values.ContainsKey('Scenarios')) {
-        throw "Please use matrix generation for stress test scenarios."
+        if ($values.ContainsKey('Scenarios')) {
+            throw "Please use matrix generation for stress test scenarios."
+        }
     }
 
     $values.scenarios = $scenariosMatrix

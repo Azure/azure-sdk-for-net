@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="secret"/> is null. </exception>
         public ServicePrincipalProperties(string clientId, string secret)
         {
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (secret == null)
-            {
-                throw new ArgumentNullException(nameof(secret));
-            }
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(secret, nameof(secret));
 
             ClientId = clientId;
             Secret = secret;

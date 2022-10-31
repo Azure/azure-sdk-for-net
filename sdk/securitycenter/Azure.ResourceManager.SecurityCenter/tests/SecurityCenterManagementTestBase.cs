@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 },
                 RecommendationsConfiguration =
                 {
-                    new RecommendationConfigurationProperties(RecommendationType.IotOpenPorts,RecommendationConfigStatus.Disabled),
-                    new RecommendationConfigurationProperties(RecommendationType.IotSharedCredentials,RecommendationConfigStatus.Disabled),
+                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotOpenPorts,RecommendationConfigStatus.Disabled),
+                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotSharedCredentials,RecommendationConfigStatus.Disabled),
                 }
             };
             var iotSecuritySolutionModel = await resourceGroup.GetIotSecuritySolutions().CreateOrUpdateAsync(WaitUntil.Completed, solutionModelName, data);

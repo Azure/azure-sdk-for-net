@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -25,14 +26,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filePrefix"/> or <paramref name="uri"/> is null. </exception>
         public RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, Uri uri)
         {
-            if (filePrefix == null)
-            {
-                throw new ArgumentNullException(nameof(filePrefix));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(filePrefix, nameof(filePrefix));
+            Argument.AssertNotNull(uri, nameof(uri));
 
             FilePrefix = filePrefix;
             RestoreTargetLocationType = restoreTargetLocationType;

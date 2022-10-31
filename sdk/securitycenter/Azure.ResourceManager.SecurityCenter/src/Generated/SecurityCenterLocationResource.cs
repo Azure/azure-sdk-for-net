@@ -279,10 +279,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AllowedConnections_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AllowedConnection> GetAllowedConnectionsByHomeRegionAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AllowedConnection>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecurityCenterAllowedConnection>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
                 scope.Start();
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<AllowedConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecurityCenterAllowedConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
                 scope.Start();
@@ -321,10 +321,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AllowedConnections_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AllowedConnection> GetAllowedConnectionsByHomeRegion(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<AllowedConnection> FirstPageFunc(int? pageSizeHint)
+            Page<SecurityCenterAllowedConnection> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
                 scope.Start();
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<AllowedConnection> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecurityCenterAllowedConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
                 scope.Start();

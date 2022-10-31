@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task Get()
         {
-            var allowedConnections = await _resourceGroup.GetAllowedConnectionAsync(AzureLocation.CentralUS, ConnectionType.Internal);
+            var allowedConnections = await _resourceGroup.GetAllowedConnectionAsync(AzureLocation.CentralUS, SecurityCenterConnectionType.Internal);
             ValidateAllowedConnections(allowedConnections);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateAllowedConnections(list.FirstOrDefault());
         }
 
-        private void ValidateAllowedConnections(AllowedConnection allowedConnections)
+        private void ValidateAllowedConnections(SecurityCenterAllowedConnection allowedConnections)
         {
             Assert.IsNotNull(allowedConnections);
             Assert.IsNotNull(allowedConnections.Id);

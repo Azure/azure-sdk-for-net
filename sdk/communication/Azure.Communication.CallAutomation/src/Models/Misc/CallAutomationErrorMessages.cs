@@ -12,5 +12,25 @@ namespace Azure.Communication.CallAutomation
         /// Invalid RepeatabilityHeaders message.
         /// </summary>
         public const string InvalidRepeatabilityHeadersMessage = "Invalid RepeatabilityHeaders. RepeatabilityHeaders is only valid when RepeatabilityRequestId and RepeatabilityFirstSent are set to non-default value.";
+
+        /// <summary>
+        /// Invalid Https Uri message.
+        /// </summary>
+        public const string InvalidHttpsUriMessage = "Callback Uri has to be in well-formed, valid https format.";
+
+        /// <summary>
+        /// Invalid InvitationTimeoutInSeconds message.
+        /// </summary>
+        public const string InvalidInvitationTimeoutInSeconds = "InvitationTimeoutInSeconds has to be between 1 and 180 seconds.";
+
+        /// <summary>
+        /// UserToUserInformation exceeds max length message.
+        /// </summary>
+        public const string UserToUserInformationExceedsMaxLength = "UserToUserInformation exceeds maximum string length of 5000.";
+
+        /// <summary>
+        /// OperationContext exceeds max length message.
+        /// </summary>
+        public const string OperationContextExceedsMaxLength = "UserToUserInformation exceeds maximum string length of 5000.";
     }
 }

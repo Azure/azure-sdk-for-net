@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="denylistValues"/> is null. </exception>
         public DenylistCustomAlertRule(bool isEnabled, IEnumerable<string> denylistValues) : base(isEnabled)
         {
-            if (denylistValues == null)
-            {
-                throw new ArgumentNullException(nameof(denylistValues));
-            }
+            Argument.AssertNotNull(denylistValues, nameof(denylistValues));
 
             DenylistValues = denylistValues.ToList();
             RuleType = "DenylistCustomAlertRule";

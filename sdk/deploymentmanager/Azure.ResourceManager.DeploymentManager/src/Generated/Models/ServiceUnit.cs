@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceGroup"/> is null. </exception>
         internal ServiceUnit(string targetResourceGroup, DeploymentMode deploymentMode) : base(targetResourceGroup, deploymentMode)
         {
-            if (targetResourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceGroup));
-            }
+            Argument.AssertNotNull(targetResourceGroup, nameof(targetResourceGroup));
 
             Steps = new ChangeTrackingList<RolloutStep>();
         }

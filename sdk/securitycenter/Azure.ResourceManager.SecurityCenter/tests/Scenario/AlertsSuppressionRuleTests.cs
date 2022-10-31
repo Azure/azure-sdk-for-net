@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class AlertsSuppressionRuleTests : SecurityCenterManagementTestBase
     {
-        private AlertsSuppressionRuleCollection _alertsSuppressionRuleCollection => DefaultSubscription.GetAlertsSuppressionRules();
+        private SecurityAlertsSuppressionRuleCollection _alertsSuppressionRuleCollection => DefaultSubscription.GetSecurityAlertsSuppressionRules();
 
         public AlertsSuppressionRuleTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             }
         }
 
-        private async Task<AlertsSuppressionRuleResource> CreateAlertsSuppressionRule(string alertsSuppressionRuleName)
+        private async Task<SecurityAlertsSuppressionRuleResource> CreateAlertsSuppressionRule(string alertsSuppressionRuleName)
         {
             List<SuppressionAlertsScopeElement> allof = new List<SuppressionAlertsScopeElement>()
             {
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     },
                 },
             };
-            var data = new AlertsSuppressionRuleData()
+            var data = new SecurityAlertsSuppressionRuleData()
             {
                 AlertType = "IpAnomaly",
-                State = AlertsSuppressionRuleState.Enabled,
+                State = SecurityAlertsSuppressionRuleState.Enabled,
                 Reason = "FalsePositive",
                 Comment = "Test VM",
                 SuppressionAlertsScope = new SuppressionAlertsScope(allof),
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateAlertsSuppressionRule(AlertsSuppressionRuleResource alertSuppressionRule, string alertsSuppressionRuleName)
+        private void ValidateAlertsSuppressionRule(SecurityAlertsSuppressionRuleResource alertSuppressionRule, string alertsSuppressionRuleName)
         {
             Assert.IsNotNull(alertSuppressionRule);
             Assert.IsNotNull(alertSuppressionRule.Data.Id);

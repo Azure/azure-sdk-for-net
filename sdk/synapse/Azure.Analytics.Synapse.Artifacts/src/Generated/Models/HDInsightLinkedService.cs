@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterUri"/> is null. </exception>
         public HDInsightLinkedService(object clusterUri)
         {
-            if (clusterUri == null)
-            {
-                throw new ArgumentNullException(nameof(clusterUri));
-            }
+            Argument.AssertNotNull(clusterUri, nameof(clusterUri));
 
             ClusterUri = clusterUri;
             Type = "HDInsight";
