@@ -134,6 +134,8 @@ if ($relatedCadlProjectFolder) {
             $namespace = $directories[-2];
         }
         New-CADLPackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -cadlInput $caldFolder/main.cadl -outputJsonFile $newpackageoutput
+        $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
+        $relativeSdkPath = $newPackageOutputJson.path
         # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --emit @azure-tools/cadl-csharp --output-path $sdkPath .\main.cadl
 
         # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --output-path $sdkPath --emit @azure-tools/cadl-csharp ./main.cadl
@@ -142,7 +144,7 @@ if ($relatedCadlProjectFolder) {
         if ( !$?) {
             Throw "Failed to generate sdk for cadl. exit code: $?"
         }
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkPath -path $projectFolder -downloadUrlPrefix "$downloadUrlPrefix" -skipGenerate -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkPath -path $relativeSdkPath -downloadUrlPrefix "$downloadUrlPrefix" -skipGenerate -generatedSDKPackages $generatedSDKPackages
         Pop-Location
     }
 }
