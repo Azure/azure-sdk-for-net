@@ -91,7 +91,7 @@
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.7.3" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.10.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.11.0" />
-    <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0" />
+    <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.1.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />

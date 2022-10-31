@@ -20,9 +20,9 @@ namespace Microsoft.Azure.WebPubSub.Common
                 null,
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.ClaimsProperty),
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.QueryProperty),
-                element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.HeadersProperty),
                 element.ReadToObject<string[]>(ConnectEventRequest.SubprotocolsProperty),
-                element.ReadToObject<WebPubSubClientCertificate[]>(ConnectEventRequest.ClientCertificatesProperty));
+                element.ReadToObject<WebPubSubClientCertificate[]>(ConnectEventRequest.ClientCertificatesProperty),
+                element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.HeadersProperty));
         }
 
         public override void Write(Utf8JsonWriter writer, ConnectEventRequest value, JsonSerializerOptions options)
