@@ -3,11 +3,13 @@
 
 using System;
 using System.IO;
+using System.Security.Authentication.ExtendedProtection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Data.SchemaRegistry.Models;
+using ContentType = Azure.Data.SchemaRegistry.Models.ContentType;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -346,6 +348,17 @@ namespace Azure.Data.SchemaRegistry
             }
 
             return format;
+        }
+
+        private static ContentType ConstructContentType(SchemaFormat schemaFormat)
+        {
+            if (string.Equals(schemaFormat.ContentType, "application/json; serialization=Avro", StringComparison.InvariantCultureIgnoreCase))
+                return ContentType.ApplicationJsonSerializationAvro;
+            if (string.Equals(schemaFormat.ContentType, "application/json; serialization=json", StringComparison.InvariantCultureIgnoreCase))
+                return ContentType.ApplicationJsonSerializationJson;
+            if (string.Equals(schemaFormat.ContentType, "text/plain; charset=utf-8", StringComparison.InvariantCultureIgnoreCase))
+                return ContentType.TextPlainCharsetUtf8;
+            throw new ArgumentOutOfRangeException(nameof(schemaFormat), schemaFormat.ContentType, "Unknown ContentType value.");
         }
     }
 }
