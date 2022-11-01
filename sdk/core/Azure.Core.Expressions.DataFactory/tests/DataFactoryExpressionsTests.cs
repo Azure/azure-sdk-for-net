@@ -177,7 +177,11 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = new DataFactoryExpression<double>(DoubleValue);
             var actual = GetSerializedString(dfe);
+#if NET461_OR_GREATER
+            Assert.AreEqual("1.1000000000000001", actual);
+#else
             Assert.AreEqual(DoubleJson, actual);
+#endif
         }
 
         [Ignore("Discussing if we should support SecureString or just string")]
