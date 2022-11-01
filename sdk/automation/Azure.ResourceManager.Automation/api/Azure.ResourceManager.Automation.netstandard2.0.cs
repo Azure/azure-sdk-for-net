@@ -2455,7 +2455,7 @@ namespace Azure.ResourceManager.Automation.Models
     public partial class SoftwareUpdateConfigurationRunTaskProperties
     {
         internal SoftwareUpdateConfigurationRunTaskProperties() { }
-        public string JobId { get { throw null; } }
+        public System.Guid? JobId { get { throw null; } }
         public string Source { get { throw null; } }
         public string Status { get { throw null; } }
     }
@@ -2596,7 +2596,7 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public string Exception { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SourceControlProvisioningState? ProvisioningState { get { throw null; } }
         public string SourceControlSyncJobId { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -2605,7 +2605,7 @@ namespace Azure.ResourceManager.Automation.Models
     public partial class SourceControlSyncJobStream
     {
         internal SourceControlSyncJobStream() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string SourceControlSyncJobStreamId { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SourceControlStreamType? StreamType { get { throw null; } }
         public string Summary { get { throw null; } }
@@ -2614,7 +2614,7 @@ namespace Azure.ResourceManager.Automation.Models
     public partial class SourceControlSyncJobStreamResult
     {
         internal SourceControlSyncJobStreamResult() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string SourceControlSyncJobStreamId { get { throw null; } }
         public string StreamText { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SourceControlStreamType? StreamType { get { throw null; } }
@@ -2646,7 +2646,7 @@ namespace Azure.ResourceManager.Automation.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SourceControlTokenType(string value) { throw null; }
-        public static Azure.ResourceManager.Automation.Models.SourceControlTokenType Oauth { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.SourceControlTokenType OAuth { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.SourceControlTokenType PersonalAccessToken { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.SourceControlTokenType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

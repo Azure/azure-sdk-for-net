@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// The job id of the task.
         /// Serialized Name: SoftwareUpdateConfigurationRunTaskProperties.jobId
         /// </param>
-        internal SoftwareUpdateConfigurationRunTaskProperties(string status, string source, string jobId)
+        internal SoftwareUpdateConfigurationRunTaskProperties(string status, string source, Guid? jobId)
         {
             Status = status;
             Source = source;
@@ -52,6 +54,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// The job id of the task.
         /// Serialized Name: SoftwareUpdateConfigurationRunTaskProperties.jobId
         /// </summary>
-        public string JobId { get; }
+        public Guid? JobId { get; }
     }
 }

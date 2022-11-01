@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         private const string PersonalAccessTokenValue = "PersonalAccessToken";
-        private const string OauthValue = "Oauth";
+        private const string OAuthValue = "Oauth";
 
         /// <summary>
         /// PersonalAccessToken
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Oauth
         /// Serialized Name: TokenType.Oauth
         /// </summary>
-        public static SourceControlTokenType Oauth { get; } = new SourceControlTokenType(OauthValue);
+        public static SourceControlTokenType OAuth { get; } = new SourceControlTokenType(OAuthValue);
         /// <summary> Determines if two <see cref="SourceControlTokenType"/> values are the same. </summary>
         public static bool operator ==(SourceControlTokenType left, SourceControlTokenType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlTokenType"/> values are not the same. </summary>

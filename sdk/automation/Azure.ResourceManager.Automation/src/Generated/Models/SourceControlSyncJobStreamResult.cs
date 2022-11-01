@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// The values of the job stream.
         /// Serialized Name: SourceControlSyncJobStreamById.properties.value
         /// </param>
-        internal SourceControlSyncJobStreamResult(string id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value)
+        internal SourceControlSyncJobStreamResult(ResourceIdentifier id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value)
         {
             Id = id;
             SourceControlSyncJobStreamId = sourceControlSyncJobStreamId;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Resource id.
         /// Serialized Name: SourceControlSyncJobStreamById.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary>
         /// The sync job stream id.
         /// Serialized Name: SourceControlSyncJobStreamById.properties.sourceControlSyncJobStreamId

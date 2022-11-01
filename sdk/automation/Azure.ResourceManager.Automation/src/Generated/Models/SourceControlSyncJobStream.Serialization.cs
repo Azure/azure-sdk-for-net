@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static SourceControlSyncJobStream DeserializeSourceControlSyncJobStream(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> sourceControlSyncJobStreamId = default;
             Optional<string> summary = default;
             Optional<DateTimeOffset?> time = default;
@@ -24,7 +24,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// The exceptions that occurred while running the sync job.
         /// Serialized Name: SourceControlSyncJobById.properties.exception
         /// </param>
-        internal SourceControlSyncJobResult(string id, string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, string exception)
+        internal SourceControlSyncJobResult(ResourceIdentifier id, string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, string exception)
         {
             Id = id;
             SourceControlSyncJobId = sourceControlSyncJobId;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// The id of the job.
         /// Serialized Name: SourceControlSyncJobById.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary>
         /// The source control sync job id.
         /// Serialized Name: SourceControlSyncJobById.properties.sourceControlSyncJobId

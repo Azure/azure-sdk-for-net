@@ -112,6 +112,11 @@ rename-mapping:
   SoftwareUpdateConfigurationMachineRun.id: -|arm-id
   SoftwareUpdateConfigurationMachineRun.properties.targetComputer: TargetComputerId|arm-id
   SoftwareUpdateConfigurationRun.id: -|arm-id
+  SoftwareUpdateConfigurationRunTaskProperties.jobId: -|uuid
+  SourceControlSyncJobById.id: -|arm-id
+  SourceControlSyncJobStream.id: -|arm-id
+  SourceControlSyncJobStreamById.id: -|arm-id
+  TokenType.Oauth: OAuth
 
 prepend-rp-prefix:
   - Certificate

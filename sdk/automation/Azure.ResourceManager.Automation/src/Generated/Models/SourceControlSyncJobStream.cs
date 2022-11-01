@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// The type of the sync job stream.
         /// Serialized Name: SourceControlSyncJobStream.properties.streamType
         /// </param>
-        internal SourceControlSyncJobStream(string id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType)
+        internal SourceControlSyncJobStream(ResourceIdentifier id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType)
         {
             Id = id;
             SourceControlSyncJobStreamId = sourceControlSyncJobStreamId;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Resource id.
         /// Serialized Name: SourceControlSyncJobStream.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary>
         /// The sync job stream id.
         /// Serialized Name: SourceControlSyncJobStream.properties.sourceControlSyncJobStreamId
