@@ -3,11 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
-using System.Text.Json;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
@@ -25,8 +24,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
             // retrieve export operation response, and extract url of exported file
-            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
-            string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+            var operationValueJson = exportOperation.Value.ToDynamic();
+            string exportedFileUrl = operationValueJson.ResultUrl;
             #endregion
 
             Assert.True(exportOperation.HasCompleted);
@@ -84,7 +83,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Operation<BinaryData> exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
             // retrieve export operation response, and extract url of exported file
-            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
+            var operationValueJson = exportOperation.Value.ToDynamic();
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
             #endregion
 

@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Castle.Core.Internal;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -98,7 +95,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
 #if !SNIPPET
                         // TODO: this currently fails without a cast.  String issue.
-                        expectedRedactedText.Add(conversationItem.RedactedContent.Text);
+                        expectedRedactedText.Add((string)conversationItem.RedactedContent.Text);
 #endif
 
                         Console.WriteLine("Entities:");
@@ -204,7 +201,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
                         Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
 #if !SNIPPET
-                        expectedRedactedText.Add(conversationItem.RedactedContent.Text);
+                        expectedRedactedText.Add((string)conversationItem.RedactedContent.Text);
 #endif
 
                         Console.WriteLine("Entities:");

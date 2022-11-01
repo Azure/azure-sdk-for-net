@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Castle.Core.Internal;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -82,23 +79,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
-            using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-            JsonElement jobResults = result.RootElement;
-            foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+            var jobResults = analyzeConversationOperation.Value.ToDynamic();
+            foreach (var task in jobResults.Tasks.Items)
             {
-                JsonElement results = task.GetProperty("results");
+                var results = task.Results;
 
                 Console.WriteLine("Conversations:");
-                foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+                foreach (var conversation in results.Conversations)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+                    Console.WriteLine($"Conversation: #{conversation.Id}");
                     Console.WriteLine("Summaries:");
-                    foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
+                    foreach (var summary in conversation.Summaries)
                     {
-                        Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
-                        Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+                        Console.WriteLine($"Text: {summary.Text}");
+                        Console.WriteLine($"Aspect: {summary.Aspect}");
 #if !SNIPPET
-                        aspects.Add(summary.GetProperty("aspect").GetString());
+                        aspects.Add((string)summary.Aspect);
 #endif
                     }
                     Console.WriteLine();
@@ -178,23 +174,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
             #endregion
 
-            using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-            JsonElement jobResults = result.RootElement;
-            foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+            var jobResults = analyzeConversationOperation.Value.ToDynamic();
+            foreach (var task in jobResults.Tasks.Items)
             {
-                JsonElement results = task.GetProperty("results");
+                var results = task.Results;
 
                 Console.WriteLine("Conversations:");
-                foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+                foreach (var conversation in results.Conversations)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+                    Console.WriteLine($"Conversation: #{conversation.Id}");
                     Console.WriteLine("Summaries:");
-                    foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
+                    foreach (var summary in conversation.Summaries)
                     {
-                        Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
-                        Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+                        Console.WriteLine($"Text: {summary.Text}");
+                        Console.WriteLine($"Aspect: {summary.Aspect}");
 #if !SNIPPET
-                        aspects.Add(summary.GetProperty("aspect").GetString());
+                        aspects.Add((string)summary.Aspect);
 #endif
                     }
                     Console.WriteLine();
