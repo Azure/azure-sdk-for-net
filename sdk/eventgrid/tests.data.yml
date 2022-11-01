@@ -4,4 +4,4 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: eventgrid
-    SDKType: client
+    SDKType: data
