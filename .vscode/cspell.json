@@ -709,7 +709,8 @@
         "Aatp",
         "Puid",
         "Stix",
-        "Whois"
+        "Whois",
+        "Nlstext"
       ]
     },
     {
@@ -903,14 +904,14 @@
         "cname",
         "kube"
         ]
-    },  
+    },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "Msrp",
         "Hana"
         ]
-    },  
+    },
     {
       "filename": "**/sdk/securitydevops/**/*.cs",
       "words": [
