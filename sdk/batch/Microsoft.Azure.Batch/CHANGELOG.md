@@ -12,7 +12,7 @@
 
 ### Other Changes
 
-- Modified descriptions of `CertificateReferences` and `UploadHeaders`.
+- Modified descriptions of `ApplicationId`, `UploadHeaders`, and `Name` (UserAccount) properties.
 
 ## 15.3.0 (2022-01-07)
 
