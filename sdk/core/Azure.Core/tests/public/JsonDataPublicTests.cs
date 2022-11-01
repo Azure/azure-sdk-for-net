@@ -106,6 +106,16 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanTestPropertyForNull()
+        {
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();
+
+            Assert.IsNull(jsonData.OptionalInt);
+            Assert.IsNull(jsonData.OptionalString);
+            Assert.AreEqual("Hello", (string)jsonData.Primitive);
+        }
+
+        [Test]
         public void GetMemberIsCaseInsensitive()
         {
             dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();

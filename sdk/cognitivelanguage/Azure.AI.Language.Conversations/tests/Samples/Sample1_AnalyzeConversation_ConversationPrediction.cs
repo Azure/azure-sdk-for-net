@@ -73,20 +73,19 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine($"  Confidence: {entity.ConfidenceScore}");
                 Console.WriteLine();
 
-                //// TODO: TryGet operation
-                ////if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
-                ////{
-                //    foreach (var resolution in entity.resolutions)
-                //    {
-                //        if (resolution.resolutionKind == "DateTimeResolution")
-                //        {
-                //            Console.WriteLine($"Datetime Sub Kind: {resolution.dateTimeSubKind}");
-                //            Console.WriteLine($"Timex: {resolution.timex}");
-                //            Console.WriteLine($"Value: {resolution.value}");
-                //            Console.WriteLine();
-                //        }
-                //    }
-                ////}
+                if (entity.Resolutions != null)
+                {
+                    foreach (var resolution in entity.Resolutions)
+                    {
+                        if (resolution.ResolutionKind == "DateTimeResolution")
+                        {
+                            Console.WriteLine($"Datetime Sub Kind: {resolution.DateTimeSubKind}");
+                            Console.WriteLine($"Timex: {resolution.Timex}");
+                            Console.WriteLine($"Value: {resolution.Value}");
+                            Console.WriteLine();
+                        }
+                    }
+                }
             }
             #endregion
 

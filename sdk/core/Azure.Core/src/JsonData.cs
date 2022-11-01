@@ -75,7 +75,7 @@ namespace Azure
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
         /// </remarks>
-        private JsonData this[int arrayIndex]
+        private JsonData? this[int arrayIndex]
         {
             get => GetValueAt(arrayIndex);
         }
@@ -88,7 +88,7 @@ namespace Azure
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
         /// </remarks>
-        private JsonData this[string propertyName]
+        private JsonData? this[string propertyName]
         {
             get => GetPropertyValue(propertyName);
         }
@@ -465,14 +465,14 @@ namespace Azure
             return EnsureArray()[index];
         }
 
-        private JsonData GetPropertyValue(string propertyName)
+        private JsonData? GetPropertyValue(string propertyName)
         {
             if (EnsureObject().TryGetValue(propertyName, out JsonData? element))
             {
                 return element;
             }
 
-            throw new InvalidOperationException($"Property {propertyName} not found");
+            return null;
         }
 
         private IEnumerable GetDynamicEnumerable()
