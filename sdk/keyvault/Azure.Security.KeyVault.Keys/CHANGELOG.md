@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- The default service version is now "7.4-preview.1".
+
 ## 4.4.0 (2022-09-20)
 
 ### Breaking Changes
