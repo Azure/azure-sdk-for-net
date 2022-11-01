@@ -77,7 +77,7 @@ namespace Azure.Core.Tests
             RetryPolicyMock mockPolicy = (RetryPolicyMock) policy;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
-            Assert.Greater(message.ProcessingStartTime, beforeSend);
+            Assert.GreaterOrEqual(message.ProcessingStartTime, beforeSend);
             Assert.AreEqual(0, message.ProcessingContext.RetryNumber);
             await gate.Cycle();
             Assert.IsTrue(mockPolicy.ShouldRetryCalled);
