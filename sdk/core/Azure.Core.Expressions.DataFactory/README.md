@@ -7,7 +7,7 @@ Azure.Core.Expressions.DataFactory provides shared classes that represent [Expre
 Typically, you will not need to install Azure.Core.Expressions.DataFActory; 
 it will be installed for you when you install one of the client libraries using it. 
 In case you want to install it explicitly (to implement your own client library, for example), 
-you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core.Expressions.DataFactory).
+you can find the NuGet package.
 
 ## Key concepts
 
