@@ -19,7 +19,7 @@
 
   <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Messaging.EventGrid\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.EventGrid\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.EventGrid\**\*.csproj" Condition="'$(AZURE_EVENTGRID_TEST_MODE)' != 'Live'" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents\**\*.csproj" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.EventGrid\**\*.csproj" />
   </ItemGroup>
