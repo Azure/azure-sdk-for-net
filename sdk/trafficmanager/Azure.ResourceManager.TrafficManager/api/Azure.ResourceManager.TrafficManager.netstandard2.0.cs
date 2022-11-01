@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerEndpointData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData
     {
         public TrafficManagerEndpointData() { }
+        public Azure.ResourceManager.TrafficManager.Models.AlwaysServe? AlwaysServe { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo> CustomHeaders { get { throw null; } }
         public string EndpointLocation { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus? EndpointMonitorStatus { get { throw null; } set { } }
@@ -197,6 +198,24 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType left, Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType left, Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlwaysServe : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.AlwaysServe>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlwaysServe(string value) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.AlwaysServe Disabled { get { throw null; } }
+        public static Azure.ResourceManager.TrafficManager.Models.AlwaysServe Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.TrafficManager.Models.AlwaysServe other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.AlwaysServe left, Azure.ResourceManager.TrafficManager.Models.AlwaysServe right) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrafficManager.Models.AlwaysServe (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.AlwaysServe left, Azure.ResourceManager.TrafficManager.Models.AlwaysServe right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ExpectedStatusCodeRangeInfo

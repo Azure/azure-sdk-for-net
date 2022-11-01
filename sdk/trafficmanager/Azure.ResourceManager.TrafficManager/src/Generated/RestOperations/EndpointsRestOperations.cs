@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2018-08-01";
+            _apiVersion = apiVersion ?? "2022-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Update a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be updated. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be updated. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be updated. </param>
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Update a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be updated. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be updated. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be updated. </param>
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Gets a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Gets a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
@@ -257,8 +257,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Create or update a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be created or updated. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be created or updated. </param>
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Create or update a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be created or updated. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be created or updated. </param>
@@ -353,8 +353,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Deletes a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be deleted. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be deleted. </param>
@@ -382,8 +382,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Deletes a Traffic Manager endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint to be deleted. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be deleted. </param>
