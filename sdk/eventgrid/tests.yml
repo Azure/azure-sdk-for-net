@@ -1,12 +1,4 @@
-trigger:
-  branches:
-    include:
-      - main
-      - hotfix/*
-      - release/*
-  paths:
-    include:
-      - sdk/eventgrid/tests.yml
+trigger: none
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
