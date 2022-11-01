@@ -136,8 +136,8 @@ public static class EventTracking
                                   ConcurrentDictionary<string, byte> readMessages)
     {
         // Id Checks
-        var hasId = eventData.ApplicationProperties.TryGetValue(IdPropertyName, out var messageIdProperty);
-        var eventId = eventIdProperty?.ToString();
+        var hasId = message.ApplicationProperties.TryGetValue(IdPropertyName, out var messageIdProperty);
+        var messageId = messageIdProperty?.ToString();
 
         if (!hasId)
         {
@@ -151,46 +151,18 @@ public static class EventTracking
             return -1;
         }
 
-        // Index Value checks
-        var hasIndex = eventData.Properties.TryGetValue(IndexNumberPropertyName, out var IndexProperty);
+        // Hashed message body checks
+        message.ApplicationProperties.TryGetValue(MessageBodyHashPropertyName, out var expected);
+        var expectedMessageBodyHash = expected.ToString();
+        var receivedMessageBodyHash = sha256Hash.ComputeHash(message.Body.ToArray()).ToString();
 
-        if (!hasIndex)
+        if (expectedMessageBodyHash != receivedMessageBodyHash)
         {
-            var eventProperties = new Dictionary<string,string>();
-            eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
-            eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
-            metrics.Client.TrackEvent(Metrics.UnknownEventsProcessed, eventProperties);
-            return -1;
-        }
-        int.TryParse(IndexProperty.ToString(), out var indexNumber);
-
-        var seenEventFromThisPartition = lastReadPartitionSequence.TryGetValue(partitionReceivedFrom, out var lastReadFromPartition);
-
-        if (seenEventFromThisPartition && lastReadFromPartition >= indexNumber)
-        {
-            metrics.Client.GetMetric(Metrics.MissingOrOutOfOrderEvent).TrackValue(1);
-
-            var eventProperties = new Dictionary<string,string>();
-            eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
-            eventProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
-            eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
-            metrics.Client.TrackEvent(Metrics.MissingOrOutOfOrderEvent, eventProperties);
-        }
-
-        lastReadPartitionSequence.AddOrUpdate(partitionReceivedFrom, _ => indexNumber, (k,v) => Math.Max(v, indexNumber));
-
-        // Hashed event body checks
-        eventData.Properties.TryGetValue(EventBodyHashPropertyName, out var expected);
-        var expectedEventBodyHash = expected.ToString();
-        var receivedEventBodyHash = sha256Hash.ComputeHash(eventData.EventBody.ToArray()).ToString();
-
-        if (expectedEventBodyHash != receivedEventBodyHash)
-        {
-            var eventProperties = new Dictionary<string,string>();
-            eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
-            eventProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
-            eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
-            metrics.Client.TrackEvent(Metrics.InvalidBodies, eventProperties);
+            var messageProperties = new Dictionary<string,string>();
+            messageProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
+            messageProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
+            messageProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
+            metrics.Client.TrackEvent(Metrics.InvalidBodies, messageProperties);
             return -1;
         }
 
