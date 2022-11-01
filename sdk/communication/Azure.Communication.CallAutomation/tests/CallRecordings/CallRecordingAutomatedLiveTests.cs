@@ -62,7 +62,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallRecording callRecording = client.GetCallRecording();
             StartRecordingOptions recordingOptions = new StartRecordingOptions(new ServerCallLocator(serverCallId))
             {
-                RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback)
+                RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback),
+                RepeatabilityHeaders = null
             };
             var recordingResponse = await callRecording.StartRecordingAsync(recordingOptions).ConfigureAwait(false);
             Assert.NotNull(recordingResponse.Value);
@@ -182,7 +183,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                         RecordingChannel = RecordingChannel.Unmixed,
                         RecordingContent = RecordingContent.Audio,
                         RecordingFormat = RecordingFormat.Wav,
-                        RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback)
+                        RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback),
+                        RepeatabilityHeaders = null
                     });
                 Assert.AreEqual(StatusCodes.Status200OK, startRecordingResponse.GetRawResponse().Status);
                 Assert.NotNull(startRecordingResponse.Value.RecordingId);
@@ -288,6 +290,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                         RecordingContent = RecordingContent.Audio,
                         RecordingFormat = RecordingFormat.Wav,
                         RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback),
+                        RepeatabilityHeaders = null
                     };
                 startRecordingOptions.AudioChannelParticipantOrdering.Add(user);
                 startRecordingOptions.AudioChannelParticipantOrdering.Add(target);

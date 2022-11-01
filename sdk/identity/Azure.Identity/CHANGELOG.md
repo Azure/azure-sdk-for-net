@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`.
 
 ### Other Changes
 

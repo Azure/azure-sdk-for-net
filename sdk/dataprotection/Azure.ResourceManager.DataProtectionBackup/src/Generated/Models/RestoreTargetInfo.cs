@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceInfo"/> is null. </exception>
         public RestoreTargetInfo(RecoverySetting recoverySetting, DataSourceInfo dataSourceInfo) : base(recoverySetting)
         {
-            if (dataSourceInfo == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceInfo));
-            }
+            Argument.AssertNotNull(dataSourceInfo, nameof(dataSourceInfo));
 
             DataSourceInfo = dataSourceInfo;
             ObjectType = "RestoreTargetInfo";

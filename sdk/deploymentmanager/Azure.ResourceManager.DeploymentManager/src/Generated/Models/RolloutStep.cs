@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal RolloutStep(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceOperations = new ChangeTrackingList<ResourceOperation>();

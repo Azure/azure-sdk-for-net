@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,14 +27,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> or <paramref name="restriction"/> is null. </exception>
         public ContentKeyPolicyOption(ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
         {
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
-            if (restriction == null)
-            {
-                throw new ArgumentNullException(nameof(restriction));
-            }
+            Argument.AssertNotNull(configuration, nameof(configuration));
+            Argument.AssertNotNull(restriction, nameof(restriction));
 
             Configuration = configuration;
             Restriction = restriction;

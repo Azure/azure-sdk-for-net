@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PrivateEndpointACL(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

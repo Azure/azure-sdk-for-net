@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public BackupRehydrationContent(string recoveryPointId, TimeSpan rehydrationRetentionDuration)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
+            Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
 
             RecoveryPointId = recoveryPointId;
             RehydrationRetentionDuration = rehydrationRetentionDuration;

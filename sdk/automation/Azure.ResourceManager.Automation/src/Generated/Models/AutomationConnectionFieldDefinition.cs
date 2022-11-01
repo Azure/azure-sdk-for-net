@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -23,10 +24,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fieldDefinitionType"/> is null. </exception>
         public AutomationConnectionFieldDefinition(string fieldDefinitionType)
         {
-            if (fieldDefinitionType == null)
-            {
-                throw new ArgumentNullException(nameof(fieldDefinitionType));
-            }
+            Argument.AssertNotNull(fieldDefinitionType, nameof(fieldDefinitionType));
 
             FieldDefinitionType = fieldDefinitionType;
         }

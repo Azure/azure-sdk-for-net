@@ -23,14 +23,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSettings"/> or <paramref name="limitSettings"/> is null. </exception>
         public ImageClassificationMultilabel(ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings)
         {
-            if (dataSettings == null)
-            {
-                throw new ArgumentNullException(nameof(dataSettings));
-            }
-            if (limitSettings == null)
-            {
-                throw new ArgumentNullException(nameof(limitSettings));
-            }
+            Argument.AssertNotNull(dataSettings, nameof(dataSettings));
+            Argument.AssertNotNull(limitSettings, nameof(limitSettings));
 
             SearchSpace = new ChangeTrackingList<ImageModelDistributionSettingsClassification>();
             DataSettings = dataSettings;

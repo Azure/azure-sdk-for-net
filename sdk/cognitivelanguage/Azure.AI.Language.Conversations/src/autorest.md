@@ -165,19 +165,19 @@ directive:
 - from: analyzeconversations.json
   where: $.paths.*.*
   transform: |
-    var operationId = $.operationId.substring("ConversationAnalysis_".length);
-    // BUGBUG: Will not work until https://github.com/Azure/autorest.csharp/issues/2384 is fixed.
+    var version = $doc.info.version;
+    var operationId = $.operationId.substring($.operationId.indexOf("_") + 1);
     $["externalDocs"] = {
-        url: "https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/" + operationId.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
+        url: "https://learn.microsoft.com/rest/api/language/" + version + "/conversation-analysis-runtime/" + operationId.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
     };
 
 - from: analyzeconversations-authoring.json
   where: $.paths.*.*
   transform: |
-    var operationId = $.operationId.substring("ConversationalAnalysisAuthoring_".length);
-    // BUGBUG: Will not work until https://github.com/Azure/autorest.csharp/issues/2384 is fixed.
+    var version = $doc.info.version;
+    var operationId = $.operationId.substring($.operationId.indexOf("_") + 1);
     $["externalDocs"] = {
-        url: "https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/" + operationId.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
+        url: "https://learn.microsoft.com/rest/api/language/" + version + "/conversational-analysis-authoring/" + operationId.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
     };
 
 # Mark the LRO as internal so we can call it from an overload, which we can't do using transforms since that results in duplicate operationIds.

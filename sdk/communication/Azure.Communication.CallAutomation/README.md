@@ -2,7 +2,7 @@
 
 This package contains a C# SDK for Azure Communication Call Automation.
 
-[Source code][source] |[Product documentation][product_docs]
+[Source code][source] | [Product documentation][product_docs]
 ## Getting started
 
 ### Install the package
@@ -40,41 +40,6 @@ Or alternatively using a valid Active Directory token.
 var endpoint = new Uri("https://my-resource.communication.azure.com");
 TokenCredential tokenCredential = new DefaultAzureCredential();
 var client = new CallAutomationClient(endpoint, tokenCredential);
-```
-
-### Idempotent Requests
-An operation is idempotent if it can be performed multiple times and have the same result as a single execution.
-
-The following operations are idempotent:
-- `AnswerCall`
-- `RedirectCall`
-- `RejectCall`
-- `CreateCall`
-- `HangUp` when terminating the call for everyone, ie. `forEveryone` parameter is set to `true`.
-- `TransferCallToParticipant`
-- `AddParticipants`
-- `RemoveParticipants`
-
-By default, SDK generates a new `RepeatabilityHeaders` object every time the above operation is called. If you would
-like to provide your own `RepeatabilityHeaders` for your application (eg. for your own retry mechanism), you can do so by specifying
-the `RepeatabilityHeaders` in the operation's `Options` object. If this is not set by user, then the SDK will generate
-it.
-
-The parameters for the `RepeatabilityHeaders` class are `repeatabilityRequestId` and `repeatabilityFirstSent`. Two or
-more requests are considered the same request **if and only if** both repeatability parameters are the same.
-- `repeatabilityRequestId`: an opaque string representing a client-generated unique identifier for the request.
-It is a version 4 (random) UUID.
-- `repeatabilityFirstSent`: The value should be the date and time at which the request was **first** created.
-
-To set repeatability parameters, see below C# code snippet as an example:
-```C#
-var createCallOptions = new CreateCallOptions(callSource, new CommunicationIdentifier[] { target }, new Uri("https://exmaple.com/callback")) {
-    RepeatabilityHeaders = new RepeatabilityHeaders(Guid.NewGuid(), DateTimeOffset.UtcNow);
-};
-CreateCallResult response1 = await callAutomationClient.CreateCallAsync(createCallOptions).ConfigureAwait(false);
-await Task.Delay(5000);
-CreateCallResult response2 = await callAutomationClient.CreateCallAsync(createCallOptions).ConfigureAwait(false);
-// response1 and response2 will have the same CallConnectionId as they have the same reapeatability parameters which means that the CreateCall operation was only executed once.
 ```
 
 ## Examples
@@ -148,11 +113,54 @@ Your app will receive mid-connection call back events via the callbackEndpoint y
         return Ok();
     }
 ```
+### Idempotent Requests
+An operation is idempotent if it can be performed multiple times and have the same result as a single execution.
+
+The following operations are idempotent:
+- `AnswerCall`
+- `RedirectCall`
+- `RejectCall`
+- `CreateCall`
+- `HangUp` when terminating the call for everyone, ie. `forEveryone` parameter is set to `true`.
+- `TransferCallToParticipant`
+- `AddParticipants`
+- `RemoveParticipants`
+- `StartRecording`
+
+By default, SDK generates a new `RepeatabilityHeaders` object every time the above operation is called. If you would
+like to provide your own `RepeatabilityHeaders` for your application (eg. for your own retry mechanism), you can do so by specifying
+the `RepeatabilityHeaders` in the operation's `Options` object. If this is not set by user, then the SDK will generate
+it. You can also disable this by setting `RepeatabilityHeaders` to NULL in the option.
+
+The parameters for the `RepeatabilityHeaders` class are `repeatabilityRequestId` and `repeatabilityFirstSent`. Two or
+more requests are considered the same request **if and only if** both repeatability parameters are the same.
+- `repeatabilityRequestId`: an opaque string representing a client-generated unique identifier for the request.
+It is a version 4 (random) UUID.
+- `repeatabilityFirstSent`: The value should be the date and time at which the request was **first** created.
+
+To set repeatability parameters, see below C# code snippet as an example:
+```C#
+var createCallOptions = new CreateCallOptions(callSource, new CommunicationIdentifier[] { target }, new Uri("https://exmaple.com/callback")) {
+    RepeatabilityHeaders = new RepeatabilityHeaders(Guid.NewGuid(), DateTimeOffset.UtcNow);
+};
+CreateCallResult response1 = await callAutomationClient.CreateCallAsync(createCallOptions).ConfigureAwait(false);
+await Task.Delay(5000);
+CreateCallResult response2 = await callAutomationClient.CreateCallAsync(createCallOptions).ConfigureAwait(false);
+// response1 and response2 will have the same CallConnectionId as they have the same reapeatability parameters which means that the CreateCall operation was only executed once.
+```
 
 ## Troubleshooting
 A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
 
 ## Next steps
+- [Call Automation Overview][overview]
+- [Incoming Call Concept][incomingcall]
+- [Build a customer interaction workflow using Call Automation][build1]
+- [Redirect inbound telephony calls with Call Automation][build2]
+- [Quickstart: Play action][build3]
+- [Quickstart: Recognize action][build4]
+- [Read more about Call Recording in Azure Communication Services][recording1]
+- [Record and download calls with Event Grid][recording2]
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -173,3 +181,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.CallAutomation/src
+[overview]: https://learn.microsoft.com/azure/communication-services/concepts/voice-video-calling/call-automation
+[incomingcall]: https://learn.microsoft.com/azure/communication-services/concepts/voice-video-calling/incoming-call-notification
+[build1]: https://learn.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/callflows-for-customer-interactions?pivots=programming-language-csha
+[build2]: https://learn.microsoft.com/azure/communication-services/how-tos/call-automation-sdk/redirect-inbound-telephony-calls?pivots=programming-language-csharp
+[build3]: https://learn.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/play-action?pivots=programming-language-csharp
+[build4]: https://learn.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/recognize-action?pivots=programming-language-csharp
+[recording1]: https://learn.microsoft.com/azure/communication-services/concepts/voice-video-calling/call-recording
+[recording2]: https://learn.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/get-started-call-recording?pivots=programming-language-csharp

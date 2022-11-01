@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
         internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, ContainerServiceOSType osType)
         {
-            if (kubernetesVersion == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesVersion));
-            }
+            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
 
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
