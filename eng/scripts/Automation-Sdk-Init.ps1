@@ -44,5 +44,3 @@ $dotnet = Join-Path $RepoRoot "../.dotnet"
 if (Test-Path $installScript) {
     Remove-Item $installScript
 }
-
-# npm install -g @azure-tools/cadl-csharp

@@ -22,8 +22,8 @@ please refer to eng/scripts/automation/unified-pipeline-test.md for more test sc
 
 #>
 param (
-  [string]$inputJsonFile="./eng/scripts/tests/firstOnboardInput.json",
-  [string]$outputJsonFile="output.json"
+  [string]$inputJsonFile,
+  [string]$outputJsonFile
 )
 
 . (Join-Path $PSScriptRoot ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
@@ -111,9 +111,6 @@ if ($inputFileToGen) {
 
 # generate sdk from cadl file
 if ($relatedCadlProjectFolder) {
-    # Push-Location $swaggerDir
-    # npm install @azure-tools/cadl-csharp
-    # Pop-Location
     for ($i = 0; $i -le $relatedCadlProjectFolder.Count - 1; $i++) {
         $caldFolder = (Join-Path $swaggerDir $relatedCadlProjectFolder[$i]) -replace "\\", "/"
         $newPackageOutput = "newPackageOutput.json"
@@ -136,9 +133,6 @@ if ($relatedCadlProjectFolder) {
         New-CADLPackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -cadlInput $caldFolder/main.cadl -outputJsonFile $newpackageoutput
         $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
         $relativeSdkPath = $newPackageOutputJson.path
-        # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --emit @azure-tools/cadl-csharp --output-path $sdkPath .\main.cadl
-
-        # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --output-path $sdkPath --emit @azure-tools/cadl-csharp ./main.cadl
         npm install
         npx cadl compile --output-path $sdkPath --emit @azure-tools/cadl-csharp .
         if ( !$?) {

@@ -87,9 +87,6 @@ if ($relatedCadlProjectFolder) {
   New-CADLPackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -cadlInput $caldFolder/main.cadl -outputJsonFile $newpackageoutput
   $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
   $relativeSdkPath = $newPackageOutputJson.path
-  # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --emit @azure-tools/cadl-csharp --output-path $sdkPath .\main.cadl
-
-  # node $swaggerDir/node_modules/@cadl-lang/compiler/cmd/cadl.js compile --output-path $sdkPath --emit @azure-tools/cadl-csharp ./main.cadl
   npm install
   npx cadl compile --output-path $sdkPath --emit @azure-tools/cadl-csharp .
   if ( !$?) {
