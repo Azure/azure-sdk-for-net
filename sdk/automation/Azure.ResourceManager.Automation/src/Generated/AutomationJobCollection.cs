@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
     /// Each <see cref="AutomationJobResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
     /// To get an <see cref="AutomationJobCollection" /> instance call the GetAutomationJobs method from an instance of <see cref="AutomationAccountResource" />.
     /// </summary>
-    public partial class AutomationJobCollection : ArmCollection, IEnumerable<AutomatioJobCollectionItemData>, IAsyncEnumerable<AutomatioJobCollectionItemData>
+    public partial class AutomationJobCollection : ArmCollection, IEnumerable<AutomationJobCollectionItemData>, IAsyncEnumerable<AutomationJobCollectionItemData>
     {
         private readonly ClientDiagnostics _automationJobJobClientDiagnostics;
         private readonly JobRestOperations _automationJobJobRestClient;
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomatioJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomatioJobCollectionItemData> GetAllAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomationJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationJobCollectionItemData> GetAllAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomatioJobCollectionItemData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AutomationJobCollectionItemData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
                 scope.Start();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Automation
                     throw;
                 }
             }
-            async Task<Page<AutomatioJobCollectionItemData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AutomationJobCollectionItemData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
                 scope.Start();
@@ -233,10 +233,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomatioJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomatioJobCollectionItemData> GetAll(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationJobCollectionItemData> GetAll(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Page<AutomatioJobCollectionItemData> FirstPageFunc(int? pageSizeHint)
+            Page<AutomationJobCollectionItemData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
                 scope.Start();
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Automation
                     throw;
                 }
             }
-            Page<AutomatioJobCollectionItemData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AutomationJobCollectionItemData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
                 scope.Start();
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        IEnumerator<AutomatioJobCollectionItemData> IEnumerable<AutomatioJobCollectionItemData>.GetEnumerator()
+        IEnumerator<AutomationJobCollectionItemData> IEnumerable<AutomationJobCollectionItemData>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Automation
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AutomatioJobCollectionItemData> IAsyncEnumerable<AutomatioJobCollectionItemData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AutomationJobCollectionItemData> IAsyncEnumerable<AutomationJobCollectionItemData>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

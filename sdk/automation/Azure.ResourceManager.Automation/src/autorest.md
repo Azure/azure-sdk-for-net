@@ -54,7 +54,7 @@ rename-mapping:
   ScheduleDay: AutomationDayOfWeek
   FieldDefinition: AutomationConnectionFieldDefinition
   GroupTypeEnum: HybridWorkerGroup
-  JobCollectionItem: AutomatioJobCollectionItemData
+  JobCollectionItem: AutomationJobCollectionItemData
   LinuxProperties: LinuxUpdateConfigurationProperties
   NodeCount: DscNodeCount
   NodeCountProperties: DscNodeCountProperties

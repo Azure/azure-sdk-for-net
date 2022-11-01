@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationJobListResultV2. </summary>
         internal AutomationJobListResultV2()
         {
-            Value = new ChangeTrackingList<AutomatioJobCollectionItemData>();
+            Value = new ChangeTrackingList<AutomationJobCollectionItemData>();
         }
 
         /// <summary> Initializes a new instance of AutomationJobListResultV2. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// The  link to the next page.
         /// Serialized Name: JobListResultV2.nextLink
         /// </param>
-        internal AutomationJobListResultV2(IReadOnlyList<AutomatioJobCollectionItemData> value, string nextLink)
+        internal AutomationJobListResultV2(IReadOnlyList<AutomationJobCollectionItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// List of jobs.
         /// Serialized Name: JobListResultV2.value
         /// </summary>
-        public IReadOnlyList<AutomatioJobCollectionItemData> Value { get; }
+        public IReadOnlyList<AutomationJobCollectionItemData> Value { get; }
         /// <summary>
         /// The  link to the next page.
         /// Serialized Name: JobListResultV2.nextLink

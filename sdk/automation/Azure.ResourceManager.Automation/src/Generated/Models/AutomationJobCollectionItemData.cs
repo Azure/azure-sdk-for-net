@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
     /// Job collection item properties.
     /// Serialized Name: JobCollectionItem
     /// </summary>
-    public partial class AutomatioJobCollectionItemData : ResourceData
+    public partial class AutomationJobCollectionItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomatioJobCollectionItemData. </summary>
-        public AutomatioJobCollectionItemData()
+        /// <summary> Initializes a new instance of AutomationJobCollectionItemData. </summary>
+        public AutomationJobCollectionItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomatioJobCollectionItemData. </summary>
+        /// <summary> Initializes a new instance of AutomationJobCollectionItemData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Specifies the runOn group name where the job was executed.
         /// Serialized Name: JobCollectionItem.properties.runOn
         /// </param>
-        internal AutomatioJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, string runOn) : base(id, name, resourceType, systemData)
+        internal AutomationJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, string runOn) : base(id, name, resourceType, systemData)
         {
             Runbook = runbook;
             JobId = jobId;

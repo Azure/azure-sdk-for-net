@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomatioJobCollectionItemData : IUtf8JsonSerializable
+    public partial class AutomationJobCollectionItemData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteEndObject();
         }
 
-        internal static AutomatioJobCollectionItemData DeserializeAutomatioJobCollectionItemData(JsonElement element)
+        internal static AutomationJobCollectionItemData DeserializeAutomationJobCollectionItemData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomatioJobCollectionItemData(id, name, type, systemData.Value, runbook.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, runOn.Value);
+            return new AutomationJobCollectionItemData(id, name, type, systemData.Value, runbook.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, runOn.Value);
         }
     }
 }

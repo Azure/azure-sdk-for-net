@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationJobListResultV2 DeserializeAutomationJobListResultV2(JsonElement element)
         {
-            Optional<IReadOnlyList<AutomatioJobCollectionItemData>> value = default;
+            Optional<IReadOnlyList<AutomationJobCollectionItemData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AutomatioJobCollectionItemData> array = new List<AutomatioJobCollectionItemData>();
+                    List<AutomationJobCollectionItemData> array = new List<AutomationJobCollectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomatioJobCollectionItemData.DeserializeAutomatioJobCollectionItemData(item));
+                        array.Add(AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData(item));
                     }
                     value = array;
                     continue;
