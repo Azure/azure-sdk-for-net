@@ -84,8 +84,11 @@ namespace Azure.Core.Tests
             var exception = new IOException();
             await mockTransport.RequestGate.CycleWithException(exception);
             Assert.AreEqual(1, message.ProcessingContext.RetryNumber);
+
             await gate.Cycle();
-            Assert.AreSame(exception, message.ProcessingContext.LastException);
+            Assert.AreSame(exception, mockPolicy.LastException);
+            mockPolicy.LastException = null;
+
             Assert.IsTrue(mockPolicy.ShouldRetryCalled);
             mockPolicy.ShouldRetryCalled = false;
 
@@ -94,11 +97,11 @@ namespace Azure.Core.Tests
             await task.TimeoutAfterDefault();
             Assert.IsFalse(mockPolicy.ShouldRetryCalled);
             Assert.AreEqual(2, message.ProcessingContext.RetryNumber);
-            Assert.IsNull(message.ProcessingContext.LastException);
+            Assert.IsNull(mockPolicy.LastException);
         }
 
         [Test]
-        public async Task OnResponseIsCalledOnlyWhenResponseExists()
+        public async Task OnRequestSentIsCalledForErrorResponseAndException()
         {
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
             MockTransport mockTransport = CreateMockTransport();
@@ -117,16 +120,22 @@ namespace Azure.Core.Tests
             var exception = new IOException();
             await mockTransport.RequestGate.CycleWithException(exception);
             Assert.AreEqual(1, message.ProcessingContext.RetryNumber);
-            await gate.Cycle();
-            Assert.AreSame(exception, message.ProcessingContext.LastException);
             Assert.IsTrue(mockPolicy.OnRequestSentCalled);
+            mockPolicy.OnRequestSentCalled = false;
+
+            await gate.Cycle();
+            Assert.AreSame(exception, mockPolicy.LastException);
+            mockPolicy.LastException = null;
+
+            Assert.IsTrue(mockPolicy.OnRequestSentCalled);
+            mockPolicy.OnRequestSentCalled = false;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
             await task.TimeoutAfterDefault();
             Assert.IsTrue(mockPolicy.OnRequestSentCalled);
             Assert.AreEqual(2, message.ProcessingContext.RetryNumber);
-            Assert.IsNull(message.ProcessingContext.LastException);
+            Assert.IsNull(mockPolicy.LastException);
         }
 
         [Test]
@@ -137,6 +146,7 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport();
             Task<Response> task = SendGetRequest(mockTransport, policy, responseClassifier);
 
+            // this validates that the base RetryPolicy respects the custom response classifier
             await mockTransport.RequestGate.CycleWithException(new InvalidOperationException());
 
             await gate.Cycle();
@@ -395,6 +405,8 @@ namespace Azure.Core.Tests
 
             internal bool OnRequestSentCalled { get; set; }
 
+            internal Exception LastException { get; set; }
+
             public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default) : base(
                 new RetryOptions
                 {
@@ -430,16 +442,18 @@ namespace Azure.Core.Tests
                 return base.OnRequestSentAsync(message);
             }
 
-            protected internal override bool ShouldRetry(HttpMessage message)
+            protected internal override bool ShouldRetry(HttpMessage message, Exception exception)
             {
+                LastException = exception;
                 ShouldRetryCalled = true;
-                return base.ShouldRetry(message);
+                return base.ShouldRetry(message, exception);
             }
 
-            protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message)
+            protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
             {
+                LastException = exception;
                 ShouldRetryCalled = true;
-                return base.ShouldRetryAsync(message);
+                return base.ShouldRetryAsync(message, exception);
             }
         }
 
