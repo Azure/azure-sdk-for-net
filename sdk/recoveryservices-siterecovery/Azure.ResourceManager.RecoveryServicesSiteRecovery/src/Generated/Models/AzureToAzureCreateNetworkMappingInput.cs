@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primaryNetworkId"/> is null. </exception>
         public AzureToAzureCreateNetworkMappingInput(string primaryNetworkId)
         {
-            if (primaryNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(primaryNetworkId));
-            }
+            Argument.AssertNotNull(primaryNetworkId, nameof(primaryNetworkId));
 
             PrimaryNetworkId = primaryNetworkId;
             InstanceType = "AzureToAzure";

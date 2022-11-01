@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.HybridData
 {
     /// <summary>
     /// A class representing a collection of <see cref="HybridDataPublicKeyResource" /> and their operations.
-    /// Each <see cref="HybridDataPublicKeyResource" /> in the collection will belong to the same instance of <see cref="DataManagerResource" />.
-    /// To get a <see cref="HybridDataPublicKeyCollection" /> instance call the GetHybridDataPublicKeys method from an instance of <see cref="DataManagerResource" />.
+    /// Each <see cref="HybridDataPublicKeyResource" /> in the collection will belong to the same instance of <see cref="HybridDataManagerResource" />.
+    /// To get a <see cref="HybridDataPublicKeyCollection" /> instance call the GetHybridDataPublicKeys method from an instance of <see cref="HybridDataManagerResource" />.
     /// </summary>
     public partial class HybridDataPublicKeyCollection : ArmCollection, IEnumerable<HybridDataPublicKeyResource>, IAsyncEnumerable<HybridDataPublicKeyResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.HybridData
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DataManagerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataManagerResource.ResourceType), nameof(id));
+            if (id.ResourceType != HybridDataManagerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HybridDataManagerResource.ResourceType), nameof(id));
         }
 
         /// <summary>

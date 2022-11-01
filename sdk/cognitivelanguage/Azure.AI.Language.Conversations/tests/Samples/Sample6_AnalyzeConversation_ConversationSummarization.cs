@@ -63,16 +63,27 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 {
                     new
                     {
+                        taskName = "Issue task",
+                        kind = "ConversationalSummarizationTask",
                         parameters = new
                         {
                             summaryAspects = new[]
                             {
                                 "issue",
+                            }
+                        },
+                    },
+                    new
+                    {
+                        taskName = "Resolution task",
+                        kind = "ConversationalSummarizationTask",
+                        parameters = new
+                        {
+                            summaryAspects = new[]
+                            {
                                 "resolution",
                             }
                         },
-                        kind = "ConversationalSummarizationTask",
-                        taskName = "1",
                     },
                 },
             };
@@ -82,9 +93,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             var jobResults = analyzeConversationOperation.Value.ToDynamic();
             foreach (var task in jobResults.Tasks.Items)
             {
+                Console.WriteLine($"Task name: {task.TaskName}");
                 var results = task.Results;
-
-                Console.WriteLine("Conversations:");
                 foreach (var conversation in results.Conversations)
                 {
                     Console.WriteLine($"Conversation: #{conversation.Id}");
@@ -156,16 +166,27 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 {
                     new
                     {
+                        taskName = "Issue task",
+                        kind = "ConversationalSummarizationTask",
                         parameters = new
                         {
                             summaryAspects = new[]
                             {
                                 "issue",
+                            }
+                        },
+                    },
+                    new
+                    {
+                        taskName = "Resolution task",
+                        kind = "ConversationalSummarizationTask",
+                        parameters = new
+                        {
+                            summaryAspects = new[]
+                            {
                                 "resolution",
                             }
                         },
-                        kind = "ConversationalSummarizationTask",
-                        taskName = "1",
                     },
                 },
             };
@@ -177,9 +198,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             var jobResults = analyzeConversationOperation.Value.ToDynamic();
             foreach (var task in jobResults.Tasks.Items)
             {
+                Console.WriteLine($"Task name: {task.TaskName}");
                 var results = task.Results;
-
-                Console.WriteLine("Conversations:");
                 foreach (var conversation in results.Conversations)
                 {
                     Console.WriteLine($"Conversation: #{conversation.Id}");

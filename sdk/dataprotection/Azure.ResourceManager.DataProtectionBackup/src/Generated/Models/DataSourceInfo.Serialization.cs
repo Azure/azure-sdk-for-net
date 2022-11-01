@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation");
-                writer.WriteStringValue(ResourceLocation);
+                writer.WriteStringValue(ResourceLocation.Value);
             }
             if (Optional.IsDefined(ResourceName))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType");
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(ResourceUri))
             {
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             Optional<string> datasourceType = default;
             Optional<string> objectType = default;
-            string resourceId = default;
-            Optional<string> resourceLocation = default;
+            ResourceIdentifier resourceId = default;
+            Optional<AzureLocation> resourceLocation = default;
             Optional<string> resourceName = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<Uri> resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,12 +74,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("resourceID"))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceLocation"))
                 {
-                    resourceLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceName"))
@@ -89,7 +94,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceUri"))
@@ -103,7 +113,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, resourceLocation.Value, resourceName.Value, resourceType.Value, resourceUri.Value);
+            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value);
         }
     }
 }

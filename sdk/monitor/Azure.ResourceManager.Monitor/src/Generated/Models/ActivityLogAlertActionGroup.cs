@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupId"/> is null. </exception>
         public ActivityLogAlertActionGroup(ResourceIdentifier actionGroupId)
         {
-            if (actionGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(actionGroupId));
-            }
+            Argument.AssertNotNull(actionGroupId, nameof(actionGroupId));
 
             ActionGroupId = actionGroupId;
             WebhookProperties = new ChangeTrackingDictionary<string, string>();

@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
-        private const string StandardSSDValue = "StandardSSD";
+        private const string StandardSsdValue = "StandardSSD";
 
         /// <summary> Standard. </summary>
         public static DevTestLabStorageType Standard { get; } = new DevTestLabStorageType(StandardValue);
         /// <summary> Premium. </summary>
         public static DevTestLabStorageType Premium { get; } = new DevTestLabStorageType(PremiumValue);
         /// <summary> StandardSSD. </summary>
-        public static DevTestLabStorageType StandardSSD { get; } = new DevTestLabStorageType(StandardSSDValue);
+        public static DevTestLabStorageType StandardSsd { get; } = new DevTestLabStorageType(StandardSsdValue);
         /// <summary> Determines if two <see cref="DevTestLabStorageType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabStorageType left, DevTestLabStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabStorageType"/> values are not the same. </summary>

@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceDetails> resourceDetails = default;
+            Optional<SecurityCenterResourceDetails> resourceDetails = default;
             Optional<string> displayName = default;
             Optional<IDictionary<string, string>> additionalData = default;
             Optional<AssessmentLinks> links = default;
             Optional<SecurityAssessmentMetadataProperties> metadata = default;
             Optional<SecurityAssessmentPartner> partnersData = default;
-            Optional<AssessmentStatus> status = default;
+            Optional<SecurityAssessmentStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceDetails = ResourceDetails.DeserializeResourceDetails(property0.Value);
+                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("displayName"))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = AssessmentStatus.DeserializeAssessmentStatus(property0.Value);
+                            status = SecurityAssessmentStatus.DeserializeSecurityAssessmentStatus(property0.Value);
                             continue;
                         }
                     }

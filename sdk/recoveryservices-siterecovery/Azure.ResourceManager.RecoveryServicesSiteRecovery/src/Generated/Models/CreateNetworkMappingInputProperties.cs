@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryNetworkId"/> is null. </exception>
         public CreateNetworkMappingInputProperties(string recoveryNetworkId)
         {
-            if (recoveryNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryNetworkId));
-            }
+            Argument.AssertNotNull(recoveryNetworkId, nameof(recoveryNetworkId));
 
             RecoveryNetworkId = recoveryNetworkId;
         }

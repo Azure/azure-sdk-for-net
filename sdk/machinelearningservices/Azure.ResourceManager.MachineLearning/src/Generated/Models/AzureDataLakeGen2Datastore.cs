@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -24,18 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/> or <paramref name="filesystem"/> is null. </exception>
         public AzureDataLakeGen2Datastore(DatastoreCredentials credentials, string accountName, string filesystem) : base(credentials)
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException(nameof(credentials));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (filesystem == null)
-            {
-                throw new ArgumentNullException(nameof(filesystem));
-            }
+            Argument.AssertNotNull(credentials, nameof(credentials));
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(filesystem, nameof(filesystem));
 
             AccountName = accountName;
             Filesystem = filesystem;

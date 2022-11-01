@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accessKey"/> is null. </exception>
         public StorageAccountInformationCreateOrUpdateContent(string accessKey)
         {
-            if (accessKey == null)
-            {
-                throw new ArgumentNullException(nameof(accessKey));
-            }
+            Argument.AssertNotNull(accessKey, nameof(accessKey));
 
             AccessKey = accessKey;
         }

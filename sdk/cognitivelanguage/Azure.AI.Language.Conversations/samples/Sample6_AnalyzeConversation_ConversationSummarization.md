@@ -1,4 +1,4 @@
-# Analyze a conversation
+# Analyze a conversation with Conversation Summarization
 
 This sample demonstrates how to analyze a conversation with Conversation Summarization. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
@@ -58,16 +58,27 @@ var data = new
     {
         new
         {
+            taskName = "Issue task",
+            kind = "ConversationalSummarizationTask",
             parameters = new
             {
                 summaryAspects = new[]
                 {
                     "issue",
+                }
+            },
+        },
+        new
+        {
+            taskName = "Resolution task",
+            kind = "ConversationalSummarizationTask",
+            parameters = new
+            {
+                summaryAspects = new[]
+                {
                     "resolution",
                 }
             },
-            kind = "ConversationalSummarizationTask",
-            taskName = "1",
         },
     },
 };
@@ -77,9 +88,8 @@ Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(
 var jobResults = analyzeConversationOperation.Value.ToDynamic();
 foreach (var task in jobResults.Tasks.Items)
 {
+    Console.WriteLine($"Task name: {task.TaskName}");
     var results = task.Results;
-
-    Console.WriteLine("Conversations:");
     foreach (var conversation in results.Conversations)
     {
         Console.WriteLine($"Conversation: #{conversation.Id}");

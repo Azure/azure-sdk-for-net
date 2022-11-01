@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of RecoveryPointDataStoreDetail. </summary>
         /// <param name="createdOn"></param>
         /// <param name="expireOn"></param>
-        /// <param name="id"></param>
+        /// <param name="recoveryPointDataStoreId"></param>
         /// <param name="metadata"></param>
         /// <param name="state"></param>
-        /// <param name="recoveryPointDataStoreDetailType"></param>
+        /// <param name="recoveryPointDataStoreType"></param>
         /// <param name="isVisible"></param>
         /// <param name="rehydrationExpireOn"></param>
         /// <param name="rehydrationStatus"></param>
-        internal RecoveryPointDataStoreDetail(DateTimeOffset? createdOn, DateTimeOffset? expireOn, string id, string metadata, string state, string recoveryPointDataStoreDetailType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus)
+        internal RecoveryPointDataStoreDetail(DateTimeOffset? createdOn, DateTimeOffset? expireOn, Guid? recoveryPointDataStoreId, string metadata, string state, string recoveryPointDataStoreType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus)
         {
             CreatedOn = createdOn;
             ExpireOn = expireOn;
-            Id = id;
+            RecoveryPointDataStoreId = recoveryPointDataStoreId;
             Metadata = metadata;
             State = state;
-            RecoveryPointDataStoreDetailType = recoveryPointDataStoreDetailType;
+            RecoveryPointDataStoreType = recoveryPointDataStoreType;
             IsVisible = isVisible;
             RehydrationExpireOn = rehydrationExpireOn;
             RehydrationStatus = rehydrationStatus;
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Gets or sets the expire on. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> Gets or sets the id. </summary>
-        public string Id { get; set; }
+        /// <summary> Gets or sets the recovery point data store id. </summary>
+        public Guid? RecoveryPointDataStoreId { get; set; }
         /// <summary> Gets or sets the metadata. </summary>
         public string Metadata { get; set; }
         /// <summary> Gets or sets the state. </summary>
         public string State { get; set; }
-        /// <summary> Gets or sets the recovery point data store detail type. </summary>
-        public string RecoveryPointDataStoreDetailType { get; set; }
+        /// <summary> Gets or sets the recovery point data store type. </summary>
+        public string RecoveryPointDataStoreType { get; set; }
         /// <summary> Gets or sets the is visible. </summary>
         public bool? IsVisible { get; set; }
         /// <summary> Gets the rehydration expire on. </summary>

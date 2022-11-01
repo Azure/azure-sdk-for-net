@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
         /// <param name="enabled"> Is the lab announcement active/enabled at this time?. </param>
         /// <param name="expireOn"> The time at which the announcement expires (null for never). </param>
-        /// <param name="expired"> Has this announcement expired?. </param>
+        /// <param name="isExpired"> Has this announcement expired?. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabAnnouncement(string title, string markdown, DevTestLabEnableStatus? enabled, DateTimeOffset? expireOn, bool? expired, string provisioningState, string uniqueIdentifier)
+        internal DevTestLabAnnouncement(string title, string markdown, DevTestLabEnableStatus? enabled, DateTimeOffset? expireOn, bool? isExpired, string provisioningState, Guid? uniqueIdentifier)
         {
             Title = title;
             Markdown = markdown;
             Enabled = enabled;
             ExpireOn = expireOn;
-            Expired = expired;
+            IsExpired = isExpired;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
         }
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> The time at which the announcement expires (null for never). </summary>
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Has this announcement expired?. </summary>
-        public bool? Expired { get; set; }
+        public bool? IsExpired { get; set; }
         /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public string UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier { get; }
     }
 }

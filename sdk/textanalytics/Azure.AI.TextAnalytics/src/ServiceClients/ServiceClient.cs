@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using static Azure.AI.TextAnalytics.TextAnalyticsClientOptions;
 
 namespace Azure.AI.TextAnalytics.ServiceClients
 {
@@ -20,7 +21,16 @@ namespace Azure.AI.TextAnalytics.ServiceClients
     ///
     internal abstract class ServiceClient
     {
+        public ServiceClient(TextAnalyticsClientOptions options)
+        {
+            Options = options;
+        }
+
         public abstract ClientDiagnostics Diagnostics { get; }
+
+        protected TextAnalyticsClientOptions Options { get; }
+
+        protected ServiceVersion ServiceVersion => Options.Version;
 
         #region Detect Language
 
@@ -142,6 +152,22 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public abstract ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
         public abstract Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
         public abstract Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+
+        #endregion
+
+        #region Extract Summary
+
+        public virtual ExtractSummaryOperation StartExtractSummary(IEnumerable<string> documents, string language = default, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual ExtractSummaryOperation StartExtractSummary(IEnumerable<TextDocumentInput> documents, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<ExtractSummaryOperation> StartExtractSummaryAsync(IEnumerable<string> documents, string language = default, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<ExtractSummaryOperation> StartExtractSummaryAsync(IEnumerable<TextDocumentInput> documents, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         #endregion
 

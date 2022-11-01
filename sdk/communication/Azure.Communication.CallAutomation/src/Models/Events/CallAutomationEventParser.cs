@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Parsing a CallAutomation event from a CloudEvent.
         /// </summary>
-        public const string EventPrefix = "Microsoft.Communication.";
+        private const string EventPrefix = "Microsoft.Communication.";
 
         /// <summary>
         /// Parsing a CallAutomation event from a CloudEvent.
