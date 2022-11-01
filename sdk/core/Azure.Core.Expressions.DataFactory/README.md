@@ -1,6 +1,6 @@
 # Azure Core Expressions DataFactory shared client library for .NET
 
-Azure.Core.Expressions.DataFactory provides shared classes that represent [Expression](https://learn.microsoft.com/en-us/azure/data-factory/control-flow-expression-language-functions#expressions). 
+Azure.Core.Expressions.DataFactory provides shared classes that represent [Expression](https://learn.microsoft.com/azure/data-factory/control-flow-expression-language-functions#expressions). 
 
 ## Getting started
 
