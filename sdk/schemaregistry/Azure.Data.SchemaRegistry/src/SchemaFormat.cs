@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Net.Mime;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
@@ -24,21 +25,27 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaFormat"/> struct.
         /// </summary>
-        /// <param name="contentType"></param>
-        public SchemaFormat(ContentType contentType)
+        /// <param name="contentType">The content type of this schema format.</param>
+        /// <param name="value">The value of the serialization.</param>
+        /// <param name="serialization">The type of serialization being done.</param>
+        public SchemaFormat(Core.ContentType contentType, string value, string serialization)
         {
-            _value = contentType.ToString() ?? throw new ArgumentNullException(nameof(contentType));
-            ContentType = contentType.ToString();
+            _value = value ?? throw new ArgumentNullException(nameof(contentType));
+            var content = contentType.ToString();
+            ContentType = $"{content}; {serialization}={_value}";
         }
 
         private const string AvroValue = "Avro";
+        private const string JsonValue = "JSON";
+        private const string CustomValue = "utf-8";
+        private const string CustomSerialization = "charset";
 
         /// <summary> Avro Serialization schema type. </summary>
         public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);
         /// <summary> Json Serialization schema type. </summary>
-        public static SchemaFormat Json { get; } = new SchemaFormat(Core.ContentType.ApplicationJson);
+        public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue);
         /// <summary> Custom Serialization schema type. </summary>
-        public static SchemaFormat Custom { get; } = new SchemaFormat(Core.ContentType.ApplicationOctetStream);
+        public static SchemaFormat Custom { get; } = new SchemaFormat(Core.ContentType.TextPlain, CustomValue, CustomSerialization);
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are not the same. </summary>
