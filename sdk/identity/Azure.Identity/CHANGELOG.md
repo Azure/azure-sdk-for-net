@@ -119,7 +119,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Breaking Changes from 1.5.0-beta.4
 - The `AllowMultiTenantAuthentication` option has been removed and the default behavior is now as if it were true. The multi-tenant discovery feature can be totally disabled by either setting an `AppContext` switch named "Azure.Identity.DisableTenantDiscovery" to `true` or by setting the environment variable "AZURE_IDENTITY_DISABLE_MULTITENANTAUTH" to "true".
 - Removed the `IsPIILoggingEnabled` property from `TokenCredentialOptions`, similar functionality is planned to be added to `TokenCredentialOptions.Diagnostics` in a later release.
-- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type. This feature will stay in preview, and these APIs will be added back in `1.6.0-beta.1`.
+- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type.
 - Renamed struct `TokenCacheDetails` to `TokenCacheData`.
 - Renamed class `TokenCacheNotificationDetails` to `TokenCacheRefreshArgs`.
 - Updated `CacheBytes` property on `TokenCacheData` to be readonly and a required constructor parameter.
