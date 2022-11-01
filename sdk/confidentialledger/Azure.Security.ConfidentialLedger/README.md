@@ -72,10 +72,7 @@ Since Azure confidential ledger is a distributed system, rare transient failures
 ```C# Snippet:GetStatus
 Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
 
-string status = JsonDocument.Parse(statusResponse.Content)
-    .RootElement
-    .GetProperty("state")
-    .GetString();
+string status = statusResponse.Content.ToDynamic().State;
 
 Console.WriteLine($"Transaction status: {status}");
 
@@ -83,10 +80,7 @@ Console.WriteLine($"Transaction status: {status}");
 while (status == "Pending")
 {
     statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-    status = JsonDocument.Parse(statusResponse.Content)
-        .RootElement
-        .GetProperty("state")
-        .GetString();
+    status = statusResponse.Content.ToDynamic().State;
 }
 
 Console.WriteLine($"Transaction status: {status}");
@@ -133,32 +127,23 @@ string collectionId = "subledger:0";
 
 // Try fetching the ledger entry until it is "loaded".
 Response getByCollectionResponse = default;
-JsonElement rootElement = default;
+dynamic ledgerEntry = default;
 bool loaded = false;
 
 while (!loaded)
 {
     // Provide both the transactionId and collectionId.
     getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
-    rootElement = JsonDocument.Parse(getByCollectionResponse.Content).RootElement;
-    loaded = rootElement.GetProperty("state").GetString() != "Loading";
+    ledgerEntry = getByCollectionResponse.Content.ToDynamic();
+    loaded = ledgerEntry.State != "Loading";
 }
 
-string contents = rootElement
-    .GetProperty("entry")
-    .GetProperty("contents")
-    .GetString();
-
-Console.WriteLine(contents); // "Hello world!"
+Console.WriteLine(ledgerEntry.Entry.Contents); // "Hello world!"
 
 // Now just provide the transactionId.
 getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
 
-string collectionId2 = JsonDocument.Parse(getByCollectionResponse.Content)
-    .RootElement
-    .GetProperty("entry")
-    .GetProperty("collectionId")
-    .GetString();
+string collectionId2 = ledgerEntry.Entry.CollectionId;
 
 Console.WriteLine($"{collectionId} == {collectionId2}");
 ```
@@ -183,101 +168,53 @@ ledgerClient.PostLedgerEntry(
 string transactionId = firstPostOperation.Id;
 
 // Wait for the entry to be committed
-status = "Pending";
-while (status == "Pending")
+do
 {
     statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-    status = JsonDocument.Parse(statusResponse.Content)
-        .RootElement
-        .GetProperty("state")
-        .GetString();
+    status = statusResponse.Content.ToDynamic().State;
 }
+while (status == "Pending");
 
 // The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
 Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
+ledgerEntry = getResponse.Content.ToDynamic();
 
 // Try until the entry is available.
-loaded = false;
-JsonElement element = default;
-contents = null;
-while (!loaded)
+while (ledgerEntry.Entry == null)
 {
-    loaded = JsonDocument.Parse(getResponse.Content)
-        .RootElement
-        .TryGetProperty("entry", out element);
-    if (loaded)
-    {
-        contents = element.GetProperty("contents").GetString();
-    }
-    else
-    {
-        getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
-    }
+    getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+    ledgerEntry = getResponse.Content.ToDynamic();
 }
 
-string firstEntryContents = JsonDocument.Parse(getResponse.Content)
-    .RootElement
-    .GetProperty("entry")
-    .GetProperty("contents")
-    .GetString();
-
-Console.WriteLine(firstEntryContents); // "Hello world 0"
+Console.WriteLine(ledgerEntry.Entry.Contents); // "Hello world 0"
 
 // This will return the latest entry available in the default collection.
-getResponse = ledgerClient.GetCurrentLedgerEntry();
-
 // Try until the entry is available.
-loaded = false;
-element = default;
-string latestDefaultCollection = null;
-while (!loaded)
+do
 {
-    loaded = JsonDocument.Parse(getResponse.Content)
-        .RootElement
-        .TryGetProperty("contents", out element);
-    if (loaded)
-    {
-        latestDefaultCollection = element.GetString();
-    }
-    else
-    {
-        getResponse = ledgerClient.GetCurrentLedgerEntry();
-    }
+    getResponse = ledgerClient.GetCurrentLedgerEntry();
+    ledgerEntry = getResponse.Content.ToDynamic();
 }
+while (ledgerEntry.Contents == null);
 
-Console.WriteLine($"The latest ledger entry from the default collection is {latestDefaultCollection}"); //"Hello world 1"
+Console.WriteLine($"The latest ledger entry from the default collection is {ledgerEntry.Contents}"); // "Hello world 1"
 
 // The ledger entry written at collectionTransactionId is retrieved from the collection 'collection'.
 string collectionTransactionId = collectionPostOperation.Id;
 
-getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
 // Try until the entry is available.
-loaded = false;
-element = default;
-string collectionEntry = null;
-while (!loaded)
+do
 {
-    loaded = JsonDocument.Parse(getResponse.Content)
-        .RootElement
-        .TryGetProperty("entry", out element);
-    if (loaded)
-    {
-        collectionEntry = element.GetProperty("contents").GetString();
-    }
-    else
-    {
-        getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
-    }
+    getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
+    ledgerEntry = getResponse.Content.ToDynamic();
 }
+while (ledgerEntry.Entry == null);
 
-Console.WriteLine(collectionEntry); // "Hello world collection 0"
+Console.WriteLine(ledgerEntry.Entry.Contents); // "Hello world collection 0"
 
 // This will return the latest entry available in the collection.
 getResponse = ledgerClient.GetCurrentLedgerEntry("my collection");
-string latestCollection = JsonDocument.Parse(getResponse.Content)
-    .RootElement
-    .GetProperty("contents")
-    .GetString();
+string latestCollection = getResponse.Content.ToDynamic().Contents;
 
 Console.WriteLine($"The latest ledger entry from the collection is {latestCollection}"); // "Hello world collection 1"
 ```
