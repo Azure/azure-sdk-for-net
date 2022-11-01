@@ -81,34 +81,34 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
-            using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-            JsonElement jobResults = result.RootElement;
-            foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+            var jobResults = analyzeConversationOperation.Value.ToDynamic();
+            foreach (var task in jobResults.Tasks.Items)
             {
-                JsonElement results = task.GetProperty("results");
+                var results = task.Results;
 
                 Console.WriteLine("Conversations:");
-                foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+                foreach (var conversation in results.Conversations)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+                    Console.WriteLine($"Conversation: #{conversation.Id}");
                     Console.WriteLine("Conversation Items:");
-                    foreach (JsonElement conversationItem in conversation.GetProperty("conversationItems").EnumerateArray())
+                    foreach (var conversationItem in conversation.ConversationItems)
                     {
-                        Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
+                        Console.WriteLine($"Conversation Item: #{conversationItem.Id}");
 
-                        Console.WriteLine($"Redacted Text: {conversationItem.GetProperty("redactedContent").GetProperty("text").GetString()}");
+                        Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
 #if !SNIPPET
-                        expectedRedactedText.Add(conversationItem.GetProperty("redactedContent").GetProperty("text").GetString());
+                        // TODO: this currently fails without a cast.  String issue.
+                        expectedRedactedText.Add(conversationItem.RedactedContent.Text);
 #endif
 
                         Console.WriteLine("Entities:");
-                        foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
+                        foreach (var entity in conversationItem.Entities)
                         {
-                            Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-                            Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-                            Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-                            Console.WriteLine($"Confidence Score: {entity.GetProperty("confidenceScore").GetSingle()}");
-                            Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
+                            Console.WriteLine($"Text: {entity.Text}");
+                            Console.WriteLine($"Offset: {entity.Offset}");
+                            Console.WriteLine($"Category: {entity.Category}");
+                            Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                            Console.WriteLine($"Length: {entity.Length}");
                             Console.WriteLine();
                         }
                     }
@@ -188,34 +188,33 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
             #endregion
 
-            using JsonDocument result = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
-            JsonElement jobResults = result.RootElement;
-            foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+            var jobResults = analyzeConversationOperation.Value.ToDynamic();
+            foreach (var task in jobResults.Tasks.Items)
             {
-                JsonElement results = task.GetProperty("results");
+                var results = task.Results;
 
                 Console.WriteLine("Conversations:");
-                foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+                foreach (var conversation in results.Conversations)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+                    Console.WriteLine($"Conversation: #{conversation.Id}");
                     Console.WriteLine("Conversation Items:");
-                    foreach (JsonElement conversationItem in conversation.GetProperty("conversationItems").EnumerateArray())
+                    foreach (var conversationItem in conversation.ConversationItems)
                     {
-                        Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
+                        Console.WriteLine($"Conversation Item: #{conversationItem.Id}");
 
-                        Console.WriteLine($"Redacted Text: {conversationItem.GetProperty("redactedContent").GetProperty("text").GetString()}");
+                        Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
 #if !SNIPPET
-                        expectedRedactedText.Add(conversationItem.GetProperty("redactedContent").GetProperty("text").GetString());
+                        expectedRedactedText.Add(conversationItem.RedactedContent.Text);
 #endif
 
                         Console.WriteLine("Entities:");
-                        foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
+                        foreach (var entity in conversationItem.Entities)
                         {
-                            Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-                            Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-                            Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-                            Console.WriteLine($"Confidence Score: {entity.GetProperty("confidenceScore").GetSingle()}");
-                            Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
+                            Console.WriteLine($"Text: {entity.Text}");
+                            Console.WriteLine($"Offset: {entity.Offset}");
+                            Console.WriteLine($"Category: {entity.Category}");
+                            Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                            Console.WriteLine($"Length: {entity.Length}");
                             Console.WriteLine();
                         }
                     }
