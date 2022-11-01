@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.HybridData
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _dataManagerClientDiagnostics;
-        private DataManagersRestOperations _dataManagerRestClient;
+        private ClientDiagnostics _hybridDataManagerDataManagersClientDiagnostics;
+        private DataManagersRestOperations _hybridDataManagerDataManagersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridData
         {
         }
 
-        private ClientDiagnostics DataManagerClientDiagnostics => _dataManagerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridData", DataManagerResource.ResourceType.Namespace, Diagnostics);
-        private DataManagersRestOperations DataManagerRestClient => _dataManagerRestClient ??= new DataManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataManagerResource.ResourceType));
+        private ClientDiagnostics HybridDataManagerDataManagersClientDiagnostics => _hybridDataManagerDataManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridData", HybridDataManagerResource.ResourceType.Namespace, Diagnostics);
+        private DataManagersRestOperations HybridDataManagerDataManagersRestClient => _hybridDataManagerDataManagersRestClient ??= new DataManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridDataManagerResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataManagers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataManagerResource> GetDataManagersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridDataManagerResource> GetHybridDataManagersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataManagerResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HybridDataManagerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DataManagerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataManagers");
+                using var scope = HybridDataManagerDataManagersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridDataManagers");
                 scope.Start();
                 try
                 {
-                    var response = await DataManagerRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataManagerResource(Client, value)), null, response.GetRawResponse());
+                    var response = await HybridDataManagerDataManagersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataManagerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.HybridData
         /// Operation Id: DataManagers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataManagerResource> GetDataManagers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridDataManagerResource> GetHybridDataManagers(CancellationToken cancellationToken = default)
         {
-            Page<DataManagerResource> FirstPageFunc(int? pageSizeHint)
+            Page<HybridDataManagerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DataManagerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataManagers");
+                using var scope = HybridDataManagerDataManagersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridDataManagers");
                 scope.Start();
                 try
                 {
-                    var response = DataManagerRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataManagerResource(Client, value)), null, response.GetRawResponse());
+                    var response = HybridDataManagerDataManagersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataManagerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

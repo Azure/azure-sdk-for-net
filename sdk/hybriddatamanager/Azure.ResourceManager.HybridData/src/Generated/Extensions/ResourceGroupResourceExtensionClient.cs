@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.HybridData
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DataManagerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DataManagerResources and their operations over a DataManagerResource. </returns>
-        public virtual DataManagerCollection GetDataManagers()
+        /// <summary> Gets a collection of HybridDataManagerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HybridDataManagerResources and their operations over a HybridDataManagerResource. </returns>
+        public virtual HybridDataManagerCollection GetHybridDataManagers()
         {
-            return GetCachedClient(Client => new DataManagerCollection(Client, Id));
+            return GetCachedClient(Client => new HybridDataManagerCollection(Client, Id));
         }
     }
 }

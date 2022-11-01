@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public PartnerNamespaceRegenerateKeyContent(string keyName)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNull(keyName, nameof(keyName));
 
             KeyName = keyName;
         }

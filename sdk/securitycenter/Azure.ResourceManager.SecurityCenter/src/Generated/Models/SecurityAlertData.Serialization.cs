@@ -53,20 +53,20 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> productComponentName = default;
             Optional<string> alertDisplayName = default;
             Optional<string> description = default;
-            Optional<AlertSeverity> severity = default;
+            Optional<SecurityAlertSeverity> severity = default;
             Optional<KillChainIntent> intent = default;
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<IReadOnlyList<AlertResourceIdentifier>> resourceIdentifiers = default;
+            Optional<IReadOnlyList<SecurityAlertResourceIdentifier>> resourceIdentifiers = default;
             Optional<IReadOnlyList<string>> remediationSteps = default;
             Optional<string> vendorName = default;
-            Optional<AlertStatus> status = default;
+            Optional<SecurityAlertStatus> status = default;
             Optional<IReadOnlyList<IDictionary<string, string>>> extendedLinks = default;
             Optional<Uri> alertUri = default;
             Optional<DateTimeOffset> timeGeneratedUtc = default;
             Optional<string> productName = default;
             Optional<DateTimeOffset> processingEndTimeUtc = default;
-            Optional<IReadOnlyList<AlertEntity>> entities = default;
+            Optional<IReadOnlyList<SecurityAlertEntity>> entities = default;
             Optional<bool> isIncident = default;
             Optional<string> correlationKey = default;
             Optional<IDictionary<string, string>> extendedProperties = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            severity = new AlertSeverity(property0.Value.GetString());
+                            severity = new SecurityAlertSeverity(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("intent"))
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AlertResourceIdentifier> array = new List<AlertResourceIdentifier>();
+                            List<SecurityAlertResourceIdentifier> array = new List<SecurityAlertResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertResourceIdentifier.DeserializeAlertResourceIdentifier(item));
+                                array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item));
                             }
                             resourceIdentifiers = array;
                             continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new AlertStatus(property0.Value.GetString());
+                            status = new SecurityAlertStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("extendedLinks"))
@@ -287,10 +287,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AlertEntity> array = new List<AlertEntity>();
+                            List<SecurityAlertEntity> array = new List<SecurityAlertEntity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertEntity.DeserializeAlertEntity(item));
+                                array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item));
                             }
                             entities = array;
                             continue;

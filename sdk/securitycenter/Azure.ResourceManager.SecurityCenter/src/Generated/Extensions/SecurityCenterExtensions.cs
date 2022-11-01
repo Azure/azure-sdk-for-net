@@ -339,12 +339,12 @@ namespace Azure.ResourceManager.SecurityCenter
             return subscriptionResource.GetRegulatoryComplianceStandards().Get(regulatoryComplianceStandardName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AlertsSuppressionRuleResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of SecurityAlertsSuppressionRuleResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AlertsSuppressionRuleResources and their operations over a AlertsSuppressionRuleResource. </returns>
-        public static AlertsSuppressionRuleCollection GetAlertsSuppressionRules(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of SecurityAlertsSuppressionRuleResources and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
+        public static SecurityAlertsSuppressionRuleCollection GetSecurityAlertsSuppressionRules(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetAlertsSuppressionRules();
+            return GetExtensionClient(subscriptionResource).GetSecurityAlertsSuppressionRules();
         }
 
         /// <summary>
@@ -358,9 +358,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AlertsSuppressionRuleResource>> GetAlertsSuppressionRuleAsync(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SecurityAlertsSuppressionRuleResource>> GetSecurityAlertsSuppressionRuleAsync(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetAlertsSuppressionRules().GetAsync(alertsSuppressionRuleName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetSecurityAlertsSuppressionRules().GetAsync(alertsSuppressionRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -374,9 +374,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AlertsSuppressionRuleResource> GetAlertsSuppressionRule(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
+        public static Response<SecurityAlertsSuppressionRuleResource> GetSecurityAlertsSuppressionRule(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetAlertsSuppressionRules().Get(alertsSuppressionRuleName, cancellationToken);
+            return subscriptionResource.GetSecurityAlertsSuppressionRules().Get(alertsSuppressionRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionAssessmentMetadataResources in the SubscriptionResource. </summary>
@@ -459,12 +459,12 @@ namespace Azure.ResourceManager.SecurityCenter
             return subscriptionResource.GetSecureScores().Get(secureScoreName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConnectorSettingResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of SecurityCloudConnectorResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ConnectorSettingResources and their operations over a ConnectorSettingResource. </returns>
-        public static ConnectorSettingCollection GetConnectorSettings(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of SecurityCloudConnectorResources and their operations over a SecurityCloudConnectorResource. </returns>
+        public static SecurityCloudConnectorCollection GetSecurityCloudConnectors(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetConnectorSettings();
+            return GetExtensionClient(subscriptionResource).GetSecurityCloudConnectors();
         }
 
         /// <summary>
@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConnectorSettingResource>> GetConnectorSettingAsync(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SecurityCloudConnectorResource>> GetSecurityCloudConnectorAsync(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetConnectorSettings().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetSecurityCloudConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -494,9 +494,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConnectorSettingResource> GetConnectorSetting(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
+        public static Response<SecurityCloudConnectorResource> GetSecurityCloudConnector(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetConnectorSettings().Get(connectorName, cancellationToken);
+            return subscriptionResource.GetSecurityCloudConnectors().Get(connectorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecuritySettingResources in the SubscriptionResource. </summary>
@@ -876,8 +876,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AllowedConnection> GetAllowedConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAllowedConnectionsAsync(cancellationToken);
         }
@@ -889,8 +889,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AllowedConnection> GetAllowedConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityCenterAllowedConnection> GetAllowedConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAllowedConnections(cancellationToken);
         }
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<AllowedConnection>> GetAllowedConnectionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public static async Task<Response<SecurityCenterAllowedConnection>> GetAllowedConnectionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(resourceGroupResource).GetAllowedConnectionAsync(ascLocation, connectionType, cancellationToken).ConfigureAwait(false);
         }
@@ -1707,7 +1707,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<AllowedConnection> GetAllowedConnection(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public static Response<SecurityCenterAllowedConnection> GetAllowedConnection(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetAllowedConnection(ascLocation, connectionType, cancellationToken);
         }
@@ -2129,9 +2129,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this ArmClient client, ResourceIdentifier scope, string scanId, string workspaceId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
         {
             return await client.GetSqlVulnerabilityAssessmentScans(scope).GetAsync(scanId, workspaceId, cancellationToken).ConfigureAwait(false);
         }
@@ -2147,9 +2147,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier scope, string scanId, string workspaceId, CancellationToken cancellationToken = default)
+        public static Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
         {
             return client.GetSqlVulnerabilityAssessmentScans(scope).Get(scanId, workspaceId, cancellationToken);
         }
@@ -2174,9 +2174,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, string workspaceId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
         {
             return await client.GetSqlVulnerabilityAssessmentBaselineRules(scope).GetAsync(ruleId, workspaceId, cancellationToken).ConfigureAwait(false);
         }
@@ -2192,9 +2192,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this ArmClient client, ResourceIdentifier scope, string ruleId, string workspaceId, CancellationToken cancellationToken = default)
+        public static Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
         {
             return client.GetSqlVulnerabilityAssessmentBaselineRules(scope).Get(ruleId, workspaceId, cancellationToken);
         }
@@ -2617,20 +2617,20 @@ namespace Azure.ResourceManager.SecurityCenter
         }
         #endregion
 
-        #region AlertsSuppressionRuleResource
+        #region SecurityAlertsSuppressionRuleResource
         /// <summary>
-        /// Gets an object representing an <see cref="AlertsSuppressionRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertsSuppressionRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertsSuppressionRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SecurityAlertsSuppressionRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityAlertsSuppressionRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityAlertsSuppressionRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertsSuppressionRuleResource" /> object. </returns>
-        public static AlertsSuppressionRuleResource GetAlertsSuppressionRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityAlertsSuppressionRuleResource" /> object. </returns>
+        public static SecurityAlertsSuppressionRuleResource GetSecurityAlertsSuppressionRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AlertsSuppressionRuleResource.ValidateResourceId(id);
-                return new AlertsSuppressionRuleResource(client, id);
+                SecurityAlertsSuppressionRuleResource.ValidateResourceId(id);
+                return new SecurityAlertsSuppressionRuleResource(client, id);
             }
             );
         }
@@ -2788,20 +2788,20 @@ namespace Azure.ResourceManager.SecurityCenter
         }
         #endregion
 
-        #region ConnectorSettingResource
+        #region SecurityCloudConnectorResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectorSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectorSettingResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SecurityCloudConnectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityCloudConnectorResource.CreateResourceIdentifier" /> to create a <see cref="SecurityCloudConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectorSettingResource" /> object. </returns>
-        public static ConnectorSettingResource GetConnectorSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityCloudConnectorResource" /> object. </returns>
+        public static SecurityCloudConnectorResource GetSecurityCloudConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConnectorSettingResource.ValidateResourceId(id);
-                return new ConnectorSettingResource(client, id);
+                SecurityCloudConnectorResource.ValidateResourceId(id);
+                return new SecurityCloudConnectorResource(client, id);
             }
             );
         }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="branches"/> is null. </exception>
         public Step(string name, IEnumerable<Branch> branches)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (branches == null)
-            {
-                throw new ArgumentNullException(nameof(branches));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(branches, nameof(branches));
 
             Name = name;
             Branches = branches.ToList();

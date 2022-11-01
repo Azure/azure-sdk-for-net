@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateUri"/> or <paramref name="certificateStore"/> is null. </exception>
         public NodeTypeVaultCertificate(Uri certificateUri, string certificateStore)
         {
-            if (certificateUri == null)
-            {
-                throw new ArgumentNullException(nameof(certificateUri));
-            }
-            if (certificateStore == null)
-            {
-                throw new ArgumentNullException(nameof(certificateStore));
-            }
+            Argument.AssertNotNull(certificateUri, nameof(certificateUri));
+            Argument.AssertNotNull(certificateStore, nameof(certificateStore));
 
             CertificateUri = certificateUri;
             CertificateStore = certificateStore;

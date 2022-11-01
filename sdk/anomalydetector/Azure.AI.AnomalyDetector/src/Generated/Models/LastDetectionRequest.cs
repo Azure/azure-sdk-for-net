@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>
         public LastDetectionRequest(IEnumerable<VariableValues> variables, int detectingPoints)
         {
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
+            Argument.AssertNotNull(variables, nameof(variables));
 
             Variables = variables.ToList();
             DetectingPoints = detectingPoints;

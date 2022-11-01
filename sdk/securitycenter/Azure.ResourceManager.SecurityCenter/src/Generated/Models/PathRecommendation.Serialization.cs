@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("action");
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(RecommendationType))
+            if (Optional.IsDefined(IotSecurityRecommendationType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(RecommendationType.Value.ToString());
+                writer.WriteStringValue(IotSecurityRecommendationType.Value.ToString());
             }
             if (Optional.IsDefined(PublisherInfo))
             {
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Optional<string> path = default;
             Optional<RecommendationAction> action = default;
-            Optional<RecommendationType> type = default;
-            Optional<PublisherInfo> publisherInfo = default;
+            Optional<IotSecurityRecommendationType> type = default;
+            Optional<SecurityCenterPublisherInfo> publisherInfo = default;
             Optional<bool> common = default;
             Optional<IList<string>> userSids = default;
             Optional<IList<UserRecommendation>> usernames = default;
             Optional<PathRecommendationFileType> fileType = default;
-            Optional<ConfigurationStatus> configurationStatus = default;
+            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new RecommendationType(property.Value.GetString());
+                    type = new IotSecurityRecommendationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publisherInfo"))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publisherInfo = PublisherInfo.DeserializePublisherInfo(property.Value);
+                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("common"))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configurationStatus = new ConfigurationStatus(property.Value.GetString());
+                    configurationStatus = new SecurityCenterConfigurationStatus(property.Value.GetString());
                     continue;
                 }
             }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.Communication.JobRouter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="jobId"/> is null. </exception>
         internal JobOffer(string id, string jobId, int capacityCost)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(jobId, nameof(jobId));
 
             Id = id;
             JobId = jobId;

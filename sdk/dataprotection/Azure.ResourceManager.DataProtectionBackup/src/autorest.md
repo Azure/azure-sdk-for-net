@@ -98,6 +98,7 @@ rename-mapping:
   TriggerBackupRequest.backupRuleOptions: BackupRules
   OperationExtendedInfo: DataProtectionOperationExtendedInfo
   OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
+  OperationJobExtendedInfo.jobId: -|uuid
   AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
   AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
   AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time
@@ -132,6 +133,7 @@ rename-mapping:
   CheckNameAvailabilityRequest: DataProtectionBackupNameAvailabilityContent
   CheckNameAvailabilityRequest.type: -|resource-type
   CheckNameAvailabilityResult: DataProtectionBackupNameAvailabilityResult
+  CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
   AdHocBackupRuleOptions: AdhocBackupRules
   AdHocBackupRuleOptions.triggerOption: BackupTrigger
   AdhocBackupTriggerOption: AdhocBackupTriggerSetting
@@ -152,7 +154,8 @@ rename-mapping:
   RecoveryPointDataStoreDetails.expiryTime: ExpireOn
   RecoveryPointDataStoreDetails.rehydrationExpiryTime: RehydrationExpireOn
   RecoveryPointDataStoreDetails.metaData: Metadata
-  RecoveryPointDataStoreDetails.type: RecoveryPointDataStoreDetailType
+  RecoveryPointDataStoreDetails.id: RecoveryPointDataStoreId|uuid
+  RecoveryPointDataStoreDetails.type: RecoveryPointDataStoreType
   RecoveryPointDataStoreDetails.visible: IsVisible
   BackupParameters: DataProtectionBackupSettingsBase
   AzureBackupParams: DataProtectionBackupSettings
@@ -166,8 +169,14 @@ rename-mapping:
   BackupCriteria: DataProtectionBackupCriteria
   Datasource: DataSourceInfo
   Datasource.datasourceType: DataSourceType
+  Datasource.resourceID: -|arm-id
+  Datasource.resourceLocation: -|azure-location
+  Datasource.resourceType: -|resource-type
   DatasourceSet: DataSourceSetInfo
   DatasourceSet.datasourceType: DataSourceType
+  DatasourceSet.resourceID: -|arm-id
+  DatasourceSet.resourceLocation: -|azure-location
+  DatasourceSet.resourceType: -|resource-type
   PolicyInfo: BackupInstancePolicyInfo
   PolicyInfo.policyId: -|arm-id
   ValidationType: BackupValidationType
@@ -209,6 +218,8 @@ rename-mapping:
   RestoreTargetInfoBase.recoveryOption: RecoverySetting
   SecretStoreResource: SecretStoreResourceInfo
   SyncType: BackupInstanceSyncType
+  ScheduleBasedBackupCriteria.daysOfTheWeek: DaysOfWeek
+  ScheduleBasedBackupCriteria.weeksOfTheMonth: WeeksOfMonth
 
 directive:
 # Correct the type of properties

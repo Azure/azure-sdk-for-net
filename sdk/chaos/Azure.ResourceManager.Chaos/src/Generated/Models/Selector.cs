@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="targets"/> is null. </exception>
         public Selector(SelectorType selectorType, string id, IEnumerable<TargetReference> targets)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (targets == null)
-            {
-                throw new ArgumentNullException(nameof(targets));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(targets, nameof(targets));
 
             SelectorType = selectorType;
             Id = id;

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="isPlanAuthorized"> Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Vm = vm;
             Vhd = vhd;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public string UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier { get; }
     }
 }

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class AdaptiveApplicationControlGroupData : Azure.ResourceManager.Models.ResourceData
     {
         public AdaptiveApplicationControlGroupData() { }
-        public Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus? ConfigurationStatus { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.EnforcementMode? EnforcementMode { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus? ConfigurationStatus { get { throw null; } }
+        public Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode? EnforcementMode { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssueSummary> Issues { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.PathRecommendation> PathRecommendations { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.ProtectionMode ProtectionMode { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterFileProtectionMode ProtectionMode { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus? RecommendationStatus { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem? SourceSystem { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.VmRecommendation> VmRecommendations { get { throw null; } }
@@ -86,46 +86,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AdvancedThreatProtectionSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AdvancedThreatProtectionSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AlertsSuppressionRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource>, System.Collections.IEnumerable
-    {
-        protected AlertsSuppressionRuleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string alertsSuppressionRuleName, Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string alertsSuppressionRuleName, Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource> Get(string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource> GetAll(string alertType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource> GetAllAsync(string alertType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource>> GetAsync(string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AlertsSuppressionRuleData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AlertsSuppressionRuleData() { }
-        public string AlertType { get { throw null; } set { } }
-        public string Comment { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public string Reason { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.AlertsSuppressionRuleState? State { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf { get { throw null; } set { } }
-    }
-    public partial class AlertsSuppressionRuleResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AlertsSuppressionRuleResource() { }
-        public virtual Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string alertsSuppressionRuleName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class AutoProvisioningSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AutoProvisioningSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AutoProvisioningSettingResource>, System.Collections.IEnumerable
     {
         protected AutoProvisioningSettingCollection() { }
@@ -174,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class ComplianceResultData : Azure.ResourceManager.Models.ResourceData
     {
         public ComplianceResultData() { }
-        public Azure.ResourceManager.SecurityCenter.Models.ResourceStatus? ResourceStatus { get { throw null; } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus? ResourceStatus { get { throw null; } }
     }
     public partial class ComplianceResultResource : Azure.ResourceManager.ArmResource
     {
@@ -185,41 +145,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceId, string complianceResultName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.ComplianceResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ComplianceResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ConnectorSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource>, System.Collections.IEnumerable
-    {
-        protected ConnectorSettingCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectorName, Azure.ResourceManager.SecurityCenter.ConnectorSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectorName, Azure.ResourceManager.SecurityCenter.ConnectorSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource> Get(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource>> GetAsync(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ConnectorSettingData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ConnectorSettingData() { }
-        public Azure.ResourceManager.SecurityCenter.Models.AuthenticationDetailsProperties AuthenticationDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.HybridComputeSettingsProperties HybridComputeSettings { get { throw null; } set { } }
-    }
-    public partial class ConnectorSettingResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ConnectorSettingResource() { }
-        public virtual Azure.ResourceManager.SecurityCenter.ConnectorSettingData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string connectorName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.ConnectorSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.ConnectorSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CustomAssessmentAutomationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource>, System.Collections.IEnumerable
     {
@@ -552,7 +477,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public IotSecuritySolutionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspacesProperties> AdditionalWorkspaces { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AutoDiscoveredResources { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.DataSource> DisabledDataSources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource> DisabledDataSources { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption> Export { get { throw null; } }
         public System.Collections.Generic.IList<string> IotHubs { get { throw null; } }
@@ -826,7 +751,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public string CorrelationKey { get { throw null; } }
         public string Description { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.AlertEntity> Entities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertEntity> Entities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, string>> ExtendedLinks { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ExtendedProperties { get { throw null; } }
         public System.DateTimeOffset? GeneratedOn { get { throw null; } }
@@ -836,16 +761,56 @@ namespace Azure.ResourceManager.SecurityCenter
         public string ProductComponentName { get { throw null; } }
         public string ProductName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RemediationSteps { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.AlertResourceIdentifier> ResourceIdentifiers { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.AlertSeverity? Severity { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertResourceIdentifier> ResourceIdentifiers { get { throw null; } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity? Severity { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.AlertStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SubTechniques { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSupportingEvidence SupportingEvidence { get { throw null; } set { } }
         public string SystemAlertId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Techniques { get { throw null; } }
         public string VendorName { get { throw null; } }
         public string Version { get { throw null; } }
+    }
+    public partial class SecurityAlertsSuppressionRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource>, System.Collections.IEnumerable
+    {
+        protected SecurityAlertsSuppressionRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string alertsSuppressionRuleName, Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string alertsSuppressionRuleName, Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource> Get(string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource> GetAll(string alertType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource> GetAllAsync(string alertType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource>> GetAsync(string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SecurityAlertsSuppressionRuleData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SecurityAlertsSuppressionRuleData() { }
+        public string AlertType { get { throw null; } set { } }
+        public string Comment { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        public string Reason { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertsSuppressionRuleState? State { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf { get { throw null; } set { } }
+    }
+    public partial class SecurityAlertsSuppressionRuleResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SecurityAlertsSuppressionRuleResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string alertsSuppressionRuleName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SecurityApplicationData : Azure.ResourceManager.Models.ResourceData
     {
@@ -873,13 +838,13 @@ namespace Azure.ResourceManager.SecurityCenter
         public string DisplayName { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentMetadataProperties Metadata { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentPartner PartnersData { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.ResourceDetails ResourceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterResourceDetails ResourceDetails { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusResult Status { get { throw null; } set { } }
     }
     public partial class SecurityAssessmentMetadataData : Azure.ResourceManager.Models.ResourceData
     {
         public SecurityAssessmentMetadataData() { }
-        public Azure.ResourceManager.SecurityCenter.Models.AssessmentType? AssessmentType { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType? AssessmentType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory> Categories { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -934,12 +899,12 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityAutomationData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SecurityAutomationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.AutomationAction> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationAction> Actions { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.AutomationScope> Scopes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationScope> Scopes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationSource> Sources { get { throw null; } }
     }
     public partial class SecurityAutomationResource : Azure.ResourceManager.ArmResource
@@ -961,8 +926,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAutomationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityAutomationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAutomationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityAutomationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAutomationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.Models.AutomationValidationStatus> Validate(Azure.ResourceManager.SecurityCenter.SecurityAutomationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.AutomationValidationStatus>> ValidateAsync(Azure.ResourceManager.SecurityCenter.SecurityAutomationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationValidationStatus> Validate(Azure.ResourceManager.SecurityCenter.SecurityAutomationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationValidationStatus>> ValidateAsync(Azure.ResourceManager.SecurityCenter.SecurityAutomationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class SecurityCenterExtensions
     {
@@ -979,14 +944,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsByResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource> GetAlertsSuppressionRule(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource>> GetAlertsSuppressionRuleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleResource GetAlertsSuppressionRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.AlertsSuppressionRuleCollection GetAlertsSuppressionRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.AllowedConnection> GetAllowedConnection(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, Azure.ResourceManager.SecurityCenter.Models.ConnectionType connectionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.AllowedConnection>> GetAllowedConnectionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, Azure.ResourceManager.SecurityCenter.Models.ConnectionType connectionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.AllowedConnection> GetAllowedConnections(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.AllowedConnection> GetAllowedConnectionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection> GetAllowedConnection(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType connectionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection>> GetAllowedConnectionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType connectionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection> GetAllowedConnections(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceData(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
@@ -999,10 +960,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ComplianceResultResource>> GetComplianceResultAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string complianceResultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.ComplianceResultResource GetComplianceResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.ComplianceResultCollection GetComplianceResults(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource> GetConnectorSetting(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ConnectorSettingResource>> GetConnectorSettingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.ConnectorSettingResource GetConnectorSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.ConnectorSettingCollection GetConnectorSettings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource> GetCustomAssessmentAutomation(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource>> GetCustomAssessmentAutomationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource GetCustomAssessmentAutomationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1077,6 +1034,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDetails> GetSecureScoreControlsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecureScoreResource GetSecureScoreResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecureScoreCollection GetSecureScores(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource> GetSecurityAlertsSuppressionRule(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource>> GetSecurityAlertsSuppressionRuleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleResource GetSecurityAlertsSuppressionRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.SecurityAlertsSuppressionRuleCollection GetSecurityAlertsSuppressionRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource> GetSecurityAssessment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource>> GetSecurityAssessmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource GetSecurityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1095,6 +1056,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string pricingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource GetSecurityCenterPricingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityCenterPricingCollection GetSecurityCenterPricings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> GetSecurityCloudConnector(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>> GetSecurityCloudConnectorAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource GetSecurityCloudConnectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorCollection GetSecurityCloudConnectors(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityComplianceResource> GetSecurityCompliance(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string complianceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityComplianceResource>> GetSecurityComplianceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string complianceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityComplianceResource GetSecurityComplianceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1134,12 +1099,12 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource> GetSoftwareInventory(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource>> GetSoftwareInventoryAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource GetSoftwareInventoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource GetSqlVulnerabilityAssessmentBaselineRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1194,8 +1159,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroup(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource>> GetAdaptiveApplicationControlGroupAsync(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupCollection GetAdaptiveApplicationControlGroups() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.AllowedConnection> GetAllowedConnectionsByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.AllowedConnection> GetAllowedConnectionsByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1249,6 +1214,41 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityCenterPricingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityCenterPricingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SecurityCloudConnectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>, System.Collections.IEnumerable
+    {
+        protected SecurityCloudConnectorCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectorName, Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectorName, Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> Get(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>> GetAsync(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SecurityCloudConnectorData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SecurityCloudConnectorData() { }
+        public Azure.ResourceManager.SecurityCenter.Models.AuthenticationDetailsProperties AuthenticationDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.HybridComputeSettingsProperties HybridComputeSettings { get { throw null; } set { } }
+    }
+    public partial class SecurityCloudConnectorResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SecurityCloudConnectorResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string connectorName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SecurityComplianceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SecurityComplianceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityComplianceResource>, System.Collections.IEnumerable
     {
@@ -1328,12 +1328,12 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         public SecurityConnectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment EnvironmentData { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.CloudName? EnvironmentName { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName? EnvironmentName { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string HierarchyIdentifier { get { throw null; } set { } }
         public System.DateTimeOffset? HierarchyIdentifierTrialEndOn { get { throw null; } }
         public string Kind { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.CloudOffering> Offerings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering> Offerings { get { throw null; } }
     }
     public partial class SecurityConnectorGovernanceRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>, System.Collections.IEnumerable
     {
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public System.DateTimeOffset? GeneratedOn { get { throw null; } }
         public string Impact { get { throw null; } }
         public string Remediation { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.ResourceDetails ResourceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterResourceDetails ResourceDetails { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatus Status { get { throw null; } set { } }
         public string VulnerabilityId { get { throw null; } }
     }
@@ -1527,7 +1527,7 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         public SecurityWorkspaceSettingData() { }
         public string Scope { get { throw null; } set { } }
-        public string WorkspaceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WorkspaceId { get { throw null; } set { } }
     }
     public partial class SecurityWorkspaceSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -1596,7 +1596,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public string DeviceId { get { throw null; } set { } }
         public string EndOfSupportDate { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus? EndOfSupportStatus { get { throw null; } set { } }
-        public string FirstSeenAt { get { throw null; } set { } }
+        public System.DateTimeOffset? FirstSeenOn { get { throw null; } set { } }
         public int? NumberOfKnownVulnerabilities { get { throw null; } set { } }
         public string OSPlatform { get { throw null; } set { } }
         public string SoftwareName { get { throw null; } set { } }
@@ -1616,16 +1616,16 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SqlVulnerabilityAssessmentBaselineRuleCollection : Azure.ResourceManager.ArmCollection
     {
         protected SqlVulnerabilityAssessmentBaselineRuleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, string workspaceId, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, string workspaceId, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string ruleId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> Get(string ruleId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAll(string workspaceId, Azure.ResourceManager.SecurityCenter.Models.RulesResultsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAll(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(string workspaceId, Azure.ResourceManager.SecurityCenter.Models.RulesResultsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(string ruleId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, System.Guid workspaceId, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, System.Guid workspaceId, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> Get(string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAll(System.Guid workspaceId, Azure.ResourceManager.SecurityCenter.Models.RulesResultsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAll(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(System.Guid workspaceId, Azure.ResourceManager.SecurityCenter.Models.RulesResultsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlVulnerabilityAssessmentBaselineRuleData : Azure.ResourceManager.Models.ResourceData
     {
@@ -1639,22 +1639,22 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceId, string ruleId) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> Get(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> Update(Azure.WaitUntil waitUntil, string workspaceId, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, string workspaceId, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> Get(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> Update(Azure.WaitUntil waitUntil, System.Guid workspaceId, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Guid workspaceId, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlVulnerabilityAssessmentScanCollection : Azure.ResourceManager.ArmCollection
     {
         protected SqlVulnerabilityAssessmentScanCollection() { }
-        public virtual Azure.Response<bool> Exists(string scanId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> Get(string scanId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetAll(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetAllAsync(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource>> GetAsync(string scanId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> Get(string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetAll(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetAllAsync(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource>> GetAsync(string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlVulnerabilityAssessmentScanData : Azure.ResourceManager.Models.ResourceData
     {
@@ -1668,12 +1668,12 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceId, string scanId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> Get(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource>> GetAsync(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResult> GetSqlVulnerabilityAssessmentScanResult(string scanResultId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResult>> GetSqlVulnerabilityAssessmentScanResultAsync(string scanResultId, string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResult> GetSqlVulnerabilityAssessmentScanResults(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResult> GetSqlVulnerabilityAssessmentScanResultsAsync(string workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> Get(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource>> GetAsync(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResult> GetSqlVulnerabilityAssessmentScanResult(string scanResultId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResult>> GetSqlVulnerabilityAssessmentScanResultAsync(string scanResultId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResult> GetSqlVulnerabilityAssessmentScanResults(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResult> GetSqlVulnerabilityAssessmentScanResultsAsync(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SubscriptionAssessmentMetadataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>, System.Collections.IEnumerable
     {
@@ -1746,8 +1746,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>> GetAsync(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Simulate(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.AlertSimulatorRequestBody alertSimulatorRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SimulateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.AlertSimulatorRequestBody alertSimulatorRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Simulate(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SimulateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1853,6 +1853,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public ActiveConnectionsNotInAllowedRange(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize) : base (default(bool), default(int), default(int), default(System.TimeSpan)) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AdaptiveApplicationControlEnforcementMode : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AdaptiveApplicationControlEnforcementMode(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode Audit { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode Enforce { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AdaptiveApplicationControlGroupSourceSystem : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem>
     {
         private readonly object _dummy;
@@ -1949,89 +1968,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceType left, Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AlertEntity
-    {
-        internal AlertEntity() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public string AlertEntityType { get { throw null; } }
-    }
-    public abstract partial class AlertResourceIdentifier
-    {
-        protected AlertResourceIdentifier() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AlertSeverity : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AlertSeverity>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AlertSeverity(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.AlertSeverity High { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AlertSeverity Informational { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AlertSeverity Low { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AlertSeverity Medium { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AlertSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AlertSeverity left, Azure.ResourceManager.SecurityCenter.Models.AlertSeverity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AlertSeverity (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AlertSeverity left, Azure.ResourceManager.SecurityCenter.Models.AlertSeverity right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AlertSimulatorBundlesRequestProperties : Azure.ResourceManager.SecurityCenter.Models.AlertSimulatorRequestProperties
-    {
-        public AlertSimulatorBundlesRequestProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.BundleType> Bundles { get { throw null; } }
-    }
-    public partial class AlertSimulatorRequestBody
-    {
-        public AlertSimulatorRequestBody() { }
-        public Azure.ResourceManager.SecurityCenter.Models.AlertSimulatorRequestProperties Properties { get { throw null; } set { } }
-    }
-    public partial class AlertSimulatorRequestProperties
-    {
-        public AlertSimulatorRequestProperties() { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-    }
-    public enum AlertsSuppressionRuleState
-    {
-        Enabled = 0,
-        Disabled = 1,
-        Expired = 2,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AlertStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AlertStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AlertStatus(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.AlertStatus Active { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AlertStatus Dismissed { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AlertStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AlertStatus Resolved { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AlertStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AlertStatus left, Azure.ResourceManager.SecurityCenter.Models.AlertStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AlertStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AlertStatus left, Azure.ResourceManager.SecurityCenter.Models.AlertStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AlertSyncSettings : Azure.ResourceManager.SecurityCenter.SecuritySettingData
-    {
-        public AlertSyncSettings() { }
-        public bool? IsEnabled { get { throw null; } set { } }
-    }
-    public partial class AllowedConnection : Azure.ResourceManager.Models.ResourceData
-    {
-        public AllowedConnection() { }
-        public System.DateTimeOffset? CalculatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.ConnectableResourceInfo> ConnectableResources { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-    }
     public partial class AllowlistCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.ListCustomAlertRule
     {
         public AllowlistCustomAlertRule(bool isEnabled, System.Collections.Generic.IEnumerable<string> allowlistValues) : base (default(bool)) { }
@@ -2066,57 +2002,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType left, Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AssessmentStatus
-    {
-        public AssessmentStatus(Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode code) { }
-        public string Cause { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode Code { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AssessmentStatusCode : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AssessmentStatusCode(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode Healthy { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode NotApplicable { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode Unhealthy { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode left, Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode left, Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AssessmentType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AssessmentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AssessmentType(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.AssessmentType BuiltIn { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AssessmentType CustomerManaged { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AssessmentType CustomPolicy { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.AssessmentType VerifiedPartner { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AssessmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AssessmentType left, Azure.ResourceManager.SecurityCenter.Models.AssessmentType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AssessmentType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AssessmentType left, Azure.ResourceManager.SecurityCenter.Models.AssessmentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public abstract partial class AuthenticationDetailsProperties
     {
         protected AuthenticationDetailsProperties() { }
         public Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState? AuthenticationProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.PermissionProperty> GrantedPermissions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission> GrantedPermissions { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AuthenticationProvisioningState : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState>
@@ -2137,47 +2027,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public abstract partial class AutomationAction
-    {
-        protected AutomationAction() { }
-    }
-    public partial class AutomationActionEventHub : Azure.ResourceManager.SecurityCenter.Models.AutomationAction
-    {
-        public AutomationActionEventHub() { }
-        public string ConnectionString { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier EventHubResourceId { get { throw null; } set { } }
-        public string SasPolicyName { get { throw null; } }
-    }
-    public partial class AutomationActionLogicApp : Azure.ResourceManager.SecurityCenter.Models.AutomationAction
-    {
-        public AutomationActionLogicApp() { }
-        public Azure.Core.ResourceIdentifier LogicAppResourceId { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
-    }
-    public partial class AutomationActionWorkspace : Azure.ResourceManager.SecurityCenter.Models.AutomationAction
-    {
-        public AutomationActionWorkspace() { }
-        public Azure.Core.ResourceIdentifier WorkspaceResourceId { get { throw null; } set { } }
-    }
-    public partial class AutomationRuleSet
-    {
-        public AutomationRuleSet() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRule> Rules { get { throw null; } }
-    }
-    public partial class AutomationScope
-    {
-        public AutomationScope() { }
-        public string Description { get { throw null; } set { } }
-        public string ScopePath { get { throw null; } set { } }
-    }
-    public partial class AutomationTriggeringRule
-    {
-        public AutomationTriggeringRule() { }
-        public string ExpectedValue { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRuleOperator? Operator { get { throw null; } set { } }
-        public string PropertyJPath { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType? PropertyType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationTriggeringRuleOperator : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRuleOperator>
@@ -2223,12 +2072,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType left, Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AutomationValidationStatus
-    {
-        internal AutomationValidationStatus() { }
-        public bool? IsValid { get { throw null; } }
-        public string Message { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutoProvisionState : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState>
@@ -2304,12 +2147,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         public AzureDevOpsScopeEnvironment() { }
     }
-    public partial class AzureResourceDetails : Azure.ResourceManager.SecurityCenter.Models.ResourceDetails
+    public partial class AzureResourceDetails : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterResourceDetails
     {
         public AzureResourceDetails() { }
         public string Id { get { throw null; } }
     }
-    public partial class AzureResourceIdentifier : Azure.ResourceManager.SecurityCenter.Models.AlertResourceIdentifier
+    public partial class AzureResourceIdentifier : Azure.ResourceManager.SecurityCenter.Models.SecurityAlertResourceIdentifier
     {
         internal AzureResourceIdentifier() { }
         public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } }
@@ -2328,83 +2171,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string Benchmark { get { throw null; } set { } }
         public string Reference { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BundleType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.BundleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BundleType(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.BundleType AppServices { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.BundleType CosmosDbs { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.BundleType Dns { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.BundleType KeyVaults { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.BundleType KubernetesService { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.BundleType ResourceManager { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.BundleType SqlServers { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.BundleType StorageAccounts { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.BundleType VirtualMachines { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.BundleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.BundleType left, Azure.ResourceManager.SecurityCenter.Models.BundleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.BundleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.BundleType left, Azure.ResourceManager.SecurityCenter.Models.BundleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CloudName : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.CloudName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CloudName(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.CloudName Aws { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.CloudName Azure { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.CloudName AzureDevOps { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.CloudName Gcp { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.CloudName Github { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.CloudName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.CloudName left, Azure.ResourceManager.SecurityCenter.Models.CloudName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.CloudName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.CloudName left, Azure.ResourceManager.SecurityCenter.Models.CloudName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public abstract partial class CloudOffering
-    {
-        protected CloudOffering() { }
-        public string Description { get { throw null; } }
-    }
     public partial class ComplianceSegment
     {
         internal ComplianceSegment() { }
         public double? Percentage { get { throw null; } }
         public string SegmentType { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ConfigurationStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ConfigurationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus Configured { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus NoStatus { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus NotConfigured { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus left, Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus left, Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ConnectableResourceInfo
     {
@@ -2428,64 +2199,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         public ConnectionToIPNotAllowed(bool isEnabled, System.Collections.Generic.IEnumerable<string> allowlistValues) : base (default(bool), default(System.Collections.Generic.IEnumerable<string>)) { }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ConnectionType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.ConnectionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ConnectionType(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.ConnectionType External { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.ConnectionType Internal { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ConnectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ConnectionType left, Azure.ResourceManager.SecurityCenter.Models.ConnectionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ConnectionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ConnectionType left, Azure.ResourceManager.SecurityCenter.Models.ConnectionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ContainerRegistryVulnerabilityProperties : Azure.ResourceManager.SecurityCenter.Models.SecuritySubAssessmentAdditionalInfo
     {
         public ContainerRegistryVulnerabilityProperties() { }
         public string ContainerRegistryVulnerabilityPropertiesType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.SecurityCve> Cve { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.SecurityCenter.Models.Cvss> Cvss { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.SecurityCenter.Models.SecurityCvss> Cvss { get { throw null; } }
         public string ImageDigest { get { throw null; } }
         public bool? IsPatchable { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public string RepositoryName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.VendorReference> VendorReferences { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ControlType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.ControlType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ControlType(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.ControlType BuiltIn { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.ControlType Custom { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ControlType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ControlType left, Azure.ResourceManager.SecurityCenter.Models.ControlType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ControlType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ControlType left, Azure.ResourceManager.SecurityCenter.Models.ControlType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CspmMonitorAwsOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class CspmMonitorAwsOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public CspmMonitorAwsOffering() { }
         public string CloudRoleArn { get { throw null; } set { } }
     }
-    public partial class CspmMonitorAzureDevOpsOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class CspmMonitorAzureDevOpsOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public CspmMonitorAzureDevOpsOffering() { }
     }
-    public partial class CspmMonitorGcpOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class CspmMonitorGcpOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public CspmMonitorGcpOffering() { }
         public Azure.ResourceManager.SecurityCenter.Models.CspmMonitorGcpOfferingNativeCloudConnection NativeCloudConnection { get { throw null; } set { } }
@@ -2496,7 +2231,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string ServiceAccountEmailAddress { get { throw null; } set { } }
         public string WorkloadIdentityProviderId { get { throw null; } set { } }
     }
-    public partial class CspmMonitorGithubOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class CspmMonitorGithubOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public CspmMonitorGithubOffering() { }
     }
@@ -2559,34 +2294,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public CustomEntityStoreAssignmentCreateOrUpdateContent() { }
         public string Principal { get { throw null; } set { } }
     }
-    public partial class Cvss
-    {
-        internal Cvss() { }
-        public float? Base { get { throw null; } }
-    }
     public partial class DataExportSettings : Azure.ResourceManager.SecurityCenter.SecuritySettingData
     {
         public DataExportSettings() { }
         public bool? IsEnabled { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataSource : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.DataSource>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataSource(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.DataSource TwinData { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.DataSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.DataSource left, Azure.ResourceManager.SecurityCenter.Models.DataSource right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.DataSource (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.DataSource left, Azure.ResourceManager.SecurityCenter.Models.DataSource right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DefenderCspmAwsOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderCspmAwsOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderCspmAwsOffering() { }
         public Azure.ResourceManager.SecurityCenter.Models.DefenderCspmAwsOfferingVmScanners VmScanners { get { throw null; } set { } }
@@ -2604,11 +2317,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public System.Collections.Generic.IDictionary<string, string> ExclusionTags { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode? ScanningMode { get { throw null; } set { } }
     }
-    public partial class DefenderCspmGcpOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderCspmGcpOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderCspmGcpOffering() { }
     }
-    public partial class DefenderForContainersAwsOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderForContainersAwsOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderForContainersAwsOffering() { }
         public string CloudRoleArn { get { throw null; } set { } }
@@ -2622,7 +2335,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string KubernetesServiceCloudRoleArn { get { throw null; } set { } }
         public string ScubaExternalId { get { throw null; } set { } }
     }
-    public partial class DefenderForContainersGcpOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderForContainersGcpOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderForContainersGcpOffering() { }
         public Azure.ResourceManager.SecurityCenter.Models.DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection DataPipelineNativeCloudConnection { get { throw null; } set { } }
@@ -2643,7 +2356,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string ServiceAccountEmailAddress { get { throw null; } set { } }
         public string WorkloadIdentityProviderId { get { throw null; } set { } }
     }
-    public partial class DefenderForDatabasesAwsOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderForDatabasesAwsOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderForDatabasesAwsOffering() { }
         public Azure.ResourceManager.SecurityCenter.Models.DefenderForDatabasesAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get { throw null; } set { } }
@@ -2661,21 +2374,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string CloudRoleArn { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
     }
-    public partial class DefenderForDatabasesGcpOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderForDatabasesGcpOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderForDatabasesGcpOffering() { }
         public Azure.ResourceManager.SecurityCenter.Models.GcpDefenderForDatabasesArcAutoProvisioning DefenderForDatabasesArcAutoProvisioning { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
     }
-    public partial class DefenderForDevOpsAzureDevOpsOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderForDevOpsAzureDevOpsOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderForDevOpsAzureDevOpsOffering() { }
     }
-    public partial class DefenderForDevOpsGithubOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderForDevOpsGithubOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderForDevOpsGithubOffering() { }
     }
-    public partial class DefenderForServersAwsOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderForServersAwsOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderForServersAwsOffering() { }
         public Azure.ResourceManager.SecurityCenter.Models.DefenderForServersAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get { throw null; } set { } }
@@ -2716,7 +2429,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentAutoProvisioningType? VulnerabilityAssessmentAutoProvisioningType { get { throw null; } set { } }
     }
-    public partial class DefenderForServersGcpOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class DefenderForServersGcpOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public DefenderForServersGcpOffering() { }
         public Azure.ResourceManager.SecurityCenter.Models.AvailableSubPlanType? AvailableSubPlanType { get { throw null; } set { } }
@@ -2797,44 +2510,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus left, Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus left, Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnforcementMode : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.EnforcementMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EnforcementMode(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.EnforcementMode Audit { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.EnforcementMode Enforce { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.EnforcementMode None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.EnforcementMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.EnforcementMode left, Azure.ResourceManager.SecurityCenter.Models.EnforcementMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.EnforcementMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.EnforcementMode left, Azure.ResourceManager.SecurityCenter.Models.EnforcementMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnforcementSupport : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EnforcementSupport(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport NotSupported { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport Supported { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport left, Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport left, Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ExecuteGovernanceRuleParams
@@ -3079,7 +2754,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ImplementationEffort left, Azure.ResourceManager.SecurityCenter.Models.ImplementationEffort right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class InformationProtectionAwsOffering : Azure.ResourceManager.SecurityCenter.Models.CloudOffering
+    public partial class InformationProtectionAwsOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering
     {
         public InformationProtectionAwsOffering() { }
         public string InformationProtectionCloudRoleArn { get { throw null; } set { } }
@@ -3122,11 +2797,60 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string RecommendationDisplayName { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity? ReportedSeverity { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IotSecurityRecommendationType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IotSecurityRecommendationType(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotAcrAuthentication { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotAgentSendsUnutilizedMessages { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotBaseline { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotEdgeHubMemOptimize { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotEdgeLoggingOptions { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotInconsistentModuleSettings { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotInstallAgent { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotIPFilterDenyAll { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotIPFilterPermissiveRule { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotOpenPorts { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotPermissiveFirewallPolicy { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotPermissiveInputFirewallRules { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotPermissiveOutputFirewallRules { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotPrivilegedDockerOptions { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotSharedCredentials { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotVulnerableTlsCipherSuite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType left, Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType left, Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics
     {
         internal IotSecuritySolutionAnalyticsModelDevicesMetrics() { }
         public System.DateTimeOffset? Date { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.IotSeverityMetrics DevicesMetrics { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IotSecuritySolutionDataSource : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IotSecuritySolutionDataSource(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource TwinData { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource left, Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource left, Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IotSecuritySolutionExportOption : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption>
@@ -3145,7 +2869,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption left, Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IotSecuritySolutionPatch : Azure.ResourceManager.SecurityCenter.Models.TagsResourceInfo
+    public partial class IotSecuritySolutionPatch : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterTagsResourceInfo
     {
         public IotSecuritySolutionPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigurationProperties> RecommendationsConfiguration { get { throw null; } }
@@ -3315,11 +3039,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         public LocalUserNotAllowed(bool isEnabled, System.Collections.Generic.IEnumerable<string> allowlistValues) : base (default(bool), default(System.Collections.Generic.IEnumerable<string>)) { }
     }
-    public partial class LogAnalyticsIdentifier : Azure.ResourceManager.SecurityCenter.Models.AlertResourceIdentifier
+    public partial class LogAnalyticsIdentifier : Azure.ResourceManager.SecurityCenter.Models.SecurityAlertResourceIdentifier
     {
         internal LogAnalyticsIdentifier() { }
         public System.Guid? AgentId { get { throw null; } }
-        public string WorkspaceId { get { throw null; } }
+        public System.Guid? WorkspaceId { get { throw null; } }
         public string WorkspaceResourceGroup { get { throw null; } }
         public string WorkspaceSubscriptionId { get { throw null; } }
     }
@@ -3341,17 +3065,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         public MqttD2CMessagesNotInAllowedRange(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize) : base (default(bool), default(int), default(int), default(System.TimeSpan)) { }
     }
-    public partial class OnPremiseResourceDetails : Azure.ResourceManager.SecurityCenter.Models.ResourceDetails
+    public partial class OnPremiseResourceDetails : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterResourceDetails
     {
-        public OnPremiseResourceDetails(string workspaceId, System.Guid vmUuid, string sourceComputerId, string machineName) { }
+        public OnPremiseResourceDetails(Azure.Core.ResourceIdentifier workspaceId, System.Guid vmUuid, string sourceComputerId, string machineName) { }
         public string MachineName { get { throw null; } set { } }
         public string SourceComputerId { get { throw null; } set { } }
         public System.Guid VmUuid { get { throw null; } set { } }
-        public string WorkspaceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WorkspaceId { get { throw null; } set { } }
     }
     public partial class OnPremiseSqlResourceDetails : Azure.ResourceManager.SecurityCenter.Models.OnPremiseResourceDetails
     {
-        public OnPremiseSqlResourceDetails(string workspaceId, System.Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base (default(string), default(System.Guid), default(string), default(string)) { }
+        public OnPremiseSqlResourceDetails(Azure.Core.ResourceIdentifier workspaceId, System.Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base (default(Azure.Core.ResourceIdentifier), default(System.Guid), default(string), default(string)) { }
         public string DatabaseName { get { throw null; } set { } }
         public string ServerName { get { throw null; } set { } }
     }
@@ -3359,12 +3083,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         public PathRecommendation() { }
         public Azure.ResourceManager.SecurityCenter.Models.RecommendationAction? Action { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus? ConfigurationStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus? ConfigurationStatus { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType? FileType { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType? IotSecurityRecommendationType { get { throw null; } set { } }
         public bool? IsCommon { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.PublisherInfo PublisherInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.RecommendationType? RecommendationType { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPublisherInfo PublisherInfo { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.UserRecommendation> Usernames { get { throw null; } }
         public System.Collections.Generic.IList<string> UserSids { get { throw null; } }
     }
@@ -3390,58 +3114,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType left, Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PermissionProperty : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.PermissionProperty>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PermissionProperty(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.PermissionProperty AwsAmazonSsmAutomationRole { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.PermissionProperty AwsAwsSecurityHubReadOnlyAccess { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.PermissionProperty AwsSecurityAudit { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.PermissionProperty GcpSecurityCenterAdminViewer { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.PermissionProperty other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.PermissionProperty left, Azure.ResourceManager.SecurityCenter.Models.PermissionProperty right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.PermissionProperty (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.PermissionProperty left, Azure.ResourceManager.SecurityCenter.Models.PermissionProperty right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ProcessNotAllowed : Azure.ResourceManager.SecurityCenter.Models.AllowlistCustomAlertRule
     {
         public ProcessNotAllowed(bool isEnabled, System.Collections.Generic.IEnumerable<string> allowlistValues) : base (default(bool), default(System.Collections.Generic.IEnumerable<string>)) { }
-    }
-    public partial class ProtectionMode
-    {
-        public ProtectionMode() { }
-        public Azure.ResourceManager.SecurityCenter.Models.EnforcementMode? Exe { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.EnforcementMode? Executable { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.EnforcementMode? Msi { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.EnforcementMode? Script { get { throw null; } set { } }
     }
     public partial class ProxyServerProperties
     {
         public ProxyServerProperties() { }
         public string IP { get { throw null; } set { } }
         public string Port { get { throw null; } set { } }
-    }
-    public partial class PublisherInfo
-    {
-        public PublisherInfo() { }
-        public string BinaryName { get { throw null; } set { } }
-        public string ProductName { get { throw null; } set { } }
-        public string PublisherName { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-    }
-    public partial class QueryCheck
-    {
-        public QueryCheck() { }
-        public System.Collections.Generic.IList<string> ColumnNames { get { throw null; } }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> ExpectedResult { get { throw null; } }
-        public string Query { get { throw null; } set { } }
     }
     public partial class QueuePurgesNotInAllowedRange : Azure.ResourceManager.SecurityCenter.Models.TimeWindowCustomAlertRule
     {
@@ -3486,9 +3167,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class RecommendationConfigurationProperties
     {
-        public RecommendationConfigurationProperties(Azure.ResourceManager.SecurityCenter.Models.RecommendationType recommendationType, Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigStatus status) { }
+        public RecommendationConfigurationProperties(Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType recommendationType, Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigStatus status) { }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.RecommendationType RecommendationType { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType RecommendationType { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigStatus Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3509,38 +3190,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus left, Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus left, Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecommendationType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.RecommendationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecommendationType(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotAcrAuthentication { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotAgentSendsUnutilizedMessages { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotBaseline { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotEdgeHubMemOptimize { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotEdgeLoggingOptions { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotInconsistentModuleSettings { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotInstallAgent { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotIPFilterDenyAll { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotIPFilterPermissiveRule { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotOpenPorts { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPermissiveFirewallPolicy { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPermissiveInputFirewallRules { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPermissiveOutputFirewallRules { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPrivilegedDockerOptions { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotSharedCredentials { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotVulnerableTlsCipherSuite { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.RecommendationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RecommendationType left, Azure.ResourceManager.SecurityCenter.Models.RecommendationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RecommendationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.RecommendationType left, Azure.ResourceManager.SecurityCenter.Models.RecommendationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RecommendedSecurityRule
@@ -3598,30 +3247,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity left, Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class ResourceDetails
-    {
-        protected ResourceDetails() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.ResourceStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceStatus(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.ResourceStatus Healthy { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.ResourceStatus NotApplicable { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.ResourceStatus NotHealthy { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.ResourceStatus OffByPolicy { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ResourceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ResourceStatus left, Azure.ResourceManager.SecurityCenter.Models.ResourceStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ResourceStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ResourceStatus left, Azure.ResourceManager.SecurityCenter.Models.ResourceStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RuleSeverity : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.RuleSeverity>
     {
@@ -3656,7 +3281,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public int? MaxScore { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.ControlType? SourceType { get { throw null; } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityControlType? SourceType { get { throw null; } }
     }
     public partial class SecureScoreControlDetails : Azure.ResourceManager.Models.ResourceData
     {
@@ -3670,6 +3295,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public double? Percentage { get { throw null; } }
         public int? UnhealthyResourceCount { get { throw null; } }
         public long? Weight { get { throw null; } }
+    }
+    public partial class SecurityAlertEntity
+    {
+        internal SecurityAlertEntity() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public string AlertEntityType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityAlertMinimalSeverity : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity>
@@ -3746,11 +3377,106 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertReceivingRole left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertReceivingRole right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public abstract partial class SecurityAlertResourceIdentifier
+    {
+        protected SecurityAlertResourceIdentifier() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityAlertSeverity : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityAlertSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity High { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity Informational { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity Low { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity Medium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SecurityAlertSimulatorBundlesRequestProperties : Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorRequestProperties
+    {
+        public SecurityAlertSimulatorBundlesRequestProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType> Bundles { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityAlertSimulatorBundleType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityAlertSimulatorBundleType(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType AppServices { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType CosmosDbs { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType Dns { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType KeyVaults { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType KubernetesService { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType ResourceManager { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType SqlServers { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType StorageAccounts { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType VirtualMachines { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SecurityAlertSimulatorContent
+    {
+        public SecurityAlertSimulatorContent() { }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorRequestProperties Properties { get { throw null; } set { } }
+    }
+    public partial class SecurityAlertSimulatorRequestProperties
+    {
+        public SecurityAlertSimulatorRequestProperties() { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+    }
+    public enum SecurityAlertsSuppressionRuleState
+    {
+        Enabled = 0,
+        Disabled = 1,
+        Expired = 2,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityAlertStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityAlertStatus(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus Dismissed { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus Resolved { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SecurityAlertSupportingEvidence
     {
         public SecurityAlertSupportingEvidence() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string SecurityAlertSupportingEvidenceType { get { throw null; } }
+    }
+    public partial class SecurityAlertSyncSettings : Azure.ResourceManager.SecurityCenter.SecuritySettingData
+    {
+        public SecurityAlertSyncSettings() { }
+        public bool? IsEnabled { get { throw null; } set { } }
     }
     public partial class SecurityAssessmentCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
@@ -3760,8 +3486,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public System.Uri LinksAzurePortalUri { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentMetadataProperties Metadata { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentPartner PartnersData { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.ResourceDetails ResourceDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.AssessmentStatus Status { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterResourceDetails ResourceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatus Status { get { throw null; } set { } }
     }
     public partial class SecurityAssessmentMetadataPartner
     {
@@ -3772,8 +3498,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class SecurityAssessmentMetadataProperties
     {
-        public SecurityAssessmentMetadataProperties(string displayName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity severity, Azure.ResourceManager.SecurityCenter.Models.AssessmentType assessmentType) { }
-        public Azure.ResourceManager.SecurityCenter.Models.AssessmentType AssessmentType { get { throw null; } set { } }
+        public SecurityAssessmentMetadataProperties(string displayName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity severity, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType assessmentType) { }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType AssessmentType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory> Categories { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -3838,6 +3564,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityAssessmentResourceStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityAssessmentResourceStatus(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus Healthy { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus NotApplicable { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus NotHealthy { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus OffByPolicy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityAssessmentSeverity : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity>
     {
         private readonly object _dummy;
@@ -3856,9 +3602,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecurityAssessmentStatusResult : Azure.ResourceManager.SecurityCenter.Models.AssessmentStatus
+    public partial class SecurityAssessmentStatus
     {
-        public SecurityAssessmentStatusResult(Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode code) : base (default(Azure.ResourceManager.SecurityCenter.Models.AssessmentStatusCode)) { }
+        public SecurityAssessmentStatus(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode code) { }
+        public string Cause { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode Code { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityAssessmentStatusCode : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityAssessmentStatusCode(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode Healthy { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode NotApplicable { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode Unhealthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SecurityAssessmentStatusResult : Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatus
+    {
+        public SecurityAssessmentStatusResult(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode code) : base (default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode)) { }
         public System.DateTimeOffset? FirstEvaluatedOn { get { throw null; } }
         public System.DateTimeOffset? StatusChangeOn { get { throw null; } }
     }
@@ -4013,6 +3785,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityAssessmentType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityAssessmentType(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType BuiltIn { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType CustomerManaged { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType CustomPolicy { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType VerifiedPartner { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityAssessmentUserImpact : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentUserImpact>
     {
         private readonly object _dummy;
@@ -4031,11 +3823,158 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentUserImpact left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentUserImpact right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public abstract partial class SecurityAutomationAction
+    {
+        protected SecurityAutomationAction() { }
+    }
+    public partial class SecurityAutomationActionEventHub : Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationAction
+    {
+        public SecurityAutomationActionEventHub() { }
+        public string ConnectionString { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier EventHubResourceId { get { throw null; } set { } }
+        public string SasPolicyName { get { throw null; } }
+    }
+    public partial class SecurityAutomationActionLogicApp : Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationAction
+    {
+        public SecurityAutomationActionLogicApp() { }
+        public Azure.Core.ResourceIdentifier LogicAppResourceId { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class SecurityAutomationActionWorkspace : Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationAction
+    {
+        public SecurityAutomationActionWorkspace() { }
+        public Azure.Core.ResourceIdentifier WorkspaceResourceId { get { throw null; } set { } }
+    }
+    public partial class SecurityAutomationRuleSet
+    {
+        public SecurityAutomationRuleSet() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationTriggeringRule> Rules { get { throw null; } }
+    }
+    public partial class SecurityAutomationScope
+    {
+        public SecurityAutomationScope() { }
+        public string Description { get { throw null; } set { } }
+        public string ScopePath { get { throw null; } set { } }
+    }
     public partial class SecurityAutomationSource
     {
         public SecurityAutomationSource() { }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityEventSource? EventSource { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.AutomationRuleSet> RuleSets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationRuleSet> RuleSets { get { throw null; } }
+    }
+    public partial class SecurityAutomationTriggeringRule
+    {
+        public SecurityAutomationTriggeringRule() { }
+        public string ExpectedValue { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRuleOperator? Operator { get { throw null; } set { } }
+        public string PropertyJPath { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType? PropertyType { get { throw null; } set { } }
+    }
+    public partial class SecurityAutomationValidationStatus
+    {
+        internal SecurityAutomationValidationStatus() { }
+        public bool? IsValid { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    public partial class SecurityCenterAllowedConnection : Azure.ResourceManager.Models.ResourceData
+    {
+        public SecurityCenterAllowedConnection() { }
+        public System.DateTimeOffset? CalculatedOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.ConnectableResourceInfo> ConnectableResources { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityCenterCloudName : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityCenterCloudName(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Aws { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Azure { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName AzureDevOps { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Gcp { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Github { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class SecurityCenterCloudOffering
+    {
+        protected SecurityCenterCloudOffering() { }
+        public string Description { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityCenterCloudPermission : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityCenterCloudPermission(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission AwsAmazonSsmAutomationRole { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission AwsAwsSecurityHubReadOnlyAccess { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission AwsSecurityAudit { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission GcpSecurityCenterAdminViewer { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityCenterConfigurationStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityCenterConfigurationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus Configured { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus NoStatus { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus NotConfigured { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityCenterConnectionType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityCenterConnectionType(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType External { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType Internal { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SecurityCenterFileProtectionMode
+    {
+        public SecurityCenterFileProtectionMode() { }
+        public Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode? Exe { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode? Executable { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode? Msi { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode? Script { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityCenterPricingTier : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier>
@@ -4055,6 +3994,42 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SecurityCenterPublisherInfo
+    {
+        public SecurityCenterPublisherInfo() { }
+        public string BinaryName { get { throw null; } set { } }
+        public string ProductName { get { throw null; } set { } }
+        public string PublisherName { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+    }
+    public abstract partial class SecurityCenterResourceDetails
+    {
+        protected SecurityCenterResourceDetails() { }
+    }
+    public partial class SecurityCenterTagsResourceInfo
+    {
+        public SecurityCenterTagsResourceInfo() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityCenterVmEnforcementSupportState : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityCenterVmEnforcementSupportState(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState NotSupported { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState Supported { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class SecurityConnectorEnvironment
     {
         protected SecurityConnectorEnvironment() { }
@@ -4071,11 +4046,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertReceivingRole> Roles { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationByRoleState? State { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityControlType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityControlType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityControlType(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityControlType BuiltIn { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityControlType Custom { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType left, Azure.ResourceManager.SecurityCenter.Models.SecurityControlType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityControlType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType left, Azure.ResourceManager.SecurityCenter.Models.SecurityControlType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SecurityCve
     {
         internal SecurityCve() { }
         public string Link { get { throw null; } }
         public string Title { get { throw null; } }
+    }
+    public partial class SecurityCvss
+    {
+        internal SecurityCvss() { }
+        public float? Base { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityEventSource : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityEventSource>
@@ -4340,7 +4338,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         public ServerVulnerabilityProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.SecurityCve> Cve { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.SecurityCenter.Models.Cvss> Cvss { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.SecurityCenter.Models.SecurityCvss> Cvss { get { throw null; } }
         public bool? IsPatchable { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public string ServerVulnerabilityType { get { throw null; } }
@@ -4503,11 +4501,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string Field { get { throw null; } set { } }
     }
-    public partial class TagsResourceInfo
-    {
-        public TagsResourceInfo() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class ThresholdCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule
     {
         public ThresholdCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold) : base (default(bool)) { }
@@ -4588,8 +4581,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class VmRecommendation
     {
         public VmRecommendation() { }
-        public Azure.ResourceManager.SecurityCenter.Models.ConfigurationStatus? ConfigurationStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.EnforcementSupport? EnforcementSupport { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus? ConfigurationStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState? EnforcementSupport { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.RecommendationAction? RecommendationAction { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
     }
@@ -4617,12 +4610,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.BenchmarkReference> BenchmarkReferences { get { throw null; } }
         public string Category { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityCenter.Models.QueryCheck QueryCheck { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentRuleQueryCheck QueryCheck { get { throw null; } set { } }
         public string Rationale { get { throw null; } set { } }
         public string RuleId { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentRuleType? RuleType { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.RuleSeverity? Severity { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
+    }
+    public partial class VulnerabilityAssessmentRuleQueryCheck
+    {
+        public VulnerabilityAssessmentRuleQueryCheck() { }
+        public System.Collections.Generic.IList<string> ColumnNames { get { throw null; } }
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> ExpectedResult { get { throw null; } }
+        public string Query { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VulnerabilityAssessmentRuleType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentRuleType>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocation"/> or <paramref name="targetSubscriptionId"/> is null. </exception>
         internal ServiceProperties(string targetLocation, string targetSubscriptionId)
         {
-            if (targetLocation == null)
-            {
-                throw new ArgumentNullException(nameof(targetLocation));
-            }
-            if (targetSubscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(targetSubscriptionId));
-            }
+            Argument.AssertNotNull(targetLocation, nameof(targetLocation));
+            Argument.AssertNotNull(targetSubscriptionId, nameof(targetSubscriptionId));
 
             TargetLocation = targetLocation;
             TargetSubscriptionId = targetSubscriptionId;

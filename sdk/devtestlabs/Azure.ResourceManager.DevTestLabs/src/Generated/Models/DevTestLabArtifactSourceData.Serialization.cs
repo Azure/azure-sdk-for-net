@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<DevTestLabEnableStatus> status = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -225,14 +225,19 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("uniqueIdentifier"))
                         {
-                            uniqueIdentifier = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uniqueIdentifier = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevTestLabArtifactSourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, uri.Value, Optional.ToNullable(sourceType), folderPath.Value, armTemplateFolderPath.Value, branchRef.Value, securityToken.Value, Optional.ToNullable(status), Optional.ToNullable(createdDate), provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabArtifactSourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, uri.Value, Optional.ToNullable(sourceType), folderPath.Value, armTemplateFolderPath.Value, branchRef.Value, securityToken.Value, Optional.ToNullable(status), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

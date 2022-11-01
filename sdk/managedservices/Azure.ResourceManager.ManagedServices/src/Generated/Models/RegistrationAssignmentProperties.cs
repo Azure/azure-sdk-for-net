@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="registrationDefinitionId"/> is null. </exception>
         public RegistrationAssignmentProperties(string registrationDefinitionId)
         {
-            if (registrationDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationDefinitionId));
-            }
+            Argument.AssertNotNull(registrationDefinitionId, nameof(registrationDefinitionId));
 
             RegistrationDefinitionId = registrationDefinitionId;
         }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridData
     /// A Class representing a HybridDataJobDefinition along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridDataJobDefinitionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetHybridDataJobDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataServiceResource" /> using the GetHybridDataJobDefinition method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridDataServiceResource" /> using the GetHybridDataJobDefinition method.
     /// </summary>
     public partial class HybridDataJobDefinitionResource : ArmResource
     {

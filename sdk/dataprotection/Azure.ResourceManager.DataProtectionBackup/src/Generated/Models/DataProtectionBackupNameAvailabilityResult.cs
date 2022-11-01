@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of DataProtectionBackupNameAvailabilityResult. </summary>
         /// <param name="message"> Gets or sets the message. </param>
-        /// <param name="nameAvailable"> Gets or sets a value indicating whether [name available]. </param>
+        /// <param name="isNameAvailable"> Gets or sets a value indicating whether [name available]. </param>
         /// <param name="reason"> Gets or sets the reason. </param>
-        internal DataProtectionBackupNameAvailabilityResult(string message, bool? nameAvailable, string reason)
+        internal DataProtectionBackupNameAvailabilityResult(string message, bool? isNameAvailable, string reason)
         {
             Message = message;
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
         }
 
         /// <summary> Gets or sets the message. </summary>
         public string Message { get; }
         /// <summary> Gets or sets a value indicating whether [name available]. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> Gets or sets the reason. </summary>
         public string Reason { get; }
     }

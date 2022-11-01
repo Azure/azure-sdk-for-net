@@ -93,5 +93,9 @@ rename-mapping:
   PublicKey: HybridDataPublicKey
   Key: HybridDataEncryptionKey
   SupportedAlgorithm: SupportedEncryptionAlgorithm
+  DataManager: HybridDataManager
+  DataService: HybridDataService
+  DataStore: HybridDataStore
+  DataStoreType: HybridDataStoreType
 
 ```

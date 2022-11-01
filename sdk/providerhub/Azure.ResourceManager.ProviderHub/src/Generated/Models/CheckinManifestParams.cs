@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="environment"/> or <paramref name="baselineArmManifestLocation"/> is null. </exception>
         public CheckinManifestParams(string environment, string baselineArmManifestLocation)
         {
-            if (environment == null)
-            {
-                throw new ArgumentNullException(nameof(environment));
-            }
-            if (baselineArmManifestLocation == null)
-            {
-                throw new ArgumentNullException(nameof(baselineArmManifestLocation));
-            }
+            Argument.AssertNotNull(environment, nameof(environment));
+            Argument.AssertNotNull(baselineArmManifestLocation, nameof(baselineArmManifestLocation));
 
             Environment = environment;
             BaselineArmManifestLocation = baselineArmManifestLocation;
