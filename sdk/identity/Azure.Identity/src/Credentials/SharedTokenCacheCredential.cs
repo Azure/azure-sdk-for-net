@@ -15,7 +15,8 @@ using System.ComponentModel;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Authenticates using tokens in the local cache shared between Microsoft applications.
+    /// Authenticates using tokens in a local cache file. This is a legacy mechanism for authenticating clients using credentials provided to Visual Studio.
+    /// This mechanism for Visual Studio authentication has been replaced by the <see cref="VisualStudioCredential"/>.
     /// </summary>
     public class SharedTokenCacheCredential : TokenCredential
     {
