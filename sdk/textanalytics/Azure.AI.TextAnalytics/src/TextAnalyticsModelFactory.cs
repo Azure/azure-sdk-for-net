@@ -897,7 +897,8 @@ namespace Azure.AI.TextAnalytics
                 new List<SingleLabelClassifyActionResult>(),
                 new List<MultiLabelClassifyActionResult>(),
                 new List<AnalyzeHealthcareEntitiesActionResult>(),
-                new List<ExtractSummaryActionResult>()
+                new List<ExtractSummaryActionResult>(),
+                new List<AbstractSummaryActionResult>()
                 );
         }
 
@@ -934,7 +935,8 @@ namespace Azure.AI.TextAnalytics
                 singleLabelClassifyActionResults.ToList(),
                 multiLabelClassifyActionResults.ToList(),
                 new List<AnalyzeHealthcareEntitiesActionResult>(),
-                new List<ExtractSummaryActionResult>()
+                new List<ExtractSummaryActionResult>(),
+                new List<AbstractSummaryActionResult>()
                 );
         }
 
@@ -973,7 +975,8 @@ namespace Azure.AI.TextAnalytics
                 singleLabelClassifyActionResults.ToList(),
                 multiLabelClassifyActionResults.ToList(),
                 analyzeHealthcareEntitiesActionResults.ToList(),
-                new List<ExtractSummaryActionResult>()
+                new List<ExtractSummaryActionResult>(),
+                new List<AbstractSummaryActionResult>()
                 );
         }
 
@@ -990,6 +993,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="multiLabelClassifyActionResults">Sets the collection of <see cref="TextAnalytics.MultiLabelClassifyActionResult"/>.</param>
         /// <param name="analyzeHealthcareEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/>.</param>
         /// <param name="extractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.ExtractSummaryActionResult"/>.</param>
+        /// <param name="abstractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.AbstractSummaryActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
         public static AnalyzeActionsResult AnalyzeActionsResult(
             IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
@@ -1001,7 +1005,8 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
             IEnumerable<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
             IEnumerable<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
-            IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults)
+            IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults,
+            IEnumerable<AbstractSummaryActionResult> abstractSummaryActionResults)
         {
             return new AnalyzeActionsResult(
                 extractKeyPhrasesActionResults.ToList(),
@@ -1013,7 +1018,8 @@ namespace Azure.AI.TextAnalytics
                 singleLabelClassifyActionResults.ToList(),
                 multiLabelClassifyActionResults.ToList(),
                 analyzeHealthcareEntitiesActionResults.ToList(),
-                extractSummaryActionResults.ToList()
+                extractSummaryActionResults.ToList(),
+                abstractSummaryActionResults.ToList()
                 );
         }
 
@@ -1578,6 +1584,38 @@ namespace Azure.AI.TextAnalytics
             return new ExtractSummaryActionResult(actionName, completedOn, new Error(code, message));
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="AbstractSummaryActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.</returns>
+        public static AbstractSummaryActionResult AbstractSummaryActionResult(
+            AbstractSummaryResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new AbstractSummaryActionResult(result, actionName, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.</returns>
+        public static AbstractSummaryActionResult AbstractSummaryActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new AbstractSummaryActionResult(actionName, completedOn, new Error(code, message));
+        }
+
         #endregion Action Result Models
 
         #region Healthcare
@@ -1814,6 +1852,98 @@ namespace Azure.AI.TextAnalytics
         {
             warnings ??= new List<TextAnalyticsWarning>();
             return new SummarySentenceCollection(sentences, warnings);
+        }
+
+        #endregion
+
+        #region Abstract Summary
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="summaries">Sets the <see cref="AbstractSummaryResult.Summaries"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// </returns>
+        public static AbstractSummaryResult AbstractSummaryResult(string id, TextDocumentStatistics statistics, SummaryCollection summaries)
+        {
+            return new AbstractSummaryResult(id, statistics, summaries);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// </returns>
+        public static AbstractSummaryResult AbstractSummaryResult(string id, string code, string message)
+        {
+            return new AbstractSummaryResult(id, new TextAnalyticsError(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="list">Sets the collection of <see cref="TextAnalytics.AbstractSummaryResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="AbstractSummaryResultCollection.Statistics"/> property.</param>
+        /// <param name="modelVersion">Sets the <see cref="AbstractSummaryResultCollection.ModelVersion"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.AbstractSummaryResultCollection"/> for mocking purposes.
+        /// </returns>
+        public static AbstractSummaryResultCollection AbstractSummaryResultCollection(IEnumerable<AbstractSummaryResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        {
+            return new AbstractSummaryResultCollection(list.ToList(), statistics, modelVersion);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SummaryContext"/> for mocking purposes.
+        /// </summary>
+        /// <param name="offset">Sets the <see cref="SummaryContext.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="SummaryContext.Length"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.SummaryContext"/> for mocking purposes.
+        /// </returns>
+        public static SummaryContext SummaryContext(int offset, int length)
+        {
+            return new SummaryContext(new SummaryContextInternal(offset, length));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.Summary"/> for mocking purposes.
+        /// </summary>
+        /// <param name="text">Sets the <see cref="Summary.Text"/> property.</param>
+        /// <param name="contexts">Sets the <see cref="Summary.Contexts"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.Summary"/> for mocking purposes.
+        /// </returns>
+        public static Summary Summary(string text, IList<SummaryContext> contexts)
+        {
+            List<SummaryContextInternal> internalContexts = new();
+            foreach (SummaryContext context in contexts)
+            {
+                internalContexts.Add(new SummaryContextInternal(context.Offset, context.Length));
+            }
+
+            return new Summary(new AbstractiveSummary(text, internalContexts));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SummaryCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="summaries">Sets the collection of <see cref="Summary"/>.</param>
+        /// <param name="warnings">Sets the <see cref="SummarySentenceCollection.Warnings"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.SummaryCollection"/> for mocking purposes.
+        /// </returns>
+        public static SummaryCollection SummaryCollection(IList<Summary> summaries, IList<TextAnalyticsWarning> warnings = default)
+        {
+            warnings ??= new List<TextAnalyticsWarning>();
+            return new SummaryCollection(summaries, warnings);
         }
 
         #endregion

@@ -22,13 +22,13 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            Contexts = new ChangeTrackingList<SummaryContext>();
+            Contexts = new ChangeTrackingList<SummaryContextInternal>();
         }
 
         /// <summary> Initializes a new instance of AbstractiveSummary. </summary>
         /// <param name="text"> The text of the summary. </param>
         /// <param name="contexts"> The context list of the summary. </param>
-        internal AbstractiveSummary(string text, IList<SummaryContext> contexts)
+        internal AbstractiveSummary(string text, IList<SummaryContextInternal> contexts)
         {
             Text = text;
             Contexts = contexts;
@@ -37,6 +37,6 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> The text of the summary. </summary>
         public string Text { get; set; }
         /// <summary> The context list of the summary. </summary>
-        public IList<SummaryContext> Contexts { get; }
+        public IList<SummaryContextInternal> Contexts { get; }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal static AbstractiveSummary DeserializeAbstractiveSummary(JsonElement element)
         {
             string text = default;
-            Optional<IList<SummaryContext>> contexts = default;
+            Optional<IList<SummaryContextInternal>> contexts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -49,10 +49,10 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SummaryContext> array = new List<SummaryContext>();
+                    List<SummaryContextInternal> array = new List<SummaryContextInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SummaryContext.DeserializeSummaryContext(item));
+                        array.Add(SummaryContextInternal.DeserializeSummaryContextInternal(item));
                     }
                     contexts = array;
                     continue;
