@@ -49,28 +49,28 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             Response response = client.AnalyzeConversation(RequestContent.Create(data));
-			
-            var json = response.Content.ToDynamic();
-            var conversationPrediction = json.result.prediction;            // TODO: PascalCase instead of camelCase
 
-            Console.WriteLine($"Top intent: {conversationPrediction.topIntent}");
+            var json = response.Content.ToDynamic();
+            var conversationPrediction = json.Result.Prediction;
+
+            Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
             Console.WriteLine("Intents:");
-            foreach (var intent in conversationPrediction.intents)
+            foreach (var intent in conversationPrediction.Intents)
             {
-                Console.WriteLine($"Category: {intent.category}");
-                Console.WriteLine($"Confidence: {intent.confidenceScore}");
+                Console.WriteLine($"  Category: {intent.Category}");
+                Console.WriteLine($"  Confidence: {intent.ConfidenceScore}");
                 Console.WriteLine();
             }
 
             Console.WriteLine("Entities:");
-            foreach (var entity in conversationPrediction.entities)
+            foreach (var entity in conversationPrediction.Entities)
             {
-                Console.WriteLine($"Category: {entity.category}");
-                Console.WriteLine($"Text: {entity.text}");
-                Console.WriteLine($"Offset: {entity.offset}");
-                Console.WriteLine($"Length: {entity.length}");
-                Console.WriteLine($"Confidence: {entity.confidenceScore}");
+                Console.WriteLine($"  Category: {entity.Category}");
+                Console.WriteLine($"  Text: {entity.Text}");
+                Console.WriteLine($"  Offset: {entity.Offset}");
+                Console.WriteLine($"  Length: {entity.Length}");
+                Console.WriteLine($"  Confidence: {entity.ConfidenceScore}");
                 Console.WriteLine();
 
                 //// TODO: TryGet operation
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.Status, Is.EqualTo(200));
-            Assert.AreEqual(conversationPrediction.topIntent, "Send");
+            Assert.That((string)conversationPrediction.TopIntent, Is.EqualTo("Send"));
         }
 
         [AsyncOnly]

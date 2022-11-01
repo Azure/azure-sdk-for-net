@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -156,7 +157,7 @@ namespace Azure
             switch (element.ValueKind)
             {
                 case JsonValueKind.Object:
-                    _objectRepresentation = new Dictionary<string, JsonData>();
+                    _objectRepresentation = new Dictionary<string, JsonData>(StringComparer.OrdinalIgnoreCase);
                     foreach (var item in element.EnumerateObject())
                     {
                         _objectRepresentation[item.Name] = new JsonData(item.Value);
@@ -636,6 +637,18 @@ namespace Azure
             public double AsDouble()
             {
                 return _double;
+            }
+
+            public override string ToString()
+            {
+                if (_hasDouble)
+                {
+                    return _double.ToString(CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    return _long.ToString(CultureInfo.InvariantCulture);
+                }
             }
         }
 

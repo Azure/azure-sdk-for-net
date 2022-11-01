@@ -106,6 +106,15 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void GetMemberIsCaseInsensitive()
+        {
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();
+
+            Assert.AreEqual("Hello", (string)jsonData.Primitive);
+            Assert.AreEqual(true, (bool)jsonData.Nested.NestedPrimitive);
+        }
+
+        [Test]
         public void CanReadIntsAsFloatingPoints()
         {
             dynamic json = new BinaryData("{ \"value\": 5 }").ToDynamic().value;
@@ -272,6 +281,20 @@ namespace Azure.Core.Tests.Public
             Assert.IsFalse("foo" == bar);
             Assert.IsTrue(bar != "foo");
             Assert.IsTrue("foo" != bar);
+        }
+
+        [Test]
+        public void EqualsForStringNUnit()
+        {
+            dynamic foo = new BinaryData("{ \"value\": \"foo\" }").ToDynamic();
+            var value = foo.Value;
+
+            // TODO: Outstanding question regarding whether we want these to succeed without a cast.
+            Assert.AreEqual(value, "foo");
+            Assert.AreEqual("foo", value);
+
+            Assert.That(value, Is.EqualTo("foo"));
+            Assert.That("foo", Is.EqualTo(value));
         }
 
         private T JsonAsType<T>(string json)
