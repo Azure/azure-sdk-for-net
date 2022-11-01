@@ -70,12 +70,14 @@ namespace Azure.Core.Tests
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
             MockTransport mockTransport = CreateMockTransport();
 
+            var beforeSend = DateTimeOffset.UtcNow;
             var pipeline = new HttpPipeline(mockTransport, new[] { policy });
             HttpMessage message = pipeline.CreateMessage();
             Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
             RetryPolicyMock mockPolicy = (RetryPolicyMock) policy;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            Assert.Greater(message.ProcessingStartTime, beforeSend);
             Assert.AreEqual(0, message.ProcessingContext.RetryNumber);
             await gate.Cycle();
             Assert.IsTrue(mockPolicy.ShouldRetryCalled);
@@ -113,6 +115,7 @@ namespace Azure.Core.Tests
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
             Assert.AreEqual(0, message.ProcessingContext.RetryNumber);
+
             await gate.Cycle();
             Assert.IsTrue(mockPolicy.OnRequestSentCalled);
             mockPolicy.OnRequestSentCalled = false;
@@ -120,15 +123,13 @@ namespace Azure.Core.Tests
             var exception = new IOException();
             await mockTransport.RequestGate.CycleWithException(exception);
             Assert.AreEqual(1, message.ProcessingContext.RetryNumber);
-            Assert.IsTrue(mockPolicy.OnRequestSentCalled);
-            mockPolicy.OnRequestSentCalled = false;
 
             await gate.Cycle();
-            Assert.AreSame(exception, mockPolicy.LastException);
-            mockPolicy.LastException = null;
-
             Assert.IsTrue(mockPolicy.OnRequestSentCalled);
             mockPolicy.OnRequestSentCalled = false;
+
+            Assert.AreSame(exception, mockPolicy.LastException);
+            mockPolicy.LastException = null;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
