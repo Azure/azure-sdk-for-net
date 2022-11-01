@@ -16,6 +16,73 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:AnalyzeConversation_ConversationSentiment
+var data = new
+{
+    displayName = "Sentiment analysis from a call center conversation",
+    analysisInput = new
+    {
+        conversations = new[]
+        {
+            new
+            {
+                id = "1",
+                language = "en",
+                modality = "transcript",
+                conversationItems = new[]
+                {
+                    new
+                    {
+                        participantId = "1",
+                        id = "1",
+                        text = "I like the service. I do not like the food",
+                        lexical = "i like the service i do not like the food",
+                        itn = "",
+                        maskedItn = "",
+                    }
+                },
+            },
+        }
+    },
+    tasks = new[]
+    {
+        new
+        {
+            taskName = "Conversation Sentiment Analysis",
+            kind = "ConversationalSentimentTask",
+            parameters = new
+            {
+                modelVersion = "latest",
+                predictionSource = "text",
+            },
+        },
+    },
+};
+
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
+
+using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
+JsonElement jobResults = result.RootElement;
+foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+{
+    Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
+    JsonElement results = task.GetProperty("results");
+    foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+    {
+        Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+        Console.WriteLine("Conversation Items:");
+        foreach (JsonElement conversationItem in conversation.GetProperty("conversationItems").EnumerateArray())
+        {
+            Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
+            Console.WriteLine($"Sentiment: {conversationItem.GetProperty("sentiment").GetString()}");
+
+            JsonElement confidenceScores = conversationItem.GetProperty("confidenceScores");
+            Console.WriteLine($"Positive: {confidenceScores.GetProperty("positive").GetSingle()}");
+            Console.WriteLine($"Neutral: {confidenceScores.GetProperty("neutral").GetSingle()}");
+            Console.WriteLine($"Negative: {confidenceScores.GetProperty("negative").GetSingle()}");
+        }
+        Console.WriteLine();
+    }
+}
 ```
 
 ## Asynchronous
