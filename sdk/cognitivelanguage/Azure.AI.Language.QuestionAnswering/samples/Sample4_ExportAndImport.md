@@ -23,8 +23,8 @@ To export a Question Answering project, you will need to set your project name a
 Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
 // retrieve export operation response, and extract url of exported file
-JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
-string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+var operationValueJson = exportOperation.Value.ToDynamic();
+string exportedFileUrl = operationValueJson.ResultUrl;
 ```
 
 ### Importing a project
@@ -71,7 +71,7 @@ Console.WriteLine(projectDetails.Content);
 Operation<BinaryData> exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
 // retrieve export operation response, and extract url of exported file
-JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
+var operationValueJson = exportOperation.Value.ToDynamic();
 string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
 ```
 
