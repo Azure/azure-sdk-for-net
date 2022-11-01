@@ -27,13 +27,9 @@ namespace Azure.Core.Samples
                     },
                     onRetry: (result, _) =>
                     {
-                        // Since we are overriding the RetryPolicy, it is our responsibility to maintain the ProcessingContext
+                        // Since we are overriding the RetryPolicy, it is our responsibility to increment the RetryNumber
                         // that other policies in the pipeline may be depending on.
                         var context = message.ProcessingContext;
-                        if (result.Exception != null)
-                        {
-                            context.LastException = result.Exception;
-                        }
                         context.RetryNumber++;
                     }
                 )
@@ -64,13 +60,9 @@ namespace Azure.Core.Samples
                     },
                     onRetry: (result, _) =>
                     {
-                        // Since we are overriding the RetryPolicy, it is our responsibility to maintain the ProcessingContext
+                        // Since we are overriding the RetryPolicy, it is our responsibility to increment the RetryNumber
                         // that other policies in the pipeline may be depending on.
                         var context = message.ProcessingContext;
-                        if (result.Exception != null)
-                        {
-                            context.LastException = result.Exception;
-                        }
                         context.RetryNumber++;
                     })
                 .ExecuteAsync(async () =>
