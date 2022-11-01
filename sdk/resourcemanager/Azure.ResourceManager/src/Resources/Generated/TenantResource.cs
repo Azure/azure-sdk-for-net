@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Resources
 
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;
+        private readonly ClientDiagnostics _resourceProviderProvidersClientDiagnostics;
+        private readonly ProvidersRestOperations _resourceProviderProvidersRestClient;
         private readonly ClientDiagnostics _providersClientDiagnostics;
         private readonly ProvidersRestOperations _providersRestClient;
         private readonly TenantData _data;
@@ -44,6 +46,9 @@ namespace Azure.ResourceManager.Resources
             _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string tenantApiVersion);
             _tenantRestClient = new TenantsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantApiVersion);
+            _resourceProviderProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceProviderResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceProviderResource.ResourceType, out string resourceProviderProvidersApiVersion);
+            _resourceProviderProvidersRestClient = new ProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceProviderProvidersApiVersion);
             _providersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _providersRestClient = new ProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -271,11 +276,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<TenantResourceProvider>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
                 scope.Start();
                 try
                 {
-                    var response = await _providersRestClient.ListAtTenantScopeAsync(top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeAsync(top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -286,11 +291,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<TenantResourceProvider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
                 scope.Start();
                 try
                 {
-                    var response = await _providersRestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -315,11 +320,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<TenantResourceProvider> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
                 scope.Start();
                 try
                 {
-                    var response = _providersRestClient.ListAtTenantScope(top, expand, cancellationToken: cancellationToken);
+                    var response = _resourceProviderProvidersRestClient.ListAtTenantScope(top, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -330,11 +335,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<TenantResourceProvider> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
                 scope.Start();
                 try
                 {
-                    var response = _providersRestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken: cancellationToken);
+                    var response = _resourceProviderProvidersRestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
