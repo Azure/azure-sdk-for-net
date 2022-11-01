@@ -352,6 +352,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             return sr.ReadToEnd();
         }
 
+        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForInt()
         {
@@ -360,6 +361,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(IntJson, actual);
         }
 
+        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForArray()
         {
@@ -368,6 +370,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(IntJson, actual);
         }
 
+        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForBool()
         {
@@ -376,6 +379,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(IntJson, actual);
         }
 
+        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForDouble()
         {
@@ -384,6 +388,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(IntJson, actual);
         }
 
+        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForEmptyArray()
         {
@@ -401,6 +406,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(IntJson, actual);
         }
 
+        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForString()
         {
@@ -409,6 +415,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(IntJson, actual);
         }
 
+        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForExpression()
         {
