@@ -206,6 +206,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+no-property-type-replacement::
+  - JobNavigation
+  - SoftwareUpdateConfigurationMachineRun
+
 request-path-to-parent:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations:  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}
@@ -229,7 +233,6 @@ directive:
     where: $.definitions
     transform: >
         $.updateConfigurationMachineRunProperties.properties.configuredDuration['format'] = 'duration';
-        $.jobNavigation['x-ms-mgmt-referenceType'] = false;
   - from: softwareUpdateConfigurationRun.json
     where: $.definitions
     transform: >
