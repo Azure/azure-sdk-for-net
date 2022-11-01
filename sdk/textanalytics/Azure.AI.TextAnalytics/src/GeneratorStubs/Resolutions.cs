@@ -114,7 +114,7 @@ namespace Azure.AI.TextAnalytics
     }
 
     [CodeGenModel("BaseResolution")]
-    public partial class BaseResolution
+    public abstract partial class BaseResolution
     {
         internal BaseResolution()
         {

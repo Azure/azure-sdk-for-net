@@ -211,7 +211,7 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public string Text { get { throw null; } }
     }
-    public partial class BaseResolution
+    public abstract partial class BaseResolution
     {
         internal BaseResolution() { }
     }
