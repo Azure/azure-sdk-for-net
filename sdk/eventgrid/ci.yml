@@ -9,11 +9,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/eventgrid/ci.yml
-    - sdk/eventgrid/Azure.Messaging.EventGrid/
-    - sdk/eventgrid/Microsoft.Azure.EventGrid/
-    - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/
-    - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/
+      - sdk/eventgrid/
+    exclude:
+      - sdk/eventgrid/Azure.ResourceManager.EventGrid/
 
 pr:
   branches:
@@ -24,11 +22,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/eventgrid/ci.yml
-    - sdk/eventgrid/Azure.Messaging.EventGrid/
-    - sdk/eventgrid/Microsoft.Azure.EventGrid/
-    - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/
-    - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/
+      - sdk/eventgrid/
+    exclude:
+      - sdk/eventgrid/Azure.ResourceManager.EventGrid/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
