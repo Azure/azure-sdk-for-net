@@ -1,8 +1,6 @@
 # Microsoft Azure Nginx management client library for .NET
 
-NGINX for Azure is a natively integrated software as a service (SaaS) solution with advanced traffic management and monitoring.
-The Azure integration enables ease of use with provisioning and configuration in a couple steps.
-Leverage advanced traffic management features, such as JSON Web Token (JWT) authentication and active health checks, with built-in security integrations like Azure Key Vault for SSL/TLS certificate management.
+Microsoft Azure Nginx is a natively integrated software as a service (SaaS) solution with advanced traffic management and monitoring. It offers ease of use with provisioning and configuration in a couple steps and leverages advanced traffic management features, such as JSON Web Token (JWT) authentication and active health checks, with built-in security integrations like Azure Key Vault for SSL/TLS certificate management.
 
 This library supports managing Microsoft Azure Nginx resources.
 
