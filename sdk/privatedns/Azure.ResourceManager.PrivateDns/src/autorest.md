@@ -21,7 +21,11 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-
+  '*Guid': 'uuid'
+  'ifMatch': 'etag'
+  'IPv6Address': 'ip-address'
+  'IPv4Address': 'ip-address'
+  
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

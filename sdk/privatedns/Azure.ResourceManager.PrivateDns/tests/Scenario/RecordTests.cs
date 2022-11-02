@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -33,8 +34,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         {
             var collection = _privateDns.GetAaaaRecords();
             string aaaaRecordName = Recording.GenerateAssetName("aaaa");
-            string ipv6AddressValue1 = "3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:0d55";
-            string ipv6AddressValue2 = "3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:0d66";
+            string ipv6AddressValue1 = "3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55";
+            string ipv6AddressValue2 = "3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d66";
 
             // CreateOrUpdate
             var data = new AaaaRecordData()
@@ -44,11 +45,11 @@ namespace Azure.ResourceManager.PrivateDns.Tests
                 {
                     new AaaaRecordInfo()
                     {
-                        IPv6Address = ipv6AddressValue1
+                        IPv6Address = IPAddress.Parse(ipv6AddressValue1)
                     },
                     new AaaaRecordInfo()
                     {
-                        IPv6Address = ipv6AddressValue2
+                        IPv6Address = IPAddress.Parse(ipv6AddressValue2)
                     },
                 }
             };
@@ -56,8 +57,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             ValidateRecordBaseInfo(aaaaRecord.Value.Data, aaaaRecordName);
             Assert.AreEqual("privateDnsZones/AAAA", aaaaRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, aaaaRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv6AddressValue1, aaaaRecord.Value.Data.AaaaRecords[0].IPv6Address);
-            Assert.AreEqual(ipv6AddressValue2, aaaaRecord.Value.Data.AaaaRecords[1].IPv6Address);
+            Assert.AreEqual(ipv6AddressValue1, aaaaRecord.Value.Data.AaaaRecords[0].IPv6Address.ToString());
+            Assert.AreEqual(ipv6AddressValue2, aaaaRecord.Value.Data.AaaaRecords[1].IPv6Address.ToString());
 
             // Exist
             bool flag = await collection.ExistsAsync(aaaaRecordName);
@@ -70,8 +71,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             var getResponse = await collection.GetAsync(aaaaRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, aaaaRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv6AddressValue1, getResponse.Value.Data.AaaaRecords[0].IPv6Address);
-            Assert.AreEqual(ipv6AddressValue2, getResponse.Value.Data.AaaaRecords[1].IPv6Address);
+            Assert.AreEqual(ipv6AddressValue1, getResponse.Value.Data.AaaaRecords[0].IPv6Address.ToString());
+            Assert.AreEqual(ipv6AddressValue2, getResponse.Value.Data.AaaaRecords[1].IPv6Address.ToString());
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -100,11 +101,11 @@ namespace Azure.ResourceManager.PrivateDns.Tests
                 {
                     new ARecordInfo()
                     {
-                        IPv4Address = ipv4AddressValue1
+                        IPv4Address =  IPAddress.Parse(ipv4AddressValue1)
                     },
                     new ARecordInfo()
                     {
-                        IPv4Address = ipv4AddressValue2
+                        IPv4Address =  IPAddress.Parse(ipv4AddressValue2)
                     },
                 }
             };
@@ -112,8 +113,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             ValidateRecordBaseInfo(aRecord.Value.Data, aRecordName);
             Assert.AreEqual("privateDnsZones/A", aRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, aRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv4AddressValue1, aRecord.Value.Data.ARecords[0].IPv4Address);
-            Assert.AreEqual(ipv4AddressValue2, aRecord.Value.Data.ARecords[1].IPv4Address);
+            Assert.AreEqual(ipv4AddressValue1, aRecord.Value.Data.ARecords[0].IPv4Address.ToString());
+            Assert.AreEqual(ipv4AddressValue2, aRecord.Value.Data.ARecords[1].IPv4Address.ToString());
 
             // Exist
             bool flag = await collection.ExistsAsync(aRecordName);
@@ -126,8 +127,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             var getResponse = await collection.GetAsync(aRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, aRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv4AddressValue1, getResponse.Value.Data.ARecords[0].IPv4Address);
-            Assert.AreEqual(ipv4AddressValue2, getResponse.Value.Data.ARecords[1].IPv4Address);
+            Assert.AreEqual(ipv4AddressValue1, getResponse.Value.Data.ARecords[0].IPv4Address.ToString());
+            Assert.AreEqual(ipv4AddressValue2, getResponse.Value.Data.ARecords[1].IPv4Address.ToString());
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
