@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Group specific to the update configuration.
-    /// Serialized Name: TargetProperties
-    /// </summary>
+    /// <summary> Group specific to the update configuration. </summary>
     public partial class SoftwareUpdateConfigurationTargetProperties
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTargetProperties. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTargetProperties. </summary>
-        /// <param name="azureQueries">
-        /// List of Azure queries in the software update configuration.
-        /// Serialized Name: TargetProperties.azureQueries
-        /// </param>
-        /// <param name="nonAzureQueries">
-        /// List of non Azure queries in the software update configuration.
-        /// Serialized Name: TargetProperties.nonAzureQueries
-        /// </param>
+        /// <param name="azureQueries"> List of Azure queries in the software update configuration. </param>
+        /// <param name="nonAzureQueries"> List of non Azure queries in the software update configuration. </param>
         internal SoftwareUpdateConfigurationTargetProperties(IList<AzureQueryProperties> azureQueries, IList<NonAzureQueryProperties> nonAzureQueries)
         {
             AzureQueries = azureQueries;
             NonAzureQueries = nonAzureQueries;
         }
 
-        /// <summary>
-        /// List of Azure queries in the software update configuration.
-        /// Serialized Name: TargetProperties.azureQueries
-        /// </summary>
+        /// <summary> List of Azure queries in the software update configuration. </summary>
         public IList<AzureQueryProperties> AzureQueries { get; }
-        /// <summary>
-        /// List of non Azure queries in the software update configuration.
-        /// Serialized Name: TargetProperties.nonAzureQueries
-        /// </summary>
+        /// <summary> List of non Azure queries in the software update configuration. </summary>
         public IList<NonAzureQueryProperties> NonAzureQueries { get; }
     }
 }

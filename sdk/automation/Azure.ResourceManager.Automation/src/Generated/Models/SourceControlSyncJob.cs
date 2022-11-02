@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the source control sync job.
-    /// Serialized Name: SourceControlSyncJob
-    /// </summary>
+    /// <summary> Definition of the source control sync job. </summary>
     public partial class SourceControlSyncJob : ResourceData
     {
         /// <summary> Initializes a new instance of SourceControlSyncJob. </summary>
@@ -27,30 +24,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sourceControlSyncJobId">
-        /// The source control sync job id.
-        /// Serialized Name: SourceControlSyncJob.properties.sourceControlSyncJobId
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation time of the job.
-        /// Serialized Name: SourceControlSyncJob.properties.creationTime
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the job.
-        /// Serialized Name: SourceControlSyncJob.properties.provisioningState
-        /// </param>
-        /// <param name="startOn">
-        /// The start time of the job.
-        /// Serialized Name: SourceControlSyncJob.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time of the job.
-        /// Serialized Name: SourceControlSyncJob.properties.endTime
-        /// </param>
-        /// <param name="syncType">
-        /// The sync type.
-        /// Serialized Name: SourceControlSyncJob.properties.syncType
-        /// </param>
+        /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
+        /// <param name="createdOn"> The creation time of the job. </param>
+        /// <param name="provisioningState"> The provisioning state of the job. </param>
+        /// <param name="startOn"> The start time of the job. </param>
+        /// <param name="endOn"> The end time of the job. </param>
+        /// <param name="syncType"> The sync type. </param>
         internal SourceControlSyncJob(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType) : base(id, name, resourceType, systemData)
         {
             SourceControlSyncJobId = sourceControlSyncJobId;
@@ -61,35 +40,17 @@ namespace Azure.ResourceManager.Automation.Models
             SyncType = syncType;
         }
 
-        /// <summary>
-        /// The source control sync job id.
-        /// Serialized Name: SourceControlSyncJob.properties.sourceControlSyncJobId
-        /// </summary>
+        /// <summary> The source control sync job id. </summary>
         public string SourceControlSyncJobId { get; }
-        /// <summary>
-        /// The creation time of the job.
-        /// Serialized Name: SourceControlSyncJob.properties.creationTime
-        /// </summary>
+        /// <summary> The creation time of the job. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The provisioning state of the job.
-        /// Serialized Name: SourceControlSyncJob.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the job. </summary>
         public SourceControlProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The start time of the job.
-        /// Serialized Name: SourceControlSyncJob.properties.startTime
-        /// </summary>
+        /// <summary> The start time of the job. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// The end time of the job.
-        /// Serialized Name: SourceControlSyncJob.properties.endTime
-        /// </summary>
+        /// <summary> The end time of the job. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// The sync type.
-        /// Serialized Name: SourceControlSyncJob.properties.syncType
-        /// </summary>
+        /// <summary> The sync type. </summary>
         public SourceControlSyncType? SyncType { get; }
     }
 }

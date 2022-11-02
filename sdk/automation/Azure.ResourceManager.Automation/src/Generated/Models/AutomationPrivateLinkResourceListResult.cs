@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// A list of private link resources
-    /// Serialized Name: PrivateLinkResourceListResult
-    /// </summary>
+    /// <summary> A list of private link resources. </summary>
     internal partial class AutomationPrivateLinkResourceListResult
     {
         /// <summary> Initializes a new instance of AutomationPrivateLinkResourceListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationPrivateLinkResourceListResult. </summary>
-        /// <param name="value">
-        /// Array of private link resources
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </param>
+        /// <param name="value"> Array of private link resources. </param>
         internal AutomationPrivateLinkResourceListResult(IReadOnlyList<AutomationPrivateLinkResource> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// Array of private link resources
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </summary>
+        /// <summary> Array of private link resources. </summary>
         public IReadOnlyList<AutomationPrivateLinkResource> Value { get; }
     }
 }

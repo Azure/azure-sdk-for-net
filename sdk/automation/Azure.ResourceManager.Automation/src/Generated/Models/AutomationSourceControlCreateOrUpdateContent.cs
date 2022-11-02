@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create or update source control operation.
-    /// Serialized Name: SourceControlCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create or update source control operation. </summary>
     public partial class AutomationSourceControlCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationSourceControlCreateOrUpdateContent. </summary>
@@ -20,45 +17,21 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary>
-        /// The repo url of the source control.
-        /// Serialized Name: SourceControlCreateOrUpdateParameters.properties.repoUrl
-        /// </summary>
+        /// <summary> The repo url of the source control. </summary>
         public Uri RepoUri { get; set; }
-        /// <summary>
-        /// The repo branch of the source control. Include branch as empty string for VsoTfvc.
-        /// Serialized Name: SourceControlCreateOrUpdateParameters.properties.branch
-        /// </summary>
+        /// <summary> The repo branch of the source control. Include branch as empty string for VsoTfvc. </summary>
         public string Branch { get; set; }
-        /// <summary>
-        /// The folder path of the source control. Path must be relative.
-        /// Serialized Name: SourceControlCreateOrUpdateParameters.properties.folderPath
-        /// </summary>
+        /// <summary> The folder path of the source control. Path must be relative. </summary>
         public string FolderPath { get; set; }
-        /// <summary>
-        /// The auto async of the source control. Default is false.
-        /// Serialized Name: SourceControlCreateOrUpdateParameters.properties.autoSync
-        /// </summary>
+        /// <summary> The auto async of the source control. Default is false. </summary>
         public bool? IsAutoSyncEnabled { get; set; }
-        /// <summary>
-        /// The auto publish of the source control. Default is true.
-        /// Serialized Name: SourceControlCreateOrUpdateParameters.properties.publishRunbook
-        /// </summary>
+        /// <summary> The auto publish of the source control. Default is true. </summary>
         public bool? IsAutoPublishRunbookEnabled { get; set; }
-        /// <summary>
-        /// The source type. Must be one of VsoGit, VsoTfvc, GitHub, case sensitive.
-        /// Serialized Name: SourceControlCreateOrUpdateParameters.properties.sourceType
-        /// </summary>
+        /// <summary> The source type. Must be one of VsoGit, VsoTfvc, GitHub, case sensitive. </summary>
         public SourceControlSourceType? SourceType { get; set; }
-        /// <summary>
-        /// The authorization token for the repo of the source control.
-        /// Serialized Name: SourceControlCreateOrUpdateParameters.properties.securityToken
-        /// </summary>
+        /// <summary> The authorization token for the repo of the source control. </summary>
         public SourceControlSecurityTokenProperties SecurityToken { get; set; }
-        /// <summary>
-        /// The user description of the source control.
-        /// Serialized Name: SourceControlCreateOrUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> The user description of the source control. </summary>
         public string Description { get; set; }
     }
 }

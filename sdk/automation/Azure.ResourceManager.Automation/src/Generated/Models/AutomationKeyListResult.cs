@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The AutomationKeyListResult.
-    /// Serialized Name: KeyListResult
-    /// </summary>
+    /// <summary> The AutomationKeyListResult. </summary>
     internal partial class AutomationKeyListResult
     {
         /// <summary> Initializes a new instance of AutomationKeyListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationKeyListResult. </summary>
-        /// <param name="keys">
-        /// Lists the automation keys.
-        /// Serialized Name: KeyListResult.keys
-        /// </param>
+        /// <param name="keys"> Lists the automation keys. </param>
         internal AutomationKeyListResult(IReadOnlyList<AutomationKey> keys)
         {
             Keys = keys;
         }
 
-        /// <summary>
-        /// Lists the automation keys.
-        /// Serialized Name: KeyListResult.keys
-        /// </summary>
+        /// <summary> Lists the automation keys. </summary>
         public IReadOnlyList<AutomationKey> Keys { get; }
     }
 }

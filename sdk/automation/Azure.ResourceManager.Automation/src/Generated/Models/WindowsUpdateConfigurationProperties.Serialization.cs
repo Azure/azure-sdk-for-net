@@ -21,21 +21,21 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("includedUpdateClassifications");
                 writer.WriteStringValue(IncludedUpdateClassifications.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludedKbNumbers))
+            if (Optional.IsCollectionDefined(ExcludedKBNumbers))
             {
                 writer.WritePropertyName("excludedKbNumbers");
                 writer.WriteStartArray();
-                foreach (var item in ExcludedKbNumbers)
+                foreach (var item in ExcludedKBNumbers)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedKbNumbers))
+            if (Optional.IsCollectionDefined(IncludedKBNumbers))
             {
                 writer.WritePropertyName("includedKbNumbers");
                 writer.WriteStartArray();
-                foreach (var item in IncludedKbNumbers)
+                foreach (var item in IncludedKBNumbers)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static WindowsUpdateConfigurationProperties DeserializeWindowsUpdateConfigurationProperties(JsonElement element)
         {
-            Optional<WindowsUpdateClass> includedUpdateClassifications = default;
+            Optional<WindowsUpdateClassification> includedUpdateClassifications = default;
             Optional<IList<string>> excludedKbNumbers = default;
             Optional<IList<string>> includedKbNumbers = default;
             Optional<string> rebootSetting = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    includedUpdateClassifications = new WindowsUpdateClass(property.Value.GetString());
+                    includedUpdateClassifications = new WindowsUpdateClassification(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("excludedKbNumbers"))

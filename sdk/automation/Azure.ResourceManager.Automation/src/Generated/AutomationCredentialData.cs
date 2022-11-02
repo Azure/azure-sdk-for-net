@@ -24,22 +24,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="userName">
-        /// Gets the user name of the credential.
-        /// Serialized Name: Credential.properties.userName
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets the creation time.
-        /// Serialized Name: Credential.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets the last modified time.
-        /// Serialized Name: Credential.properties.lastModifiedTime
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: Credential.properties.description
-        /// </param>
+        /// <param name="userName"> Gets the user name of the credential. </param>
+        /// <param name="createdOn"> Gets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
         internal AutomationCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string userName, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
             UserName = userName;
@@ -48,25 +36,13 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets the user name of the credential.
-        /// Serialized Name: Credential.properties.userName
-        /// </summary>
+        /// <summary> Gets the user name of the credential. </summary>
         public string UserName { get; }
-        /// <summary>
-        /// Gets the creation time.
-        /// Serialized Name: Credential.properties.creationTime
-        /// </summary>
+        /// <summary> Gets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Gets the last modified time.
-        /// Serialized Name: Credential.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: Credential.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

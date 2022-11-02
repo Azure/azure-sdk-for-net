@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation
             Optional<SystemData> systemData = default;
             Optional<DscConfigurationProvisioningState> provisioningState = default;
             Optional<int> jobCount = default;
-            Optional<IDictionary<string, DscConfigurationParameter>> parameters = default;
+            Optional<IDictionary<string, DscConfigurationParameterDefinition>> parameters = default;
             Optional<AutomationContentSource> source = default;
             Optional<DscConfigurationState> state = default;
             Optional<bool> logVerbose = default;
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, DscConfigurationParameter> dictionary = new Dictionary<string, DscConfigurationParameter>();
+                            Dictionary<string, DscConfigurationParameterDefinition> dictionary = new Dictionary<string, DscConfigurationParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DscConfigurationParameter.DeserializeDscConfigurationParameter(property1.Value));
+                                dictionary.Add(property1.Name, DscConfigurationParameterDefinition.DeserializeDscConfigurationParameterDefinition(property1.Value));
                             }
                             parameters = dictionary;
                             continue;

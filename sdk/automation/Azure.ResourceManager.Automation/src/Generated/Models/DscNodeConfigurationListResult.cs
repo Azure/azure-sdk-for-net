@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list job operation.
-    /// Serialized Name: DscNodeConfigurationListResult
-    /// </summary>
+    /// <summary> The response model for the list job operation. </summary>
     internal partial class DscNodeConfigurationListResult
     {
         /// <summary> Initializes a new instance of DscNodeConfigurationListResult. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscNodeConfigurationListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of Dsc node configurations.
-        /// Serialized Name: DscNodeConfigurationListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: DscNodeConfigurationListResult.nextLink
-        /// </param>
-        /// <param name="totalCount">
-        /// Gets or sets the total rows in query.
-        /// Serialized Name: DscNodeConfigurationListResult.totalCount
-        /// </param>
+        /// <param name="value"> Gets or sets a list of Dsc node configurations. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
+        /// <param name="totalCount"> Gets or sets the total rows in query. </param>
         internal DscNodeConfigurationListResult(IReadOnlyList<DscNodeConfigurationData> value, string nextLink, int? totalCount)
         {
             Value = value;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.Automation.Models
             TotalCount = totalCount;
         }
 
-        /// <summary>
-        /// Gets or sets a list of Dsc node configurations.
-        /// Serialized Name: DscNodeConfigurationListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of Dsc node configurations. </summary>
         public IReadOnlyList<DscNodeConfigurationData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: DscNodeConfigurationListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Gets or sets the total rows in query.
-        /// Serialized Name: DscNodeConfigurationListResult.totalCount
-        /// </summary>
+        /// <summary> Gets or sets the total rows in query. </summary>
         public int? TotalCount { get; }
     }
 }

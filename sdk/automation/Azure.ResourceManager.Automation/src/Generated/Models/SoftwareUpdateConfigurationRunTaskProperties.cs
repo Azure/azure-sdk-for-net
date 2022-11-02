@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Task properties of the software update configuration.
-    /// Serialized Name: SoftwareUpdateConfigurationRunTaskProperties
-    /// </summary>
+    /// <summary> Task properties of the software update configuration. </summary>
     public partial class SoftwareUpdateConfigurationRunTaskProperties
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTaskProperties. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTaskProperties. </summary>
-        /// <param name="status">
-        /// The status of the task.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTaskProperties.status
-        /// </param>
-        /// <param name="source">
-        /// The name of the source of the task.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTaskProperties.source
-        /// </param>
-        /// <param name="jobId">
-        /// The job id of the task.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTaskProperties.jobId
-        /// </param>
+        /// <param name="status"> The status of the task. </param>
+        /// <param name="source"> The name of the source of the task. </param>
+        /// <param name="jobId"> The job id of the task. </param>
         internal SoftwareUpdateConfigurationRunTaskProperties(string status, string source, Guid? jobId)
         {
             Status = status;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.Automation.Models
             JobId = jobId;
         }
 
-        /// <summary>
-        /// The status of the task.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTaskProperties.status
-        /// </summary>
+        /// <summary> The status of the task. </summary>
         public string Status { get; }
-        /// <summary>
-        /// The name of the source of the task.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTaskProperties.source
-        /// </summary>
+        /// <summary> The name of the source of the task. </summary>
         public string Source { get; }
-        /// <summary>
-        /// The job id of the task.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTaskProperties.jobId
-        /// </summary>
+        /// <summary> The job id of the task. </summary>
         public Guid? JobId { get; }
     }
 }

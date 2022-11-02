@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscConfigurationParameter : IUtf8JsonSerializable
+    public partial class DscConfigurationParameterDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteEndObject();
         }
 
-        internal static DscConfigurationParameter DeserializeDscConfigurationParameter(JsonElement element)
+        internal static DscConfigurationParameterDefinition DeserializeDscConfigurationParameterDefinition(JsonElement element)
         {
             Optional<string> type = default;
             Optional<bool> isMandatory = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscConfigurationParameter(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value);
+            return new DscConfigurationParameterDefinition(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value);
         }
     }
 }

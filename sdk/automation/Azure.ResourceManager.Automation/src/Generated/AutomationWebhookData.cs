@@ -27,50 +27,17 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isEnabled">
-        /// Gets or sets the value of the enabled flag of the webhook.
-        /// Serialized Name: Webhook.properties.isEnabled
-        /// </param>
-        /// <param name="uri">
-        /// Gets or sets the webhook uri.
-        /// Serialized Name: Webhook.properties.uri
-        /// </param>
-        /// <param name="expireOn">
-        /// Gets or sets the expiry time.
-        /// Serialized Name: Webhook.properties.expiryTime
-        /// </param>
-        /// <param name="lastInvokedOn">
-        /// Gets or sets the last invoked time.
-        /// Serialized Name: Webhook.properties.lastInvokedTime
-        /// </param>
-        /// <param name="parameters">
-        /// Gets or sets the parameters of the job that is created when the webhook calls the runbook it is associated with.
-        /// Serialized Name: Webhook.properties.parameters
-        /// </param>
-        /// <param name="runbook">
-        /// Gets or sets the runbook the webhook is associated with.
-        /// Serialized Name: Webhook.properties.runbook
-        /// </param>
-        /// <param name="runOn">
-        /// Gets or sets the name of the hybrid worker group the webhook job will run on.
-        /// Serialized Name: Webhook.properties.runOn
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets or sets the creation time.
-        /// Serialized Name: Webhook.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Webhook.properties.lastModifiedTime
-        /// </param>
-        /// <param name="lastModifiedBy">
-        /// Details of the user who last modified the Webhook
-        /// Serialized Name: Webhook.properties.lastModifiedBy
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: Webhook.properties.description
-        /// </param>
+        /// <param name="isEnabled"> Gets or sets the value of the enabled flag of the webhook. </param>
+        /// <param name="uri"> Gets or sets the webhook uri. </param>
+        /// <param name="expireOn"> Gets or sets the expiry time. </param>
+        /// <param name="lastInvokedOn"> Gets or sets the last invoked time. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job that is created when the webhook calls the runbook it is associated with. </param>
+        /// <param name="runbook"> Gets or sets the runbook the webhook is associated with. </param>
+        /// <param name="runOn"> Gets or sets the name of the hybrid worker group the webhook job will run on. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
+        /// <param name="lastModifiedBy"> Details of the user who last modified the Webhook. </param>
+        /// <param name="description"> Gets or sets the description. </param>
         internal AutomationWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
@@ -86,40 +53,19 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets or sets the value of the enabled flag of the webhook.
-        /// Serialized Name: Webhook.properties.isEnabled
-        /// </summary>
+        /// <summary> Gets or sets the value of the enabled flag of the webhook. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets the webhook uri.
-        /// Serialized Name: Webhook.properties.uri
-        /// </summary>
+        /// <summary> Gets or sets the webhook uri. </summary>
         public Uri Uri { get; set; }
-        /// <summary>
-        /// Gets or sets the expiry time.
-        /// Serialized Name: Webhook.properties.expiryTime
-        /// </summary>
+        /// <summary> Gets or sets the expiry time. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary>
-        /// Gets or sets the last invoked time.
-        /// Serialized Name: Webhook.properties.lastInvokedTime
-        /// </summary>
+        /// <summary> Gets or sets the last invoked time. </summary>
         public DateTimeOffset? LastInvokedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the parameters of the job that is created when the webhook calls the runbook it is associated with.
-        /// Serialized Name: Webhook.properties.parameters
-        /// </summary>
+        /// <summary> Gets or sets the parameters of the job that is created when the webhook calls the runbook it is associated with. </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// Gets or sets the runbook the webhook is associated with.
-        /// Serialized Name: Webhook.properties.runbook
-        /// </summary>
+        /// <summary> Gets or sets the runbook the webhook is associated with. </summary>
         internal RunbookAssociationProperty Runbook { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the runbook.
-        /// Serialized Name: RunbookAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the runbook. </summary>
         public string RunbookName
         {
             get => Runbook is null ? default : Runbook.Name;
@@ -131,30 +77,15 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Gets or sets the name of the hybrid worker group the webhook job will run on.
-        /// Serialized Name: Webhook.properties.runOn
-        /// </summary>
+        /// <summary> Gets or sets the name of the hybrid worker group the webhook job will run on. </summary>
         public string RunOn { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time.
-        /// Serialized Name: Webhook.properties.creationTime
-        /// </summary>
+        /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Webhook.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary>
-        /// Details of the user who last modified the Webhook
-        /// Serialized Name: Webhook.properties.lastModifiedBy
-        /// </summary>
+        /// <summary> Details of the user who last modified the Webhook. </summary>
         public string LastModifiedBy { get; set; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: Webhook.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

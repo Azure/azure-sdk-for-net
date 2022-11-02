@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The properties of the create advanced schedule monthly occurrence.
-    /// Serialized Name: AdvancedScheduleMonthlyOccurrence
-    /// </summary>
+    /// <summary> The properties of the create advanced schedule monthly occurrence. </summary>
     public partial class AutomationAdvancedScheduleMonthlyOccurrence
     {
         /// <summary> Initializes a new instance of AutomationAdvancedScheduleMonthlyOccurrence. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationAdvancedScheduleMonthlyOccurrence. </summary>
-        /// <param name="occurrence">
-        /// Occurrence of the week within the month. Must be between 1 and 5
-        /// Serialized Name: AdvancedScheduleMonthlyOccurrence.occurrence
-        /// </param>
-        /// <param name="day">
-        /// Day of the occurrence. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday.
-        /// Serialized Name: AdvancedScheduleMonthlyOccurrence.day
-        /// </param>
+        /// <param name="occurrence"> Occurrence of the week within the month. Must be between 1 and 5. </param>
+        /// <param name="day"> Day of the occurrence. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday. </param>
         internal AutomationAdvancedScheduleMonthlyOccurrence(int? occurrence, AutomationDayOfWeek? day)
         {
             Occurrence = occurrence;
             Day = day;
         }
 
-        /// <summary>
-        /// Occurrence of the week within the month. Must be between 1 and 5
-        /// Serialized Name: AdvancedScheduleMonthlyOccurrence.occurrence
-        /// </summary>
+        /// <summary> Occurrence of the week within the month. Must be between 1 and 5. </summary>
         public int? Occurrence { get; set; }
-        /// <summary>
-        /// Day of the occurrence. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday.
-        /// Serialized Name: AdvancedScheduleMonthlyOccurrence.day
-        /// </summary>
+        /// <summary> Day of the occurrence. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday. </summary>
         public AutomationDayOfWeek? Day { get; set; }
     }
 }

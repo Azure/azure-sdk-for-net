@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the statistic.
-    /// Serialized Name: Statistics
-    /// </summary>
+    /// <summary> Definition of the statistic. </summary>
     public partial class AutomationAccountStatistics
     {
         /// <summary> Initializes a new instance of AutomationAccountStatistics. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationAccountStatistics. </summary>
-        /// <param name="counterProperty">
-        /// Gets the property value of the statistic.
-        /// Serialized Name: Statistics.counterProperty
-        /// </param>
-        /// <param name="counterValue">
-        /// Gets the value of the statistic.
-        /// Serialized Name: Statistics.counterValue
-        /// </param>
-        /// <param name="startOn">
-        /// Gets the startTime of the statistic.
-        /// Serialized Name: Statistics.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Gets the endTime of the statistic.
-        /// Serialized Name: Statistics.endTime
-        /// </param>
-        /// <param name="id">
-        /// Gets the id.
-        /// Serialized Name: Statistics.id
-        /// </param>
+        /// <param name="counterProperty"> Gets the property value of the statistic. </param>
+        /// <param name="counterValue"> Gets the value of the statistic. </param>
+        /// <param name="startOn"> Gets the startTime of the statistic. </param>
+        /// <param name="endOn"> Gets the endTime of the statistic. </param>
+        /// <param name="id"> Gets the id. </param>
         internal AutomationAccountStatistics(string counterProperty, long? counterValue, DateTimeOffset? startOn, DateTimeOffset? endOn, string id)
         {
             CounterProperty = counterProperty;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.Automation.Models
             Id = id;
         }
 
-        /// <summary>
-        /// Gets the property value of the statistic.
-        /// Serialized Name: Statistics.counterProperty
-        /// </summary>
+        /// <summary> Gets the property value of the statistic. </summary>
         public string CounterProperty { get; }
-        /// <summary>
-        /// Gets the value of the statistic.
-        /// Serialized Name: Statistics.counterValue
-        /// </summary>
+        /// <summary> Gets the value of the statistic. </summary>
         public long? CounterValue { get; }
-        /// <summary>
-        /// Gets the startTime of the statistic.
-        /// Serialized Name: Statistics.startTime
-        /// </summary>
+        /// <summary> Gets the startTime of the statistic. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// Gets the endTime of the statistic.
-        /// Serialized Name: Statistics.endTime
-        /// </summary>
+        /// <summary> Gets the endTime of the statistic. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Gets the id.
-        /// Serialized Name: Statistics.id
-        /// </summary>
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
     }
 }

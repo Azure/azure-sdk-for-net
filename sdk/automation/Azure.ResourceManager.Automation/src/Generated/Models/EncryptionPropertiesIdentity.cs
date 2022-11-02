@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// User identity used for CMK.
-    /// Serialized Name: EncryptionPropertiesIdentity
-    /// </summary>
+    /// <summary> User identity used for CMK. </summary>
     internal partial class EncryptionPropertiesIdentity
     {
         /// <summary> Initializes a new instance of EncryptionPropertiesIdentity. </summary>
@@ -21,10 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionPropertiesIdentity. </summary>
-        /// <param name="userAssignedIdentity">
-        /// The user identity used for CMK. It will be an ARM resource id in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;.
-        /// Serialized Name: EncryptionPropertiesIdentity.userAssignedIdentity
-        /// </param>
+        /// <param name="userAssignedIdentity"> The user identity used for CMK. It will be an ARM resource id in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </param>
         internal EncryptionPropertiesIdentity(BinaryData userAssignedIdentity)
         {
             UserAssignedIdentity = userAssignedIdentity;
@@ -32,7 +26,6 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary>
         /// The user identity used for CMK. It will be an ARM resource id in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;.
-        /// Serialized Name: EncryptionPropertiesIdentity.userAssignedIdentity
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

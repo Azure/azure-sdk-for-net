@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The schedule property associated with the entity.
-    /// Serialized Name: ScheduleAssociationProperty
-    /// </summary>
+    /// <summary> The schedule property associated with the entity. </summary>
     public partial class ScheduleAssociationProperty
     {
         /// <summary> Initializes a new instance of ScheduleAssociationProperty. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of ScheduleAssociationProperty. </summary>
-        /// <param name="name">
-        /// Gets or sets the name of the Schedule.
-        /// Serialized Name: ScheduleAssociationProperty.name
-        /// </param>
+        /// <param name="name"> Gets or sets the name of the Schedule. </param>
         internal ScheduleAssociationProperty(string name)
         {
             Name = name;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the Schedule.
-        /// Serialized Name: ScheduleAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the Schedule. </summary>
         public string Name { get; set; }
     }
 }

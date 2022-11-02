@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Linux specific update configuration.
-    /// Serialized Name: LinuxProperties
-    /// </summary>
+    /// <summary> Linux specific update configuration. </summary>
     public partial class LinuxUpdateConfigurationProperties
     {
         /// <summary> Initializes a new instance of LinuxUpdateConfigurationProperties. </summary>
@@ -24,23 +21,11 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of LinuxUpdateConfigurationProperties. </summary>
-        /// <param name="includedPackageClassifications">
-        /// Update classifications included in the software update configuration.
-        /// Serialized Name: LinuxProperties.includedPackageClassifications
-        /// </param>
-        /// <param name="excludedPackageNameMasks">
-        /// packages excluded from the software update configuration.
-        /// Serialized Name: LinuxProperties.excludedPackageNameMasks
-        /// </param>
-        /// <param name="includedPackageNameMasks">
-        /// packages included from the software update configuration.
-        /// Serialized Name: LinuxProperties.includedPackageNameMasks
-        /// </param>
-        /// <param name="rebootSetting">
-        /// Reboot setting for the software update configuration.
-        /// Serialized Name: LinuxProperties.rebootSetting
-        /// </param>
-        internal LinuxUpdateConfigurationProperties(LinuxUpdateClass? includedPackageClassifications, IList<string> excludedPackageNameMasks, IList<string> includedPackageNameMasks, string rebootSetting)
+        /// <param name="includedPackageClassifications"> Update classifications included in the software update configuration. </param>
+        /// <param name="excludedPackageNameMasks"> packages excluded from the software update configuration. </param>
+        /// <param name="includedPackageNameMasks"> packages included from the software update configuration. </param>
+        /// <param name="rebootSetting"> Reboot setting for the software update configuration. </param>
+        internal LinuxUpdateConfigurationProperties(LinuxUpdateClassification? includedPackageClassifications, IList<string> excludedPackageNameMasks, IList<string> includedPackageNameMasks, string rebootSetting)
         {
             IncludedPackageClassifications = includedPackageClassifications;
             ExcludedPackageNameMasks = excludedPackageNameMasks;
@@ -48,25 +33,13 @@ namespace Azure.ResourceManager.Automation.Models
             RebootSetting = rebootSetting;
         }
 
-        /// <summary>
-        /// Update classifications included in the software update configuration.
-        /// Serialized Name: LinuxProperties.includedPackageClassifications
-        /// </summary>
-        public LinuxUpdateClass? IncludedPackageClassifications { get; set; }
-        /// <summary>
-        /// packages excluded from the software update configuration.
-        /// Serialized Name: LinuxProperties.excludedPackageNameMasks
-        /// </summary>
+        /// <summary> Update classifications included in the software update configuration. </summary>
+        public LinuxUpdateClassification? IncludedPackageClassifications { get; set; }
+        /// <summary> packages excluded from the software update configuration. </summary>
         public IList<string> ExcludedPackageNameMasks { get; }
-        /// <summary>
-        /// packages included from the software update configuration.
-        /// Serialized Name: LinuxProperties.includedPackageNameMasks
-        /// </summary>
+        /// <summary> packages included from the software update configuration. </summary>
         public IList<string> IncludedPackageNameMasks { get; }
-        /// <summary>
-        /// Reboot setting for the software update configuration.
-        /// Serialized Name: LinuxProperties.rebootSetting
-        /// </summary>
+        /// <summary> Reboot setting for the software update configuration. </summary>
         public string RebootSetting { get; set; }
     }
 }

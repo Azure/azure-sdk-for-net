@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the update webhook operation.
-    /// Serialized Name: WebhookUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the update webhook operation. </summary>
     public partial class AutomationWebhookPatch
     {
         /// <summary> Initializes a new instance of AutomationWebhookPatch. </summary>
@@ -22,30 +19,15 @@ namespace Azure.ResourceManager.Automation.Models
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Gets or sets the name of the webhook.
-        /// Serialized Name: WebhookUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the webhook. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Gets or sets the value of the enabled flag of webhook.
-        /// Serialized Name: WebhookUpdateParameters.properties.isEnabled
-        /// </summary>
+        /// <summary> Gets or sets the value of the enabled flag of webhook. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the hybrid worker group the webhook job will run on.
-        /// Serialized Name: WebhookUpdateParameters.properties.runOn
-        /// </summary>
+        /// <summary> Gets or sets the name of the hybrid worker group the webhook job will run on. </summary>
         public string RunOn { get; set; }
-        /// <summary>
-        /// Gets or sets the parameters of the job.
-        /// Serialized Name: WebhookUpdateParameters.properties.parameters
-        /// </summary>
+        /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// Gets or sets the description of the webhook.
-        /// Serialized Name: WebhookUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the webhook. </summary>
         public string Description { get; set; }
     }
 }

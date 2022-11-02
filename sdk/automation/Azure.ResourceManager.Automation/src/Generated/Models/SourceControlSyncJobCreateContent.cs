@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create source control sync job operation.
-    /// Serialized Name: SourceControlSyncJobCreateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create source control sync job operation. </summary>
     public partial class SourceControlSyncJobCreateContent
     {
         /// <summary> Initializes a new instance of SourceControlSyncJobCreateContent. </summary>
-        /// <param name="commitId">
-        /// The commit id of the source control sync job. If not syncing to a commitId, enter an empty string.
-        /// Serialized Name: SourceControlSyncJobCreateParameters.properties.commitId
-        /// </param>
+        /// <param name="commitId"> The commit id of the source control sync job. If not syncing to a commitId, enter an empty string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="commitId"/> is null. </exception>
         public SourceControlSyncJobCreateContent(string commitId)
         {
@@ -29,10 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
             CommitId = commitId;
         }
 
-        /// <summary>
-        /// The commit id of the source control sync job. If not syncing to a commitId, enter an empty string.
-        /// Serialized Name: SourceControlSyncJobCreateParameters.properties.commitId
-        /// </summary>
+        /// <summary> The commit id of the source control sync job. If not syncing to a commitId, enter an empty string. </summary>
         public string CommitId { get; }
     }
 }

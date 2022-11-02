@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the agent registration keys.
-    /// Serialized Name: AgentRegistrationKeys
-    /// </summary>
+    /// <summary> Definition of the agent registration keys. </summary>
     public partial class AgentRegistrationKeys
     {
         /// <summary> Initializes a new instance of AgentRegistrationKeys. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AgentRegistrationKeys. </summary>
-        /// <param name="primary">
-        /// Gets or sets the primary key.
-        /// Serialized Name: AgentRegistrationKeys.primary
-        /// </param>
-        /// <param name="secondary">
-        /// Gets or sets the secondary key.
-        /// Serialized Name: AgentRegistrationKeys.secondary
-        /// </param>
+        /// <param name="primary"> Gets or sets the primary key. </param>
+        /// <param name="secondary"> Gets or sets the secondary key. </param>
         internal AgentRegistrationKeys(string primary, string secondary)
         {
             Primary = primary;
             Secondary = secondary;
         }
 
-        /// <summary>
-        /// Gets or sets the primary key.
-        /// Serialized Name: AgentRegistrationKeys.primary
-        /// </summary>
+        /// <summary> Gets or sets the primary key. </summary>
         public string Primary { get; }
-        /// <summary>
-        /// Gets or sets the secondary key.
-        /// Serialized Name: AgentRegistrationKeys.secondary
-        /// </summary>
+        /// <summary> Gets or sets the secondary key. </summary>
         public string Secondary { get; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list deleted automation account.
-    /// Serialized Name: DeletedAutomationAccountListResult
-    /// </summary>
+    /// <summary> The response model for the list deleted automation account. </summary>
     internal partial class DeletedAutomationAccountListResult
     {
         /// <summary> Initializes a new instance of DeletedAutomationAccountListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DeletedAutomationAccountListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets the list of deleted automation accounts.
-        /// Serialized Name: DeletedAutomationAccountListResult.value
-        /// </param>
+        /// <param name="value"> Gets or sets the list of deleted automation accounts. </param>
         internal DeletedAutomationAccountListResult(IReadOnlyList<DeletedAutomationAccount> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// Gets or sets the list of deleted automation accounts.
-        /// Serialized Name: DeletedAutomationAccountListResult.value
-        /// </summary>
+        /// <summary> Gets or sets the list of deleted automation accounts. </summary>
         public IReadOnlyList<DeletedAutomationAccount> Value { get; }
     }
 }

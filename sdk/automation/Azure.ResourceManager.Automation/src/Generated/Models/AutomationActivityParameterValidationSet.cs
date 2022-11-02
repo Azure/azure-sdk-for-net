@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the activity parameter validation set.
-    /// Serialized Name: ActivityParameterValidationSet
-    /// </summary>
+    /// <summary> Definition of the activity parameter validation set. </summary>
     public partial class AutomationActivityParameterValidationSet
     {
         /// <summary> Initializes a new instance of AutomationActivityParameterValidationSet. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationActivityParameterValidationSet. </summary>
-        /// <param name="memberValue">
-        /// Gets or sets the name of the activity parameter validation set member.
-        /// Serialized Name: ActivityParameterValidationSet.memberValue
-        /// </param>
+        /// <param name="memberValue"> Gets or sets the name of the activity parameter validation set member. </param>
         internal AutomationActivityParameterValidationSet(string memberValue)
         {
             MemberValue = memberValue;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the activity parameter validation set member.
-        /// Serialized Name: ActivityParameterValidationSet.memberValue
-        /// </summary>
+        /// <summary> Gets or sets the name of the activity parameter validation set member. </summary>
         public string MemberValue { get; }
     }
 }

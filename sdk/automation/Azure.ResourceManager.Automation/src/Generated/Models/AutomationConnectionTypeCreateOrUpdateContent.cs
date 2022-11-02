@@ -11,21 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create or update connection type operation.
-    /// Serialized Name: ConnectionTypeCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create or update connection type operation. </summary>
     public partial class AutomationConnectionTypeCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationConnectionTypeCreateOrUpdateContent. </summary>
-        /// <param name="name">
-        /// Gets or sets the name of the connection type.
-        /// Serialized Name: ConnectionTypeCreateOrUpdateParameters.name
-        /// </param>
-        /// <param name="fieldDefinitions">
-        /// Gets or sets the field definitions of the connection type.
-        /// Serialized Name: ConnectionTypeCreateOrUpdateParameters.properties.fieldDefinitions
-        /// </param>
+        /// <param name="name"> Gets or sets the name of the connection type. </param>
+        /// <param name="fieldDefinitions"> Gets or sets the field definitions of the connection type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="fieldDefinitions"/> is null. </exception>
         public AutomationConnectionTypeCreateOrUpdateContent(string name, IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions)
         {
@@ -36,20 +27,11 @@ namespace Azure.ResourceManager.Automation.Models
             FieldDefinitions = fieldDefinitions;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the connection type.
-        /// Serialized Name: ConnectionTypeCreateOrUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the connection type. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Gets or sets a Boolean value to indicate if the connection type is global.
-        /// Serialized Name: ConnectionTypeCreateOrUpdateParameters.properties.isGlobal
-        /// </summary>
+        /// <summary> Gets or sets a Boolean value to indicate if the connection type is global. </summary>
         public bool? IsGlobal { get; set; }
-        /// <summary>
-        /// Gets or sets the field definitions of the connection type.
-        /// Serialized Name: ConnectionTypeCreateOrUpdateParameters.properties.fieldDefinitions
-        /// </summary>
+        /// <summary> Gets or sets the field definitions of the connection type. </summary>
         public IDictionary<string, AutomationConnectionFieldDefinition> FieldDefinitions { get; }
     }
 }

@@ -24,34 +24,19 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupType">
-        /// Type of the HybridWorkerGroup.
-        /// Serialized Name: HybridRunbookWorkerGroup.properties.groupType
-        /// </param>
-        /// <param name="credential">
-        /// Sets the credential of a worker group.
-        /// Serialized Name: HybridRunbookWorkerGroup.properties.credential
-        /// </param>
+        /// <param name="groupType"> Type of the HybridWorkerGroup. </param>
+        /// <param name="credential"> Sets the credential of a worker group. </param>
         internal HybridRunbookWorkerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridWorkerGroup? groupType, RunAsCredentialAssociationProperty credential) : base(id, name, resourceType, systemData)
         {
             GroupType = groupType;
             Credential = credential;
         }
 
-        /// <summary>
-        /// Type of the HybridWorkerGroup.
-        /// Serialized Name: HybridRunbookWorkerGroup.properties.groupType
-        /// </summary>
+        /// <summary> Type of the HybridWorkerGroup. </summary>
         public HybridWorkerGroup? GroupType { get; set; }
-        /// <summary>
-        /// Sets the credential of a worker group.
-        /// Serialized Name: HybridRunbookWorkerGroup.properties.credential
-        /// </summary>
+        /// <summary> Sets the credential of a worker group. </summary>
         internal RunAsCredentialAssociationProperty Credential { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the credential.
-        /// Serialized Name: RunAsCredentialAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the credential. </summary>
         public string CredentialName
         {
             get => Credential is null ? default : Credential.Name;

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The AutomationHttpStatusCode.
-    /// Serialized Name: HttpStatusCode
-    /// </summary>
+    /// <summary> The AutomationHttpStatusCode. </summary>
     public readonly partial struct AutomationHttpStatusCode : IEquatable<AutomationHttpStatusCode>
     {
         private readonly string _value;
@@ -73,240 +70,99 @@ namespace Azure.ResourceManager.Automation.Models
         private const string GatewayTimeoutValue = "GatewayTimeout";
         private const string HttpVersionNotSupportedValue = "HttpVersionNotSupported";
 
-        /// <summary>
-        /// Continue
-        /// Serialized Name: HttpStatusCode.Continue
-        /// </summary>
+        /// <summary> Continue. </summary>
         public static AutomationHttpStatusCode Continue { get; } = new AutomationHttpStatusCode(ContinueValue);
-        /// <summary>
-        /// SwitchingProtocols
-        /// Serialized Name: HttpStatusCode.SwitchingProtocols
-        /// </summary>
+        /// <summary> SwitchingProtocols. </summary>
         public static AutomationHttpStatusCode SwitchingProtocols { get; } = new AutomationHttpStatusCode(SwitchingProtocolsValue);
-        /// <summary>
-        /// OK
-        /// Serialized Name: HttpStatusCode.OK
-        /// </summary>
+        /// <summary> OK. </summary>
         public static AutomationHttpStatusCode OK { get; } = new AutomationHttpStatusCode(OKValue);
-        /// <summary>
-        /// Created
-        /// Serialized Name: HttpStatusCode.Created
-        /// </summary>
+        /// <summary> Created. </summary>
         public static AutomationHttpStatusCode Created { get; } = new AutomationHttpStatusCode(CreatedValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: HttpStatusCode.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static AutomationHttpStatusCode Accepted { get; } = new AutomationHttpStatusCode(AcceptedValue);
-        /// <summary>
-        /// NonAuthoritativeInformation
-        /// Serialized Name: HttpStatusCode.NonAuthoritativeInformation
-        /// </summary>
+        /// <summary> NonAuthoritativeInformation. </summary>
         public static AutomationHttpStatusCode NonAuthoritativeInformation { get; } = new AutomationHttpStatusCode(NonAuthoritativeInformationValue);
-        /// <summary>
-        /// NoContent
-        /// Serialized Name: HttpStatusCode.NoContent
-        /// </summary>
+        /// <summary> NoContent. </summary>
         public static AutomationHttpStatusCode NoContent { get; } = new AutomationHttpStatusCode(NoContentValue);
-        /// <summary>
-        /// ResetContent
-        /// Serialized Name: HttpStatusCode.ResetContent
-        /// </summary>
+        /// <summary> ResetContent. </summary>
         public static AutomationHttpStatusCode ResetContent { get; } = new AutomationHttpStatusCode(ResetContentValue);
-        /// <summary>
-        /// PartialContent
-        /// Serialized Name: HttpStatusCode.PartialContent
-        /// </summary>
+        /// <summary> PartialContent. </summary>
         public static AutomationHttpStatusCode PartialContent { get; } = new AutomationHttpStatusCode(PartialContentValue);
-        /// <summary>
-        /// MultipleChoices
-        /// Serialized Name: HttpStatusCode.MultipleChoices
-        /// </summary>
+        /// <summary> MultipleChoices. </summary>
         public static AutomationHttpStatusCode MultipleChoices { get; } = new AutomationHttpStatusCode(MultipleChoicesValue);
-        /// <summary>
-        /// Ambiguous
-        /// Serialized Name: HttpStatusCode.Ambiguous
-        /// </summary>
+        /// <summary> Ambiguous. </summary>
         public static AutomationHttpStatusCode Ambiguous { get; } = new AutomationHttpStatusCode(AmbiguousValue);
-        /// <summary>
-        /// MovedPermanently
-        /// Serialized Name: HttpStatusCode.MovedPermanently
-        /// </summary>
+        /// <summary> MovedPermanently. </summary>
         public static AutomationHttpStatusCode MovedPermanently { get; } = new AutomationHttpStatusCode(MovedPermanentlyValue);
-        /// <summary>
-        /// Moved
-        /// Serialized Name: HttpStatusCode.Moved
-        /// </summary>
+        /// <summary> Moved. </summary>
         public static AutomationHttpStatusCode Moved { get; } = new AutomationHttpStatusCode(MovedValue);
-        /// <summary>
-        /// Found
-        /// Serialized Name: HttpStatusCode.Found
-        /// </summary>
+        /// <summary> Found. </summary>
         public static AutomationHttpStatusCode Found { get; } = new AutomationHttpStatusCode(FoundValue);
-        /// <summary>
-        /// Redirect
-        /// Serialized Name: HttpStatusCode.Redirect
-        /// </summary>
+        /// <summary> Redirect. </summary>
         public static AutomationHttpStatusCode Redirect { get; } = new AutomationHttpStatusCode(RedirectValue);
-        /// <summary>
-        /// SeeOther
-        /// Serialized Name: HttpStatusCode.SeeOther
-        /// </summary>
+        /// <summary> SeeOther. </summary>
         public static AutomationHttpStatusCode SeeOther { get; } = new AutomationHttpStatusCode(SeeOtherValue);
-        /// <summary>
-        /// RedirectMethod
-        /// Serialized Name: HttpStatusCode.RedirectMethod
-        /// </summary>
+        /// <summary> RedirectMethod. </summary>
         public static AutomationHttpStatusCode RedirectMethod { get; } = new AutomationHttpStatusCode(RedirectMethodValue);
-        /// <summary>
-        /// NotModified
-        /// Serialized Name: HttpStatusCode.NotModified
-        /// </summary>
+        /// <summary> NotModified. </summary>
         public static AutomationHttpStatusCode NotModified { get; } = new AutomationHttpStatusCode(NotModifiedValue);
-        /// <summary>
-        /// UseProxy
-        /// Serialized Name: HttpStatusCode.UseProxy
-        /// </summary>
+        /// <summary> UseProxy. </summary>
         public static AutomationHttpStatusCode UseProxy { get; } = new AutomationHttpStatusCode(UseProxyValue);
-        /// <summary>
-        /// Unused
-        /// Serialized Name: HttpStatusCode.Unused
-        /// </summary>
+        /// <summary> Unused. </summary>
         public static AutomationHttpStatusCode Unused { get; } = new AutomationHttpStatusCode(UnusedValue);
-        /// <summary>
-        /// TemporaryRedirect
-        /// Serialized Name: HttpStatusCode.TemporaryRedirect
-        /// </summary>
+        /// <summary> TemporaryRedirect. </summary>
         public static AutomationHttpStatusCode TemporaryRedirect { get; } = new AutomationHttpStatusCode(TemporaryRedirectValue);
-        /// <summary>
-        /// RedirectKeepVerb
-        /// Serialized Name: HttpStatusCode.RedirectKeepVerb
-        /// </summary>
+        /// <summary> RedirectKeepVerb. </summary>
         public static AutomationHttpStatusCode RedirectKeepVerb { get; } = new AutomationHttpStatusCode(RedirectKeepVerbValue);
-        /// <summary>
-        /// BadRequest
-        /// Serialized Name: HttpStatusCode.BadRequest
-        /// </summary>
+        /// <summary> BadRequest. </summary>
         public static AutomationHttpStatusCode BadRequest { get; } = new AutomationHttpStatusCode(BadRequestValue);
-        /// <summary>
-        /// Unauthorized
-        /// Serialized Name: HttpStatusCode.Unauthorized
-        /// </summary>
+        /// <summary> Unauthorized. </summary>
         public static AutomationHttpStatusCode Unauthorized { get; } = new AutomationHttpStatusCode(UnauthorizedValue);
-        /// <summary>
-        /// PaymentRequired
-        /// Serialized Name: HttpStatusCode.PaymentRequired
-        /// </summary>
+        /// <summary> PaymentRequired. </summary>
         public static AutomationHttpStatusCode PaymentRequired { get; } = new AutomationHttpStatusCode(PaymentRequiredValue);
-        /// <summary>
-        /// Forbidden
-        /// Serialized Name: HttpStatusCode.Forbidden
-        /// </summary>
+        /// <summary> Forbidden. </summary>
         public static AutomationHttpStatusCode Forbidden { get; } = new AutomationHttpStatusCode(ForbiddenValue);
-        /// <summary>
-        /// NotFound
-        /// Serialized Name: HttpStatusCode.NotFound
-        /// </summary>
+        /// <summary> NotFound. </summary>
         public static AutomationHttpStatusCode NotFound { get; } = new AutomationHttpStatusCode(NotFoundValue);
-        /// <summary>
-        /// MethodNotAllowed
-        /// Serialized Name: HttpStatusCode.MethodNotAllowed
-        /// </summary>
+        /// <summary> MethodNotAllowed. </summary>
         public static AutomationHttpStatusCode MethodNotAllowed { get; } = new AutomationHttpStatusCode(MethodNotAllowedValue);
-        /// <summary>
-        /// NotAcceptable
-        /// Serialized Name: HttpStatusCode.NotAcceptable
-        /// </summary>
+        /// <summary> NotAcceptable. </summary>
         public static AutomationHttpStatusCode NotAcceptable { get; } = new AutomationHttpStatusCode(NotAcceptableValue);
-        /// <summary>
-        /// ProxyAuthenticationRequired
-        /// Serialized Name: HttpStatusCode.ProxyAuthenticationRequired
-        /// </summary>
+        /// <summary> ProxyAuthenticationRequired. </summary>
         public static AutomationHttpStatusCode ProxyAuthenticationRequired { get; } = new AutomationHttpStatusCode(ProxyAuthenticationRequiredValue);
-        /// <summary>
-        /// RequestTimeout
-        /// Serialized Name: HttpStatusCode.RequestTimeout
-        /// </summary>
+        /// <summary> RequestTimeout. </summary>
         public static AutomationHttpStatusCode RequestTimeout { get; } = new AutomationHttpStatusCode(RequestTimeoutValue);
-        /// <summary>
-        /// Conflict
-        /// Serialized Name: HttpStatusCode.Conflict
-        /// </summary>
+        /// <summary> Conflict. </summary>
         public static AutomationHttpStatusCode Conflict { get; } = new AutomationHttpStatusCode(ConflictValue);
-        /// <summary>
-        /// Gone
-        /// Serialized Name: HttpStatusCode.Gone
-        /// </summary>
+        /// <summary> Gone. </summary>
         public static AutomationHttpStatusCode Gone { get; } = new AutomationHttpStatusCode(GoneValue);
-        /// <summary>
-        /// LengthRequired
-        /// Serialized Name: HttpStatusCode.LengthRequired
-        /// </summary>
+        /// <summary> LengthRequired. </summary>
         public static AutomationHttpStatusCode LengthRequired { get; } = new AutomationHttpStatusCode(LengthRequiredValue);
-        /// <summary>
-        /// PreconditionFailed
-        /// Serialized Name: HttpStatusCode.PreconditionFailed
-        /// </summary>
+        /// <summary> PreconditionFailed. </summary>
         public static AutomationHttpStatusCode PreconditionFailed { get; } = new AutomationHttpStatusCode(PreconditionFailedValue);
-        /// <summary>
-        /// RequestEntityTooLarge
-        /// Serialized Name: HttpStatusCode.RequestEntityTooLarge
-        /// </summary>
+        /// <summary> RequestEntityTooLarge. </summary>
         public static AutomationHttpStatusCode RequestEntityTooLarge { get; } = new AutomationHttpStatusCode(RequestEntityTooLargeValue);
-        /// <summary>
-        /// RequestUriTooLong
-        /// Serialized Name: HttpStatusCode.RequestUriTooLong
-        /// </summary>
+        /// <summary> RequestUriTooLong. </summary>
         public static AutomationHttpStatusCode RequestUriTooLong { get; } = new AutomationHttpStatusCode(RequestUriTooLongValue);
-        /// <summary>
-        /// UnsupportedMediaType
-        /// Serialized Name: HttpStatusCode.UnsupportedMediaType
-        /// </summary>
+        /// <summary> UnsupportedMediaType. </summary>
         public static AutomationHttpStatusCode UnsupportedMediaType { get; } = new AutomationHttpStatusCode(UnsupportedMediaTypeValue);
-        /// <summary>
-        /// RequestedRangeNotSatisfiable
-        /// Serialized Name: HttpStatusCode.RequestedRangeNotSatisfiable
-        /// </summary>
+        /// <summary> RequestedRangeNotSatisfiable. </summary>
         public static AutomationHttpStatusCode RequestedRangeNotSatisfiable { get; } = new AutomationHttpStatusCode(RequestedRangeNotSatisfiableValue);
-        /// <summary>
-        /// ExpectationFailed
-        /// Serialized Name: HttpStatusCode.ExpectationFailed
-        /// </summary>
+        /// <summary> ExpectationFailed. </summary>
         public static AutomationHttpStatusCode ExpectationFailed { get; } = new AutomationHttpStatusCode(ExpectationFailedValue);
-        /// <summary>
-        /// UpgradeRequired
-        /// Serialized Name: HttpStatusCode.UpgradeRequired
-        /// </summary>
+        /// <summary> UpgradeRequired. </summary>
         public static AutomationHttpStatusCode UpgradeRequired { get; } = new AutomationHttpStatusCode(UpgradeRequiredValue);
-        /// <summary>
-        /// InternalServerError
-        /// Serialized Name: HttpStatusCode.InternalServerError
-        /// </summary>
+        /// <summary> InternalServerError. </summary>
         public static AutomationHttpStatusCode InternalServerError { get; } = new AutomationHttpStatusCode(InternalServerErrorValue);
-        /// <summary>
-        /// NotImplemented
-        /// Serialized Name: HttpStatusCode.NotImplemented
-        /// </summary>
+        /// <summary> NotImplemented. </summary>
         public static AutomationHttpStatusCode NotImplemented { get; } = new AutomationHttpStatusCode(NotImplementedValue);
-        /// <summary>
-        /// BadGateway
-        /// Serialized Name: HttpStatusCode.BadGateway
-        /// </summary>
+        /// <summary> BadGateway. </summary>
         public static AutomationHttpStatusCode BadGateway { get; } = new AutomationHttpStatusCode(BadGatewayValue);
-        /// <summary>
-        /// ServiceUnavailable
-        /// Serialized Name: HttpStatusCode.ServiceUnavailable
-        /// </summary>
+        /// <summary> ServiceUnavailable. </summary>
         public static AutomationHttpStatusCode ServiceUnavailable { get; } = new AutomationHttpStatusCode(ServiceUnavailableValue);
-        /// <summary>
-        /// GatewayTimeout
-        /// Serialized Name: HttpStatusCode.GatewayTimeout
-        /// </summary>
+        /// <summary> GatewayTimeout. </summary>
         public static AutomationHttpStatusCode GatewayTimeout { get; } = new AutomationHttpStatusCode(GatewayTimeoutValue);
-        /// <summary>
-        /// HttpVersionNotSupported
-        /// Serialized Name: HttpStatusCode.HttpVersionNotSupported
-        /// </summary>
+        /// <summary> HttpVersionNotSupported. </summary>
         public static AutomationHttpStatusCode HttpVersionNotSupported { get; } = new AutomationHttpStatusCode(HttpVersionNotSupportedValue);
         /// <summary> Determines if two <see cref="AutomationHttpStatusCode"/> values are the same. </summary>
         public static bool operator ==(AutomationHttpStatusCode left, AutomationHttpStatusCode right) => left.Equals(right);

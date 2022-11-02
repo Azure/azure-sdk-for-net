@@ -1179,18 +1179,18 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey
         /// Operation Id: AgentRegistrationInformation_RegenerateKey
         /// </summary>
-        /// <param name="agentRegistrationRegenerateKeyParameter"> The name of the agent registration key to be regenerated. </param>
+        /// <param name="content"> The name of the agent registration key to be regenerated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentRegistrationRegenerateKeyParameter"/> is null. </exception>
-        public virtual async Task<Response<AgentRegistration>> RegenerateKeyAgentRegistrationInformationAsync(AgentRegistrationRegenerateKeyParameter agentRegistrationRegenerateKeyParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AgentRegistration>> RegenerateKeyAgentRegistrationInformationAsync(AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agentRegistrationRegenerateKeyParameter, nameof(agentRegistrationRegenerateKeyParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.RegenerateKeyAgentRegistrationInformation");
             scope.Start();
             try
             {
-                var response = await _agentRegistrationInformationRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentRegistrationRegenerateKeyParameter, cancellationToken).ConfigureAwait(false);
+                var response = await _agentRegistrationInformationRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1205,18 +1205,18 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey
         /// Operation Id: AgentRegistrationInformation_RegenerateKey
         /// </summary>
-        /// <param name="agentRegistrationRegenerateKeyParameter"> The name of the agent registration key to be regenerated. </param>
+        /// <param name="content"> The name of the agent registration key to be regenerated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentRegistrationRegenerateKeyParameter"/> is null. </exception>
-        public virtual Response<AgentRegistration> RegenerateKeyAgentRegistrationInformation(AgentRegistrationRegenerateKeyParameter agentRegistrationRegenerateKeyParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AgentRegistration> RegenerateKeyAgentRegistrationInformation(AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agentRegistrationRegenerateKeyParameter, nameof(agentRegistrationRegenerateKeyParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.RegenerateKeyAgentRegistrationInformation");
             scope.Start();
             try
             {
-                var response = _agentRegistrationInformationRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentRegistrationRegenerateKeyParameter, cancellationToken);
+                var response = _agentRegistrationInformationRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

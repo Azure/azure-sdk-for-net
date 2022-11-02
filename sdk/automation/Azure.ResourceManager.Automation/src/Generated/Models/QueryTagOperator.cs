@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Filter VMs by Any or All specified tags.
-    /// Serialized Name: TagOperators
-    /// </summary>
+    /// <summary> Filter VMs by Any or All specified tags. </summary>
     public enum QueryTagOperator
     {
-        /// <summary>
-        /// All
-        /// Serialized Name: TagOperators.All
-        /// </summary>
+        /// <summary> All. </summary>
         All,
-        /// <summary>
-        /// Any
-        /// Serialized Name: TagOperators.Any
-        /// </summary>
+        /// <summary> Any. </summary>
         Any
     }
 }

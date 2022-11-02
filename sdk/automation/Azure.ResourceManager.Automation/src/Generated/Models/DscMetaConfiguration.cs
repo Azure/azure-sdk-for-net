@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the DSC Meta Configuration.
-    /// Serialized Name: DscMetaConfiguration
-    /// </summary>
+    /// <summary> Definition of the DSC Meta Configuration. </summary>
     public partial class DscMetaConfiguration
     {
         /// <summary> Initializes a new instance of DscMetaConfiguration. </summary>
@@ -19,34 +16,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscMetaConfiguration. </summary>
-        /// <param name="configurationModeFrequencyMins">
-        /// Gets or sets the ConfigurationModeFrequencyMins value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.configurationModeFrequencyMins
-        /// </param>
-        /// <param name="rebootNodeIfNeeded">
-        /// Gets or sets the RebootNodeIfNeeded value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.rebootNodeIfNeeded
-        /// </param>
-        /// <param name="configurationMode">
-        /// Gets or sets the ConfigurationMode value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.configurationMode
-        /// </param>
-        /// <param name="actionAfterReboot">
-        /// Gets or sets the ActionAfterReboot value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.actionAfterReboot
-        /// </param>
-        /// <param name="certificateId">
-        /// Gets or sets the CertificateId value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.certificateId
-        /// </param>
-        /// <param name="refreshFrequencyMins">
-        /// Gets or sets the RefreshFrequencyMins value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.refreshFrequencyMins
-        /// </param>
-        /// <param name="allowModuleOverwrite">
-        /// Gets or sets the AllowModuleOverwrite value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.allowModuleOverwrite
-        /// </param>
+        /// <param name="configurationModeFrequencyMins"> Gets or sets the ConfigurationModeFrequencyMins value of the meta configuration. </param>
+        /// <param name="rebootNodeIfNeeded"> Gets or sets the RebootNodeIfNeeded value of the meta configuration. </param>
+        /// <param name="configurationMode"> Gets or sets the ConfigurationMode value of the meta configuration. </param>
+        /// <param name="actionAfterReboot"> Gets or sets the ActionAfterReboot value of the meta configuration. </param>
+        /// <param name="certificateId"> Gets or sets the CertificateId value of the meta configuration. </param>
+        /// <param name="refreshFrequencyMins"> Gets or sets the RefreshFrequencyMins value of the meta configuration. </param>
+        /// <param name="allowModuleOverwrite"> Gets or sets the AllowModuleOverwrite value of the meta configuration. </param>
         internal DscMetaConfiguration(int? configurationModeFrequencyMins, bool? rebootNodeIfNeeded, string configurationMode, string actionAfterReboot, string certificateId, int? refreshFrequencyMins, bool? allowModuleOverwrite)
         {
             ConfigurationModeFrequencyMins = configurationModeFrequencyMins;
@@ -58,40 +34,19 @@ namespace Azure.ResourceManager.Automation.Models
             AllowModuleOverwrite = allowModuleOverwrite;
         }
 
-        /// <summary>
-        /// Gets or sets the ConfigurationModeFrequencyMins value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.configurationModeFrequencyMins
-        /// </summary>
+        /// <summary> Gets or sets the ConfigurationModeFrequencyMins value of the meta configuration. </summary>
         public int? ConfigurationModeFrequencyMins { get; }
-        /// <summary>
-        /// Gets or sets the RebootNodeIfNeeded value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.rebootNodeIfNeeded
-        /// </summary>
+        /// <summary> Gets or sets the RebootNodeIfNeeded value of the meta configuration. </summary>
         public bool? RebootNodeIfNeeded { get; }
-        /// <summary>
-        /// Gets or sets the ConfigurationMode value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.configurationMode
-        /// </summary>
+        /// <summary> Gets or sets the ConfigurationMode value of the meta configuration. </summary>
         public string ConfigurationMode { get; }
-        /// <summary>
-        /// Gets or sets the ActionAfterReboot value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.actionAfterReboot
-        /// </summary>
+        /// <summary> Gets or sets the ActionAfterReboot value of the meta configuration. </summary>
         public string ActionAfterReboot { get; }
-        /// <summary>
-        /// Gets or sets the CertificateId value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.certificateId
-        /// </summary>
+        /// <summary> Gets or sets the CertificateId value of the meta configuration. </summary>
         public string CertificateId { get; }
-        /// <summary>
-        /// Gets or sets the RefreshFrequencyMins value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.refreshFrequencyMins
-        /// </summary>
+        /// <summary> Gets or sets the RefreshFrequencyMins value of the meta configuration. </summary>
         public int? RefreshFrequencyMins { get; }
-        /// <summary>
-        /// Gets or sets the AllowModuleOverwrite value of the meta configuration.
-        /// Serialized Name: DscMetaConfiguration.allowModuleOverwrite
-        /// </summary>
+        /// <summary> Gets or sets the AllowModuleOverwrite value of the meta configuration. </summary>
         public bool? AllowModuleOverwrite { get; }
     }
 }

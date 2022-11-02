@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list activity operation.
-    /// Serialized Name: ActivityListResult
-    /// </summary>
+    /// <summary> The response model for the list activity operation. </summary>
     internal partial class AutomationActivityListResult
     {
         /// <summary> Initializes a new instance of AutomationActivityListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationActivityListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of activities.
-        /// Serialized Name: ActivityListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: ActivityListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of activities. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationActivityListResult(IReadOnlyList<AutomationActivity> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of activities.
-        /// Serialized Name: ActivityListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of activities. </summary>
         public IReadOnlyList<AutomationActivity> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: ActivityListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

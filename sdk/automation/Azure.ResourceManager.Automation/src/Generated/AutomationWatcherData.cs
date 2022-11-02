@@ -30,46 +30,16 @@ namespace Azure.ResourceManager.Automation
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// Gets or sets the etag of the resource.
-        /// Serialized Name: Watcher.etag
-        /// </param>
-        /// <param name="executionFrequencyInSeconds">
-        /// Gets or sets the frequency at which the watcher is invoked.
-        /// Serialized Name: Watcher.properties.executionFrequencyInSeconds
-        /// </param>
-        /// <param name="scriptName">
-        /// Gets or sets the name of the script the watcher is attached to, i.e. the name of an existing runbook.
-        /// Serialized Name: Watcher.properties.scriptName
-        /// </param>
-        /// <param name="scriptParameters">
-        /// Gets or sets the parameters of the script.
-        /// Serialized Name: Watcher.properties.scriptParameters
-        /// </param>
-        /// <param name="scriptRunOn">
-        /// Gets or sets the name of the hybrid worker group the watcher will run on.
-        /// Serialized Name: Watcher.properties.scriptRunOn
-        /// </param>
-        /// <param name="status">
-        /// Gets the current status of the watcher.
-        /// Serialized Name: Watcher.properties.status
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets or sets the creation time.
-        /// Serialized Name: Watcher.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Watcher.properties.lastModifiedTime
-        /// </param>
-        /// <param name="lastModifiedBy">
-        /// Details of the user who last modified the watcher.
-        /// Serialized Name: Watcher.properties.lastModifiedBy
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: Watcher.properties.description
-        /// </param>
+        /// <param name="etag"> Gets or sets the etag of the resource. </param>
+        /// <param name="executionFrequencyInSeconds"> Gets or sets the frequency at which the watcher is invoked. </param>
+        /// <param name="scriptName"> Gets or sets the name of the script the watcher is attached to, i.e. the name of an existing runbook. </param>
+        /// <param name="scriptParameters"> Gets or sets the parameters of the script. </param>
+        /// <param name="scriptRunOn"> Gets or sets the name of the hybrid worker group the watcher will run on. </param>
+        /// <param name="status"> Gets the current status of the watcher. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
+        /// <param name="lastModifiedBy"> Details of the user who last modified the watcher. </param>
+        /// <param name="description"> Gets or sets the description. </param>
         internal AutomationWatcherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? executionFrequencyInSeconds, string scriptName, IDictionary<string, string> scriptParameters, string scriptRunOn, string status, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
@@ -84,55 +54,25 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets or sets the etag of the resource.
-        /// Serialized Name: Watcher.etag
-        /// </summary>
+        /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
-        /// <summary>
-        /// Gets or sets the frequency at which the watcher is invoked.
-        /// Serialized Name: Watcher.properties.executionFrequencyInSeconds
-        /// </summary>
+        /// <summary> Gets or sets the frequency at which the watcher is invoked. </summary>
         public long? ExecutionFrequencyInSeconds { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the script the watcher is attached to, i.e. the name of an existing runbook.
-        /// Serialized Name: Watcher.properties.scriptName
-        /// </summary>
+        /// <summary> Gets or sets the name of the script the watcher is attached to, i.e. the name of an existing runbook. </summary>
         public string ScriptName { get; set; }
-        /// <summary>
-        /// Gets or sets the parameters of the script.
-        /// Serialized Name: Watcher.properties.scriptParameters
-        /// </summary>
+        /// <summary> Gets or sets the parameters of the script. </summary>
         public IDictionary<string, string> ScriptParameters { get; }
-        /// <summary>
-        /// Gets or sets the name of the hybrid worker group the watcher will run on.
-        /// Serialized Name: Watcher.properties.scriptRunOn
-        /// </summary>
+        /// <summary> Gets or sets the name of the hybrid worker group the watcher will run on. </summary>
         public string ScriptRunOn { get; set; }
-        /// <summary>
-        /// Gets the current status of the watcher.
-        /// Serialized Name: Watcher.properties.status
-        /// </summary>
+        /// <summary> Gets the current status of the watcher. </summary>
         public string Status { get; }
-        /// <summary>
-        /// Gets or sets the creation time.
-        /// Serialized Name: Watcher.properties.creationTime
-        /// </summary>
+        /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Watcher.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// Details of the user who last modified the watcher.
-        /// Serialized Name: Watcher.properties.lastModifiedBy
-        /// </summary>
+        /// <summary> Details of the user who last modified the watcher. </summary>
         public string LastModifiedBy { get; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: Watcher.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

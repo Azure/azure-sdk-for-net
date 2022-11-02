@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets or sets the content source type.
-    /// Serialized Name: ContentSourceType
-    /// </summary>
+    /// <summary> Gets or sets the content source type. </summary>
     public readonly partial struct AutomationContentSourceType : IEquatable<AutomationContentSourceType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Automation.Models
         private const string EmbeddedContentValue = "embeddedContent";
         private const string UriValue = "uri";
 
-        /// <summary>
-        /// embeddedContent
-        /// Serialized Name: ContentSourceType.embeddedContent
-        /// </summary>
+        /// <summary> embeddedContent. </summary>
         public static AutomationContentSourceType EmbeddedContent { get; } = new AutomationContentSourceType(EmbeddedContentValue);
-        /// <summary>
-        /// uri
-        /// Serialized Name: ContentSourceType.uri
-        /// </summary>
+        /// <summary> uri. </summary>
         public static AutomationContentSourceType Uri { get; } = new AutomationContentSourceType(UriValue);
         /// <summary> Determines if two <see cref="AutomationContentSourceType"/> values are the same. </summary>
         public static bool operator ==(AutomationContentSourceType left, AutomationContentSourceType right) => left.Equals(right);

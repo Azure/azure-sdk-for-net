@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Software update configuration run tasks model.
-    /// Serialized Name: SoftwareUpdateConfigurationRunTasks
-    /// </summary>
+    /// <summary> Software update configuration run tasks model. </summary>
     public partial class SoftwareUpdateConfigurationRunTasks
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTasks. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTasks. </summary>
-        /// <param name="preTask">
-        /// Pre task properties.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTasks.preTask
-        /// </param>
-        /// <param name="postTask">
-        /// Post task properties.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTasks.postTask
-        /// </param>
+        /// <param name="preTask"> Pre task properties. </param>
+        /// <param name="postTask"> Post task properties. </param>
         internal SoftwareUpdateConfigurationRunTasks(SoftwareUpdateConfigurationRunTaskProperties preTask, SoftwareUpdateConfigurationRunTaskProperties postTask)
         {
             PreTask = preTask;
             PostTask = postTask;
         }
 
-        /// <summary>
-        /// Pre task properties.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTasks.preTask
-        /// </summary>
+        /// <summary> Pre task properties. </summary>
         public SoftwareUpdateConfigurationRunTaskProperties PreTask { get; }
-        /// <summary>
-        /// Post task properties.
-        /// Serialized Name: SoftwareUpdateConfigurationRunTasks.postTask
-        /// </summary>
+        /// <summary> Post task properties. </summary>
         public SoftwareUpdateConfigurationRunTaskProperties PostTask { get; }
     }
 }

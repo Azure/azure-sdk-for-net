@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets or sets the type of the runbook.
-    /// Serialized Name: RunbookTypeEnum
-    /// </summary>
+    /// <summary> Gets or sets the type of the runbook. </summary>
     public readonly partial struct AutomationRunbookType : IEquatable<AutomationRunbookType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.Automation.Models
         private const string Python2Value = "Python2";
         private const string Python3Value = "Python3";
 
-        /// <summary>
-        /// Script
-        /// Serialized Name: RunbookTypeEnum.Script
-        /// </summary>
+        /// <summary> Script. </summary>
         public static AutomationRunbookType Script { get; } = new AutomationRunbookType(ScriptValue);
-        /// <summary>
-        /// Graph
-        /// Serialized Name: RunbookTypeEnum.Graph
-        /// </summary>
+        /// <summary> Graph. </summary>
         public static AutomationRunbookType Graph { get; } = new AutomationRunbookType(GraphValue);
-        /// <summary>
-        /// PowerShellWorkflow
-        /// Serialized Name: RunbookTypeEnum.PowerShellWorkflow
-        /// </summary>
+        /// <summary> PowerShellWorkflow. </summary>
         public static AutomationRunbookType PowerShellWorkflow { get; } = new AutomationRunbookType(PowerShellWorkflowValue);
-        /// <summary>
-        /// PowerShell
-        /// Serialized Name: RunbookTypeEnum.PowerShell
-        /// </summary>
+        /// <summary> PowerShell. </summary>
         public static AutomationRunbookType PowerShell { get; } = new AutomationRunbookType(PowerShellValue);
-        /// <summary>
-        /// GraphPowerShellWorkflow
-        /// Serialized Name: RunbookTypeEnum.GraphPowerShellWorkflow
-        /// </summary>
+        /// <summary> GraphPowerShellWorkflow. </summary>
         public static AutomationRunbookType GraphPowerShellWorkflow { get; } = new AutomationRunbookType(GraphPowerShellWorkflowValue);
-        /// <summary>
-        /// GraphPowerShell
-        /// Serialized Name: RunbookTypeEnum.GraphPowerShell
-        /// </summary>
+        /// <summary> GraphPowerShell. </summary>
         public static AutomationRunbookType GraphPowerShell { get; } = new AutomationRunbookType(GraphPowerShellValue);
-        /// <summary>
-        /// Python2
-        /// Serialized Name: RunbookTypeEnum.Python2
-        /// </summary>
+        /// <summary> Python2. </summary>
         public static AutomationRunbookType Python2 { get; } = new AutomationRunbookType(Python2Value);
-        /// <summary>
-        /// Python3
-        /// Serialized Name: RunbookTypeEnum.Python3
-        /// </summary>
+        /// <summary> Python3. </summary>
         public static AutomationRunbookType Python3 { get; } = new AutomationRunbookType(Python3Value);
         /// <summary> Determines if two <see cref="AutomationRunbookType"/> values are the same. </summary>
         public static bool operator ==(AutomationRunbookType left, AutomationRunbookType right) => left.Equals(right);

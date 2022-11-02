@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the dsc node report error type.
-    /// Serialized Name: DscReportError
-    /// </summary>
+    /// <summary> Definition of the dsc node report error type. </summary>
     public partial class DscReportError
     {
         /// <summary> Initializes a new instance of DscReportError. </summary>
@@ -19,30 +16,12 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscReportError. </summary>
-        /// <param name="errorSource">
-        /// Gets or sets the source of the error.
-        /// Serialized Name: DscReportError.errorSource
-        /// </param>
-        /// <param name="resourceId">
-        /// Gets or sets the resource ID which generated the error.
-        /// Serialized Name: DscReportError.resourceId
-        /// </param>
-        /// <param name="errorCode">
-        /// Gets or sets the error code.
-        /// Serialized Name: DscReportError.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// Gets or sets the error message.
-        /// Serialized Name: DscReportError.errorMessage
-        /// </param>
-        /// <param name="locale">
-        /// Gets or sets the locale of the error.
-        /// Serialized Name: DscReportError.locale
-        /// </param>
-        /// <param name="errorDetails">
-        /// Gets or sets the error details.
-        /// Serialized Name: DscReportError.errorDetails
-        /// </param>
+        /// <param name="errorSource"> Gets or sets the source of the error. </param>
+        /// <param name="resourceId"> Gets or sets the resource ID which generated the error. </param>
+        /// <param name="errorCode"> Gets or sets the error code. </param>
+        /// <param name="errorMessage"> Gets or sets the error message. </param>
+        /// <param name="locale"> Gets or sets the locale of the error. </param>
+        /// <param name="errorDetails"> Gets or sets the error details. </param>
         internal DscReportError(string errorSource, string resourceId, string errorCode, string errorMessage, string locale, string errorDetails)
         {
             ErrorSource = errorSource;
@@ -53,35 +32,17 @@ namespace Azure.ResourceManager.Automation.Models
             ErrorDetails = errorDetails;
         }
 
-        /// <summary>
-        /// Gets or sets the source of the error.
-        /// Serialized Name: DscReportError.errorSource
-        /// </summary>
+        /// <summary> Gets or sets the source of the error. </summary>
         public string ErrorSource { get; }
-        /// <summary>
-        /// Gets or sets the resource ID which generated the error.
-        /// Serialized Name: DscReportError.resourceId
-        /// </summary>
+        /// <summary> Gets or sets the resource ID which generated the error. </summary>
         public string ResourceId { get; }
-        /// <summary>
-        /// Gets or sets the error code.
-        /// Serialized Name: DscReportError.errorCode
-        /// </summary>
+        /// <summary> Gets or sets the error code. </summary>
         public string ErrorCode { get; }
-        /// <summary>
-        /// Gets or sets the error message.
-        /// Serialized Name: DscReportError.errorMessage
-        /// </summary>
+        /// <summary> Gets or sets the error message. </summary>
         public string ErrorMessage { get; }
-        /// <summary>
-        /// Gets or sets the locale of the error.
-        /// Serialized Name: DscReportError.locale
-        /// </summary>
+        /// <summary> Gets or sets the locale of the error. </summary>
         public string Locale { get; }
-        /// <summary>
-        /// Gets or sets the error details.
-        /// Serialized Name: DscReportError.errorDetails
-        /// </summary>
+        /// <summary> Gets or sets the error details. </summary>
         public string ErrorDetails { get; }
     }
 }

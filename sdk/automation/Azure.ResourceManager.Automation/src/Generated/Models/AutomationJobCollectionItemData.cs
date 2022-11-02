@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Job collection item properties.
-    /// Serialized Name: JobCollectionItem
-    /// </summary>
+    /// <summary> Job collection item properties. </summary>
     public partial class AutomationJobCollectionItemData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationJobCollectionItemData. </summary>
@@ -27,42 +24,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="runbook">
-        /// The runbook association.
-        /// Serialized Name: JobCollectionItem.properties.runbook
-        /// </param>
-        /// <param name="jobId">
-        /// The id of the job.
-        /// Serialized Name: JobCollectionItem.properties.jobId
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation time of the job.
-        /// Serialized Name: JobCollectionItem.properties.creationTime
-        /// </param>
-        /// <param name="status">
-        /// The status of the job.
-        /// Serialized Name: JobCollectionItem.properties.status
-        /// </param>
-        /// <param name="startOn">
-        /// The start time of the job.
-        /// Serialized Name: JobCollectionItem.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time of the job.
-        /// Serialized Name: JobCollectionItem.properties.endTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// The last modified time of the job.
-        /// Serialized Name: JobCollectionItem.properties.lastModifiedTime
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of a resource.
-        /// Serialized Name: JobCollectionItem.properties.provisioningState
-        /// </param>
-        /// <param name="runOn">
-        /// Specifies the runOn group name where the job was executed.
-        /// Serialized Name: JobCollectionItem.properties.runOn
-        /// </param>
+        /// <param name="runbook"> The runbook association. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="createdOn"> The creation time of the job. </param>
+        /// <param name="status"> The status of the job. </param>
+        /// <param name="startOn"> The start time of the job. </param>
+        /// <param name="endOn"> The end time of the job. </param>
+        /// <param name="lastModifiedOn"> The last modified time of the job. </param>
+        /// <param name="provisioningState"> The provisioning state of a resource. </param>
+        /// <param name="runOn"> Specifies the runOn group name where the job was executed. </param>
         internal AutomationJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, string runOn) : base(id, name, resourceType, systemData)
         {
             Runbook = runbook;
@@ -76,59 +46,29 @@ namespace Azure.ResourceManager.Automation.Models
             RunOn = runOn;
         }
 
-        /// <summary>
-        /// The runbook association.
-        /// Serialized Name: JobCollectionItem.properties.runbook
-        /// </summary>
+        /// <summary> The runbook association. </summary>
         internal RunbookAssociationProperty Runbook { get; }
-        /// <summary>
-        /// Gets or sets the name of the runbook.
-        /// Serialized Name: RunbookAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the runbook. </summary>
         public string RunbookName
         {
             get => Runbook?.Name;
         }
 
-        /// <summary>
-        /// The id of the job.
-        /// Serialized Name: JobCollectionItem.properties.jobId
-        /// </summary>
+        /// <summary> The id of the job. </summary>
         public Guid? JobId { get; }
-        /// <summary>
-        /// The creation time of the job.
-        /// Serialized Name: JobCollectionItem.properties.creationTime
-        /// </summary>
+        /// <summary> The creation time of the job. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The status of the job.
-        /// Serialized Name: JobCollectionItem.properties.status
-        /// </summary>
+        /// <summary> The status of the job. </summary>
         public AutomationJobStatus? Status { get; }
-        /// <summary>
-        /// The start time of the job.
-        /// Serialized Name: JobCollectionItem.properties.startTime
-        /// </summary>
+        /// <summary> The start time of the job. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// The end time of the job.
-        /// Serialized Name: JobCollectionItem.properties.endTime
-        /// </summary>
+        /// <summary> The end time of the job. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// The last modified time of the job.
-        /// Serialized Name: JobCollectionItem.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> The last modified time of the job. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// The provisioning state of a resource.
-        /// Serialized Name: JobCollectionItem.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of a resource. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Specifies the runOn group name where the job was executed.
-        /// Serialized Name: JobCollectionItem.properties.runOn
-        /// </summary>
+        /// <summary> Specifies the runOn group name where the job was executed. </summary>
         public string RunOn { get; set; }
     }
 }

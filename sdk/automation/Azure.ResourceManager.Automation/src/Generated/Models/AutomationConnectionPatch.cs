@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the update connection operation.
-    /// Serialized Name: ConnectionUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the update connection operation. </summary>
     public partial class AutomationConnectionPatch
     {
         /// <summary> Initializes a new instance of AutomationConnectionPatch. </summary>
@@ -22,20 +19,11 @@ namespace Azure.ResourceManager.Automation.Models
             FieldDefinitionValues = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Gets or sets the name of the connection.
-        /// Serialized Name: ConnectionUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the connection. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Gets or sets the description of the connection.
-        /// Serialized Name: ConnectionUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the connection. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Gets or sets the field definition values of the connection.
-        /// Serialized Name: ConnectionUpdateParameters.properties.fieldDefinitionValues
-        /// </summary>
+        /// <summary> Gets or sets the field definition values of the connection. </summary>
         public IDictionary<string, string> FieldDefinitionValues { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the module error info type.
-    /// Serialized Name: ModuleErrorInfo
-    /// </summary>
+    /// <summary> Definition of the module error info type. </summary>
     public partial class AutomationModuleErrorInfo
     {
         /// <summary> Initializes a new instance of AutomationModuleErrorInfo. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationModuleErrorInfo. </summary>
-        /// <param name="code">
-        /// Gets or sets the error code.
-        /// Serialized Name: ModuleErrorInfo.code
-        /// </param>
-        /// <param name="message">
-        /// Gets or sets the error message.
-        /// Serialized Name: ModuleErrorInfo.message
-        /// </param>
+        /// <param name="code"> Gets or sets the error code. </param>
+        /// <param name="message"> Gets or sets the error message. </param>
         internal AutomationModuleErrorInfo(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
-        /// <summary>
-        /// Gets or sets the error code.
-        /// Serialized Name: ModuleErrorInfo.code
-        /// </summary>
+        /// <summary> Gets or sets the error code. </summary>
         public string Code { get; set; }
-        /// <summary>
-        /// Gets or sets the error message.
-        /// Serialized Name: ModuleErrorInfo.message
-        /// </summary>
+        /// <summary> Gets or sets the error message. </summary>
         public string Message { get; set; }
     }
 }

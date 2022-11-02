@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Task properties of the software update configuration.
-    /// Serialized Name: TaskProperties
-    /// </summary>
+    /// <summary> Task properties of the software update configuration. </summary>
     public partial class SoftwareUpdateConfigurationTaskProperties
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTaskProperties. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTaskProperties. </summary>
-        /// <param name="parameters">
-        /// Gets or sets the parameters of the task.
-        /// Serialized Name: TaskProperties.parameters
-        /// </param>
-        /// <param name="source">
-        /// Gets or sets the name of the runbook.
-        /// Serialized Name: TaskProperties.source
-        /// </param>
+        /// <param name="parameters"> Gets or sets the parameters of the task. </param>
+        /// <param name="source"> Gets or sets the name of the runbook. </param>
         internal SoftwareUpdateConfigurationTaskProperties(IDictionary<string, string> parameters, string source)
         {
             Parameters = parameters;
             Source = source;
         }
 
-        /// <summary>
-        /// Gets or sets the parameters of the task.
-        /// Serialized Name: TaskProperties.parameters
-        /// </summary>
+        /// <summary> Gets or sets the parameters of the task. </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// Gets or sets the name of the runbook.
-        /// Serialized Name: TaskProperties.source
-        /// </summary>
+        /// <summary> Gets or sets the name of the runbook. </summary>
         public string Source { get; set; }
     }
 }

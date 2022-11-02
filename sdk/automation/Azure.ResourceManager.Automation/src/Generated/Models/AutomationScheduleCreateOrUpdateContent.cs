@@ -10,25 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create or update schedule operation.
-    /// Serialized Name: ScheduleCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create or update schedule operation. </summary>
     public partial class AutomationScheduleCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationScheduleCreateOrUpdateContent. </summary>
-        /// <param name="name">
-        /// Gets or sets the name of the Schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.name
-        /// </param>
-        /// <param name="startOn">
-        /// Gets or sets the start time of the schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.startTime
-        /// </param>
-        /// <param name="frequency">
-        /// Gets or sets the frequency of the schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.frequency
-        /// </param>
+        /// <param name="name"> Gets or sets the name of the Schedule. </param>
+        /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
+        /// <param name="frequency"> Gets or sets the frequency of the schedule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AutomationScheduleCreateOrUpdateContent(string name, DateTimeOffset startOn, AutomationScheduleFrequency frequency)
         {
@@ -39,29 +27,16 @@ namespace Azure.ResourceManager.Automation.Models
             Frequency = frequency;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the Schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the Schedule. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Gets or sets the description of the schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the schedule. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Gets or sets the start time of the schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.startTime
-        /// </summary>
+        /// <summary> Gets or sets the start time of the schedule. </summary>
         public DateTimeOffset StartOn { get; }
-        /// <summary>
-        /// Gets or sets the end time of the schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.expiryTime
-        /// </summary>
+        /// <summary> Gets or sets the end time of the schedule. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary>
         /// Gets or sets the interval of the schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.interval
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -91,20 +66,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// </para>
         /// </summary>
         public BinaryData Interval { get; set; }
-        /// <summary>
-        /// Gets or sets the frequency of the schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.frequency
-        /// </summary>
+        /// <summary> Gets or sets the frequency of the schedule. </summary>
         public AutomationScheduleFrequency Frequency { get; }
-        /// <summary>
-        /// Gets or sets the time zone of the schedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.timeZone
-        /// </summary>
+        /// <summary> Gets or sets the time zone of the schedule. </summary>
         public string TimeZone { get; set; }
-        /// <summary>
-        /// Gets or sets the AdvancedSchedule.
-        /// Serialized Name: ScheduleCreateOrUpdateParameters.properties.advancedSchedule
-        /// </summary>
+        /// <summary> Gets or sets the AdvancedSchedule. </summary>
         public AutomationAdvancedSchedule AdvancedSchedule { get; set; }
     }
 }

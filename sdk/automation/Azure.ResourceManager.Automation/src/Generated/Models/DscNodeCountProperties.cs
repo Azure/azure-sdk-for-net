@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The DscNodeCountProperties.
-    /// Serialized Name: NodeCountProperties
-    /// </summary>
+    /// <summary> The DscNodeCountProperties. </summary>
     internal partial class DscNodeCountProperties
     {
         /// <summary> Initializes a new instance of DscNodeCountProperties. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscNodeCountProperties. </summary>
-        /// <param name="nameCount">
-        /// Gets the count for the name
-        /// Serialized Name: NodeCountProperties.count
-        /// </param>
+        /// <param name="nameCount"> Gets the count for the name. </param>
         internal DscNodeCountProperties(int? nameCount)
         {
             NameCount = nameCount;
         }
 
-        /// <summary>
-        /// Gets the count for the name
-        /// Serialized Name: NodeCountProperties.count
-        /// </summary>
+        /// <summary> Gets the count for the name. </summary>
         public int? NameCount { get; }
     }
 }

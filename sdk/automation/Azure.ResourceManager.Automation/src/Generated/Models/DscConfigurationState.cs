@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets or sets the state of the configuration.
-    /// Serialized Name: DscConfigurationState
-    /// </summary>
+    /// <summary> Gets or sets the state of the configuration. </summary>
     public readonly partial struct DscConfigurationState : IEquatable<DscConfigurationState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Automation.Models
         private const string EditValue = "Edit";
         private const string PublishedValue = "Published";
 
-        /// <summary>
-        /// New
-        /// Serialized Name: DscConfigurationState.New
-        /// </summary>
+        /// <summary> New. </summary>
         public static DscConfigurationState New { get; } = new DscConfigurationState(NewValue);
-        /// <summary>
-        /// Edit
-        /// Serialized Name: DscConfigurationState.Edit
-        /// </summary>
+        /// <summary> Edit. </summary>
         public static DscConfigurationState Edit { get; } = new DscConfigurationState(EditValue);
-        /// <summary>
-        /// Published
-        /// Serialized Name: DscConfigurationState.Published
-        /// </summary>
+        /// <summary> Published. </summary>
         public static DscConfigurationState Published { get; } = new DscConfigurationState(PublishedValue);
         /// <summary> Determines if two <see cref="DscConfigurationState"/> values are the same. </summary>
         public static bool operator ==(DscConfigurationState left, DscConfigurationState right) => left.Equals(right);

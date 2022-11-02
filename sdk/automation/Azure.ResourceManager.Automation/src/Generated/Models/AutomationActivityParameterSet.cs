@@ -10,42 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the activity parameter set.
-    /// Serialized Name: ActivityParameterSet
-    /// </summary>
+    /// <summary> Definition of the activity parameter set. </summary>
     public partial class AutomationActivityParameterSet
     {
         /// <summary> Initializes a new instance of AutomationActivityParameterSet. </summary>
         internal AutomationActivityParameterSet()
         {
-            Parameters = new ChangeTrackingList<AutomationActivityParameter>();
+            Parameters = new ChangeTrackingList<AutomationActivityParameterDefinition>();
         }
 
         /// <summary> Initializes a new instance of AutomationActivityParameterSet. </summary>
-        /// <param name="name">
-        /// Gets or sets the name of the activity parameter set.
-        /// Serialized Name: ActivityParameterSet.name
-        /// </param>
-        /// <param name="parameters">
-        /// Gets or sets the parameters of the activity parameter set.
-        /// Serialized Name: ActivityParameterSet.parameters
-        /// </param>
-        internal AutomationActivityParameterSet(string name, IReadOnlyList<AutomationActivityParameter> parameters)
+        /// <param name="name"> Gets or sets the name of the activity parameter set. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the activity parameter set. </param>
+        internal AutomationActivityParameterSet(string name, IReadOnlyList<AutomationActivityParameterDefinition> parameters)
         {
             Name = name;
             Parameters = parameters;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the activity parameter set.
-        /// Serialized Name: ActivityParameterSet.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the activity parameter set. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Gets or sets the parameters of the activity parameter set.
-        /// Serialized Name: ActivityParameterSet.parameters
-        /// </summary>
-        public IReadOnlyList<AutomationActivityParameter> Parameters { get; }
+        /// <summary> Gets or sets the parameters of the activity parameter set. </summary>
+        public IReadOnlyList<AutomationActivityParameterDefinition> Parameters { get; }
     }
 }

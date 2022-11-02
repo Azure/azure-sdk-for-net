@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class RunbookParameter : IUtf8JsonSerializable
+    public partial class RunbookParameterDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteEndObject();
         }
 
-        internal static RunbookParameter DeserializeRunbookParameter(JsonElement element)
+        internal static RunbookParameterDefinition DeserializeRunbookParameterDefinition(JsonElement element)
         {
             Optional<string> type = default;
             Optional<bool> isMandatory = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new RunbookParameter(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value);
+            return new RunbookParameterDefinition(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value);
         }
     }
 }

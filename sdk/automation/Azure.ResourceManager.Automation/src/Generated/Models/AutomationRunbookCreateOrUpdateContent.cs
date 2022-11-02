@@ -10,72 +10,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create or update runbook operation.
-    /// Serialized Name: RunbookCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create or update runbook operation. </summary>
     public partial class AutomationRunbookCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationRunbookCreateOrUpdateContent. </summary>
-        /// <param name="runbookType">
-        /// Gets or sets the type of the runbook.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.properties.runbookType
-        /// </param>
+        /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
         public AutomationRunbookCreateOrUpdateContent(AutomationRunbookType runbookType)
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             RunbookType = runbookType;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the resource.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the resource. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Gets or sets the location of the resource.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.location
-        /// </summary>
+        /// <summary> Gets or sets the location of the resource. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.tags
-        /// </summary>
+        /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Gets or sets verbose log option.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.properties.logVerbose
-        /// </summary>
+        /// <summary> Gets or sets verbose log option. </summary>
         public bool? IsLogVerboseEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets progress log option.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.properties.logProgress
-        /// </summary>
+        /// <summary> Gets or sets progress log option. </summary>
         public bool? IsLogProgressEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets the type of the runbook.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.properties.runbookType
-        /// </summary>
+        /// <summary> Gets or sets the type of the runbook. </summary>
         public AutomationRunbookType RunbookType { get; }
-        /// <summary>
-        /// Gets or sets the draft runbook properties.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.properties.draft
-        /// </summary>
+        /// <summary> Gets or sets the draft runbook properties. </summary>
         public AutomationRunbookDraft Draft { get; set; }
-        /// <summary>
-        /// Gets or sets the published runbook content link.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.properties.publishContentLink
-        /// </summary>
+        /// <summary> Gets or sets the published runbook content link. </summary>
         public AutomationContentLink PublishContentLink { get; set; }
-        /// <summary>
-        /// Gets or sets the description of the runbook.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the runbook. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Gets or sets the activity-level tracing options of the runbook.
-        /// Serialized Name: RunbookCreateOrUpdateParameters.properties.logActivityTrace
-        /// </summary>
+        /// <summary> Gets or sets the activity-level tracing options of the runbook. </summary>
         public int? LogActivityTrace { get; set; }
     }
 }

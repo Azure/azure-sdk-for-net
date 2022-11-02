@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         internal static AutomationActivityParameterSet DeserializeAutomationActivityParameterSet(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<IReadOnlyList<AutomationActivityParameter>> parameters = default;
+            Optional<IReadOnlyList<AutomationActivityParameterDefinition>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AutomationActivityParameter> array = new List<AutomationActivityParameter>();
+                    List<AutomationActivityParameterDefinition> array = new List<AutomationActivityParameterDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationActivityParameter.DeserializeAutomationActivityParameter(item));
+                        array.Add(AutomationActivityParameterDefinition.DeserializeAutomationActivityParameterDefinition(item));
                     }
                     parameters = array;
                     continue;

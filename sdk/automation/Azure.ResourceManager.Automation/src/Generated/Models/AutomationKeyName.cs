@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Automation key name.
-    /// Serialized Name: AutomationKeyName
-    /// </summary>
+    /// <summary> Automation key name. </summary>
     public readonly partial struct AutomationKeyName : IEquatable<AutomationKeyName>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Automation.Models
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
 
-        /// <summary>
-        /// Primary
-        /// Serialized Name: AutomationKeyName.Primary
-        /// </summary>
+        /// <summary> Primary. </summary>
         public static AutomationKeyName Primary { get; } = new AutomationKeyName(PrimaryValue);
-        /// <summary>
-        /// Secondary
-        /// Serialized Name: AutomationKeyName.Secondary
-        /// </summary>
+        /// <summary> Secondary. </summary>
         public static AutomationKeyName Secondary { get; } = new AutomationKeyName(SecondaryValue);
         /// <summary> Determines if two <see cref="AutomationKeyName"/> values are the same. </summary>
         public static bool operator ==(AutomationKeyName left, AutomationKeyName right) => left.Equals(right);

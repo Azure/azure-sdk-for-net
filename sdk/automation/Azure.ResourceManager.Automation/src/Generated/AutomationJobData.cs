@@ -27,62 +27,20 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="runbook">
-        /// Gets or sets the runbook.
-        /// Serialized Name: Job.properties.runbook
-        /// </param>
-        /// <param name="startedBy">
-        /// Gets or sets the job started by.
-        /// Serialized Name: Job.properties.startedBy
-        /// </param>
-        /// <param name="runOn">
-        /// Gets or sets the runOn which specifies the group name where the job is to be executed.
-        /// Serialized Name: Job.properties.runOn
-        /// </param>
-        /// <param name="jobId">
-        /// Gets or sets the id of the job.
-        /// Serialized Name: Job.properties.jobId
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets or sets the creation time of the job.
-        /// Serialized Name: Job.properties.creationTime
-        /// </param>
-        /// <param name="status">
-        /// Gets or sets the status of the job.
-        /// Serialized Name: Job.properties.status
-        /// </param>
-        /// <param name="statusDetails">
-        /// Gets or sets the status details of the job.
-        /// Serialized Name: Job.properties.statusDetails
-        /// </param>
-        /// <param name="startOn">
-        /// Gets or sets the start time of the job.
-        /// Serialized Name: Job.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Gets or sets the end time of the job.
-        /// Serialized Name: Job.properties.endTime
-        /// </param>
-        /// <param name="exception">
-        /// Gets or sets the exception of the job.
-        /// Serialized Name: Job.properties.exception
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time of the job.
-        /// Serialized Name: Job.properties.lastModifiedTime
-        /// </param>
-        /// <param name="lastStatusModifiedOn">
-        /// Gets or sets the last status modified time of the job.
-        /// Serialized Name: Job.properties.lastStatusModifiedTime
-        /// </param>
-        /// <param name="parameters">
-        /// Gets or sets the parameters of the job.
-        /// Serialized Name: Job.properties.parameters
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the job.
-        /// Serialized Name: Job.properties.provisioningState
-        /// </param>
+        /// <param name="runbook"> Gets or sets the runbook. </param>
+        /// <param name="startedBy"> Gets or sets the job started by. </param>
+        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
+        /// <param name="jobId"> Gets or sets the id of the job. </param>
+        /// <param name="createdOn"> Gets or sets the creation time of the job. </param>
+        /// <param name="status"> Gets or sets the status of the job. </param>
+        /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
+        /// <param name="startOn"> Gets or sets the start time of the job. </param>
+        /// <param name="endOn"> Gets or sets the end time of the job. </param>
+        /// <param name="exception"> Gets or sets the exception of the job. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time of the job. </param>
+        /// <param name="lastStatusModifiedOn"> Gets or sets the last status modified time of the job. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
+        /// <param name="provisioningState"> The current provisioning state of the job. </param>
         internal AutomationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, string startedBy, string runOn, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Runbook = runbook;
@@ -101,15 +59,9 @@ namespace Azure.ResourceManager.Automation
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// Gets or sets the runbook.
-        /// Serialized Name: Job.properties.runbook
-        /// </summary>
+        /// <summary> Gets or sets the runbook. </summary>
         internal RunbookAssociationProperty Runbook { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the runbook.
-        /// Serialized Name: RunbookAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the runbook. </summary>
         public string RunbookName
         {
             get => Runbook is null ? default : Runbook.Name;
@@ -121,70 +73,31 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Gets or sets the job started by.
-        /// Serialized Name: Job.properties.startedBy
-        /// </summary>
+        /// <summary> Gets or sets the job started by. </summary>
         public string StartedBy { get; set; }
-        /// <summary>
-        /// Gets or sets the runOn which specifies the group name where the job is to be executed.
-        /// Serialized Name: Job.properties.runOn
-        /// </summary>
+        /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
         public string RunOn { get; set; }
-        /// <summary>
-        /// Gets or sets the id of the job.
-        /// Serialized Name: Job.properties.jobId
-        /// </summary>
+        /// <summary> Gets or sets the id of the job. </summary>
         public Guid? JobId { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time of the job.
-        /// Serialized Name: Job.properties.creationTime
-        /// </summary>
+        /// <summary> Gets or sets the creation time of the job. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the status of the job.
-        /// Serialized Name: Job.properties.status
-        /// </summary>
+        /// <summary> Gets or sets the status of the job. </summary>
         public AutomationJobStatus? Status { get; set; }
-        /// <summary>
-        /// Gets or sets the status details of the job.
-        /// Serialized Name: Job.properties.statusDetails
-        /// </summary>
+        /// <summary> Gets or sets the status details of the job. </summary>
         public string StatusDetails { get; set; }
-        /// <summary>
-        /// Gets or sets the start time of the job.
-        /// Serialized Name: Job.properties.startTime
-        /// </summary>
+        /// <summary> Gets or sets the start time of the job. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// Gets or sets the end time of the job.
-        /// Serialized Name: Job.properties.endTime
-        /// </summary>
+        /// <summary> Gets or sets the end time of the job. </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// Gets or sets the exception of the job.
-        /// Serialized Name: Job.properties.exception
-        /// </summary>
+        /// <summary> Gets or sets the exception of the job. </summary>
         public string Exception { get; set; }
-        /// <summary>
-        /// Gets or sets the last modified time of the job.
-        /// Serialized Name: Job.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time of the job. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the last status modified time of the job.
-        /// Serialized Name: Job.properties.lastStatusModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last status modified time of the job. </summary>
         public DateTimeOffset? LastStatusModifiedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the parameters of the job.
-        /// Serialized Name: Job.properties.parameters
-        /// </summary>
+        /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// The current provisioning state of the job.
-        /// Serialized Name: Job.properties.provisioningState
-        /// </summary>
+        /// <summary> The current provisioning state of the job. </summary>
         public JobProvisioningState? ProvisioningState { get; set; }
     }
 }

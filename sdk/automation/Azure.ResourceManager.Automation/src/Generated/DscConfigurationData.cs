@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The location. </param>
         public DscConfigurationData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameter>();
+            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
         }
 
         /// <summary> Initializes a new instance of DscConfigurationData. </summary>
@@ -31,51 +31,18 @@ namespace Azure.ResourceManager.Automation
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// Gets or sets the etag of the resource.
-        /// Serialized Name: DscConfiguration.etag
-        /// </param>
-        /// <param name="provisioningState">
-        /// Gets or sets the provisioning state of the configuration.
-        /// Serialized Name: DscConfiguration.properties.provisioningState
-        /// </param>
-        /// <param name="jobCount">
-        /// Gets or sets the job count of the configuration.
-        /// Serialized Name: DscConfiguration.properties.jobCount
-        /// </param>
-        /// <param name="parameters">
-        /// Gets or sets the configuration parameters.
-        /// Serialized Name: DscConfiguration.properties.parameters
-        /// </param>
-        /// <param name="source">
-        /// Gets or sets the source.
-        /// Serialized Name: DscConfiguration.properties.source
-        /// </param>
-        /// <param name="state">
-        /// Gets or sets the state of the configuration.
-        /// Serialized Name: DscConfiguration.properties.state
-        /// </param>
-        /// <param name="isLogVerboseEnabled">
-        /// Gets or sets verbose log option.
-        /// Serialized Name: DscConfiguration.properties.logVerbose
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets or sets the creation time.
-        /// Serialized Name: DscConfiguration.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time.
-        /// Serialized Name: DscConfiguration.properties.lastModifiedTime
-        /// </param>
-        /// <param name="nodeConfigurationCount">
-        /// Gets the number of compiled node configurations.
-        /// Serialized Name: DscConfiguration.properties.nodeConfigurationCount
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: DscConfiguration.properties.description
-        /// </param>
-        internal DscConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DscConfigurationProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameter> parameters, AutomationContentSource source, DscConfigurationState? state, bool? isLogVerboseEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="etag"> Gets or sets the etag of the resource. </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the configuration. </param>
+        /// <param name="jobCount"> Gets or sets the job count of the configuration. </param>
+        /// <param name="parameters"> Gets or sets the configuration parameters. </param>
+        /// <param name="source"> Gets or sets the source. </param>
+        /// <param name="state"> Gets or sets the state of the configuration. </param>
+        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
+        /// <param name="nodeConfigurationCount"> Gets the number of compiled node configurations. </param>
+        /// <param name="description"> Gets or sets the description. </param>
+        internal DscConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DscConfigurationProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameterDefinition> parameters, AutomationContentSource source, DscConfigurationState? state, bool? isLogVerboseEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ProvisioningState = provisioningState;
@@ -90,60 +57,27 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets or sets the etag of the resource.
-        /// Serialized Name: DscConfiguration.etag
-        /// </summary>
+        /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
-        /// <summary>
-        /// Gets or sets the provisioning state of the configuration.
-        /// Serialized Name: DscConfiguration.properties.provisioningState
-        /// </summary>
+        /// <summary> Gets or sets the provisioning state of the configuration. </summary>
         public DscConfigurationProvisioningState? ProvisioningState { get; set; }
-        /// <summary>
-        /// Gets or sets the job count of the configuration.
-        /// Serialized Name: DscConfiguration.properties.jobCount
-        /// </summary>
+        /// <summary> Gets or sets the job count of the configuration. </summary>
         public int? JobCount { get; set; }
-        /// <summary>
-        /// Gets or sets the configuration parameters.
-        /// Serialized Name: DscConfiguration.properties.parameters
-        /// </summary>
-        public IDictionary<string, DscConfigurationParameter> Parameters { get; }
-        /// <summary>
-        /// Gets or sets the source.
-        /// Serialized Name: DscConfiguration.properties.source
-        /// </summary>
+        /// <summary> Gets or sets the configuration parameters. </summary>
+        public IDictionary<string, DscConfigurationParameterDefinition> Parameters { get; }
+        /// <summary> Gets or sets the source. </summary>
         public AutomationContentSource Source { get; set; }
-        /// <summary>
-        /// Gets or sets the state of the configuration.
-        /// Serialized Name: DscConfiguration.properties.state
-        /// </summary>
+        /// <summary> Gets or sets the state of the configuration. </summary>
         public DscConfigurationState? State { get; set; }
-        /// <summary>
-        /// Gets or sets verbose log option.
-        /// Serialized Name: DscConfiguration.properties.logVerbose
-        /// </summary>
+        /// <summary> Gets or sets verbose log option. </summary>
         public bool? IsLogVerboseEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time.
-        /// Serialized Name: DscConfiguration.properties.creationTime
-        /// </summary>
+        /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the last modified time.
-        /// Serialized Name: DscConfiguration.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary>
-        /// Gets the number of compiled node configurations.
-        /// Serialized Name: DscConfiguration.properties.nodeConfigurationCount
-        /// </summary>
+        /// <summary> Gets the number of compiled node configurations. </summary>
         public int? NodeConfigurationCount { get; set; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: DscConfiguration.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

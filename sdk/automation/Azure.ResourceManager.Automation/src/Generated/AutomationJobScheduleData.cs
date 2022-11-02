@@ -27,26 +27,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="jobScheduleId">
-        /// Gets or sets the id of job schedule.
-        /// Serialized Name: JobSchedule.properties.jobScheduleId
-        /// </param>
-        /// <param name="schedule">
-        /// Gets or sets the schedule.
-        /// Serialized Name: JobSchedule.properties.schedule
-        /// </param>
-        /// <param name="runbook">
-        /// Gets or sets the runbook.
-        /// Serialized Name: JobSchedule.properties.runbook
-        /// </param>
-        /// <param name="runOn">
-        /// Gets or sets the hybrid worker group that the scheduled job should run on.
-        /// Serialized Name: JobSchedule.properties.runOn
-        /// </param>
-        /// <param name="parameters">
-        /// Gets or sets the parameters of the job schedule.
-        /// Serialized Name: JobSchedule.properties.parameters
-        /// </param>
+        /// <param name="jobScheduleId"> Gets or sets the id of job schedule. </param>
+        /// <param name="schedule"> Gets or sets the schedule. </param>
+        /// <param name="runbook"> Gets or sets the runbook. </param>
+        /// <param name="runOn"> Gets or sets the hybrid worker group that the scheduled job should run on. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job schedule. </param>
         internal AutomationJobScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? jobScheduleId, ScheduleAssociationProperty schedule, RunbookAssociationProperty runbook, string runOn, IReadOnlyDictionary<string, string> parameters) : base(id, name, resourceType, systemData)
         {
             JobScheduleId = jobScheduleId;
@@ -56,48 +41,27 @@ namespace Azure.ResourceManager.Automation
             Parameters = parameters;
         }
 
-        /// <summary>
-        /// Gets or sets the id of job schedule.
-        /// Serialized Name: JobSchedule.properties.jobScheduleId
-        /// </summary>
+        /// <summary> Gets or sets the id of job schedule. </summary>
         public Guid? JobScheduleId { get; }
-        /// <summary>
-        /// Gets or sets the schedule.
-        /// Serialized Name: JobSchedule.properties.schedule
-        /// </summary>
+        /// <summary> Gets or sets the schedule. </summary>
         internal ScheduleAssociationProperty Schedule { get; }
-        /// <summary>
-        /// Gets or sets the name of the Schedule.
-        /// Serialized Name: ScheduleAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the Schedule. </summary>
         public string ScheduleName
         {
             get => Schedule?.Name;
         }
 
-        /// <summary>
-        /// Gets or sets the runbook.
-        /// Serialized Name: JobSchedule.properties.runbook
-        /// </summary>
+        /// <summary> Gets or sets the runbook. </summary>
         internal RunbookAssociationProperty Runbook { get; }
-        /// <summary>
-        /// Gets or sets the name of the runbook.
-        /// Serialized Name: RunbookAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the runbook. </summary>
         public string RunbookName
         {
             get => Runbook?.Name;
         }
 
-        /// <summary>
-        /// Gets or sets the hybrid worker group that the scheduled job should run on.
-        /// Serialized Name: JobSchedule.properties.runOn
-        /// </summary>
+        /// <summary> Gets or sets the hybrid worker group that the scheduled job should run on. </summary>
         public string RunOn { get; }
-        /// <summary>
-        /// Gets or sets the parameters of the job schedule.
-        /// Serialized Name: JobSchedule.properties.parameters
-        /// </summary>
+        /// <summary> Gets or sets the parameters of the job schedule. </summary>
         public IReadOnlyDictionary<string, string> Parameters { get; }
     }
 }

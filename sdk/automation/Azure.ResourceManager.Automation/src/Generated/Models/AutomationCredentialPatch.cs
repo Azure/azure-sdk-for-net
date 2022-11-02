@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the Update credential operation.
-    /// Serialized Name: CredentialUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the Update credential operation. </summary>
     public partial class AutomationCredentialPatch
     {
         /// <summary> Initializes a new instance of AutomationCredentialPatch. </summary>
@@ -18,25 +15,13 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the name of the credential.
-        /// Serialized Name: CredentialUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the credential. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Gets or sets the user name of the credential.
-        /// Serialized Name: CredentialUpdateParameters.properties.userName
-        /// </summary>
+        /// <summary> Gets or sets the user name of the credential. </summary>
         public string UserName { get; set; }
-        /// <summary>
-        /// Gets or sets the password of the credential.
-        /// Serialized Name: CredentialUpdateParameters.properties.password
-        /// </summary>
+        /// <summary> Gets or sets the password of the credential. </summary>
         public string Password { get; set; }
-        /// <summary>
-        /// Gets or sets the description of the credential.
-        /// Serialized Name: CredentialUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the credential. </summary>
         public string Description { get; set; }
     }
 }

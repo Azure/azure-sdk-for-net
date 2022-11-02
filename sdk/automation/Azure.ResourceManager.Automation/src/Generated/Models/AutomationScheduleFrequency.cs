@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets or sets the frequency of the schedule.
-    /// Serialized Name: ScheduleFrequency
-    /// </summary>
+    /// <summary> Gets or sets the frequency of the schedule. </summary>
     public readonly partial struct AutomationScheduleFrequency : IEquatable<AutomationScheduleFrequency>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Automation.Models
         private const string MonthValue = "Month";
         private const string MinuteValue = "Minute";
 
-        /// <summary>
-        /// OneTime
-        /// Serialized Name: ScheduleFrequency.OneTime
-        /// </summary>
+        /// <summary> OneTime. </summary>
         public static AutomationScheduleFrequency OneTime { get; } = new AutomationScheduleFrequency(OneTimeValue);
-        /// <summary>
-        /// Day
-        /// Serialized Name: ScheduleFrequency.Day
-        /// </summary>
+        /// <summary> Day. </summary>
         public static AutomationScheduleFrequency Day { get; } = new AutomationScheduleFrequency(DayValue);
-        /// <summary>
-        /// Hour
-        /// Serialized Name: ScheduleFrequency.Hour
-        /// </summary>
+        /// <summary> Hour. </summary>
         public static AutomationScheduleFrequency Hour { get; } = new AutomationScheduleFrequency(HourValue);
-        /// <summary>
-        /// Week
-        /// Serialized Name: ScheduleFrequency.Week
-        /// </summary>
+        /// <summary> Week. </summary>
         public static AutomationScheduleFrequency Week { get; } = new AutomationScheduleFrequency(WeekValue);
-        /// <summary>
-        /// Month
-        /// Serialized Name: ScheduleFrequency.Month
-        /// </summary>
+        /// <summary> Month. </summary>
         public static AutomationScheduleFrequency Month { get; } = new AutomationScheduleFrequency(MonthValue);
-        /// <summary>
-        /// The minimum allowed interval for Minute schedules is 15 minutes.
-        /// Serialized Name: ScheduleFrequency.Minute
-        /// </summary>
+        /// <summary> The minimum allowed interval for Minute schedules is 15 minutes. </summary>
         public static AutomationScheduleFrequency Minute { get; } = new AutomationScheduleFrequency(MinuteValue);
         /// <summary> Determines if two <see cref="AutomationScheduleFrequency"/> values are the same. </summary>
         public static bool operator ==(AutomationScheduleFrequency left, AutomationScheduleFrequency right) => left.Equals(right);

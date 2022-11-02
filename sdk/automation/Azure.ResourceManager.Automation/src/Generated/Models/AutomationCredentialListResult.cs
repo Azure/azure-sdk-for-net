@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list credential operation.
-    /// Serialized Name: CredentialListResult
-    /// </summary>
+    /// <summary> The response model for the list credential operation. </summary>
     internal partial class AutomationCredentialListResult
     {
         /// <summary> Initializes a new instance of AutomationCredentialListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationCredentialListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of credentials.
-        /// Serialized Name: CredentialListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: CredentialListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of credentials. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationCredentialListResult(IReadOnlyList<AutomationCredentialData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of credentials.
-        /// Serialized Name: CredentialListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of credentials. </summary>
         public IReadOnlyList<AutomationCredentialData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: CredentialListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

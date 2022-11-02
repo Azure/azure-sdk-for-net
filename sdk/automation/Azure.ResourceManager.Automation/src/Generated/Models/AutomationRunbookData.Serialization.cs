@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Automation
             Optional<bool> logProgress = default;
             Optional<int> logActivityTrace = default;
             Optional<int> jobCount = default;
-            Optional<IDictionary<string, RunbookParameter>> parameters = default;
+            Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
             Optional<IList<string>> outputTypes = default;
             Optional<AutomationRunbookDraft> draft = default;
             Optional<RunbookProvisioningState> provisioningState = default;
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, RunbookParameter> dictionary = new Dictionary<string, RunbookParameter>();
+                            Dictionary<string, RunbookParameterDefinition> dictionary = new Dictionary<string, RunbookParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, RunbookParameter.DeserializeRunbookParameter(property1.Value));
+                                dictionary.Add(property1.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property1.Value));
                             }
                             parameters = dictionary;
                             continue;

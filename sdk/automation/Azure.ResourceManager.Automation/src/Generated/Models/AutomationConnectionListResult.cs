@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list connection operation.
-    /// Serialized Name: ConnectionListResult
-    /// </summary>
+    /// <summary> The response model for the list connection operation. </summary>
     internal partial class AutomationConnectionListResult
     {
         /// <summary> Initializes a new instance of AutomationConnectionListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationConnectionListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of connection.
-        /// Serialized Name: ConnectionListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: ConnectionListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of connection. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationConnectionListResult(IReadOnlyList<AutomationConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of connection.
-        /// Serialized Name: ConnectionListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of connection. </summary>
         public IReadOnlyList<AutomationConnectionData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: ConnectionListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

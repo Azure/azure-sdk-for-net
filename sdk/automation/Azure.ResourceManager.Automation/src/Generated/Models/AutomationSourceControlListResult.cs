@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list source controls operation.
-    /// Serialized Name: SourceControlListResult
-    /// </summary>
+    /// <summary> The response model for the list source controls operation. </summary>
     internal partial class AutomationSourceControlListResult
     {
         /// <summary> Initializes a new instance of AutomationSourceControlListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationSourceControlListResult. </summary>
-        /// <param name="value">
-        /// The list of source controls.
-        /// Serialized Name: SourceControlListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The next link.
-        /// Serialized Name: SourceControlListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of source controls. </param>
+        /// <param name="nextLink"> The next link. </param>
         internal AutomationSourceControlListResult(IReadOnlyList<AutomationSourceControlData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of source controls.
-        /// Serialized Name: SourceControlListResult.value
-        /// </summary>
+        /// <summary> The list of source controls. </summary>
         public IReadOnlyList<AutomationSourceControlData> Value { get; }
-        /// <summary>
-        /// The next link.
-        /// Serialized Name: SourceControlListResult.nextLink
-        /// </summary>
+        /// <summary> The next link. </summary>
         public string NextLink { get; }
     }
 }

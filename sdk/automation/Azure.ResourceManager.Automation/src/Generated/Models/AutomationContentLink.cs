@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the content link.
-    /// Serialized Name: ContentLink
-    /// </summary>
+    /// <summary> Definition of the content link. </summary>
     public partial class AutomationContentLink
     {
         /// <summary> Initializes a new instance of AutomationContentLink. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationContentLink. </summary>
-        /// <param name="uri">
-        /// Gets or sets the uri of the runbook content.
-        /// Serialized Name: ContentLink.uri
-        /// </param>
-        /// <param name="contentHash">
-        /// Gets or sets the hash.
-        /// Serialized Name: ContentLink.contentHash
-        /// </param>
-        /// <param name="version">
-        /// Gets or sets the version of the content.
-        /// Serialized Name: ContentLink.version
-        /// </param>
+        /// <param name="uri"> Gets or sets the uri of the runbook content. </param>
+        /// <param name="contentHash"> Gets or sets the hash. </param>
+        /// <param name="version"> Gets or sets the version of the content. </param>
         internal AutomationContentLink(Uri uri, AutomationContentHash contentHash, string version)
         {
             Uri = uri;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.Automation.Models
             Version = version;
         }
 
-        /// <summary>
-        /// Gets or sets the uri of the runbook content.
-        /// Serialized Name: ContentLink.uri
-        /// </summary>
+        /// <summary> Gets or sets the uri of the runbook content. </summary>
         public Uri Uri { get; set; }
-        /// <summary>
-        /// Gets or sets the hash.
-        /// Serialized Name: ContentLink.contentHash
-        /// </summary>
+        /// <summary> Gets or sets the hash. </summary>
         public AutomationContentHash ContentHash { get; set; }
-        /// <summary>
-        /// Gets or sets the version of the content.
-        /// Serialized Name: ContentLink.version
-        /// </summary>
+        /// <summary> Gets or sets the version of the content. </summary>
         public string Version { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Navigation for DSC Report Resource.
-    /// Serialized Name: DscReportResourceNavigation
-    /// </summary>
+    /// <summary> Navigation for DSC Report Resource. </summary>
     public partial class DscReportResourceNavigation
     {
         /// <summary> Initializes a new instance of DscReportResourceNavigation. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscReportResourceNavigation. </summary>
-        /// <param name="resourceId">
-        /// Gets or sets the ID of the resource to navigate to.
-        /// Serialized Name: DscReportResourceNavigation.resourceId
-        /// </param>
+        /// <param name="resourceId"> Gets or sets the ID of the resource to navigate to. </param>
         internal DscReportResourceNavigation(string resourceId)
         {
             ResourceId = resourceId;
         }
 
-        /// <summary>
-        /// Gets or sets the ID of the resource to navigate to.
-        /// Serialized Name: DscReportResourceNavigation.resourceId
-        /// </summary>
+        /// <summary> Gets or sets the ID of the resource to navigate to. </summary>
         public string ResourceId { get; }
     }
 }

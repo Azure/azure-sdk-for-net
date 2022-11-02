@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Day of the occurrence. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday.
-    /// Serialized Name: ScheduleDay
-    /// </summary>
+    /// <summary> Day of the occurrence. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday. </summary>
     public readonly partial struct AutomationDayOfWeek : IEquatable<AutomationDayOfWeek>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.Automation.Models
         private const string SaturdayValue = "Saturday";
         private const string SundayValue = "Sunday";
 
-        /// <summary>
-        /// Monday
-        /// Serialized Name: ScheduleDay.Monday
-        /// </summary>
+        /// <summary> Monday. </summary>
         public static AutomationDayOfWeek Monday { get; } = new AutomationDayOfWeek(MondayValue);
-        /// <summary>
-        /// Tuesday
-        /// Serialized Name: ScheduleDay.Tuesday
-        /// </summary>
+        /// <summary> Tuesday. </summary>
         public static AutomationDayOfWeek Tuesday { get; } = new AutomationDayOfWeek(TuesdayValue);
-        /// <summary>
-        /// Wednesday
-        /// Serialized Name: ScheduleDay.Wednesday
-        /// </summary>
+        /// <summary> Wednesday. </summary>
         public static AutomationDayOfWeek Wednesday { get; } = new AutomationDayOfWeek(WednesdayValue);
-        /// <summary>
-        /// Thursday
-        /// Serialized Name: ScheduleDay.Thursday
-        /// </summary>
+        /// <summary> Thursday. </summary>
         public static AutomationDayOfWeek Thursday { get; } = new AutomationDayOfWeek(ThursdayValue);
-        /// <summary>
-        /// Friday
-        /// Serialized Name: ScheduleDay.Friday
-        /// </summary>
+        /// <summary> Friday. </summary>
         public static AutomationDayOfWeek Friday { get; } = new AutomationDayOfWeek(FridayValue);
-        /// <summary>
-        /// Saturday
-        /// Serialized Name: ScheduleDay.Saturday
-        /// </summary>
+        /// <summary> Saturday. </summary>
         public static AutomationDayOfWeek Saturday { get; } = new AutomationDayOfWeek(SaturdayValue);
-        /// <summary>
-        /// Sunday
-        /// Serialized Name: ScheduleDay.Sunday
-        /// </summary>
+        /// <summary> Sunday. </summary>
         public static AutomationDayOfWeek Sunday { get; } = new AutomationDayOfWeek(SundayValue);
         /// <summary> Determines if two <see cref="AutomationDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(AutomationDayOfWeek left, AutomationDayOfWeek right) => left.Equals(right);

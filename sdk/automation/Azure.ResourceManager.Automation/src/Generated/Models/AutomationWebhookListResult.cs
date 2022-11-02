@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list webhook operation.
-    /// Serialized Name: WebhookListResult
-    /// </summary>
+    /// <summary> The response model for the list webhook operation. </summary>
     internal partial class AutomationWebhookListResult
     {
         /// <summary> Initializes a new instance of AutomationWebhookListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationWebhookListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of webhooks.
-        /// Serialized Name: WebhookListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: WebhookListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of webhooks. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationWebhookListResult(IReadOnlyList<AutomationWebhookData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of webhooks.
-        /// Serialized Name: WebhookListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of webhooks. </summary>
         public IReadOnlyList<AutomationWebhookData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: WebhookListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

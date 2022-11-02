@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the job stream.
-    /// Serialized Name: JobStream
-    /// </summary>
+    /// <summary> Definition of the job stream. </summary>
     public partial class AutomationJobStream
     {
         /// <summary> Initializes a new instance of AutomationJobStream. </summary>
@@ -24,34 +21,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationJobStream. </summary>
-        /// <param name="id">
-        /// Gets or sets the id of the resource.
-        /// Serialized Name: JobStream.id
-        /// </param>
-        /// <param name="jobStreamId">
-        /// Gets or sets the id of the job stream.
-        /// Serialized Name: JobStream.properties.jobStreamId
-        /// </param>
-        /// <param name="time">
-        /// Gets or sets the creation time of the job.
-        /// Serialized Name: JobStream.properties.time
-        /// </param>
-        /// <param name="streamType">
-        /// Gets or sets the stream type.
-        /// Serialized Name: JobStream.properties.streamType
-        /// </param>
-        /// <param name="streamText">
-        /// Gets or sets the stream text.
-        /// Serialized Name: JobStream.properties.streamText
-        /// </param>
-        /// <param name="summary">
-        /// Gets or sets the summary.
-        /// Serialized Name: JobStream.properties.summary
-        /// </param>
-        /// <param name="value">
-        /// Gets or sets the values of the job stream.
-        /// Serialized Name: JobStream.properties.value
-        /// </param>
+        /// <param name="id"> Gets or sets the id of the resource. </param>
+        /// <param name="jobStreamId"> Gets or sets the id of the job stream. </param>
+        /// <param name="time"> Gets or sets the creation time of the job. </param>
+        /// <param name="streamType"> Gets or sets the stream type. </param>
+        /// <param name="streamText"> Gets or sets the stream text. </param>
+        /// <param name="summary"> Gets or sets the summary. </param>
+        /// <param name="value"> Gets or sets the values of the job stream. </param>
         internal AutomationJobStream(ResourceIdentifier id, string jobStreamId, DateTimeOffset? time, AutomationJobStreamType? streamType, string streamText, string summary, IReadOnlyDictionary<string, BinaryData> value)
         {
             Id = id;
@@ -63,39 +39,20 @@ namespace Azure.ResourceManager.Automation.Models
             Value = value;
         }
 
-        /// <summary>
-        /// Gets or sets the id of the resource.
-        /// Serialized Name: JobStream.id
-        /// </summary>
+        /// <summary> Gets or sets the id of the resource. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// Gets or sets the id of the job stream.
-        /// Serialized Name: JobStream.properties.jobStreamId
-        /// </summary>
+        /// <summary> Gets or sets the id of the job stream. </summary>
         public string JobStreamId { get; }
-        /// <summary>
-        /// Gets or sets the creation time of the job.
-        /// Serialized Name: JobStream.properties.time
-        /// </summary>
+        /// <summary> Gets or sets the creation time of the job. </summary>
         public DateTimeOffset? Time { get; }
-        /// <summary>
-        /// Gets or sets the stream type.
-        /// Serialized Name: JobStream.properties.streamType
-        /// </summary>
+        /// <summary> Gets or sets the stream type. </summary>
         public AutomationJobStreamType? StreamType { get; }
-        /// <summary>
-        /// Gets or sets the stream text.
-        /// Serialized Name: JobStream.properties.streamText
-        /// </summary>
+        /// <summary> Gets or sets the stream text. </summary>
         public string StreamText { get; }
-        /// <summary>
-        /// Gets or sets the summary.
-        /// Serialized Name: JobStream.properties.summary
-        /// </summary>
+        /// <summary> Gets or sets the summary. </summary>
         public string Summary { get; }
         /// <summary>
         /// Gets or sets the values of the job stream.
-        /// Serialized Name: JobStream.properties.value
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

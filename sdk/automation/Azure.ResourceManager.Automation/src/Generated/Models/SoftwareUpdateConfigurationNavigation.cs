@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Software update configuration Run Navigation model.
-    /// Serialized Name: UpdateConfigurationNavigation
-    /// </summary>
+    /// <summary> Software update configuration Run Navigation model. </summary>
     internal partial class SoftwareUpdateConfigurationNavigation
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationNavigation. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationNavigation. </summary>
-        /// <param name="name">
-        /// Name of the software update configuration triggered the software update configuration run
-        /// Serialized Name: UpdateConfigurationNavigation.name
-        /// </param>
+        /// <param name="name"> Name of the software update configuration triggered the software update configuration run. </param>
         internal SoftwareUpdateConfigurationNavigation(string name)
         {
             Name = name;
         }
 
-        /// <summary>
-        /// Name of the software update configuration triggered the software update configuration run
-        /// Serialized Name: UpdateConfigurationNavigation.name
-        /// </summary>
+        /// <summary> Name of the software update configuration triggered the software update configuration run. </summary>
         public string Name { get; }
     }
 }

@@ -24,30 +24,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="thumbprint">
-        /// Gets the thumbprint of the certificate.
-        /// Serialized Name: Certificate.properties.thumbprint
-        /// </param>
-        /// <param name="expireOn">
-        /// Gets the expiry time of the certificate.
-        /// Serialized Name: Certificate.properties.expiryTime
-        /// </param>
-        /// <param name="isExportable">
-        /// Gets the is exportable flag of the certificate.
-        /// Serialized Name: Certificate.properties.isExportable
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets the creation time.
-        /// Serialized Name: Certificate.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets the last modified time.
-        /// Serialized Name: Certificate.properties.lastModifiedTime
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: Certificate.properties.description
-        /// </param>
+        /// <param name="thumbprint"> Gets the thumbprint of the certificate. </param>
+        /// <param name="expireOn"> Gets the expiry time of the certificate. </param>
+        /// <param name="isExportable"> Gets the is exportable flag of the certificate. </param>
+        /// <param name="createdOn"> Gets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
         internal AutomationCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData thumbprint, DateTimeOffset? expireOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
             Thumbprint = thumbprint;
@@ -60,7 +42,6 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Gets the thumbprint of the certificate.
-        /// Serialized Name: Certificate.properties.thumbprint
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -90,30 +71,15 @@ namespace Azure.ResourceManager.Automation
         /// </para>
         /// </summary>
         public BinaryData Thumbprint { get; }
-        /// <summary>
-        /// Gets the expiry time of the certificate.
-        /// Serialized Name: Certificate.properties.expiryTime
-        /// </summary>
+        /// <summary> Gets the expiry time of the certificate. </summary>
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary>
-        /// Gets the is exportable flag of the certificate.
-        /// Serialized Name: Certificate.properties.isExportable
-        /// </summary>
+        /// <summary> Gets the is exportable flag of the certificate. </summary>
         public bool? IsExportable { get; }
-        /// <summary>
-        /// Gets the creation time.
-        /// Serialized Name: Certificate.properties.creationTime
-        /// </summary>
+        /// <summary> Gets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Gets the last modified time.
-        /// Serialized Name: Certificate.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: Certificate.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

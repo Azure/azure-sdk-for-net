@@ -25,62 +25,20 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn">
-        /// Gets or sets the start time of the schedule.
-        /// Serialized Name: Schedule.properties.startTime
-        /// </param>
-        /// <param name="startInMinutes">
-        /// Gets the start time&apos;s offset in minutes.
-        /// Serialized Name: Schedule.properties.startTimeOffsetMinutes
-        /// </param>
-        /// <param name="expireOn">
-        /// Gets or sets the end time of the schedule.
-        /// Serialized Name: Schedule.properties.expiryTime
-        /// </param>
-        /// <param name="expireInMinutes">
-        /// Gets or sets the expiry time&apos;s offset in minutes.
-        /// Serialized Name: Schedule.properties.expiryTimeOffsetMinutes
-        /// </param>
-        /// <param name="isEnabled">
-        /// Gets or sets a value indicating whether this schedule is enabled.
-        /// Serialized Name: Schedule.properties.isEnabled
-        /// </param>
-        /// <param name="nextRunOn">
-        /// Gets or sets the next run time of the schedule.
-        /// Serialized Name: Schedule.properties.nextRun
-        /// </param>
-        /// <param name="nextRunInMinutes">
-        /// Gets or sets the next run time&apos;s offset in minutes.
-        /// Serialized Name: Schedule.properties.nextRunOffsetMinutes
-        /// </param>
-        /// <param name="interval">
-        /// Gets or sets the interval of the schedule.
-        /// Serialized Name: Schedule.properties.interval
-        /// </param>
-        /// <param name="frequency">
-        /// Gets or sets the frequency of the schedule.
-        /// Serialized Name: Schedule.properties.frequency
-        /// </param>
-        /// <param name="timeZone">
-        /// Gets or sets the time zone of the schedule.
-        /// Serialized Name: Schedule.properties.timeZone
-        /// </param>
-        /// <param name="advancedSchedule">
-        /// Gets or sets the advanced schedule.
-        /// Serialized Name: Schedule.properties.advancedSchedule
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets or sets the creation time.
-        /// Serialized Name: Schedule.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Schedule.properties.lastModifiedTime
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: Schedule.properties.description
-        /// </param>
+        /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
+        /// <param name="startInMinutes"> Gets the start time&apos;s offset in minutes. </param>
+        /// <param name="expireOn"> Gets or sets the end time of the schedule. </param>
+        /// <param name="expireInMinutes"> Gets or sets the expiry time&apos;s offset in minutes. </param>
+        /// <param name="isEnabled"> Gets or sets a value indicating whether this schedule is enabled. </param>
+        /// <param name="nextRunOn"> Gets or sets the next run time of the schedule. </param>
+        /// <param name="nextRunInMinutes"> Gets or sets the next run time&apos;s offset in minutes. </param>
+        /// <param name="interval"> Gets or sets the interval of the schedule. </param>
+        /// <param name="frequency"> Gets or sets the frequency of the schedule. </param>
+        /// <param name="timeZone"> Gets or sets the time zone of the schedule. </param>
+        /// <param name="advancedSchedule"> Gets or sets the advanced schedule. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
         internal AutomationScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, BinaryData interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
@@ -99,44 +57,22 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets or sets the start time of the schedule.
-        /// Serialized Name: Schedule.properties.startTime
-        /// </summary>
+        /// <summary> Gets or sets the start time of the schedule. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// Gets the start time&apos;s offset in minutes.
-        /// Serialized Name: Schedule.properties.startTimeOffsetMinutes
-        /// </summary>
+        /// <summary> Gets the start time&apos;s offset in minutes. </summary>
         public double? StartInMinutes { get; }
-        /// <summary>
-        /// Gets or sets the end time of the schedule.
-        /// Serialized Name: Schedule.properties.expiryTime
-        /// </summary>
+        /// <summary> Gets or sets the end time of the schedule. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary>
-        /// Gets or sets the expiry time&apos;s offset in minutes.
-        /// Serialized Name: Schedule.properties.expiryTimeOffsetMinutes
-        /// </summary>
+        /// <summary> Gets or sets the expiry time&apos;s offset in minutes. </summary>
         public double? ExpireInMinutes { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether this schedule is enabled.
-        /// Serialized Name: Schedule.properties.isEnabled
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether this schedule is enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets the next run time of the schedule.
-        /// Serialized Name: Schedule.properties.nextRun
-        /// </summary>
+        /// <summary> Gets or sets the next run time of the schedule. </summary>
         public DateTimeOffset? NextRunOn { get; set; }
-        /// <summary>
-        /// Gets or sets the next run time&apos;s offset in minutes.
-        /// Serialized Name: Schedule.properties.nextRunOffsetMinutes
-        /// </summary>
+        /// <summary> Gets or sets the next run time&apos;s offset in minutes. </summary>
         public double? NextRunInMinutes { get; set; }
         /// <summary>
         /// Gets or sets the interval of the schedule.
-        /// Serialized Name: Schedule.properties.interval
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -166,35 +102,17 @@ namespace Azure.ResourceManager.Automation
         /// </para>
         /// </summary>
         public BinaryData Interval { get; set; }
-        /// <summary>
-        /// Gets or sets the frequency of the schedule.
-        /// Serialized Name: Schedule.properties.frequency
-        /// </summary>
+        /// <summary> Gets or sets the frequency of the schedule. </summary>
         public AutomationScheduleFrequency? Frequency { get; set; }
-        /// <summary>
-        /// Gets or sets the time zone of the schedule.
-        /// Serialized Name: Schedule.properties.timeZone
-        /// </summary>
+        /// <summary> Gets or sets the time zone of the schedule. </summary>
         public string TimeZone { get; set; }
-        /// <summary>
-        /// Gets or sets the advanced schedule.
-        /// Serialized Name: Schedule.properties.advancedSchedule
-        /// </summary>
+        /// <summary> Gets or sets the advanced schedule. </summary>
         public AutomationAdvancedSchedule AdvancedSchedule { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time.
-        /// Serialized Name: Schedule.properties.creationTime
-        /// </summary>
+        /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Schedule.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: Schedule.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

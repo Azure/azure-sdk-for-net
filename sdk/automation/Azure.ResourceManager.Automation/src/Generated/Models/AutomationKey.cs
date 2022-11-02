@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Automation key which is used to register a DSC Node
-    /// Serialized Name: Key
-    /// </summary>
+    /// <summary> Automation key which is used to register a DSC Node. </summary>
     public partial class AutomationKey
     {
         /// <summary> Initializes a new instance of AutomationKey. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationKey. </summary>
-        /// <param name="keyName">
-        /// Automation key name.
-        /// Serialized Name: Key.KeyName
-        /// </param>
-        /// <param name="permissions">
-        /// Automation key permissions.
-        /// Serialized Name: Key.Permissions
-        /// </param>
-        /// <param name="value">
-        /// Value of the Automation Key used for registration.
-        /// Serialized Name: Key.Value
-        /// </param>
+        /// <param name="keyName"> Automation key name. </param>
+        /// <param name="permissions"> Automation key permissions. </param>
+        /// <param name="value"> Value of the Automation Key used for registration. </param>
         internal AutomationKey(AutomationKeyName? keyName, AutomationKeyPermission? permissions, string value)
         {
             KeyName = keyName;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Automation.Models
             Value = value;
         }
 
-        /// <summary>
-        /// Automation key name.
-        /// Serialized Name: Key.KeyName
-        /// </summary>
+        /// <summary> Automation key name. </summary>
         public AutomationKeyName? KeyName { get; }
-        /// <summary>
-        /// Automation key permissions.
-        /// Serialized Name: Key.Permissions
-        /// </summary>
+        /// <summary> Automation key permissions. </summary>
         public AutomationKeyPermission? Permissions { get; }
-        /// <summary>
-        /// Value of the Automation Key used for registration.
-        /// Serialized Name: Key.Value
-        /// </summary>
+        /// <summary> Value of the Automation Key used for registration. </summary>
         public string Value { get; }
     }
 }

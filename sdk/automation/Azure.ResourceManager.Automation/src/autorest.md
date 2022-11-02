@@ -15,9 +15,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 rename-mapping:
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
   AutomationAccount.properties.disableLocalAuth: IsLocalAuthDisabled
@@ -120,6 +117,18 @@ rename-mapping:
   TokenType.Oauth: OAuth
   JobSchedule.properties.jobScheduleId: -|uuid
   RunbookTypeEnum: AutomationRunbookType
+  AgentRegistrationRegenerateKeyParameter: AgentRegistrationRegenerateKeyContent
+  HybridRunbookWorkerGroupCreateOrUpdateParameters: HybridRunbookWorkerGroupCreateOrUpdateContent
+  RunbookParameter: RunbookParameterDefinition
+  DscConfigurationParameter: DscConfigurationParameterDefinition
+  ActivityParameter: AutomationActivityParameterDefinition
+  CountType.nodeconfiguration: NodeConfiguration
+  ErrorResponse: AutomationResponseError
+  TypeField.type: FieldType
+  LinuxUpdateClasses: LinuxUpdateClassification
+  WindowsUpdateClasses: WindowsUpdateClassification
+  WindowsProperties.excludedKbNumbers: ExcludedKBNumbers
+  WindowsProperties.includedKbNumbers: IncludedKBNumbers
 
 prepend-rp-prefix:
   - Certificate
@@ -145,7 +154,6 @@ prepend-rp-prefix:
   - Activity
   - ActivityListResult
   - ActivityOutputType
-  - ActivityParameter
   - ActivityParameterSet
   - ActivityParameterValidationSet
   - AdvancedSchedule
@@ -160,7 +168,6 @@ prepend-rp-prefix:
   - CountType
   - CredentialListResult
   - EncryptionProperties
-  - ErrorResponse
   - HttpStatusCode
   - JobListResultV2
   - JobScheduleListResult

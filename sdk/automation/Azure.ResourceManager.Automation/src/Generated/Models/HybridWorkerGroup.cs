@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Type of the HybridWorkerGroup.
-    /// Serialized Name: GroupTypeEnum
-    /// </summary>
+    /// <summary> Type of the HybridWorkerGroup. </summary>
     public readonly partial struct HybridWorkerGroup : IEquatable<HybridWorkerGroup>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Automation.Models
         private const string UserValue = "User";
         private const string SystemValue = "System";
 
-        /// <summary>
-        /// User
-        /// Serialized Name: GroupTypeEnum.User
-        /// </summary>
+        /// <summary> User. </summary>
         public static HybridWorkerGroup User { get; } = new HybridWorkerGroup(UserValue);
-        /// <summary>
-        /// System
-        /// Serialized Name: GroupTypeEnum.System
-        /// </summary>
+        /// <summary> System. </summary>
         public static HybridWorkerGroup System { get; } = new HybridWorkerGroup(SystemValue);
         /// <summary> Determines if two <see cref="HybridWorkerGroup"/> values are the same. </summary>
         public static bool operator ==(HybridWorkerGroup left, HybridWorkerGroup right) => left.Equals(right);

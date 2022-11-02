@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Target operating system for the software update configuration.
-    /// Serialized Name: OperatingSystemType
-    /// </summary>
+    /// <summary> Target operating system for the software update configuration. </summary>
     public enum SoftwareUpdateConfigurationOperatingSystemType
     {
-        /// <summary>
-        /// Windows
-        /// Serialized Name: OperatingSystemType.Windows
-        /// </summary>
+        /// <summary> Windows. </summary>
         Windows,
-        /// <summary>
-        /// Linux
-        /// Serialized Name: OperatingSystemType.Linux
-        /// </summary>
+        /// <summary> Linux. </summary>
         Linux
     }
 }

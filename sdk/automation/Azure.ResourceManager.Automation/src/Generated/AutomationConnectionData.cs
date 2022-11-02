@@ -27,26 +27,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="connectionType">
-        /// Gets or sets the connectionType of the connection.
-        /// Serialized Name: Connection.properties.connectionType
-        /// </param>
-        /// <param name="fieldDefinitionValues">
-        /// Gets the field definition values of the connection.
-        /// Serialized Name: Connection.properties.fieldDefinitionValues
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets the creation time.
-        /// Serialized Name: Connection.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets the last modified time.
-        /// Serialized Name: Connection.properties.lastModifiedTime
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: Connection.properties.description
-        /// </param>
+        /// <param name="connectionType"> Gets or sets the connectionType of the connection. </param>
+        /// <param name="fieldDefinitionValues"> Gets the field definition values of the connection. </param>
+        /// <param name="createdOn"> Gets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
         internal AutomationConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectionTypeAssociationProperty connectionType, IReadOnlyDictionary<string, string> fieldDefinitionValues, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
             ConnectionType = connectionType;
@@ -56,15 +41,9 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets or sets the connectionType of the connection.
-        /// Serialized Name: Connection.properties.connectionType
-        /// </summary>
+        /// <summary> Gets or sets the connectionType of the connection. </summary>
         internal ConnectionTypeAssociationProperty ConnectionType { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the connection type.
-        /// Serialized Name: ConnectionTypeAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the connection type. </summary>
         public string ConnectionTypeName
         {
             get => ConnectionType is null ? default : ConnectionType.Name;
@@ -76,25 +55,13 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Gets the field definition values of the connection.
-        /// Serialized Name: Connection.properties.fieldDefinitionValues
-        /// </summary>
+        /// <summary> Gets the field definition values of the connection. </summary>
         public IReadOnlyDictionary<string, string> FieldDefinitionValues { get; }
-        /// <summary>
-        /// Gets the creation time.
-        /// Serialized Name: Connection.properties.creationTime
-        /// </summary>
+        /// <summary> Gets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Gets the last modified time.
-        /// Serialized Name: Connection.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: Connection.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

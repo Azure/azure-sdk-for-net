@@ -7,35 +7,20 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The account SKU.
-    /// Serialized Name: Sku
-    /// </summary>
+    /// <summary> The account SKU. </summary>
     public partial class AutomationSku
     {
         /// <summary> Initializes a new instance of AutomationSku. </summary>
-        /// <param name="name">
-        /// Gets or sets the SKU name of the account.
-        /// Serialized Name: Sku.name
-        /// </param>
+        /// <param name="name"> Gets or sets the SKU name of the account. </param>
         public AutomationSku(AutomationSkuName name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of AutomationSku. </summary>
-        /// <param name="name">
-        /// Gets or sets the SKU name of the account.
-        /// Serialized Name: Sku.name
-        /// </param>
-        /// <param name="family">
-        /// Gets or sets the SKU family.
-        /// Serialized Name: Sku.family
-        /// </param>
-        /// <param name="capacity">
-        /// Gets or sets the SKU capacity.
-        /// Serialized Name: Sku.capacity
-        /// </param>
+        /// <param name="name"> Gets or sets the SKU name of the account. </param>
+        /// <param name="family"> Gets or sets the SKU family. </param>
+        /// <param name="capacity"> Gets or sets the SKU capacity. </param>
         internal AutomationSku(AutomationSkuName name, string family, int? capacity)
         {
             Name = name;
@@ -43,20 +28,11 @@ namespace Azure.ResourceManager.Automation.Models
             Capacity = capacity;
         }
 
-        /// <summary>
-        /// Gets or sets the SKU name of the account.
-        /// Serialized Name: Sku.name
-        /// </summary>
+        /// <summary> Gets or sets the SKU name of the account. </summary>
         public AutomationSkuName Name { get; set; }
-        /// <summary>
-        /// Gets or sets the SKU family.
-        /// Serialized Name: Sku.family
-        /// </summary>
+        /// <summary> Gets or sets the SKU family. </summary>
         public string Family { get; set; }
-        /// <summary>
-        /// Gets or sets the SKU capacity.
-        /// Serialized Name: Sku.capacity
-        /// </summary>
+        /// <summary> Gets or sets the SKU capacity. </summary>
         public int? Capacity { get; set; }
     }
 }

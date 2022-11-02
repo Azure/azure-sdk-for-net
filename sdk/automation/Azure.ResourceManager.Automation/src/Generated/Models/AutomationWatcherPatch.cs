@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The WatcherUpdateParameters.
-    /// Serialized Name: WatcherUpdateParameters
-    /// </summary>
+    /// <summary> The AutomationWatcherPatch. </summary>
     public partial class AutomationWatcherPatch
     {
         /// <summary> Initializes a new instance of AutomationWatcherPatch. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the name of the resource.
-        /// Serialized Name: WatcherUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the resource. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Gets or sets the frequency at which the watcher is invoked.
-        /// Serialized Name: WatcherUpdateParameters.properties.executionFrequencyInSeconds
-        /// </summary>
+        /// <summary> Gets or sets the frequency at which the watcher is invoked. </summary>
         public long? ExecutionFrequencyInSeconds { get; set; }
     }
 }

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Settings concerning key vault encryption for a configuration store.
-    /// Serialized Name: KeyVaultProperties
-    /// </summary>
+    /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
     public partial class AutomationKeyVaultProperties
     {
         /// <summary> Initializes a new instance of AutomationKeyVaultProperties. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationKeyVaultProperties. </summary>
-        /// <param name="keyvaultUri">
-        /// The URI of the key vault key used to encrypt data.
-        /// Serialized Name: KeyVaultProperties.keyvaultUri
-        /// </param>
-        /// <param name="keyName">
-        /// The name of key used to encrypt data.
-        /// Serialized Name: KeyVaultProperties.keyName
-        /// </param>
-        /// <param name="keyVersion">
-        /// The key version of the key used to encrypt data.
-        /// Serialized Name: KeyVaultProperties.keyVersion
-        /// </param>
+        /// <param name="keyvaultUri"> The URI of the key vault key used to encrypt data. </param>
+        /// <param name="keyName"> The name of key used to encrypt data. </param>
+        /// <param name="keyVersion"> The key version of the key used to encrypt data. </param>
         internal AutomationKeyVaultProperties(Uri keyvaultUri, string keyName, string keyVersion)
         {
             KeyvaultUri = keyvaultUri;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.Automation.Models
             KeyVersion = keyVersion;
         }
 
-        /// <summary>
-        /// The URI of the key vault key used to encrypt data.
-        /// Serialized Name: KeyVaultProperties.keyvaultUri
-        /// </summary>
+        /// <summary> The URI of the key vault key used to encrypt data. </summary>
         public Uri KeyvaultUri { get; set; }
-        /// <summary>
-        /// The name of key used to encrypt data.
-        /// Serialized Name: KeyVaultProperties.keyName
-        /// </summary>
+        /// <summary> The name of key used to encrypt data. </summary>
         public string KeyName { get; set; }
-        /// <summary>
-        /// The key version of the key used to encrypt data.
-        /// Serialized Name: KeyVaultProperties.keyVersion
-        /// </summary>
+        /// <summary> The key version of the key used to encrypt data. </summary>
         public string KeyVersion { get; set; }
     }
 }

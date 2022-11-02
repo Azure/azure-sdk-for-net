@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create or update or replace certificate operation.
-    /// Serialized Name: CertificateCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create or update or replace certificate operation. </summary>
     public partial class AutomationCertificateCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationCertificateCreateOrUpdateContent. </summary>
-        /// <param name="name">
-        /// Gets or sets the name of the certificate.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.name
-        /// </param>
-        /// <param name="base64Value">
-        /// Gets or sets the base64 encoded value of the certificate.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.base64Value
-        /// </param>
+        /// <param name="name"> Gets or sets the name of the certificate. </param>
+        /// <param name="base64Value"> Gets or sets the base64 encoded value of the certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="base64Value"/> is null. </exception>
         public AutomationCertificateCreateOrUpdateContent(string name, string base64Value)
         {
@@ -35,24 +26,14 @@ namespace Azure.ResourceManager.Automation.Models
             Base64Value = base64Value;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the certificate.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the certificate. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Gets or sets the base64 encoded value of the certificate.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.base64Value
-        /// </summary>
+        /// <summary> Gets or sets the base64 encoded value of the certificate. </summary>
         public string Base64Value { get; }
-        /// <summary>
-        /// Gets or sets the description of the certificate.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the certificate. </summary>
         public string Description { get; set; }
         /// <summary>
         /// Gets or sets the thumbprint of the certificate.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.thumbprint
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -82,10 +63,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// </para>
         /// </summary>
         public BinaryData Thumbprint { get; set; }
-        /// <summary>
-        /// Gets or sets the is exportable flag of the certificate.
-        /// Serialized Name: CertificateCreateOrUpdateParameters.properties.isExportable
-        /// </summary>
+        /// <summary> Gets or sets the is exportable flag of the certificate. </summary>
         public bool? IsExportable { get; set; }
     }
 }

@@ -27,26 +27,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isGlobal">
-        /// Gets or sets a Boolean value to indicate if the connection type is global.
-        /// Serialized Name: ConnectionType.properties.isGlobal
-        /// </param>
-        /// <param name="fieldDefinitions">
-        /// Gets the field definitions of the connection type.
-        /// Serialized Name: ConnectionType.properties.fieldDefinitions
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets the creation time.
-        /// Serialized Name: ConnectionType.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time.
-        /// Serialized Name: ConnectionType.properties.lastModifiedTime
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: ConnectionType.properties.description
-        /// </param>
+        /// <param name="isGlobal"> Gets or sets a Boolean value to indicate if the connection type is global. </param>
+        /// <param name="fieldDefinitions"> Gets the field definitions of the connection type. </param>
+        /// <param name="createdOn"> Gets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
         internal AutomationConnectionTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isGlobal, IReadOnlyDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
             IsGlobal = isGlobal;
@@ -56,30 +41,15 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets or sets a Boolean value to indicate if the connection type is global.
-        /// Serialized Name: ConnectionType.properties.isGlobal
-        /// </summary>
+        /// <summary> Gets or sets a Boolean value to indicate if the connection type is global. </summary>
         public bool? IsGlobal { get; }
-        /// <summary>
-        /// Gets the field definitions of the connection type.
-        /// Serialized Name: ConnectionType.properties.fieldDefinitions
-        /// </summary>
+        /// <summary> Gets the field definitions of the connection type. </summary>
         public IReadOnlyDictionary<string, AutomationConnectionFieldDefinition> FieldDefinitions { get; }
-        /// <summary>
-        /// Gets the creation time.
-        /// Serialized Name: ConnectionType.properties.creationTime
-        /// </summary>
+        /// <summary> Gets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Gets or sets the last modified time.
-        /// Serialized Name: ConnectionType.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: ConnectionType.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; }
     }
 }

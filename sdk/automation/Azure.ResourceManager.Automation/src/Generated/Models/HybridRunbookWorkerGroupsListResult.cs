@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list hybrid runbook worker groups.
-    /// Serialized Name: HybridRunbookWorkerGroupsListResult
-    /// </summary>
+    /// <summary> The response model for the list hybrid runbook worker groups. </summary>
     internal partial class HybridRunbookWorkerGroupsListResult
     {
         /// <summary> Initializes a new instance of HybridRunbookWorkerGroupsListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of HybridRunbookWorkerGroupsListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of hybrid runbook worker groups.
-        /// Serialized Name: HybridRunbookWorkerGroupsListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: HybridRunbookWorkerGroupsListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of hybrid runbook worker groups. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal HybridRunbookWorkerGroupsListResult(IReadOnlyList<HybridRunbookWorkerGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of hybrid runbook worker groups.
-        /// Serialized Name: HybridRunbookWorkerGroupsListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of hybrid runbook worker groups. </summary>
         public IReadOnlyList<HybridRunbookWorkerGroupData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: HybridRunbookWorkerGroupsListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

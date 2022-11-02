@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the get usage operation.
-    /// Serialized Name: UsageListResult
-    /// </summary>
+    /// <summary> The response model for the get usage operation. </summary>
     internal partial class AutomationUsageListResult
     {
         /// <summary> Initializes a new instance of AutomationUsageListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationUsageListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets usage.
-        /// Serialized Name: UsageListResult.value
-        /// </param>
+        /// <param name="value"> Gets or sets usage. </param>
         internal AutomationUsageListResult(IReadOnlyList<AutomationUsage> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// Gets or sets usage.
-        /// Serialized Name: UsageListResult.value
-        /// </summary>
+        /// <summary> Gets or sets usage. </summary>
         public IReadOnlyList<AutomationUsage> Value { get; }
     }
 }

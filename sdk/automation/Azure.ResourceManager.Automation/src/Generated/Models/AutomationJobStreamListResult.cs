@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list job stream operation.
-    /// Serialized Name: JobStreamListResult
-    /// </summary>
+    /// <summary> The response model for the list job stream operation. </summary>
     internal partial class AutomationJobStreamListResult
     {
         /// <summary> Initializes a new instance of AutomationJobStreamListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationJobStreamListResult. </summary>
-        /// <param name="value">
-        /// A list of job streams.
-        /// Serialized Name: JobStreamListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: JobStreamListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of job streams. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationJobStreamListResult(IReadOnlyList<AutomationJobStream> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// A list of job streams.
-        /// Serialized Name: JobStreamListResult.value
-        /// </summary>
+        /// <summary> A list of job streams. </summary>
         public IReadOnlyList<AutomationJobStream> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: JobStreamListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

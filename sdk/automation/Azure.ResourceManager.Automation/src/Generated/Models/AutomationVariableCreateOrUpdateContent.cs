@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create or update variable operation.
-    /// Serialized Name: VariableCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create or update variable operation. </summary>
     public partial class AutomationVariableCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationVariableCreateOrUpdateContent. </summary>
-        /// <param name="name">
-        /// Gets or sets the name of the variable.
-        /// Serialized Name: VariableCreateOrUpdateParameters.name
-        /// </param>
+        /// <param name="name"> Gets or sets the name of the variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AutomationVariableCreateOrUpdateContent(string name)
         {
@@ -29,25 +23,13 @@ namespace Azure.ResourceManager.Automation.Models
             Name = name;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the variable.
-        /// Serialized Name: VariableCreateOrUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the variable. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Gets or sets the value of the variable.
-        /// Serialized Name: VariableCreateOrUpdateParameters.properties.value
-        /// </summary>
+        /// <summary> Gets or sets the value of the variable. </summary>
         public string Value { get; set; }
-        /// <summary>
-        /// Gets or sets the description of the variable.
-        /// Serialized Name: VariableCreateOrUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the variable. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Gets or sets the encrypted flag of the variable.
-        /// Serialized Name: VariableCreateOrUpdateParameters.properties.isEncrypted
-        /// </summary>
+        /// <summary> Gets or sets the encrypted flag of the variable. </summary>
         public bool? IsEncrypted { get; set; }
     }
 }

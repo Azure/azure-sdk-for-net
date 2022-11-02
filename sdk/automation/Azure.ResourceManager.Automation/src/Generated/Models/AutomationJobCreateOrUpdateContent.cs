@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create job operation.
-    /// Serialized Name: JobCreateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create job operation. </summary>
     public partial class AutomationJobCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationJobCreateOrUpdateContent. </summary>
@@ -22,15 +19,9 @@ namespace Azure.ResourceManager.Automation.Models
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Gets or sets the runbook.
-        /// Serialized Name: JobCreateParameters.properties.runbook
-        /// </summary>
+        /// <summary> Gets or sets the runbook. </summary>
         internal RunbookAssociationProperty Runbook { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the runbook.
-        /// Serialized Name: RunbookAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the runbook. </summary>
         public string RunbookName
         {
             get => Runbook is null ? default : Runbook.Name;
@@ -42,15 +33,9 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        /// <summary>
-        /// Gets or sets the parameters of the job.
-        /// Serialized Name: JobCreateParameters.properties.parameters
-        /// </summary>
+        /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// Gets or sets the runOn which specifies the group name where the job is to be executed.
-        /// Serialized Name: JobCreateParameters.properties.runOn
-        /// </summary>
+        /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
         public string RunOn { get; set; }
     }
 }

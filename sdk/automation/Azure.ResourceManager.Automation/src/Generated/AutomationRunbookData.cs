@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The location. </param>
         public AutomationRunbookData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, RunbookParameter>();
+            Parameters = new ChangeTrackingDictionary<string, RunbookParameterDefinition>();
             OutputTypes = new ChangeTrackingList<string>();
         }
 
@@ -32,71 +32,23 @@ namespace Azure.ResourceManager.Automation
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// Gets or sets the etag of the resource.
-        /// Serialized Name: Runbook.etag
-        /// </param>
-        /// <param name="runbookType">
-        /// Gets or sets the type of the runbook.
-        /// Serialized Name: Runbook.properties.runbookType
-        /// </param>
-        /// <param name="publishContentLink">
-        /// Gets or sets the published runbook content link.
-        /// Serialized Name: Runbook.properties.publishContentLink
-        /// </param>
-        /// <param name="state">
-        /// Gets or sets the state of the runbook.
-        /// Serialized Name: Runbook.properties.state
-        /// </param>
-        /// <param name="isLogVerboseEnabled">
-        /// Gets or sets verbose log option.
-        /// Serialized Name: Runbook.properties.logVerbose
-        /// </param>
-        /// <param name="isLogProgressEnabled">
-        /// Gets or sets progress log option.
-        /// Serialized Name: Runbook.properties.logProgress
-        /// </param>
-        /// <param name="logActivityTrace">
-        /// Gets or sets the option to log activity trace of the runbook.
-        /// Serialized Name: Runbook.properties.logActivityTrace
-        /// </param>
-        /// <param name="jobCount">
-        /// Gets or sets the job count of the runbook.
-        /// Serialized Name: Runbook.properties.jobCount
-        /// </param>
-        /// <param name="parameters">
-        /// Gets or sets the runbook parameters.
-        /// Serialized Name: Runbook.properties.parameters
-        /// </param>
-        /// <param name="outputTypes">
-        /// Gets or sets the runbook output types.
-        /// Serialized Name: Runbook.properties.outputTypes
-        /// </param>
-        /// <param name="draft">
-        /// Gets or sets the draft runbook properties.
-        /// Serialized Name: Runbook.properties.draft
-        /// </param>
-        /// <param name="provisioningState">
-        /// Gets or sets the provisioning state of the runbook.
-        /// Serialized Name: Runbook.properties.provisioningState
-        /// </param>
-        /// <param name="lastModifiedBy">
-        /// Gets or sets the last modified by.
-        /// Serialized Name: Runbook.properties.lastModifiedBy
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets or sets the creation time.
-        /// Serialized Name: Runbook.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Runbook.properties.lastModifiedTime
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: Runbook.properties.description
-        /// </param>
-        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameter> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="etag"> Gets or sets the etag of the resource. </param>
+        /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
+        /// <param name="publishContentLink"> Gets or sets the published runbook content link. </param>
+        /// <param name="state"> Gets or sets the state of the runbook. </param>
+        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
+        /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
+        /// <param name="logActivityTrace"> Gets or sets the option to log activity trace of the runbook. </param>
+        /// <param name="jobCount"> Gets or sets the job count of the runbook. </param>
+        /// <param name="parameters"> Gets or sets the runbook parameters. </param>
+        /// <param name="outputTypes"> Gets or sets the runbook output types. </param>
+        /// <param name="draft"> Gets or sets the draft runbook properties. </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the runbook. </param>
+        /// <param name="lastModifiedBy"> Gets or sets the last modified by. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
+        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             RunbookType = runbookType;
@@ -116,85 +68,37 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets or sets the etag of the resource.
-        /// Serialized Name: Runbook.etag
-        /// </summary>
+        /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
-        /// <summary>
-        /// Gets or sets the type of the runbook.
-        /// Serialized Name: Runbook.properties.runbookType
-        /// </summary>
+        /// <summary> Gets or sets the type of the runbook. </summary>
         public AutomationRunbookType? RunbookType { get; set; }
-        /// <summary>
-        /// Gets or sets the published runbook content link.
-        /// Serialized Name: Runbook.properties.publishContentLink
-        /// </summary>
+        /// <summary> Gets or sets the published runbook content link. </summary>
         public AutomationContentLink PublishContentLink { get; set; }
-        /// <summary>
-        /// Gets or sets the state of the runbook.
-        /// Serialized Name: Runbook.properties.state
-        /// </summary>
+        /// <summary> Gets or sets the state of the runbook. </summary>
         public RunbookState? State { get; set; }
-        /// <summary>
-        /// Gets or sets verbose log option.
-        /// Serialized Name: Runbook.properties.logVerbose
-        /// </summary>
+        /// <summary> Gets or sets verbose log option. </summary>
         public bool? IsLogVerboseEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets progress log option.
-        /// Serialized Name: Runbook.properties.logProgress
-        /// </summary>
+        /// <summary> Gets or sets progress log option. </summary>
         public bool? IsLogProgressEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets the option to log activity trace of the runbook.
-        /// Serialized Name: Runbook.properties.logActivityTrace
-        /// </summary>
+        /// <summary> Gets or sets the option to log activity trace of the runbook. </summary>
         public int? LogActivityTrace { get; set; }
-        /// <summary>
-        /// Gets or sets the job count of the runbook.
-        /// Serialized Name: Runbook.properties.jobCount
-        /// </summary>
+        /// <summary> Gets or sets the job count of the runbook. </summary>
         public int? JobCount { get; set; }
-        /// <summary>
-        /// Gets or sets the runbook parameters.
-        /// Serialized Name: Runbook.properties.parameters
-        /// </summary>
-        public IDictionary<string, RunbookParameter> Parameters { get; }
-        /// <summary>
-        /// Gets or sets the runbook output types.
-        /// Serialized Name: Runbook.properties.outputTypes
-        /// </summary>
+        /// <summary> Gets or sets the runbook parameters. </summary>
+        public IDictionary<string, RunbookParameterDefinition> Parameters { get; }
+        /// <summary> Gets or sets the runbook output types. </summary>
         public IList<string> OutputTypes { get; }
-        /// <summary>
-        /// Gets or sets the draft runbook properties.
-        /// Serialized Name: Runbook.properties.draft
-        /// </summary>
+        /// <summary> Gets or sets the draft runbook properties. </summary>
         public AutomationRunbookDraft Draft { get; set; }
-        /// <summary>
-        /// Gets or sets the provisioning state of the runbook.
-        /// Serialized Name: Runbook.properties.provisioningState
-        /// </summary>
+        /// <summary> Gets or sets the provisioning state of the runbook. </summary>
         public RunbookProvisioningState? ProvisioningState { get; set; }
-        /// <summary>
-        /// Gets or sets the last modified by.
-        /// Serialized Name: Runbook.properties.lastModifiedBy
-        /// </summary>
+        /// <summary> Gets or sets the last modified by. </summary>
         public string LastModifiedBy { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time.
-        /// Serialized Name: Runbook.properties.creationTime
-        /// </summary>
+        /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Runbook.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: Runbook.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

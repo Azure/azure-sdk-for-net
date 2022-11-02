@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list configuration operation.
-    /// Serialized Name: DscConfigurationListResult
-    /// </summary>
+    /// <summary> The response model for the list configuration operation. </summary>
     internal partial class DscConfigurationListResult
     {
         /// <summary> Initializes a new instance of DscConfigurationListResult. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscConfigurationListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of configurations.
-        /// Serialized Name: DscConfigurationListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: DscConfigurationListResult.nextLink
-        /// </param>
-        /// <param name="totalCount">
-        /// Gets the total number of configurations matching filter criteria.
-        /// Serialized Name: DscConfigurationListResult.totalCount
-        /// </param>
+        /// <param name="value"> Gets or sets a list of configurations. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
+        /// <param name="totalCount"> Gets the total number of configurations matching filter criteria. </param>
         internal DscConfigurationListResult(IReadOnlyList<DscConfigurationData> value, string nextLink, int? totalCount)
         {
             Value = value;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.Automation.Models
             TotalCount = totalCount;
         }
 
-        /// <summary>
-        /// Gets or sets a list of configurations.
-        /// Serialized Name: DscConfigurationListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of configurations. </summary>
         public IReadOnlyList<DscConfigurationData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: DscConfigurationListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Gets the total number of configurations matching filter criteria.
-        /// Serialized Name: DscConfigurationListResult.totalCount
-        /// </summary>
+        /// <summary> Gets the total number of configurations matching filter criteria. </summary>
         public int? TotalCount { get; }
     }
 }

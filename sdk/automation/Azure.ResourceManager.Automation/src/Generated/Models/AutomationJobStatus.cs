@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets or sets the status of the job.
-    /// Serialized Name: JobStatus
-    /// </summary>
+    /// <summary> Gets or sets the status of the job. </summary>
     public readonly partial struct AutomationJobStatus : IEquatable<AutomationJobStatus>
     {
         private readonly string _value;
@@ -39,70 +36,31 @@ namespace Azure.ResourceManager.Automation.Models
         private const string ResumingValue = "Resuming";
         private const string RemovingValue = "Removing";
 
-        /// <summary>
-        /// New
-        /// Serialized Name: JobStatus.New
-        /// </summary>
+        /// <summary> New. </summary>
         public static AutomationJobStatus New { get; } = new AutomationJobStatus(NewValue);
-        /// <summary>
-        /// Activating
-        /// Serialized Name: JobStatus.Activating
-        /// </summary>
+        /// <summary> Activating. </summary>
         public static AutomationJobStatus Activating { get; } = new AutomationJobStatus(ActivatingValue);
-        /// <summary>
-        /// Running
-        /// Serialized Name: JobStatus.Running
-        /// </summary>
+        /// <summary> Running. </summary>
         public static AutomationJobStatus Running { get; } = new AutomationJobStatus(RunningValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: JobStatus.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static AutomationJobStatus Completed { get; } = new AutomationJobStatus(CompletedValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: JobStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static AutomationJobStatus Failed { get; } = new AutomationJobStatus(FailedValue);
-        /// <summary>
-        /// Stopped
-        /// Serialized Name: JobStatus.Stopped
-        /// </summary>
+        /// <summary> Stopped. </summary>
         public static AutomationJobStatus Stopped { get; } = new AutomationJobStatus(StoppedValue);
-        /// <summary>
-        /// Blocked
-        /// Serialized Name: JobStatus.Blocked
-        /// </summary>
+        /// <summary> Blocked. </summary>
         public static AutomationJobStatus Blocked { get; } = new AutomationJobStatus(BlockedValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: JobStatus.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         public static AutomationJobStatus Suspended { get; } = new AutomationJobStatus(SuspendedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: JobStatus.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static AutomationJobStatus Disconnected { get; } = new AutomationJobStatus(DisconnectedValue);
-        /// <summary>
-        /// Suspending
-        /// Serialized Name: JobStatus.Suspending
-        /// </summary>
+        /// <summary> Suspending. </summary>
         public static AutomationJobStatus Suspending { get; } = new AutomationJobStatus(SuspendingValue);
-        /// <summary>
-        /// Stopping
-        /// Serialized Name: JobStatus.Stopping
-        /// </summary>
+        /// <summary> Stopping. </summary>
         public static AutomationJobStatus Stopping { get; } = new AutomationJobStatus(StoppingValue);
-        /// <summary>
-        /// Resuming
-        /// Serialized Name: JobStatus.Resuming
-        /// </summary>
+        /// <summary> Resuming. </summary>
         public static AutomationJobStatus Resuming { get; } = new AutomationJobStatus(ResumingValue);
-        /// <summary>
-        /// Removing
-        /// Serialized Name: JobStatus.Removing
-        /// </summary>
+        /// <summary> Removing. </summary>
         public static AutomationJobStatus Removing { get; } = new AutomationJobStatus(RemovingValue);
         /// <summary> Determines if two <see cref="AutomationJobStatus"/> values are the same. </summary>
         public static bool operator ==(AutomationJobStatus left, AutomationJobStatus right) => left.Equals(right);

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation
             SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
             SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
             Optional<string> provisioningState = default;
-            Optional<AutomationErrorResponse> error = default;
+            Optional<AutomationResponseError> error = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            error = AutomationErrorResponse.DeserializeAutomationErrorResponse(property0.Value);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"))

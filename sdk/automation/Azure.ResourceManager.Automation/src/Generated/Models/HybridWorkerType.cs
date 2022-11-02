@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Type of the HybridWorker.
-    /// Serialized Name: WorkerType
-    /// </summary>
+    /// <summary> Type of the HybridWorker. </summary>
     public readonly partial struct HybridWorkerType : IEquatable<HybridWorkerType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Automation.Models
         private const string HybridV1Value = "HybridV1";
         private const string HybridV2Value = "HybridV2";
 
-        /// <summary>
-        /// HybridV1
-        /// Serialized Name: WorkerType.HybridV1
-        /// </summary>
+        /// <summary> HybridV1. </summary>
         public static HybridWorkerType HybridV1 { get; } = new HybridWorkerType(HybridV1Value);
-        /// <summary>
-        /// HybridV2
-        /// Serialized Name: WorkerType.HybridV2
-        /// </summary>
+        /// <summary> HybridV2. </summary>
         public static HybridWorkerType HybridV2 { get; } = new HybridWorkerType(HybridV2Value);
         /// <summary> Determines if two <see cref="HybridWorkerType"/> values are the same. </summary>
         public static bool operator ==(HybridWorkerType left, HybridWorkerType right) => left.Equals(right);

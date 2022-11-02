@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Software update configuration Run properties.
-    /// Serialized Name: SoftwareUpdateConfigurationRun
-    /// </summary>
+    /// <summary> Software update configuration Run properties. </summary>
     public partial class SoftwareUpdateConfigurationRun
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRun. </summary>
@@ -22,66 +19,21 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRun. </summary>
-        /// <param name="name">
-        /// Name of the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.name
-        /// </param>
-        /// <param name="id">
-        /// Resource Id of the software update configuration run
-        /// Serialized Name: SoftwareUpdateConfigurationRun.id
-        /// </param>
-        /// <param name="softwareUpdateConfiguration">
-        /// software update configuration triggered this run
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.softwareUpdateConfiguration
-        /// </param>
-        /// <param name="status">
-        /// Status of the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.status
-        /// </param>
-        /// <param name="configuredDuration">
-        /// Configured duration for the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.configuredDuration
-        /// </param>
-        /// <param name="osType">
-        /// Operating system target of the software update configuration triggered this run
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.osType
-        /// </param>
-        /// <param name="startOn">
-        /// Start time of the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.endTime
-        /// </param>
-        /// <param name="computerCount">
-        /// Number of computers in the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.computerCount
-        /// </param>
-        /// <param name="failedCount">
-        /// Number of computers with failed status.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.failedCount
-        /// </param>
-        /// <param name="createdOn">
-        /// Creation time of the resource, which only appears in the response.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.creationTime
-        /// </param>
-        /// <param name="createdBy">
-        /// CreatedBy property, which only appears in the response.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.createdBy
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Last time resource was modified, which only appears in the response.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.lastModifiedTime
-        /// </param>
-        /// <param name="lastModifiedBy">
-        /// LastModifiedBy property, which only appears in the response.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.lastModifiedBy
-        /// </param>
-        /// <param name="tasks">
-        /// Software update configuration tasks triggered in this run
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.tasks
-        /// </param>
+        /// <param name="name"> Name of the software update configuration run. </param>
+        /// <param name="id"> Resource Id of the software update configuration run. </param>
+        /// <param name="softwareUpdateConfiguration"> software update configuration triggered this run. </param>
+        /// <param name="status"> Status of the software update configuration run. </param>
+        /// <param name="configuredDuration"> Configured duration for the software update configuration run. </param>
+        /// <param name="osType"> Operating system target of the software update configuration triggered this run. </param>
+        /// <param name="startOn"> Start time of the software update configuration run. </param>
+        /// <param name="endOn"> End time of the software update configuration run. </param>
+        /// <param name="computerCount"> Number of computers in the software update configuration run. </param>
+        /// <param name="failedCount"> Number of computers with failed status. </param>
+        /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
+        /// <param name="createdBy"> CreatedBy property, which only appears in the response. </param>
+        /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
+        /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
+        /// <param name="tasks"> Software update configuration tasks triggered in this run. </param>
         internal SoftwareUpdateConfigurationRun(string name, ResourceIdentifier id, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks)
         {
             Name = name;
@@ -101,89 +53,41 @@ namespace Azure.ResourceManager.Automation.Models
             Tasks = tasks;
         }
 
-        /// <summary>
-        /// Name of the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.name
-        /// </summary>
+        /// <summary> Name of the software update configuration run. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Resource Id of the software update configuration run
-        /// Serialized Name: SoftwareUpdateConfigurationRun.id
-        /// </summary>
+        /// <summary> Resource Id of the software update configuration run. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// software update configuration triggered this run
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.softwareUpdateConfiguration
-        /// </summary>
+        /// <summary> software update configuration triggered this run. </summary>
         internal SoftwareUpdateConfigurationNavigation SoftwareUpdateConfiguration { get; }
-        /// <summary>
-        /// Name of the software update configuration triggered the software update configuration run
-        /// Serialized Name: UpdateConfigurationNavigation.name
-        /// </summary>
+        /// <summary> Name of the software update configuration triggered the software update configuration run. </summary>
         public string SoftwareUpdateName
         {
             get => SoftwareUpdateConfiguration?.Name;
         }
 
-        /// <summary>
-        /// Status of the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.status
-        /// </summary>
+        /// <summary> Status of the software update configuration run. </summary>
         public string Status { get; }
-        /// <summary>
-        /// Configured duration for the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.configuredDuration
-        /// </summary>
+        /// <summary> Configured duration for the software update configuration run. </summary>
         public TimeSpan? ConfiguredDuration { get; }
-        /// <summary>
-        /// Operating system target of the software update configuration triggered this run
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.osType
-        /// </summary>
+        /// <summary> Operating system target of the software update configuration triggered this run. </summary>
         public string OSType { get; }
-        /// <summary>
-        /// Start time of the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.startTime
-        /// </summary>
+        /// <summary> Start time of the software update configuration run. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// End time of the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.endTime
-        /// </summary>
+        /// <summary> End time of the software update configuration run. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Number of computers in the software update configuration run.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.computerCount
-        /// </summary>
+        /// <summary> Number of computers in the software update configuration run. </summary>
         public int? ComputerCount { get; }
-        /// <summary>
-        /// Number of computers with failed status.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.failedCount
-        /// </summary>
+        /// <summary> Number of computers with failed status. </summary>
         public int? FailedCount { get; }
-        /// <summary>
-        /// Creation time of the resource, which only appears in the response.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.creationTime
-        /// </summary>
+        /// <summary> Creation time of the resource, which only appears in the response. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// CreatedBy property, which only appears in the response.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.createdBy
-        /// </summary>
+        /// <summary> CreatedBy property, which only appears in the response. </summary>
         public string CreatedBy { get; }
-        /// <summary>
-        /// Last time resource was modified, which only appears in the response.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Last time resource was modified, which only appears in the response. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// LastModifiedBy property, which only appears in the response.
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.lastModifiedBy
-        /// </summary>
+        /// <summary> LastModifiedBy property, which only appears in the response. </summary>
         public string LastModifiedBy { get; }
-        /// <summary>
-        /// Software update configuration tasks triggered in this run
-        /// Serialized Name: SoftwareUpdateConfigurationRun.properties.tasks
-        /// </summary>
+        /// <summary> Software update configuration tasks triggered in this run. </summary>
         public SoftwareUpdateConfigurationRunTasks Tasks { get; }
     }
 }

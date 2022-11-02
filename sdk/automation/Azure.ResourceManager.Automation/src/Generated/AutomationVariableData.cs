@@ -24,26 +24,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value">
-        /// Gets or sets the value of the variable.
-        /// Serialized Name: Variable.properties.value
-        /// </param>
-        /// <param name="isEncrypted">
-        /// Gets or sets the encrypted flag of the variable.
-        /// Serialized Name: Variable.properties.isEncrypted
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets or sets the creation time.
-        /// Serialized Name: Variable.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Variable.properties.lastModifiedTime
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: Variable.properties.description
-        /// </param>
+        /// <param name="value"> Gets or sets the value of the variable. </param>
+        /// <param name="isEncrypted"> Gets or sets the encrypted flag of the variable. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
         internal AutomationVariableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, bool? isEncrypted, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
         {
             Value = value;
@@ -53,30 +38,15 @@ namespace Azure.ResourceManager.Automation
             Description = description;
         }
 
-        /// <summary>
-        /// Gets or sets the value of the variable.
-        /// Serialized Name: Variable.properties.value
-        /// </summary>
+        /// <summary> Gets or sets the value of the variable. </summary>
         public string Value { get; set; }
-        /// <summary>
-        /// Gets or sets the encrypted flag of the variable.
-        /// Serialized Name: Variable.properties.isEncrypted
-        /// </summary>
+        /// <summary> Gets or sets the encrypted flag of the variable. </summary>
         public bool? IsEncrypted { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time.
-        /// Serialized Name: Variable.properties.creationTime
-        /// </summary>
+        /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Variable.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: Variable.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list schedule operation.
-    /// Serialized Name: ScheduleListResult
-    /// </summary>
+    /// <summary> The response model for the list schedule operation. </summary>
     internal partial class AutomationScheduleListResult
     {
         /// <summary> Initializes a new instance of AutomationScheduleListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationScheduleListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of schedules.
-        /// Serialized Name: ScheduleListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: ScheduleListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of schedules. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationScheduleListResult(IReadOnlyList<AutomationScheduleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of schedules.
-        /// Serialized Name: ScheduleListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of schedules. </summary>
         public IReadOnlyList<AutomationScheduleData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: ScheduleListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

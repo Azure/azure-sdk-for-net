@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list watcher operation.
-    /// Serialized Name: WatcherListResult
-    /// </summary>
+    /// <summary> The response model for the list watcher operation. </summary>
     internal partial class AutomationWatcherListResult
     {
         /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of watchers.
-        /// Serialized Name: WatcherListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: WatcherListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of watchers. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationWatcherListResult(IReadOnlyList<AutomationWatcherData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of watchers.
-        /// Serialized Name: WatcherListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of watchers. </summary>
         public IReadOnlyList<AutomationWatcherData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: WatcherListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

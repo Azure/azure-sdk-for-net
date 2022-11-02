@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The type of the sync job stream.
-    /// Serialized Name: StreamType
-    /// </summary>
+    /// <summary> The type of the sync job stream. </summary>
     public readonly partial struct SourceControlStreamType : IEquatable<SourceControlStreamType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Automation.Models
         private const string ErrorValue = "Error";
         private const string OutputValue = "Output";
 
-        /// <summary>
-        /// Error
-        /// Serialized Name: StreamType.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static SourceControlStreamType Error { get; } = new SourceControlStreamType(ErrorValue);
-        /// <summary>
-        /// Output
-        /// Serialized Name: StreamType.Output
-        /// </summary>
+        /// <summary> Output. </summary>
         public static SourceControlStreamType Output { get; } = new SourceControlStreamType(OutputValue);
         /// <summary> Determines if two <see cref="SourceControlStreamType"/> values are the same. </summary>
         public static bool operator ==(SourceControlStreamType left, SourceControlStreamType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list job operation.
-    /// Serialized Name: JobListResultV2
-    /// </summary>
+    /// <summary> The response model for the list job operation. </summary>
     internal partial class AutomationJobListResultV2
     {
         /// <summary> Initializes a new instance of AutomationJobListResultV2. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationJobListResultV2. </summary>
-        /// <param name="value">
-        /// List of jobs.
-        /// Serialized Name: JobListResultV2.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The  link to the next page.
-        /// Serialized Name: JobListResultV2.nextLink
-        /// </param>
+        /// <param name="value"> List of jobs. </param>
+        /// <param name="nextLink"> The  link to the next page. </param>
         internal AutomationJobListResultV2(IReadOnlyList<AutomationJobCollectionItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of jobs.
-        /// Serialized Name: JobListResultV2.value
-        /// </summary>
+        /// <summary> List of jobs. </summary>
         public IReadOnlyList<AutomationJobCollectionItemData> Value { get; }
-        /// <summary>
-        /// The  link to the next page.
-        /// Serialized Name: JobListResultV2.nextLink
-        /// </summary>
+        /// <summary> The  link to the next page. </summary>
         public string NextLink { get; }
     }
 }

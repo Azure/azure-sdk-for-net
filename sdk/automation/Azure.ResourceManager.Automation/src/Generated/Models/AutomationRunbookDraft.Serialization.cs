@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<AutomationContentLink> draftContentLink = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IDictionary<string, RunbookParameter>> parameters = default;
+            Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
             Optional<IList<string>> outputTypes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, RunbookParameter> dictionary = new Dictionary<string, RunbookParameter>();
+                    Dictionary<string, RunbookParameterDefinition> dictionary = new Dictionary<string, RunbookParameterDefinition>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RunbookParameter.DeserializeRunbookParameter(property0.Value));
+                        dictionary.Add(property0.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property0.Value));
                     }
                     parameters = dictionary;
                     continue;

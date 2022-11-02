@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets status of account.
-    /// Serialized Name: AutomationAccountState
-    /// </summary>
+    /// <summary> Gets status of account. </summary>
     public readonly partial struct AutomationAccountState : IEquatable<AutomationAccountState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Automation.Models
         private const string UnavailableValue = "Unavailable";
         private const string SuspendedValue = "Suspended";
 
-        /// <summary>
-        /// Ok
-        /// Serialized Name: AutomationAccountState.Ok
-        /// </summary>
+        /// <summary> Ok. </summary>
         public static AutomationAccountState Ok { get; } = new AutomationAccountState(OkValue);
-        /// <summary>
-        /// Unavailable
-        /// Serialized Name: AutomationAccountState.Unavailable
-        /// </summary>
+        /// <summary> Unavailable. </summary>
         public static AutomationAccountState Unavailable { get; } = new AutomationAccountState(UnavailableValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: AutomationAccountState.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         public static AutomationAccountState Suspended { get; } = new AutomationAccountState(SuspendedValue);
         /// <summary> Determines if two <see cref="AutomationAccountState"/> values are the same. </summary>
         public static bool operator ==(AutomationAccountState left, AutomationAccountState right) => left.Equals(right);

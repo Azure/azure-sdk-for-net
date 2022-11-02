@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the runbook property type.
-    /// Serialized Name: ContentHash
-    /// </summary>
+    /// <summary> Definition of the runbook property type. </summary>
     public partial class AutomationContentHash
     {
         /// <summary> Initializes a new instance of AutomationContentHash. </summary>
-        /// <param name="algorithm">
-        /// Gets or sets the content hash algorithm used to hash the content.
-        /// Serialized Name: ContentHash.algorithm
-        /// </param>
-        /// <param name="value">
-        /// Gets or sets expected hash value of the content.
-        /// Serialized Name: ContentHash.value
-        /// </param>
+        /// <param name="algorithm"> Gets or sets the content hash algorithm used to hash the content. </param>
+        /// <param name="value"> Gets or sets expected hash value of the content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="algorithm"/> or <paramref name="value"/> is null. </exception>
         public AutomationContentHash(string algorithm, string value)
         {
@@ -35,15 +26,9 @@ namespace Azure.ResourceManager.Automation.Models
             Value = value;
         }
 
-        /// <summary>
-        /// Gets or sets the content hash algorithm used to hash the content.
-        /// Serialized Name: ContentHash.algorithm
-        /// </summary>
+        /// <summary> Gets or sets the content hash algorithm used to hash the content. </summary>
         public string Algorithm { get; set; }
-        /// <summary>
-        /// Gets or sets expected hash value of the content.
-        /// Serialized Name: ContentHash.value
-        /// </summary>
+        /// <summary> Gets or sets expected hash value of the content. </summary>
         public string Value { get; set; }
     }
 }

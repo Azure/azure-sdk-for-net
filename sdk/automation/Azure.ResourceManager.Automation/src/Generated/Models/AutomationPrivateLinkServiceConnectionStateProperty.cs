@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Connection State of the Private Endpoint Connection.
-    /// Serialized Name: PrivateLinkServiceConnectionStateProperty
-    /// </summary>
+    /// <summary> Connection State of the Private Endpoint Connection. </summary>
     public partial class AutomationPrivateLinkServiceConnectionStateProperty
     {
         /// <summary> Initializes a new instance of AutomationPrivateLinkServiceConnectionStateProperty. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationPrivateLinkServiceConnectionStateProperty. </summary>
-        /// <param name="status">
-        /// The private link service connection status.
-        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.status
-        /// </param>
-        /// <param name="description">
-        /// The private link service connection description.
-        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.description
-        /// </param>
-        /// <param name="actionsRequired">
-        /// Any action that is required beyond basic workflow (approve/ reject/ disconnect)
-        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.actionsRequired
-        /// </param>
+        /// <param name="status"> The private link service connection status. </param>
+        /// <param name="description"> The private link service connection description. </param>
+        /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
         internal AutomationPrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired)
         {
             Status = status;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Automation.Models
             ActionsRequired = actionsRequired;
         }
 
-        /// <summary>
-        /// The private link service connection status.
-        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.status
-        /// </summary>
+        /// <summary> The private link service connection status. </summary>
         public string Status { get; set; }
-        /// <summary>
-        /// The private link service connection description.
-        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.description
-        /// </summary>
+        /// <summary> The private link service connection description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Any action that is required beyond basic workflow (approve/ reject/ disconnect)
-        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.actionsRequired
-        /// </summary>
+        /// <summary> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </summary>
         public string ActionsRequired { get; }
     }
 }

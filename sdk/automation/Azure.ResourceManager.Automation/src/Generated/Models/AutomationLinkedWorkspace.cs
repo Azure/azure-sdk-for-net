@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the linked workspace.
-    /// Serialized Name: LinkedWorkspace
-    /// </summary>
+    /// <summary> Definition of the linked workspace. </summary>
     public partial class AutomationLinkedWorkspace
     {
         /// <summary> Initializes a new instance of AutomationLinkedWorkspace. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationLinkedWorkspace. </summary>
-        /// <param name="id">
-        /// Gets the id of the linked workspace.
-        /// Serialized Name: LinkedWorkspace.id
-        /// </param>
+        /// <param name="id"> Gets the id of the linked workspace. </param>
         internal AutomationLinkedWorkspace(string id)
         {
             Id = id;
         }
 
-        /// <summary>
-        /// Gets the id of the linked workspace.
-        /// Serialized Name: LinkedWorkspace.id
-        /// </summary>
+        /// <summary> Gets the id of the linked workspace. </summary>
         public string Id { get; }
     }
 }

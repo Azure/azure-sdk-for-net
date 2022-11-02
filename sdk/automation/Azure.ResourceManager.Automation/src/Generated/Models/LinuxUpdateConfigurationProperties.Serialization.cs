@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static LinuxUpdateConfigurationProperties DeserializeLinuxUpdateConfigurationProperties(JsonElement element)
         {
-            Optional<LinuxUpdateClass> includedPackageClassifications = default;
+            Optional<LinuxUpdateClassification> includedPackageClassifications = default;
             Optional<IList<string>> excludedPackageNameMasks = default;
             Optional<IList<string>> includedPackageNameMasks = default;
             Optional<string> rebootSetting = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    includedPackageClassifications = new LinuxUpdateClass(property.Value.GetString());
+                    includedPackageClassifications = new LinuxUpdateClassification(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("excludedPackageNameMasks"))

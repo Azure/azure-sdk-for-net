@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the update source control operation.
-    /// Serialized Name: SourceControlUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the update source control operation. </summary>
     public partial class AutomationSourceControlPatch
     {
         /// <summary> Initializes a new instance of AutomationSourceControlPatch. </summary>
@@ -18,35 +15,17 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary>
-        /// The repo branch of the source control.
-        /// Serialized Name: SourceControlUpdateParameters.properties.branch
-        /// </summary>
+        /// <summary> The repo branch of the source control. </summary>
         public string Branch { get; set; }
-        /// <summary>
-        /// The folder path of the source control. Path must be relative.
-        /// Serialized Name: SourceControlUpdateParameters.properties.folderPath
-        /// </summary>
+        /// <summary> The folder path of the source control. Path must be relative. </summary>
         public string FolderPath { get; set; }
-        /// <summary>
-        /// The auto sync of the source control. Default is false.
-        /// Serialized Name: SourceControlUpdateParameters.properties.autoSync
-        /// </summary>
+        /// <summary> The auto sync of the source control. Default is false. </summary>
         public bool? IsAutoSyncEnabled { get; set; }
-        /// <summary>
-        /// The auto publish of the source control. Default is true.
-        /// Serialized Name: SourceControlUpdateParameters.properties.publishRunbook
-        /// </summary>
+        /// <summary> The auto publish of the source control. Default is true. </summary>
         public bool? IsAutoPublishRunbookEnabled { get; set; }
-        /// <summary>
-        /// The authorization token for the repo of the source control.
-        /// Serialized Name: SourceControlUpdateParameters.properties.securityToken
-        /// </summary>
+        /// <summary> The authorization token for the repo of the source control. </summary>
         public SourceControlSecurityTokenProperties SecurityToken { get; set; }
-        /// <summary>
-        /// The user description of the source control.
-        /// Serialized Name: SourceControlUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> The user description of the source control. </summary>
         public string Description { get; set; }
     }
 }

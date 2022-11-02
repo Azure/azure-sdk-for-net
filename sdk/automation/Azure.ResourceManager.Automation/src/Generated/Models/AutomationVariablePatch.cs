@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the update variable operation.
-    /// Serialized Name: VariableUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the update variable operation. </summary>
     public partial class AutomationVariablePatch
     {
         /// <summary> Initializes a new instance of AutomationVariablePatch. </summary>
@@ -18,20 +15,11 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the name of the variable.
-        /// Serialized Name: VariableUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the variable. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Gets or sets the value of the variable.
-        /// Serialized Name: VariableUpdateParameters.properties.value
-        /// </summary>
+        /// <summary> Gets or sets the value of the variable. </summary>
         public string Value { get; set; }
-        /// <summary>
-        /// Gets or sets the description of the variable.
-        /// Serialized Name: VariableUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the variable. </summary>
         public string Description { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets or sets the SKU name of the account.
-    /// Serialized Name: SkuNameEnum
-    /// </summary>
+    /// <summary> Gets or sets the SKU name of the account. </summary>
     public readonly partial struct AutomationSkuName : IEquatable<AutomationSkuName>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Automation.Models
         private const string FreeValue = "Free";
         private const string BasicValue = "Basic";
 
-        /// <summary>
-        /// Free
-        /// Serialized Name: SkuNameEnum.Free
-        /// </summary>
+        /// <summary> Free. </summary>
         public static AutomationSkuName Free { get; } = new AutomationSkuName(FreeValue);
-        /// <summary>
-        /// Basic
-        /// Serialized Name: SkuNameEnum.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static AutomationSkuName Basic { get; } = new AutomationSkuName(BasicValue);
         /// <summary> Determines if two <see cref="AutomationSkuName"/> values are the same. </summary>
         public static bool operator ==(AutomationSkuName left, AutomationSkuName right) => left.Equals(right);

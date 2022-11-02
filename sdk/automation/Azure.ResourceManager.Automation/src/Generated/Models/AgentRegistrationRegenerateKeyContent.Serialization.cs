@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AgentRegistrationRegenerateKeyParameter : IUtf8JsonSerializable
+    public partial class AgentRegistrationRegenerateKeyContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

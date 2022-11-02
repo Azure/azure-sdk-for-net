@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The sync type.
-    /// Serialized Name: SyncType
-    /// </summary>
+    /// <summary> The sync type. </summary>
     public readonly partial struct SourceControlSyncType : IEquatable<SourceControlSyncType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Automation.Models
         private const string PartialSyncValue = "PartialSync";
         private const string FullSyncValue = "FullSync";
 
-        /// <summary>
-        /// PartialSync
-        /// Serialized Name: SyncType.PartialSync
-        /// </summary>
+        /// <summary> PartialSync. </summary>
         public static SourceControlSyncType PartialSync { get; } = new SourceControlSyncType(PartialSyncValue);
-        /// <summary>
-        /// FullSync
-        /// Serialized Name: SyncType.FullSync
-        /// </summary>
+        /// <summary> FullSync. </summary>
         public static SourceControlSyncType FullSync { get; } = new SourceControlSyncType(FullSyncValue);
         /// <summary> Determines if two <see cref="SourceControlSyncType"/> values are the same. </summary>
         public static bool operator ==(SourceControlSyncType left, SourceControlSyncType right) => left.Equals(right);

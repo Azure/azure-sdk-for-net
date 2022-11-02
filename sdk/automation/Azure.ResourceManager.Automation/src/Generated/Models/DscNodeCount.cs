@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Number of nodes based on the Filter
-    /// Serialized Name: NodeCount
-    /// </summary>
+    /// <summary> Number of nodes based on the Filter. </summary>
     public partial class DscNodeCount
     {
         /// <summary> Initializes a new instance of DscNodeCount. </summary>
@@ -19,28 +16,19 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscNodeCount. </summary>
-        /// <param name="name">
-        /// Gets the name of a count type
-        /// Serialized Name: NodeCount.name
-        /// </param>
-        /// <param name="properties"> Serialized Name: NodeCount.properties. </param>
+        /// <param name="name"> Gets the name of a count type. </param>
+        /// <param name="properties"></param>
         internal DscNodeCount(string name, DscNodeCountProperties properties)
         {
             Name = name;
             Properties = properties;
         }
 
-        /// <summary>
-        /// Gets the name of a count type
-        /// Serialized Name: NodeCount.name
-        /// </summary>
+        /// <summary> Gets the name of a count type. </summary>
         public string Name { get; }
-        /// <summary> Serialized Name: NodeCount.properties. </summary>
+        /// <summary> Gets the properties. </summary>
         internal DscNodeCountProperties Properties { get; }
-        /// <summary>
-        /// Gets the count for the name
-        /// Serialized Name: NodeCountProperties.count
-        /// </summary>
+        /// <summary> Gets the count for the name. </summary>
         public int? NameCount
         {
             get => Properties?.NameCount;

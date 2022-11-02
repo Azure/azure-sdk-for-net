@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list account operation.
-    /// Serialized Name: AutomationAccountListResult
-    /// </summary>
+    /// <summary> The response model for the list account operation. </summary>
     internal partial class AutomationAccountListResult
     {
         /// <summary> Initializes a new instance of AutomationAccountListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationAccountListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets list of accounts.
-        /// Serialized Name: AutomationAccountListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: AutomationAccountListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets list of accounts. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationAccountListResult(IReadOnlyList<AutomationAccountData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets list of accounts.
-        /// Serialized Name: AutomationAccountListResult.value
-        /// </summary>
+        /// <summary> Gets or sets list of accounts. </summary>
         public IReadOnlyList<AutomationAccountData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: AutomationAccountListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

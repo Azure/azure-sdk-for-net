@@ -10,63 +10,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Windows specific update configuration.
-    /// Serialized Name: WindowsProperties
-    /// </summary>
+    /// <summary> Windows specific update configuration. </summary>
     public partial class WindowsUpdateConfigurationProperties
     {
         /// <summary> Initializes a new instance of WindowsUpdateConfigurationProperties. </summary>
         public WindowsUpdateConfigurationProperties()
         {
-            ExcludedKbNumbers = new ChangeTrackingList<string>();
-            IncludedKbNumbers = new ChangeTrackingList<string>();
+            ExcludedKBNumbers = new ChangeTrackingList<string>();
+            IncludedKBNumbers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WindowsUpdateConfigurationProperties. </summary>
-        /// <param name="includedUpdateClassifications">
-        /// Update classification included in the software update configuration. A comma separated string with required values
-        /// Serialized Name: WindowsProperties.includedUpdateClassifications
-        /// </param>
-        /// <param name="excludedKbNumbers">
-        /// KB numbers excluded from the software update configuration.
-        /// Serialized Name: WindowsProperties.excludedKbNumbers
-        /// </param>
-        /// <param name="includedKbNumbers">
-        /// KB numbers included from the software update configuration.
-        /// Serialized Name: WindowsProperties.includedKbNumbers
-        /// </param>
-        /// <param name="rebootSetting">
-        /// Reboot setting for the software update configuration.
-        /// Serialized Name: WindowsProperties.rebootSetting
-        /// </param>
-        internal WindowsUpdateConfigurationProperties(WindowsUpdateClass? includedUpdateClassifications, IList<string> excludedKbNumbers, IList<string> includedKbNumbers, string rebootSetting)
+        /// <param name="includedUpdateClassifications"> Update classification included in the software update configuration. A comma separated string with required values. </param>
+        /// <param name="excludedKBNumbers"> KB numbers excluded from the software update configuration. </param>
+        /// <param name="includedKBNumbers"> KB numbers included from the software update configuration. </param>
+        /// <param name="rebootSetting"> Reboot setting for the software update configuration. </param>
+        internal WindowsUpdateConfigurationProperties(WindowsUpdateClassification? includedUpdateClassifications, IList<string> excludedKBNumbers, IList<string> includedKBNumbers, string rebootSetting)
         {
             IncludedUpdateClassifications = includedUpdateClassifications;
-            ExcludedKbNumbers = excludedKbNumbers;
-            IncludedKbNumbers = includedKbNumbers;
+            ExcludedKBNumbers = excludedKBNumbers;
+            IncludedKBNumbers = includedKBNumbers;
             RebootSetting = rebootSetting;
         }
 
-        /// <summary>
-        /// Update classification included in the software update configuration. A comma separated string with required values
-        /// Serialized Name: WindowsProperties.includedUpdateClassifications
-        /// </summary>
-        public WindowsUpdateClass? IncludedUpdateClassifications { get; set; }
-        /// <summary>
-        /// KB numbers excluded from the software update configuration.
-        /// Serialized Name: WindowsProperties.excludedKbNumbers
-        /// </summary>
-        public IList<string> ExcludedKbNumbers { get; }
-        /// <summary>
-        /// KB numbers included from the software update configuration.
-        /// Serialized Name: WindowsProperties.includedKbNumbers
-        /// </summary>
-        public IList<string> IncludedKbNumbers { get; }
-        /// <summary>
-        /// Reboot setting for the software update configuration.
-        /// Serialized Name: WindowsProperties.rebootSetting
-        /// </summary>
+        /// <summary> Update classification included in the software update configuration. A comma separated string with required values. </summary>
+        public WindowsUpdateClassification? IncludedUpdateClassifications { get; set; }
+        /// <summary> KB numbers excluded from the software update configuration. </summary>
+        public IList<string> ExcludedKBNumbers { get; }
+        /// <summary> KB numbers included from the software update configuration. </summary>
+        public IList<string> IncludedKBNumbers { get; }
+        /// <summary> Reboot setting for the software update configuration. </summary>
         public string RebootSetting { get; set; }
     }
 }

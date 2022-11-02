@@ -10,25 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create or update credential operation.
-    /// Serialized Name: CredentialCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create or update credential operation. </summary>
     public partial class AutomationCredentialCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationCredentialCreateOrUpdateContent. </summary>
-        /// <param name="name">
-        /// Gets or sets the name of the credential.
-        /// Serialized Name: CredentialCreateOrUpdateParameters.name
-        /// </param>
-        /// <param name="userName">
-        /// Gets or sets the user name of the credential.
-        /// Serialized Name: CredentialCreateOrUpdateParameters.properties.userName
-        /// </param>
-        /// <param name="password">
-        /// Gets or sets the password of the credential.
-        /// Serialized Name: CredentialCreateOrUpdateParameters.properties.password
-        /// </param>
+        /// <param name="name"> Gets or sets the name of the credential. </param>
+        /// <param name="userName"> Gets or sets the user name of the credential. </param>
+        /// <param name="password"> Gets or sets the password of the credential. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public AutomationCredentialCreateOrUpdateContent(string name, string userName, string password)
         {
@@ -41,25 +29,13 @@ namespace Azure.ResourceManager.Automation.Models
             Password = password;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the credential.
-        /// Serialized Name: CredentialCreateOrUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the credential. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Gets or sets the user name of the credential.
-        /// Serialized Name: CredentialCreateOrUpdateParameters.properties.userName
-        /// </summary>
+        /// <summary> Gets or sets the user name of the credential. </summary>
         public string UserName { get; }
-        /// <summary>
-        /// Gets or sets the password of the credential.
-        /// Serialized Name: CredentialCreateOrUpdateParameters.properties.password
-        /// </summary>
+        /// <summary> Gets or sets the password of the credential. </summary>
         public string Password { get; }
-        /// <summary>
-        /// Gets or sets the description of the credential.
-        /// Serialized Name: CredentialCreateOrUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the credential. </summary>
         public string Description { get; set; }
     }
 }

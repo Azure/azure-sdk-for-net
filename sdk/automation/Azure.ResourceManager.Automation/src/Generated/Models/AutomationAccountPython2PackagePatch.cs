@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the update module operation.
-    /// Serialized Name: PythonPackageUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the update module operation. </summary>
     public partial class AutomationAccountPython2PackagePatch
     {
         /// <summary> Initializes a new instance of AutomationAccountPython2PackagePatch. </summary>
@@ -22,10 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// Serialized Name: PythonPackageUpdateParameters.tags
-        /// </summary>
+        /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

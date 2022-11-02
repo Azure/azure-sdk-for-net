@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Non Azure query for the update configuration.
-    /// Serialized Name: NonAzureQueryProperties
-    /// </summary>
+    /// <summary> Non Azure query for the update configuration. </summary>
     public partial class NonAzureQueryProperties
     {
         /// <summary> Initializes a new instance of NonAzureQueryProperties. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of NonAzureQueryProperties. </summary>
-        /// <param name="functionAlias">
-        /// Log Analytics Saved Search name.
-        /// Serialized Name: NonAzureQueryProperties.functionAlias
-        /// </param>
-        /// <param name="workspaceId">
-        /// Workspace Id for Log Analytics in which the saved Search is resided.
-        /// Serialized Name: NonAzureQueryProperties.workspaceId
-        /// </param>
+        /// <param name="functionAlias"> Log Analytics Saved Search name. </param>
+        /// <param name="workspaceId"> Workspace Id for Log Analytics in which the saved Search is resided. </param>
         internal NonAzureQueryProperties(string functionAlias, string workspaceId)
         {
             FunctionAlias = functionAlias;
             WorkspaceId = workspaceId;
         }
 
-        /// <summary>
-        /// Log Analytics Saved Search name.
-        /// Serialized Name: NonAzureQueryProperties.functionAlias
-        /// </summary>
+        /// <summary> Log Analytics Saved Search name. </summary>
         public string FunctionAlias { get; set; }
-        /// <summary>
-        /// Workspace Id for Log Analytics in which the saved Search is resided.
-        /// Serialized Name: NonAzureQueryProperties.workspaceId
-        /// </summary>
+        /// <summary> Workspace Id for Log Analytics in which the saved Search is resided. </summary>
         public string WorkspaceId { get; set; }
     }
 }

@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create or update module operation.
-    /// Serialized Name: PythonPackageCreateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create or update module operation. </summary>
     public partial class AutomationAccountPython2PackageCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationAccountPython2PackageCreateOrUpdateContent. </summary>
-        /// <param name="contentLink">
-        /// Gets or sets the module content link.
-        /// Serialized Name: PythonPackageCreateParameters.properties.contentLink
-        /// </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
         public AutomationAccountPython2PackageCreateOrUpdateContent(AutomationContentLink contentLink)
         {
@@ -31,15 +25,9 @@ namespace Azure.ResourceManager.Automation.Models
             ContentLink = contentLink;
         }
 
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// Serialized Name: PythonPackageCreateParameters.tags
-        /// </summary>
+        /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Gets or sets the module content link.
-        /// Serialized Name: PythonPackageCreateParameters.properties.contentLink
-        /// </summary>
+        /// <summary> Gets or sets the module content link. </summary>
         public AutomationContentLink ContentLink { get; }
     }
 }

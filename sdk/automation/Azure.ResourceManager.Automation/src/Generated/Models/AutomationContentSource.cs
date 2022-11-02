@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the content source.
-    /// Serialized Name: ContentSource
-    /// </summary>
+    /// <summary> Definition of the content source. </summary>
     public partial class AutomationContentSource
     {
         /// <summary> Initializes a new instance of AutomationContentSource. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationContentSource. </summary>
-        /// <param name="hash">
-        /// Gets or sets the hash.
-        /// Serialized Name: ContentSource.hash
-        /// </param>
-        /// <param name="sourceType">
-        /// Gets or sets the content source type.
-        /// Serialized Name: ContentSource.type
-        /// </param>
-        /// <param name="value">
-        /// Gets or sets the value of the content. This is based on the content source type.
-        /// Serialized Name: ContentSource.value
-        /// </param>
-        /// <param name="version">
-        /// Gets or sets the version of the content.
-        /// Serialized Name: ContentSource.version
-        /// </param>
+        /// <param name="hash"> Gets or sets the hash. </param>
+        /// <param name="sourceType"> Gets or sets the content source type. </param>
+        /// <param name="value"> Gets or sets the value of the content. This is based on the content source type. </param>
+        /// <param name="version"> Gets or sets the version of the content. </param>
         internal AutomationContentSource(AutomationContentHash hash, AutomationContentSourceType? sourceType, string value, string version)
         {
             Hash = hash;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.Automation.Models
             Version = version;
         }
 
-        /// <summary>
-        /// Gets or sets the hash.
-        /// Serialized Name: ContentSource.hash
-        /// </summary>
+        /// <summary> Gets or sets the hash. </summary>
         public AutomationContentHash Hash { get; set; }
-        /// <summary>
-        /// Gets or sets the content source type.
-        /// Serialized Name: ContentSource.type
-        /// </summary>
+        /// <summary> Gets or sets the content source type. </summary>
         public AutomationContentSourceType? SourceType { get; set; }
-        /// <summary>
-        /// Gets or sets the value of the content. This is based on the content source type.
-        /// Serialized Name: ContentSource.value
-        /// </summary>
+        /// <summary> Gets or sets the value of the content. This is based on the content source type. </summary>
         public string Value { get; set; }
-        /// <summary>
-        /// Gets or sets the version of the content.
-        /// Serialized Name: ContentSource.version
-        /// </summary>
+        /// <summary> Gets or sets the version of the content. </summary>
         public string Version { get; set; }
     }
 }

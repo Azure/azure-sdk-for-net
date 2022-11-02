@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The encryption settings for automation account
-    /// Serialized Name: EncryptionProperties
-    /// </summary>
+    /// <summary> The encryption settings for automation account. </summary>
     public partial class AutomationEncryptionProperties
     {
         /// <summary> Initializes a new instance of AutomationEncryptionProperties. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationEncryptionProperties. </summary>
-        /// <param name="keyVaultProperties">
-        /// Key vault properties.
-        /// Serialized Name: EncryptionProperties.keyVaultProperties
-        /// </param>
-        /// <param name="keySource">
-        /// Encryption Key Source
-        /// Serialized Name: EncryptionProperties.keySource
-        /// </param>
-        /// <param name="identity">
-        /// User identity used for CMK.
-        /// Serialized Name: EncryptionProperties.identity
-        /// </param>
+        /// <param name="keyVaultProperties"> Key vault properties. </param>
+        /// <param name="keySource"> Encryption Key Source. </param>
+        /// <param name="identity"> User identity used for CMK. </param>
         internal AutomationEncryptionProperties(AutomationKeyVaultProperties keyVaultProperties, EncryptionKeySourceType? keySource, EncryptionPropertiesIdentity identity)
         {
             KeyVaultProperties = keyVaultProperties;
@@ -40,24 +28,14 @@ namespace Azure.ResourceManager.Automation.Models
             Identity = identity;
         }
 
-        /// <summary>
-        /// Key vault properties.
-        /// Serialized Name: EncryptionProperties.keyVaultProperties
-        /// </summary>
+        /// <summary> Key vault properties. </summary>
         public AutomationKeyVaultProperties KeyVaultProperties { get; set; }
-        /// <summary>
-        /// Encryption Key Source
-        /// Serialized Name: EncryptionProperties.keySource
-        /// </summary>
+        /// <summary> Encryption Key Source. </summary>
         public EncryptionKeySourceType? KeySource { get; set; }
-        /// <summary>
-        /// User identity used for CMK.
-        /// Serialized Name: EncryptionProperties.identity
-        /// </summary>
+        /// <summary> User identity used for CMK. </summary>
         internal EncryptionPropertiesIdentity Identity { get; set; }
         /// <summary>
         /// The user identity used for CMK. It will be an ARM resource id in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;.
-        /// Serialized Name: EncryptionPropertiesIdentity.userAssignedIdentity
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

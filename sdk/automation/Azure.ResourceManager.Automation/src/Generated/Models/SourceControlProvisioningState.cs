@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The provisioning state of the job.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state of the job. </summary>
     public readonly partial struct SourceControlProvisioningState : IEquatable<SourceControlProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Automation.Models
         private const string FailedValue = "Failed";
         private const string RunningValue = "Running";
 
-        /// <summary>
-        /// Completed
-        /// Serialized Name: ProvisioningState.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static SourceControlProvisioningState Completed { get; } = new SourceControlProvisioningState(CompletedValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static SourceControlProvisioningState Failed { get; } = new SourceControlProvisioningState(FailedValue);
-        /// <summary>
-        /// Running
-        /// Serialized Name: ProvisioningState.Running
-        /// </summary>
+        /// <summary> Running. </summary>
         public static SourceControlProvisioningState Running { get; } = new SourceControlProvisioningState(RunningValue);
         /// <summary> Determines if two <see cref="SourceControlProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SourceControlProvisioningState left, SourceControlProvisioningState right) => left.Equals(right);

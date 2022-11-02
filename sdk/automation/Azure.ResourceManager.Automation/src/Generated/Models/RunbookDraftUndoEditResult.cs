@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the undo edit runbook operation.
-    /// Serialized Name: RunbookDraftUndoEditResult
-    /// </summary>
+    /// <summary> The response model for the undo edit runbook operation. </summary>
     public partial class RunbookDraftUndoEditResult
     {
         /// <summary> Initializes a new instance of RunbookDraftUndoEditResult. </summary>
@@ -19,17 +16,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of RunbookDraftUndoEditResult. </summary>
-        /// <param name="statusCode"> Serialized Name: RunbookDraftUndoEditResult.statusCode. </param>
-        /// <param name="requestId"> Serialized Name: RunbookDraftUndoEditResult.requestId. </param>
+        /// <param name="statusCode"></param>
+        /// <param name="requestId"></param>
         internal RunbookDraftUndoEditResult(AutomationHttpStatusCode? statusCode, string requestId)
         {
             StatusCode = statusCode;
             RequestId = requestId;
         }
 
-        /// <summary> Serialized Name: RunbookDraftUndoEditResult.statusCode. </summary>
+        /// <summary> Gets the status code. </summary>
         public AutomationHttpStatusCode? StatusCode { get; }
-        /// <summary> Serialized Name: RunbookDraftUndoEditResult.requestId. </summary>
+        /// <summary> Gets the request id. </summary>
         public string RequestId { get; }
     }
 }

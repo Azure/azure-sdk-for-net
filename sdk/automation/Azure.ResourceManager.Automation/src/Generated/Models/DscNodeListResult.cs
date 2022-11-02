@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list dsc nodes operation.
-    /// Serialized Name: DscNodeListResult
-    /// </summary>
+    /// <summary> The response model for the list dsc nodes operation. </summary>
     internal partial class DscNodeListResult
     {
         /// <summary> Initializes a new instance of DscNodeListResult. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscNodeListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of dsc nodes.
-        /// Serialized Name: DscNodeListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: DscNodeListResult.nextLink
-        /// </param>
-        /// <param name="totalCount">
-        /// Gets the total number of nodes matching filter criteria.
-        /// Serialized Name: DscNodeListResult.totalCount
-        /// </param>
+        /// <param name="value"> Gets or sets a list of dsc nodes. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
+        /// <param name="totalCount"> Gets the total number of nodes matching filter criteria. </param>
         internal DscNodeListResult(IReadOnlyList<DscNodeData> value, string nextLink, int? totalCount)
         {
             Value = value;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.Automation.Models
             TotalCount = totalCount;
         }
 
-        /// <summary>
-        /// Gets or sets a list of dsc nodes.
-        /// Serialized Name: DscNodeListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of dsc nodes. </summary>
         public IReadOnlyList<DscNodeData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: DscNodeListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Gets the total number of nodes matching filter criteria.
-        /// Serialized Name: DscNodeListResult.totalCount
-        /// </summary>
+        /// <summary> Gets the total number of nodes matching filter criteria. </summary>
         public int? TotalCount { get; }
     }
 }

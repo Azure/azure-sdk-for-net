@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationErrorResponse : IUtf8JsonSerializable
+    public partial class AutomationResponseError : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteEndObject();
         }
 
-        internal static AutomationErrorResponse DeserializeAutomationErrorResponse(JsonElement element)
+        internal static AutomationResponseError DeserializeAutomationResponseError(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationErrorResponse(code.Value, message.Value);
+            return new AutomationResponseError(code.Value, message.Value);
         }
     }
 }

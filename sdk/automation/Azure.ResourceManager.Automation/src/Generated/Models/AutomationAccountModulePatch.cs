@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the update module operation.
-    /// Serialized Name: ModuleUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the update module operation. </summary>
     public partial class AutomationAccountModulePatch
     {
         /// <summary> Initializes a new instance of AutomationAccountModulePatch. </summary>
@@ -22,25 +19,13 @@ namespace Azure.ResourceManager.Automation.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Gets or sets name of the resource.
-        /// Serialized Name: ModuleUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets name of the resource. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Gets or sets the location of the resource.
-        /// Serialized Name: ModuleUpdateParameters.location
-        /// </summary>
+        /// <summary> Gets or sets the location of the resource. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// Serialized Name: ModuleUpdateParameters.tags
-        /// </summary>
+        /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Gets or sets the module content link.
-        /// Serialized Name: ModuleUpdateParameters.properties.contentLink
-        /// </summary>
+        /// <summary> Gets or sets the module content link. </summary>
         public AutomationContentLink ContentLink { get; set; }
     }
 }

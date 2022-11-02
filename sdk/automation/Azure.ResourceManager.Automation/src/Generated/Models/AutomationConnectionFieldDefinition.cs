@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the connection fields.
-    /// Serialized Name: FieldDefinition
-    /// </summary>
+    /// <summary> Definition of the connection fields. </summary>
     public partial class AutomationConnectionFieldDefinition
     {
         /// <summary> Initializes a new instance of AutomationConnectionFieldDefinition. </summary>
-        /// <param name="fieldDefinitionType">
-        /// Gets or sets the type of the connection field definition.
-        /// Serialized Name: FieldDefinition.type
-        /// </param>
+        /// <param name="fieldDefinitionType"> Gets or sets the type of the connection field definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldDefinitionType"/> is null. </exception>
         public AutomationConnectionFieldDefinition(string fieldDefinitionType)
         {
@@ -30,18 +24,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationConnectionFieldDefinition. </summary>
-        /// <param name="isEncrypted">
-        /// Gets or sets the isEncrypted flag of the connection field definition.
-        /// Serialized Name: FieldDefinition.isEncrypted
-        /// </param>
-        /// <param name="isOptional">
-        /// Gets or sets the isOptional flag of the connection field definition.
-        /// Serialized Name: FieldDefinition.isOptional
-        /// </param>
-        /// <param name="fieldDefinitionType">
-        /// Gets or sets the type of the connection field definition.
-        /// Serialized Name: FieldDefinition.type
-        /// </param>
+        /// <param name="isEncrypted"> Gets or sets the isEncrypted flag of the connection field definition. </param>
+        /// <param name="isOptional"> Gets or sets the isOptional flag of the connection field definition. </param>
+        /// <param name="fieldDefinitionType"> Gets or sets the type of the connection field definition. </param>
         internal AutomationConnectionFieldDefinition(bool? isEncrypted, bool? isOptional, string fieldDefinitionType)
         {
             IsEncrypted = isEncrypted;
@@ -49,20 +34,11 @@ namespace Azure.ResourceManager.Automation.Models
             FieldDefinitionType = fieldDefinitionType;
         }
 
-        /// <summary>
-        /// Gets or sets the isEncrypted flag of the connection field definition.
-        /// Serialized Name: FieldDefinition.isEncrypted
-        /// </summary>
+        /// <summary> Gets or sets the isEncrypted flag of the connection field definition. </summary>
         public bool? IsEncrypted { get; set; }
-        /// <summary>
-        /// Gets or sets the isOptional flag of the connection field definition.
-        /// Serialized Name: FieldDefinition.isOptional
-        /// </summary>
+        /// <summary> Gets or sets the isOptional flag of the connection field definition. </summary>
         public bool? IsOptional { get; set; }
-        /// <summary>
-        /// Gets or sets the type of the connection field definition.
-        /// Serialized Name: FieldDefinition.type
-        /// </summary>
+        /// <summary> Gets or sets the type of the connection field definition. </summary>
         public string FieldDefinitionType { get; set; }
     }
 }

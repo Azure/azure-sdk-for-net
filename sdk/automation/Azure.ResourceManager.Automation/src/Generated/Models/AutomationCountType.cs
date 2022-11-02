@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The AutomationCountType.
-    /// Serialized Name: CountType
-    /// </summary>
+    /// <summary> The AutomationCountType. </summary>
     public readonly partial struct AutomationCountType : IEquatable<AutomationCountType>
     {
         private readonly string _value;
@@ -26,18 +23,12 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         private const string StatusValue = "status";
-        private const string NodeconfigurationValue = "nodeconfiguration";
+        private const string NodeConfigurationValue = "nodeconfiguration";
 
-        /// <summary>
-        /// status
-        /// Serialized Name: CountType.status
-        /// </summary>
+        /// <summary> status. </summary>
         public static AutomationCountType Status { get; } = new AutomationCountType(StatusValue);
-        /// <summary>
-        /// nodeconfiguration
-        /// Serialized Name: CountType.nodeconfiguration
-        /// </summary>
-        public static AutomationCountType Nodeconfiguration { get; } = new AutomationCountType(NodeconfigurationValue);
+        /// <summary> nodeconfiguration. </summary>
+        public static AutomationCountType NodeConfiguration { get; } = new AutomationCountType(NodeConfigurationValue);
         /// <summary> Determines if two <see cref="AutomationCountType"/> values are the same. </summary>
         public static bool operator ==(AutomationCountType left, AutomationCountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationCountType"/> values are not the same. </summary>

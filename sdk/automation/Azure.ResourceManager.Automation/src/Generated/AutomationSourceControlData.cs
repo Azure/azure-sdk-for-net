@@ -25,42 +25,15 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="repoUri">
-        /// The repo url of the source control.
-        /// Serialized Name: SourceControl.properties.repoUrl
-        /// </param>
-        /// <param name="branch">
-        /// The repo branch of the source control. Include branch as empty string for VsoTfvc.
-        /// Serialized Name: SourceControl.properties.branch
-        /// </param>
-        /// <param name="folderPath">
-        /// The folder path of the source control.
-        /// Serialized Name: SourceControl.properties.folderPath
-        /// </param>
-        /// <param name="isAutoSyncEnabled">
-        /// The auto sync of the source control. Default is false.
-        /// Serialized Name: SourceControl.properties.autoSync
-        /// </param>
-        /// <param name="isAutoPublishRunbookEnabled">
-        /// The auto publish of the source control. Default is true.
-        /// Serialized Name: SourceControl.properties.publishRunbook
-        /// </param>
-        /// <param name="sourceType">
-        /// The source type. Must be one of VsoGit, VsoTfvc, GitHub.
-        /// Serialized Name: SourceControl.properties.sourceType
-        /// </param>
-        /// <param name="description">
-        /// The description.
-        /// Serialized Name: SourceControl.properties.description
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation time.
-        /// Serialized Name: SourceControl.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// The last modified time.
-        /// Serialized Name: SourceControl.properties.lastModifiedTime
-        /// </param>
+        /// <param name="repoUri"> The repo url of the source control. </param>
+        /// <param name="branch"> The repo branch of the source control. Include branch as empty string for VsoTfvc. </param>
+        /// <param name="folderPath"> The folder path of the source control. </param>
+        /// <param name="isAutoSyncEnabled"> The auto sync of the source control. Default is false. </param>
+        /// <param name="isAutoPublishRunbookEnabled"> The auto publish of the source control. Default is true. </param>
+        /// <param name="sourceType"> The source type. Must be one of VsoGit, VsoTfvc, GitHub. </param>
+        /// <param name="description"> The description. </param>
+        /// <param name="createdOn"> The creation time. </param>
+        /// <param name="lastModifiedOn"> The last modified time. </param>
         internal AutomationSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, string folderPath, bool? isAutoSyncEnabled, bool? isAutoPublishRunbookEnabled, SourceControlSourceType? sourceType, string description, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
         {
             RepoUri = repoUri;
@@ -74,50 +47,23 @@ namespace Azure.ResourceManager.Automation
             LastModifiedOn = lastModifiedOn;
         }
 
-        /// <summary>
-        /// The repo url of the source control.
-        /// Serialized Name: SourceControl.properties.repoUrl
-        /// </summary>
+        /// <summary> The repo url of the source control. </summary>
         public Uri RepoUri { get; set; }
-        /// <summary>
-        /// The repo branch of the source control. Include branch as empty string for VsoTfvc.
-        /// Serialized Name: SourceControl.properties.branch
-        /// </summary>
+        /// <summary> The repo branch of the source control. Include branch as empty string for VsoTfvc. </summary>
         public string Branch { get; set; }
-        /// <summary>
-        /// The folder path of the source control.
-        /// Serialized Name: SourceControl.properties.folderPath
-        /// </summary>
+        /// <summary> The folder path of the source control. </summary>
         public string FolderPath { get; set; }
-        /// <summary>
-        /// The auto sync of the source control. Default is false.
-        /// Serialized Name: SourceControl.properties.autoSync
-        /// </summary>
+        /// <summary> The auto sync of the source control. Default is false. </summary>
         public bool? IsAutoSyncEnabled { get; set; }
-        /// <summary>
-        /// The auto publish of the source control. Default is true.
-        /// Serialized Name: SourceControl.properties.publishRunbook
-        /// </summary>
+        /// <summary> The auto publish of the source control. Default is true. </summary>
         public bool? IsAutoPublishRunbookEnabled { get; set; }
-        /// <summary>
-        /// The source type. Must be one of VsoGit, VsoTfvc, GitHub.
-        /// Serialized Name: SourceControl.properties.sourceType
-        /// </summary>
+        /// <summary> The source type. Must be one of VsoGit, VsoTfvc, GitHub. </summary>
         public SourceControlSourceType? SourceType { get; set; }
-        /// <summary>
-        /// The description.
-        /// Serialized Name: SourceControl.properties.description
-        /// </summary>
+        /// <summary> The description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The creation time.
-        /// Serialized Name: SourceControl.properties.creationTime
-        /// </summary>
+        /// <summary> The creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// The last modified time.
-        /// Serialized Name: SourceControl.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> The last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
     }
 }

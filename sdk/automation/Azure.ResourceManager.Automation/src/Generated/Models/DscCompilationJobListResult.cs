@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list job operation.
-    /// Serialized Name: DscCompilationJobListResult
-    /// </summary>
+    /// <summary> The response model for the list job operation. </summary>
     internal partial class DscCompilationJobListResult
     {
         /// <summary> Initializes a new instance of DscCompilationJobListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscCompilationJobListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of Dsc Compilation jobs.
-        /// Serialized Name: DscCompilationJobListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: DscCompilationJobListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of Dsc Compilation jobs. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal DscCompilationJobListResult(IReadOnlyList<DscCompilationJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of Dsc Compilation jobs.
-        /// Serialized Name: DscCompilationJobListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of Dsc Compilation jobs. </summary>
         public IReadOnlyList<DscCompilationJobData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: DscCompilationJobListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

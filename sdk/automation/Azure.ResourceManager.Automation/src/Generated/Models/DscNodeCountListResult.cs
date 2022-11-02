@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets the count of nodes by count type
-    /// Serialized Name: NodeCounts
-    /// </summary>
+    /// <summary> Gets the count of nodes by count type. </summary>
     internal partial class DscNodeCountListResult
     {
         /// <summary> Initializes a new instance of DscNodeCountListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscNodeCountListResult. </summary>
-        /// <param name="value">
-        /// Gets an array of counts
-        /// Serialized Name: NodeCounts.value
-        /// </param>
-        /// <param name="totalCount">
-        /// Gets the total number of records matching countType criteria.
-        /// Serialized Name: NodeCounts.totalCount
-        /// </param>
+        /// <param name="value"> Gets an array of counts. </param>
+        /// <param name="totalCount"> Gets the total number of records matching countType criteria. </param>
         internal DscNodeCountListResult(IReadOnlyList<DscNodeCount> value, int? totalCount)
         {
             Value = value;
             TotalCount = totalCount;
         }
 
-        /// <summary>
-        /// Gets an array of counts
-        /// Serialized Name: NodeCounts.value
-        /// </summary>
+        /// <summary> Gets an array of counts. </summary>
         public IReadOnlyList<DscNodeCount> Value { get; }
-        /// <summary>
-        /// Gets the total number of records matching countType criteria.
-        /// Serialized Name: NodeCounts.totalCount
-        /// </summary>
+        /// <summary> Gets the total number of records matching countType criteria. </summary>
         public int? TotalCount { get; }
     }
 }

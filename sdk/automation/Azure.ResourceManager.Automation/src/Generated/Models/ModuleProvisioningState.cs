@@ -7,91 +7,40 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets or sets the provisioning state of the module.
-    /// Serialized Name: ModuleProvisioningState
-    /// </summary>
+    /// <summary> Gets or sets the provisioning state of the module. </summary>
     public enum ModuleProvisioningState
     {
-        /// <summary>
-        /// Created
-        /// Serialized Name: ModuleProvisioningState.Created
-        /// </summary>
+        /// <summary> Created. </summary>
         Created,
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ModuleProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         Creating,
-        /// <summary>
-        /// StartingImportModuleRunbook
-        /// Serialized Name: ModuleProvisioningState.StartingImportModuleRunbook
-        /// </summary>
+        /// <summary> StartingImportModuleRunbook. </summary>
         StartingImportModuleRunbook,
-        /// <summary>
-        /// RunningImportModuleRunbook
-        /// Serialized Name: ModuleProvisioningState.RunningImportModuleRunbook
-        /// </summary>
+        /// <summary> RunningImportModuleRunbook. </summary>
         RunningImportModuleRunbook,
-        /// <summary>
-        /// ContentRetrieved
-        /// Serialized Name: ModuleProvisioningState.ContentRetrieved
-        /// </summary>
+        /// <summary> ContentRetrieved. </summary>
         ContentRetrieved,
-        /// <summary>
-        /// ContentDownloaded
-        /// Serialized Name: ModuleProvisioningState.ContentDownloaded
-        /// </summary>
+        /// <summary> ContentDownloaded. </summary>
         ContentDownloaded,
-        /// <summary>
-        /// ContentValidated
-        /// Serialized Name: ModuleProvisioningState.ContentValidated
-        /// </summary>
+        /// <summary> ContentValidated. </summary>
         ContentValidated,
-        /// <summary>
-        /// ConnectionTypeImported
-        /// Serialized Name: ModuleProvisioningState.ConnectionTypeImported
-        /// </summary>
+        /// <summary> ConnectionTypeImported. </summary>
         ConnectionTypeImported,
-        /// <summary>
-        /// ContentStored
-        /// Serialized Name: ModuleProvisioningState.ContentStored
-        /// </summary>
+        /// <summary> ContentStored. </summary>
         ContentStored,
-        /// <summary>
-        /// ModuleDataStored
-        /// Serialized Name: ModuleProvisioningState.ModuleDataStored
-        /// </summary>
+        /// <summary> ModuleDataStored. </summary>
         ModuleDataStored,
-        /// <summary>
-        /// ActivitiesStored
-        /// Serialized Name: ModuleProvisioningState.ActivitiesStored
-        /// </summary>
+        /// <summary> ActivitiesStored. </summary>
         ActivitiesStored,
-        /// <summary>
-        /// ModuleImportRunbookComplete
-        /// Serialized Name: ModuleProvisioningState.ModuleImportRunbookComplete
-        /// </summary>
+        /// <summary> ModuleImportRunbookComplete. </summary>
         ModuleImportRunbookComplete,
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ModuleProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ModuleProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Cancelled
-        /// Serialized Name: ModuleProvisioningState.Cancelled
-        /// </summary>
+        /// <summary> Cancelled. </summary>
         Cancelled,
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ModuleProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         Updating
     }
 }

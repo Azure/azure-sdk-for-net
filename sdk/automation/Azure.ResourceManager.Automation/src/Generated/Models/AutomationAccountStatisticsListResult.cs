@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list statistics operation.
-    /// Serialized Name: StatisticsListResult
-    /// </summary>
+    /// <summary> The response model for the list statistics operation. </summary>
     internal partial class AutomationAccountStatisticsListResult
     {
         /// <summary> Initializes a new instance of AutomationAccountStatisticsListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationAccountStatisticsListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of statistics.
-        /// Serialized Name: StatisticsListResult.value
-        /// </param>
+        /// <param name="value"> Gets or sets a list of statistics. </param>
         internal AutomationAccountStatisticsListResult(IReadOnlyList<AutomationAccountStatistics> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// Gets or sets a list of statistics.
-        /// Serialized Name: StatisticsListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of statistics. </summary>
         public IReadOnlyList<AutomationAccountStatistics> Value { get; }
     }
 }

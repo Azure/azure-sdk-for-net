@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Task properties of the software update configuration.
-    /// Serialized Name: SoftwareUpdateConfigurationTasks
-    /// </summary>
+    /// <summary> Task properties of the software update configuration. </summary>
     public partial class SoftwareUpdateConfigurationTasks
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTasks. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTasks. </summary>
-        /// <param name="preTask">
-        /// Pre task properties.
-        /// Serialized Name: SoftwareUpdateConfigurationTasks.preTask
-        /// </param>
-        /// <param name="postTask">
-        /// Post task properties.
-        /// Serialized Name: SoftwareUpdateConfigurationTasks.postTask
-        /// </param>
+        /// <param name="preTask"> Pre task properties. </param>
+        /// <param name="postTask"> Post task properties. </param>
         internal SoftwareUpdateConfigurationTasks(SoftwareUpdateConfigurationTaskProperties preTask, SoftwareUpdateConfigurationTaskProperties postTask)
         {
             PreTask = preTask;
             PostTask = postTask;
         }
 
-        /// <summary>
-        /// Pre task properties.
-        /// Serialized Name: SoftwareUpdateConfigurationTasks.preTask
-        /// </summary>
+        /// <summary> Pre task properties. </summary>
         public SoftwareUpdateConfigurationTaskProperties PreTask { get; set; }
-        /// <summary>
-        /// Post task properties.
-        /// Serialized Name: SoftwareUpdateConfigurationTasks.postTask
-        /// </summary>
+        /// <summary> Post task properties. </summary>
         public SoftwareUpdateConfigurationTaskProperties PostTask { get; set; }
     }
 }

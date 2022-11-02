@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the create or update webhook operation.
-    /// Serialized Name: WebhookCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the create or update webhook operation. </summary>
     public partial class AutomationWebhookCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of AutomationWebhookCreateOrUpdateContent. </summary>
-        /// <param name="name">
-        /// Gets or sets the name of the webhook.
-        /// Serialized Name: WebhookCreateOrUpdateParameters.name
-        /// </param>
+        /// <param name="name"> Gets or sets the name of the webhook. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AutomationWebhookCreateOrUpdateContent(string name)
         {
@@ -31,40 +25,19 @@ namespace Azure.ResourceManager.Automation.Models
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Gets or sets the name of the webhook.
-        /// Serialized Name: WebhookCreateOrUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the webhook. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Gets or sets the value of the enabled flag of webhook.
-        /// Serialized Name: WebhookCreateOrUpdateParameters.properties.isEnabled
-        /// </summary>
+        /// <summary> Gets or sets the value of the enabled flag of webhook. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets the uri.
-        /// Serialized Name: WebhookCreateOrUpdateParameters.properties.uri
-        /// </summary>
+        /// <summary> Gets or sets the uri. </summary>
         public Uri Uri { get; set; }
-        /// <summary>
-        /// Gets or sets the expiry time.
-        /// Serialized Name: WebhookCreateOrUpdateParameters.properties.expiryTime
-        /// </summary>
+        /// <summary> Gets or sets the expiry time. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary>
-        /// Gets or sets the parameters of the job.
-        /// Serialized Name: WebhookCreateOrUpdateParameters.properties.parameters
-        /// </summary>
+        /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// Gets or sets the runbook.
-        /// Serialized Name: WebhookCreateOrUpdateParameters.properties.runbook
-        /// </summary>
+        /// <summary> Gets or sets the runbook. </summary>
         internal RunbookAssociationProperty Runbook { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the runbook.
-        /// Serialized Name: RunbookAssociationProperty.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the runbook. </summary>
         public string RunbookName
         {
             get => Runbook is null ? default : Runbook.Name;
@@ -76,10 +49,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        /// <summary>
-        /// Gets or sets the name of the hybrid worker group the webhook job will run on.
-        /// Serialized Name: WebhookCreateOrUpdateParameters.properties.runOn
-        /// </summary>
+        /// <summary> Gets or sets the name of the hybrid worker group the webhook job will run on. </summary>
         public string RunOn { get; set; }
     }
 }

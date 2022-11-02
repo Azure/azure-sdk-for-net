@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Gets or sets the stream type.
-    /// Serialized Name: JobStreamType
-    /// </summary>
+    /// <summary> Gets or sets the stream type. </summary>
     public readonly partial struct AutomationJobStreamType : IEquatable<AutomationJobStreamType>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.Automation.Models
         private const string VerboseValue = "Verbose";
         private const string AnyValue = "Any";
 
-        /// <summary>
-        /// Progress
-        /// Serialized Name: JobStreamType.Progress
-        /// </summary>
+        /// <summary> Progress. </summary>
         public static AutomationJobStreamType Progress { get; } = new AutomationJobStreamType(ProgressValue);
-        /// <summary>
-        /// Output
-        /// Serialized Name: JobStreamType.Output
-        /// </summary>
+        /// <summary> Output. </summary>
         public static AutomationJobStreamType Output { get; } = new AutomationJobStreamType(OutputValue);
-        /// <summary>
-        /// Warning
-        /// Serialized Name: JobStreamType.Warning
-        /// </summary>
+        /// <summary> Warning. </summary>
         public static AutomationJobStreamType Warning { get; } = new AutomationJobStreamType(WarningValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: JobStreamType.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static AutomationJobStreamType Error { get; } = new AutomationJobStreamType(ErrorValue);
-        /// <summary>
-        /// Debug
-        /// Serialized Name: JobStreamType.Debug
-        /// </summary>
+        /// <summary> Debug. </summary>
         public static AutomationJobStreamType Debug { get; } = new AutomationJobStreamType(DebugValue);
-        /// <summary>
-        /// Verbose
-        /// Serialized Name: JobStreamType.Verbose
-        /// </summary>
+        /// <summary> Verbose. </summary>
         public static AutomationJobStreamType Verbose { get; } = new AutomationJobStreamType(VerboseValue);
-        /// <summary>
-        /// Any
-        /// Serialized Name: JobStreamType.Any
-        /// </summary>
+        /// <summary> Any. </summary>
         public static AutomationJobStreamType Any { get; } = new AutomationJobStreamType(AnyValue);
         /// <summary> Determines if two <see cref="AutomationJobStreamType"/> values are the same. </summary>
         public static bool operator ==(AutomationJobStreamType left, AutomationJobStreamType right) => left.Equals(right);

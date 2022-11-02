@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The provisioning state of the resource.
-    /// Serialized Name: JobProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state of the resource. </summary>
     public readonly partial struct JobProvisioningState : IEquatable<JobProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Automation.Models
         private const string SuspendedValue = "Suspended";
         private const string ProcessingValue = "Processing";
 
-        /// <summary>
-        /// Failed
-        /// Serialized Name: JobProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static JobProvisioningState Failed { get; } = new JobProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: JobProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static JobProvisioningState Succeeded { get; } = new JobProvisioningState(SucceededValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: JobProvisioningState.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         public static JobProvisioningState Suspended { get; } = new JobProvisioningState(SuspendedValue);
-        /// <summary>
-        /// Processing
-        /// Serialized Name: JobProvisioningState.Processing
-        /// </summary>
+        /// <summary> Processing. </summary>
         public static JobProvisioningState Processing { get; } = new JobProvisioningState(ProcessingValue);
         /// <summary> Determines if two <see cref="JobProvisioningState"/> values are the same. </summary>
         public static bool operator ==(JobProvisioningState left, JobProvisioningState right) => left.Equals(right);

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list dsc nodes operation.
-    /// Serialized Name: DscNodeReportListResult
-    /// </summary>
+    /// <summary> The response model for the list dsc nodes operation. </summary>
     internal partial class DscNodeReportListResult
     {
         /// <summary> Initializes a new instance of DscNodeReportListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of DscNodeReportListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of dsc node reports.
-        /// Serialized Name: DscNodeReportListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: DscNodeReportListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of dsc node reports. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal DscNodeReportListResult(IReadOnlyList<DscNodeReport> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of dsc node reports.
-        /// Serialized Name: DscNodeReportListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of dsc node reports. </summary>
         public IReadOnlyList<DscNodeReport> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: DscNodeReportListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

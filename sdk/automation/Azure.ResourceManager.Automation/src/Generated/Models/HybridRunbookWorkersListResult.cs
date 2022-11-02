@@ -11,10 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The response model for the list hybrid runbook workers.
-    /// Serialized Name: HybridRunbookWorkersListResult
-    /// </summary>
+    /// <summary> The response model for the list hybrid runbook workers. </summary>
     internal partial class HybridRunbookWorkersListResult
     {
         /// <summary> Initializes a new instance of HybridRunbookWorkersListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of HybridRunbookWorkersListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets a list of hybrid runbook workers.
-        /// Serialized Name: HybridRunbookWorkersListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the next link.
-        /// Serialized Name: HybridRunbookWorkersListResult.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets a list of hybrid runbook workers. </param>
+        /// <param name="nextLink"> Gets or sets the next link. </param>
         internal HybridRunbookWorkersListResult(IReadOnlyList<HybridRunbookWorkerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets a list of hybrid runbook workers.
-        /// Serialized Name: HybridRunbookWorkersListResult.value
-        /// </summary>
+        /// <summary> Gets or sets a list of hybrid runbook workers. </summary>
         public IReadOnlyList<HybridRunbookWorkerData> Value { get; }
-        /// <summary>
-        /// Gets or sets the next link.
-        /// Serialized Name: HybridRunbookWorkersListResult.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the next link. </summary>
         public string NextLink { get; }
     }
 }

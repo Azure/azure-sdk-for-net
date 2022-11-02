@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// The parameters supplied to the update schedule operation.
-    /// Serialized Name: ScheduleUpdateParameters
-    /// </summary>
+    /// <summary> The parameters supplied to the update schedule operation. </summary>
     public partial class AutomationSchedulePatch
     {
         /// <summary> Initializes a new instance of AutomationSchedulePatch. </summary>
@@ -18,20 +15,11 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the name of the Schedule.
-        /// Serialized Name: ScheduleUpdateParameters.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the Schedule. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Gets or sets the description of the schedule.
-        /// Serialized Name: ScheduleUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description of the schedule. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether this schedule is enabled.
-        /// Serialized Name: ScheduleUpdateParameters.properties.isEnabled
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether this schedule is enabled. </summary>
         public bool? IsEnabled { get; set; }
     }
 }

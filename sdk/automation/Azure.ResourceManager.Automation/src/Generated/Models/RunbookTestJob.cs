@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Definition of the test job.
-    /// Serialized Name: TestJob
-    /// </summary>
+    /// <summary> Definition of the test job. </summary>
     public partial class RunbookTestJob
     {
         /// <summary> Initializes a new instance of RunbookTestJob. </summary>
@@ -24,50 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of RunbookTestJob. </summary>
-        /// <param name="createdOn">
-        /// Gets or sets the creation time of the test job.
-        /// Serialized Name: TestJob.creationTime
-        /// </param>
-        /// <param name="status">
-        /// Gets or sets the status of the test job.
-        /// Serialized Name: TestJob.status
-        /// </param>
-        /// <param name="statusDetails">
-        /// Gets or sets the status details of the test job.
-        /// Serialized Name: TestJob.statusDetails
-        /// </param>
-        /// <param name="runOn">
-        /// Gets or sets the runOn which specifies the group name where the job is to be executed.
-        /// Serialized Name: TestJob.runOn
-        /// </param>
-        /// <param name="startOn">
-        /// Gets or sets the start time of the test job.
-        /// Serialized Name: TestJob.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Gets or sets the end time of the test job.
-        /// Serialized Name: TestJob.endTime
-        /// </param>
-        /// <param name="exception">
-        /// Gets or sets the exception of the test job.
-        /// Serialized Name: TestJob.exception
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time of the test job.
-        /// Serialized Name: TestJob.lastModifiedTime
-        /// </param>
-        /// <param name="lastStatusModifiedOn">
-        /// Gets or sets the last status modified time of the test job.
-        /// Serialized Name: TestJob.lastStatusModifiedTime
-        /// </param>
-        /// <param name="parameters">
-        /// Gets or sets the parameters of the test job.
-        /// Serialized Name: TestJob.parameters
-        /// </param>
-        /// <param name="logActivityTrace">
-        /// The activity-level tracing options of the runbook.
-        /// Serialized Name: TestJob.logActivityTrace
-        /// </param>
+        /// <param name="createdOn"> Gets or sets the creation time of the test job. </param>
+        /// <param name="status"> Gets or sets the status of the test job. </param>
+        /// <param name="statusDetails"> Gets or sets the status details of the test job. </param>
+        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
+        /// <param name="startOn"> Gets or sets the start time of the test job. </param>
+        /// <param name="endOn"> Gets or sets the end time of the test job. </param>
+        /// <param name="exception"> Gets or sets the exception of the test job. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time of the test job. </param>
+        /// <param name="lastStatusModifiedOn"> Gets or sets the last status modified time of the test job. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the test job. </param>
+        /// <param name="logActivityTrace"> The activity-level tracing options of the runbook. </param>
         internal RunbookTestJob(DateTimeOffset? createdOn, string status, string statusDetails, string runOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IReadOnlyDictionary<string, string> parameters, int? logActivityTrace)
         {
             CreatedOn = createdOn;
@@ -83,60 +47,27 @@ namespace Azure.ResourceManager.Automation.Models
             LogActivityTrace = logActivityTrace;
         }
 
-        /// <summary>
-        /// Gets or sets the creation time of the test job.
-        /// Serialized Name: TestJob.creationTime
-        /// </summary>
+        /// <summary> Gets or sets the creation time of the test job. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Gets or sets the status of the test job.
-        /// Serialized Name: TestJob.status
-        /// </summary>
+        /// <summary> Gets or sets the status of the test job. </summary>
         public string Status { get; }
-        /// <summary>
-        /// Gets or sets the status details of the test job.
-        /// Serialized Name: TestJob.statusDetails
-        /// </summary>
+        /// <summary> Gets or sets the status details of the test job. </summary>
         public string StatusDetails { get; }
-        /// <summary>
-        /// Gets or sets the runOn which specifies the group name where the job is to be executed.
-        /// Serialized Name: TestJob.runOn
-        /// </summary>
+        /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
         public string RunOn { get; }
-        /// <summary>
-        /// Gets or sets the start time of the test job.
-        /// Serialized Name: TestJob.startTime
-        /// </summary>
+        /// <summary> Gets or sets the start time of the test job. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// Gets or sets the end time of the test job.
-        /// Serialized Name: TestJob.endTime
-        /// </summary>
+        /// <summary> Gets or sets the end time of the test job. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Gets or sets the exception of the test job.
-        /// Serialized Name: TestJob.exception
-        /// </summary>
+        /// <summary> Gets or sets the exception of the test job. </summary>
         public string Exception { get; }
-        /// <summary>
-        /// Gets or sets the last modified time of the test job.
-        /// Serialized Name: TestJob.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time of the test job. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// Gets or sets the last status modified time of the test job.
-        /// Serialized Name: TestJob.lastStatusModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last status modified time of the test job. </summary>
         public DateTimeOffset? LastStatusModifiedOn { get; }
-        /// <summary>
-        /// Gets or sets the parameters of the test job.
-        /// Serialized Name: TestJob.parameters
-        /// </summary>
+        /// <summary> Gets or sets the parameters of the test job. </summary>
         public IReadOnlyDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// The activity-level tracing options of the runbook.
-        /// Serialized Name: TestJob.logActivityTrace
-        /// </summary>
+        /// <summary> The activity-level tracing options of the runbook. </summary>
         public int? LogActivityTrace { get; }
     }
 }

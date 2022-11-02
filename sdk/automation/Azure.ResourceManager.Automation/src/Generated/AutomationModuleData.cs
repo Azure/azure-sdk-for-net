@@ -30,54 +30,18 @@ namespace Azure.ResourceManager.Automation
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// Gets or sets the etag of the resource.
-        /// Serialized Name: Module.etag
-        /// </param>
-        /// <param name="isGlobal">
-        /// Gets or sets the isGlobal flag of the module.
-        /// Serialized Name: Module.properties.isGlobal
-        /// </param>
-        /// <param name="version">
-        /// Gets or sets the version of the module.
-        /// Serialized Name: Module.properties.version
-        /// </param>
-        /// <param name="sizeInBytes">
-        /// Gets or sets the size in bytes of the module.
-        /// Serialized Name: Module.properties.sizeInBytes
-        /// </param>
-        /// <param name="activityCount">
-        /// Gets or sets the activity count of the module.
-        /// Serialized Name: Module.properties.activityCount
-        /// </param>
-        /// <param name="provisioningState">
-        /// Gets or sets the provisioning state of the module.
-        /// Serialized Name: Module.properties.provisioningState
-        /// </param>
-        /// <param name="contentLink">
-        /// Gets or sets the contentLink of the module.
-        /// Serialized Name: Module.properties.contentLink
-        /// </param>
-        /// <param name="error">
-        /// Gets or sets the error info of the module.
-        /// Serialized Name: Module.properties.error
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets or sets the creation time.
-        /// Serialized Name: Module.properties.creationTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Module.properties.lastModifiedTime
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the description.
-        /// Serialized Name: Module.properties.description
-        /// </param>
-        /// <param name="isComposite">
-        /// Gets or sets type of module, if its composite or not.
-        /// Serialized Name: Module.properties.isComposite
-        /// </param>
+        /// <param name="etag"> Gets or sets the etag of the resource. </param>
+        /// <param name="isGlobal"> Gets or sets the isGlobal flag of the module. </param>
+        /// <param name="version"> Gets or sets the version of the module. </param>
+        /// <param name="sizeInBytes"> Gets or sets the size in bytes of the module. </param>
+        /// <param name="activityCount"> Gets or sets the activity count of the module. </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the module. </param>
+        /// <param name="contentLink"> Gets or sets the contentLink of the module. </param>
+        /// <param name="error"> Gets or sets the error info of the module. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
+        /// <param name="isComposite"> Gets or sets type of module, if its composite or not. </param>
         internal AutomationModuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, bool? isGlobal, string version, long? sizeInBytes, int? activityCount, ModuleProvisioningState? provisioningState, AutomationContentLink contentLink, AutomationModuleErrorInfo error, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, bool? isComposite) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
@@ -94,65 +58,29 @@ namespace Azure.ResourceManager.Automation
             IsComposite = isComposite;
         }
 
-        /// <summary>
-        /// Gets or sets the etag of the resource.
-        /// Serialized Name: Module.etag
-        /// </summary>
+        /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
-        /// <summary>
-        /// Gets or sets the isGlobal flag of the module.
-        /// Serialized Name: Module.properties.isGlobal
-        /// </summary>
+        /// <summary> Gets or sets the isGlobal flag of the module. </summary>
         public bool? IsGlobal { get; set; }
-        /// <summary>
-        /// Gets or sets the version of the module.
-        /// Serialized Name: Module.properties.version
-        /// </summary>
+        /// <summary> Gets or sets the version of the module. </summary>
         public string Version { get; set; }
-        /// <summary>
-        /// Gets or sets the size in bytes of the module.
-        /// Serialized Name: Module.properties.sizeInBytes
-        /// </summary>
+        /// <summary> Gets or sets the size in bytes of the module. </summary>
         public long? SizeInBytes { get; set; }
-        /// <summary>
-        /// Gets or sets the activity count of the module.
-        /// Serialized Name: Module.properties.activityCount
-        /// </summary>
+        /// <summary> Gets or sets the activity count of the module. </summary>
         public int? ActivityCount { get; set; }
-        /// <summary>
-        /// Gets or sets the provisioning state of the module.
-        /// Serialized Name: Module.properties.provisioningState
-        /// </summary>
+        /// <summary> Gets or sets the provisioning state of the module. </summary>
         public ModuleProvisioningState? ProvisioningState { get; set; }
-        /// <summary>
-        /// Gets or sets the contentLink of the module.
-        /// Serialized Name: Module.properties.contentLink
-        /// </summary>
+        /// <summary> Gets or sets the contentLink of the module. </summary>
         public AutomationContentLink ContentLink { get; set; }
-        /// <summary>
-        /// Gets or sets the error info of the module.
-        /// Serialized Name: Module.properties.error
-        /// </summary>
+        /// <summary> Gets or sets the error info of the module. </summary>
         public AutomationModuleErrorInfo Error { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time.
-        /// Serialized Name: Module.properties.creationTime
-        /// </summary>
+        /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the last modified time.
-        /// Serialized Name: Module.properties.lastModifiedTime
-        /// </summary>
+        /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the description.
-        /// Serialized Name: Module.properties.description
-        /// </summary>
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Gets or sets type of module, if its composite or not.
-        /// Serialized Name: Module.properties.isComposite
-        /// </summary>
+        /// <summary> Gets or sets type of module, if its composite or not. </summary>
         public bool? IsComposite { get; set; }
     }
 }

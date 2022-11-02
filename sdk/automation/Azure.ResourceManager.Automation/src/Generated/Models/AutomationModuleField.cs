@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary>
-    /// Information about a field of a type.
-    /// Serialized Name: TypeField
-    /// </summary>
+    /// <summary> Information about a field of a type. </summary>
     public partial class AutomationModuleField
     {
         /// <summary> Initializes a new instance of AutomationModuleField. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of AutomationModuleField. </summary>
-        /// <param name="name">
-        /// Gets or sets the name of the field.
-        /// Serialized Name: TypeField.name
-        /// </param>
-        /// <param name="typeFieldType">
-        /// Gets or sets the type of the field.
-        /// Serialized Name: TypeField.type
-        /// </param>
-        internal AutomationModuleField(string name, string typeFieldType)
+        /// <param name="name"> Gets or sets the name of the field. </param>
+        /// <param name="fieldType"> Gets or sets the type of the field. </param>
+        internal AutomationModuleField(string name, string fieldType)
         {
             Name = name;
-            TypeFieldType = typeFieldType;
+            FieldType = fieldType;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the field.
-        /// Serialized Name: TypeField.name
-        /// </summary>
+        /// <summary> Gets or sets the name of the field. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Gets or sets the type of the field.
-        /// Serialized Name: TypeField.type
-        /// </summary>
-        public string TypeFieldType { get; }
+        /// <summary> Gets or sets the type of the field. </summary>
+        public string FieldType { get; }
     }
 }

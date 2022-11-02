@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationActivityParameter
+    public partial class AutomationActivityParameterDefinition
     {
-        internal static AutomationActivityParameter DeserializeAutomationActivityParameter(JsonElement element)
+        internal static AutomationActivityParameterDefinition DeserializeAutomationActivityParameterDefinition(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> type = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationActivityParameter(name.Value, type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(isDynamic), Optional.ToNullable(position), Optional.ToNullable(valueFromPipeline), Optional.ToNullable(valueFromPipelineByPropertyName), Optional.ToNullable(valueFromRemainingArguments), description.Value, Optional.ToList(validationSet));
+            return new AutomationActivityParameterDefinition(name.Value, type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(isDynamic), Optional.ToNullable(position), Optional.ToNullable(valueFromPipeline), Optional.ToNullable(valueFromPipelineByPropertyName), Optional.ToNullable(valueFromRemainingArguments), description.Value, Optional.ToList(validationSet));
         }
     }
 }
