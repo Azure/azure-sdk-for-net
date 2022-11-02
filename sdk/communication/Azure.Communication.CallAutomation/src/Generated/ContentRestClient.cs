@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class ContentRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ContentRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-04-07-preview")
+        public ContentRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2022-04-07-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -44,12 +44,13 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath(":play", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(playRequest);
@@ -58,8 +59,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="playRequest"> The PlayRequest to use. </param>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="playRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
         public async Task<Response> PlayAsync(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
@@ -85,8 +86,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="playRequest"> The PlayRequest to use. </param>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="playRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
         public Response Play(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
@@ -117,12 +118,13 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath(":cancelAllMediaOperations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -176,12 +178,13 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath(":recognize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(recognizeRequest);
@@ -249,7 +252,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/recordings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

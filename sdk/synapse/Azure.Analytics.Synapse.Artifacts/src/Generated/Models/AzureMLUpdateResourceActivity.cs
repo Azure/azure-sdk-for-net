@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,22 +22,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="trainedModelName"/>, <paramref name="trainedModelLinkedServiceName"/> or <paramref name="trainedModelFilePath"/> is null. </exception>
         public AzureMLUpdateResourceActivity(string name, object trainedModelName, LinkedServiceReference trainedModelLinkedServiceName, object trainedModelFilePath) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (trainedModelName == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelName));
-            }
-            if (trainedModelLinkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLinkedServiceName));
-            }
-            if (trainedModelFilePath == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelFilePath));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(trainedModelName, nameof(trainedModelName));
+            Argument.AssertNotNull(trainedModelLinkedServiceName, nameof(trainedModelLinkedServiceName));
+            Argument.AssertNotNull(trainedModelFilePath, nameof(trainedModelFilePath));
 
             TrainedModelName = trainedModelName;
             TrainedModelLinkedServiceName = trainedModelLinkedServiceName;

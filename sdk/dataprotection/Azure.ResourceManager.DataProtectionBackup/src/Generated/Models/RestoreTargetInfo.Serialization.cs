@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("datasourceInfo");
-            writer.WriteObjectValue(DatasourceInfo);
-            if (Optional.IsDefined(DatasourceSetInfo))
+            writer.WriteObjectValue(DataSourceInfo);
+            if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo");
-                writer.WriteObjectValue(DatasourceSetInfo);
+                writer.WriteObjectValue(DataSourceSetInfo);
             }
-            if (Optional.IsDefined(DatasourceAuthCredentials))
+            if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials");
-                writer.WriteObjectValue(DatasourceAuthCredentials);
+                writer.WriteObjectValue(DataSourceAuthCredentials);
             }
             writer.WritePropertyName("objectType");
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption");
-            writer.WriteStringValue(RecoveryOption.ToString());
+            writer.WriteStringValue(RecoverySetting.ToString());
             if (Optional.IsDefined(RestoreLocation))
             {
                 writer.WritePropertyName("restoreLocation");
-                writer.WriteStringValue(RestoreLocation);
+                writer.WriteStringValue(RestoreLocation.Value);
             }
             writer.WriteEndObject();
         }

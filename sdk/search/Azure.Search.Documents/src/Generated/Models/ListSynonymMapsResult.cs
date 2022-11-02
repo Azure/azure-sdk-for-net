@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="synonymMaps"/> is null. </exception>
         internal ListSynonymMapsResult(IEnumerable<SynonymMap> synonymMaps)
         {
-            if (synonymMaps == null)
-            {
-                throw new ArgumentNullException(nameof(synonymMaps));
-            }
+            Argument.AssertNotNull(synonymMaps, nameof(synonymMaps));
 
             SynonymMaps = synonymMaps.ToList();
         }

@@ -16,7 +16,7 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 
 - [Azure.Storage.Common][common] provides infrastructure shared by the other Azure Storage client libraries like shared key authentication and exceptions.
 
-- [Microsoft.Azure.Management.Storage][management] supports managing Azure Storage resources, including the creation of new storage accounts.
+- [Azure.ResourceManager.Storage][management] supports managing Azure Storage resources, including the creation of new storage accounts.
 
 ## Contributing
 

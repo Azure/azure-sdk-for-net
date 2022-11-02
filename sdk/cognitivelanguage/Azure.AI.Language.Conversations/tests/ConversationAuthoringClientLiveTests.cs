@@ -9,7 +9,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
 {
-    [ClientTestFixture(ConversationsClientOptions.ServiceVersion.V2022_05_01)] // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29600
     public class ConversationAuthoringClientLiveTests : ConversationAnalysisTestBase<ConversationAuthoringClient>
     {
         public ConversationAuthoringClientLiveTests(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion)

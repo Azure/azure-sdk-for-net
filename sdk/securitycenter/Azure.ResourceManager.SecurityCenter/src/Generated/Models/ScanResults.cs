@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -17,17 +16,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ScanResults. </summary>
         internal ScanResults()
         {
-            Value = new ChangeTrackingList<ScanResultData>();
+            Value = new ChangeTrackingList<SqlVulnerabilityAssessmentScanResult>();
         }
 
         /// <summary> Initializes a new instance of ScanResults. </summary>
         /// <param name="value"> List of vulnerability assessment scan results. </param>
-        internal ScanResults(IReadOnlyList<ScanResultData> value)
+        internal ScanResults(IReadOnlyList<SqlVulnerabilityAssessmentScanResult> value)
         {
             Value = value;
         }
 
         /// <summary> List of vulnerability assessment scan results. </summary>
-        public IReadOnlyList<ScanResultData> Value { get; }
+        public IReadOnlyList<SqlVulnerabilityAssessmentScanResult> Value { get; }
     }
 }

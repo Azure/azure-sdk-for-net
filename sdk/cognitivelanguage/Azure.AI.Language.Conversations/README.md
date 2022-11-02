@@ -375,30 +375,39 @@ var data = new
     {
         new
         {
+            taskName = "Issue task",
+            kind = "ConversationalSummarizationTask",
             parameters = new
             {
                 summaryAspects = new[]
                 {
                     "issue",
+                }
+            },
+        },
+        new
+        {
+            taskName = "Resolution task",
+            kind = "ConversationalSummarizationTask",
+            parameters = new
+            {
+                summaryAspects = new[]
+                {
                     "resolution",
                 }
             },
-            kind = "ConversationalSummarizationTask",
-            taskName = "1",
         },
     },
 };
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
-analyzeConversationOperation.WaitForCompletion();
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
 JsonElement jobResults = result.RootElement;
 foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
 {
+    Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
     JsonElement results = task.GetProperty("results");
-
-    Console.WriteLine("Conversations:");
     foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
     {
         Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
@@ -473,8 +482,7 @@ var data = new
     },
 };
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
-analyzeConversationOperation.WaitForCompletion();
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
 JsonElement jobResults = result.RootElement;
@@ -638,5 +646,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_docs_demos]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/quickstart
 [conversationanalysis_docs_features]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/azure.ai.language.conversations
-[conversationanalysis_restdocs]: https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime
-[conversationanalysis_restdocs_authoring]: https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime
+[conversationanalysis_restdocs]: https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversation-analysis-runtime
+[conversationanalysis_restdocs_authoring]: https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring

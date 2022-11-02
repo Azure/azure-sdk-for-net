@@ -67,7 +67,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -111,7 +111,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -138,7 +138,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             var artifact = metadataClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -191,7 +191,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             var artifact = metadataClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -204,7 +204,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue2 = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             // Clean up
             await client.DeleteManifestAsync(digest);

@@ -338,7 +338,7 @@
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
     </PropertyGroup>
 
-    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)'" Importance="High" />
+    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'" Importance="High" />
   </Target>
 
   <Target Name="_SetProjectDependsOnInnerTarget">

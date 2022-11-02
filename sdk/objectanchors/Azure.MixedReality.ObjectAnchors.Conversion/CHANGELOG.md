@@ -2,13 +2,17 @@
 
 ## 0.3.0-beta.6 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
-### Other Changes
+- The `AccountDomain` property on the `ObjectAnchorsConversionClient` is not properly set to the value passed into the
+  constructor.
+
+### Features Added
+
+- As of API version `0.3-preview.2`, we have begun detecting and using asset scale units embedded in FBX files for asset
+  conversion. The detected scale unit will be used by default. To disable this behavior, you can set the new
+  `DisableDetectScaleUnits` option in `AssetConversionOptions` to `true`. The `DisableDetectScaleUnits` option is
+  ignored in previous API versions.
 
 ## 0.3.0-beta.5 (2022-09-12)
 

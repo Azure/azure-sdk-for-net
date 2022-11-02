@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SystemData> systemData = default;
             Optional<string> state = default;
             Optional<DateTimeOffset> creationTimeUtc = default;
-            Optional<SecurityTaskParameters> securityTaskParameters = default;
+            Optional<SecurityTaskProperties> securityTaskParameters = default;
             Optional<DateTimeOffset> lastStateChangeTimeUtc = default;
             Optional<string> subState = default;
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            securityTaskParameters = SecurityTaskParameters.DeserializeSecurityTaskParameters(property0.Value);
+                            securityTaskParameters = SecurityTaskProperties.DeserializeSecurityTaskProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastStateChangeTimeUtc"))

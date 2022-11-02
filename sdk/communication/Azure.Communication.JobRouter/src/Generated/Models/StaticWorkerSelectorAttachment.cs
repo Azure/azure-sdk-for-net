@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="labelSelector"/> is null. </exception>
         public StaticWorkerSelectorAttachment(WorkerSelector labelSelector)
         {
-            if (labelSelector == null)
-            {
-                throw new ArgumentNullException(nameof(labelSelector));
-            }
+            Argument.AssertNotNull(labelSelector, nameof(labelSelector));
 
             LabelSelector = labelSelector;
             Kind = "static";

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> controlId = default;
             Optional<string> controlName = default;
             Optional<ControlType> controlType = default;
-            Optional<string> complianceState = default;
+            Optional<ComplianceState> complianceState = default;
             Optional<string> policyId = default;
             Optional<string> policyDisplayName = default;
             Optional<string> policyDescription = default;
@@ -56,7 +56,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (property.NameEquals("complianceState"))
                 {
-                    complianceState = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    complianceState = new ComplianceState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyId"))
@@ -100,7 +105,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), complianceState.Value, policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value);
+            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value);
         }
     }
 }

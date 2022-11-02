@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DtlEnvironmentList DeserializeDtlEnvironmentList(JsonElement element)
         {
-            Optional<IReadOnlyList<DtlEnvironmentData>> value = default;
+            Optional<IReadOnlyList<DevTestLabEnvironmentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DtlEnvironmentData> array = new List<DtlEnvironmentData>();
+                    List<DevTestLabEnvironmentData> array = new List<DevTestLabEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DtlEnvironmentData.DeserializeDtlEnvironmentData(item));
+                        array.Add(DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(item));
                     }
                     value = array;
                     continue;

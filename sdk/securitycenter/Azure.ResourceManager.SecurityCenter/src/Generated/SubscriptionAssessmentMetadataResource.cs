@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         private readonly ClientDiagnostics _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics;
         private readonly AssessmentsMetadataRestOperations _subscriptionAssessmentMetadataAssessmentsMetadataRestClient;
-        private readonly SecurityAssessmentMetadataResponseData _data;
+        private readonly SecurityAssessmentMetadataData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionAssessmentMetadataResource"/> class for mocking. </summary>
         protected SubscriptionAssessmentMetadataResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "SubscriptionAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataResponseData data) : this(client, data.Id)
+        internal SubscriptionAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SecurityAssessmentMetadataResponseData Data
+        public virtual SecurityAssessmentMetadataData Data
         {
             get
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> AssessmentMetadata object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SubscriptionAssessmentMetadataResource>> UpdateAsync(WaitUntil waitUntil, SecurityAssessmentMetadataResponseData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SubscriptionAssessmentMetadataResource>> UpdateAsync(WaitUntil waitUntil, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> AssessmentMetadata object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SubscriptionAssessmentMetadataResource> Update(WaitUntil waitUntil, SecurityAssessmentMetadataResponseData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SubscriptionAssessmentMetadataResource> Update(WaitUntil waitUntil, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
