@@ -66,33 +66,34 @@ if ($readmeFile) {
 }
 
 if ($relatedCadlProjectFolder) {
-  $caldFolder = (Join-Path $swaggerDir $relatedCadlProjectFolder) -replace "\\", "/"
+  $cadlFolder = Resolve-Path (Join-Path $swaggerDir $cadlRelativeFolder)
   $newPackageOutput = "newPackageOutput.json"
 
-  Push-Location $caldFolder
-  $cadlProjectYaml = Get-Content -Path "$caldFolder/cadl-project.yaml" -Raw
+  Push-Location $cadlFolder
+  trap {Pop-Location}
+  $cadlProjectYaml = Get-Content -Path (Join-Path "$cadlFolder" "cadl-project.yaml") -Raw
 
   Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
   $yml = ConvertFrom-YAML $cadlProjectYaml
   $sdkFolder = $yml["emitters"]["@azure-tools/cadl-csharp"]["sdk-folder"]
   $projectFolder = (Join-Path $sdkPath $sdkFolder)
-  $projectFolder = $projectFolder -replace "\\", "/"
+  # $projectFolder = $projectFolder -replace "\\", "/"
   if ($projectFolder) {
-      $directories = $projectFolder.Split("/");
+      $directories = $projectFolder -split "/|\\"
       $count = $directories.Count
       $projectFolder = $directories[0 .. ($count-2)] -join "/"
       $service = $directories[-3];
       $namespace = $directories[-2];
   }
-  New-CADLPackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -cadlInput $caldFolder/main.cadl -outputJsonFile $newpackageoutput
-  $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
+  New-CADLPackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -cadlInput $cadlFolder/main.cadl -outputJsonFile $newpackageoutput
+  $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
   $relativeSdkPath = $newPackageOutputJson.path
   npm install
   npx cadl compile --output-path $sdkPath --emit @azure-tools/cadl-csharp .
   if ( !$?) {
       Throw "Failed to generate sdk for cadl. exit code: $?"
   }
-  GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkPath -path $relativeSdkPath -downloadUrlPrefix "$downloadUrlPrefix" -skipGenerate -generatedSDKPackages $generatedSDKPackages
+  GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkPath -path $relativeSdkPath -downloadUrlPrefix $downloadUrlPrefix -skipGenerate -generatedSDKPackages $generatedSDKPackages
   Pop-Location
 }
 $outputJson = [PSCustomObject]@{
