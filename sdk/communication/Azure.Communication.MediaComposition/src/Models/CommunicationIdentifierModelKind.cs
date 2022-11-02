@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication
 {
     [CodeGenModel("CommunicationIdentifierModelKind")]
-    public readonly partial struct CommunicationIdentifierModelKind
+    internal readonly partial struct CommunicationIdentifierModelKind
     {
     }
 }

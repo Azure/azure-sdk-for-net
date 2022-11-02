@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("imageName");
                 writer.WriteStringValue(ImageName);
             }
-            if (Optional.IsDefined(SysPrep))
+            if (Optional.IsDefined(IsSysPrepEnabled))
             {
                 writer.WritePropertyName("sysPrep");
-                writer.WriteBooleanValue(SysPrep.Value);
+                writer.WriteBooleanValue(IsSysPrepEnabled.Value);
             }
             writer.WritePropertyName("osType");
             writer.WriteStringValue(OSType.ToString());

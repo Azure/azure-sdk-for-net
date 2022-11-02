@@ -21,14 +21,8 @@ namespace Azure.ResourceManager.HybridData
         /// <exception cref="ArgumentNullException"> <paramref name="dataServiceLevel1Key"/> or <paramref name="dataServiceLevel2Key"/> is null. </exception>
         public HybridDataPublicKeyData(HybridDataEncryptionKey dataServiceLevel1Key, HybridDataEncryptionKey dataServiceLevel2Key)
         {
-            if (dataServiceLevel1Key == null)
-            {
-                throw new ArgumentNullException(nameof(dataServiceLevel1Key));
-            }
-            if (dataServiceLevel2Key == null)
-            {
-                throw new ArgumentNullException(nameof(dataServiceLevel2Key));
-            }
+            Argument.AssertNotNull(dataServiceLevel1Key, nameof(dataServiceLevel1Key));
+            Argument.AssertNotNull(dataServiceLevel2Key, nameof(dataServiceLevel2Key));
 
             DataServiceLevel1Key = dataServiceLevel1Key;
             DataServiceLevel2Key = dataServiceLevel2Key;

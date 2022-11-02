@@ -21,18 +21,9 @@ namespace Azure.Communication.Email.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sender"/>, <paramref name="content"/> or <paramref name="recipients"/> is null. </exception>
         public EmailMessage(string sender, EmailContent content, EmailRecipients recipients)
         {
-            if (sender == null)
-            {
-                throw new ArgumentNullException(nameof(sender));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-            if (recipients == null)
-            {
-                throw new ArgumentNullException(nameof(recipients));
-            }
+            Argument.AssertNotNull(sender, nameof(sender));
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(recipients, nameof(recipients));
 
             CustomHeaders = new ChangeTrackingList<EmailCustomHeader>();
             Sender = sender;
