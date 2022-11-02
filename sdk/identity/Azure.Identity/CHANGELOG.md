@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 - Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`.
+- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell.
 
 ### Other Changes
 
