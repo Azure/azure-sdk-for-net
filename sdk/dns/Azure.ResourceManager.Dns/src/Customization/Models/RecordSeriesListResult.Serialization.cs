@@ -1,0 +1,45 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.Dns;
+
+namespace Azure.ResourceManager.Dns.Models
+{
+    internal partial class RecordSeriesListResult
+    {
+        internal static RecordSeriesListResult DeserializeRecordSetListResult(JsonElement element)
+        {
+            Optional<IReadOnlyList<RecordSeriesData>> value = default;
+            Optional<string> nextLink = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("value"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<RecordSeriesData> array = new List<RecordSeriesData>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RecordSeriesData.DeserializeRecordSeriesData(item));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new RecordSeriesListResult(Optional.ToList(value), nextLink.Value);
+        }
+    }
+}
