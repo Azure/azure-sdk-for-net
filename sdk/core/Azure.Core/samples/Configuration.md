@@ -34,16 +34,16 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
         _timeout = timeout;
     }
 
-    protected internal override bool ShouldRetry(HttpMessage message)
+    protected internal override bool ShouldRetry(HttpMessage message, Exception exception)
     {
-        return ShouldRetryInternalAsync(message, false).EnsureCompleted();
+        return ShouldRetryInternalAsync(message, exception, false).EnsureCompleted();
     }
-    protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message)
+    protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
     {
-        return ShouldRetryInternalAsync(message, true);
+        return ShouldRetryInternalAsync(message, exception, true);
     }
 
-    private ValueTask<bool> ShouldRetryInternalAsync(HttpMessage message, bool async)
+    private ValueTask<bool> ShouldRetryInternalAsync(HttpMessage message, Exception exception, bool async)
     {
         TimeSpan elapsedTime = message.ProcessingContext.StartTime - DateTimeOffset.UtcNow;
         if (elapsedTime > _timeout)
@@ -51,7 +51,7 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
             return new ValueTask<bool>(false);
         }
 
-        return async ? base.ShouldRetryAsync(message) : new ValueTask<bool>(base.ShouldRetry(message));
+        return async ? base.ShouldRetryAsync(message, exception) : new ValueTask<bool>(base.ShouldRetry(message, exception));
     }
 }
 ```
@@ -91,13 +91,9 @@ internal class PollyPolicy : HttpPipelinePolicy
                 },
                 onRetry: (result, _) =>
                 {
-                    // Since we are overriding the RetryPolicy, it is our responsibility to maintain the ProcessingContext
+                    // Since we are overriding the RetryPolicy, it is our responsibility to increment the RetryNumber
                     // that other policies in the pipeline may be depending on.
                     var context = message.ProcessingContext;
-                    if (result.Exception != null)
-                    {
-                        context.LastException = result.Exception;
-                    }
                     context.RetryNumber++;
                 }
             )
@@ -118,6 +114,9 @@ SecretClientOptions options = new SecretClientOptions()
     RetryPolicy = new PollyPolicy()
 };
 ```
+
+> **_A note to library authors:_**
+Library-specific response classifiers _will_ be respected if a user sets a custom policy deriving from `RetryPolicy` as long as they call into the base `ShouldRetry` method. If a user doesn't call the base method, or sets a `HttpPipelinePolicy` in the `RetryPolicy` property, then the library-specific response classifiers _will not_ be respected. 
 
 ## User provided HttpClient instance
 

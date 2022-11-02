@@ -40,12 +40,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// installed on each Compute Node in the Pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the Pool as metadata.</param>
-        public PoolPatchParameter(StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="targetNodeCommunicationMode">The desired node
+        /// communication mode for the pool.</param>
+        public PoolPatchParameter(StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<MetadataItem> metadata = default(IList<MetadataItem>), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?))
         {
             StartTask = startTask;
             CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
             Metadata = metadata;
+            TargetNodeCommunicationMode = targetNodeCommunicationMode;
             CustomInit();
         }
 
@@ -113,6 +116,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired node communication mode for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If this element is present, it replaces the existing
+        /// targetNodeCommunicationMode configured on the Pool. If omitted, any
+        /// existing metadata is left unchanged. Possible values include:
+        /// 'default', 'classic', 'simplified'
+        /// </remarks>
+        [JsonProperty(PropertyName = "targetNodeCommunicationMode")]
+        public NodeCommunicationMode? TargetNodeCommunicationMode { get; set; }
 
     }
 }

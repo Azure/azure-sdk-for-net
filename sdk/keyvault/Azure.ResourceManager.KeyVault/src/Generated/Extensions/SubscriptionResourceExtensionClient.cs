@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKeyVaultNameAvailability");
+            using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKeyVaultNameAvailability");
             scope.Start();
             try
             {
-                var response = await VaultsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await KeyVaultVaultsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -272,11 +272,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKeyVaultNameAvailability");
+            using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKeyVaultNameAvailability");
             scope.Start();
             try
             {
-                var response = VaultsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = KeyVaultVaultsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
