@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetSeasonAsync(String,RequestContext)">
+    <member name="GetCropAsync(String,RequestContext)">
 <example>
-This sample shows how to call GetSeasonAsync with required parameters and parse the result.
+This sample shows how to call GetCropAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
-Response response = await client.GetSeasonAsync("<seasonId>");
+Response response = await client.GetCropAsync("<cropId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("startDateTime").ToString());
-Console.WriteLine(result.GetProperty("endDateTime").ToString());
-Console.WriteLine(result.GetProperty("year").ToString());
+Console.WriteLine(result.GetProperty("phenotype").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -30,46 +28,44 @@ Below is the JSON schema for the response payload.
 
 Response Body:
 
-Schema for <c>Season</c>:
+Schema for <c>Crop</c>:
 <code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
+  phenotype: string, # Optional. Crop phenotype.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetSeason(String,RequestContext)">
+    <member name="GetCrop(String,RequestContext)">
 <example>
-This sample shows how to call GetSeason with required parameters and parse the result.
+This sample shows how to call GetCrop with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
-Response response = client.GetSeason("<seasonId>");
+Response response = client.GetCrop("<cropId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("startDateTime").ToString());
-Console.WriteLine(result.GetProperty("endDateTime").ToString());
-Console.WriteLine(result.GetProperty("year").ToString());
+Console.WriteLine(result.GetProperty("phenotype").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -80,22 +76,22 @@ Below is the JSON schema for the response payload.
 
 Response Body:
 
-Schema for <c>Season</c>:
+Schema for <c>Crop</c>:
 <code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
+  phenotype: string, # Optional. Crop phenotype.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -106,12 +102,11 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -119,14 +114,12 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
 var data = new {
-    startDateTime = "2022-05-10T18:57:31.2311892Z",
-    endDateTime = "2022-05-10T18:57:31.2311892Z",
-    year = 1234,
+    phenotype = "<phenotype>",
     status = "<status>",
+    source = "<source>",
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -134,17 +127,16 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("startDateTime").ToString());
-Console.WriteLine(result.GetProperty("endDateTime").ToString());
-Console.WriteLine(result.GetProperty("year").ToString());
+Console.WriteLine(result.GetProperty("phenotype").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -155,43 +147,43 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>Season</c>:
+Schema for <c>Crop</c>:
 <code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
+  phenotype: string, # Optional. Crop phenotype.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 Response Body:
 
-Schema for <c>Season</c>:
+Schema for <c>Crop</c>:
 <code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
+  phenotype: string, # Optional. Crop phenotype.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -202,12 +194,11 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
 var data = new {};
 
-Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -215,14 +206,12 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
 var data = new {
-    startDateTime = "2022-05-10T18:57:31.2311892Z",
-    endDateTime = "2022-05-10T18:57:31.2311892Z",
-    year = 1234,
+    phenotype = "<phenotype>",
     status = "<status>",
+    source = "<source>",
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -230,17 +219,16 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("startDateTime").ToString());
-Console.WriteLine(result.GetProperty("endDateTime").ToString());
-Console.WriteLine(result.GetProperty("year").ToString());
+Console.WriteLine(result.GetProperty("phenotype").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -251,43 +239,43 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>Season</c>:
+Schema for <c>Crop</c>:
 <code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
+  phenotype: string, # Optional. Crop phenotype.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 Response Body:
 
-Schema for <c>Season</c>:
+Schema for <c>Crop</c>:
 <code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
+  phenotype: string, # Optional. Crop phenotype.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -298,10 +286,9 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
-Response response = await client.DeleteAsync("<seasonId>");
+Response response = await client.DeleteAsync("<cropId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -311,45 +298,41 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
-Response response = client.Delete("<seasonId>");
+Response response = client.Delete("<cropId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetSeasonsAsync(DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetCropsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetSeasonsAsync and parse the result.
+This sample shows how to call GetCropsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetSeasonsAsync())
+await foreach (var data in client.GetCropsAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetSeasonsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetCropsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetCropsAsync(new String[]{"<phenotypes>"}, new String[]{"<cropIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("startDateTime").ToString());
-    Console.WriteLine(result.GetProperty("endDateTime").ToString());
-    Console.WriteLine(result.GetProperty("year").ToString());
+    Console.WriteLine(result.GetProperty("phenotype").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -361,58 +344,55 @@ Below is the JSON schema for one item in the pageable response.
 
 Response Body:
 
-Schema for <c>SeasonListResponseValue</c>:
+Schema for <c>CropListResponseValue</c>:
 <code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
+  phenotype: string, # Optional. Crop phenotype.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetSeasons(DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetCrops(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetSeasons and parse the result.
+This sample shows how to call GetCrops and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetSeasons())
+foreach (var data in client.GetCrops())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetSeasons with all parameters, and how to parse the result.
+This sample shows how to call GetCrops with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new SeasonsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropsClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetCrops(new String[]{"<phenotypes>"}, new String[]{"<cropIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("startDateTime").ToString());
-    Console.WriteLine(result.GetProperty("endDateTime").ToString());
-    Console.WriteLine(result.GetProperty("year").ToString());
+    Console.WriteLine(result.GetProperty("phenotype").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -424,22 +404,22 @@ Below is the JSON schema for one item in the pageable response.
 
 Response Body:
 
-Schema for <c>SeasonListResponseValue</c>:
+Schema for <c>CropListResponseValue</c>:
 <code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
+  phenotype: string, # Optional. Crop phenotype.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetDataIngestionJobDetailsAsync(String,RequestContext)">
+    <member name="GetJobDetailsAsync(String,RequestContext)">
 <example>
-This sample shows how to call GetDataIngestionJobDetailsAsync with required parameters and parse the result.
+This sample shows how to call GetJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
 
-Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
+Response response = await client.GetJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
+Console.WriteLine(result.GetProperty("isIncremental").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -36,10 +36,11 @@ Response Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  authProviderId: string, # Required. Authentication provider ID.
+  farmerId: string, # Required. Farmer Id.
+  authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+  isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -51,30 +52,31 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetDataIngestionJobDetails(String,RequestContext)">
+    <member name="GetJobDetails(String,RequestContext)">
 <example>
-This sample shows how to call GetDataIngestionJobDetails with required parameters and parse the result.
+This sample shows how to call GetJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
 
-Response response = client.GetDataIngestionJobDetails("<jobId>");
+Response response = client.GetJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
+Console.WriteLine(result.GetProperty("isIncremental").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -95,10 +97,11 @@ Response Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  authProviderId: string, # Required. Authentication provider ID.
+  farmerId: string, # Required. Farmer Id.
+  authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+  isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -110,22 +113,22 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="CreateDataIngestionJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateJobAsync(WaitUntil,String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateDataIngestionJobAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -133,7 +136,7 @@ var data = new {
     startYear = 1234,
 };
 
-var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -141,11 +144,10 @@ Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
 ]]></code>
-This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -154,6 +156,7 @@ var data = new {
         "<String>"
     },
     startYear = 1234,
+    isIncremental = true,
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -161,7 +164,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -169,6 +172,7 @@ Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
+Console.WriteLine(result.GetProperty("isIncremental").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -189,10 +193,11 @@ Request Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  authProviderId: string, # Required. Authentication provider ID.
+  farmerId: string, # Required. Farmer Id.
+  authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+  isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -204,10 +209,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -215,10 +221,11 @@ Response Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  authProviderId: string, # Required. Authentication provider ID.
+  farmerId: string, # Required. Farmer Id.
+  authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+  isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -230,22 +237,22 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="CreateDataIngestionJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateJob(WaitUntil,String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateDataIngestionJob with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -253,7 +260,7 @@ var data = new {
     startYear = 1234,
 };
 
-var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -261,11 +268,10 @@ Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
 ]]></code>
-This sample shows how to call CreateDataIngestionJob with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -274,6 +280,7 @@ var data = new {
         "<String>"
     },
     startYear = 1234,
+    isIncremental = true,
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -281,7 +288,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -289,6 +296,7 @@ Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
+Console.WriteLine(result.GetProperty("isIncremental").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -309,10 +317,11 @@ Request Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  authProviderId: string, # Required. Authentication provider ID.
+  farmerId: string, # Required. Farmer Id.
+  authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+  isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -324,10 +333,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -335,10 +345,11 @@ Response Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  authProviderId: string, # Required. Authentication provider ID.
+  farmerId: string, # Required. Farmer Id.
+  authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+  isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -350,10 +361,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 

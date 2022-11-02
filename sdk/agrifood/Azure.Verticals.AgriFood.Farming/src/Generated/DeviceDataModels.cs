@@ -61,123 +61,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     type = "<type>",
-        ///     manufacturer = "<manufacturer>",
-        ///     productCode = "<productCode>",
-        ///     ports = new[] {
-        ///         new {
-        ///             name = "<name>",
-        ///             type = "<type>",
-        ///         }
-        ///     },
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("productCode").ToString());
-        /// Console.WriteLine(result.GetProperty("ports")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("ports")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>DeviceDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of device.
-        ///   manufacturer: string, # Optional. Device manufacturer.
-        ///   productCode: string, # Optional. Device productCode.
-        ///   ports: [
-        ///     {
-        ///       name: string, # Optional. Name of the port.
-        ///       type: string, # Optional. Type of port digital/analog.
-        ///     }
-        ///   ], # Optional. List of device ports supported.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DeviceDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of device.
-        ///   manufacturer: string, # Optional. Device manufacturer.
-        ///   productCode: string, # Optional. Device productCode.
-        ///   ports: [
-        ///     {
-        ///       name: string, # Optional. Name of the port.
-        ///       type: string, # Optional. Type of port digital/analog.
-        ///     }
-        ///   ], # Optional. List of device ports supported.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceDataModels.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string deviceDataModelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -207,123 +91,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     type = "<type>",
-        ///     manufacturer = "<manufacturer>",
-        ///     productCode = "<productCode>",
-        ///     ports = new[] {
-        ///         new {
-        ///             name = "<name>",
-        ///             type = "<type>",
-        ///         }
-        ///     },
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("productCode").ToString());
-        /// Console.WriteLine(result.GetProperty("ports")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("ports")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>DeviceDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of device.
-        ///   manufacturer: string, # Optional. Device manufacturer.
-        ///   productCode: string, # Optional. Device productCode.
-        ///   ports: [
-        ///     {
-        ///       name: string, # Optional. Name of the port.
-        ///       type: string, # Optional. Type of port digital/analog.
-        ///     }
-        ///   ], # Optional. List of device ports supported.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DeviceDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of device.
-        ///   manufacturer: string, # Optional. Device manufacturer.
-        ///   productCode: string, # Optional. Device productCode.
-        ///   ports: [
-        ///     {
-        ///       name: string, # Optional. Name of the port.
-        ///       type: string, # Optional. Type of port digital/analog.
-        ///     }
-        ///   ], # Optional. List of device ports supported.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceDataModels.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string deviceDataModelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -352,64 +120,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeviceDataModelAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("productCode").ToString());
-        /// Console.WriteLine(result.GetProperty("ports")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("ports")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DeviceDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of device.
-        ///   manufacturer: string, # Optional. Device manufacturer.
-        ///   productCode: string, # Optional. Device productCode.
-        ///   ports: [
-        ///     {
-        ///       name: string, # Optional. Name of the port.
-        ///       type: string, # Optional. Type of port digital/analog.
-        ///     }
-        ///   ], # Optional. List of device ports supported.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceDataModels.xml" path="doc/members/member[@name='GetDeviceDataModelAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetDeviceDataModelAsync(string sensorPartnerId, string deviceDataModelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -437,64 +148,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeviceDataModel with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.GetDeviceDataModel("<sensorPartnerId>", "<deviceDataModelId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("productCode").ToString());
-        /// Console.WriteLine(result.GetProperty("ports")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("ports")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DeviceDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of device.
-        ///   manufacturer: string, # Optional. Device manufacturer.
-        ///   productCode: string, # Optional. Device productCode.
-        ///   ports: [
-        ///     {
-        ///       name: string, # Optional. Name of the port.
-        ///       type: string, # Optional. Type of port digital/analog.
-        ///     }
-        ///   ], # Optional. List of device ports supported.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceDataModels.xml" path="doc/members/member[@name='GetDeviceDataModel(String,String,RequestContext)']/*" />
         public virtual Response GetDeviceDataModel(string sensorPartnerId, string deviceDataModelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -522,16 +176,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/DeviceDataModels.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorPartnerId, string deviceDataModelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -559,16 +204,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/DeviceDataModels.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
         public virtual Response Delete(string sensorPartnerId, string deviceDataModelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -611,76 +247,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeviceDataModelsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetDeviceDataModelsAsync("<sensorPartnerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetDeviceDataModelsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetDeviceDataModelsAsync("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        ///     Console.WriteLine(result.GetProperty("productCode").ToString());
-        ///     Console.WriteLine(result.GetProperty("ports")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("ports")[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DeviceDataModelListResponseValue</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of device.
-        ///   manufacturer: string, # Optional. Device manufacturer.
-        ///   productCode: string, # Optional. Device productCode.
-        ///   ports: [
-        ///     {
-        ///       name: string, # Optional. Name of the port.
-        ///       type: string, # Optional. Type of port digital/analog.
-        ///     }
-        ///   ], # Optional. List of device ports supported.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceDataModels.xml" path="doc/members/member[@name='GetDeviceDataModelsAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDeviceDataModelsAsync(string sensorPartnerId, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -728,76 +295,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeviceDataModels with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetDeviceDataModels("<sensorPartnerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetDeviceDataModels with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetDeviceDataModels("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        ///     Console.WriteLine(result.GetProperty("productCode").ToString());
-        ///     Console.WriteLine(result.GetProperty("ports")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("ports")[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DeviceDataModelListResponseValue</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of device.
-        ///   manufacturer: string, # Optional. Device manufacturer.
-        ///   productCode: string, # Optional. Device productCode.
-        ///   ports: [
-        ///     {
-        ///       name: string, # Optional. Name of the port.
-        ///       type: string, # Optional. Type of port digital/analog.
-        ///     }
-        ///   ], # Optional. List of device ports supported.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceDataModels.xml" path="doc/members/member[@name='GetDeviceDataModels(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDeviceDataModels(string sensorPartnerId, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));

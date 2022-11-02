@@ -60,104 +60,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     sensorId = "<sensorId>",
-        ///     sensorPartnerId = "<sensorPartnerId>",
-        ///     farmerId = "<farmerId>",
-        ///     boundaryId = "<boundaryId>",
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("sensorId").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SensorMapping</c>:
-        /// <code>{
-        ///   sensorId: string, # Optional. Id of the associated sensor.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   farmerId: string, # Optional. Id of the associated farmer.
-        ///   boundaryId: string, # Optional. Id of the associated boundary.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorMapping</c>:
-        /// <code>{
-        ///   sensorId: string, # Optional. Id of the associated sensor.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   farmerId: string, # Optional. Id of the associated farmer.
-        ///   boundaryId: string, # Optional. Id of the associated boundary.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorMappingId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
@@ -185,104 +88,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     sensorId = "<sensorId>",
-        ///     sensorPartnerId = "<sensorPartnerId>",
-        ///     farmerId = "<farmerId>",
-        ///     boundaryId = "<boundaryId>",
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("sensorId").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SensorMapping</c>:
-        /// <code>{
-        ///   sensorId: string, # Optional. Id of the associated sensor.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   farmerId: string, # Optional. Id of the associated farmer.
-        ///   boundaryId: string, # Optional. Id of the associated boundary.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorMapping</c>:
-        /// <code>{
-        ///   sensorId: string, # Optional. Id of the associated sensor.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   farmerId: string, # Optional. Id of the associated farmer.
-        ///   boundaryId: string, # Optional. Id of the associated boundary.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='CreateOrUpdate(String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorMappingId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
@@ -309,56 +115,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorMappingAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.GetSensorMappingAsync("<sensorMappingId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("sensorId").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorMapping</c>:
-        /// <code>{
-        ///   sensorId: string, # Optional. Id of the associated sensor.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   farmerId: string, # Optional. Id of the associated farmer.
-        ///   boundaryId: string, # Optional. Id of the associated boundary.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMappingAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorMappingAsync(string sensorMappingId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
@@ -384,56 +141,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorMapping with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.GetSensorMapping("<sensorMappingId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("sensorId").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorMapping</c>:
-        /// <code>{
-        ///   sensorId: string, # Optional. Id of the associated sensor.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   farmerId: string, # Optional. Id of the associated farmer.
-        ///   boundaryId: string, # Optional. Id of the associated boundary.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMapping(String,RequestContext)']/*" />
         public virtual Response GetSensorMapping(string sensorMappingId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
@@ -459,16 +167,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.DeleteAsync("<sensorMappingId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='DeleteAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorMappingId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
@@ -494,16 +193,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.Delete("<sensorMappingId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='Delete(String,RequestContext)']/*" />
         public virtual Response Delete(string sensorMappingId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
@@ -546,68 +236,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorMappingsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetSensorMappingsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSensorMappingsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<farmerIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("sensorId").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorMappingListResponseValue</c>:
-        /// <code>{
-        ///   sensorId: string, # Optional. Id of the associated sensor.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   farmerId: string, # Optional. Id of the associated farmer.
-        ///   boundaryId: string, # Optional. Id of the associated boundary.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMappingsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSensorMappingsAsync(IEnumerable<string> sensorIds = null, IEnumerable<string> sensorPartnerIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             return GetSensorMappingsImplementationAsync("SensorMappings.GetSensorMappings", sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -654,68 +283,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorMappings and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetSensorMappings())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSensorMappings with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<farmerIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("sensorId").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorMappingListResponseValue</c>:
-        /// <code>{
-        ///   sensorId: string, # Optional. Id of the associated sensor.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   farmerId: string, # Optional. Id of the associated farmer.
-        ///   boundaryId: string, # Optional. Id of the associated boundary.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMappings(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSensorMappings(IEnumerable<string> sensorIds = null, IEnumerable<string> sensorPartnerIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             return GetSensorMappingsImplementation("SensorMappings.GetSensorMappings", sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);

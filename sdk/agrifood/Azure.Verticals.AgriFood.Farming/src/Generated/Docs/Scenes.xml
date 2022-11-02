@@ -1,13 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
+    <member name="DownloadAsync(String,RequestContext)">
+<example>
+This sample shows how to call DownloadAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+
+Response response = await client.DownloadAsync("<filePath>");
+if (response.ContentStream != null)
+{
+    using(Stream outFileStream = File.OpenWrite("<filePath>")
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
+}
+]]></code>
+</example>
+    </member>
+    <member name="Download(String,RequestContext)">
+<example>
+This sample shows how to call Download with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+
+Response response = client.Download("<filePath>");
+if (response.ContentStream != null)
+{
+    using(Stream outFileStream = File.OpenWrite("<filePath>")
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
+}
+]]></code>
+</example>
+    </member>
     <member name="GetSatelliteDataIngestionJobDetailsAsync(String,RequestContext)">
 <example>
 This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>");
 
@@ -41,12 +76,12 @@ Response Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
+  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
+  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -63,10 +98,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -77,8 +113,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call GetSatelliteDataIngestionJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>");
 
@@ -112,12 +147,12 @@ Response Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
+  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
+  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -134,60 +169,22 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
-    </member>
-    <member name="DownloadAsync(String,RequestContext)">
-<example>
-This sample shows how to call DownloadAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
-
-Response response = await client.DownloadAsync("<filePath>");
-if (response.ContentStream != null)
-{
-    using(Stream outFileStream = File.OpenWrite("<filePath>")
-    {
-        response.ContentStream.CopyTo(outFileStream);
-    }
-}
-]]></code>
-</example>
-    </member>
-    <member name="Download(String,RequestContext)">
-<example>
-This sample shows how to call Download with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
-
-Response response = client.Download("<filePath>");
-if (response.ContentStream != null)
-{
-    using(Stream outFileStream = File.OpenWrite("<filePath>")
-    {
-        response.ContentStream.CopyTo(outFileStream);
-    }
-}
-]]></code>
-</example>
     </member>
     <member name="GetScenesAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetScenesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>"))
 {
@@ -198,8 +195,7 @@ await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<b
 This sample shows how to call GetScenesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
 {
@@ -236,11 +232,11 @@ Schema for <c>SceneListResponseValue</c>:
     {
       fileLink: string, # Optional. Link of the image file.
       name: string, # Required. Name of the image file.
-      imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+      imageFormat: &quot;TIF&quot;, # Optional. ImageFormat. Available value: TIF.
       resolution: number, # Optional. Resolution of image file in meters.
     }
   ], # Optional. Collection of image files.
-  imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+  imageFormat: &quot;TIF&quot;, # Optional. ImageFormat. Available value: TIF.
   cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
@@ -258,8 +254,7 @@ Schema for <c>SceneListResponseValue</c>:
 This sample shows how to call GetScenes with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>"))
 {
@@ -270,8 +265,7 @@ foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>"
 This sample shows how to call GetScenes with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
 {
@@ -308,11 +302,11 @@ Schema for <c>SceneListResponseValue</c>:
     {
       fileLink: string, # Optional. Link of the image file.
       name: string, # Required. Name of the image file.
-      imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+      imageFormat: &quot;TIF&quot;, # Optional. ImageFormat. Available value: TIF.
       resolution: number, # Optional. Resolution of image file in meters.
     }
   ], # Optional. Collection of image files.
-  imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+  imageFormat: &quot;TIF&quot;, # Optional. ImageFormat. Available value: TIF.
   cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
@@ -330,8 +324,7 @@ Schema for <c>SceneListResponseValue</c>:
 This sample shows how to call CreateSatelliteDataIngestionJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -352,8 +345,7 @@ Console.WriteLine(result.GetProperty("endDateTime").ToString());
 This sample shows how to call CreateSatelliteDataIngestionJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -413,12 +405,12 @@ Request Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
+  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
+  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -435,10 +427,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -446,12 +439,12 @@ Response Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
+  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
+  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -468,10 +461,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -482,8 +476,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateSatelliteDataIngestionJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -504,8 +497,7 @@ Console.WriteLine(result.GetProperty("endDateTime").ToString());
 This sample shows how to call CreateSatelliteDataIngestionJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ScenesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -565,12 +557,12 @@ Request Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
+  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
+  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -587,10 +579,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -598,12 +591,12 @@ Response Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
+  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
+  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -620,10 +613,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 

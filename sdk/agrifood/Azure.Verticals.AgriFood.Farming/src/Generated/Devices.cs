@@ -61,129 +61,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     deviceDataModelId = "<deviceDataModelId>",
-        ///     integrationId = "<integrationId>",
-        ///     type = "<type>",
-        ///     hardwareId = "<hardwareId>",
-        ///     reportingIntervalInSeconds = 1234,
-        ///     parentDeviceId = "<parentDeviceId>",
-        ///     location = new {
-        ///         latitude = 123.45d,
-        ///         longitude = 123.45d,
-        ///     },
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("hardwareId").ToString());
-        /// Console.WriteLine(result.GetProperty("reportingIntervalInSeconds").ToString());
-        /// Console.WriteLine(result.GetProperty("parentDeviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
-        /// Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>Device</c>:
-        /// <code>{
-        ///   deviceDataModelId: string, # Optional. Id of the associated device data model.
-        ///   integrationId: string, # Optional. Integration id for the device.
-        ///   type: string, # Optional. Type of device.
-        ///   hardwareId: string, # Optional. Device hardwareId.
-        ///   reportingIntervalInSeconds: number, # Optional. Interval at which the device sends data in seconds.
-        ///   parentDeviceId: string, # Optional. Parent device Id for this device.
-        ///   location: {
-        ///     latitude: number, # Required. Latitude of the location.
-        ///     longitude: number, # Required. Longitude of the location.
-        ///   }, # Optional. Location model class.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Device</c>:
-        /// <code>{
-        ///   deviceDataModelId: string, # Optional. Id of the associated device data model.
-        ///   integrationId: string, # Optional. Integration id for the device.
-        ///   type: string, # Optional. Type of device.
-        ///   hardwareId: string, # Optional. Device hardwareId.
-        ///   reportingIntervalInSeconds: number, # Optional. Interval at which the device sends data in seconds.
-        ///   parentDeviceId: string, # Optional. Parent device Id for this device.
-        ///   location: {
-        ///     latitude: number, # Required. Latitude of the location.
-        ///     longitude: number, # Required. Longitude of the location.
-        ///   }, # Optional. Location model class.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string deviceId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -213,129 +91,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     deviceDataModelId = "<deviceDataModelId>",
-        ///     integrationId = "<integrationId>",
-        ///     type = "<type>",
-        ///     hardwareId = "<hardwareId>",
-        ///     reportingIntervalInSeconds = 1234,
-        ///     parentDeviceId = "<parentDeviceId>",
-        ///     location = new {
-        ///         latitude = 123.45d,
-        ///         longitude = 123.45d,
-        ///     },
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("hardwareId").ToString());
-        /// Console.WriteLine(result.GetProperty("reportingIntervalInSeconds").ToString());
-        /// Console.WriteLine(result.GetProperty("parentDeviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
-        /// Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>Device</c>:
-        /// <code>{
-        ///   deviceDataModelId: string, # Optional. Id of the associated device data model.
-        ///   integrationId: string, # Optional. Integration id for the device.
-        ///   type: string, # Optional. Type of device.
-        ///   hardwareId: string, # Optional. Device hardwareId.
-        ///   reportingIntervalInSeconds: number, # Optional. Interval at which the device sends data in seconds.
-        ///   parentDeviceId: string, # Optional. Parent device Id for this device.
-        ///   location: {
-        ///     latitude: number, # Required. Latitude of the location.
-        ///     longitude: number, # Required. Longitude of the location.
-        ///   }, # Optional. Location model class.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Device</c>:
-        /// <code>{
-        ///   deviceDataModelId: string, # Optional. Id of the associated device data model.
-        ///   integrationId: string, # Optional. Integration id for the device.
-        ///   type: string, # Optional. Type of device.
-        ///   hardwareId: string, # Optional. Device hardwareId.
-        ///   reportingIntervalInSeconds: number, # Optional. Interval at which the device sends data in seconds.
-        ///   parentDeviceId: string, # Optional. Parent device Id for this device.
-        ///   location: {
-        ///     latitude: number, # Required. Latitude of the location.
-        ///     longitude: number, # Required. Longitude of the location.
-        ///   }, # Optional. Location model class.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string deviceId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -364,68 +120,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeviceAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.GetDeviceAsync("<sensorPartnerId>", "<deviceId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("hardwareId").ToString());
-        /// Console.WriteLine(result.GetProperty("reportingIntervalInSeconds").ToString());
-        /// Console.WriteLine(result.GetProperty("parentDeviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
-        /// Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Device</c>:
-        /// <code>{
-        ///   deviceDataModelId: string, # Optional. Id of the associated device data model.
-        ///   integrationId: string, # Optional. Integration id for the device.
-        ///   type: string, # Optional. Type of device.
-        ///   hardwareId: string, # Optional. Device hardwareId.
-        ///   reportingIntervalInSeconds: number, # Optional. Interval at which the device sends data in seconds.
-        ///   parentDeviceId: string, # Optional. Parent device Id for this device.
-        ///   location: {
-        ///     latitude: number, # Required. Latitude of the location.
-        ///     longitude: number, # Required. Longitude of the location.
-        ///   }, # Optional. Location model class.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDeviceAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetDeviceAsync(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -453,68 +148,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDevice with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.GetDevice("<sensorPartnerId>", "<deviceId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("hardwareId").ToString());
-        /// Console.WriteLine(result.GetProperty("reportingIntervalInSeconds").ToString());
-        /// Console.WriteLine(result.GetProperty("parentDeviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
-        /// Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Device</c>:
-        /// <code>{
-        ///   deviceDataModelId: string, # Optional. Id of the associated device data model.
-        ///   integrationId: string, # Optional. Integration id for the device.
-        ///   type: string, # Optional. Type of device.
-        ///   hardwareId: string, # Optional. Device hardwareId.
-        ///   reportingIntervalInSeconds: number, # Optional. Interval at which the device sends data in seconds.
-        ///   parentDeviceId: string, # Optional. Parent device Id for this device.
-        ///   location: {
-        ///     latitude: number, # Required. Latitude of the location.
-        ///     longitude: number, # Required. Longitude of the location.
-        ///   }, # Optional. Location model class.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevice(String,String,RequestContext)']/*" />
         public virtual Response GetDevice(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -542,16 +176,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -579,16 +204,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.Delete("<sensorPartnerId>", "<deviceId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
         public virtual Response Delete(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -633,80 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDevicesAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetDevicesAsync("<sensorPartnerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetDevicesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetDevicesAsync("<sensorPartnerId>", new String[]{"<parentDeviceIds>"}, new String[]{"<deviceDataModelIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
-        ///     Console.WriteLine(result.GetProperty("integrationId").ToString());
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareId").ToString());
-        ///     Console.WriteLine(result.GetProperty("reportingIntervalInSeconds").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentDeviceId").ToString());
-        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
-        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DeviceListResponseValue</c>:
-        /// <code>{
-        ///   deviceDataModelId: string, # Optional. Id of the associated device data model.
-        ///   integrationId: string, # Optional. Integration id for the device.
-        ///   type: string, # Optional. Type of device.
-        ///   hardwareId: string, # Optional. Device hardwareId.
-        ///   reportingIntervalInSeconds: number, # Optional. Interval at which the device sends data in seconds.
-        ///   parentDeviceId: string, # Optional. Parent device Id for this device.
-        ///   location: {
-        ///     latitude: number, # Required. Latitude of the location.
-        ///     longitude: number, # Required. Longitude of the location.
-        ///   }, # Optional. Location model class.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevicesAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDevicesAsync(string sensorPartnerId, IEnumerable<string> parentDeviceIds = null, IEnumerable<string> deviceDataModelIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -756,80 +299,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDevices with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetDevices("<sensorPartnerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetDevices with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetDevices("<sensorPartnerId>", new String[]{"<parentDeviceIds>"}, new String[]{"<deviceDataModelIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
-        ///     Console.WriteLine(result.GetProperty("integrationId").ToString());
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("hardwareId").ToString());
-        ///     Console.WriteLine(result.GetProperty("reportingIntervalInSeconds").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentDeviceId").ToString());
-        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
-        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DeviceListResponseValue</c>:
-        /// <code>{
-        ///   deviceDataModelId: string, # Optional. Id of the associated device data model.
-        ///   integrationId: string, # Optional. Integration id for the device.
-        ///   type: string, # Optional. Type of device.
-        ///   hardwareId: string, # Optional. Device hardwareId.
-        ///   reportingIntervalInSeconds: number, # Optional. Interval at which the device sends data in seconds.
-        ///   parentDeviceId: string, # Optional. Parent device Id for this device.
-        ///   location: {
-        ///     latitude: number, # Required. Latitude of the location.
-        ///     longitude: number, # Required. Longitude of the location.
-        ///   }, # Optional. Location model class.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevices(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDevices(string sensorPartnerId, IEnumerable<string> parentDeviceIds = null, IEnumerable<string> deviceDataModelIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));

@@ -61,98 +61,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     farmerId = "<farmerId>",
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationModel</c>:
-        /// <code>{
-        ///   integrationId: string, # Optional. Id of the integration.
-        ///   farmerId: string, # Optional. Id of the farmer.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationModel</c>:
-        /// <code>{
-        ///   integrationId: string, # Optional. Id of the integration.
-        ///   farmerId: string, # Optional. Id of the farmer.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string integrationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -182,98 +91,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     farmerId = "<farmerId>",
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationModel</c>:
-        /// <code>{
-        ///   integrationId: string, # Optional. Id of the integration.
-        ///   farmerId: string, # Optional. Id of the farmer.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationModel</c>:
-        /// <code>{
-        ///   integrationId: string, # Optional. Id of the integration.
-        ///   farmerId: string, # Optional. Id of the farmer.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string integrationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -302,54 +120,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorPartnerIntegrationAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.GetSensorPartnerIntegrationAsync("<sensorPartnerId>", "<integrationId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationModel</c>:
-        /// <code>{
-        ///   integrationId: string, # Optional. Id of the integration.
-        ///   farmerId: string, # Optional. Id of the farmer.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrationAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorPartnerIntegrationAsync(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -377,54 +148,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorPartnerIntegration with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.GetSensorPartnerIntegration("<sensorPartnerId>", "<integrationId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationModel</c>:
-        /// <code>{
-        ///   integrationId: string, # Optional. Id of the integration.
-        ///   farmerId: string, # Optional. Id of the farmer.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegration(String,String,RequestContext)']/*" />
         public virtual Response GetSensorPartnerIntegration(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -452,16 +176,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.DeleteAsync("<sensorPartnerId>", "<integrationId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -489,16 +204,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.Delete("<sensorPartnerId>", "<integrationId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
         public virtual Response Delete(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -527,34 +233,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CheckConsentAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.CheckConsentAsync("<sensorPartnerId>", "<integrationId>", "<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("consented").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationCheckConsentResponse</c>:
-        /// <code>{
-        ///   consented: boolean, # Optional. Flag to determine the status of partner integration consent.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   integrationId: string, # Optional. Id of the integration.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CheckConsentAsync(String,String,String,RequestContext)']/*" />
         public virtual async Task<Response> CheckConsentAsync(string sensorPartnerId, string integrationId, string key, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -584,34 +263,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CheckConsent with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.CheckConsent("<sensorPartnerId>", "<integrationId>", "<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("consented").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("integrationId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationCheckConsentResponse</c>:
-        /// <code>{
-        ///   consented: boolean, # Optional. Flag to determine the status of partner integration consent.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   integrationId: string, # Optional. Id of the integration.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CheckConsent(String,String,String,RequestContext)']/*" />
         public virtual Response CheckConsent(string sensorPartnerId, string integrationId, string key, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -640,32 +292,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GenerateConsentLinkAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.GenerateConsentLinkAsync("<sensorPartnerId>", "<integrationId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("consentLink").ToString());
-        /// Console.WriteLine(result.GetProperty("consentExpiryDateTime").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationGenerateConsentLinkResponse</c>:
-        /// <code>{
-        ///   consentLink: string, # Optional. Consent link.
-        ///   consentExpiryDateTime: string (ISO 8601 Format), # Optional. Consent expiry date time, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GenerateConsentLinkAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GenerateConsentLinkAsync(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -693,32 +320,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GenerateConsentLink with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.GenerateConsentLink("<sensorPartnerId>", "<integrationId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("consentLink").ToString());
-        /// Console.WriteLine(result.GetProperty("consentExpiryDateTime").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationGenerateConsentLinkResponse</c>:
-        /// <code>{
-        ///   consentLink: string, # Optional. Consent link.
-        ///   consentExpiryDateTime: string (ISO 8601 Format), # Optional. Consent expiry date time, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GenerateConsentLink(String,String,RequestContext)']/*" />
         public virtual Response GenerateConsentLink(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -763,66 +365,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorPartnerIntegrationsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSensorPartnerIntegrationsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>", new String[]{"<integrationIds>"}, new String[]{"<farmerIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("integrationId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationModelListResponseValue</c>:
-        /// <code>{
-        ///   integrationId: string, # Optional. Id of the integration.
-        ///   farmerId: string, # Optional. Id of the farmer.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrationsAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSensorPartnerIntegrationsAsync(string sensorPartnerId, IEnumerable<string> integrationIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -872,66 +415,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorPartnerIntegrations with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetSensorPartnerIntegrations("<sensorPartnerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSensorPartnerIntegrations with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetSensorPartnerIntegrations("<sensorPartnerId>", new String[]{"<integrationIds>"}, new String[]{"<farmerIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("integrationId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorPartnerIntegrationModelListResponseValue</c>:
-        /// <code>{
-        ///   integrationId: string, # Optional. Id of the integration.
-        ///   farmerId: string, # Optional. Id of the farmer.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrations(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSensorPartnerIntegrations(string sensorPartnerId, IEnumerable<string> integrationIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));

@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetFarmAsync(String,String,RequestContext)">
+    <member name="GetPrescriptionMapAsync(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFarmAsync with required parameters and parse the result.
+This sample shows how to call GetPrescriptionMapAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-Response response = await client.GetFarmAsync("<farmerId>", "<farmId>");
+Response response = await client.GetPrescriptionMapAsync("<farmerId>", "<prescriptionMapId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("seasonId").ToString());
+Console.WriteLine(result.GetProperty("cropId").ToString());
+Console.WriteLine(result.GetProperty("fieldId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -28,42 +32,52 @@ Below is the JSON schema for the response payload.
 
 Response Body:
 
-Schema for <c>Farm</c>:
+Schema for <c>PrescriptionMap</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetFarm(String,String,RequestContext)">
+    <member name="GetPrescriptionMap(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFarm with required parameters and parse the result.
+This sample shows how to call GetPrescriptionMap with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-Response response = client.GetFarm("<farmerId>", "<farmId>");
+Response response = client.GetPrescriptionMap("<farmerId>", "<prescriptionMapId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("seasonId").ToString());
+Console.WriteLine(result.GetProperty("cropId").ToString());
+Console.WriteLine(result.GetProperty("fieldId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -74,20 +88,26 @@ Below is the JSON schema for the response payload.
 
 Response Body:
 
-Schema for <c>Farm</c>:
+Schema for <c>PrescriptionMap</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -98,12 +118,11 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<farmId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<farmerId>", "<prescriptionMapId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -111,11 +130,15 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
 var data = new {
+    type = "<type>",
+    seasonId = "<seasonId>",
+    cropId = "<cropId>",
+    fieldId = "<fieldId>",
     status = "<status>",
+    source = "<source>",
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -123,15 +146,20 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<farmId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<farmerId>", "<prescriptionMapId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("seasonId").ToString());
+Console.WriteLine(result.GetProperty("cropId").ToString());
+Console.WriteLine(result.GetProperty("fieldId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -142,39 +170,51 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>Farm</c>:
+Schema for <c>PrescriptionMap</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 Response Body:
 
-Schema for <c>Farm</c>:
+Schema for <c>PrescriptionMap</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -185,12 +225,11 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
 var data = new {};
 
-Response response = client.CreateOrUpdate("<farmerId>", "<farmId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<farmerId>", "<prescriptionMapId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -198,11 +237,15 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
 var data = new {
+    type = "<type>",
+    seasonId = "<seasonId>",
+    cropId = "<cropId>",
+    fieldId = "<fieldId>",
     status = "<status>",
+    source = "<source>",
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -210,15 +253,20 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<farmerId>", "<farmId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<farmerId>", "<prescriptionMapId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("seasonId").ToString());
+Console.WriteLine(result.GetProperty("cropId").ToString());
+Console.WriteLine(result.GetProperty("fieldId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -229,39 +277,51 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>Farm</c>:
+Schema for <c>PrescriptionMap</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 Response Body:
 
-Schema for <c>Farm</c>:
+Schema for <c>PrescriptionMap</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -272,10 +332,9 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-Response response = await client.DeleteAsync("<farmerId>", "<farmId>");
+Response response = await client.DeleteAsync("<farmerId>", "<prescriptionMapId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -285,10 +344,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-Response response = client.Delete("<farmerId>", "<farmId>");
+Response response = client.Delete("<farmerId>", "<prescriptionMapId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -298,8 +356,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
@@ -315,9 +372,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -327,11 +381,11 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
@@ -339,12 +393,6 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
 }
 </code>
 
@@ -355,8 +403,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
@@ -372,9 +419,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -384,11 +428,11 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
@@ -396,46 +440,43 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetFarmsByFarmerIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetPrescriptionMapsByFarmerIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetFarmsByFarmerIdAsync with required parameters and parse the result.
+This sample shows how to call GetPrescriptionMapsByFarmerIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetFarmsByFarmerIdAsync("<farmerId>"))
+await foreach (var data in client.GetPrescriptionMapsByFarmerIdAsync("<farmerId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetFarmsByFarmerIdAsync with all parameters, and how to parse the result.
+This sample shows how to call GetPrescriptionMapsByFarmerIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetFarmsByFarmerIdAsync("<farmerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetPrescriptionMapsByFarmerIdAsync("<farmerId>", new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("seasonId").ToString());
+    Console.WriteLine(result.GetProperty("cropId").ToString());
+    Console.WriteLine(result.GetProperty("fieldId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -447,54 +488,63 @@ Below is the JSON schema for one item in the pageable response.
 
 Response Body:
 
-Schema for <c>FarmListResponseValue</c>:
+Schema for <c>PrescriptionMapListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetFarmsByFarmerId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetPrescriptionMapsByFarmerId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetFarmsByFarmerId with required parameters and parse the result.
+This sample shows how to call GetPrescriptionMapsByFarmerId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetFarmsByFarmerId("<farmerId>"))
+foreach (var data in client.GetPrescriptionMapsByFarmerId("<farmerId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetFarmsByFarmerId with all parameters, and how to parse the result.
+This sample shows how to call GetPrescriptionMapsByFarmerId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetFarmsByFarmerId("<farmerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetPrescriptionMapsByFarmerId("<farmerId>", new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("seasonId").ToString());
+    Console.WriteLine(result.GetProperty("cropId").ToString());
+    Console.WriteLine(result.GetProperty("fieldId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -506,54 +556,63 @@ Below is the JSON schema for one item in the pageable response.
 
 Response Body:
 
-Schema for <c>FarmListResponseValue</c>:
+Schema for <c>PrescriptionMapListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetFarmsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetPrescriptionMapsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetFarmsAsync and parse the result.
+This sample shows how to call GetPrescriptionMapsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetFarmsAsync())
+await foreach (var data in client.GetPrescriptionMapsAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetFarmsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetPrescriptionMapsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetFarmsAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetPrescriptionMapsAsync(new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("seasonId").ToString());
+    Console.WriteLine(result.GetProperty("cropId").ToString());
+    Console.WriteLine(result.GetProperty("fieldId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -565,54 +624,63 @@ Below is the JSON schema for one item in the pageable response.
 
 Response Body:
 
-Schema for <c>FarmListResponseValue</c>:
+Schema for <c>PrescriptionMapListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetFarms(IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetPrescriptionMaps(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetFarms and parse the result.
+This sample shows how to call GetPrescriptionMaps and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetFarms())
+foreach (var data in client.GetPrescriptionMaps())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetFarms with all parameters, and how to parse the result.
+This sample shows how to call GetPrescriptionMaps with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetFarms(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetPrescriptionMaps(new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("seasonId").ToString());
+    Console.WriteLine(result.GetProperty("cropId").ToString());
+    Console.WriteLine(result.GetProperty("fieldId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -624,20 +692,26 @@ Below is the JSON schema for one item in the pageable response.
 
 Response Body:
 
-Schema for <c>FarmListResponseValue</c>:
+Schema for <c>PrescriptionMapListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer ID.
+  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Prescription map type.
+  seasonId: string, # Optional. Season Id.
+  cropId: string, # Optional. Crop Id.
+  fieldId: string, # Optional. Field Id.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -648,10 +722,9 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<prescriptionMapId>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -666,9 +739,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -678,11 +748,11 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
@@ -690,12 +760,6 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
 }
 </code>
 
@@ -706,10 +770,9 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new FarmsClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2021-07-31-preview>);
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<prescriptionMapId>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -724,9 +787,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -736,11 +796,11 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
@@ -748,12 +808,6 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
 }
 </code>
 

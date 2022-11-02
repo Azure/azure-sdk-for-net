@@ -6,8 +6,7 @@
 This sample shows how to call GetOAuthConnectionLinkAsync with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -23,8 +22,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetOAuthConnectionLinkAsync with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -46,8 +44,8 @@ Request Body:
 
 Schema for <c>OAuthConnectRequest</c>:
 <code>{
-  farmerId: string, # Required. ID of the farmer.
-  oAuthProviderId: string, # Required. ID of the OAuthProvider.
+  farmerId: string, # Required. Id of the farmer.
+  oAuthProviderId: string, # Required. Id of the OAuthProvider.
   userRedirectLink: string, # Required. Link to redirect the user to, at the end of the oauth flow.
   userRedirectState: string, # Optional. State to provide back when redirecting the user, at the end of the oauth flow.
 }
@@ -60,8 +58,7 @@ Schema for <c>OAuthConnectRequest</c>:
 This sample shows how to call GetOAuthConnectionLink with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -77,8 +74,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetOAuthConnectionLink with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -100,8 +96,8 @@ Request Body:
 
 Schema for <c>OAuthConnectRequest</c>:
 <code>{
-  farmerId: string, # Required. ID of the farmer.
-  oAuthProviderId: string, # Required. ID of the OAuthProvider.
+  farmerId: string, # Required. Id of the farmer.
+  oAuthProviderId: string, # Required. Id of the OAuthProvider.
   userRedirectLink: string, # Required. Link to redirect the user to, at the end of the oauth flow.
   userRedirectState: string, # Optional. State to provide back when redirecting the user, at the end of the oauth flow.
 }
@@ -114,8 +110,7 @@ Schema for <c>OAuthConnectRequest</c>:
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
@@ -131,9 +126,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -143,11 +135,11 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
@@ -155,12 +147,6 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
 }
 </code>
 
@@ -171,8 +157,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
@@ -188,9 +173,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -200,11 +182,11 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
@@ -212,39 +194,31 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetOAuthTokensAsync(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAuthenticatedFarmersDetailsAsync(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetOAuthTokensAsync and parse the result.
+This sample shows how to call GetAuthenticatedFarmersDetailsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetOAuthTokensAsync())
+await foreach (var data in client.GetAuthenticatedFarmersDetailsAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("farmerId").ToString());
     Console.WriteLine(result.GetProperty("authProviderId").ToString());
 }
 ]]></code>
-This sample shows how to call GetOAuthTokensAsync with all parameters, and how to parse the result.
+This sample shows how to call GetAuthenticatedFarmersDetailsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetOAuthTokensAsync(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetAuthenticatedFarmersDetailsAsync(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -274,28 +248,26 @@ Schema for <c>OAuthTokenListResponseValue</c>:
 
 </remarks>
     </member>
-    <member name="GetOAuthTokens(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAuthenticatedFarmersDetails(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetOAuthTokens and parse the result.
+This sample shows how to call GetAuthenticatedFarmersDetails and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetOAuthTokens())
+foreach (var data in client.GetAuthenticatedFarmersDetails())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("farmerId").ToString());
     Console.WriteLine(result.GetProperty("authProviderId").ToString());
 }
 ]]></code>
-This sample shows how to call GetOAuthTokens with all parameters, and how to parse the result.
+This sample shows how to call GetAuthenticatedFarmersDetails with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetOAuthTokens(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetAuthenticatedFarmersDetails(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -330,8 +302,7 @@ Schema for <c>OAuthTokenListResponseValue</c>:
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
 var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<oauthProviderId>");
 
@@ -348,9 +319,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -360,11 +328,11 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
@@ -372,12 +340,6 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
 }
 </code>
 
@@ -388,8 +350,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OAuthTokensClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
 
 var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<oauthProviderId>");
 
@@ -406,9 +367,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -418,11 +376,11 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
+  farmerId: string, # Required. Farmer Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
@@ -430,12 +388,6 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
 }
 </code>
 

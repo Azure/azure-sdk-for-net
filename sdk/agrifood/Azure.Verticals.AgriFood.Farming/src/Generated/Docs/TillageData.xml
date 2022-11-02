@@ -6,8 +6,7 @@
 This sample shows how to call GetTillageDataAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 Response response = await client.GetTillageDataAsync("<farmerId>", "<tillageDataId>");
 
@@ -18,19 +17,18 @@ Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToSt
 Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
 Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
 Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
 Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -49,26 +47,26 @@ Schema for <c>TillageData</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -79,8 +77,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call GetTillageData with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 Response response = client.GetTillageData("<farmerId>", "<tillageDataId>");
 
@@ -91,19 +88,18 @@ Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToSt
 Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
 Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
 Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
 Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -122,26 +118,26 @@ Schema for <c>TillageData</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -152,8 +148,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 var data = new {};
 
@@ -165,8 +160,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 var data = new {
     tillageDepth = new {
@@ -181,13 +175,12 @@ var data = new {
         unit = "<unit>",
         value = 123.45d,
     },
-    source = "<source>",
     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
     associatedBoundaryId = "<associatedBoundaryId>",
-    operationBoundaryId = "<operationBoundaryId>",
     status = "<status>",
+    source = "<source>",
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -204,19 +197,18 @@ Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToSt
 Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
 Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
 Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
 Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -235,26 +227,26 @@ Schema for <c>TillageData</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -268,26 +260,26 @@ Schema for <c>TillageData</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -298,8 +290,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 var data = new {};
 
@@ -311,8 +302,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 var data = new {
     tillageDepth = new {
@@ -327,13 +317,12 @@ var data = new {
         unit = "<unit>",
         value = 123.45d,
     },
-    source = "<source>",
     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
     associatedBoundaryId = "<associatedBoundaryId>",
-    operationBoundaryId = "<operationBoundaryId>",
     status = "<status>",
+    source = "<source>",
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -350,19 +339,18 @@ Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToSt
 Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
 Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
 Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
 Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -381,26 +369,26 @@ Schema for <c>TillageData</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -414,26 +402,26 @@ Schema for <c>TillageData</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -444,8 +432,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 Response response = await client.DeleteAsync("<farmerId>", "<tillageDataId>");
 Console.WriteLine(response.Status);
@@ -457,21 +444,113 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 Response response = client.Delete("<farmerId>", "<tillageDataId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetAllTillageDataByFarmerIdAsync(String,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetCascadeDeleteJobDetailsAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
+
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CascadeDeleteJob</c>:
+<code>{
+  farmerId: string, # Required. Farmer Id.
+  resourceId: string, # Required. The id of the resource.
+  resourceType: string, # Required. The type of the resource.
+  id: string, # Optional. Unique job id.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetCascadeDeleteJobDetails(String,RequestContext)">
+<example>
+This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
+
+Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CascadeDeleteJob</c>:
+<code>{
+  farmerId: string, # Required. Farmer Id.
+  resourceId: string, # Required. The id of the resource.
+  resourceType: string, # Required. The type of the resource.
+  id: string, # Optional. Unique job id.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAllTillageDataByFarmerIdAsync(String,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetAllTillageDataByFarmerIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 await foreach (var data in client.GetAllTillageDataByFarmerIdAsync("<farmerId>"))
 {
@@ -482,10 +561,9 @@ await foreach (var data in client.GetAllTillageDataByFarmerIdAsync("<farmerId>")
 This sample shows how to call GetAllTillageDataByFarmerIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetAllTillageDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetAllTillageDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<tillageDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -494,19 +572,18 @@ await foreach (var data in client.GetAllTillageDataByFarmerIdAsync("<farmerId>",
     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
     Console.WriteLine(result.GetProperty("farmerId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -526,38 +603,37 @@ Schema for <c>TillageDataListResponseValue</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetAllTillageDataByFarmerId(String,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAllTillageDataByFarmerId(String,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetAllTillageDataByFarmerId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 foreach (var data in client.GetAllTillageDataByFarmerId("<farmerId>"))
 {
@@ -568,10 +644,9 @@ foreach (var data in client.GetAllTillageDataByFarmerId("<farmerId>"))
 This sample shows how to call GetAllTillageDataByFarmerId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetAllTillageDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetAllTillageDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<tillageDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -580,19 +655,18 @@ foreach (var data in client.GetAllTillageDataByFarmerId("<farmerId>", 1234, 1234
     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
     Console.WriteLine(result.GetProperty("farmerId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -612,38 +686,37 @@ Schema for <c>TillageDataListResponseValue</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetAllTillageDataAsync(Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAllTillageDataAsync(Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetAllTillageDataAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 await foreach (var data in client.GetAllTillageDataAsync())
 {
@@ -654,10 +727,9 @@ await foreach (var data in client.GetAllTillageDataAsync())
 This sample shows how to call GetAllTillageDataAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetAllTillageDataAsync(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetAllTillageDataAsync(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<tillageDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -666,19 +738,18 @@ await foreach (var data in client.GetAllTillageDataAsync(1234, 1234, 1234, 1234,
     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
     Console.WriteLine(result.GetProperty("farmerId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -698,38 +769,37 @@ Schema for <c>TillageDataListResponseValue</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetAllTillageData(Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAllTillageData(Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetAllTillageData and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
 foreach (var data in client.GetAllTillageData())
 {
@@ -740,10 +810,9 @@ foreach (var data in client.GetAllTillageData())
 This sample shows how to call GetAllTillageData with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TillageDataClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetAllTillageData(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetAllTillageData(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<tillageDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -752,19 +821,18 @@ foreach (var data in client.GetAllTillageData(1234, 1234, 1234, 1234, new String
     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
     Console.WriteLine(result.GetProperty("farmerId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -784,26 +852,122 @@ Schema for <c>TillageDataListResponseValue</c>:
   }, # Optional. Schema for storing measurement reading and unit.
   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
   area: Measure, # Optional. Schema for storing measurement reading and unit.
-  source: string, # Optional. Source of the operation data.
   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
 Note: this will be specified by the source provider itself.
   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
+
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<tillageDataId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CascadeDeleteJob</c>:
+<code>{
+  farmerId: string, # Required. Farmer Id.
+  resourceId: string, # Required. The id of the resource.
+  resourceType: string, # Required. The type of the resource.
+  id: string, # Optional. Unique job id.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateCascadeDeleteJob(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetTillageDataClient(<2021-07-31-preview>);
+
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<tillageDataId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CascadeDeleteJob</c>:
+<code>{
+  farmerId: string, # Required. Farmer Id.
+  resourceId: string, # Required. The id of the resource.
+  resourceType: string, # Required. The type of the resource.
+  id: string, # Optional. Unique job id.
+  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
 }
 </code>
 

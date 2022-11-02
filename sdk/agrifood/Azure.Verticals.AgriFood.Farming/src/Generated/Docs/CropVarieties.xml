@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetCropVarietyAsync(String,String,RequestContext)">
+    <member name="GetCropVarietyAsync(String,RequestContext)">
 <example>
 This sample shows how to call GetCropVarietyAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
-Response response = await client.GetCropVarietyAsync("<cropId>", "<cropVarietyId>");
+Response response = await client.GetCropVarietyAsync("<cropVarietyId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("cropId").ToString());
+Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
 Console.WriteLine(result.GetProperty("brand").ToString());
 Console.WriteLine(result.GetProperty("product").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -20,6 +19,7 @@ Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -32,7 +32,8 @@ Response Body:
 
 Schema for <c>CropVariety</c>:
 <code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
+  cropIds: [string], # Optional. Ids of the crops it belongs to.
+Note: A maximum of 25 crops can be associated with a cropVariety.
   brand: string, # Optional. CropVariety Brand.
   product: string, # Optional. CropVariety product.
   id: string, # Optional. Unique resource ID.
@@ -40,29 +41,30 @@ Schema for <c>CropVariety</c>:
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetCropVariety(String,String,RequestContext)">
+    <member name="GetCropVariety(String,RequestContext)">
 <example>
 This sample shows how to call GetCropVariety with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
-Response response = client.GetCropVariety("<cropId>", "<cropVarietyId>");
+Response response = client.GetCropVariety("<cropVarietyId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("cropId").ToString());
+Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
 Console.WriteLine(result.GetProperty("brand").ToString());
 Console.WriteLine(result.GetProperty("product").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -70,6 +72,7 @@ Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -82,7 +85,8 @@ Response Body:
 
 Schema for <c>CropVariety</c>:
 <code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
+  cropIds: [string], # Optional. Ids of the crops it belongs to.
+Note: A maximum of 25 crops can be associated with a cropVariety.
   brand: string, # Optional. CropVariety Brand.
   product: string, # Optional. CropVariety product.
   id: string, # Optional. Unique resource ID.
@@ -90,28 +94,29 @@ Schema for <c>CropVariety</c>:
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateAsync(String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(String,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateAsync("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<cropVarietyId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -119,13 +124,16 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
 var data = new {
+    cropIds = new[] {
+        "<String>"
+    },
     brand = "<brand>",
     product = "<product>",
     status = "<status>",
+    source = "<source>",
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -133,10 +141,10 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<cropVarietyId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("cropId").ToString());
+Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
 Console.WriteLine(result.GetProperty("brand").ToString());
 Console.WriteLine(result.GetProperty("product").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -144,6 +152,7 @@ Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -156,7 +165,8 @@ Request Body:
 
 Schema for <c>CropVariety</c>:
 <code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
+  cropIds: [string], # Optional. Ids of the crops it belongs to.
+Note: A maximum of 25 crops can be associated with a cropVariety.
   brand: string, # Optional. CropVariety Brand.
   product: string, # Optional. CropVariety product.
   id: string, # Optional. Unique resource ID.
@@ -164,12 +174,14 @@ Schema for <c>CropVariety</c>:
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -177,7 +189,8 @@ Response Body:
 
 Schema for <c>CropVariety</c>:
 <code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
+  cropIds: [string], # Optional. Ids of the crops it belongs to.
+Note: A maximum of 25 crops can be associated with a cropVariety.
   brand: string, # Optional. CropVariety Brand.
   product: string, # Optional. CropVariety product.
   id: string, # Optional. Unique resource ID.
@@ -185,28 +198,29 @@ Schema for <c>CropVariety</c>:
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(String,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
 var data = new {};
 
-Response response = client.CreateOrUpdate("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<cropVarietyId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -214,13 +228,16 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
 var data = new {
+    cropIds = new[] {
+        "<String>"
+    },
     brand = "<brand>",
     product = "<product>",
     status = "<status>",
+    source = "<source>",
     name = "<name>",
     description = "<description>",
     properties = new {
@@ -228,10 +245,10 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<cropVarietyId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("cropId").ToString());
+Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
 Console.WriteLine(result.GetProperty("brand").ToString());
 Console.WriteLine(result.GetProperty("product").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -239,6 +256,7 @@ Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -251,7 +269,8 @@ Request Body:
 
 Schema for <c>CropVariety</c>:
 <code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
+  cropIds: [string], # Optional. Ids of the crops it belongs to.
+Note: A maximum of 25 crops can be associated with a cropVariety.
   brand: string, # Optional. CropVariety Brand.
   product: string, # Optional. CropVariety product.
   id: string, # Optional. Unique resource ID.
@@ -259,12 +278,14 @@ Schema for <c>CropVariety</c>:
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -272,7 +293,8 @@ Response Body:
 
 Schema for <c>CropVariety</c>:
 <code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
+  cropIds: [string], # Optional. Ids of the crops it belongs to.
+Note: A maximum of 25 crops can be associated with a cropVariety.
   brand: string, # Optional. CropVariety Brand.
   product: string, # Optional. CropVariety product.
   id: string, # Optional. Unique resource ID.
@@ -280,176 +302,49 @@ Schema for <c>CropVariety</c>:
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="DeleteAsync(String,String,RequestContext)">
+    <member name="DeleteAsync(String,RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
-Response response = await client.DeleteAsync("<cropId>", "<cropVarietyId>");
+Response response = await client.DeleteAsync("<cropVarietyId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="Delete(String,String,RequestContext)">
+    <member name="Delete(String,RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
-Response response = client.Delete("<cropId>", "<cropVarietyId>");
+Response response = client.Delete("<cropVarietyId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-    </member>
-    <member name="GetCropVarietiesByCropIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
-<example>
-This sample shows how to call GetCropVarietiesByCropIdAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
-
-await foreach (var data in client.GetCropVarietiesByCropIdAsync("<cropId>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetCropVarietiesByCropIdAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
-
-await foreach (var data in client.GetCropVarietiesByCropIdAsync("<cropId>", new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("cropId").ToString());
-    Console.WriteLine(result.GetProperty("brand").ToString());
-    Console.WriteLine(result.GetProperty("product").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("eTag").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-}
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CropVarietyListResponseValue</c>:
-<code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
-  brand: string, # Optional. CropVariety Brand.
-  product: string, # Optional. CropVariety product.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetCropVarietiesByCropId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
-<example>
-This sample shows how to call GetCropVarietiesByCropId with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
-
-foreach (var data in client.GetCropVarietiesByCropId("<cropId>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetCropVarietiesByCropId with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
-
-foreach (var data in client.GetCropVarietiesByCropId("<cropId>", new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("cropId").ToString());
-    Console.WriteLine(result.GetProperty("brand").ToString());
-    Console.WriteLine(result.GetProperty("product").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("eTag").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-}
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CropVarietyListResponseValue</c>:
-<code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
-  brand: string, # Optional. CropVariety Brand.
-  product: string, # Optional. CropVariety product.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCropVarietiesAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetCropVarietiesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
 await foreach (var data in client.GetCropVarietiesAsync())
 {
@@ -460,13 +355,12 @@ await foreach (var data in client.GetCropVarietiesAsync())
 This sample shows how to call GetCropVarietiesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
-await foreach (var data in client.GetCropVarietiesAsync(new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetCropVarietiesAsync(new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("cropId").ToString());
+    Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
     Console.WriteLine(result.GetProperty("brand").ToString());
     Console.WriteLine(result.GetProperty("product").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -474,6 +368,7 @@ await foreach (var data in client.GetCropVarietiesAsync(new String[]{"<cropIds>"
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -487,7 +382,8 @@ Response Body:
 
 Schema for <c>CropVarietyListResponseValue</c>:
 <code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
+  cropIds: [string], # Optional. Ids of the crops it belongs to.
+Note: A maximum of 25 crops can be associated with a cropVariety.
   brand: string, # Optional. CropVariety Brand.
   product: string, # Optional. CropVariety product.
   id: string, # Optional. Unique resource ID.
@@ -495,12 +391,14 @@ Schema for <c>CropVarietyListResponseValue</c>:
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -511,8 +409,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call GetCropVarieties and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
 foreach (var data in client.GetCropVarieties())
 {
@@ -523,13 +420,12 @@ foreach (var data in client.GetCropVarieties())
 This sample shows how to call GetCropVarieties with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new CropVarietiesClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetCropVarietiesClient(<2021-07-31-preview>);
 
-foreach (var data in client.GetCropVarieties(new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetCropVarieties(new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("cropId").ToString());
+    Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
     Console.WriteLine(result.GetProperty("brand").ToString());
     Console.WriteLine(result.GetProperty("product").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -537,6 +433,7 @@ foreach (var data in client.GetCropVarieties(new String[]{"<cropIds>"}, new Stri
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -550,7 +447,8 @@ Response Body:
 
 Schema for <c>CropVarietyListResponseValue</c>:
 <code>{
-  cropId: string, # Optional. ID of the crop it belongs to.
+  cropIds: [string], # Optional. Ids of the crops it belongs to.
+Note: A maximum of 25 crops can be associated with a cropVariety.
   brand: string, # Optional. CropVariety Brand.
   product: string, # Optional. CropVariety product.
   id: string, # Optional. Unique resource ID.
@@ -558,12 +456,14 @@ Schema for <c>CropVarietyListResponseValue</c>:
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 

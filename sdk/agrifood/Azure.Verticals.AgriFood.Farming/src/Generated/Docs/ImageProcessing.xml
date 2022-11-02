@@ -6,8 +6,7 @@
 This sample shows how to call GetRasterizeJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ImageProcessingClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetImageProcessingClient(<2021-07-31-preview>);
 
 Response response = await client.GetRasterizeJobAsync("<jobId>");
 
@@ -35,8 +34,8 @@ Response Body:
 
 Schema for <c>ImageProcessingRasterizeJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  shapefileAttachmentId: string, # Required. Shapefile attachment ID.
+  farmerId: string, # Required. Farmer Id.
+  shapefileAttachmentId: string, # Required. Shapefile attachment Id.
   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
@@ -49,10 +48,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -63,8 +63,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call GetRasterizeJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ImageProcessingClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetImageProcessingClient(<2021-07-31-preview>);
 
 Response response = client.GetRasterizeJob("<jobId>");
 
@@ -92,8 +91,8 @@ Response Body:
 
 Schema for <c>ImageProcessingRasterizeJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  shapefileAttachmentId: string, # Required. Shapefile attachment ID.
+  farmerId: string, # Required. Farmer Id.
+  shapefileAttachmentId: string, # Required. Shapefile attachment Id.
   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
@@ -106,10 +105,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -120,8 +120,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateRasterizeJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ImageProcessingClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetImageProcessingClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -142,8 +141,7 @@ Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
 This sample shows how to call CreateRasterizeJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ImageProcessingClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetImageProcessingClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -185,8 +183,8 @@ Request Body:
 
 Schema for <c>ImageProcessingRasterizeJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  shapefileAttachmentId: string, # Required. Shapefile attachment ID.
+  farmerId: string, # Required. Farmer Id.
+  shapefileAttachmentId: string, # Required. Shapefile attachment Id.
   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
@@ -199,10 +197,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -210,8 +209,8 @@ Response Body:
 
 Schema for <c>ImageProcessingRasterizeJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  shapefileAttachmentId: string, # Required. Shapefile attachment ID.
+  farmerId: string, # Required. Farmer Id.
+  shapefileAttachmentId: string, # Required. Shapefile attachment Id.
   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
@@ -224,10 +223,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -238,8 +238,7 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 This sample shows how to call CreateRasterizeJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ImageProcessingClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetImageProcessingClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -260,8 +259,7 @@ Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
 This sample shows how to call CreateRasterizeJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ImageProcessingClient(endpoint, credential);
+var client = new FarmBeatsClient(credential).GetImageProcessingClient(<2021-07-31-preview>);
 
 var data = new {
     farmerId = "<farmerId>",
@@ -303,8 +301,8 @@ Request Body:
 
 Schema for <c>ImageProcessingRasterizeJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  shapefileAttachmentId: string, # Required. Shapefile attachment ID.
+  farmerId: string, # Required. Farmer Id.
+  shapefileAttachmentId: string, # Required. Shapefile attachment Id.
   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
@@ -317,10 +315,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 
@@ -328,8 +327,8 @@ Response Body:
 
 Schema for <c>ImageProcessingRasterizeJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID.
-  shapefileAttachmentId: string, # Required. Shapefile attachment ID.
+  farmerId: string, # Required. Farmer Id.
+  shapefileAttachmentId: string, # Required. Shapefile attachment Id.
   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
   id: string, # Optional. Unique job id.
   status: string, # Optional. Status of the job.
@@ -342,10 +341,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 }
 </code>
 

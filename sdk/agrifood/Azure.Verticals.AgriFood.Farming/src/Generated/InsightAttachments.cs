@@ -67,58 +67,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = File.OpenRead("<filePath>");
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("insightId").ToString());
-        /// Console.WriteLine(result.GetProperty("modelId").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>InsightAttachment</c>:
-        /// <code>{
-        ///   insightId: string, # Required. InsightID for this InsightAttachment.
-        ///   modelId: string, # Optional. ModelID for this InsightAttachment.
-        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   originalFileName: string, # Optional. Original File Name for this attachment.
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
-        ///   id: string, # Optional. Unique id.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of resource.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,String,String,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -156,58 +105,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = File.OpenRead("<filePath>");
-        /// 
-        /// Response response = client.CreateOrUpdate("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("insightId").ToString());
-        /// Console.WriteLine(result.GetProperty("modelId").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>InsightAttachment</c>:
-        /// <code>{
-        ///   insightId: string, # Required. InsightID for this InsightAttachment.
-        ///   modelId: string, # Optional. ModelID for this InsightAttachment.
-        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   originalFileName: string, # Optional. Original File Name for this attachment.
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
-        ///   id: string, # Optional. Unique id.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of resource.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,String,String,String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string farmerId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -244,56 +142,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetInsightAttachmentAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.GetInsightAttachmentAsync("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("insightId").ToString());
-        /// Console.WriteLine(result.GetProperty("modelId").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>InsightAttachment</c>:
-        /// <code>{
-        ///   insightId: string, # Required. InsightID for this InsightAttachment.
-        ///   modelId: string, # Optional. ModelID for this InsightAttachment.
-        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   originalFileName: string, # Optional. Original File Name for this attachment.
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
-        ///   id: string, # Optional. Unique id.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of resource.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='GetInsightAttachmentAsync(String,String,String,String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetInsightAttachmentAsync(string farmerId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -330,56 +179,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetInsightAttachment with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.GetInsightAttachment("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("insightId").ToString());
-        /// Console.WriteLine(result.GetProperty("modelId").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>InsightAttachment</c>:
-        /// <code>{
-        ///   insightId: string, # Required. InsightID for this InsightAttachment.
-        ///   modelId: string, # Optional. ModelID for this InsightAttachment.
-        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   originalFileName: string, # Optional. Original File Name for this attachment.
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
-        ///   id: string, # Optional. Unique id.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of resource.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='GetInsightAttachment(String,String,String,String,String,RequestContext)']/*" />
         public virtual Response GetInsightAttachment(string farmerId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -416,16 +216,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.DeleteAsync("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='DeleteAsync(String,String,String,String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string farmerId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -462,16 +253,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.Delete("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='Delete(String,String,String,String,String,RequestContext)']/*" />
         public virtual Response Delete(string farmerId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -508,22 +290,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DownloadAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.DownloadAsync("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
-        /// if (response.ContentStream != null)
-        /// {
-        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
-        ///     {
-        ///         response.ContentStream.CopyTo(outFileStream);
-        ///     }
-        /// }
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='DownloadAsync(String,String,String,String,String,RequestContext)']/*" />
         public virtual async Task<Response> DownloadAsync(string farmerId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -560,22 +327,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Download with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.Download("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
-        /// if (response.ContentStream != null)
-        /// {
-        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
-        ///     {
-        ///         response.ContentStream.CopyTo(outFileStream);
-        ///     }
-        /// }
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='Download(String,String,String,String,String,RequestContext)']/*" />
         public virtual Response Download(string farmerId, string modelId, string resourceType, string resourceId, string insightAttachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -625,68 +377,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetInsightAttachmentsByFarmerIdModelIdAndResourceAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetInsightAttachmentsByFarmerIdModelIdAndResourceAsync("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("insightId").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetInsightAttachmentsByFarmerIdModelIdAndResourceAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetInsightAttachmentsByFarmerIdModelIdAndResourceAsync("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", new String[]{"<insightIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("insightId").ToString());
-        ///     Console.WriteLine(result.GetProperty("modelId").ToString());
-        ///     Console.WriteLine(result.GetProperty("resourceType").ToString());
-        ///     Console.WriteLine(result.GetProperty("resourceId").ToString());
-        ///     Console.WriteLine(result.GetProperty("originalFileName").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>InsightAttachmentListResponseValue</c>:
-        /// <code>{
-        ///   insightId: string, # Required. InsightID for this InsightAttachment.
-        ///   modelId: string, # Optional. ModelID for this InsightAttachment.
-        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   originalFileName: string, # Optional. Original File Name for this attachment.
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
-        ///   id: string, # Optional. Unique id.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of resource.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='GetInsightAttachmentsByFarmerIdModelIdAndResourceAsync(String,String,String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetInsightAttachmentsByFarmerIdModelIdAndResourceAsync(string farmerId, string modelId, string resourceType, string resourceId, IEnumerable<string> insightIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -741,68 +432,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetInsightAttachmentsByFarmerIdModelIdAndResource with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetInsightAttachmentsByFarmerIdModelIdAndResource("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("insightId").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetInsightAttachmentsByFarmerIdModelIdAndResource with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetInsightAttachmentsByFarmerIdModelIdAndResource("<farmerId>", "<modelId>", "<resourceType>", "<resourceId>", new String[]{"<insightIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("insightId").ToString());
-        ///     Console.WriteLine(result.GetProperty("modelId").ToString());
-        ///     Console.WriteLine(result.GetProperty("resourceType").ToString());
-        ///     Console.WriteLine(result.GetProperty("resourceId").ToString());
-        ///     Console.WriteLine(result.GetProperty("originalFileName").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>InsightAttachmentListResponseValue</c>:
-        /// <code>{
-        ///   insightId: string, # Required. InsightID for this InsightAttachment.
-        ///   modelId: string, # Optional. ModelID for this InsightAttachment.
-        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   originalFileName: string, # Optional. Original File Name for this attachment.
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
-        ///   id: string, # Optional. Unique id.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of resource.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/InsightAttachments.xml" path="doc/members/member[@name='GetInsightAttachmentsByFarmerIdModelIdAndResource(String,String,String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetInsightAttachmentsByFarmerIdModelIdAndResource(string farmerId, string modelId, string resourceType, string resourceId, IEnumerable<string> insightIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));

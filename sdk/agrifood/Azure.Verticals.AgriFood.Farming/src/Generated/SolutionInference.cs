@@ -57,54 +57,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CancelAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        /// };
-        /// 
-        /// Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CancelAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        ///     partnerRequestBody = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SolutionInference</c>:
-        /// <code>{
-        ///   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
-        /// Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
-        /// Not following this format may result into validation errors.
-        ///   partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CancelAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CancelAsync(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -132,54 +85,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Cancel with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        /// };
-        /// 
-        /// Response response = client.Cancel("<solutionId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// This sample shows how to call Cancel with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        ///     partnerRequestBody = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.Cancel("<solutionId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SolutionInference</c>:
-        /// <code>{
-        ///   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
-        /// Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
-        /// Not following this format may result into validation errors.
-        ///   partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Cancel(String,RequestContent,RequestContext)']/*" />
         public virtual Response Cancel(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -207,54 +113,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call FetchAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        /// };
-        /// 
-        /// Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// This sample shows how to call FetchAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        ///     partnerRequestBody = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SolutionInference</c>:
-        /// <code>{
-        ///   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
-        /// Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
-        /// Not following this format may result into validation errors.
-        ///   partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='FetchAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> FetchAsync(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -282,54 +141,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Fetch with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        /// };
-        /// 
-        /// Response response = client.Fetch("<solutionId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// This sample shows how to call Fetch with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        ///     partnerRequestBody = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.Fetch("<solutionId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SolutionInference</c>:
-        /// <code>{
-        ///   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
-        /// Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
-        /// Not following this format may result into validation errors.
-        ///   partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Fetch(String,RequestContent,RequestContext)']/*" />
         public virtual Response Fetch(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -358,56 +170,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        /// };
-        /// 
-        /// var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        ///     partnerRequestBody = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SolutionInference</c>:
-        /// <code>{
-        ///   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
-        /// Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
-        /// Not following this format may result into validation errors.
-        ///   partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdateAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -436,56 +199,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        /// };
-        /// 
-        /// var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     requestPath = "<requestPath>",
-        ///     partnerRequestBody = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SolutionInference</c>:
-        /// <code>{
-        ///   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
-        /// Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
-        /// Not following this format may result into validation errors.
-        ///   partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdate(WaitUntil,String,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrUpdate(WaitUntil waitUntil, string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));

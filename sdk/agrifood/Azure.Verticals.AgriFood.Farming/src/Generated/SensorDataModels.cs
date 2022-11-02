@@ -61,127 +61,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     measures = new {
-        ///         key = new {
-        ///             dataType = "Bool",
-        ///         },
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<sensorDataModelId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     type = "<type>",
-        ///     manufacturer = "<manufacturer>",
-        ///     productCode = "<productCode>",
-        ///     measures = new {
-        ///         key = new {
-        ///             description = "<description>",
-        ///             dataType = "Bool",
-        ///             type = "<type>",
-        ///             unit = "<unit>",
-        ///             properties = new {
-        ///                 key = new {},
-        ///             },
-        ///         },
-        ///     },
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<sensorDataModelId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("productCode").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SensorDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of sensor.
-        ///   manufacturer: string, # Optional. Sensor manufacturer.
-        ///   productCode: string, # Optional. Sensor productCode.
-        ///   measures: Dictionary&lt;string, SensorDataModelMeasure&gt;, # Required. Map of sensor type to sensor measures.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of sensor.
-        ///   manufacturer: string, # Optional. Sensor manufacturer.
-        ///   productCode: string, # Optional. Sensor productCode.
-        ///   measures: Dictionary&lt;string, SensorDataModelMeasure&gt;, # Required. Map of sensor type to sensor measures.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string sensorDataModelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -211,127 +91,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     measures = new {
-        ///         key = new {
-        ///             dataType = "Bool",
-        ///         },
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorPartnerId>", "<sensorDataModelId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// var data = new {
-        ///     type = "<type>",
-        ///     manufacturer = "<manufacturer>",
-        ///     productCode = "<productCode>",
-        ///     measures = new {
-        ///         key = new {
-        ///             description = "<description>",
-        ///             dataType = "Bool",
-        ///             type = "<type>",
-        ///             unit = "<unit>",
-        ///             properties = new {
-        ///                 key = new {},
-        ///             },
-        ///         },
-        ///     },
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sensorPartnerId>", "<sensorDataModelId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("productCode").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SensorDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of sensor.
-        ///   manufacturer: string, # Optional. Sensor manufacturer.
-        ///   productCode: string, # Optional. Sensor productCode.
-        ///   measures: Dictionary&lt;string, SensorDataModelMeasure&gt;, # Required. Map of sensor type to sensor measures.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of sensor.
-        ///   manufacturer: string, # Optional. Sensor manufacturer.
-        ///   productCode: string, # Optional. Sensor productCode.
-        ///   measures: Dictionary&lt;string, SensorDataModelMeasure&gt;, # Required. Map of sensor type to sensor measures.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string sensorDataModelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -360,62 +120,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorDataModelAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.GetSensorDataModelAsync("<sensorPartnerId>", "<sensorDataModelId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("productCode").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of sensor.
-        ///   manufacturer: string, # Optional. Sensor manufacturer.
-        ///   productCode: string, # Optional. Sensor productCode.
-        ///   measures: Dictionary&lt;string, SensorDataModelMeasure&gt;, # Required. Map of sensor type to sensor measures.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModelAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorDataModelAsync(string sensorPartnerId, string sensorDataModelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -443,62 +148,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorDataModel with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.GetSensorDataModel("<sensorPartnerId>", "<sensorDataModelId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("productCode").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorDataModel</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of sensor.
-        ///   manufacturer: string, # Optional. Sensor manufacturer.
-        ///   productCode: string, # Optional. Sensor productCode.
-        ///   measures: Dictionary&lt;string, SensorDataModelMeasure&gt;, # Required. Map of sensor type to sensor measures.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModel(String,String,RequestContext)']/*" />
         public virtual Response GetSensorDataModel(string sensorPartnerId, string sensorDataModelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -526,16 +176,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorDataModelId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorPartnerId, string sensorDataModelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -563,16 +204,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// Response response = client.Delete("<sensorPartnerId>", "<sensorDataModelId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
         public virtual Response Delete(string sensorPartnerId, string sensorDataModelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -615,74 +247,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorDataModelsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetSensorDataModelsAsync("<sensorPartnerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSensorDataModelsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// await foreach (var data in client.GetSensorDataModelsAsync("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        ///     Console.WriteLine(result.GetProperty("productCode").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("properties").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorDataModelListResponseValue</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of sensor.
-        ///   manufacturer: string, # Optional. Sensor manufacturer.
-        ///   productCode: string, # Optional. Sensor productCode.
-        ///   measures: Dictionary&lt;string, SensorDataModelMeasure&gt;, # Required. Map of sensor type to sensor measures.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModelsAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSensorDataModelsAsync(string sensorPartnerId, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -730,74 +295,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSensorDataModels with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetSensorDataModels("<sensorPartnerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSensorDataModels with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetSensorDataModelsClient(<2021-07-31-preview>);
-        /// 
-        /// foreach (var data in client.GetSensorDataModels("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("manufacturer").ToString());
-        ///     Console.WriteLine(result.GetProperty("productCode").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("properties").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SensorDataModelListResponseValue</c>:
-        /// <code>{
-        ///   type: string, # Optional. Type of sensor.
-        ///   manufacturer: string, # Optional. Sensor manufacturer.
-        ///   productCode: string, # Optional. Sensor productCode.
-        ///   measures: Dictionary&lt;string, SensorDataModelMeasure&gt;, # Required. Map of sensor type to sensor measures.
-        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-        ///   id: string, # Optional. Id of the resource.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and
-        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModels(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSensorDataModels(string sensorPartnerId, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
