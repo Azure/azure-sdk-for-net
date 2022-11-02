@@ -1176,6 +1176,25 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RelativeTo : System.IEquatable<Azure.AI.TextAnalytics.RelativeTo>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RelativeTo(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.RelativeTo Current { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RelativeTo End { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RelativeTo Start { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.RelativeTo other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.RelativeTo left, Azure.AI.TextAnalytics.RelativeTo right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.RelativeTo (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.RelativeTo left, Azure.AI.TextAnalytics.RelativeTo right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScriptKind : System.IEquatable<Azure.AI.TextAnalytics.ScriptKind>
     {
         private readonly object _dummy;
