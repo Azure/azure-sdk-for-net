@@ -71,7 +71,7 @@ namespace SecurityCenter.Tests
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
-                var contact = new SecurityContact("Off", "", "", "barbra@contoso.com");
+                var contact = new SecurityContact("Off", "", "", "barbra@contoso.com", "", new SecurityContactPropertiesAlertNotifications(), new SecurityContactPropertiesNotificationsByRole());
 
                 var securityContact = securityCenterClient.SecurityContacts.Create("default", contact);
                 ValidateSecurityContact(securityContact);
@@ -92,7 +92,7 @@ namespace SecurityCenter.Tests
 
         #region Validations
 
-        private void ValidateSecurityContacts(List<SecurityContact> securityContactPage)
+        private void ValidateSecurityContacts(IList<SecurityContact> securityContactPage)
         {
             Assert.True(securityContactPage.IsAny());
 
