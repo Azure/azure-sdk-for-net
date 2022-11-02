@@ -1,10 +1,10 @@
 # Release History
 
-## 1.1.0 (Unreleased)
+## 1.1.0 (2022-11-02)
 
 ### Other Changes
 
-- Switch to API version `2022-10-01`
+- Upgraded API version to 2022-10-01
 
 ## 1.0.0 (2022-08-29)
 
