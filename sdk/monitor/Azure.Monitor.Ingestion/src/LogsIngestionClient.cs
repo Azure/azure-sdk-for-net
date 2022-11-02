@@ -307,22 +307,8 @@ namespace Azure.Monitor.Ingestion
                             {
                                 continue;
                             }
-                            // If current task has an exception, log the exception and add number of logs in this task to failed logs
-                            if (runningTask.Exception != null)
-                            {
-                                AddException(
-                                    ref exceptions,
-                                    runningTask.Exception);
-                                logsFailed += runningTasks[i].LogsCount;
-                            }
-                            // If current task returned a response that was not a success, log the exception and add number of logs in this task to failed logs
-                            if (runningTask.Result.Status != 204)
-                            {
-                                AddException(
-                                    ref exceptions,
-                                    new RequestFailedException(runningTask.Result));
-                                logsFailed += runningTasks[i].LogsCount;
-                            }
+                            // Check completed task for Exception/RequestFailedException and increase logsFailed count
+                            ProcessCompletedTask(ref exceptions, runningTasks, ref logsFailed, i, runningTask);
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
                             i--;
@@ -372,22 +358,40 @@ namespace Azure.Monitor.Ingestion
             return runningTasks.Select(_ => _.CurrentTask).Last().Result; //204 - response of last batch with header
         }
 
+        private static void ProcessCompletedTask(ref List<Exception> exceptions, List<(Task<Response> CurrentTask, int LogsCount)> runningTasks, ref int logsFailed, int i, Task<Response> runningTask)
+        {
+            // If current task has an exception, log the exception and add number of logs in this task to failed logs
+            if (runningTask.Exception != null)
+            {
+                AddException(
+                    ref exceptions,
+                    runningTask.Exception);
+                logsFailed += runningTasks[i].LogsCount;
+            }
+            // If current task returned a response that was not a success, log the exception and add number of logs in this task to failed logs
+            else if (runningTask.Result.Status != 204)
+            {
+                AddException(
+                    ref exceptions,
+                    new RequestFailedException(runningTask.Result));
+                logsFailed += runningTasks[i].LogsCount;
+            }
+        }
+
         private async Task<Response> UploadBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
         {
-            Response response = null;
-
             using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, Compression, null);
 
             if (async)
             {
-                response = await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                response = _pipeline.Send(message, null, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
             }
 
-            return response;
+            return message.Response;
         }
 
         private static List<Exception> AddException(ref List<Exception> exceptions, Exception ex)
