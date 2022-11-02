@@ -706,6 +706,16 @@ namespace Azure.Storage
             internal const int MaxJobPartReaders = 64;
             internal const int MaxJobChunkTasks = 300;
 
+            internal static class ConcurrencyTuner
+            {
+                internal const int StandardMultiplier = 2;
+                internal const int BoostedMultiplier = StandardMultiplier * 2;
+                internal const int TopOfBoostZone = 256; // boosted multiplier applies up to this many connections
+                internal const int SlowdownFactor = 5;
+                internal const double MinMulitplier = 1.19; // really this is 1.2, but use a little less to make the floating point comparisons robust
+                internal const double FudgeFactor = 0.2;
+            }
+
             /// <summary>
             /// If there are multiple log files or job state files
             ///
