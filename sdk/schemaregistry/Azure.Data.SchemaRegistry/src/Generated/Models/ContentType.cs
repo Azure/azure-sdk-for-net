@@ -8,7 +8,7 @@
 namespace Azure.Data.SchemaRegistry.Models
 {
     /// <summary> Content type for upload. </summary>
-    internal enum ContentType
+    public enum ContentType
     {
         /// <summary> Content Type &apos;application/json; serialization=Avro&apos;. </summary>
         ApplicationJsonSerializationAvro,
