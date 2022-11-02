@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -270,14 +271,26 @@ namespace Azure.AI.TextAnalytics.Tests
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task DetectLanguageBatchWithScriptTest()
         {
-            string document = "Tumhara naam kya hai?";
-
             TextAnalyticsClient client = GetClient();
+
+            // BUGBUG: The only model version that currently supports script detection is 2022-04-10-preview, which is even older
+            // than the latest GA API version (i.e., 2022-05-01). Ideally, we shouldn't have to pin to such an old version.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/32234.
             TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions() { ModelVersion = "2022-04-10-preview" };
 
-            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(new List<string>() { document }, options: options);
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(new List<DetectLanguageInput>() {
+                new("1", "What is your name?"),
+                new("2", "Tumhara naam kya hai?")
+            }, options: options);
 
-            Assert.AreEqual(ScriptKind.Latin, results[0].PrimaryLanguage.Script);
+            DetectLanguageResult result1 = results.Where(result => result.Id == "1").FirstOrDefault();
+            Assert.IsNotNull(result1);
+            Assert.IsNull(result1.PrimaryLanguage.Script);
+
+            DetectLanguageResult result2 = results.Where(result => result.Id == "2").FirstOrDefault();
+            Assert.IsNotNull(result2);
+            Assert.AreEqual(ScriptKind.Latin, result2.PrimaryLanguage.Script);
+
             ValidateBatchDocumentsResult(results);
         }
 

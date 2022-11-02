@@ -5,21 +5,24 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "172",
+        "Content-Length": "192",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-9a66570bc9dcfa43b40624db97773bf4-1180b2b0fc021225-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221030.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d22916b483b21529ad198900d476a069",
+        "traceparent": "00-35eac17e77db7955751bc78561844c7a-16d7eda687c54ae1-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221101.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "959dd0edb9cd24047b59238b9e41879b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "documents": [
             {
-              "id": "0",
-              "text": "Tumhara naam kya hai?",
-              "countryHint": "us"
+              "id": "1",
+              "text": "What is your name?"
+            },
+            {
+              "id": "2",
+              "text": "Tumhara naam kya hai?"
             }
           ]
         },
@@ -30,15 +33,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f3e94e35-e2db-466e-b02d-e9011bcfbb79",
-        "Content-Length": "228",
+        "apim-request-id": "8ffeac7d-86d7-498a-bbea-17735832b00a",
+        "Content-Length": "332",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Mon, 31 Oct 2022 17:33:37 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Wed, 02 Nov 2022 04:57:15 GMT",
         "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "18",
+        "x-envoy-upstream-service-time": "51",
         "x-ms-region": "West US 2"
       },
       "ResponseBody": {
@@ -46,7 +49,16 @@
         "results": {
           "documents": [
             {
-              "id": "0",
+              "id": "1",
+              "detectedLanguage": {
+                "name": "English",
+                "iso6391Name": "en",
+                "confidenceScore": 1.0
+              },
+              "warnings": []
+            },
+            {
+              "id": "2",
               "detectedLanguage": {
                 "name": "Hindi",
                 "iso6391Name": "hi",
@@ -63,7 +75,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "721196271",
+    "RandomSeed": "1087012927",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
