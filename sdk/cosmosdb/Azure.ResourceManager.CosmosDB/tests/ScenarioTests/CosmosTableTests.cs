@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [[Ignore("Flaky test: Need diagnose the table API issue from RP team")]
+        [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableCreateAndUpdate()
         {
             var table = await CreateTable(null);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [[Ignore("Flaky test: Need diagnose the table API issue from RP team")]
+        [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableList()
         {
             var database = await CreateTable(null);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [[Ignore("Flaky test: Need diagnose the table API issue from RP team")]
+        [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableThroughput()
         {
             var database = await CreateTable(null);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [[Ignore("Flaky test: Need diagnose the table API issue from RP team")]
+        [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableDelete()
         {
             var database = await CreateTable(null);
