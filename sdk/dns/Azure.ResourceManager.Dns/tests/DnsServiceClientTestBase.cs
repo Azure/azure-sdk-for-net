@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns.Tests
             return lro.Value;
         }
 
-        public async Task<DnsZoneResource> CreateADnsZone(string dnsZoneName, ResourceGroupResource rg)
+        public async Task<DnsZoneResource> CreateDnsZone(string dnsZoneName, ResourceGroupResource rg)
         {
             DnsZoneCollection collection = rg.GetDnsZones();
             DnsZoneData data = new DnsZoneData("Global") { };
