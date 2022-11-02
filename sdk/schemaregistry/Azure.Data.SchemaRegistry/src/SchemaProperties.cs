@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Data.SchemaRegistry.Models;
+
 namespace Azure.Data.SchemaRegistry
 {
     /// <summary>

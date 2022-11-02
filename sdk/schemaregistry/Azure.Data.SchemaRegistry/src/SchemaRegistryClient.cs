@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Data.SchemaRegistry.Models;
-using ContentType = Azure.Data.SchemaRegistry.Models.ContentType;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -197,11 +196,11 @@ namespace Azure.Data.SchemaRegistry
                 ResponseWithHeaders<SchemaQueryIdByContentHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, ConstructContentType(format) , new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, format , new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.QueryIdByContent(groupName, schemaName, ConstructContentType(format), new BinaryData(schemaDefinition).ToStream(), cancellationToken);
+                    response = RestClient.QueryIdByContent(groupName, schemaName, format, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
                 var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
@@ -279,9 +278,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetSchemaVersion(groupName, schemaName, version, cancellationToken);
                 }
 
-                SchemaFormat format = ConstructFormat(response.Headers.ContentType);
-
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
+                var properties = new SchemaProperties(response.Headers.ContentType.Value, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);
@@ -309,9 +306,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetById(schemaId, cancellationToken);
                 }
 
-                SchemaFormat format = ConstructFormat(response.Headers.ContentType);
-
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
+                var properties = new SchemaProperties(response.Headers.ContentType.Value, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);
@@ -321,44 +316,6 @@ namespace Azure.Data.SchemaRegistry
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private static SchemaFormat ConstructFormat(string contentType)
-        {
-            string content;
-            if (contentType.Contains("="))
-            {
-                content = contentType.Split('=')[1];
-            }
-            else
-            {
-                content = contentType.Split('+')[1];
-            }
-
-            SchemaFormat format;
-            switch (content)
-            {
-                case "json":
-                    format = SchemaFormat.Json;
-                    break;
-
-                default:
-                    format = new SchemaFormat(content);
-                    break;
-            }
-
-            return format;
-        }
-
-        private static ContentType ConstructContentType(SchemaFormat schemaFormat)
-        {
-            if (string.Equals(schemaFormat.ContentType, "application/json; serialization=Avro", StringComparison.InvariantCultureIgnoreCase))
-                return ContentType.ApplicationJsonSerializationAvro;
-            if (string.Equals(schemaFormat.ContentType, "application/json; serialization=json", StringComparison.InvariantCultureIgnoreCase))
-                return ContentType.ApplicationJsonSerializationJson;
-            if (string.Equals(schemaFormat.ContentType, "text/plain; charset=utf-8", StringComparison.InvariantCultureIgnoreCase))
-                return ContentType.TextPlainCharsetUtf8;
-            throw new ArgumentOutOfRangeException(nameof(schemaFormat), schemaFormat.ContentType, "Unknown ContentType value.");
         }
     }
 }

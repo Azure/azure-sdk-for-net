@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Data.SchemaRegistry.Models;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
@@ -194,7 +195,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             Assert.That(
-                async () => await client.GetSchemaPropertiesAsync(schemaName, groupName, SchemaContent, SchemaFormat.Avro),
+                async () => await client.GetSchemaPropertiesAsync(schemaName, groupName, SchemaContent, SchemaFormat.ApplicationJsonSerializationAvro),
                 Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
                     .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
         }
@@ -230,11 +231,11 @@ namespace Azure.Data.SchemaRegistry.Tests
             switch (formatName)
             {
                 case Avro:
-                    return SchemaFormat.Avro;
+                    return SchemaFormat.ApplicationJsonSerializationAvro;
                 case Json:
-                    return SchemaFormat.Json;
+                    return SchemaFormat.ApplicationJsonSerializationJson;
                 case Custom:
-                    return SchemaFormat.Custom;
+                    return SchemaFormat.TextPlainCharsetUtf8;
                 default:
                     throw new ArgumentException("Format name was invalid.");
             }

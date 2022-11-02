@@ -1,70 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ComponentModel;
-using System.Net.Mime;
-using System.Text.Json.Serialization;
-using Azure.Core;
-
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> The SerializationType. </summary>
-    public readonly partial struct SchemaFormat : IEquatable<SchemaFormat>
+    /// <summary>
+    /// Properties for a SchemaRegistry schema.
+    /// </summary>
+    public readonly partial struct SchemaFormat
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SchemaFormat(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-            ContentType = $"application/json; serialization={_value}";
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SchemaFormat"/> struct.
-        /// </summary>
-        /// <param name="contentType">The content type of this schema format.</param>
-        /// <param name="value">The value of the serialization.</param>
-        /// <param name="serialization">The type of serialization being done.</param>
-        public SchemaFormat(Core.ContentType contentType, string value, string serialization)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(contentType));
-            var content = contentType.ToString();
-            ContentType = $"{content}; {serialization}={_value}";
-        }
-
-        private const string AvroValue = "Avro";
-        private const string JsonValue = "JSON";
-        private const string CustomValue = "utf-8";
-        private const string CustomSerialization = "charset";
-
-        /// <summary> Avro Serialization schema type. </summary>
-        public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);
-        /// <summary> Json Serialization schema type. </summary>
-        public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue);
-        /// <summary> Custom Serialization schema type. </summary>
-        public static SchemaFormat Custom { get; } = new SchemaFormat(Core.ContentType.TextPlain, CustomValue, CustomSerialization);
-        /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
-        public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SchemaFormat"/> values are not the same. </summary>
-        public static bool operator !=(SchemaFormat left, SchemaFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SchemaFormat"/>. </summary>
-        public static implicit operator SchemaFormat(string value) => new SchemaFormat(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SchemaFormat other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(SchemaFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
-
-        internal string ContentType { get; }
     }
 }
