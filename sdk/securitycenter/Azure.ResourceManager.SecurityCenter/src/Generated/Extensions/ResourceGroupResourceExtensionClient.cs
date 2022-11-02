@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AllowedConnection>> GetAllowedConnectionAsync(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterAllowedConnection>> GetAllowedConnectionAsync(AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
             using var scope = AllowedConnectionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllowedConnection");
             scope.Start();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AllowedConnection> GetAllowedConnection(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterAllowedConnection> GetAllowedConnection(AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
             using var scope = AllowedConnectionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllowedConnection");
             scope.Start();

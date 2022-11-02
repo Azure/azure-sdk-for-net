@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> networkSecurityGroupId = default;
             Optional<IDictionary<string, string>> extendedProperties = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -335,14 +335,19 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("uniqueIdentifier"))
                         {
-                            uniqueIdentifier = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uniqueIdentifier = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevTestLabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), Optional.ToList(mandatoryArtifactsResourceIdsLinux), Optional.ToList(mandatoryArtifactsResourceIdsWindows), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, Optional.ToDictionary(extendedProperties), provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), Optional.ToList(mandatoryArtifactsResourceIdsLinux), Optional.ToList(mandatoryArtifactsResourceIdsWindows), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, Optional.ToDictionary(extendedProperties), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

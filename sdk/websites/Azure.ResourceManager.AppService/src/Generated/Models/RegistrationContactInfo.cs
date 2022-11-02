@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,22 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="email"/>, <paramref name="nameFirst"/>, <paramref name="nameLast"/> or <paramref name="phone"/> is null. </exception>
         public RegistrationContactInfo(string email, string nameFirst, string nameLast, string phone)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (nameFirst == null)
-            {
-                throw new ArgumentNullException(nameof(nameFirst));
-            }
-            if (nameLast == null)
-            {
-                throw new ArgumentNullException(nameof(nameLast));
-            }
-            if (phone == null)
-            {
-                throw new ArgumentNullException(nameof(phone));
-            }
+            Argument.AssertNotNull(email, nameof(email));
+            Argument.AssertNotNull(nameFirst, nameof(nameFirst));
+            Argument.AssertNotNull(nameLast, nameof(nameLast));
+            Argument.AssertNotNull(phone, nameof(phone));
 
             Email = email;
             NameFirst = nameFirst;

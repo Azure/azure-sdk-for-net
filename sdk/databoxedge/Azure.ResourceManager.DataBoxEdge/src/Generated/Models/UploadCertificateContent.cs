@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificate"/> is null. </exception>
         public UploadCertificateContent(string certificate)
         {
-            if (certificate == null)
-            {
-                throw new ArgumentNullException(nameof(certificate));
-            }
+            Argument.AssertNotNull(certificate, nameof(certificate));
 
             Certificate = certificate;
         }

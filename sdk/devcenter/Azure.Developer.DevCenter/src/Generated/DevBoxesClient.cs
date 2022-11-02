@@ -205,7 +205,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDevBoxByUserRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateGetDevBoxByUserRequest(devBoxName, userId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -233,7 +233,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDevBoxByUserRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateGetDevBoxByUserRequest(devBoxName, userId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRemoteConnectionRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateGetRemoteConnectionRequest(devBoxName, userId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -289,7 +289,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRemoteConnectionRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateGetRemoteConnectionRequest(devBoxName, userId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -514,7 +514,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateDevBoxRequest(userId, devBoxName, content, context);
+                using HttpMessage message = CreateCreateDevBoxRequest(devBoxName, content, userId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBox", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -545,7 +545,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateDevBoxRequest(userId, devBoxName, content, context);
+                using HttpMessage message = CreateCreateDevBoxRequest(devBoxName, content, userId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBox", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
@@ -574,7 +574,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDevBoxRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateDeleteDevBoxRequest(devBoxName, userId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -603,7 +603,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDevBoxRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateDeleteDevBoxRequest(devBoxName, userId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -632,7 +632,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartDevBoxRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateStartDevBoxRequest(devBoxName, userId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -661,7 +661,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartDevBoxRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateStartDevBoxRequest(devBoxName, userId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -690,7 +690,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopDevBoxRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateStopDevBoxRequest(devBoxName, userId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -719,7 +719,7 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopDevBoxRequest(userId, devBoxName, context);
+                using HttpMessage message = CreateStopDevBoxRequest(devBoxName, userId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -866,7 +866,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetDevBoxByUserRequest(string userId, string devBoxName, RequestContext context)
+        internal HttpMessage CreateGetDevBoxByUserRequest(string devBoxName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -890,7 +890,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateCreateDevBoxRequest(string userId, string devBoxName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateDevBoxRequest(string devBoxName, RequestContent content, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -916,7 +916,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateDeleteDevBoxRequest(string userId, string devBoxName, RequestContext context)
+        internal HttpMessage CreateDeleteDevBoxRequest(string devBoxName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202204);
             var request = message.Request;
@@ -940,7 +940,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateStartDevBoxRequest(string userId, string devBoxName, RequestContext context)
+        internal HttpMessage CreateStartDevBoxRequest(string devBoxName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -965,7 +965,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateStopDevBoxRequest(string userId, string devBoxName, RequestContext context)
+        internal HttpMessage CreateStopDevBoxRequest(string devBoxName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -990,7 +990,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetRemoteConnectionRequest(string userId, string devBoxName, RequestContext context)
+        internal HttpMessage CreateGetRemoteConnectionRequest(string devBoxName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

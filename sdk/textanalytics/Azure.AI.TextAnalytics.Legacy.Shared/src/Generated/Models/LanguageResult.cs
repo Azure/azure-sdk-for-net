@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -21,18 +22,9 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/>, <paramref name="errors"/> or <paramref name="modelVersion"/> is null. </exception>
         internal LanguageResult(IEnumerable<DocumentLanguage> documents, IEnumerable<DocumentError> errors, string modelVersion)
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException(nameof(documents));
-            }
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
-            if (modelVersion == null)
-            {
-                throw new ArgumentNullException(nameof(modelVersion));
-            }
+            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNull(errors, nameof(errors));
+            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
             Documents = documents.ToList();
             Errors = errors.ToList();

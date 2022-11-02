@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -22,14 +23,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetApplianceId"/> or <paramref name="providerSpecificDetails"/> is null. </exception>
         public UpdateApplianceForReplicationProtectedItemInputProperties(string targetApplianceId, UpdateApplianceForReplicationProtectedItemProviderSpecificInput providerSpecificDetails)
         {
-            if (targetApplianceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetApplianceId));
-            }
-            if (providerSpecificDetails == null)
-            {
-                throw new ArgumentNullException(nameof(providerSpecificDetails));
-            }
+            Argument.AssertNotNull(targetApplianceId, nameof(targetApplianceId));
+            Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
 
             TargetApplianceId = targetApplianceId;
             ProviderSpecificDetails = providerSpecificDetails;

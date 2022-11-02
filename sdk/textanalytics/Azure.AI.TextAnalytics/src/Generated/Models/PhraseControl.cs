@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetPhrase"/> is null. </exception>
         public PhraseControl(string targetPhrase, PhraseControlStrategy strategy)
         {
-            if (targetPhrase == null)
-            {
-                throw new ArgumentNullException(nameof(targetPhrase));
-            }
+            Argument.AssertNotNull(targetPhrase, nameof(targetPhrase));
 
             TargetPhrase = targetPhrase;
             Strategy = strategy;

@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<EnforcementMode> enforcementMode = default;
-            Optional<ProtectionMode> protectionMode = default;
-            Optional<ConfigurationStatus> configurationStatus = default;
+            Optional<AdaptiveApplicationControlEnforcementMode> enforcementMode = default;
+            Optional<SecurityCenterFileProtectionMode> protectionMode = default;
+            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
             Optional<RecommendationStatus> recommendationStatus = default;
             Optional<IReadOnlyList<AdaptiveApplicationControlIssueSummary>> issues = default;
             Optional<AdaptiveApplicationControlGroupSourceSystem> sourceSystem = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enforcementMode = new EnforcementMode(property0.Value.GetString());
+                            enforcementMode = new AdaptiveApplicationControlEnforcementMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("protectionMode"))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protectionMode = ProtectionMode.DeserializeProtectionMode(property0.Value);
+                            protectionMode = SecurityCenterFileProtectionMode.DeserializeSecurityCenterFileProtectionMode(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationStatus"))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            configurationStatus = new ConfigurationStatus(property0.Value.GetString());
+                            configurationStatus = new SecurityCenterConfigurationStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("recommendationStatus"))

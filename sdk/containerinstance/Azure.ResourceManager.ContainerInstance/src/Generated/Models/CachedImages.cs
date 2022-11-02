@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="osType"/> or <paramref name="image"/> is null. </exception>
         internal CachedImages(string osType, string image)
         {
-            if (osType == null)
-            {
-                throw new ArgumentNullException(nameof(osType));
-            }
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
+            Argument.AssertNotNull(osType, nameof(osType));
+            Argument.AssertNotNull(image, nameof(image));
 
             OSType = osType;
             Image = image;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -17,10 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> is null. </exception>
         public AzureBlobContentSource(string containerUrl)
         {
-            if (containerUrl == null)
-            {
-                throw new ArgumentNullException(nameof(containerUrl));
-            }
+            Argument.AssertNotNull(containerUrl, nameof(containerUrl));
 
             ContainerUrl = containerUrl;
         }

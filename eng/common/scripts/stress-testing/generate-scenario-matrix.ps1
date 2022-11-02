@@ -7,9 +7,11 @@ param(
     [Parameter(Mandatory=$False)][array]$NonSparseParameters
 )
 
+$ErrorActionPreference = 'Stop'
+
 function GenerateScenarioMatrix(
-    [string]$matrixFilePath,
-    [string]$Selection,
+    [Parameter(Mandatory=$True)][string]$matrixFilePath,
+    [Parameter(Mandatory=$True)][string]$Selection,
     [Parameter(Mandatory=$False)][string]$DisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$Filters,
     [Parameter(Mandatory=$False)][array]$Replace,
@@ -23,12 +25,17 @@ function GenerateScenarioMatrix(
         -DisplayNameFilter $DisplayNameFilter `
         -Filters $Filters `
         -Replace $Replace `
-        -NonSparseParameters $NonSparseParameters
+        -NonSparseParameters $NonSparseParameters `
+        -CI:$False
+
+    Write-Host "=================================================="
+    Write-Host "Generated matrix for $matrixFilePath"
     Write-Host $prettyMatrix
-    $prettyMatrix = $prettyMatrix | ConvertFrom-Json
+    Write-Host "=================================================="
+    $matrixObj = $prettyMatrix | ConvertFrom-Json
 
     $scenariosMatrix = @()
-    foreach($permutation in $prettyMatrix.psobject.properties) {
+    foreach($permutation in $matrixObj.psobject.properties) {
         $entry = @{}
         $entry.Name = $permutation.Name -replace '_', '-'
         $entry.Scenario = $entry.Name
@@ -39,16 +46,21 @@ function GenerateScenarioMatrix(
         $scenariosMatrix += $entry
     }
 
-    $valuesYaml = Get-Content -Raw (Join-Path (Split-Path $matrixFilePath) 'values.yaml')
-    $values = $valuesYaml | ConvertFrom-Yaml -Ordered
-    if (!$values) {$values = @{}}
+    $valuesConfig = Join-Path (Split-Path $matrixFilePath) 'values.yaml'
+    $values = [ordered]@{}
+    if (Test-Path $valuesConfig) {
+        $valuesYaml = Get-Content -Raw $valuesConfig
+        $values = $valuesYaml | ConvertFrom-Yaml -Ordered
+        if (!$values) {$values = @{}}
 
-    if ($values.ContainsKey('Scenarios')) {
-        throw "Please use matrix generation for stress test scenarios."
+        if ($values.Contains('Scenarios')) {
+            throw "Please remove the 'Scenarios' key from $valuesConfig as it is deprecated."
+        }
     }
 
     $values.scenarios = $scenariosMatrix
-    $values | ConvertTo-Yaml | Out-File -FilePath (Join-Path $matrixFilePath '../generatedValues.yaml')
+    $generatedValues = Join-Path (Split-Path $matrixFilePath) 'generatedValues.yaml'
+    $values | ConvertTo-Yaml | Out-File -FilePath $generatedValues
 }
 
 function NewStressTestPackageInfo(

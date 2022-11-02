@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<bool> isEnabled = default;
-            Optional<IList<AutomationScope>> scopes = default;
+            Optional<IList<SecurityAutomationScope>> scopes = default;
             Optional<IList<SecurityAutomationSource>> sources = default;
-            Optional<IList<AutomationAction>> actions = default;
+            Optional<IList<SecurityAutomationAction>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AutomationScope> array = new List<AutomationScope>();
+                            List<SecurityAutomationScope> array = new List<SecurityAutomationScope>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationScope.DeserializeAutomationScope(item));
+                                array.Add(SecurityAutomationScope.DeserializeSecurityAutomationScope(item));
                             }
                             scopes = array;
                             continue;
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AutomationAction> array = new List<AutomationAction>();
+                            List<SecurityAutomationAction> array = new List<SecurityAutomationAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationAction.DeserializeAutomationAction(item));
+                                array.Add(SecurityAutomationAction.DeserializeSecurityAutomationAction(item));
                             }
                             actions = array;
                             continue;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageSettings"/> is null. </exception>
         public DataProtectionBackupVaultProperties(IEnumerable<DataProtectionBackupStorageSetting> storageSettings)
         {
-            if (storageSettings == null)
-            {
-                throw new ArgumentNullException(nameof(storageSettings));
-            }
+            Argument.AssertNotNull(storageSettings, nameof(storageSettings));
 
             StorageSettings = storageSettings.ToList();
         }
