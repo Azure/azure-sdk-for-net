@@ -73,7 +73,7 @@ public static class EventTracking
 
         message.ApplicationProperties.Add(MessageBodyHashPropertyName, sha256Hash.ComputeHash(message.Body.ToArray()).ToString());
 
-        if (!string.IsNullOrEmpty(partition))
+        if (!string.IsNullOrEmpty(sessionId))
         {
             message.ApplicationProperties.Add(SessionIdPropertyName, sessionId);
         }
@@ -89,7 +89,7 @@ public static class EventTracking
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
-    public static async void ProcessEventAsync(ProcessMessageEventArgs args,
+    public static void ProcessEventAsync(ProcessMessageEventArgs args,
                                                SHA256 sha256Hash,
                                                Metrics metrics,
                                                ConcurrentDictionary<string, byte> readMessages) => CheckMessage(args.Message, sha256Hash, null, metrics, readMessages);
@@ -104,7 +104,7 @@ public static class EventTracking
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
-    public static async void ProcessSessionEventAsync(ProcessSessionMessageEventArgs args,
+    public static void ProcessSessionEventAsync(ProcessSessionMessageEventArgs args,
                                                SHA256 sha256Hash,
                                                Metrics metrics,
                                                ConcurrentDictionary<string, byte> readMessages) => CheckMessage(args.Message, sha256Hash, args.SessionId, metrics, readMessages);
@@ -122,7 +122,7 @@ public static class EventTracking
     /// <param name="metrics">The metrics instance used to send metrics to application insights.</param>
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
-    /// <returns>The sender assigned index number of the event that was just read, or -1 if this event was unkown or a duplicate.</returns>
+    /// <returns>The sender assigned index number of the event that was just read, or -1 if this event was unknown or a duplicate.</returns>
     ///
     /// <remarks>
     ///   One instance should be created for each processor or receiver role. This instance will be able to keep track of all the events the
@@ -141,13 +141,13 @@ public static class EventTracking
 
         if (!hasId)
         {
-            metrics.Client.GetMetric(Metrics.UnknownEventsProcessed).TrackValue(1);
+            metrics.Client.GetMetric(Metrics.UnknownMessagesProcessed).TrackValue(1);
             return -1;
         }
 
-        if (readMessages.ContainsKey(eventId))
+        if (readMessages.ContainsKey(messageId))
         {
-            metrics.Client.GetMetric(Metrics.DuplicateEventsDiscarded).TrackValue(1);
+            metrics.Client.GetMetric(Metrics.DuplicateMessagesDiscarded).TrackValue(1);
             return -1;
         }
 
@@ -159,16 +159,15 @@ public static class EventTracking
         if (expectedMessageBodyHash != receivedMessageBodyHash)
         {
             var messageProperties = new Dictionary<string,string>();
-            messageProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
-            messageProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
-            messageProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
+            messageProperties.Add(Metrics.SenderDefinedId, messageId.ToString());
+            messageProperties.Add(Metrics.MessageBody, message.Body.ToString());
             metrics.Client.TrackEvent(Metrics.InvalidBodies, messageProperties);
             return -1;
         }
 
         // Finished Checks - mark as read
-        readEvents.TryAdd(eventId, 0);
+        readMessages.TryAdd(messageId, 0);
 
-        return indexNumber;
+        return 1;
     }
 }

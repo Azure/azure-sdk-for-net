@@ -1,10 +1,8 @@
 {{- include "stress.deploy-job-template.from-job" (list . "stress.service-bus") -}}
 {{- define "stress.service-bus" -}}
 spec:
-  {{ if eq .Stress.scenarioName "SendRec" }}
   completions: 2
   parallelism: 2
-  {{ end }}
   completionMode: Indexed
   template:
     metadata:

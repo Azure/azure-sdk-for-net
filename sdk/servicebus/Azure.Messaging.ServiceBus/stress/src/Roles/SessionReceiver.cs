@@ -69,7 +69,7 @@ internal class SessionReceiver
             try
             {
                 var message = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
-                _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.MessagesRead).TrackValue(1);
                 // TODO: check event
             }
             catch (TaskCanceledException)

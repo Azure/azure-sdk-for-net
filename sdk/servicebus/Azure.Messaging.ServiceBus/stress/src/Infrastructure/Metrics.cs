@@ -56,14 +56,14 @@ public class Metrics
 
     /// <summary>
     ///   This is the metric name used to collect metrics on how many batches
-    ///   are published by the Event Producer or Buffered Producer client.
+    ///   are published by the ServiceBusSender.
     /// </summary>
     ///
-    public const string BatchesPublished = "BatchesPublished";
+    public const string BatchesSent = "BatchesSent";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on how many times
-    ///   the Sender client needs to restart. TODO
+    ///   the Sender client needs to restart.
     /// </summary>
     ///
     public const string SenderRestarted = "SenderRestarted";
@@ -76,20 +76,13 @@ public class Metrics
     public const string MessagesSent = "MessagesSent";
 
     /// <summary>
-    ///   This is the metric name used to collect metrics on the number of times the Service Bus sender
-    ///   tried to send a message, regardless of if the message was successfully sent or not.
-    /// </summary>
-    ///
-    public const string SendAttempts = "SendAttempts";
-
-    /// <summary>
     ///   This is the metric name used to collect metrics on the total number of bytes that have been
     ///   Sent to the Service Bus Queue over the course of the test run.
     /// </summary>
     ///
     public const string TotalSentSizeBytes = "TotalSentSizeBytes";
 
-    // Processor statistics TODO
+    // Processor statistics
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of times the event handler was
@@ -99,7 +92,7 @@ public class Metrics
     public const string EventHandlerCalls = "EventHandlerCalls";
 
     /// <summary>
-    ///   This is the metric name used to collect metrics on the number of times the process had to restart.
+    ///   This is the metric name used to collect metrics on the number of times the processor had to restart.
     /// </summary>
     ///
     public const string ProcessorRestarted = "ProcessorRestarted";
@@ -112,92 +105,66 @@ public class Metrics
     public const string TotalServiceOperations = "TotalServiceOperations";
 
     /// <summary>
-    ///   This is the metric name used to collect metrics on the number of events read by the processor.
+    ///   This is the metric name used to collect metrics on the number of messages read by the processor.
     /// </summary>
     ///
-    public const string EventsRead = "EventsRead";
+    public const string MessagesRead = "MessagesRead";
 
     /// <summary>
-    ///   This is the metric name used to collect metrics on the number of events processed by the processor.
+    ///   This is the metric name used to collect metrics on the number of messages processed by the processor.
     /// </summary>
     ///
-    public const string MessagesReceived = "MessagesReceived";
+    public const string MessagesProcessed = "MessagesProcessed";
 
     /// <summary>
-    ///   This is the metric name used to collect metrics on the number of duplicate events processed by the processor.
+    ///   This is the metric name used to collect metrics on the number of duplicate messages processed by the processor.
     /// </summary>
     ///
-    public const string DuplicateEventsDiscarded = "DuplicateEventsDiscarded";
+    public const string DuplicateMessagesDiscarded = "DuplicateMessagesDiscarded";
 
     /// <summary>
-    ///   This is the metric name used by the partition publisher to collect metrics on the number of events that failed to publish.
+    ///   This is the metric name used by the sender to collect metrics on the number of messages that failed to send.
     /// </summary>
     ///
-    public const string EventsFailedToPublish = "EventsFailedToPublish";
+    public const string MessagesFailedToSend = "MessagesFailedToSend";
 
     /// <summary>
-    ///   This is the property name used to send information about the publisher assigned index to Application Insights for further
+    ///   This is the property name used to send information about the application defined index to Application Insights for further
     ///   investigation.
     /// </summary>
     ///
-    public const string PublisherAssignedIndex = "PublisherAssignedIndex";
+    public const string ApplicationDefinedIndex = "ApplicationDefinedIndex";
 
     /// <summary>
-    ///   This is the property name used to send information about the publisher assigned Id to Application Insights for further
+    ///   This is the property name used to send information about the Application assigned Id to Application Insights for further
     ///   investigation.
     /// </summary>
     ///
-    public const string PublisherAssignedId = "PublisherAssignedId";
+    public const string SenderDefinedId = "SenderDefinedId";
 
     /// <summary>
-    ///   This is the metric name used by the processor when a received event was received from the partition that it was not intended
-    ///   to be sent to.
+    ///   The property to use to send the message body to Application Insights for further investigation.
     /// </summary>
     ///
-    public const string EventReceivedFromWrongPartition = "EventReceivedFromWrongPartition";
+    public const string MessageBody = "MessageBody";
 
     /// <summary>
-    ///   This is the metric name used by the processor when an event is received in the wrong order or an event is missing.
-    /// </summary>
-    ///
-    public const string MissingOrOutOfOrderEvent = "MissingOrOutOfOrderEvent";
-
-    /// <summary>
-    ///   The property to use to send the event body to Application Insights for further investigation.
-    /// </summary>
-    ///
-    public const string EventBody = "EventBody";
-
-    /// <summary>
-    ///   This is the metric name used by the processor when an event has an invalid body.
+    ///   This is the metric name used by the processor when a message has an invalid body.
     /// </summary>
     ///
     public const string InvalidBodies = "InvalidBodies";
 
     /// <summary>
-    ///   This is the metric name used by the processor when an unknown event has been processed.
+    ///   This is the metric name used by the processor when an unknown message has been processed.
     /// </summary>
     ///
-    public const string UnknownEventsProcessed = "UnknownEventsProcessed";
+    public const string UnknownMessagesProcessed = "UnknownMessagesProcessed";
 
     /// <summary>
-    ///   This is the metric name used when the consumer needs to be restarted.
+    ///   This is the metric name used when the receiver needs to be restarted.
     /// </summary>
     ///
-    public const string ConsumerRestarted = "ConsumerRestarted";
-
-    /// <summary>
-    ///   This is the event name used by the processor or consumer when an event without a valid index has been processed.
-    /// </summary>
-    ///
-    public const string EventWithInvalidIndex = "EventWithInvalidIndex";
-
-    /// <summary>
-    ///   This is the property name used to tell what partition an event was supposed to be sent to when it received from
-    ///   a different partition.
-    /// </summary>
-    ///
-    public const string IntendedPartitionId = "IntendedPartitionId";
+    public const string ReceiverRestarted = "ReceiverRestarted";
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Metrics" /> class.

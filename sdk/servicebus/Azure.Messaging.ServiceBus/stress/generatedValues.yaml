@@ -2,6 +2,6 @@ scenarios:
 - scenarioName: SendRec
   image: Dockerfile
   imageBuildDir: ../../../..
-  Scenario: sendreceive
+  Scenario: sendrec
   imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/servicebus-net-stress/dockerfile:mredding
 

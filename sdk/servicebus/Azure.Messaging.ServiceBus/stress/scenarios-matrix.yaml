@@ -1,22 +1,22 @@
 matrix:
   scenarios:
-    sendreceive:
+    sendrec:
       image: Dockerfile
       imageBuildDir: "../../../.."
       scenarioName: "SendRec"
-    sendreceivebatch:
+    sendrecbatch:
       image: Dockerfile
       imageBuildDir: "../../../.."
       scenarioName: "SendRecBatch"
-    sessionsendreceive:
+    sesssendrec:
       image: Dockerfile
       imageBuildDir: "../../../.."
       scenarioName: "SessionSendRec"
-    sessionsendprocess:
+    sesssendproc:
       image: Dockerfile
       imageBuildDir: "../../../.."
       scenarioName: "SessionSendProc"
-    sendprocess:
+    sendproc:
       image: Dockerfile
       imageBuildDir: "../../../.."
       scenarioName: "SendProc"

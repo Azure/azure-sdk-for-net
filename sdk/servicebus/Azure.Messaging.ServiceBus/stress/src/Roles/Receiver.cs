@@ -73,7 +73,8 @@ internal class Receiver
                     // TODO
                 }
                 var message = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
-                _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.MessagesRead).TrackValue(1);
+                await receiver.CompleteMessageAsync(message).ConfigureAwait(false);;
                 // TODO: check event
             }
             catch (TaskCanceledException)
