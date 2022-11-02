@@ -4,9 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
@@ -113,6 +110,18 @@ namespace Azure.Core.Tests.Public
             Assert.IsNull(jsonData.OptionalInt);
             Assert.IsNull(jsonData.OptionalString);
             Assert.AreEqual("Hello", (string)jsonData.Primitive);
+        }
+
+        [Test]
+        public void CanAddStringToList()
+        {
+            dynamic jsonData = new BinaryData(new { value = "foo" }).ToDynamic();
+
+            List<string> list = new();
+            list.Add(jsonData.Value);
+
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual("foo", list[0]);
         }
 
         [Test]
@@ -252,29 +261,33 @@ namespace Azure.Core.Tests.Public
             }
         }
 
-        //[Test]
-        //public void EqualsHandlesStringsSpecial()
-        //{
-        //    Assert.IsTrue((new JsonData("test").Equals("test")));
-        //    Assert.IsTrue((new JsonData("test").Equals(new JsonData("test"))));
-        //}
+        [Test]
+        public void EqualsHandlesStringsSpecial()
+        {
+            Assert.IsTrue(new BinaryData(new { value = "test" }).ToDynamic().Value.Equals("test"));
+            Assert.IsTrue(
+                new BinaryData(new { value = "test" }).ToDynamic().Value.Equals(
+                new BinaryData(new { value = "test" }).ToDynamic().Value
+                )
+            );
+        }
 
-        //[Test]
-        //public void EqualsForObjectsAndArrays()
-        //{
-        //    JsonData obj1 = new JsonData(new { foo = "bar" });
-        //    JsonData obj2 = new JsonData(new { foo = "bar" });
+        [Test]
+        public void EqualsForObjectsAndArrays()
+        {
+            dynamic obj1 = new BinaryData(new { value = new { foo = "bar" } }).ToDynamic().Value;
+            dynamic obj2 = new BinaryData(new { value = new { foo = "bar" } }).ToDynamic().Value;
 
-        //    JsonData arr1 = new JsonData(new[] { "bar" });
-        //    JsonData arr2 = new JsonData(new[] { "bar" });
+            dynamic arr1 = new BinaryData(new { value = new[] { "bar" } }).ToDynamic().Value;
+            dynamic arr2 = new BinaryData(new { value = new[] { "bar" } }).ToDynamic().Value;
 
-        //    // For objects and arrays, Equals provides reference equality.
-        //    Assert.AreEqual(obj1, obj1);
-        //    Assert.AreEqual(arr1, arr1);
+            // For objects and arrays, Equals provides reference equality.
+            Assert.AreEqual(obj1, obj1);
+            Assert.AreEqual(arr1, arr1);
 
-        //    Assert.AreNotEqual(obj1, obj2);
-        //    Assert.AreNotEqual(arr1, arr2);
-        //}
+            Assert.AreNotEqual(obj1, obj2);
+            Assert.AreNotEqual(arr1, arr2);
+        }
 
         [Test]
         public void OperatorEqualsForString()
