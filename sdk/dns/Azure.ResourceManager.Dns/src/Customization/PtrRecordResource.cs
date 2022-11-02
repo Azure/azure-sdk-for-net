@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Dns
     public partial class PtrRecordResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PtrRecordResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string ptrRecordName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{ptrRecordName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{relativeRecordSetName}";
             return new ResourceIdentifier(resourceId);
         }
 
         private readonly ClientDiagnostics _ptrRecordInfoRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _ptrRecordInfoRecordSetsRestClient;
+        private readonly PtrRecordRestOperations _ptrRecordInfoRecordSetsRestClient;
         private readonly PtrRecordData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PtrRecordResource"/> class for mocking. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dns
         {
             _ptrRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string ptrRecordInfoRecordSetsApiVersion);
-            _ptrRecordInfoRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ptrRecordInfoRecordSetsApiVersion);
+            _ptrRecordInfoRecordSetsRestClient = new PtrRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ptrRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _ptrRecordInfoRecordSetsRestClient.GetPtrRecordAsync("PTR".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _ptrRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _ptrRecordInfoRecordSetsRestClient.GetPtrRecord("PTR".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _ptrRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _ptrRecordInfoRecordSetsRestClient.DeleteAsync("PTR".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _ptrRecordInfoRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _ptrRecordInfoRecordSetsRestClient.Delete("PTR".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _ptrRecordInfoRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _ptrRecordInfoRecordSetsRestClient.UpdateAsync("PTR".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _ptrRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _ptrRecordInfoRecordSetsRestClient.Update("PTR".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _ptrRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

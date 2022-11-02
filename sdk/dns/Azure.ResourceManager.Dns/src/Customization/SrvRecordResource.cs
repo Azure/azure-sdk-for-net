@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Dns
     public partial class SrvRecordResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SrvRecordResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string srvRecordName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SRV/{srvRecordName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SRV/{relativeRecordSetName}";
             return new ResourceIdentifier(resourceId);
         }
 
         private readonly ClientDiagnostics _srvRecordInfoRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _srvRecordInfoRecordSetsRestClient;
+        private readonly SrvRecordRestOperations _srvRecordInfoRecordSetsRestClient;
         private readonly SrvRecordData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SrvRecordResource"/> class for mocking. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dns
         {
             _srvRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string srvRecordInfoRecordSetsApiVersion);
-            _srvRecordInfoRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, srvRecordInfoRecordSetsApiVersion);
+            _srvRecordInfoRecordSetsRestClient = new SrvRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, srvRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _srvRecordInfoRecordSetsRestClient.GetSrvRecordAsync("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _srvRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _srvRecordInfoRecordSetsRestClient.GetSrvRecord("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _srvRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _srvRecordInfoRecordSetsRestClient.DeleteAsync("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _srvRecordInfoRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _srvRecordInfoRecordSetsRestClient.Delete("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _srvRecordInfoRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _srvRecordInfoRecordSetsRestClient.UpdateAsync("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _srvRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _srvRecordInfoRecordSetsRestClient.Update("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _srvRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

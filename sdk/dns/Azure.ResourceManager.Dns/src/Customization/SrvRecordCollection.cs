@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dns
     public partial class SrvRecordCollection : ArmCollection, IEnumerable<SrvRecordResource>, IAsyncEnumerable<SrvRecordResource>
     {
         private readonly ClientDiagnostics _srvRecordInfoRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _srvRecordInfoRecordSetsRestClient;
+        private readonly SrvRecordRestOperations _srvRecordInfoRecordSetsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SrvRecordCollection"/> class for mocking. </summary>
         protected SrvRecordCollection()
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Dns
         {
             _srvRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", SrvRecordResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SrvRecordResource.ResourceType, out string srvRecordInfoRecordSetsApiVersion);
-            _srvRecordInfoRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, srvRecordInfoRecordSetsApiVersion);
+            _srvRecordInfoRecordSetsRestClient = new SrvRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, srvRecordInfoRecordSetsApiVersion);
 #if DEBUG
-            ValidateResourceId(Id);
+			ValidateResourceId(Id);
 #endif
         }
 
@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="srvRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SrvRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string srvRecordName, SrvRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SrvRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, SrvRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _srvRecordInfoRecordSetsRestClient.CreateOrUpdateAsync("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Name, srvRecordName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _srvRecordInfoRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation<SrvRecordResource>(Response.FromValue(new SrvRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -94,22 +94,22 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="srvRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SrvRecordResource> CreateOrUpdate(WaitUntil waitUntil, string srvRecordName, SrvRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SrvRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, SrvRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _srvRecordInfoRecordSetsRestClient.CreateOrUpdate("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Name, srvRecordName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var response = _srvRecordInfoRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
                 var operation = new DnsArmOperation<SrvRecordResource>(Response.FromValue(new SrvRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -127,18 +127,18 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="srvRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
-        public virtual async Task<Response<SrvRecordResource>> GetAsync(string srvRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
+        public virtual async Task<Response<SrvRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = await _srvRecordInfoRecordSetsRestClient.GetSrvRecordAsync("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Name, srvRecordName, cancellationToken).ConfigureAwait(false);
+                var response = await _srvRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), relativeRecordSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
@@ -155,18 +155,18 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="srvRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
-        public virtual Response<SrvRecordResource> Get(string srvRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
+        public virtual Response<SrvRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = _srvRecordInfoRecordSetsRestClient.GetSrvRecord("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Name, srvRecordName, cancellationToken);
+                var response = _srvRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), relativeRecordSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var response = await _srvRecordInfoRecordSetsRestClient.ListSrvRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _srvRecordInfoRecordSetsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SrvRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var response = await _srvRecordInfoRecordSetsRestClient.ListSrvRecordNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _srvRecordInfoRecordSetsRestClient.ListByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SrvRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var response = _srvRecordInfoRecordSetsRestClient.ListSrvRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _srvRecordInfoRecordSetsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SrvRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var response = _srvRecordInfoRecordSetsRestClient.ListSrvRecordNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _srvRecordInfoRecordSetsRestClient.ListByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SrvRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -271,18 +271,18 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="srvRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string srvRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _srvRecordInfoRecordSetsRestClient.GetSrvRecordAsync("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Name, srvRecordName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _srvRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,18 +297,18 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="srvRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
-        public virtual Response<bool> Exists(string srvRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
+        public virtual Response<bool> Exists(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = _srvRecordInfoRecordSetsRestClient.GetSrvRecord("SRV".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Name, srvRecordName, cancellationToken: cancellationToken);
+                var response = _srvRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "SRV".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

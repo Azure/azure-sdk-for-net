@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Dns
     public partial class NSRecordResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NSRecordResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string NSRecordName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NS/{NSRecordName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NS/{relativeRecordSetName}";
             return new ResourceIdentifier(resourceId);
         }
 
         private readonly ClientDiagnostics _nsRecordRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _nsRecordRecordSetsRestClient;
+        private readonly NSRecordRestOperations _nsRecordRecordSetsRestClient;
         private readonly NSRecordData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NSRecordResource"/> class for mocking. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dns
         {
             _nsRecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string nsRecordRecordSetsApiVersion);
-            _nsRecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nsRecordRecordSetsApiVersion);
+            _nsRecordRecordSetsRestClient = new NSRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nsRecordRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _nsRecordRecordSetsRestClient.GetNSRecordAsync("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _nsRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _nsRecordRecordSetsRestClient.GetNSRecord("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _nsRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _nsRecordRecordSetsRestClient.DeleteAsync("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _nsRecordRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _nsRecordRecordSetsRestClient.Delete("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _nsRecordRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _nsRecordRecordSetsRestClient.UpdateAsync("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _nsRecordRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _nsRecordRecordSetsRestClient.Update("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _nsRecordRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Dns
     public partial class CnameRecordResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CnameRecordResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string cnameRecordName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{cnameRecordName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{relativeRecordSetName}";
             return new ResourceIdentifier(resourceId);
         }
 
         private readonly ClientDiagnostics _cnameRecordInfoRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _cnameRecordInfoRecordSetsRestClient;
+        private readonly CnameRecordRestOperations _cnameRecordInfoRecordSetsRestClient;
         private readonly CnameRecordData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CnameRecordResource"/> class for mocking. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dns
         {
             _cnameRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string cnameRecordInfoRecordSetsApiVersion);
-            _cnameRecordInfoRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cnameRecordInfoRecordSetsApiVersion);
+            _cnameRecordInfoRecordSetsRestClient = new CnameRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cnameRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _cnameRecordInfoRecordSetsRestClient.GetCnameRecordAsync("CNAME".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cnameRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _cnameRecordInfoRecordSetsRestClient.GetCnameRecord("CNAME".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cnameRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _cnameRecordInfoRecordSetsRestClient.DeleteAsync("CNAME".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _cnameRecordInfoRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _cnameRecordInfoRecordSetsRestClient.Delete("CNAME".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _cnameRecordInfoRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _cnameRecordInfoRecordSetsRestClient.UpdateAsync("CNAME".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _cnameRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _cnameRecordInfoRecordSetsRestClient.Update("CNAME".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _cnameRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
