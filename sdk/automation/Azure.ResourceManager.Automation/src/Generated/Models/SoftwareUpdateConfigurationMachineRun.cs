@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Details of provisioning error
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.properties.error
         /// </param>
-        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, SubResource job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationErrorResponse error)
+        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationErrorResponse error)
         {
             Name = name;
             Id = id;
@@ -190,9 +189,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// Job associated with the software update configuration machine run
         /// Serialized Name: SoftwareUpdateConfigurationMachineRun.properties.job
         /// </summary>
-        internal SubResource Job { get; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier JobId
+        internal JobNavigation Job { get; }
+        /// <summary>
+        /// Id of the job associated with the software update configuration run
+        /// Serialized Name: JobNavigation.id
+        /// </summary>
+        public Guid? JobId
         {
             get => Job?.Id;
         }

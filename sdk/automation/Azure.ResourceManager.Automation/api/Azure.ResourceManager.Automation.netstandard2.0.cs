@@ -2416,7 +2416,7 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationErrorResponse Error { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public Azure.Core.ResourceIdentifier JobId { get { throw null; } }
+        public System.Guid? JobId { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Name { get { throw null; } }

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
             Optional<TimeSpan> configuredDuration = default;
-            Optional<SubResource> job = default;
+            Optional<JobNavigation> job = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            job = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
+                            job = JobNavigation.DeserializeJobNavigation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"))
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value);
+            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value);
         }
     }
 }

@@ -400,13 +400,13 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <returns> An async collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationModuleField> GetFieldsByModuleAndTypeAsync(string typeName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AutomationModuleField> GetFieldsByObjectDataTypeAsync(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             async Task<Page<AutomationModuleField>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndType");
+                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByObjectDataType");
                 scope.Start();
                 try
                 {
@@ -432,13 +432,13 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <returns> A collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationModuleField> GetFieldsByModuleAndType(string typeName, CancellationToken cancellationToken = default)
+        public virtual Pageable<AutomationModuleField> GetFieldsByObjectDataType(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             Page<AutomationModuleField> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndType");
+                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByObjectDataType");
                 scope.Start();
                 try
                 {

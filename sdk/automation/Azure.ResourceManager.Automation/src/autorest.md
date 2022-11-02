@@ -18,6 +18,10 @@ modelerfour:
 mgmt-debug: 
   show-serialized-names: true
 
+parameter-rename-mapping:
+  ObjectDataTypes_ListFieldsByModuleAndType:
+    typeName: objectDataType
+
 rename-mapping:
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
   AutomationAccount.properties.disableLocalAuth: IsLocalAuthDisabled
@@ -116,6 +120,7 @@ rename-mapping:
   SourceControlSyncJobById.id: -|arm-id
   SourceControlSyncJobStream.id: -|arm-id
   SourceControlSyncJobStreamById.id: -|arm-id
+  JobNavigation.id: -|uuid
   TokenType.Oauth: OAuth
 
 prepend-rp-prefix:
@@ -206,16 +211,15 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-no-property-type-replacement::
+no-property-type-replacement:
   - JobNavigation
-  - SoftwareUpdateConfigurationMachineRun
 
 request-path-to-parent:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations:  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}
 override-operation-name:
   Job_ListByAutomationAccount: GetAll
-  ObjectDataTypes_ListFieldsByModuleAndType: GetFieldsByModuleAndType
+  ObjectDataTypes_ListFieldsByModuleAndType: GetFieldsByObjectDataType
   Keys_ListByAutomationAccount: GetAutomationAccountKeys
   SoftwareUpdateConfigurationMachineRuns_GetById: GetSoftwareUpdateConfigurationMachineRun
   SoftwareUpdateConfigurationRuns_GetById: GetSoftwareUpdateConfigurationRun
