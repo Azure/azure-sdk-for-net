@@ -90,54 +90,6 @@ namespace Azure.ResourceManager.EventGrid
             return GetCachedClient(Client => new PartnerTopicCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of EventGridTopicPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <returns> An object representing collection of EventGridTopicPrivateEndpointConnectionResources and their operations over a EventGridTopicPrivateEndpointConnectionResource. </returns>
-        public virtual EventGridTopicPrivateEndpointConnectionCollection GetEventGridTopicPrivateEndpointConnections(string parentName)
-        {
-            return new EventGridTopicPrivateEndpointConnectionCollection(Client, Id, parentName);
-        }
-
-        /// <summary> Gets a collection of EventGridDomainPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <returns> An object representing collection of EventGridDomainPrivateEndpointConnectionResources and their operations over a EventGridDomainPrivateEndpointConnectionResource. </returns>
-        public virtual EventGridDomainPrivateEndpointConnectionCollection GetEventGridDomainPrivateEndpointConnections(string parentName)
-        {
-            return new EventGridDomainPrivateEndpointConnectionCollection(Client, Id, parentName);
-        }
-
-        /// <summary> Gets a collection of EventGridPartnerNamespacePrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <returns> An object representing collection of EventGridPartnerNamespacePrivateEndpointConnectionResources and their operations over a EventGridPartnerNamespacePrivateEndpointConnectionResource. </returns>
-        public virtual EventGridPartnerNamespacePrivateEndpointConnectionCollection GetEventGridPartnerNamespacePrivateEndpointConnections(string parentName)
-        {
-            return new EventGridPartnerNamespacePrivateEndpointConnectionCollection(Client, Id, parentName);
-        }
-
-        /// <summary> Gets a collection of EventGridTopicPrivateLinkResources in the ResourceGroupResource. </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <returns> An object representing collection of EventGridTopicPrivateLinkResources and their operations over a EventGridTopicPrivateLinkResource. </returns>
-        public virtual EventGridTopicPrivateLinkResourceCollection GetEventGridTopicPrivateLinkResources(string parentName)
-        {
-            return new EventGridTopicPrivateLinkResourceCollection(Client, Id, parentName);
-        }
-
-        /// <summary> Gets a collection of EventGridDomainPrivateLinkResources in the ResourceGroupResource. </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <returns> An object representing collection of EventGridDomainPrivateLinkResources and their operations over a EventGridDomainPrivateLinkResource. </returns>
-        public virtual EventGridDomainPrivateLinkResourceCollection GetEventGridDomainPrivateLinkResources(string parentName)
-        {
-            return new EventGridDomainPrivateLinkResourceCollection(Client, Id, parentName);
-        }
-
-        /// <summary> Gets a collection of PartnerNamespacePrivateLinkResources in the ResourceGroupResource. </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <returns> An object representing collection of PartnerNamespacePrivateLinkResources and their operations over a PartnerNamespacePrivateLinkResource. </returns>
-        public virtual PartnerNamespacePrivateLinkResourceCollection GetPartnerNamespacePrivateLinkResources(string parentName)
-        {
-            return new PartnerNamespacePrivateLinkResourceCollection(Client, Id, parentName);
-        }
-
         /// <summary> Gets a collection of SystemTopicResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of SystemTopicResources and their operations over a SystemTopicResource. </returns>
         public virtual SystemTopicCollection GetSystemTopics()

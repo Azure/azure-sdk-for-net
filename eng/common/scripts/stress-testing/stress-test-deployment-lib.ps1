@@ -40,8 +40,12 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
     $cluster = RunOrExitOnFailure az aks list -g $clusterGroup --subscription $subscription -o json
     $clusterName = ($cluster | ConvertFrom-Json).name
 
-    $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json
-    $defaultNamespace = $kubeContext.contexts.Where({ $_.name -eq $clusterName }).context.namespace
+    $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json -AsHashtable
+    $defaultNamespace = $null
+    $targetContext = $kubeContext.contexts.Where({ $_.name -eq $clusterName }) | Select -First 1
+    if ($targetContext -ne $null) {
+        $defaultNamespace = $targetContext.context.namespace
+    }
 
     RunOrExitOnFailure az aks get-credentials `
         -n "$clusterName" `
@@ -201,6 +205,9 @@ function DeployStressPackage(
                 $dockerFilePath = "$($pkg.Directory)/Dockerfile"
             }
             $dockerFilePath = [System.IO.Path]::GetFullPath($dockerFilePath).Trim()
+            if (!(Test-Path $dockerFilePath)) {
+                continue
+            }
 
             if ("imageBuildDir" -in $scenario.keys) {
                 $dockerBuildDir = Join-Path $pkg.Directory $scenario.imageBuildDir
@@ -212,7 +219,7 @@ function DeployStressPackage(
         }
     }
     if ($pkg.Dockerfile -or $pkg.DockerBuildDir) {
-        throw "The chart.yaml docker config is depracated, please use the scenarios matrix instead."
+        throw "The chart.yaml docker config is deprecated, please use the scenarios matrix instead."
     }
     
 
@@ -249,9 +256,10 @@ function DeployStressPackage(
             }
         }
         $genVal.scenarios = @( foreach ($scenario in $genVal.scenarios) {
-            $dockerPath = Join-Path $pkg.Directory $scenario.image
-            if ("image" -notin $scenario) {
-                $dockerPath = $dockerFilePath
+            $dockerPath = if ("image" -notin $scenario) {
+                $dockerFilePath
+            } else {
+                Join-Path $pkg.Directory $scenario.image
             }
             if ([System.IO.Path]::GetFullPath($dockerPath) -eq $dockerFilePath) {
                 $scenario.imageTag = $imageTag
@@ -267,7 +275,7 @@ function DeployStressPackage(
         -n $pkg.Namespace `
         --install `
         --set stress-test-addons.env=$environment `
-        --values generatedValues.yaml
+        --values (Join-Path $pkg.Directory generatedValues.yaml)
     if ($LASTEXITCODE) {
         # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'
         # can be the result of cancelled `upgrade` operations (e.g. ctrl-c).

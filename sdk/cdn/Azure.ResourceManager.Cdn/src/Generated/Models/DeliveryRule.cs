@@ -25,10 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
         public DeliveryRule(int order, IEnumerable<DeliveryRuleAction> actions)
         {
-            if (actions == null)
-            {
-                throw new ArgumentNullException(nameof(actions));
-            }
+            Argument.AssertNotNull(actions, nameof(actions));
 
             Order = order;
             Conditions = new ChangeTrackingList<DeliveryRuleCondition>();

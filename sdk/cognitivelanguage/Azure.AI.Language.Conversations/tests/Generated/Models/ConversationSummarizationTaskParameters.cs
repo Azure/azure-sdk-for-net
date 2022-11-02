@@ -20,10 +20,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="summaryAspects"/> is null. </exception>
         public ConversationSummarizationTaskParameters(IEnumerable<SummaryAspect> summaryAspects)
         {
-            if (summaryAspects == null)
-            {
-                throw new ArgumentNullException(nameof(summaryAspects));
-            }
+            Argument.AssertNotNull(summaryAspects, nameof(summaryAspects));
 
             SummaryAspects = summaryAspects.ToList();
             PhraseControls = new ChangeTrackingList<PhraseControl>();

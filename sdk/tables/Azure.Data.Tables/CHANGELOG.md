@@ -1,6 +1,6 @@
 # Release History
 
-## 12.7.0-beta.2 (Unreleased)
+## 12.7.0-beta.2 (2022-11-08)
 
 ### Features Added
 - Added a `Uri` property to `TableClient` and `TableServiceClient`

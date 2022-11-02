@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contentPaths"/> is null. </exception>
         public PurgeContent(IEnumerable<string> contentPaths)
         {
-            if (contentPaths == null)
-            {
-                throw new ArgumentNullException(nameof(contentPaths));
-            }
+            Argument.AssertNotNull(contentPaths, nameof(contentPaths));
 
             ContentPaths = contentPaths.ToList();
         }

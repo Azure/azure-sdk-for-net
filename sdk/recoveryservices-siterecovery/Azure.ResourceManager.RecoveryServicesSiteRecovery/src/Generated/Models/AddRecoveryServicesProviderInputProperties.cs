@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,18 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/>, <paramref name="authenticationIdentityInput"/> or <paramref name="resourceAccessIdentityInput"/> is null. </exception>
         public AddRecoveryServicesProviderInputProperties(string machineName, IdentityProviderInput authenticationIdentityInput, IdentityProviderInput resourceAccessIdentityInput)
         {
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (authenticationIdentityInput == null)
-            {
-                throw new ArgumentNullException(nameof(authenticationIdentityInput));
-            }
-            if (resourceAccessIdentityInput == null)
-            {
-                throw new ArgumentNullException(nameof(resourceAccessIdentityInput));
-            }
+            Argument.AssertNotNull(machineName, nameof(machineName));
+            Argument.AssertNotNull(authenticationIdentityInput, nameof(authenticationIdentityInput));
+            Argument.AssertNotNull(resourceAccessIdentityInput, nameof(resourceAccessIdentityInput));
 
             MachineName = machineName;
             AuthenticationIdentityInput = authenticationIdentityInput;

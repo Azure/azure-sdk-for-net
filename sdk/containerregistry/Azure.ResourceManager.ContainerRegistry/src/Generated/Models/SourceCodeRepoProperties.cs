@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="repositoryUri"/> is null. </exception>
         public SourceCodeRepoProperties(SourceControlType sourceControlType, Uri repositoryUri)
         {
-            if (repositoryUri == null)
-            {
-                throw new ArgumentNullException(nameof(repositoryUri));
-            }
+            Argument.AssertNotNull(repositoryUri, nameof(repositoryUri));
 
             SourceControlType = sourceControlType;
             RepositoryUri = repositoryUri;

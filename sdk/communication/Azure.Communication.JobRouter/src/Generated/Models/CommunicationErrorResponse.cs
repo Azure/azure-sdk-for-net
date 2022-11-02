@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication.JobRouter.Models;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -18,10 +19,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal CommunicationErrorResponse(JobRouterError error)
         {
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
+            Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
         }

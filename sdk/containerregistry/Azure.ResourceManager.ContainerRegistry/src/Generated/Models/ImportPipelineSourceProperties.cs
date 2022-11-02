@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/> is null. </exception>
         public ImportPipelineSourceProperties(Uri keyVaultUri)
         {
-            if (keyVaultUri == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultUri));
-            }
+            Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
 
             KeyVaultUri = keyVaultUri;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="awsAccessKeyId"/> or <paramref name="awsSecretAccessKey"/> is null. </exception>
         public AwsCredsAuthenticationDetailsProperties(string awsAccessKeyId, string awsSecretAccessKey)
         {
-            if (awsAccessKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(awsAccessKeyId));
-            }
-            if (awsSecretAccessKey == null)
-            {
-                throw new ArgumentNullException(nameof(awsSecretAccessKey));
-            }
+            Argument.AssertNotNull(awsAccessKeyId, nameof(awsAccessKeyId));
+            Argument.AssertNotNull(awsSecretAccessKey, nameof(awsSecretAccessKey));
 
             AwsAccessKeyId = awsAccessKeyId;
             AwsSecretAccessKey = awsSecretAccessKey;

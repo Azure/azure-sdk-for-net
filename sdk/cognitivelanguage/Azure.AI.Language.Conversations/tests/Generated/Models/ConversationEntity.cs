@@ -23,14 +23,8 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> or <paramref name="text"/> is null. </exception>
         internal ConversationEntity(string category, string text, int offset, int length, float confidence)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(category, nameof(category));
+            Argument.AssertNotNull(text, nameof(text));
 
             Category = category;
             Text = text;

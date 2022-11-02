@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     {
         private ClientDiagnostics _deviceProvisioningServiceIotDpsResourceClientDiagnostics;
         private IotDpsResourceRestOperations _deviceProvisioningServiceIotDpsResourceRestClient;
-        private ClientDiagnostics _iotDpsResourceClientDiagnostics;
-        private IotDpsResourceRestOperations _iotDpsResourceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,8 +37,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         private ClientDiagnostics DeviceProvisioningServiceIotDpsResourceClientDiagnostics => _deviceProvisioningServiceIotDpsResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
         private IotDpsResourceRestOperations DeviceProvisioningServiceIotDpsResourceRestClient => _deviceProvisioningServiceIotDpsResourceRestClient ??= new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceProvisioningServiceResource.ResourceType));
-        private ClientDiagnostics IotDpsResourceClientDiagnostics => _iotDpsResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private IotDpsResourceRestOperations IotDpsResourceRestClient => _iotDpsResourceRestClient ??= new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -141,11 +137,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDeviceProvisioningServicesNameAvailability");
+            using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDeviceProvisioningServicesNameAvailability");
             scope.Start();
             try
             {
-                var response = await IotDpsResourceRestClient.CheckProvisioningServiceNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await DeviceProvisioningServiceIotDpsResourceRestClient.CheckProvisioningServiceNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -164,11 +160,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDeviceProvisioningServicesNameAvailability");
+            using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDeviceProvisioningServicesNameAvailability");
             scope.Start();
             try
             {
-                var response = IotDpsResourceRestClient.CheckProvisioningServiceNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = DeviceProvisioningServiceIotDpsResourceRestClient.CheckProvisioningServiceNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

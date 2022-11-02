@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="exclusionPattern"/> or <paramref name="dateAddedInUTC"/> is null. </exception>
         public FusionScenarioExclusionPattern(string exclusionPattern, string dateAddedInUTC)
         {
-            if (exclusionPattern == null)
-            {
-                throw new ArgumentNullException(nameof(exclusionPattern));
-            }
-            if (dateAddedInUTC == null)
-            {
-                throw new ArgumentNullException(nameof(dateAddedInUTC));
-            }
+            Argument.AssertNotNull(exclusionPattern, nameof(exclusionPattern));
+            Argument.AssertNotNull(dateAddedInUTC, nameof(dateAddedInUTC));
 
             ExclusionPattern = exclusionPattern;
             DateAddedInUTC = dateAddedInUTC;
