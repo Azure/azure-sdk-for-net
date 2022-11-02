@@ -18,10 +18,6 @@ modelerfour:
 mgmt-debug: 
   show-serialized-names: true
 
-parameter-rename-mapping:
-  ObjectDataTypes_ListFieldsByModuleAndType:
-    typeName: objectDataType
-
 rename-mapping:
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
   AutomationAccount.properties.disableLocalAuth: IsLocalAuthDisabled
@@ -122,6 +118,8 @@ rename-mapping:
   SourceControlSyncJobStreamById.id: -|arm-id
   JobNavigation.id: -|uuid
   TokenType.Oauth: OAuth
+  JobSchedule.properties.jobScheduleId: -|uuid
+  RunbookTypeEnum: AutomationRunbookType
 
 prepend-rp-prefix:
   - Certificate
@@ -214,12 +212,14 @@ rename-rules:
 no-property-type-replacement:
   - JobNavigation
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields: AutomationAccountResource
 request-path-to-parent:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations:  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}
 override-operation-name:
   Job_ListByAutomationAccount: GetAll
-  ObjectDataTypes_ListFieldsByModuleAndType: GetFieldsByObjectDataType
+  ObjectDataTypes_ListFieldsByModuleAndType: GetFieldsByModuleAndType
   Keys_ListByAutomationAccount: GetAutomationAccountKeys
   SoftwareUpdateConfigurationMachineRuns_GetById: GetSoftwareUpdateConfigurationMachineRun
   SoftwareUpdateConfigurationRuns_GetById: GetSoftwareUpdateConfigurationRun
@@ -252,4 +252,12 @@ directive:
       $['x-ms-pageable'] = {
         'nextLinkName': null
       };
+  - from: account.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys'].post
+    transform: >
+      $['x-ms-pageable'] = {
+            'nextLinkName': null,
+            'itemName': 'keys'
+          }
+
 ```

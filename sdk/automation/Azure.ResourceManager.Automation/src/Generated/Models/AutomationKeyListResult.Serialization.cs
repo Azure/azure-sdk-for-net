@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationKeyListResult
+    internal partial class AutomationKeyListResult
     {
         internal static AutomationKeyListResult DeserializeAutomationKeyListResult(JsonElement element)
         {

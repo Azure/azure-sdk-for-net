@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the type of the runbook.
         /// Serialized Name: RunbookCreateOrUpdateParameters.properties.runbookType
         /// </param>
-        public AutomationRunbookCreateOrUpdateContent(RunbookTypeEnum runbookType)
+        public AutomationRunbookCreateOrUpdateContent(AutomationRunbookType runbookType)
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             RunbookType = runbookType;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// Gets or sets the type of the runbook.
         /// Serialized Name: RunbookCreateOrUpdateParameters.properties.runbookType
         /// </summary>
-        public RunbookTypeEnum RunbookType { get; }
+        public AutomationRunbookType RunbookType { get; }
         /// <summary>
         /// Gets or sets the draft runbook properties.
         /// Serialized Name: RunbookCreateOrUpdateParameters.properties.draft

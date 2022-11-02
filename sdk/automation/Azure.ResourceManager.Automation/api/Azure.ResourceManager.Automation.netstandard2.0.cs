@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.DscNodeCount> GetAllNodeCountInformation(Azure.ResourceManager.Automation.Models.AutomationCountType countType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.DscNodeCount> GetAllNodeCountInformationAsync(Azure.ResourceManager.Automation.Models.AutomationCountType countType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Automation.Models.AutomationKeyListResult> GetAutomationAccountKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.Models.AutomationKeyListResult>> GetAutomationAccountKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.AutomationKey> GetAutomationAccountKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.AutomationKey> GetAutomationAccountKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationAccountModuleResource> GetAutomationAccountModule(string moduleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationAccountModuleResource>> GetAutomationAccountModuleAsync(string moduleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationAccountModuleCollection GetAutomationAccountModules() { throw null; }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Automation
     public partial class AutomationJobScheduleData : Azure.ResourceManager.Models.ResourceData
     {
         internal AutomationJobScheduleData() { }
-        public string JobScheduleId { get { throw null; } }
+        public System.Guid? JobScheduleId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Parameters { get { throw null; } }
         public string RunbookName { get { throw null; } }
         public string RunOn { get { throw null; } }
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Automation
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.RunbookParameter> Parameters { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.RunbookProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationContentLink PublishContentLink { get { throw null; } set { } }
-        public Azure.ResourceManager.Automation.Models.RunbookTypeEnum? RunbookType { get { throw null; } set { } }
+        public Azure.ResourceManager.Automation.Models.AutomationRunbookType? RunbookType { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.RunbookState? State { get { throw null; } set { } }
     }
     public partial class AutomationRunbookResource : Azure.ResourceManager.ArmResource
@@ -1663,11 +1663,6 @@ namespace Azure.ResourceManager.Automation.Models
         public Azure.ResourceManager.Automation.Models.AutomationKeyPermission? Permissions { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class AutomationKeyListResult
-    {
-        internal AutomationKeyListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Automation.Models.AutomationKey> Keys { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationKeyName : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationKeyName>
     {
@@ -1743,7 +1738,7 @@ namespace Azure.ResourceManager.Automation.Models
     }
     public partial class AutomationRunbookCreateOrUpdateContent
     {
-        public AutomationRunbookCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.RunbookTypeEnum runbookType) { }
+        public AutomationRunbookCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationRunbookType runbookType) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationRunbookDraft Draft { get { throw null; } set { } }
         public bool? IsLogProgressEnabled { get { throw null; } set { } }
@@ -1752,7 +1747,7 @@ namespace Azure.ResourceManager.Automation.Models
         public int? LogActivityTrace { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationContentLink PublishContentLink { get { throw null; } set { } }
-        public Azure.ResourceManager.Automation.Models.RunbookTypeEnum RunbookType { get { throw null; } }
+        public Azure.ResourceManager.Automation.Models.AutomationRunbookType RunbookType { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class AutomationRunbookDraft
@@ -1775,6 +1770,30 @@ namespace Azure.ResourceManager.Automation.Models
         public int? LogActivityTrace { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AutomationRunbookType : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationRunbookType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AutomationRunbookType(string value) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationRunbookType Graph { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationRunbookType GraphPowerShell { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationRunbookType GraphPowerShellWorkflow { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationRunbookType PowerShell { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationRunbookType PowerShellWorkflow { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationRunbookType Python2 { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationRunbookType Python3 { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationRunbookType Script { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Automation.Models.AutomationRunbookType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationRunbookType left, Azure.ResourceManager.Automation.Models.AutomationRunbookType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Automation.Models.AutomationRunbookType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationRunbookType left, Azure.ResourceManager.Automation.Models.AutomationRunbookType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AutomationScheduleCreateOrUpdateContent
     {
@@ -2362,30 +2381,6 @@ namespace Azure.ResourceManager.Automation.Models
         public RunbookTestJobCreateContent() { }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public string RunOn { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RunbookTypeEnum : System.IEquatable<Azure.ResourceManager.Automation.Models.RunbookTypeEnum>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RunbookTypeEnum(string value) { throw null; }
-        public static Azure.ResourceManager.Automation.Models.RunbookTypeEnum Graph { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.RunbookTypeEnum GraphPowerShell { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.RunbookTypeEnum GraphPowerShellWorkflow { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.RunbookTypeEnum PowerShell { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.RunbookTypeEnum PowerShellWorkflow { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.RunbookTypeEnum Python2 { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.RunbookTypeEnum Python3 { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.RunbookTypeEnum Script { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Automation.Models.RunbookTypeEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Automation.Models.RunbookTypeEnum left, Azure.ResourceManager.Automation.Models.RunbookTypeEnum right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Automation.Models.RunbookTypeEnum (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Automation.Models.RunbookTypeEnum left, Azure.ResourceManager.Automation.Models.RunbookTypeEnum right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ScheduleAssociationProperty
     {

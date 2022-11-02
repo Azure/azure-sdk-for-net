@@ -1510,20 +1510,25 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: Keys_ListByAutomationAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AutomationKeyListResult>> GetAutomationAccountKeysAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomationKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationKey> GetAutomationAccountKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeys");
-            scope.Start();
-            try
+            async Task<Page<AutomationKey>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _keysRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeys");
+                scope.Start();
+                try
+                {
+                    var response = await _keysRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -1532,20 +1537,25 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: Keys_ListByAutomationAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AutomationKeyListResult> GetAutomationAccountKeys(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationKey> GetAutomationAccountKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeys");
-            scope.Start();
-            try
+            Page<AutomationKey> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _keysRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
+                using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeys");
+                scope.Start();
+                try
+                {
+                    var response = _keysRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>

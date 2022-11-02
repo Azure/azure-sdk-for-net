@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<RunbookTypeEnum> runbookType = default;
+            Optional<AutomationRunbookType> runbookType = default;
             Optional<AutomationContentLink> publishContentLink = default;
             Optional<RunbookState> state = default;
             Optional<bool> logVerbose = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            runbookType = new RunbookTypeEnum(property0.Value.GetString());
+                            runbookType = new AutomationRunbookType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publishContentLink"))

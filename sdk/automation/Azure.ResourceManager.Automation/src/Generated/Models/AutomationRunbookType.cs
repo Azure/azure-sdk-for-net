@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// Gets or sets the type of the runbook.
     /// Serialized Name: RunbookTypeEnum
     /// </summary>
-    public readonly partial struct RunbookTypeEnum : IEquatable<RunbookTypeEnum>
+    public readonly partial struct AutomationRunbookType : IEquatable<AutomationRunbookType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="RunbookTypeEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RunbookTypeEnum(string value)
+        public AutomationRunbookType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -38,54 +38,54 @@ namespace Azure.ResourceManager.Automation.Models
         /// Script
         /// Serialized Name: RunbookTypeEnum.Script
         /// </summary>
-        public static RunbookTypeEnum Script { get; } = new RunbookTypeEnum(ScriptValue);
+        public static AutomationRunbookType Script { get; } = new AutomationRunbookType(ScriptValue);
         /// <summary>
         /// Graph
         /// Serialized Name: RunbookTypeEnum.Graph
         /// </summary>
-        public static RunbookTypeEnum Graph { get; } = new RunbookTypeEnum(GraphValue);
+        public static AutomationRunbookType Graph { get; } = new AutomationRunbookType(GraphValue);
         /// <summary>
         /// PowerShellWorkflow
         /// Serialized Name: RunbookTypeEnum.PowerShellWorkflow
         /// </summary>
-        public static RunbookTypeEnum PowerShellWorkflow { get; } = new RunbookTypeEnum(PowerShellWorkflowValue);
+        public static AutomationRunbookType PowerShellWorkflow { get; } = new AutomationRunbookType(PowerShellWorkflowValue);
         /// <summary>
         /// PowerShell
         /// Serialized Name: RunbookTypeEnum.PowerShell
         /// </summary>
-        public static RunbookTypeEnum PowerShell { get; } = new RunbookTypeEnum(PowerShellValue);
+        public static AutomationRunbookType PowerShell { get; } = new AutomationRunbookType(PowerShellValue);
         /// <summary>
         /// GraphPowerShellWorkflow
         /// Serialized Name: RunbookTypeEnum.GraphPowerShellWorkflow
         /// </summary>
-        public static RunbookTypeEnum GraphPowerShellWorkflow { get; } = new RunbookTypeEnum(GraphPowerShellWorkflowValue);
+        public static AutomationRunbookType GraphPowerShellWorkflow { get; } = new AutomationRunbookType(GraphPowerShellWorkflowValue);
         /// <summary>
         /// GraphPowerShell
         /// Serialized Name: RunbookTypeEnum.GraphPowerShell
         /// </summary>
-        public static RunbookTypeEnum GraphPowerShell { get; } = new RunbookTypeEnum(GraphPowerShellValue);
+        public static AutomationRunbookType GraphPowerShell { get; } = new AutomationRunbookType(GraphPowerShellValue);
         /// <summary>
         /// Python2
         /// Serialized Name: RunbookTypeEnum.Python2
         /// </summary>
-        public static RunbookTypeEnum Python2 { get; } = new RunbookTypeEnum(Python2Value);
+        public static AutomationRunbookType Python2 { get; } = new AutomationRunbookType(Python2Value);
         /// <summary>
         /// Python3
         /// Serialized Name: RunbookTypeEnum.Python3
         /// </summary>
-        public static RunbookTypeEnum Python3 { get; } = new RunbookTypeEnum(Python3Value);
-        /// <summary> Determines if two <see cref="RunbookTypeEnum"/> values are the same. </summary>
-        public static bool operator ==(RunbookTypeEnum left, RunbookTypeEnum right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="RunbookTypeEnum"/> values are not the same. </summary>
-        public static bool operator !=(RunbookTypeEnum left, RunbookTypeEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RunbookTypeEnum"/>. </summary>
-        public static implicit operator RunbookTypeEnum(string value) => new RunbookTypeEnum(value);
+        public static AutomationRunbookType Python3 { get; } = new AutomationRunbookType(Python3Value);
+        /// <summary> Determines if two <see cref="AutomationRunbookType"/> values are the same. </summary>
+        public static bool operator ==(AutomationRunbookType left, AutomationRunbookType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AutomationRunbookType"/> values are not the same. </summary>
+        public static bool operator !=(AutomationRunbookType left, AutomationRunbookType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AutomationRunbookType"/>. </summary>
+        public static implicit operator AutomationRunbookType(string value) => new AutomationRunbookType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RunbookTypeEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is AutomationRunbookType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(RunbookTypeEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AutomationRunbookType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

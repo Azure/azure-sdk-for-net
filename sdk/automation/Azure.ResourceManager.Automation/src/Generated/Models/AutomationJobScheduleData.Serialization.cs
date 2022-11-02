@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Automation
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> jobScheduleId = default;
+            Optional<Guid> jobScheduleId = default;
             Optional<ScheduleAssociationProperty> schedule = default;
             Optional<RunbookAssociationProperty> runbook = default;
             Optional<string> runOn = default;
@@ -64,7 +65,12 @@ namespace Azure.ResourceManager.Automation
                     {
                         if (property0.NameEquals("jobScheduleId"))
                         {
-                            jobScheduleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            jobScheduleId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("schedule"))
@@ -111,7 +117,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationJobScheduleData(id, name, type, systemData.Value, jobScheduleId.Value, schedule.Value, runbook.Value, runOn.Value, Optional.ToDictionary(parameters));
+            return new AutomationJobScheduleData(id, name, type, systemData.Value, Optional.ToNullable(jobScheduleId), schedule.Value, runbook.Value, runOn.Value, Optional.ToDictionary(parameters));
         }
     }
 }

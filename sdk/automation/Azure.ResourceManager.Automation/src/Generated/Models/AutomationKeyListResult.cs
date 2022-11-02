@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// The AutomationKeyListResult.
     /// Serialized Name: KeyListResult
     /// </summary>
-    public partial class AutomationKeyListResult
+    internal partial class AutomationKeyListResult
     {
         /// <summary> Initializes a new instance of AutomationKeyListResult. </summary>
         internal AutomationKeyListResult()

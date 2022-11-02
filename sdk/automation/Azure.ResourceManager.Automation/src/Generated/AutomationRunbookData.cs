@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the description.
         /// Serialized Name: Runbook.properties.description
         /// </param>
-        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, RunbookTypeEnum? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameter> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData, tags, location)
+        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameter> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             RunbookType = runbookType;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the type of the runbook.
         /// Serialized Name: Runbook.properties.runbookType
         /// </summary>
-        public RunbookTypeEnum? RunbookType { get; set; }
+        public AutomationRunbookType? RunbookType { get; set; }
         /// <summary>
         /// Gets or sets the published runbook content link.
         /// Serialized Name: Runbook.properties.publishContentLink

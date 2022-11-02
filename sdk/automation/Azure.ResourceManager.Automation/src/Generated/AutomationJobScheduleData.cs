@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the parameters of the job schedule.
         /// Serialized Name: JobSchedule.properties.parameters
         /// </param>
-        internal AutomationJobScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string jobScheduleId, ScheduleAssociationProperty schedule, RunbookAssociationProperty runbook, string runOn, IReadOnlyDictionary<string, string> parameters) : base(id, name, resourceType, systemData)
+        internal AutomationJobScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? jobScheduleId, ScheduleAssociationProperty schedule, RunbookAssociationProperty runbook, string runOn, IReadOnlyDictionary<string, string> parameters) : base(id, name, resourceType, systemData)
         {
             JobScheduleId = jobScheduleId;
             Schedule = schedule;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Automation
         /// Gets or sets the id of job schedule.
         /// Serialized Name: JobSchedule.properties.jobScheduleId
         /// </summary>
-        public string JobScheduleId { get; }
+        public Guid? JobScheduleId { get; }
         /// <summary>
         /// Gets or sets the schedule.
         /// Serialized Name: JobSchedule.properties.schedule
