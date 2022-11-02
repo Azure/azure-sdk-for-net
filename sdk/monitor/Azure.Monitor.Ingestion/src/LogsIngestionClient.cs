@@ -216,12 +216,17 @@ namespace Azure.Monitor.Ingestion
                 {
                     logsFailed += batch.LogsList.Count;
                     // If we have an error, add error from response into exceptions list which represents the errors from all the batches
-                    exceptions = AddException(
-                    exceptions,
+                    AddException(
+                    ref exceptions,
                     ex);
                 }
             }
-            ThrowException(logs, scope, exceptions, logsFailed);
+            if (exceptions?.Count > 0)
+            {
+                var ex = new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
+                scope.Failed(ex);
+                throw ex;
+            }
 
             // If no exceptions return response
             return response; //204 - response of last batch with header
@@ -305,16 +310,16 @@ namespace Azure.Monitor.Ingestion
                             // If current task has an exception, log the exception and add number of logs in this task to failed logs
                             if (runningTask.Exception != null)
                             {
-                                exceptions = AddException(
-                                    exceptions,
+                                AddException(
+                                    ref exceptions,
                                     runningTask.Exception);
                                 logsFailed += runningTasks[i].LogsCount;
                             }
                             // If current task returned a response that was not a success, log the exception and add number of logs in this task to failed logs
                             if (runningTask.Result.Status != 204)
                             {
-                                exceptions = AddException(
-                                    exceptions,
+                                AddException(
+                                    ref exceptions,
                                     new RequestFailedException(runningTask.Result));
                                 logsFailed += runningTasks[i].LogsCount;
                             }
@@ -323,24 +328,14 @@ namespace Azure.Monitor.Ingestion
                             i--;
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    // If we have an error, add error from response into exceptions list which represents the errors from all the batches
-                    AddException(
-                        exceptions,
-                        ex);
-                }
-            }
 
-            try
-            {
-                // Wait for all the remaining blocks to finish uploading
-                await Task.WhenAll(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // We do not want to log exceptions here as we will loop through all the tasks later
+                    // Wait for all the remaining blocks to finish uploading
+                    await Task.WhenAll(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
+                }
+                catch (Exception)
+                {
+                    // We do not want to log exceptions here as we will loop through all the tasks later
+                }
             }
 
             // At this point, all tasks have completed. Examine tasks to see if they have exceptions. If Status code != 204, add RequestFailedException to list of exceptions. Increment logsFailed accordingly
@@ -350,7 +345,7 @@ namespace Azure.Monitor.Ingestion
                 if (task.CurrentTask.Exception != null)
                 {
                     AddException(
-                        exceptions,
+                        ref exceptions,
                         task.CurrentTask.Exception);
                     logsFailed += task.LogsCount;
                 }
@@ -359,14 +354,19 @@ namespace Azure.Monitor.Ingestion
                 {
                     if (task.CurrentTask.Result.Status != 204)
                     {
-                        exceptions = AddException(
-                                    exceptions,
-                                    new RequestFailedException(task.CurrentTask.Result));
+                        AddException(
+                            ref exceptions,
+                            new RequestFailedException(task.CurrentTask.Result));
                     }
                     logsFailed += task.LogsCount;
                 }
             }
-            ThrowException(logs, scope, exceptions, logsFailed);
+            if (exceptions?.Count > 0)
+            {
+                var ex = new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
+                scope.Failed(ex);
+                throw ex;
+            }
 
             // If no exceptions return response
             return runningTasks.Select(_ => _.CurrentTask).Last().Result; //204 - response of last batch with header
@@ -380,31 +380,21 @@ namespace Azure.Monitor.Ingestion
 
             if (async)
             {
-                response = await _pipeline.ProcessMessageAsync(message, null, cancellationToken).ConfigureAwait(false);
+                response = await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                response = _pipeline.ProcessMessage(message, null, cancellationToken);
+                response = _pipeline.Send(message, null, cancellationToken);
             }
 
             return response;
         }
 
-        private static List<Exception> AddException(List<Exception> exceptions, Exception ex)
+        private static List<Exception> AddException(ref List<Exception> exceptions, Exception ex)
         {
             exceptions ??= new List<Exception>();
             exceptions.Add(ex);
             return exceptions;
-        }
-
-        private static void ThrowException<T>(IEnumerable<T> logs, DiagnosticScope scope, List<Exception> exceptions, int logsFailed)
-        {
-            if (exceptions?.Count > 0)
-            {
-                var ex = new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
-                scope.Failed(ex);
-                throw ex;
-            }
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
