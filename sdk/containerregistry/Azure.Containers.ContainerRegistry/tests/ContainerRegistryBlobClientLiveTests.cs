@@ -288,8 +288,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 digest = uploadResult.Value.Digest;
             }
 
+            var context = new RequestContext()
+            {
+                AllowAutoRedirect = false
+            };
+
             // Act
-            NullableResponse<Uri> response = await client.GetBlobLocationAsync(digest);
+            NullableResponse<DownloadBlobResult> result = await client.DownloadBlobAsync(digest, context);
+            Response response = result.GetRawResponse();
+
+            if (response.Status == 307 && response.Headers.TryGetValue("Location", out string value))
+            {
+                Uri redirectUri = new Uri(value);
+            }
 
             // Clean up
             await client.DeleteBlobAsync(digest);

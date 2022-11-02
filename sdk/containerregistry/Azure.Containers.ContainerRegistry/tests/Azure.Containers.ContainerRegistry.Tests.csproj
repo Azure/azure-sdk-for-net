@@ -14,8 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <!--<ProjectReference Include="$(AzureCoreTestFramework)" />-->
+    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
     <ProjectReference Include="..\src\Azure.Containers.ContainerRegistry.csproj" />
+
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">

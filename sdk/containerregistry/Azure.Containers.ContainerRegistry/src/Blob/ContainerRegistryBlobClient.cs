@@ -519,31 +519,39 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Download a blob that is part of an artifact.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="context"> The request context used to configure the request.</param>
         /// <returns></returns>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual NullableResponse<Uri> GetBlobLocation(string digest, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DownloadBlobResult> DownloadBlob(string digest, RequestContext context)
 #pragma warning restore AZC0015 // Unexpected client method return type.
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(GetBlobLocation)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
             scope.Start();
             try
             {
-                var context = new RequestContext()
-                {
-                    CancellationToken = cancellationToken,
-                    FollowRedirects = false
-                };
-
                 Response response = _blobRestClient.GetBlob(_repositoryName, digest, context);
 
-                return (response.Status == 307 && response.Headers.TryGetValue("Location", out string value)) ?
-                    Response.FromValue(new Uri(value), response) :
-                    new NoValueResponse<Uri>(response);
+                if (response.Status == 200)
+                {
+                    if (!ValidateDigest(response.ContentStream, digest))
+                    {
+                        throw _clientDiagnostics.CreateRequestFailedException(response,
+                            new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
+                    }
+
+                    return Response.FromValue(new DownloadBlobResult(digest, response.ContentStream), response);
+                }
+
+                // If we should have thrown RequestFailedException according to RequestContext, we
+                // would have done so in the GetBlob protocol method. Return a NoValueResponse.
+                return new NoValueResponse<DownloadBlobResult>(response);
             }
             catch (Exception e)
             {
@@ -553,31 +561,39 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Download a blob that is part of an artifact.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="context"> The request context used to configure the request.</param>
         /// <returns></returns>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<NullableResponse<Uri>> GetBlobLocationAsync(string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DownloadBlobResult>> DownloadBlobAsync(string digest, RequestContext context)
 #pragma warning restore AZC0015 // Unexpected client method return type.
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(GetBlobLocation)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
             scope.Start();
             try
             {
-                var context = new RequestContext()
-                {
-                    CancellationToken = cancellationToken,
-                    FollowRedirects = false
-                };
-
                 Response response = await _blobRestClient.GetBlobAsync(_repositoryName, digest, context).ConfigureAwait(false);
 
-                return (response.Status == 307 && response.Headers.TryGetValue("Location", out string value)) ?
-                    Response.FromValue(new Uri(value), response) :
-                    new NoValueResponse<Uri>(response);
+                if (response.Status == 200)
+                {
+                    if (!ValidateDigest(response.ContentStream, digest))
+                    {
+                        throw _clientDiagnostics.CreateRequestFailedException(response,
+                            new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
+                    }
+
+                    return Response.FromValue(new DownloadBlobResult(digest, response.ContentStream), response);
+                }
+
+                // If we should have thrown RequestFailedException according to RequestContext, we
+                // would have done so in the GetBlob protocol method. Return a NoValueResponse.
+                return new NoValueResponse<DownloadBlobResult>(response);
             }
             catch (Exception e)
             {

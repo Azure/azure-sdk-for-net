@@ -33,7 +33,7 @@ namespace Azure.Core
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
-            FollowRedirects = true;
+            AllowAutoRedirect = true;
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.Core
 
             context.Freeze();
 
-            FollowRedirects = context.FollowRedirects;
+            AllowAutoRedirect = context.AllowAutoRedirect;
 
             if (context.Policies?.Count > 0)
             {
@@ -118,7 +118,7 @@ namespace Azure.Core
             }
         }
 
-        internal bool FollowRedirects { get; private set; }
+        internal bool AllowAutoRedirect { get; private set; }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 

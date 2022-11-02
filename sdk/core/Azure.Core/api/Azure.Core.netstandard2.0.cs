@@ -205,6 +205,7 @@ namespace Azure
     public partial class RequestContext
     {
         public RequestContext() { }
+        public bool AllowAutoRedirect { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
