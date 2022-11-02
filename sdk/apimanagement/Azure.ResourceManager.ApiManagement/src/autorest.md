@@ -19,8 +19,6 @@ skip-serialization-format-xml: true
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}
 
-strict-common-operations: false
-
 request-path-is-non-resource:
 # The Id of content type does not meet the criteria of ResourceIdentifier (E.g. /contentTypes/page)
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
