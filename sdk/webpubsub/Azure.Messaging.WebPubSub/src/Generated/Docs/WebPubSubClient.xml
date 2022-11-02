@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="RemoveConnectionFromAllGroupsAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call RemoveConnectionFromAllGroupsAsync with required parameters.
+<code><![CDATA[
+var client = new WebPubSubClient("<https://my-service.azure.com>");
+
+Response response = await client.RemoveConnectionFromAllGroupsAsync("<hub>", "<connectionId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="RemoveConnectionFromAllGroups(String,String,RequestContext)">
+<example>
+This sample shows how to call RemoveConnectionFromAllGroups with required parameters.
+<code><![CDATA[
+var client = new WebPubSubClient("<https://my-service.azure.com>");
+
+Response response = client.RemoveConnectionFromAllGroups("<hub>", "<connectionId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>
