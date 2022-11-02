@@ -1,18 +1,11 @@
 # Generated code configuration
-declare-directive:
-  rename-parameter: >-
-    [{
-      from: 'swagger-document',
-      "where": $.paths[${JSON.stringify($.path)}].get.parameters[?(@["name"] == ${JSON.stringify($.from)})],
-      transform: `$["x-ms-client-name"] = ${JSON.stringify($.to)}`
-    }]
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 title: FarmBeats
 input-file:
-- C:\Users\bhkansag\bhargav-kansagara\azure-rest-api-specs-pr\specification\agrifood\data-plane\Microsoft.AgFoodPlatform\preview\2021-07-31-preview\agfood.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/fa581bd5f31cbc6f6882b254ce5b0f5c20d84648/specification/agrifood/data-plane/Microsoft.AgFoodPlatform/preview/2021-07-31-preview/agfood.json
 
 namespace: Azure.Verticals.AgriFood.Farming
 security: AADToken

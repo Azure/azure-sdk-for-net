@@ -41,7 +41,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         internal Attachments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
@@ -53,8 +53,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -67,19 +67,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// Response response = await client.GetAttachmentAsync("<farmerId>", "<attachmentId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());
         /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -92,15 +93,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>Attachment</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   resourceType: string, # Optional. Associated Resource type for this attachment
-        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
         ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   id: string, # Optional. Unique id.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of resource.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
@@ -129,8 +130,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -143,19 +144,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachment with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// Response response = client.GetAttachment("<farmerId>", "<attachmentId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());
         /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -168,15 +170,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>Attachment</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   resourceType: string, # Optional. Associated Resource type for this attachment
-        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
         ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   id: string, # Optional. Unique id.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of resource.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
@@ -205,8 +207,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="attachmentId"> ID of the attachment resource. </param>
+        /// <param name="farmerId"> Id of the associated farmer resource. </param>
+        /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
@@ -220,21 +222,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<attachmentId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());
         /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -247,15 +250,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>Attachment</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   resourceType: string, # Optional. Associated Resource type for this attachment
-        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
         ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   id: string, # Optional. Unique id.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of resource.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
@@ -284,8 +287,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="attachmentId"> ID of the attachment resource. </param>
+        /// <param name="farmerId"> Id of the associated farmer resource. </param>
+        /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
@@ -299,21 +302,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<attachmentId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());
         /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -326,15 +330,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>Attachment</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   resourceType: string, # Optional. Associated Resource type for this attachment
-        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
         ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   id: string, # Optional. Unique id.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of resource.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
@@ -363,8 +367,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -377,7 +381,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// Response response = await client.DeleteAsync("<farmerId>", "<attachmentId>");
         /// Console.WriteLine(response.Status);
@@ -404,8 +408,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -418,7 +422,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// Response response = client.Delete("<farmerId>", "<attachmentId>");
         /// Console.WriteLine(response.Status);
@@ -445,8 +449,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="attachmentId"> Id of attachment to be downloaded. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -459,7 +463,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DownloadAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// Response response = await client.DownloadAsync("<farmerId>", "<attachmentId>");
         /// if (response.ContentStream != null)
@@ -492,8 +496,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="attachmentId"> Id of attachment to be downloaded. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -506,7 +510,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Download with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// Response response = client.Download("<farmerId>", "<attachmentId>");
         /// if (response.ContentStream != null)
@@ -539,9 +543,12 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
-        /// <param name="resourceTypes"> Resource Types of the resource. </param>
+        /// <param name="resourceTypes">
+        /// Resource Types of the resource.
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, ApplicationData, HarvestData, TillageData, PlantingData, PlantTissueAnalysis.
+        /// </param>
         /// <param name="attachmentIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -570,7 +577,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentsByFarmerIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// await foreach (var data in client.GetAttachmentsByFarmerIdAsync("<farmerId>"))
         /// {
@@ -581,19 +588,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentsByFarmerIdAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// await foreach (var data in client.GetAttachmentsByFarmerIdAsync("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<attachmentIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("resourceId").ToString());
         ///     Console.WriteLine(result.GetProperty("resourceType").ToString());
         ///     Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -607,15 +615,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>AttachmentListResponseValue</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   resourceType: string, # Optional. Associated Resource type for this attachment
-        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
         ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   id: string, # Optional. Unique id.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of resource.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
@@ -653,9 +661,12 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
-        /// <param name="resourceTypes"> Resource Types of the resource. </param>
+        /// <param name="resourceTypes">
+        /// Resource Types of the resource.
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, ApplicationData, HarvestData, TillageData, PlantingData, PlantTissueAnalysis.
+        /// </param>
         /// <param name="attachmentIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -684,7 +695,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentsByFarmerId with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// foreach (var data in client.GetAttachmentsByFarmerId("<farmerId>"))
         /// {
@@ -695,19 +706,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentsByFarmerId with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
         /// 
         /// foreach (var data in client.GetAttachmentsByFarmerId("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<attachmentIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("resourceId").ToString());
         ///     Console.WriteLine(result.GetProperty("resourceType").ToString());
         ///     Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -721,15 +733,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>AttachmentListResponseValue</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///   resourceType: string, # Optional. Associated Resource type for this attachment
-        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
         ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   id: string, # Optional. Unique id.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of resource.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
@@ -915,7 +927,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/file", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/octet-stream, application/json");
+            request.Headers.Add("Accept", "application/json, application/octet-stream");
             return message;
         }
 

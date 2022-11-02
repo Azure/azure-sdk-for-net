@@ -38,7 +38,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         internal FarmOperationsDataIngestion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
@@ -50,7 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get a farm operation data ingestion job. </summary>
-        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -63,7 +63,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
         /// 
         /// Response response = await client.GetJobDetailsAsync("<jobId>");
         /// 
@@ -72,6 +72,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
+        /// Console.WriteLine(result.GetProperty("isIncremental").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -92,10 +93,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   authProviderId: string, # Required. Authentication provider Id.
         ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
         ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+        ///   isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -107,10 +109,11 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
@@ -139,7 +142,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get a farm operation data ingestion job. </summary>
-        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -152,7 +155,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
         /// 
         /// Response response = client.GetJobDetails("<jobId>");
         /// 
@@ -161,6 +164,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
+        /// Console.WriteLine(result.GetProperty("isIncremental").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -181,10 +185,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   authProviderId: string, # Required. Authentication provider Id.
         ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
         ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+        ///   isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -196,10 +201,11 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
@@ -229,10 +235,10 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create a farm operation data ingestion job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobId"> Job ID supplied by user. </param>
+        /// <param name="jobId"> Job Id supplied by user. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
@@ -243,7 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateJobAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
@@ -262,7 +268,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateJobAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
@@ -271,6 +277,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///         "<String>"
         ///     },
         ///     startYear = 1234,
+        ///     isIncremental = true,
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -286,6 +293,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
+        /// Console.WriteLine(result.GetProperty("isIncremental").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -306,10 +314,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   authProviderId: string, # Required. Authentication provider Id.
         ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
         ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+        ///   isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -321,10 +330,11 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
@@ -332,10 +342,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   authProviderId: string, # Required. Authentication provider Id.
         ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
         ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+        ///   isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -347,10 +358,11 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
@@ -363,6 +375,7 @@ namespace Azure.Verticals.AgriFood.Farming
 >>>>>>> Fixing clients hierarchy and renaming some clients:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/FarmOperationsDataIngestion.cs
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("FarmOperationsDataIngestion.CreateJob");
             scope.Start();
@@ -380,10 +393,10 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create a farm operation data ingestion job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobId"> Job ID supplied by user. </param>
+        /// <param name="jobId"> Job Id supplied by user. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
@@ -394,7 +407,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateJob with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
@@ -413,7 +426,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateJob with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
@@ -422,6 +435,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///         "<String>"
         ///     },
         ///     startYear = 1234,
+        ///     isIncremental = true,
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -437,6 +451,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
+        /// Console.WriteLine(result.GetProperty("isIncremental").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -457,10 +472,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   authProviderId: string, # Required. Authentication provider Id.
         ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
         ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+        ///   isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -472,10 +488,11 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
@@ -483,10 +500,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   authProviderId: string, # Required. Authentication provider Id.
         ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
         ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
+        ///   isIncremental: boolean, # Optional. Use this to pull only the incremental changes from the last run.
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -498,10 +516,11 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
@@ -514,6 +533,7 @@ namespace Azure.Verticals.AgriFood.Farming
 >>>>>>> Fixing clients hierarchy and renaming some clients:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/FarmOperationsDataIngestion.cs
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("FarmOperationsDataIngestion.CreateJob");
             scope.Start();

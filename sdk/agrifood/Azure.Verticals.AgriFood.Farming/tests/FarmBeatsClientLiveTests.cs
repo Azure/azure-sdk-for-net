@@ -17,10 +17,11 @@ namespace Azure.Verticals.AgriFood.Farming.Tests
         [Test]
         public async Task FarmersSmokeTest()
         {
-            FarmersClient client = GetFarmersClient();
-            const string farmerId = "smoke-test-farmer";
+            FarmBeatsClient client = GetFarmersClient();
+            var farmersClient = client.GetFarmersClient();
+            const string farmerId = "smoke-test-farmer-4754";
 
-            Response createdResponse = await client.CreateOrUpdateAsync(farmerId, RequestContent.Create(new object()));
+            Response createdResponse = await farmersClient.CreateOrUpdateAsync(farmerId, RequestContent.Create(new object()));
             JsonElement createdBodyJson = JsonDocument.Parse(GetContentFromResponse(createdResponse)).RootElement;
 
             Assert.AreEqual(farmerId, createdBodyJson.GetProperty("id").GetString());
@@ -28,7 +29,7 @@ namespace Azure.Verticals.AgriFood.Farming.Tests
             Assert.IsTrue(HasProperty(createdBodyJson, "createdDateTime"));
             Assert.IsTrue(HasProperty(createdBodyJson, "modifiedDateTime"));
 
-            Response fetchResponse = await client.GetFarmerAsync(farmerId, new());
+            Response fetchResponse = await farmersClient.GetFarmerAsync(farmerId, new());
             JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
 
             Assert.AreEqual(createdBodyJson.GetProperty("id").GetString(), fetchBodyJson.GetProperty("id").GetString());
@@ -36,7 +37,7 @@ namespace Azure.Verticals.AgriFood.Farming.Tests
             Assert.AreEqual(createdBodyJson.GetProperty("createdDateTime").GetString(), fetchBodyJson.GetProperty("createdDateTime").GetString());
             Assert.AreEqual(createdBodyJson.GetProperty("modifiedDateTime").GetString(), fetchBodyJson.GetProperty("modifiedDateTime").GetString());
 
-            await client.DeleteAsync(farmerId);
+            await farmersClient.DeleteAsync(farmerId);
         }
 
         private static bool HasProperty(JsonElement e, string propertyName)

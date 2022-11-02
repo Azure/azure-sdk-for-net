@@ -2,7 +2,7 @@
 
 ## 1.1.0-beta.2 (Unreleased)
 ### Features Added
-- New set of APIs to support Sensor integration and Solution inference
+- - Adding clients for Sensor Integration which includes crud operations on DeviceDataModels, Devices, SensorDataModels, Sensors, SensorMappings, SensorPartnerIntegration and get Sensor events.
 
 ## 1.0.0-beta.1 (2021-05-26)
 
