@@ -68,6 +68,23 @@ namespace Azure.ResourceManager.PrivateDns
         public virtual Azure.Response<Azure.ResourceManager.PrivateDns.ARecordResource> Update(Azure.ResourceManager.PrivateDns.ARecordData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PrivateDns.ARecordResource>> UpdateAsync(Azure.ResourceManager.PrivateDns.ARecordData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class BaseRecordData : Azure.ResourceManager.Models.ResourceData
+    {
+        public BaseRecordData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.AaaaRecordInfo> AaaaRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.ARecordInfo> ARecords { get { throw null; } }
+        public string Cname { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public string Fqdn { get { throw null; } }
+        public bool? IsAutoRegistered { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.MXRecordInfo> MXRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PtrRecordInfo> PtrRecords { get { throw null; } }
+        public Azure.ResourceManager.PrivateDns.Models.SoaRecordInfo SoaRecordInfo { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.SrvRecordInfo> SrvRecords { get { throw null; } }
+        public long? TtlInSeconds { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.TxtRecordInfo> TxtRecords { get { throw null; } }
+    }
     public partial class CnameRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PrivateDns.CnameRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateDns.CnameRecordResource>, System.Collections.IEnumerable
     {
         protected CnameRecordCollection() { }
@@ -210,8 +227,8 @@ namespace Azure.ResourceManager.PrivateDns
         public virtual Azure.Response<Azure.ResourceManager.PrivateDns.PtrRecordResource> GetPtrRecord(string ptrRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PrivateDns.PtrRecordResource>> GetPtrRecordAsync(string ptrRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.PrivateDns.PtrRecordCollection GetPtrRecords() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.PrivateDns.RecordSeriesData> GetRecords(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.PrivateDns.RecordSeriesData> GetRecordsAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.PrivateDns.BaseRecordData> GetRecords(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PrivateDns.BaseRecordData> GetRecordsAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PrivateDns.SoaRecordResource> GetSoaRecord(string soaRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PrivateDns.SoaRecordResource>> GetSoaRecordAsync(string soaRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.PrivateDns.SoaRecordCollection GetSoaRecords() { throw null; }
@@ -273,23 +290,6 @@ namespace Azure.ResourceManager.PrivateDns
         public bool? IsAutoRegistered { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public long? TtlInSeconds { get { throw null; } set { } }
-    }
-    public partial class RecordSeriesData : Azure.ResourceManager.Models.ResourceData
-    {
-        public RecordSeriesData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.AaaaRecordInfo> AaaaRecords { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.ARecordInfo> ARecords { get { throw null; } }
-        public string Cname { get { throw null; } set { } }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public string Fqdn { get { throw null; } }
-        public bool? IsAutoRegistered { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.MXRecordInfo> MXRecords { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PtrRecordInfo> PtrRecords { get { throw null; } }
-        public Azure.ResourceManager.PrivateDns.Models.SoaRecordInfo SoaRecordInfo { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.SrvRecordInfo> SrvRecords { get { throw null; } }
-        public long? TtlInSeconds { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.TxtRecordInfo> TxtRecords { get { throw null; } }
     }
     public partial class SoaRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PrivateDns.SoaRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateDns.SoaRecordResource>, System.Collections.IEnumerable
     {
