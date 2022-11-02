@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
         public InboundEndpointIPConfiguration(WritableSubResource subnet)
         {
-            if (subnet == null)
-            {
-                throw new ArgumentNullException(nameof(subnet));
-            }
+            Argument.AssertNotNull(subnet, nameof(subnet));
 
             Subnet = subnet;
         }

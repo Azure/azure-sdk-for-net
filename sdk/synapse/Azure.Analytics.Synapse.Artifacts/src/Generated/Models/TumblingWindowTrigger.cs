@@ -23,10 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
         public TumblingWindowTrigger(TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startTime, int maxConcurrency)
         {
-            if (pipeline == null)
-            {
-                throw new ArgumentNullException(nameof(pipeline));
-            }
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
 
             Pipeline = pipeline;
             Frequency = frequency;

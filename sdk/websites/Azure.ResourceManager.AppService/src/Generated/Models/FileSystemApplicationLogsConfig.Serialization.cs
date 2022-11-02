@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FileSystemApplicationLogsConfig DeserializeFileSystemApplicationLogsConfig(JsonElement element)
         {
-            Optional<LogLevel> level = default;
+            Optional<WebAppLogLevel> level = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("level"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = property.Value.GetString().ToLogLevel();
+                    level = property.Value.GetString().ToWebAppLogLevel();
                     continue;
                 }
             }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static ListStreamingLocatorsResponse DeserializeListStreamingLocatorsResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<AssetStreamingLocator>> streamingLocators = default;
+            Optional<IReadOnlyList<MediaAssetStreamingLocator>> streamingLocators = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamingLocators"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AssetStreamingLocator> array = new List<AssetStreamingLocator>();
+                    List<MediaAssetStreamingLocator> array = new List<MediaAssetStreamingLocator>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssetStreamingLocator.DeserializeAssetStreamingLocator(item));
+                        array.Add(MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator(item));
                     }
                     streamingLocators = array;
                     continue;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.Email.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Communication.Email.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         internal SendStatusResult(string messageId, SendStatus status)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
 
             MessageId = messageId;
             Status = status;

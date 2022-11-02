@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
-        public async Task RecognizeCustomEntitiesWithADDTest()
+        public async Task RecognizeCustomEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
 

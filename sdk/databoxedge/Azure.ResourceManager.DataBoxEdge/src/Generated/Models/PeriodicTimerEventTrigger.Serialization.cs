@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             PeriodicTimerSourceInfo sourceInfo = default;
-            RoleSinkInfo sinkInfo = default;
+            DataBoxEdgeRoleSinkInfo sinkInfo = default;
             Optional<string> customContextTag = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         }
                         if (property0.NameEquals("sinkInfo"))
                         {
-                            sinkInfo = RoleSinkInfo.DeserializeRoleSinkInfo(property0.Value);
+                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customContextTag"))

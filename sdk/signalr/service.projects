@@ -17,4 +17,8 @@
   <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.SignalRService\**\*.csproj" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.SignalR\**\*.csproj" />
+  </ItemGroup>
 </Project>

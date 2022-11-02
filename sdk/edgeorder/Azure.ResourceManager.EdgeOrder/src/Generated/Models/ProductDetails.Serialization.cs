@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             HierarchyInformation hierarchyInformation = default;
             Optional<int> count = default;
             Optional<DoubleEncryptionStatus> productDoubleEncryptionStatus = default;
-            Optional<IReadOnlyList<DeviceDetails>> deviceDetails = default;
+            Optional<IReadOnlyList<EdgeOrderProductDeviceDetails>> deviceDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayInfo"))
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeviceDetails> array = new List<DeviceDetails>();
+                    List<EdgeOrderProductDeviceDetails> array = new List<EdgeOrderProductDeviceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DeviceDetails.DeserializeDeviceDetails(item));
+                        array.Add(EdgeOrderProductDeviceDetails.DeserializeEdgeOrderProductDeviceDetails(item));
                     }
                     deviceDetails = array;
                     continue;

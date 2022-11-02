@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adminUserName"/> is null. </exception>
         public UserAccountCredentials(string adminUserName)
         {
-            if (adminUserName == null)
-            {
-                throw new ArgumentNullException(nameof(adminUserName));
-            }
+            Argument.AssertNotNull(adminUserName, nameof(adminUserName));
 
             AdminUserName = adminUserName;
         }

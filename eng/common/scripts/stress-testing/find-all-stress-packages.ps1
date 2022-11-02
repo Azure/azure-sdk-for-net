@@ -12,20 +12,44 @@ class StressTestPackageInfo {
     [string]$Deployer
 }
 
+. $PSScriptRoot/../job-matrix/job-matrix-functions.ps1
+. $PSScriptRoot/generate-scenario-matrix.ps1
+
 function FindStressPackages(
     [string]$directory,
     [hashtable]$filters = @{},
     [switch]$CI,
-    [string]$namespaceOverride
+    [string]$namespaceOverride,
+    [string]$MatrixSelection,
+    [Parameter(Mandatory=$False)][string]$MatrixFileName,
+    [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
+    [Parameter(Mandatory=$False)][array]$MatrixFilters,
+    [Parameter(Mandatory=$False)][array]$MatrixReplace,
+    [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters
 ) {
     # Bare minimum filter for stress tests
     $filters['stressTest'] = 'true'
-
     $packages = @()
     $chartFiles = Get-ChildItem -Recurse -Filter 'Chart.yaml' $directory 
+    if (!$MatrixFileName) {
+        $MatrixFileName = '/scenarios-matrix.yaml'
+    }
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
+        
+        VerifyAddonsVersion $chart
         if (matchesAnnotations $chart $filters) {
+            $matrixFilePath = (Join-Path $chartFile.Directory.FullName $MatrixFileName)
+            if (Test-Path $matrixFilePath) {
+                GenerateScenarioMatrix `
+                    -matrixFilePath $matrixFilePath `
+                    -Selection $MatrixSelection `
+                    -DisplayNameFilter $MatrixDisplayNameFilter `
+                    -Filters $MatrixFilters `
+                    -Replace $MatrixReplace `
+                    -NonSparseParameters $MatrixNonSparseParameters
+            }
+
             $packages += NewStressTestPackageInfo `
                             -chart $chart `
                             -chartFile $chartFile `
@@ -49,6 +73,15 @@ function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     }
 
     return $true
+}
+
+function VerifyAddonsVersion([hashtable]$chart) {
+    foreach ($dependency in $chart.dependencies) {
+        if ($dependency.name -eq "stress-test-addons" -and
+            $dependency.version -lt "0.2.0") {
+            throw "The stress-test-addons version in use is $($dependency.version), please use versions >= 0.2.0"
+        }
+    }
 }
 
 function GetUsername() {
@@ -80,8 +113,8 @@ function NewStressTestPackageInfo(
         Namespace = $namespace.ToLower()
         Directory = $chartFile.DirectoryName
         ReleaseName = $chart.name
-        Dockerfile = $chart.annotations.dockerfile
-        DockerBuildDir = $chart.annotations.dockerbuilddir
+        Dockerfile = "dockerfile" -in $chart.annotations.keys ? $chart.annotations.dockerfile : $null
+        DockerBuildDir = "dockerbuilddir" -in $chart.annotations.keys ? $chart.annotations.dockerbuilddir : $null
     }
 }
 

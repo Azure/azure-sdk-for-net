@@ -232,6 +232,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesAccountDeploymentModel
     {
         public CognitiveServicesAccountDeploymentModel() { }
+        public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit CallRateLimit { get { throw null; } }
         public string Format { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
@@ -239,8 +240,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesAccountDeploymentProperties
     {
         public CognitiveServicesAccountDeploymentProperties() { }
+        public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit CallRateLimit { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Capabilities { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel Model { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? ProvisioningState { get { throw null; } }
+        public string RaiPolicyName { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings ScaleSettings { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

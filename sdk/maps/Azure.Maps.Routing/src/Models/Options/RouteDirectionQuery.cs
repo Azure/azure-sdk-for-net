@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> Options for rendering static images. </summary>
     public class RouteDirectionQuery

@@ -69,6 +69,11 @@ namespace Azure.Security.KeyVault.Certificates
             this.ConfigureLogging();
         }
 
+        /// <summary>
+        /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault domain.
+        /// </summary>
+        public bool DisableChallengeResourceVerification { get; set; }
+
         internal string GetVersionString()
         {
             return Version switch

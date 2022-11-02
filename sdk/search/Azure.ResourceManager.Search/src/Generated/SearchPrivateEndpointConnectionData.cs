@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Search
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Describes the properties of an existing Private Endpoint connection to the Azure Cognitive Search service. </param>
-        internal SearchPrivateEndpointConnectionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal SearchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SearchServicePrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> Describes the properties of an existing Private Endpoint connection to the Azure Cognitive Search service. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        public SearchServicePrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

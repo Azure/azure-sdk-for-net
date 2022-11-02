@@ -7,7 +7,6 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
 require: https://github.com/Azure/azure-rest-api-specs/blob/20b212e1ef41b1d49b83ba82b4cd2d3330e44742/specification/storage/resource-manager/readme.md
-tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -205,7 +204,7 @@ rename-mapping:
   KeySource.Microsoft.Keyvault: KeyVault
   StorageAccountListKeysResult: StorageAccountGetKeysResult
   TableAccessPolicy: StorageTableAccessPolicy
-  TableAccessPolicy.expiryTime: ExpiresOn
+  TableAccessPolicy.expiryTime: ExpireOn
   TableSignedIdentifier: StorageTableSignedIdentifier
   UpdateHistoryProperty: UpdateHistoryEntry
   UpdateHistoryProperty.update: UpdateType

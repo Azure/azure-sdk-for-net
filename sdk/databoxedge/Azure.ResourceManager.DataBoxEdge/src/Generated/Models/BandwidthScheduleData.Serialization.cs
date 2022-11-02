@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("start");
-            writer.WriteStringValue(Start);
+            writer.WriteStringValue(StartOn, "T");
             writer.WritePropertyName("stop");
-            writer.WriteStringValue(Stop);
+            writer.WriteStringValue(StopOn, "T");
             writer.WritePropertyName("rateInMbps");
             writer.WriteNumberValue(RateInMbps);
             writer.WritePropertyName("days");
@@ -43,8 +44,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            string start = default;
-            string stop = default;
+            TimeSpan start = default;
+            TimeSpan stop = default;
             int rateInMbps = default;
             IList<DataBoxEdgeDayOfWeek> days = default;
             foreach (var property in element.EnumerateObject())
@@ -85,12 +86,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         if (property0.NameEquals("start"))
                         {
-                            start = property0.Value.GetString();
+                            start = property0.Value.GetTimeSpan("T");
                             continue;
                         }
                         if (property0.NameEquals("stop"))
                         {
-                            stop = property0.Value.GetString();
+                            stop = property0.Value.GetTimeSpan("T");
                             continue;
                         }
                         if (property0.NameEquals("rateInMbps"))

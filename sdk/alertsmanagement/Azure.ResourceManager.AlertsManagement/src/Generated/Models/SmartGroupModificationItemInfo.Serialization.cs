@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedAt");
-                writer.WriteStringValue(ModifiedOn.Value);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(ModifiedBy))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modifiedAt = property.Value.GetDateTimeOffset();
+                    modifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("modifiedBy"))

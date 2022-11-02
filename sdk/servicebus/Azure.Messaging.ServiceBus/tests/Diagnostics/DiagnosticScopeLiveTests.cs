@@ -194,8 +194,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     {
                         Assert.IsNotNull(messageActivities);
                         Assert.AreEqual(
-                            messageActivities[messageProcessedCt],
-                            scope.Links.Single());
+                            messageActivities[messageProcessedCt].Traceparent,
+                            scope.Activity.ParentId);
                         callbackExecuted = true;
                     }
                 });
@@ -232,6 +232,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessMessageActivityName);
+                    Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);
@@ -252,8 +253,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     {
                         Assert.IsNotNull(messageActivities);
                         Assert.AreEqual(
-                            messageActivities[messageProcessedCt],
-                            scope.Links.Single());
+                            messageActivities[messageProcessedCt].Traceparent,
+                            scope.Activity.ParentId);
                         callbackExecuted = true;
                     }
                 });
@@ -291,6 +292,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessSessionMessageActivityName);
+                    Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);

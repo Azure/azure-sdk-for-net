@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static PagedSchedules DeserializePagedSchedules(JsonElement element)
         {
-            Optional<IReadOnlyList<ScheduleData>> value = default;
+            Optional<IReadOnlyList<LabServicesScheduleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScheduleData> array = new List<ScheduleData>();
+                    List<LabServicesScheduleData> array = new List<LabServicesScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduleData.DeserializeScheduleData(item));
+                        array.Add(LabServicesScheduleData.DeserializeLabServicesScheduleData(item));
                     }
                     value = array;
                     continue;

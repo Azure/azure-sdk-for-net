@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Search
 
         internal static SearchPrivateEndpointConnectionData DeserializeSearchPrivateEndpointConnectionData(JsonElement element)
         {
-            Optional<PrivateEndpointConnectionProperties> properties = default;
+            Optional<SearchServicePrivateEndpointConnectionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Search
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(property.Value);
+                    properties = SearchServicePrivateEndpointConnectionProperties.DeserializeSearchServicePrivateEndpointConnectionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Search
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

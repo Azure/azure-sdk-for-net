@@ -17,28 +17,16 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
     internal class RecordSetsBasicE2ETest : DnsServiceClientTestBase
     {
         private DnsZoneResource _dnsZone;
-        private ResourceIdentifier _dnsZoneIdentifier;
 
         public RecordSetsBasicE2ETest(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
+        [SetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Dns-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-
-            // TODO: Castle.DynamicProxy.Generators.GeneratorException
-            //var dnsLro = await CreateADnsZone($"2022{SessionRecording.GenerateAssetName("dnszone")}.com", rgLro.Value);
-            //_dnsZoneIdentifier = dnsLro.Data.Id;
-            _dnsZoneIdentifier = null;
-            await StopSessionRecordingAsync();
-        }
-
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            _dnsZone = await Client.GetDnsZoneResource(_dnsZoneIdentifier).GetAsync();
+            var resourceGroup = await CreateResourceGroup();
+            _dnsZone = await CreateADnsZone($"2022{SessionRecording.GenerateAssetName("dnszone")}.com", resourceGroup);
         }
 
         [Test]

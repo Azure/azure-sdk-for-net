@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<int> sessionAffinityTtlSeconds = default;
             Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
             Optional<FrontDoorResourceState> resourceState = default;
-            Optional<FrontendEndpointCustomHttpsProvisioningState> customHttpsProvisioningState = default;
-            Optional<FrontendEndpointCustomHttpsProvisioningSubstate> customHttpsProvisioningSubstate = default;
+            Optional<FrontendEndpointCustomHttpsProvisioningState?> customHttpsProvisioningState = default;
+            Optional<FrontendEndpointCustomHttpsProvisioningSubstate?> customHttpsProvisioningSubstate = default;
             Optional<CustomHttpsConfiguration> customHttpsConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                customHttpsProvisioningState = null;
                                 continue;
                             }
                             customHttpsProvisioningState = new FrontendEndpointCustomHttpsProvisioningState(property0.Value.GetString());
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                customHttpsProvisioningSubstate = null;
                                 continue;
                             }
                             customHttpsProvisioningSubstate = new FrontendEndpointCustomHttpsProvisioningSubstate(property0.Value.GetString());
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                customHttpsConfiguration = null;
                                 continue;
                             }
                             customHttpsConfiguration = CustomHttpsConfiguration.DeserializeCustomHttpsConfiguration(property0.Value);

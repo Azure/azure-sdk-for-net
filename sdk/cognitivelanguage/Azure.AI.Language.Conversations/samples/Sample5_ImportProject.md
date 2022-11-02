@@ -13,7 +13,7 @@ using Azure.AI.Language.Conversations.Authoring;
 To import a project, you'll need to first create a `ConversationAuthoringClient` using an endpoint and an API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAuthoringClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
@@ -109,7 +109,7 @@ var importData = new
     stringIndexType = "Utf16CodeUnit",
 };
 
-Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Started, projectName, RequestContent.Create(importData));
+Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Completed, projectName, RequestContent.Create(importData));
 
 // Train the model.
 var trainData = new
@@ -119,23 +119,16 @@ var trainData = new
 };
 
 Console.WriteLine($"Training project {projectName}...");
-Operation<BinaryData> trainOperation = client.Train(
-    WaitUntil.Completed,
-    projectName,
-    RequestContent.Create(trainData));
+Operation<BinaryData> trainOperation = client.Train(WaitUntil.Completed, projectName, RequestContent.Create(trainData));
 
-// Deploy the model.
-var deployData = new
-{
-    trainedModelLabel = "Sample5",
-};
+    // Deploy the model.
+    var deployData = new
+    {
+        trainedModelLabel = "Sample5",
+    };
 
 Console.WriteLine($"Deploying project {projectName} to production...");
-Operation<BinaryData> deployOperation = client.DeployProject(
-    WaitUntil.Completed,
-    projectName,
-    "production",
-    RequestContent.Create(deployData));
+Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
 
 Console.WriteLine("Import complete");
 ```
@@ -145,7 +138,7 @@ Console.WriteLine("Import complete");
 Using the same `importData` definition above, you can make an asynchronous request by calling `ImportProjectAsync`:
 
 ```C# Snippet:ConversationAuthoringClient_ImportProjectAsync
-Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
+Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Completed, projectName, RequestContent.Create(importData));
 
 // Train the model.
 var trainData = new
@@ -155,10 +148,7 @@ var trainData = new
 };
 
 Console.WriteLine($"Training project {projectName}...");
-Operation<BinaryData> trainOperation = await client.TrainAsync(
-    WaitUntil.Completed,
-    projectName,
-    RequestContent.Create(trainData));
+Operation<BinaryData> trainOperation = await client.TrainAsync(WaitUntil.Completed, projectName, RequestContent.Create(trainData));
 
 // Deploy the model.
 var deployData = new
@@ -167,11 +157,7 @@ var deployData = new
 };
 
 Console.WriteLine($"Deploying project {projectName} to production...");
-Operation<BinaryData> deployOperation = await client.DeployProjectAsync(
-    WaitUntil.Completed,
-    projectName,
-    "production",
-    RequestContent.Create(deployData));
+Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
 
 Console.WriteLine("Import complete");
 ```

@@ -6,7 +6,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 {
     public class CallAutomationTestBase
     {
@@ -97,7 +97,6 @@ namespace Azure.Communication.CallAutomation
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
             Assert.AreEqual(TargetId, targetUser.Id);
             Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(Subject, callConnectionProperties.Subject);
             Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackEndpoint.ToString());
         }
     }

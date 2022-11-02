@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         internal static TrackedResourceModificationDetails DeserializeTrackedResourceModificationDetails(JsonElement element)
         {
             Optional<PolicyDetails> policyDetails = default;
-            Optional<string> deploymentId = default;
+            Optional<ResourceIdentifier> deploymentId = default;
             Optional<DateTimeOffset> deploymentTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +32,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (property.NameEquals("deploymentId"))
                 {
-                    deploymentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deploymentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deploymentTime"))

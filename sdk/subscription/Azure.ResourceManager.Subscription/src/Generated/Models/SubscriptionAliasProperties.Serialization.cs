@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createdTime = property.Value.GetDateTimeOffset();
+                    createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("tags"))

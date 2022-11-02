@@ -9,7 +9,6 @@ csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
 require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/eventgrid/resource-manager/readme.md
-tag: package-2022-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -73,7 +72,7 @@ rename-mapping:
   ReadinessState: PartnerTopicReadinessState
   Domain: EventGridDomain
   Domain.properties.disableLocalAuth: IsLocalAuthDisabled
-  Domain.properties.endpoint: EndpointUri
+  Domain.properties.endpoint: Endpoint|Uri
   DomainUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled
   EventSubscriptionUpdateParameters: EventSubscriptionPatch
   EventSubscriptionUpdateParameters.expirationTimeUtc: ExpireOn
@@ -94,14 +93,14 @@ rename-mapping:
   Partner: EventGridPartnerContent
   Partner.authorizationExpirationTimeInUtc: AuthorizationExpireOn
   PartnerNamespace.properties.disableLocalAuth: IsLocalAuthDisabled
-  PartnerNamespace.properties.endpoint: EndpointUri
+  PartnerNamespace.properties.endpoint: Endpoint|Uri
   PartnerNamespace.properties.partnerRegistrationFullyQualifiedId: -|arm-id
   PartnerTopic.properties.expirationTimeIfNotActivatedUtc: ExpireOnIfNotActivated
   SystemTopic.properties.source: -|arm-id
   SystemTopic.properties.metricResourceId: -|uuid
   Topic: EventGridTopic
   Topic.properties.disableLocalAuth: IsLocalAuthDisabled
-  Topic.properties.endpoint: EndpointUri
+  Topic.properties.endpoint: Endpoint|Uri
   TopicUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled
   TopicProvisioningState: EventGridTopicProvisioningState
   TopicTypeInfo: TopicType
@@ -120,13 +119,16 @@ rename-mapping:
   PartnerTopicInfo.azureSubscriptionId: -|uuid
   WebHookEventSubscriptionDestination.properties.azureActiveDirectoryApplicationIdOrUri: UriOrAzureActiveDirectoryApplicationId
   WebHookEventSubscriptionDestination.properties.azureActiveDirectoryTenantId: -|uuid
+  WebHookEventSubscriptionDestination.properties.endpointUrl: Endpoint|Uri
+  WebHookEventSubscriptionDestination.properties.endpointBaseUrl: BaseEndpoint|Uri
+  EventSubscriptionFullUrl.endpointUrl: Endpoint|Uri
 
 directive:
   - from: EventGrid.json
     where: $.paths..parameters[?(@.name=='scope')]
     transform: >
       $['x-ms-skip-url-encoding'] = true;
-  # PrivateEndpointConnection defines enum type but PrivateLinkResources not, should fix it in swagger 
+  # PrivateEndpointConnection defines enum type but PrivateLinkResources not, should fix it in swagger
   - from: EventGrid.json
     where: $.paths..parameters[?(@.name=='parentType')]
     transform: >
@@ -145,5 +147,5 @@ directive:
       $.properties.principalId.readOnly = true;
       $.properties.tenantId.readOnly = true;
     reason: Remove the setter to ensure this type can be replaced by the common type.
-  
+
 ```

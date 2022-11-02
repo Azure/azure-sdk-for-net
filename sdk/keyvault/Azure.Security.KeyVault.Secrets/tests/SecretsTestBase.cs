@@ -272,6 +272,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 new ClientSecretCredentialOptions()
                 {
                     AuthorityHost = new Uri(TestEnvironment.AuthorityHostUrl),
+                    AdditionallyAllowedTenants = { TestEnvironment.TenantId },
                 }
             );
         }

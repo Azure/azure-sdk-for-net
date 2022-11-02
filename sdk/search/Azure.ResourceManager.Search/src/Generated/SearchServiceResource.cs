@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Search/searchServices";
+        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Search
             return GetSearchPrivateEndpointConnections().Get(privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SharedPrivateLinkResources in the SearchService. </summary>
-        /// <returns> An object representing collection of SharedPrivateLinkResources and their operations over a SharedPrivateLinkResource. </returns>
-        public virtual SharedPrivateLinkResourceCollection GetSharedPrivateLinkResources()
+        /// <summary> Gets a collection of SharedSearchServicePrivateLinkResources in the SearchService. </summary>
+        /// <returns> An object representing collection of SharedSearchServicePrivateLinkResources and their operations over a SharedSearchServicePrivateLinkResource. </returns>
+        public virtual SharedSearchServicePrivateLinkResourceCollection GetSharedSearchServicePrivateLinkResources()
         {
-            return GetCachedClient(Client => new SharedPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(Client => new SharedSearchServicePrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SharedPrivateLinkResource>> GetSharedPrivateLinkResourceAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetSharedSearchServicePrivateLinkResourceAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return await GetSharedPrivateLinkResources().GetAsync(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetSharedSearchServicePrivateLinkResources().GetAsync(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SharedPrivateLinkResource> GetSharedPrivateLinkResource(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SharedSearchServicePrivateLinkResource> GetSharedSearchServicePrivateLinkResource(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSharedPrivateLinkResources().Get(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken);
+            return GetSharedSearchServicePrivateLinkResources().Get(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Search
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdminKeyResult>> GetAdminKeyAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceAdminKeyResult>> GetAdminKeyAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.GetAdminKey");
             scope.Start();
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Search
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdminKeyResult> GetAdminKey(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceAdminKeyResult> GetAdminKey(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.GetAdminKey");
             scope.Start();
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="keyKind"> Specifies which key to regenerate. Valid values include &apos;primary&apos; and &apos;secondary&apos;. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdminKeyResult>> RegenerateAdminKeyAsync(AdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceAdminKeyResult>> RegenerateAdminKeyAsync(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.RegenerateAdminKey");
             scope.Start();
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="keyKind"> Specifies which key to regenerate. Valid values include &apos;primary&apos; and &apos;secondary&apos;. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdminKeyResult> RegenerateAdminKey(AdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceAdminKeyResult> RegenerateAdminKey(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.RegenerateAdminKey");
             scope.Start();
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<QueryKey>> CreateQueryKeyAsync(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceQueryKey>> CreateQueryKeyAsync(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<QueryKey> CreateQueryKey(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceQueryKey> CreateQueryKey(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -494,10 +494,10 @@ namespace Azure.ResourceManager.Search
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QueryKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QueryKey> GetQueryKeysBySearchServiceAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SearchServiceQueryKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SearchServiceQueryKey> GetQueryKeysBySearchServiceAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<QueryKey>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SearchServiceQueryKey>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
                 scope.Start();
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Search
                     throw;
                 }
             }
-            async Task<Page<QueryKey>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SearchServiceQueryKey>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
                 scope.Start();
@@ -537,10 +537,10 @@ namespace Azure.ResourceManager.Search
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QueryKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QueryKey> GetQueryKeysBySearchService(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SearchServiceQueryKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SearchServiceQueryKey> GetQueryKeysBySearchService(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<QueryKey> FirstPageFunc(int? pageSizeHint)
+            Page<SearchServiceQueryKey> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
                 scope.Start();
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Search
                     throw;
                 }
             }
-            Page<QueryKey> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SearchServiceQueryKey> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
                 scope.Start();

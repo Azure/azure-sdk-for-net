@@ -24,10 +24,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public RedisData(AzureLocation location, RedisSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Zones = new ChangeTrackingList<string>();
             TenantSettings = new ChangeTrackingDictionary<string, string>();

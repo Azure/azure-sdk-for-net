@@ -243,6 +243,10 @@ namespace Azure.Core.TestFramework
             {
                 await _proxy.Client.StopRecordAsync(RecordingId, Variables, save ? null : "request-response");
             }
+            else if (Mode == RecordedTestMode.Playback && HasRequests)
+            {
+                await _proxy.Client.StopPlaybackAsync(RecordingId);
+            }
         }
 
         public async ValueTask DisposeAsync()

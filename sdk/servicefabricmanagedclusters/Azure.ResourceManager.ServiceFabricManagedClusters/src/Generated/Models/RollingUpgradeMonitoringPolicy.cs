@@ -19,22 +19,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="healthCheckRetryTimeout"> The amount of time to retry health evaluation when the application or cluster is unhealthy before FailureAction is executed. It is interpreted as a string representing an ISO 8601 duration with following format &quot;hh:mm:ss.fff&quot;. </param>
         /// <param name="upgradeTimeout"> The amount of time the overall upgrade has to complete before FailureAction is executed. Cannot be larger than 12 hours. It is interpreted as a string representing an ISO 8601 duration with following format &quot;hh:mm:ss.fff&quot;. </param>
         /// <param name="upgradeDomainTimeout"> The amount of time each upgrade domain has to complete before FailureAction is executed. Cannot be larger than 12 hours. It is interpreted as a string representing an ISO 8601 duration with following format &quot;hh:mm:ss.fff&quot;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="healthCheckRetryTimeout"/>, <paramref name="upgradeTimeout"/> or <paramref name="upgradeDomainTimeout"/> is null. </exception>
-        public RollingUpgradeMonitoringPolicy(FailureAction failureAction, TimeSpan healthCheckWaitDuration, TimeSpan healthCheckStableDuration, string healthCheckRetryTimeout, string upgradeTimeout, string upgradeDomainTimeout)
+        public RollingUpgradeMonitoringPolicy(PolicyViolationCompensationAction failureAction, TimeSpan healthCheckWaitDuration, TimeSpan healthCheckStableDuration, TimeSpan healthCheckRetryTimeout, TimeSpan upgradeTimeout, TimeSpan upgradeDomainTimeout)
         {
-            if (healthCheckRetryTimeout == null)
-            {
-                throw new ArgumentNullException(nameof(healthCheckRetryTimeout));
-            }
-            if (upgradeTimeout == null)
-            {
-                throw new ArgumentNullException(nameof(upgradeTimeout));
-            }
-            if (upgradeDomainTimeout == null)
-            {
-                throw new ArgumentNullException(nameof(upgradeDomainTimeout));
-            }
-
             FailureAction = failureAction;
             HealthCheckWaitDuration = healthCheckWaitDuration;
             HealthCheckStableDuration = healthCheckStableDuration;
@@ -44,16 +30,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> The compensating action to perform when a Monitored upgrade encounters monitoring policy or health policy violations. Invalid indicates the failure action is invalid. Rollback specifies that the upgrade will start rolling back automatically. Manual indicates that the upgrade will switch to UnmonitoredManual upgrade mode. </summary>
-        public FailureAction FailureAction { get; set; }
+        public PolicyViolationCompensationAction FailureAction { get; set; }
         /// <summary> The amount of time to wait after completing an upgrade domain before applying health policies. It is interpreted as a string representing an ISO 8601 duration with following format &quot;hh:mm:ss.fff&quot;. </summary>
         public TimeSpan HealthCheckWaitDuration { get; set; }
         /// <summary> The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. It is interpreted as a string representing an ISO 8601 duration with following format &quot;hh:mm:ss.fff&quot;. </summary>
         public TimeSpan HealthCheckStableDuration { get; set; }
         /// <summary> The amount of time to retry health evaluation when the application or cluster is unhealthy before FailureAction is executed. It is interpreted as a string representing an ISO 8601 duration with following format &quot;hh:mm:ss.fff&quot;. </summary>
-        public string HealthCheckRetryTimeout { get; set; }
+        public TimeSpan HealthCheckRetryTimeout { get; set; }
         /// <summary> The amount of time the overall upgrade has to complete before FailureAction is executed. Cannot be larger than 12 hours. It is interpreted as a string representing an ISO 8601 duration with following format &quot;hh:mm:ss.fff&quot;. </summary>
-        public string UpgradeTimeout { get; set; }
+        public TimeSpan UpgradeTimeout { get; set; }
         /// <summary> The amount of time each upgrade domain has to complete before FailureAction is executed. Cannot be larger than 12 hours. It is interpreted as a string representing an ISO 8601 duration with following format &quot;hh:mm:ss.fff&quot;. </summary>
-        public string UpgradeDomainTimeout { get; set; }
+        public TimeSpan UpgradeDomainTimeout { get; set; }
     }
 }

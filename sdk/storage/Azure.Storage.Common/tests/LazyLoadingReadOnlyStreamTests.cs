@@ -82,7 +82,7 @@ namespace Azure.Storage.Tests
             var readStream = new LazyLoadingReadOnlyStream<int>(
                 downloadMock.Object,
                 propertiesMock.Object,
-                validationOptions: default,
+                transferValidation: default,
                 allowModifications: false,
                 initialLenght: dataSize,
                 position: offset,

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="value">
         /// The Value.
         /// Please note <see cref="DataBoxEdgeRoleAddonData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ArcAddon"/> and <see cref="IotAddon"/>.
+        /// The available derived classes include <see cref="EdgeArcAddon"/> and <see cref="EdgeIotAddon"/>.
         /// </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal AddonList(IReadOnlyList<DataBoxEdgeRoleAddonData> value, string nextLink)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary>
         /// The Value.
         /// Please note <see cref="DataBoxEdgeRoleAddonData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ArcAddon"/> and <see cref="IotAddon"/>.
+        /// The available derived classes include <see cref="EdgeArcAddon"/> and <see cref="EdgeIotAddon"/>.
         /// </summary>
         public IReadOnlyList<DataBoxEdgeRoleAddonData> Value { get; }
         /// <summary> Link to the next set of results. </summary>

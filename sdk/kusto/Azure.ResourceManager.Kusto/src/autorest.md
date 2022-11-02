@@ -9,7 +9,6 @@ csharp: true
 library-name: Kusto
 namespace: Azure.ResourceManager.Kusto
 require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/azure-kusto/resource-manager/readme.md
-tag: package-2022-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -75,7 +74,7 @@ rename-mapping:
   DatabasePrincipalAssignment: KustoDatabasePrincipalAssignment
   DatabasePrincipalAssignmentType: KustoDatabasePrincipalAssignmentType
   DatabasePrincipalAssignment.properties.aadObjectId: -|uuid
-  DatabasePrincipalAssignment.properties.principalId: -|uuid
+  DatabasePrincipalAssignment.properties.principalId: DatabasePrincipalId
   DatabasePrincipalRole: KustoDatabasePrincipalRole
   DatabasePrincipalType: KustoDatabasePrincipalType
   DatabasePrincipal: KustoDatabasePrincipal
@@ -97,10 +96,10 @@ rename-mapping:
   AzureScaleType: KustoScaleType
   AzureSkuName: KustoSkuName
   AzureSkuName.Dev(No SLA)_Standard_D11_v2: DevNoSlaStandardD11V2
-  AzureSkuName.Dev(No SLA)_Standard_E2a_v4: DevNoSlaStandardE2aV4 
+  AzureSkuName.Dev(No SLA)_Standard_E2a_v4: DevNoSlaStandardE2aV4
   AzureSkuName.Standard_D32d_v4: StandardD32dV4
   AzureSkuName.Standard_D16d_v5: StandardD16dV5
-  AzureSkuName.Standard_D32d_v5: StandardD32dV5 
+  AzureSkuName.Standard_D32d_v5: StandardD32dV5
   AzureSkuName.Standard_L4s: StandardL4s
   AzureSkuName.Standard_L8s: StandardL8s
   AzureSkuName.Standard_L16s: StandardL16s

@@ -26,30 +26,12 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expectedValues"/>, <paramref name="upperMargins"/>, <paramref name="lowerMargins"/>, <paramref name="isAnomaly"/>, <paramref name="isNegativeAnomaly"/> or <paramref name="isPositiveAnomaly"/> is null. </exception>
         internal EntireDetectResponse(int period, IEnumerable<float> expectedValues, IEnumerable<float> upperMargins, IEnumerable<float> lowerMargins, IEnumerable<bool> isAnomaly, IEnumerable<bool> isNegativeAnomaly, IEnumerable<bool> isPositiveAnomaly)
         {
-            if (expectedValues == null)
-            {
-                throw new ArgumentNullException(nameof(expectedValues));
-            }
-            if (upperMargins == null)
-            {
-                throw new ArgumentNullException(nameof(upperMargins));
-            }
-            if (lowerMargins == null)
-            {
-                throw new ArgumentNullException(nameof(lowerMargins));
-            }
-            if (isAnomaly == null)
-            {
-                throw new ArgumentNullException(nameof(isAnomaly));
-            }
-            if (isNegativeAnomaly == null)
-            {
-                throw new ArgumentNullException(nameof(isNegativeAnomaly));
-            }
-            if (isPositiveAnomaly == null)
-            {
-                throw new ArgumentNullException(nameof(isPositiveAnomaly));
-            }
+            Argument.AssertNotNull(expectedValues, nameof(expectedValues));
+            Argument.AssertNotNull(upperMargins, nameof(upperMargins));
+            Argument.AssertNotNull(lowerMargins, nameof(lowerMargins));
+            Argument.AssertNotNull(isAnomaly, nameof(isAnomaly));
+            Argument.AssertNotNull(isNegativeAnomaly, nameof(isNegativeAnomaly));
+            Argument.AssertNotNull(isPositiveAnomaly, nameof(isPositiveAnomaly));
 
             Period = period;
             ExpectedValues = expectedValues.ToList();

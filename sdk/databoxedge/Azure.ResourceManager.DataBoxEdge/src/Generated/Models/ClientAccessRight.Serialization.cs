@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal static ClientAccessRight DeserializeClientAccessRight(JsonElement element)
         {
             string client = default;
-            ClientPermissionType accessPermission = default;
+            EdgeClientPermissionType accessPermission = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("client"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("accessPermission"))
                 {
-                    accessPermission = new ClientPermissionType(property.Value.GetString());
+                    accessPermission = new EdgeClientPermissionType(property.Value.GetString());
                     continue;
                 }
             }

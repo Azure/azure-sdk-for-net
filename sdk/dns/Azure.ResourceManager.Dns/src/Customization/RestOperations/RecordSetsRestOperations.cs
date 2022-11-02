@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dns
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordSetData data, ETag? ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordData data, ETag? ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecordSetData>> UpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RecordData>> UpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.Dns
             {
                 case 200:
                     {
-                        RecordSetData value = default;
+                        RecordData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = RecordData.DeserializeRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecordSetData> Update(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<RecordData> Update(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.Dns
             {
                 case 200:
                     {
-                        RecordSetData value = default;
+                        RecordData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = RecordData.DeserializeRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordSetData data, ETag? ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordData data, ETag? ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecordSetData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordSetData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RecordData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                 case 201:
                     {
-                        RecordSetData value = default;
+                        RecordData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = RecordData.DeserializeRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecordSetData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordSetData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<RecordData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, RecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                 case 201:
                     {
-                        RecordSetData value = default;
+                        RecordData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = RecordData.DeserializeRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecordSetData>> GetAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<RecordData>> GetAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -383,13 +383,13 @@ namespace Azure.ResourceManager.Dns
             {
                 case 200:
                     {
-                        RecordSetData value = default;
+                        RecordData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = RecordData.DeserializeRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecordSetData)null, message.Response);
+                    return Response.FromValue((RecordData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecordSetData> Get(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public Response<RecordData> Get(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType recordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -417,13 +417,13 @@ namespace Azure.ResourceManager.Dns
             {
                 case 200:
                     {
-                        RecordSetData value = default;
+                        RecordData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = RecordData.DeserializeRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecordSetData)null, message.Response);
+                    return Response.FromValue((RecordData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

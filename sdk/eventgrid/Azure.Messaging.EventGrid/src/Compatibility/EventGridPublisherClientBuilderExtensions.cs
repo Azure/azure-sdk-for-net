@@ -9,12 +9,12 @@ using Azure.Messaging.EventGrid;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
-    ///    The set of extensions to add the <see cref="EventGridPublisherClient"/> type to the clients builder.
+    /// The set of extensions to add the <see cref="EventGridPublisherClient"/> type to the clients builder.
     /// </summary>
     public static class EventGridPublisherClientBuilderExtensions
     {
         /// <summary>
-        ///   Registers a <see cref="EventGridPublisherClient "/> instance with the provided <see cref="Uri"/> and <see cref="AzureKeyCredential"/>./>.
+        /// Registers an <see cref="EventGridPublisherClient "/> instance with the provided <see cref="Uri"/> and <see cref="AzureKeyCredential"/>./>.
         /// </summary>
         public static IAzureClientBuilder<EventGridPublisherClient, EventGridPublisherClientOptions> AddEventGridPublisherClient<TBuilder>(
             this TBuilder builder,
@@ -24,7 +24,7 @@ namespace Microsoft.Extensions.Azure
             builder.RegisterClientFactory<EventGridPublisherClient, EventGridPublisherClientOptions>(options => new EventGridPublisherClient(endpoint, credential, options));
 
         /// <summary>
-        ///   Registers a <see cref="EventGridPublisherClient "/> instance with the provided <see cref="Uri"/> and <see cref="AzureSasCredential"/>./>.
+        /// Registers an <see cref="EventGridPublisherClient "/> instance with the provided <see cref="Uri"/> and <see cref="AzureSasCredential"/>./>.
         /// </summary>
         public static IAzureClientBuilder<EventGridPublisherClient, EventGridPublisherClientOptions> AddEventGridPublisherClient<TBuilder>(
             this TBuilder builder,
@@ -34,7 +34,16 @@ namespace Microsoft.Extensions.Azure
             builder.RegisterClientFactory<EventGridPublisherClient, EventGridPublisherClientOptions>(options => new EventGridPublisherClient(endpoint, credential, options));
 
         /// <summary>
-        ///   Registers a <see cref="EventGridPublisherClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
+        /// Registers an <see cref="EventGridPublisherClient"/> instance with the provided <see cref="Uri"/>.
+        /// </summary>
+        public static IAzureClientBuilder<EventGridPublisherClient, EventGridPublisherClientOptions> AddEventGridPublisherClient<TBuilder>(this TBuilder builder, Uri endpoint)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<EventGridPublisherClient, EventGridPublisherClientOptions>((options, token) => new EventGridPublisherClient(endpoint, token, options));
+        }
+
+        /// <summary>
+        /// Registers an <see cref="EventGridPublisherClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
         public static IAzureClientBuilder<EventGridPublisherClient, EventGridPublisherClientOptions> AddEventGridPublisherClient<TBuilder, TConfiguration>(
             this TBuilder builder,

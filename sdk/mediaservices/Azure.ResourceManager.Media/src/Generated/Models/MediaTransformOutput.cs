@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="preset"/> is null. </exception>
         public MediaTransformOutput(MediaTransformPreset preset)
         {
-            if (preset == null)
-            {
-                throw new ArgumentNullException(nameof(preset));
-            }
+            Argument.AssertNotNull(preset, nameof(preset));
 
             Preset = preset;
         }
@@ -37,7 +35,7 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
         /// </param>
-        internal MediaTransformOutput(MediaTransformOutputErrorAction? onError, MediaTransformOutputsPriority? relativePriority, MediaTransformPreset preset)
+        internal MediaTransformOutput(MediaTransformOnErrorType? onError, MediaJobPriority? relativePriority, MediaTransformPreset preset)
         {
             OnError = onError;
             RelativePriority = relativePriority;
@@ -45,9 +43,9 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> A Transform can define more than one outputs. This property defines what the service should do when one output fails - either continue to produce other outputs, or, stop the other outputs. The overall Job state will not reflect failures of outputs that are specified with &apos;ContinueJob&apos;. The default is &apos;StopProcessingJob&apos;. </summary>
-        public MediaTransformOutputErrorAction? OnError { get; set; }
+        public MediaTransformOnErrorType? OnError { get; set; }
         /// <summary> Sets the relative priority of the TransformOutputs within a Transform. This sets the priority that the service uses for processing TransformOutputs. The default priority is Normal. </summary>
-        public MediaTransformOutputsPriority? RelativePriority { get; set; }
+        public MediaJobPriority? RelativePriority { get; set; }
         /// <summary>
         /// Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the output.
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

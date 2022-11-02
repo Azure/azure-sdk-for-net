@@ -46,14 +46,22 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="geoReplicatedPrimaryHostName">The unchanging DNS name
+        /// which will always point to current geo-primary cache among the
+        /// linked redis caches for seamless Geo Failover experience.</param>
+        /// <param name="primaryHostName">The changing DNS name that resolves
+        /// to the current geo-primary cache among the linked redis caches
+        /// before or after the Geo Failover.</param>
         /// <param name="provisioningState">Terminal state of the link between
         /// primary and secondary redis cache.</param>
-        public RedisLinkedServerWithProperties(string linkedRedisCacheId, string linkedRedisCacheLocation, ReplicationRole serverRole, string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string))
+        public RedisLinkedServerWithProperties(string linkedRedisCacheId, string linkedRedisCacheLocation, ReplicationRole serverRole, string id = default(string), string name = default(string), string type = default(string), string geoReplicatedPrimaryHostName = default(string), string primaryHostName = default(string), string provisioningState = default(string))
             : base(id, name, type)
         {
             LinkedRedisCacheId = linkedRedisCacheId;
             LinkedRedisCacheLocation = linkedRedisCacheLocation;
             ServerRole = serverRole;
+            GeoReplicatedPrimaryHostName = geoReplicatedPrimaryHostName;
+            PrimaryHostName = primaryHostName;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -81,6 +89,22 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverRole")]
         public ReplicationRole ServerRole { get; set; }
+
+        /// <summary>
+        /// Gets the unchanging DNS name which will always point to current
+        /// geo-primary cache among the linked redis caches for seamless Geo
+        /// Failover experience.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.geoReplicatedPrimaryHostName")]
+        public string GeoReplicatedPrimaryHostName { get; private set; }
+
+        /// <summary>
+        /// Gets the changing DNS name that resolves to the current geo-primary
+        /// cache among the linked redis caches before or after the Geo
+        /// Failover.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.primaryHostName")]
+        public string PrimaryHostName { get; private set; }
 
         /// <summary>
         /// Gets terminal state of the link between primary and secondary redis

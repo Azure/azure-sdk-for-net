@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<ArmPlan> plan = default;
+            Optional<AppServiceArmPlan> plan = default;
             Optional<RemotePrivateEndpointConnection> properties = default;
             Optional<AppServiceSkuDescription> sku = default;
             Optional<string> status = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = ArmPlan.DeserializeArmPlan(property.Value);
+                    plan = AppServiceArmPlan.DeserializeAppServiceArmPlan(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))

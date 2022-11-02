@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public void CreateCommonClient()
         {
-            Client = GetArmClient();
+            Client = GetArmClient(enableDeleteAfter: true);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(AzureLocation location)
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.Media.Tests
             return mediaTransfer.Value;
         }
 
-        protected async Task<LiveEventResource> CreateLiveEvent(MediaServicesAccountResource mediaService, string liveEventName)
+        protected async Task<MediaLiveEventResource> CreateLiveEvent(MediaServicesAccountResource mediaService, string liveEventName)
         {
-            LiveEventData data = new LiveEventData(mediaService.Data.Location)
+            MediaLiveEventData data = new MediaLiveEventData(mediaService.Data.Location)
             {
                 Input = new LiveEventInput(LiveEventInputProtocol.Rtmp),
                 CrossSiteAccessPolicies = new CrossSiteAccessPolicies(),
             };
-            var liveEvent = await mediaService.GetLiveEvents().CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
+            var liveEvent = await mediaService.GetMediaLiveEvents().CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
             return liveEvent.Value;
         }
     }

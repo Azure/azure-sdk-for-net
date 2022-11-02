@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// <param name="range">
         /// Content range to download.
         /// </param>
-        /// <param name="validationOptions">
+        /// <param name="transferValidation">
         /// Optional validation options.
         /// </param>
         /// <param name="async">
@@ -38,7 +38,7 @@ namespace Azure.Storage
         /// </returns>
         public delegate Task<Response<IDownloadedContent>> DownloadInternalAsync(
             HttpRange range,
-            DownloadTransferValidationOptions validationOptions,
+            DownloadTransferValidationOptions transferValidation,
             bool async,
             CancellationToken cancellationToken);
 
@@ -137,7 +137,7 @@ namespace Azure.Storage
         public LazyLoadingReadOnlyStream(
             DownloadInternalAsync downloadInternalFunc,
             GetPropertiesAsync getPropertiesFunc,
-            DownloadTransferValidationOptions validationOptions,
+            DownloadTransferValidationOptions transferValidation,
             bool allowModifications,
             long initialLenght,
             long position = 0,
@@ -157,16 +157,16 @@ namespace Azure.Storage
             _bufferInvalidated = false;
 
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
-            if (!(validationOptions?.AutoValidateChecksum ?? true))
+            if (!(transferValidation?.AutoValidateChecksum ?? true))
             {
                 throw Errors.CannotDeferTransactionalHashVerification();
             }
             // we defer hash validation on download calls to validate in-place with our existing buffer
-            _validationOptions = validationOptions == default
+            _validationOptions = transferValidation == default
                 ? default
                 : new DownloadTransferValidationOptions
                 {
-                    ChecksumAlgorithm = validationOptions.ChecksumAlgorithm,
+                    ChecksumAlgorithm = transferValidation.ChecksumAlgorithm,
                     AutoValidateChecksum = false
                 };
         }

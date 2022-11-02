@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="ipv6Configuration"> The IPv6 configuration of the network adapter. </param>
         /// <param name="ipv6LinkLocalAddress"> The IPv6 local address. </param>
         /// <param name="dnsServers"> The list of DNS Servers of the device. </param>
-        internal DataBoxEdgeNetworkAdapter(string adapterId, NetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, NetworkAdapterStatus? status, NetworkAdapterRdmaStatus? rdmaStatus, NetworkAdapterDhcpStatus? dhcpStatus, IPv4Config ipv4Configuration, IPv6Config ipv6Configuration, string ipv6LinkLocalAddress, IReadOnlyList<string> dnsServers)
+        internal DataBoxEdgeNetworkAdapter(string adapterId, DataBoxEdgeNetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, DataBoxEdgeNetworkAdapterStatus? status, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus, DataBoxEdgeIPv4Config ipv4Configuration, DataBoxEdgeIPv6Config ipv6Configuration, string ipv6LinkLocalAddress, IReadOnlyList<string> dnsServers)
         {
             AdapterId = adapterId;
             AdapterPosition = adapterPosition;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Instance ID of network adapter. </summary>
         public string AdapterId { get; }
         /// <summary> Hardware position of network adapter. </summary>
-        public NetworkAdapterPosition AdapterPosition { get; }
+        public DataBoxEdgeNetworkAdapterPosition AdapterPosition { get; }
         /// <summary> Logical index of the adapter. </summary>
         public int? Index { get; }
         /// <summary> Node ID of the network adapter. </summary>
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Link speed. </summary>
         public long? LinkSpeed { get; }
         /// <summary> Value indicating whether this adapter is valid. </summary>
-        public NetworkAdapterStatus? Status { get; }
+        public DataBoxEdgeNetworkAdapterStatus? Status { get; }
         /// <summary> Value indicating whether this adapter is RDMA capable. </summary>
-        public NetworkAdapterRdmaStatus? RdmaStatus { get; }
+        public DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get; }
         /// <summary> Value indicating whether this adapter has DHCP enabled. </summary>
-        public NetworkAdapterDhcpStatus? DhcpStatus { get; }
+        public DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get; }
         /// <summary> The IPv4 configuration of the network adapter. </summary>
-        public IPv4Config IPv4Configuration { get; }
+        public DataBoxEdgeIPv4Config IPv4Configuration { get; }
         /// <summary> The IPv6 configuration of the network adapter. </summary>
-        public IPv6Config IPv6Configuration { get; }
+        public DataBoxEdgeIPv6Config IPv6Configuration { get; }
         /// <summary> The IPv6 local address. </summary>
         public string IPv6LinkLocalAddress { get; }
         /// <summary> The list of DNS Servers of the device. </summary>

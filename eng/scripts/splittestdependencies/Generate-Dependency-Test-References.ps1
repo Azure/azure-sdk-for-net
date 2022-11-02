@@ -63,6 +63,7 @@ $projGroups = Split-Project-File-To-Groups `
                 -ServiceDirToExclude $ServiceDirectoryToExclude
 
 $projFiles = Write-Test-Dependency-Group-To-Files `
+                -ProjectFileConfigName $ProjectFileConfigName `
                 -ProjectGroups $projGroups `
                 -MatrixOutputFolder $ProjectFilesOutputFolder
 

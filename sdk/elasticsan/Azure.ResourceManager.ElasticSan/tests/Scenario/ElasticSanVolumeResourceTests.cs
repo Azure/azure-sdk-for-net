@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             _collection = await GetVolumeCollection();
             string volumeName = Recording.GenerateAssetName("testvolume-");
             ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, GetDefaultElasticSanVolumeData())).Value;
-            ElasticSanElasticSanVolumePatch patch = new ElasticSanElasticSanVolumePatch()
+            ElasticSanVolumePatch patch = new ElasticSanVolumePatch()
             {
                 SizeGiB = 200
             };

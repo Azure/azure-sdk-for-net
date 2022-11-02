@@ -41,7 +41,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal string DataFlowType { get; set; }
         /// <summary> The description of the data flow. </summary>
         public string Description { get; set; }
-        /// <summary> List of tags that can be used for describing the data flow. </summary>
+        /// <summary>
+        /// List of tags that can be used for describing the data flow.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> Annotations { get; }
         /// <summary> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </summary>
         internal DataFlowFolder Folder { get; set; }

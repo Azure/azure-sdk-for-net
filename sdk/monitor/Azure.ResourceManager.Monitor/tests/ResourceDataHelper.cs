@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 TimeZone = "UTC"
             };
-            var Schedule = new RecurrentSchedule("UTC-11", new[] { "Monday" }, new[] { 0 }, new[] { 10 });
+            var Schedule = new RecurrentSchedule("UTC-11", new MonitorDayOfWeek[] { "Monday" }, new[] { 0 }, new[] { 10 });
             var recurrence = new MonitorRecurrence(RecurrenceFrequency.Week, Schedule);
-            var scaleCapacity = new MonitorScaleCapacity("1", "1", "1");
+            var scaleCapacity = new MonitorScaleCapacity(1, 1, 1);
             var metricTrigger = new MetricTrigger("AbandonMessage", new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), MetricTriggerTimeAggregationType.Average, MetricTriggerComparisonOperation.GreaterThan, 70)
             {
                 MetricNamespace = "microsoft.servicebus/namespaces",

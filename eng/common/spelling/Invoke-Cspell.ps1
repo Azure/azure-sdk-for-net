@@ -84,7 +84,7 @@ if (!(Test-Path $CSpellConfigPath)) {
 
 function Test-VersionReportMatches() {
   # Arrange
-  $expectedPackageVersion = '5.12.3'
+  $expectedPackageVersion = '6.12.0'
 
   # Act
   $actual = &"$PSSCriptRoot/Invoke-Cspell.ps1" `

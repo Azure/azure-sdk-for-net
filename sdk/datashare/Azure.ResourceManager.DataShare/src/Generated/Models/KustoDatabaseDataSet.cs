@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="kustoDatabaseResourceId"/> is null. </exception>
         public KustoDatabaseDataSet(ResourceIdentifier kustoDatabaseResourceId)
         {
-            if (kustoDatabaseResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(kustoDatabaseResourceId));
-            }
+            Argument.AssertNotNull(kustoDatabaseResourceId, nameof(kustoDatabaseResourceId));
 
             KustoDatabaseResourceId = kustoDatabaseResourceId;
             Kind = DataSetKind.KustoDatabase;

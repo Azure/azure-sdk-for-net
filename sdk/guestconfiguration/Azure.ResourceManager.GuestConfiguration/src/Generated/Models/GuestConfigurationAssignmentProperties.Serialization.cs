@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<DateTimeOffset?> lastComplianceStatusChecked = default;
             Optional<ResourceIdentifier> latestReportId = default;
             Optional<string> parameterHash = default;
-            Optional<AssignmentReport> latestAssignmentReport = default;
+            Optional<GuestConfigurationAssignmentReportInfo> latestAssignmentReport = default;
             Optional<string> context = default;
             Optional<string> assignmentHash = default;
             Optional<GuestConfigurationProvisioningState?> provisioningState = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    latestAssignmentReport = AssignmentReport.DeserializeAssignmentReport(property.Value);
+                    latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("context"))

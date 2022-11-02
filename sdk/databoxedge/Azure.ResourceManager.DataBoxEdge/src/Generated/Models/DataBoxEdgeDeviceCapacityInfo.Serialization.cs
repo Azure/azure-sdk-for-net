@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> timeStamp = default;
-            Optional<ClusterStorageViewData> clusterStorageCapacityInfo = default;
-            Optional<ClusterCapacityViewData> clusterComputeCapacityInfo = default;
+            Optional<EdgeClusterStorageViewInfo> clusterStorageCapacityInfo = default;
+            Optional<EdgeClusterCapacityViewInfo> clusterComputeCapacityInfo = default;
             Optional<IDictionary<string, HostCapacity>> nodeCapacityInfos = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterStorageCapacityInfo = ClusterStorageViewData.DeserializeClusterStorageViewData(property0.Value);
+                            clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterComputeCapacityInfo"))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterComputeCapacityInfo = ClusterCapacityViewData.DeserializeClusterCapacityViewData(property0.Value);
+                            clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("nodeCapacityInfos"))

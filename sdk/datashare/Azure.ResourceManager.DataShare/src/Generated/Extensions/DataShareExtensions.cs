@@ -67,34 +67,6 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Lists invitations
-        /// Request Path: /providers/Microsoft.DataShare/listInvitations
-        /// Operation Id: ConsumerInvitations_ListInvitations
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="skipToken"> The continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataShareConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataShareConsumerInvitationResource> GetConsumerInvitationsAsync(this TenantResource tenantResource, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetConsumerInvitationsAsync(skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists invitations
-        /// Request Path: /providers/Microsoft.DataShare/listInvitations
-        /// Operation Id: ConsumerInvitations_ListInvitations
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="skipToken"> The continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataShareConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataShareConsumerInvitationResource> GetConsumerInvitations(this TenantResource tenantResource, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetConsumerInvitations(skipToken, cancellationToken);
-        }
-
-        /// <summary>
         /// Reject an invitation
         /// Request Path: /providers/Microsoft.DataShare/locations/{location}/rejectInvitation
         /// Operation Id: ConsumerInvitations_RejectInvitation

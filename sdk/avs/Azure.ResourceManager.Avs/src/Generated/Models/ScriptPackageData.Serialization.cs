@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -30,6 +31,8 @@ namespace Azure.ResourceManager.Avs
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> version = default;
+            Optional<string> company = default;
+            Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -76,11 +79,26 @@ namespace Azure.ResourceManager.Avs
                             version = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("company"))
+                        {
+                            company = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("uri"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                uri = null;
+                                continue;
+                            }
+                            uri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ScriptPackageData(id, name, type, systemData.Value, description.Value, version.Value);
+            return new ScriptPackageData(id, name, type, systemData.Value, description.Value, version.Value, company.Value, uri.Value);
         }
     }
 }

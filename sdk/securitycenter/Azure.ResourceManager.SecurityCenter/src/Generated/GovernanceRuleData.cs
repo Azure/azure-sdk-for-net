@@ -69,7 +69,36 @@ namespace Azure.ResourceManager.SecurityCenter
         public GovernanceRuleType? RuleType { get; set; }
         /// <summary> The governance rule source, what the rule affects, e.g. Assessments. </summary>
         public GovernanceRuleSourceResourceType? SourceResourceType { get; set; }
-        /// <summary> The governance rule conditionSets - see examples. </summary>
+        /// <summary>
+        /// The governance rule conditionSets - see examples
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> ConditionSets { get; }
         /// <summary> The Owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </summary>
         public GovernanceRuleOwnerSource OwnerSource { get; set; }

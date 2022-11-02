@@ -911,7 +911,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Assert.True(gremlinGraphsList[1].Resource.OwnerId == "graph2");
                     Assert.True(gremlinGraphsList[1].Resource.OperationType == "Create");
 
-                    IEnumerable<GremlinDatabaseRestoreResource> gremlinResources = cosmosDBManagementClient.RestorableGremlinResources.List(this.fixture.Location, gremlinAccountInstanceId, this.fixture.Location, DateTime.UtcNow.ToString());
+                    IEnumerable<RestorableGremlinResourcesGetResult> gremlinResources = cosmosDBManagementClient.RestorableGremlinResources.List(this.fixture.Location, gremlinAccountInstanceId, this.fixture.Location, DateTime.UtcNow.ToString());
                     Assert.NotNull(gremlinResources);
                     Assert.True(gremlinResources.Count() == 2);
 
@@ -1041,7 +1041,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Assert.True(mongodbCollectionsList[1].Resource.OwnerId == "col2");
                     Assert.True(mongodbCollectionsList[1].Resource.OperationType == "Create");
 
-                    IEnumerable<DatabaseRestoreResource> mongoDBRestorableResources = cosmosDBManagementClient.RestorableMongodbResources.List(location, mongoDBAccountInstanceId, location, DateTime.UtcNow.ToString());
+                    IEnumerable<RestorableMongodbResourcesGetResult> mongoDBRestorableResources = cosmosDBManagementClient.RestorableMongodbResources.List(location, mongoDBAccountInstanceId, location, DateTime.UtcNow.ToString());
                     Console.WriteLine(JsonConvert.SerializeObject(mongoDBRestorableResources));
 
                     Assert.NotNull(mongoDBRestorableResources);
@@ -1185,7 +1185,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Assert.True(sqlContainersList[1].Resource.OwnerId == "cont2");
                     Assert.True(sqlContainersList[1].Resource.OperationType == "Create");
 
-                    IEnumerable<DatabaseRestoreResource> sqlResources = cosmosDBManagementClient.RestorableSqlResources.List(this.fixture.Location, sqlAccountInstanceId, this.fixture.Location, DateTime.UtcNow.ToString());
+                    IEnumerable<RestorableSqlResourcesGetResult> sqlResources = cosmosDBManagementClient.RestorableSqlResources.List(this.fixture.Location, sqlAccountInstanceId, this.fixture.Location, DateTime.UtcNow.ToString());
                     Assert.NotNull(sqlResources);
                     Assert.True(sqlResources.Count() == 2);
 

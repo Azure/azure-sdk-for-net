@@ -690,7 +690,8 @@ namespace Azure.AI.TextAnalytics
                     ConvertToDocumentStatistics(documentHealthcareEntities.Statistics),
                     ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities),
                     ConvertToHealthcareEntityRelationsCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
-                    ConvertToWarnings(documentHealthcareEntities.Warnings)));
+                    ConvertToWarnings(documentHealthcareEntities.Warnings),
+                    default));
             }
 
             healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
@@ -704,8 +705,9 @@ namespace Azure.AI.TextAnalytics
             foreach (var relation in healthcareRelations)
             {
                 result.Add(new HealthcareEntityRelation(
-                                    relation.RelationType.ToString(),
-                                    ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities)));
+                    relation.RelationType.ToString(),
+                    ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities),
+                    default));
             }
             return result;
         }

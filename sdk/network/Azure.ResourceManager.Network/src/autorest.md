@@ -123,7 +123,7 @@ format-by-name-rules:
   'validatedCertData': 'any'
   'publicCertData': 'any'
   '*Guid': 'uuid'
-  '*Time': 'datetime'
+  '*Time': 'date-time'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 

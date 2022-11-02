@@ -12,7 +12,7 @@ namespace Azure.Monitor.Ingestion
     /// </summary>
     public class UploadLogsError
     {
-        internal UploadLogsError(ResponseError error, IEnumerable<Object> failedLogs)
+        internal UploadLogsError(ResponseError error, IReadOnlyList<BinaryData> failedLogs)
         {
             Argument.AssertNotNull(failedLogs, nameof(failedLogs));
             Error = error;
@@ -22,7 +22,7 @@ namespace Azure.Monitor.Ingestion
         /// <summary>
         ///  List of logs that failed to upload.
         /// </summary>
-        public IEnumerable<Object> FailedLogs { get; }
+        public IReadOnlyList<BinaryData> FailedLogs { get; }
 
         /// <summary>
         /// The response error containing the error details returned by the service.

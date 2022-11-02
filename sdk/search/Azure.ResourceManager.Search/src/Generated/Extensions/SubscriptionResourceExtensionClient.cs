@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Search
         private ClientDiagnostics SearchServiceServicesClientDiagnostics => _searchServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
         private ServicesRestOperations SearchServiceServicesRestClient => _searchServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SearchServiceResource.ResourceType));
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.Search
         /// <param name="content"> The resource name and type to check. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityServiceAsync(CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSearchServiceNameAvailability");
             scope.Start();
             try
             {
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Search
         /// <param name="content"> The resource name and type to check. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityOutput> CheckNameAvailabilityService(CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSearchServiceNameAvailability");
             scope.Start();
             try
             {

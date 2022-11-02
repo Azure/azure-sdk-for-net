@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// A Class representing an IotSecuritySolutionAnalyticsModel along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotSecuritySolutionAnalyticsModelResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetIotSecuritySolutionAnalyticsModelResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionModelResource" /> using the GetIotSecuritySolutionAnalyticsModel method.
+    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionResource" /> using the GetIotSecuritySolutionAnalyticsModel method.
     /// </summary>
     public partial class IotSecuritySolutionAnalyticsModelResource : ArmResource
     {

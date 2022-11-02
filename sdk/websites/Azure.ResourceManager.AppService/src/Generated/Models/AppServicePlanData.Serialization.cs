@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("spotExpirationTime");
                 }
             }
-            if (Optional.IsDefined(FreeOfferExpiredOn))
+            if (Optional.IsDefined(FreeOfferExpireOn))
             {
-                if (FreeOfferExpiredOn != null)
+                if (FreeOfferExpireOn != null)
                 {
                     writer.WritePropertyName("freeOfferExpirationTime");
-                    writer.WriteStringValue(FreeOfferExpiredOn.Value, "O");
+                    writer.WriteStringValue(FreeOfferExpireOn.Value, "O");
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> workerTierName = default;
-            Optional<StatusOption> status = default;
+            Optional<AppServicePlanStatus> status = default;
             Optional<string> subscription = default;
             Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
             Optional<int> maximumNumberOfWorkers = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToStatusOption();
+                            status = property0.Value.GetString().ToAppServicePlanStatus();
                             continue;
                         }
                         if (property0.NameEquals("subscription"))

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> displayName = default;
             Optional<string> languageCode = default;
             Optional<HlsSettings> hlsSettings = default;
-            Optional<DashSettings> dashSettings = default;
+            Optional<TrackDashSettings> dashSettings = default;
             Optional<int?> mpeg4TrackId = default;
             Optional<int> bitRate = default;
             string odataType = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dashSettings = DashSettings.DeserializeDashSettings(property.Value);
+                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mpeg4TrackId"))

@@ -1,6 +1,6 @@
 # Release History
 
-## 4.4.0-beta.1 (Unreleased)
+## 4.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.4.0 (2022-09-20)
+
+### Breaking Changes
+
+- Verify the challenge resource matches the vault domain.
+  This should affect few customers who can set `CertificateClientOptions.DisableChallengeResourceVerification` to `true` to disable.
+  See https://aka.ms/azsdk/blog/vault-uri for more information.
 
 ## 4.3.0 (2022-03-24)
 

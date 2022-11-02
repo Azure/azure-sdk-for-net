@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
         public MonitorDimension(string name, MonitorDimensionOperator @operator, IEnumerable<string> values)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(values, nameof(values));
 
             Name = name;
             Operator = @operator;

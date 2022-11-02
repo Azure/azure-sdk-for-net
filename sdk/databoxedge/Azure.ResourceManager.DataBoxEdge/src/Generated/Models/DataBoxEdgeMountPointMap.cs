@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
         public DataBoxEdgeMountPointMap(ResourceIdentifier shareId)
         {
-            if (shareId == null)
-            {
-                throw new ArgumentNullException(nameof(shareId));
-            }
+            Argument.AssertNotNull(shareId, nameof(shareId));
 
             ShareId = shareId;
         }
@@ -32,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="mountPoint"> Mount point for the share. </param>
         /// <param name="mountType"> Mounting type. </param>
         /// <param name="roleType"> Role type. </param>
-        internal DataBoxEdgeMountPointMap(ResourceIdentifier shareId, ResourceIdentifier roleId, string mountPoint, DataBoxEdgeMountType? mountType, RoleType? roleType)
+        internal DataBoxEdgeMountPointMap(ResourceIdentifier shareId, ResourceIdentifier roleId, string mountPoint, DataBoxEdgeMountType? mountType, DataBoxEdgeRoleType? roleType)
         {
             ShareId = shareId;
             RoleId = roleId;
@@ -50,6 +47,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Mounting type. </summary>
         public DataBoxEdgeMountType? MountType { get; }
         /// <summary> Role type. </summary>
-        public RoleType? RoleType { get; }
+        public DataBoxEdgeRoleType? RoleType { get; }
     }
 }
