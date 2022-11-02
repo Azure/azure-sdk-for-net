@@ -31,16 +31,19 @@ namespace Azure.AI.TextAnalytics.Tests
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
-        protected TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default, bool useTokenCredential = default)
-            => GetClient(out _, credential, options, useTokenCredential);
+        protected TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default, bool useTokenCredential = default, bool useStaticResource = default)
+            => GetClient(out _, credential, options, useTokenCredential, useStaticResource);
 
         public TextAnalyticsClient GetClient(
             out TextAnalyticsClient nonInstrumentedClient,
             AzureKeyCredential credential = default,
             TextAnalyticsClientOptions options = default,
-            bool useTokenCredential = default)
+            bool useTokenCredential = default,
+            bool useStaticResource = default)
         {
-            var endpoint = new Uri(TestEnvironment.Endpoint);
+            Uri endpoint = useStaticResource
+                ? new(TestEnvironment.StaticEndpoint)
+                : new(TestEnvironment.Endpoint);
             options ??= new TextAnalyticsClientOptions(ServiceVersion);
 
             // While we use a persistent resource for live tests, we need to increase our retries.
@@ -54,7 +57,9 @@ namespace Azure.AI.TextAnalytics.Tests
             }
             else
             {
-                credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
+                credential ??= useStaticResource
+                    ? new AzureKeyCredential(TestEnvironment.StaticApiKey)
+                    : new AzureKeyCredential(TestEnvironment.ApiKey);
                 nonInstrumentedClient = new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options));
             }
             return InstrumentClient(nonInstrumentedClient);

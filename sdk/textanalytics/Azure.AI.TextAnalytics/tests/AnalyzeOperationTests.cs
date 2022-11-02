@@ -310,7 +310,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Ignore("issue: results in an internal server error | bug link: https://dev.azure.com/msazure/Cognitive%20Services/_workitems/edit/12413250")]
         public async Task AnalyzeOperationWithMultipleActionsOfSameType()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             var batchDocuments = new List<TextDocumentInput>
             {
@@ -878,7 +878,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TestDiagnostics = false;
 
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new()
             {
@@ -898,7 +898,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TestDiagnostics = false;
 
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new()
             {
@@ -918,7 +918,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TestDiagnostics = false;
 
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new()
             {
