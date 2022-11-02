@@ -238,20 +238,23 @@ namespace Azure.Data.AppConfiguration
                 var newFilters = new ObservableCollection<FeatureFlagFilter>();
                 if (conditionsProperty.TryGetProperty("client_filters", out var clientFiltersProperty))
                 {
-                    foreach (var clientFilter in clientFiltersProperty.EnumerateArray())
+                    if (clientFiltersProperty.ValueKind != JsonValueKind.Null)
                     {
-                        if (!clientFilter.TryGetProperty("name", out var filterNameProperty))
+                        foreach (var clientFilter in clientFiltersProperty.EnumerateArray())
                         {
-                            return false;
-                        }
+                            if (!clientFilter.TryGetProperty("name", out var filterNameProperty))
+                            {
+                                return false;
+                            }
 
-                        Dictionary<string, object> value = null;
-                        if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
-                        {
-                            value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
-                        }
+                            Dictionary<string, object> value = null;
+                            if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
+                            {
+                                value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
+                            }
 
-                        newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
+                            newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
+                        }
                     }
                 }
 
