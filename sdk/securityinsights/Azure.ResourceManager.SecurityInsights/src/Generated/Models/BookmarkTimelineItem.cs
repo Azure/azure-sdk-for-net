@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/> is null. </exception>
         internal BookmarkTimelineItem(string azureResourceId)
         {
-            if (azureResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(azureResourceId));
-            }
+            Argument.AssertNotNull(azureResourceId, nameof(azureResourceId));
 
             AzureResourceId = azureResourceId;
             Labels = new ChangeTrackingList<string>();

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -21,18 +22,9 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/>, <paramref name="sku"/> or <paramref name="adminUser"/> is null. </exception>
         public LabVirtualMachineProfile(LabVirtualMachineCreateOption createOption, LabVirtualMachineImageReference imageReference, LabServicesSku sku, TimeSpan usageQuota, LabVirtualMachineCredential adminUser)
         {
-            if (imageReference == null)
-            {
-                throw new ArgumentNullException(nameof(imageReference));
-            }
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (adminUser == null)
-            {
-                throw new ArgumentNullException(nameof(adminUser));
-            }
+            Argument.AssertNotNull(imageReference, nameof(imageReference));
+            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(adminUser, nameof(adminUser));
 
             CreateOption = createOption;
             ImageReference = imageReference;

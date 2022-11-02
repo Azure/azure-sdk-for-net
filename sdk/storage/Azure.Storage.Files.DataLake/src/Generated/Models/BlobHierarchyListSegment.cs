@@ -20,10 +20,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
         internal BlobHierarchyListSegment(IEnumerable<BlobItemInternal> blobItems)
         {
-            if (blobItems == null)
-            {
-                throw new ArgumentNullException(nameof(blobItems));
-            }
+            Argument.AssertNotNull(blobItems, nameof(blobItems));
 
             BlobPrefixes = new ChangeTrackingList<BlobPrefix>();
             BlobItems = blobItems.ToList();

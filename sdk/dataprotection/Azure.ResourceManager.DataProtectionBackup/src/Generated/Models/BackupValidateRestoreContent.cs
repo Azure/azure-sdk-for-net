@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequestObject"/> is null. </exception>
         public BackupValidateRestoreContent(BackupRestoreContent restoreRequestObject)
         {
-            if (restoreRequestObject == null)
-            {
-                throw new ArgumentNullException(nameof(restoreRequestObject));
-            }
+            Argument.AssertNotNull(restoreRequestObject, nameof(restoreRequestObject));
 
             RestoreRequestObject = restoreRequestObject;
         }

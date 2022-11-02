@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="contents"> The contents of the ARM template. </param>
         /// <param name="createdOn"> The creation date of the armTemplate. </param>
         /// <param name="parametersValueFilesInfo"> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </param>
-        /// <param name="enabled"> Whether or not ARM template is enabled for use by lab user. </param>
-        internal DevTestLabArmTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string description, string publisher, string icon, BinaryData contents, DateTimeOffset? createdOn, IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? enabled) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="isEnabled"> Whether or not ARM template is enabled for use by lab user. </param>
+        internal DevTestLabArmTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string description, string publisher, string icon, BinaryData contents, DateTimeOffset? createdOn, IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? isEnabled) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
             Description = description;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Contents = contents;
             CreatedOn = createdOn;
             ParametersValueFilesInfo = parametersValueFilesInfo;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> The display name of the ARM template. </summary>
@@ -94,6 +94,6 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </summary>
         public IReadOnlyList<DevTestLabParametersValueFileInfo> ParametersValueFilesInfo { get; }
         /// <summary> Whether or not ARM template is enabled for use by lab user. </summary>
-        public bool? Enabled { get; }
+        public bool? IsEnabled { get; }
     }
 }

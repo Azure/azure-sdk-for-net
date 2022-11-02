@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Telemetry will now use a parent activity instead of links when the event processor is configured to use a `eventBatchMaximumCount` of 1.
+
 ### Other Changes
 
 - Adjusted the frequency that a warning logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.

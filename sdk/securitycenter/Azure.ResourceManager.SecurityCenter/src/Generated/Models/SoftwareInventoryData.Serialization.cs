@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -59,10 +60,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("numberOfKnownVulnerabilities");
                 writer.WriteNumberValue(NumberOfKnownVulnerabilities.Value);
             }
-            if (Optional.IsDefined(FirstSeenAt))
+            if (Optional.IsDefined(FirstSeenOn))
             {
                 writer.WritePropertyName("firstSeenAt");
-                writer.WriteStringValue(FirstSeenAt);
+                writer.WriteStringValue(FirstSeenOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<EndOfSupportStatus> endOfSupportStatus = default;
             Optional<string> endOfSupportDate = default;
             Optional<int> numberOfKnownVulnerabilities = default;
-            Optional<string> firstSeenAt = default;
+            Optional<DateTimeOffset> firstSeenAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -171,14 +172,19 @@ namespace Azure.ResourceManager.SecurityCenter
                         }
                         if (property0.NameEquals("firstSeenAt"))
                         {
-                            firstSeenAt = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            firstSeenAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SoftwareInventoryData(id, name, type, systemData.Value, deviceId.Value, osPlatform.Value, vendor.Value, softwareName.Value, version.Value, Optional.ToNullable(endOfSupportStatus), endOfSupportDate.Value, Optional.ToNullable(numberOfKnownVulnerabilities), firstSeenAt.Value);
+            return new SoftwareInventoryData(id, name, type, systemData.Value, deviceId.Value, osPlatform.Value, vendor.Value, softwareName.Value, version.Value, Optional.ToNullable(endOfSupportStatus), endOfSupportDate.Value, Optional.ToNullable(numberOfKnownVulnerabilities), Optional.ToNullable(firstSeenAt));
         }
     }
 }

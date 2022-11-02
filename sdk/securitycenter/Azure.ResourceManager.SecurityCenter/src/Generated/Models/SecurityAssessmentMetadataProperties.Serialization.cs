@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<ImplementationEffort> implementationEffort = default;
             Optional<IList<SecurityThreat>> threats = default;
             Optional<bool> preview = default;
-            AssessmentType assessmentType = default;
+            SecurityAssessmentType assessmentType = default;
             Optional<SecurityAssessmentMetadataPartner> partnerData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("assessmentType"))
                 {
-                    assessmentType = new AssessmentType(property.Value.GetString());
+                    assessmentType = new SecurityAssessmentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("partnerData"))

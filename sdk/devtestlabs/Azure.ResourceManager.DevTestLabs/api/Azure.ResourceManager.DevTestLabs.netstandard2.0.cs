@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public bool? Enabled { get { throw null; } }
         public string Icon { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo> ParametersValueFilesInfo { get { throw null; } }
         public string Publisher { get { throw null; } }
     }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string SecurityToken { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType? SourceType { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
         public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class DevTestLabArtifactSourceResource : Azure.ResourceManager.ArmResource
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost> ResourceCosts { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost TargetCost { get { throw null; } set { } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabCostResource : Azure.ResourceManager.ArmResource
     {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ManagedImageId { get { throw null; } set { } }
         public string ManagedSnapshotId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd Vhd { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm Vm { get { throw null; } set { } }
     }
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ProvisioningState { get { throw null; } }
         public string PublicIPId { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport Support { get { throw null; } set { } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
         public string VaultName { get { throw null; } }
         public string VmCreationResourceGroup { get { throw null; } }
     }
@@ -318,11 +318,11 @@ namespace Azure.ResourceManager.DevTestLabs
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? DiskType { get { throw null; } set { } }
         public System.Uri DiskUri { get { throw null; } set { } }
         public string HostCaching { get { throw null; } set { } }
-        public string LeasedByLabVmId { get { throw null; } set { } }
-        public string ManagedDiskId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ManagedDiskId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string StorageAccountId { get { throw null; } set { } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabDiskResource : Azure.ResourceManager.ArmResource
     {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment DeploymentProperties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string ResourceGroupId { get { throw null; } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabEnvironmentResource : Azure.ResourceManager.ArmResource
     {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string LabVmId { get { throw null; } set { } }
         public string OSType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabFormulaResource : Azure.ResourceManager.ArmResource
     {
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> Events { get { throw null; } }
         public string NotificationLocale { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
         public System.Uri WebHookUri { get { throw null; } set { } }
     }
     public partial class DevTestLabNotificationChannelResource : Azure.ResourceManager.ArmResource
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus? Status { get { throw null; } set { } }
         public string Threshold { get { throw null; } set { } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string TargetResourceId { get { throw null; } set { } }
         public string TaskType { get { throw null; } set { } }
         public string TimeZoneId { get { throw null; } set { } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails WeeklyRecurrence { get { throw null; } set { } }
     }
     public partial class DevTestLabScheduleResource : Azure.ResourceManager.DevTestLabs.BaseDevTestLabScheduleResource
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.DevTestLabs
     {
         public DevTestLabSecretData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ProvisioningState { get { throw null; } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
         public string Value { get { throw null; } set { } }
     }
     public partial class DevTestLabSecretResource : Azure.ResourceManager.ArmResource
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string EnvironmentId { get { throw null; } set { } }
         public string ExternalServiceFabricId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabServiceFabricResource : Azure.ResourceManager.ArmResource
     {
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity Identity { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore SecretStore { get { throw null; } set { } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabUserResource : Azure.ResourceManager.ArmResource
     {
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet> ExternalSubnets { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride> SubnetOverrides { get { throw null; } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabVirtualNetworkResource : Azure.ResourceManager.ArmResource
     {
@@ -1056,12 +1056,12 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string CustomImageId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties> DataDiskParameters { get { throw null; } }
+        public bool? DisallowPublicIPAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier EnvironmentId { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference GalleryImageReference { get { throw null; } set { } }
         public bool? IsAuthenticationWithSshKey { get { throw null; } set { } }
-        public bool? IsPublicIPAddressDisallowed { get { throw null; } set { } }
         public string LabSubnetName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LabVirtualNetworkId { get { throw null; } set { } }
         public string LastKnownPowerState { get { throw null; } }
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string Size { get { throw null; } set { } }
         public string SshKey { get { throw null; } set { } }
         public string StorageType { get { throw null; } set { } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
         public string UserName { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? VmCreationSource { get { throw null; } }
     }
@@ -1215,12 +1215,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabAnnouncement() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Enabled { get { throw null; } set { } }
-        public bool? Expired { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public bool? IsExpired { get { throw null; } set { } }
         public string Markdown { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Title { get { throw null; } set { } }
-        public string UniqueIdentifier { get { throw null; } }
+        public System.Guid? UniqueIdentifier { get { throw null; } }
     }
     public partial class DevTestLabApplicableSchedule : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -1363,8 +1363,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabCustomImageVhd(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType osType) { }
         public string ImageName { get { throw null; } set { } }
+        public bool? IsSysPrepEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType OSType { get { throw null; } set { } }
-        public bool? SysPrep { get { throw null; } set { } }
     }
     public partial class DevTestLabCustomImageVm
     {
@@ -1862,7 +1862,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabStorageType(string value) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType Premium { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType Standard { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType StandardSSD { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType StandardSsd { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2004,7 +2004,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference GalleryImageReference { get { throw null; } set { } }
         public bool? IsAuthenticationWithSshKey { get { throw null; } set { } }
         public string LabSubnetName { get { throw null; } set { } }
-        public string LabVirtualNetworkId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LabVirtualNetworkId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface NetworkInterface { get { throw null; } set { } }
@@ -2042,7 +2042,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabVmDetachDataDiskContent
     {
         public DevTestLabVmDetachDataDiskContent() { }
-        public string ExistingLabDiskId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ExistingLabDiskId { get { throw null; } set { } }
     }
     public partial class DevTestLabVmPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
     {

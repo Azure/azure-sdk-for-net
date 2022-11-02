@@ -4,14 +4,10 @@
 #nullable disable
 
 using System;
-using System.Globalization;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
@@ -24,8 +20,8 @@ namespace Azure.ResourceManager.PolicyInsights
         private ClientDiagnostics _policyStatesClientDiagnostics;
         private PolicyStatesRestOperations _policyStatesRestClient;
 
-        private static ResourceType _subscription = new ResourceType("Microsoft.Resources/subscriptions");
-        private static ResourceType _resourceGroup = new ResourceType("Microsoft.Resources/resourceGroups");
+        private static readonly ResourceType _subscription = new ResourceType("Microsoft.Resources/subscriptions");
+        private static readonly ResourceType _resourceGroup = new ResourceType("Microsoft.Resources/resourceGroups");
 
         /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentResourceExtensionClient"/> class for mocking. </summary>
         protected PolicyAssignmentResourceExtensionClient()

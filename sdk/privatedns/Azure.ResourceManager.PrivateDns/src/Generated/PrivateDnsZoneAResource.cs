@@ -6,34 +6,194 @@
 #nullable disable
 
 using System;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.PrivateDns.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PrivateDns
 {
+<<<<<<<< HEAD:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/RecordSetResource.cs
+    /// <summary> This is the base client representation of the following resources <see cref="PrivateDnsZoneAResource" />, <see cref="PrivateDnsZoneAAAAResource" />, <see cref="PrivateDnsZoneCNAMEResource" />, <see cref="PrivateDnsZoneMXResource" />, <see cref="PrivateDnsZonePTRResource" />, <see cref="PrivateDnsZoneSOAResource" />, <see cref="PrivateDnsZoneSRVResource" /> or <see cref="PrivateDnsZoneTXTResource" />. </summary>
+    public abstract partial class RecordSetResource : ArmResource
+    {
+        internal static RecordSetResource GetResource(ArmClient client, RecordSetData data)
+========
     /// <summary>
     /// A Class representing a PrivateDnsZoneA along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateDnsZoneAResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetPrivateDnsZoneAResource method.
     /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetPrivateDnsZoneA method.
     /// </summary>
-    public partial class PrivateDnsZoneAResource : RecordSetResource
+    public partial class PrivateDnsZoneAResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateDnsZoneAResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string relativeRecordSetName)
+>>>>>>>> origin/main:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/PrivateDnsZoneAResource.cs
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/A/{relativeRecordSetName}";
-            return new ResourceIdentifier(resourceId);
+            if (IsPrivateDnsZoneAResource(data.Id))
+            {
+                return new PrivateDnsZoneAResource(client, data);
+            }
+            if (IsPrivateDnsZoneAAAAResource(data.Id))
+            {
+                return new PrivateDnsZoneAAAAResource(client, data);
+            }
+            if (IsPrivateDnsZoneCNAMEResource(data.Id))
+            {
+                return new PrivateDnsZoneCNAMEResource(client, data);
+            }
+            if (IsPrivateDnsZoneMXResource(data.Id))
+            {
+                return new PrivateDnsZoneMXResource(client, data);
+            }
+            if (IsPrivateDnsZonePTRResource(data.Id))
+            {
+                return new PrivateDnsZonePTRResource(client, data);
+            }
+            if (IsPrivateDnsZoneSOAResource(data.Id))
+            {
+                return new PrivateDnsZoneSOAResource(client, data);
+            }
+            if (IsPrivateDnsZoneSRVResource(data.Id))
+            {
+                return new PrivateDnsZoneSRVResource(client, data);
+            }
+            if (IsPrivateDnsZoneTXTResource(data.Id))
+            {
+                return new PrivateDnsZoneTXTResource(client, data);
+            }
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: PrivateDnsZoneAResource, PrivateDnsZoneAAAAResource, PrivateDnsZoneCNAMEResource, PrivateDnsZoneMXResource, PrivateDnsZonePTRResource, PrivateDnsZoneSOAResource, PrivateDnsZoneSRVResource or PrivateDnsZoneTXTResource");
         }
 
+        private static bool IsPrivateDnsZoneAResource(ResourceIdentifier id)
+        {
+            // checking the resource type
+            if (id.ResourceType != PrivateDnsZoneAResource.ResourceType)
+            {
+                return false;
+            }
+            // checking the resource scope
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static bool IsPrivateDnsZoneAAAAResource(ResourceIdentifier id)
+        {
+            // checking the resource type
+            if (id.ResourceType != PrivateDnsZoneAAAAResource.ResourceType)
+            {
+                return false;
+            }
+            // checking the resource scope
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static bool IsPrivateDnsZoneCNAMEResource(ResourceIdentifier id)
+        {
+            // checking the resource type
+            if (id.ResourceType != PrivateDnsZoneCNAMEResource.ResourceType)
+            {
+                return false;
+            }
+            // checking the resource scope
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static bool IsPrivateDnsZoneMXResource(ResourceIdentifier id)
+        {
+            // checking the resource type
+            if (id.ResourceType != PrivateDnsZoneMXResource.ResourceType)
+            {
+                return false;
+            }
+            // checking the resource scope
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static bool IsPrivateDnsZonePTRResource(ResourceIdentifier id)
+        {
+            // checking the resource type
+            if (id.ResourceType != PrivateDnsZonePTRResource.ResourceType)
+            {
+                return false;
+            }
+            // checking the resource scope
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static bool IsPrivateDnsZoneSOAResource(ResourceIdentifier id)
+        {
+            // checking the resource type
+            if (id.ResourceType != PrivateDnsZoneSOAResource.ResourceType)
+            {
+                return false;
+            }
+            // checking the resource scope
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static bool IsPrivateDnsZoneSRVResource(ResourceIdentifier id)
+        {
+            // checking the resource type
+            if (id.ResourceType != PrivateDnsZoneSRVResource.ResourceType)
+            {
+                return false;
+            }
+            // checking the resource scope
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static bool IsPrivateDnsZoneTXTResource(ResourceIdentifier id)
+        {
+            // checking the resource type
+            if (id.ResourceType != PrivateDnsZoneTXTResource.ResourceType)
+            {
+                return false;
+            }
+            // checking the resource scope
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                return false;
+            }
+            return true;
+        }
+
+<<<<<<<< HEAD:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/RecordSetResource.cs
+========
         private readonly ClientDiagnostics _privateDnsZoneARecordSetsClientDiagnostics;
         private readonly RecordSetsRestOperations _privateDnsZoneARecordSetsRestClient;
+>>>>>>>> origin/main:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/PrivateDnsZoneAResource.cs
+        private readonly RecordSetData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateDnsZoneAResource"/> class for mocking. </summary>
         protected PrivateDnsZoneAResource()
@@ -43,14 +203,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Initializes a new instance of the <see cref = "PrivateDnsZoneAResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateDnsZoneAResource(ArmClient client, RecordSetData data) : base(client, data)
+        internal PrivateDnsZoneAResource(ArmClient client, RecordSetData data) : this(client, data.Id)
         {
-            _privateDnsZoneARecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string privateDnsZoneARecordSetsApiVersion);
-            _privateDnsZoneARecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneARecordSetsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            HasData = true;
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="PrivateDnsZoneAResource"/> class. </summary>
@@ -58,30 +214,38 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PrivateDnsZoneAResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+<<<<<<<< HEAD:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/RecordSetResource.cs
+========
             _privateDnsZoneARecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string privateDnsZoneARecordSetsApiVersion);
             _privateDnsZoneARecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneARecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
+>>>>>>>> origin/main:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/PrivateDnsZoneAResource.cs
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/privateDnsZones/A";
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
 
-        internal static void ValidateResourceId(ResourceIdentifier id)
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual RecordSetData Data
         {
-            if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
         }
 
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<RecordSetResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+<<<<<<<< HEAD:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/RecordSetResource.cs
+        protected abstract Task<Response<RecordSetResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+========
+        public virtual async Task<Response<PrivateDnsZoneAResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _privateDnsZoneARecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneAResource.Get");
             scope.Start();
@@ -90,7 +254,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = await _privateDnsZoneARecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "A".ToRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((RecordSetResource)new PrivateDnsZoneAResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneAResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -98,27 +262,17 @@ namespace Azure.ResourceManager.PrivateDns
                 throw;
             }
         }
+>>>>>>>> origin/main:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/PrivateDnsZoneAResource.cs
 
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+<<<<<<<< HEAD:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/RecordSetResource.cs
         [ForwardsClientCalls]
-        public new async Task<Response<PrivateDnsZoneAResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<RecordSetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((PrivateDnsZoneAResource)result.Value, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<RecordSetResource> GetCore(CancellationToken cancellationToken = default)
+            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+========
+        public virtual Response<PrivateDnsZoneAResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _privateDnsZoneARecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneAResource.Get");
             scope.Start();
@@ -127,37 +281,36 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = _privateDnsZoneARecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "A".ToRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue((RecordSetResource)new PrivateDnsZoneAResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneAResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+>>>>>>>> origin/main:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/PrivateDnsZoneAResource.cs
         }
 
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected abstract Response<RecordSetResource> GetCore(CancellationToken cancellationToken = default);
+
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<PrivateDnsZoneAResource> Get(CancellationToken cancellationToken = default)
+        public Response<RecordSetResource> Get(CancellationToken cancellationToken = default)
         {
-            var result = GetCore(cancellationToken);
-            return Response.FromValue((PrivateDnsZoneAResource)result.Value, result.GetRawResponse());
+            return GetCore(cancellationToken);
         }
 
-        /// <summary>
-        /// Deletes a record set from a Private DNS zone. This operation cannot be undone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
-        /// Operation Id: RecordSets_Delete
-        /// </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always delete the current record set. Specify the last-seen ETag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
+<<<<<<<< HEAD:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/RecordSetResource.cs
+        protected abstract Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default);
+========
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _privateDnsZoneARecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneAResource.Delete");
             scope.Start();
@@ -175,17 +328,18 @@ namespace Azure.ResourceManager.PrivateDns
                 throw;
             }
         }
+>>>>>>>> origin/main:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/PrivateDnsZoneAResource.cs
 
-        /// <summary>
-        /// Deletes a record set from a Private DNS zone. This operation cannot be undone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
-        /// Operation Id: RecordSets_Delete
-        /// </summary>
+        /// <summary> The default implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always delete the current record set. Specify the last-seen ETag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override ArmOperation DeleteCore(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+<<<<<<<< HEAD:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/RecordSetResource.cs
+            return await DeleteCoreAsync(waitUntil, ifMatch, cancellationToken).ConfigureAwait(false);
+========
             using var scope = _privateDnsZoneARecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneAResource.Delete");
             scope.Start();
             try
@@ -201,18 +355,36 @@ namespace Azure.ResourceManager.PrivateDns
                 scope.Failed(e);
                 throw;
             }
+>>>>>>>> origin/main:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/PrivateDnsZoneAResource.cs
         }
 
-        /// <summary>
-        /// Updates a record set within a Private DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
-        /// Operation Id: RecordSets_Update
-        /// </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The ETag of the record set. Omit this value to always delete the current record set. Specify the last-seen ETag value to prevent accidentally deleting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected abstract ArmOperation DeleteCore(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default);
+
+        /// <summary> The default implementation for operation Delete. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The ETag of the record set. Omit this value to always delete the current record set. Specify the last-seen ETag value to prevent accidentally deleting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            return DeleteCore(waitUntil, ifMatch, cancellationToken);
+        }
+
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected override async Task<Response<RecordSetResource>> UpdateCoreAsync(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+<<<<<<<< HEAD:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/RecordSetResource.cs
+        protected abstract Task<Response<RecordSetResource>> UpdateCoreAsync(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default);
+
+        /// <summary> The default implementation for operation Update. </summary>
+========
+        public virtual async Task<Response<PrivateDnsZoneAResource>> UpdateAsync(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -221,7 +393,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = await _privateDnsZoneARecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "A".ToRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue((RecordSetResource)new PrivateDnsZoneAResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneAResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,29 +407,40 @@ namespace Azure.ResourceManager.PrivateDns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Update
         /// </summary>
+>>>>>>>> origin/main:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/PrivateDnsZoneAResource.cs
+        /// <param name="data"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+<<<<<<<< HEAD:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/RecordSetResource.cs
+        [ForwardsClientCalls]
+        public async Task<Response<RecordSetResource>> UpdateAsync(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            return await UpdateCoreAsync(data, ifMatch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> The core implementation for operation Update. </summary>
+        /// <param name="data"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected abstract Response<RecordSetResource> UpdateCore(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default);
+
+        /// <summary> The default implementation for operation Update. </summary>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new async Task<Response<PrivateDnsZoneAResource>> UpdateAsync(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<RecordSetResource> Update(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            var result = await UpdateCoreAsync(data, ifMatch, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((PrivateDnsZoneAResource)result.Value, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Updates a record set within a Private DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
-        /// Operation Id: RecordSets_Update
-        /// </summary>
-        /// <param name="data"> Parameters supplied to the Update operation. </param>
-        /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected override Response<RecordSetResource> UpdateCore(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+            return UpdateCore(data, ifMatch, cancellationToken);
+========
+        public virtual Response<PrivateDnsZoneAResource> Update(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -266,31 +449,14 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = _privateDnsZoneARecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "A".ToRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue((RecordSetResource)new PrivateDnsZoneAResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneAResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Updates a record set within a Private DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
-        /// Operation Id: RecordSets_Update
-        /// </summary>
-        /// <param name="data"> Parameters supplied to the Update operation. </param>
-        /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [ForwardsClientCalls]
-        public new Response<PrivateDnsZoneAResource> Update(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            var result = UpdateCore(data, ifMatch, cancellationToken);
-            return Response.FromValue((PrivateDnsZoneAResource)result.Value, result.GetRawResponse());
+>>>>>>>> origin/main:sdk/privatedns/Azure.ResourceManager.PrivateDns/src/Generated/PrivateDnsZoneAResource.cs
         }
     }
 }

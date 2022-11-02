@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -22,14 +23,8 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasks"/> is null. </exception>
         internal AnalyzeConversationJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, State status, ConversationTasksStateTasks tasks) : base(createdDateTime, jobId, lastUpdatedDateTime, status)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (tasks == null)
-            {
-                throw new ArgumentNullException(nameof(tasks));
-            }
+            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNull(tasks, nameof(tasks));
 
             Tasks = tasks;
         }

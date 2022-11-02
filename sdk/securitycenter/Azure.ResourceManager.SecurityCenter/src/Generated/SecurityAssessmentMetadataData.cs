@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="plannedDeprecationDate"></param>
         /// <param name="tactics"></param>
         /// <param name="techniques"></param>
-        internal SecurityAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity? severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, AssessmentType? assessmentType, SecurityAssessmentMetadataPartner partnerData, SecurityAssessmentPublishDates publishDates, string plannedDeprecationDate, IList<SecurityAssessmentTactic> tactics, IList<SecurityAssessmentTechnique> techniques) : base(id, name, resourceType, systemData)
+        internal SecurityAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity? severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType? assessmentType, SecurityAssessmentMetadataPartner partnerData, SecurityAssessmentPublishDates publishDates, string plannedDeprecationDate, IList<SecurityAssessmentTactic> tactics, IList<SecurityAssessmentTechnique> techniques) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> True if this assessment is in preview release status. </summary>
         public bool? IsPreview { get; set; }
         /// <summary> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </summary>
-        public AssessmentType? AssessmentType { get; set; }
+        public SecurityAssessmentType? AssessmentType { get; set; }
         /// <summary> Describes the partner that created the assessment. </summary>
         public SecurityAssessmentMetadataPartner PartnerData { get; set; }
         /// <summary> Gets or sets the publish dates. </summary>

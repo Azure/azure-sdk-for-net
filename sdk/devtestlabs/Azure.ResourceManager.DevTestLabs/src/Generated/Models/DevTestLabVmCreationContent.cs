@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="environmentId"> The resource ID of the environment that contains this virtual machine, if any. </param>
         /// <param name="dataDiskParameters"> New or existing data disks to attach to the virtual machine after creation. </param>
         /// <param name="scheduleParameters"> Virtual Machine schedules to be created. </param>
-        internal DevTestLabVmCreationContent(string name, AzureLocation? location, IDictionary<string, string> tags, BulkCreationParameters bulkCreationParameters, string notes, string ownerObjectId, string ownerUserPrincipalName, DateTimeOffset? createdOn, string customImageId, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string labSubnetName, string labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabGalleryImageReference galleryImageReference, string planId, DevTestLabNetworkInterface networkInterface, DateTimeOffset? expireOn, bool? allowClaim, string storageType, string environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters)
+        internal DevTestLabVmCreationContent(string name, AzureLocation? location, IDictionary<string, string> tags, BulkCreationParameters bulkCreationParameters, string notes, string ownerObjectId, string ownerUserPrincipalName, DateTimeOffset? createdOn, string customImageId, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabGalleryImageReference galleryImageReference, string planId, DevTestLabNetworkInterface networkInterface, DateTimeOffset? expireOn, bool? allowClaim, string storageType, string environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters)
         {
             Name = name;
             Location = location;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> The lab subnet name of the virtual machine. </summary>
         public string LabSubnetName { get; set; }
         /// <summary> The lab virtual network identifier of the virtual machine. </summary>
-        public string LabVirtualNetworkId { get; set; }
+        public ResourceIdentifier LabVirtualNetworkId { get; set; }
         /// <summary> Indicates whether the virtual machine is to be created without a public IP address. </summary>
         public bool? DisallowPublicIPAddress { get; set; }
         /// <summary> The artifacts to be installed on the virtual machine. </summary>

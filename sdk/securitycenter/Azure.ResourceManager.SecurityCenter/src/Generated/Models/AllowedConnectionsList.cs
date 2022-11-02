@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AllowedConnectionsList. </summary>
         internal AllowedConnectionsList()
         {
-            Value = new ChangeTrackingList<AllowedConnection>();
+            Value = new ChangeTrackingList<SecurityCenterAllowedConnection>();
         }
 
         /// <summary> Initializes a new instance of AllowedConnectionsList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal AllowedConnectionsList(IReadOnlyList<AllowedConnection> value, string nextLink)
+        internal AllowedConnectionsList(IReadOnlyList<SecurityCenterAllowedConnection> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<AllowedConnection> Value { get; }
+        public IReadOnlyList<SecurityCenterAllowedConnection> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

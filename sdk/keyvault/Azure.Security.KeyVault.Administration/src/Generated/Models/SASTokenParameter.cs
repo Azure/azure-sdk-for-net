@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageResourceUri"/> or <paramref name="token"/> is null. </exception>
         public SASTokenParameter(string storageResourceUri, string token)
         {
-            if (storageResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(storageResourceUri));
-            }
-            if (token == null)
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
+            Argument.AssertNotNull(storageResourceUri, nameof(storageResourceUri));
+            Argument.AssertNotNull(token, nameof(token));
 
             StorageResourceUri = storageResourceUri;
             Token = token;

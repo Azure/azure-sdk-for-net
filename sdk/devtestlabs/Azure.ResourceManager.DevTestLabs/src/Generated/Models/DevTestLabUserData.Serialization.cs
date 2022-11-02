@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<DevTestLabUserSecretStore> secretStore = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -154,14 +154,19 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("uniqueIdentifier"))
                         {
-                            uniqueIdentifier = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uniqueIdentifier = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevTestLabUserData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, secretStore.Value, Optional.ToNullable(createdDate), provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabUserData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, secretStore.Value, Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

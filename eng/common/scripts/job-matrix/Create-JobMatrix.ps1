@@ -14,7 +14,8 @@ param (
     [Parameter(Mandatory=$False)][string] $DisplayNameFilter,
     [Parameter(Mandatory=$False)][array] $Filters,
     [Parameter(Mandatory=$False)][array] $Replace,
-    [Parameter(Mandatory=$False)][array] $NonSparseParameters
+    [Parameter(Mandatory=$False)][array] $NonSparseParameters,
+    [Parameter()][switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
 . $PSScriptRoot/job-matrix-functions.ps1
@@ -39,6 +40,6 @@ $serialized = SerializePipelineMatrix $matrix
 
 Write-Output $serialized.pretty
 
-if ($null -ne $env:SYSTEM_TEAMPROJECTID) {
+if ($CI) {
     Write-Output "##vso[task.setVariable variable=matrix;isOutput=true]$($serialized.compressed)"
 }

@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new RegulatoryComplianceStandardCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of AlertsSuppressionRuleResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of AlertsSuppressionRuleResources and their operations over a AlertsSuppressionRuleResource. </returns>
-        public virtual AlertsSuppressionRuleCollection GetAlertsSuppressionRules()
+        /// <summary> Gets a collection of SecurityAlertsSuppressionRuleResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecurityAlertsSuppressionRuleResources and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
+        public virtual SecurityAlertsSuppressionRuleCollection GetSecurityAlertsSuppressionRules()
         {
-            return GetCachedClient(Client => new AlertsSuppressionRuleCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityAlertsSuppressionRuleCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of SubscriptionAssessmentMetadataResources in the SubscriptionResource. </summary>
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SecureScoreCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ConnectorSettingResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of ConnectorSettingResources and their operations over a ConnectorSettingResource. </returns>
-        public virtual ConnectorSettingCollection GetConnectorSettings()
+        /// <summary> Gets a collection of SecurityCloudConnectorResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecurityCloudConnectorResources and their operations over a SecurityCloudConnectorResource. </returns>
+        public virtual SecurityCloudConnectorCollection GetSecurityCloudConnectors()
         {
-            return GetCachedClient(Client => new ConnectorSettingCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityCloudConnectorCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of SecuritySettingResources in the SubscriptionResource. </summary>
@@ -800,10 +800,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AllowedConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AllowedConnection> GetAllowedConnectionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AllowedConnection>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecurityCenterAllowedConnection>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnections");
                 scope.Start();
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<AllowedConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecurityCenterAllowedConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = AllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnections");
                 scope.Start();
@@ -842,10 +842,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AllowedConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AllowedConnection> GetAllowedConnections(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterAllowedConnection> GetAllowedConnections(CancellationToken cancellationToken = default)
         {
-            Page<AllowedConnection> FirstPageFunc(int? pageSizeHint)
+            Page<SecurityCenterAllowedConnection> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnections");
                 scope.Start();
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<AllowedConnection> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecurityCenterAllowedConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = AllowedConnectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllowedConnections");
                 scope.Start();

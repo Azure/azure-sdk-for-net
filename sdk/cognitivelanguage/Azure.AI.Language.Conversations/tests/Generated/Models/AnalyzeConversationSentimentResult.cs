@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -19,13 +20,10 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         public AnalyzeConversationSentimentResult(DateTimeOffset lastUpdateDateTime, State status, ConversationSentimentResults results) : base(lastUpdateDateTime, status)
         {
-            if (results == null)
-            {
-                throw new ArgumentNullException(nameof(results));
-            }
+            Argument.AssertNotNull(results, nameof(results));
 
             Results = results;
-            Kind = new AnalyzeConversationResultsKind("ConversationalSentimentResults");
+            Kind = AnalyzeConversationResultsKind.ConversationalSentimentResults;
         }
 
         /// <summary> Initializes a new instance of AnalyzeConversationSentimentResult. </summary>

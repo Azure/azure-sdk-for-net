@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -18,14 +19,8 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="prediction"/> is null. </exception>
         internal AnalyzeConversationResult(string query, BasePrediction prediction)
         {
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
-            if (prediction == null)
-            {
-                throw new ArgumentNullException(nameof(prediction));
-            }
+            Argument.AssertNotNull(query, nameof(query));
+            Argument.AssertNotNull(prediction, nameof(prediction));
 
             Query = query;
             Prediction = prediction;

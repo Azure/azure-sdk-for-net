@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Azure resource identifier. </summary>
-    public partial class AzureResourceIdentifier : AlertResourceIdentifier
+    public partial class AzureResourceIdentifier : SecurityAlertResourceIdentifier
     {
         /// <summary> Initializes a new instance of AzureResourceIdentifier. </summary>
         internal AzureResourceIdentifier()

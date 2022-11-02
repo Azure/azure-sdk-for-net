@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> or <paramref name="azureApp"/> is null. </exception>
         public ConnectToTargetSqlMISyncTaskInput(MISqlConnectionInfo targetConnectionInfo, AzureActiveDirectoryApp azureApp)
         {
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
-            if (azureApp == null)
-            {
-                throw new ArgumentNullException(nameof(azureApp));
-            }
+            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
+            Argument.AssertNotNull(azureApp, nameof(azureApp));
 
             TargetConnectionInfo = targetConnectionInfo;
             AzureApp = azureApp;
