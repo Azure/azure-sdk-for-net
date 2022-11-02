@@ -74,7 +74,8 @@ rename-mapping:
   Domain.properties.disableLocalAuth: IsLocalAuthDisabled
   Domain.properties.endpoint: Endpoint|Uri
   DomainUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled
-  EventSubscriptionUpdateParameters: EventSubscriptionPatch
+  EventSubscription: EventGridSubscription
+  EventSubscriptionUpdateParameters: EventGridSubscriptionPatch
   EventSubscriptionUpdateParameters.expirationTimeUtc: ExpireOn
   DomainRegenerateKeyRequest: EventGridDomainRegenerateKeyContent
   ConnectionState: EventGridPrivateEndpointConnectionState

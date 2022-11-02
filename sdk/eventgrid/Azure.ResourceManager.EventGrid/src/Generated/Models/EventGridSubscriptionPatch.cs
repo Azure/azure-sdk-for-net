@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the Event Subscription update. </summary>
-    public partial class EventSubscriptionPatch
+    public partial class EventGridSubscriptionPatch
     {
-        /// <summary> Initializes a new instance of EventSubscriptionPatch. </summary>
-        public EventSubscriptionPatch()
+        /// <summary> Initializes a new instance of EventGridSubscriptionPatch. </summary>
+        public EventGridSubscriptionPatch()
         {
             Labels = new ChangeTrackingList<string>();
         }
