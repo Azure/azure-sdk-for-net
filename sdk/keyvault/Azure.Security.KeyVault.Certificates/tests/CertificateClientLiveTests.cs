@@ -769,6 +769,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(certificatePolicy.KeySize, updatePolicy.KeySize);
         }
 
+        [RecordedTest]
         [TestCase("application/x-pkcs12")]
         [TestCase("application/x-pem-file")]
         public async Task DownloadLatestCertificate(string contentType)
@@ -815,6 +816,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CollectionAssert.AreEqual(plaintext, decrypted);
         }
 
+        [RecordedTest]
         [TestCase("application/x-pkcs12")]
         [TestCase("application/x-pem-file")]
         public async Task DownloadVersionedCertificate(string contentType)
@@ -872,6 +874,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CollectionAssert.AreEqual(plaintext, decrypted);
         }
 
+        [RecordedTest]
         [TestCase("application/x-pkcs12")]
         [TestCase("application/x-pem-file")]
         public async Task DownloadNonExportableCertificate(string contentType)
