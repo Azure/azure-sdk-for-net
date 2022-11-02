@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public IScaleMonitor GetMonitor()
         {
-            return (IScaleMonitor)_listener;
+            return ((QueueListener)_listener).GetMonitor();
         }
     }
 }

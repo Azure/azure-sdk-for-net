@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         /// <param name="queueClient"></param>
         /// <param name="options"></param>
         /// <param name="loggerFactory"></param>
-        public QueueTargetScaler(string functionId, QueueClient queueClient, QueuesOptions options, ILoggerFactory loggerFactory)
+        internal QueueTargetScaler(string functionId, QueueClient queueClient, QueuesOptions options, ILoggerFactory loggerFactory)
         {
             _functionId = functionId;
             _queueMetricsProvider = new QueueMetricsProvider(queueClient,loggerFactory);
