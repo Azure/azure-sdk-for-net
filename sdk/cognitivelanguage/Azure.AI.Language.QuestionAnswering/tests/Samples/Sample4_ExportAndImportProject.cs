@@ -84,7 +84,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             // retrieve export operation response, and extract url of exported file
             var operationValueJson = exportOperation.Value.ToDynamic();
-            string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+            string exportedFileUrl = operationValueJson.ResultUrl;
             #endregion
 
             Assert.True(exportOperation.HasCompleted);
