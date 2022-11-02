@@ -236,25 +236,23 @@ namespace Azure.Data.AppConfiguration
                 }
 
                 var newFilters = new ObservableCollection<FeatureFlagFilter>();
-                if (conditionsProperty.TryGetProperty("client_filters", out var clientFiltersProperty))
+                if (conditionsProperty.TryGetProperty("client_filters", out var clientFiltersProperty) &&
+                   clientFiltersProperty.ValueKind != JsonValueKind.Null)
                 {
-                    if (clientFiltersProperty.ValueKind != JsonValueKind.Null)
+                    foreach (var clientFilter in clientFiltersProperty.EnumerateArray())
                     {
-                        foreach (var clientFilter in clientFiltersProperty.EnumerateArray())
+                        if (!clientFilter.TryGetProperty("name", out var filterNameProperty))
                         {
-                            if (!clientFilter.TryGetProperty("name", out var filterNameProperty))
-                            {
-                                return false;
-                            }
-
-                            Dictionary<string, object> value = null;
-                            if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
-                            {
-                                value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
-                            }
-
-                            newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
+                            return false;
                         }
+
+                        Dictionary<string, object> value = null;
+                        if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
+                        {
+                            value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
+                        }
+
+                        newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
                     }
                 }
 
