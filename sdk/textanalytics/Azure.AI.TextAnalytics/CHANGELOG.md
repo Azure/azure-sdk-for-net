@@ -9,6 +9,8 @@
 - Added `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
 - Added `TextAnalyticsActions.ExtractSummaryActions` to perform extractive summarization in a batch of actions.
 - Added `TextAnalyticsClient.StartExtractSummary` and `StartExtractSummaryAsync` to perform extractive summarization on a collection of documents.
+- Added `Script` property to `DetectedLanguage`.
+- Added `ScriptKind` enum.
 
 ### Breaking Changes
 
