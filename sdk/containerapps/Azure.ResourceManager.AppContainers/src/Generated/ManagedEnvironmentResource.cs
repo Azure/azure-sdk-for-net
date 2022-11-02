@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppContainers
     /// from an instance of <see cref="ArmClient" /> using the GetManagedEnvironmentResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedEnvironment method.
     /// </summary>
-    public partial class ManagedEnvironmentResource : ArmResource
+    public partial class ManagedEnvironmentResource : BaseManagedEnvironmentResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedEnvironmentResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName)
@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ManagedEnvironmentsRestOperations _managedEnvironmentRestClient;
         private readonly ClientDiagnostics _namespacesClientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
-        private readonly ManagedEnvironmentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedEnvironmentResource"/> class for mocking. </summary>
         protected ManagedEnvironmentResource()
@@ -48,10 +47,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of the <see cref = "ManagedEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedEnvironmentResource(ArmClient client, ManagedEnvironmentData data) : this(client, data.Id)
+        internal ManagedEnvironmentResource(ArmClient client, ManagedEnvironmentData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _managedEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string managedEnvironmentApiVersion);
+            _managedEnvironmentRestClient = new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedEnvironmentApiVersion);
+            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _namespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedEnvironmentResource"/> class. </summary>
@@ -71,21 +76,6 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ManagedEnvironmentData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -254,7 +244,7 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedEnvironmentResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseManagedEnvironmentResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.Get");
             scope.Start();
@@ -263,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _managedEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseManagedEnvironmentResource)new ManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +268,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedEnvironmentResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ManagedEnvironmentResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ManagedEnvironmentResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get the properties of a Managed Environment used to host container apps.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
+        /// Operation Id: ManagedEnvironments_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseManagedEnvironmentResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.Get");
             scope.Start();
@@ -287,13 +290,26 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _managedEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseManagedEnvironmentResource)new ManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get the properties of a Managed Environment used to host container apps.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
+        /// Operation Id: ManagedEnvironments_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<ManagedEnvironmentResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((ManagedEnvironmentResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -616,7 +632,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ManagedEnvironmentData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -624,7 +640,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags[key] = value;
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -662,7 +678,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ManagedEnvironmentData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -670,7 +686,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags[key] = value;
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
+                    return GetCore(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)
@@ -707,11 +723,11 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ManagedEnvironmentData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -748,11 +764,11 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ManagedEnvironmentData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
+                    return GetCore(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)
@@ -788,7 +804,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ManagedEnvironmentData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -796,7 +812,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags.Remove(key);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -832,7 +848,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ManagedEnvironmentData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -840,7 +856,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags.Remove(key);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
+                    return GetCore(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)

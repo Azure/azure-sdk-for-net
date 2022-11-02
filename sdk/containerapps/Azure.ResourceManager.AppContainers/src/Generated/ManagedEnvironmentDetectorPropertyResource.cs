@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers
     /// from an instance of <see cref="ArmClient" /> using the GetManagedEnvironmentDetectorPropertyResource method.
     /// Otherwise you can get one from its parent resource <see cref="ManagedEnvironmentResource" /> using the GetManagedEnvironmentDetectorProperty method.
     /// </summary>
-    public partial class ManagedEnvironmentDetectorPropertyResource : ArmResource
+    public partial class ManagedEnvironmentDetectorPropertyResource : BaseManagedEnvironmentResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedEnvironmentDetectorPropertyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsClientDiagnostics;
         private readonly ManagedEnvironmentsDiagnosticsRestOperations _managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsRestClient;
-        private readonly ManagedEnvironmentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedEnvironmentDetectorPropertyResource"/> class for mocking. </summary>
         protected ManagedEnvironmentDetectorPropertyResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of the <see cref = "ManagedEnvironmentDetectorPropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedEnvironmentDetectorPropertyResource(ArmClient client, ManagedEnvironmentData data) : this(client, data.Id)
+        internal ManagedEnvironmentDetectorPropertyResource(ArmClient client, ManagedEnvironmentData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsApiVersion);
+            _managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsRestClient = new ManagedEnvironmentsDiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedEnvironmentDetectorPropertyResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectorProperties";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ManagedEnvironmentData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -92,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ManagedEnvironmentsDiagnostics_GetRoot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedEnvironmentDetectorPropertyResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseManagedEnvironmentResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ManagedEnvironmentDetectorPropertyResource.Get");
             scope.Start();
@@ -101,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsRestClient.GetRootAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedEnvironmentDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseManagedEnvironmentResource)new ManagedEnvironmentDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +104,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ManagedEnvironmentsDiagnostics_GetRoot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedEnvironmentDetectorPropertyResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ManagedEnvironmentDetectorPropertyResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ManagedEnvironmentDetectorPropertyResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get the properties of a Managed Environment used to host container apps.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi
+        /// Operation Id: ManagedEnvironmentsDiagnostics_GetRoot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseManagedEnvironmentResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ManagedEnvironmentDetectorPropertyResource.Get");
             scope.Start();
@@ -125,13 +126,26 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _managedEnvironmentDetectorPropertyManagedEnvironmentsDiagnosticsRestClient.GetRoot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedEnvironmentDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseManagedEnvironmentResource)new ManagedEnvironmentDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get the properties of a Managed Environment used to host container apps.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi
+        /// Operation Id: ManagedEnvironmentsDiagnostics_GetRoot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<ManagedEnvironmentDetectorPropertyResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((ManagedEnvironmentDetectorPropertyResource)result.Value, result.GetRawResponse());
         }
     }
 }

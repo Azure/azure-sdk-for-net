@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers
     /// from an instance of <see cref="ArmClient" /> using the GetContainerAppDetectorResource method.
     /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource" /> using the GetContainerAppDetector method.
     /// </summary>
-    public partial class ContainerAppDetectorResource : ArmResource
+    public partial class ContainerAppDetectorResource : DiagnosticResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppDetectorResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string detectorName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics;
         private readonly ContainerAppsDiagnosticsRestOperations _containerAppDetectorContainerAppsDiagnosticsRestClient;
-        private readonly DiagnosticData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorResource"/> class for mocking. </summary>
         protected ContainerAppDetectorResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of the <see cref = "ContainerAppDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerAppDetectorResource(ArmClient client, DiagnosticData data) : this(client, data.Id)
+        internal ContainerAppDetectorResource(ArmClient client, DiagnosticData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerAppDetectorContainerAppsDiagnosticsApiVersion);
+            _containerAppDetectorContainerAppsDiagnosticsRestClient = new ContainerAppsDiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppDetectorContainerAppsDiagnosticsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectors";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DiagnosticData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -92,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ContainerAppsDiagnostics_GetDetector
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContainerAppDetectorResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<DiagnosticResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorResource.Get");
             scope.Start();
@@ -101,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _containerAppDetectorContainerAppsDiagnosticsRestClient.GetDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((DiagnosticResource)new ContainerAppDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +104,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ContainerAppsDiagnostics_GetDetector
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerAppDetectorResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ContainerAppDetectorResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ContainerAppDetectorResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get a diagnostics result of a Container App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectors/{detectorName}
+        /// Operation Id: ContainerAppsDiagnostics_GetDetector
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<DiagnosticResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorResource.Get");
             scope.Start();
@@ -125,13 +126,26 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _containerAppDetectorContainerAppsDiagnosticsRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((DiagnosticResource)new ContainerAppDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get a diagnostics result of a Container App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectors/{detectorName}
+        /// Operation Id: ContainerAppsDiagnostics_GetDetector
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<ContainerAppDetectorResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((ContainerAppDetectorResource)result.Value, result.GetRawResponse());
         }
     }
 }

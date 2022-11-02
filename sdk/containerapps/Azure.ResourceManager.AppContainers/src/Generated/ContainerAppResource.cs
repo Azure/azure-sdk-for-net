@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppContainers
     /// from an instance of <see cref="ArmClient" /> using the GetContainerAppResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetContainerApp method.
     /// </summary>
-    public partial class ContainerAppResource : ArmResource
+    public partial class ContainerAppResource : BaseContainerAppResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName)
@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _containerAppClientDiagnostics;
         private readonly ContainerAppsRestOperations _containerAppRestClient;
-        private readonly ContainerAppData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ContainerAppResource"/> class for mocking. </summary>
         protected ContainerAppResource()
@@ -46,10 +45,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of the <see cref = "ContainerAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerAppResource(ArmClient client, ContainerAppData data) : this(client, data.Id)
+        internal ContainerAppResource(ArmClient client, ContainerAppData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _containerAppClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerAppApiVersion);
+            _containerAppRestClient = new ContainerAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ContainerAppResource"/> class. </summary>
@@ -67,21 +70,6 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/containerApps";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ContainerAppData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -287,7 +275,7 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContainerAppResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseContainerAppResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.Get");
             scope.Start();
@@ -296,7 +284,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _containerAppRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseContainerAppResource)new ContainerAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -311,7 +299,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerAppResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ContainerAppResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ContainerAppResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get the properties of a Container App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
+        /// Operation Id: ContainerApps_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseContainerAppResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.Get");
             scope.Start();
@@ -320,13 +321,26 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _containerAppRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((BaseContainerAppResource)new ContainerAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get the properties of a Container App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
+        /// Operation Id: ContainerApps_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<ContainerAppResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((ContainerAppResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -613,7 +627,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ContainerAppData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -621,7 +635,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags[key] = value;
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -659,7 +673,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ContainerAppData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -667,7 +681,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags[key] = value;
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
+                    return GetCore(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)
@@ -704,11 +718,11 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ContainerAppData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -745,11 +759,11 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ContainerAppData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
+                    return GetCore(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)
@@ -785,7 +799,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ContainerAppData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -793,7 +807,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags.Remove(key);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -829,7 +843,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ContainerAppData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -837,7 +851,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags.Remove(key);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
+                    return GetCore(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)

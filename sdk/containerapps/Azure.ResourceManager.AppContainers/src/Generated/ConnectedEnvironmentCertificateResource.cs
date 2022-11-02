@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers
     /// from an instance of <see cref="ArmClient" /> using the GetConnectedEnvironmentCertificateResource method.
     /// Otherwise you can get one from its parent resource <see cref="ConnectedEnvironmentResource" /> using the GetConnectedEnvironmentCertificate method.
     /// </summary>
-    public partial class ConnectedEnvironmentCertificateResource : ArmResource
+    public partial class ConnectedEnvironmentCertificateResource : CertificateResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConnectedEnvironmentCertificateResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string certificateName)
@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics;
         private readonly ConnectedEnvironmentsCertificatesRestOperations _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient;
-        private readonly CertificateData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ConnectedEnvironmentCertificateResource"/> class for mocking. </summary>
         protected ConnectedEnvironmentCertificateResource()
@@ -45,10 +44,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of the <see cref = "ConnectedEnvironmentCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ConnectedEnvironmentCertificateResource(ArmClient client, CertificateData data) : this(client, data.Id)
+        internal ConnectedEnvironmentCertificateResource(ArmClient client, CertificateData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string connectedEnvironmentCertificateConnectedEnvironmentsCertificatesApiVersion);
+            _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient = new ConnectedEnvironmentsCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectedEnvironmentCertificateConnectedEnvironmentsCertificatesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConnectedEnvironmentCertificateResource"/> class. </summary>
@@ -67,21 +70,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments/certificates";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual CertificateData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -94,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ConnectedEnvironmentsCertificates_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConnectedEnvironmentCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<CertificateResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics.CreateScope("ConnectedEnvironmentCertificateResource.Get");
             scope.Start();
@@ -103,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((CertificateResource)new ConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +106,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ConnectedEnvironmentsCertificates_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConnectedEnvironmentCertificateResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ConnectedEnvironmentCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get the specified Certificate.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<CertificateResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics.CreateScope("ConnectedEnvironmentCertificateResource.Get");
             scope.Start();
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((CertificateResource)new ConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,13 +138,26 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Get the specified Certificate.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<ConnectedEnvironmentCertificateResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// Deletes the specified Certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
         /// Operation Id: ConnectedEnvironmentsCertificates_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics.CreateScope("ConnectedEnvironmentCertificateResource.Delete");
             scope.Start();
@@ -169,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics.CreateScope("ConnectedEnvironmentCertificateResource.Delete");
             scope.Start();
@@ -196,7 +210,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="patch"> Properties of a certificate that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ConnectedEnvironmentCertificateResource>> UpdateAsync(CertificatePatch patch, CancellationToken cancellationToken = default)
+        protected override async Task<Response<CertificateResource>> UpdateCoreAsync(CertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -205,7 +219,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((CertificateResource)new ConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,7 +236,24 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="patch"> Properties of a certificate that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ConnectedEnvironmentCertificateResource> Update(CertificatePatch patch, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ConnectedEnvironmentCertificateResource>> UpdateAsync(CertificatePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            var result = await UpdateCoreAsync(patch, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Patches a certificate. Currently only patching of tags is supported
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Update
+        /// </summary>
+        /// <param name="patch"> Properties of a certificate that need to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        protected override Response<CertificateResource> UpdateCore(CertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -231,13 +262,30 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue((CertificateResource)new ConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Patches a certificate. Currently only patching of tags is supported
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Update
+        /// </summary>
+        /// <param name="patch"> Properties of a certificate that need to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new Response<ConnectedEnvironmentCertificateResource> Update(CertificatePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            var result = UpdateCore(patch, cancellationToken);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -249,7 +297,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ConnectedEnvironmentCertificateResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        protected override async Task<Response<CertificateResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -264,18 +312,18 @@ namespace Azure.ResourceManager.AppContainers
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new CertificatePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateCoreAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
                 }
             }
@@ -295,7 +343,26 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ConnectedEnvironmentCertificateResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ConnectedEnvironmentCertificateResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            var result = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        protected override Response<CertificateResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -310,18 +377,18 @@ namespace Azure.ResourceManager.AppContainers
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new CertificatePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
+                    var result = UpdateCore(patch, cancellationToken: cancellationToken);
                     return result;
                 }
             }
@@ -333,6 +400,25 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new Response<ConnectedEnvironmentCertificateResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            var result = AddTagCore(key, value, cancellationToken);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
         /// Operation Id: ConnectedEnvironmentsCertificates_Get
@@ -340,7 +426,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ConnectedEnvironmentCertificateResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        protected override async Task<Response<CertificateResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -355,14 +441,14 @@ namespace Azure.ResourceManager.AppContainers
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new CertificatePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateCoreAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
                 }
             }
@@ -381,7 +467,24 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ConnectedEnvironmentCertificateResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ConnectedEnvironmentCertificateResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            var result = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        protected override Response<CertificateResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -396,14 +499,14 @@ namespace Azure.ResourceManager.AppContainers
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new CertificatePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
+                    var result = UpdateCore(patch, cancellationToken: cancellationToken);
                     return result;
                 }
             }
@@ -415,6 +518,23 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new Response<ConnectedEnvironmentCertificateResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            var result = SetTagsCore(tags, cancellationToken);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
         /// Operation Id: ConnectedEnvironmentsCertificates_Get
@@ -422,7 +542,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ConnectedEnvironmentCertificateResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        protected override async Task<Response<CertificateResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -436,18 +556,18 @@ namespace Azure.ResourceManager.AppContainers
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new CertificatePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateCoreAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
                 }
             }
@@ -466,7 +586,24 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ConnectedEnvironmentCertificateResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ConnectedEnvironmentCertificateResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            var result = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        protected override Response<CertificateResource> RemoveTagCore(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -480,18 +617,18 @@ namespace Azure.ResourceManager.AppContainers
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _connectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ConnectedEnvironmentCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new CertificatePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
+                    var result = UpdateCore(patch, cancellationToken: cancellationToken);
                     return result;
                 }
             }
@@ -500,6 +637,23 @@ namespace Azure.ResourceManager.AppContainers
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}
+        /// Operation Id: ConnectedEnvironmentsCertificates_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new Response<ConnectedEnvironmentCertificateResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            var result = RemoveTagCore(key, cancellationToken);
+            return Response.FromValue((ConnectedEnvironmentCertificateResource)result.Value, result.GetRawResponse());
         }
     }
 }
