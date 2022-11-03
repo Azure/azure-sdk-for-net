@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SrvRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string srvRecordName, SrvRecordData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SrvRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string srvRecordName, SrvRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
             Argument.AssertNotNull(data, nameof(data));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SrvRecordResource> CreateOrUpdate(WaitUntil waitUntil, string srvRecordName, SrvRecordData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SrvRecordResource> CreateOrUpdate(WaitUntil waitUntil, string srvRecordName, SrvRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
             Argument.AssertNotNull(data, nameof(data));
