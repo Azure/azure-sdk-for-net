@@ -393,6 +393,12 @@
 # ServiceLabel: %Lab Services %Service Attention
 sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamath
 
+# ServiceLabel: %LoadTest Service %Service Attention
+sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain
+# PRLabel: %loadtestservice
+sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain @christothes
+
+
 # ServiceLabel: %Logic App %Service Attention
 /sdk/logic/Microsoft.Azure.Management.Logic/           @Azure/azure-logicapps-team
 
@@ -468,6 +474,11 @@ sdk/monitor/ci.yml                         @nisha-bhatia @ShivangiReja
 # ServiceLabel: %MySQL %Service Attention
 /sdk/mysql/Microsoft.Azure.Management.MySQL/            @ajlam @ambhatna @kummanish
 
+# ServiceLabel: %Mixed Reality %Service Attention
+/sdk/mixedreality/                                 @crtreasu @rgarcia
+# PRLabel: %MixedReality
+/sdk/mixedreality/                                 @crtreasu @rgarcia @JoshLove-msft
+
 # ServiceLabel: %Network %Service Attention
 sdk/network/           @aznetsuppgithub
 
@@ -524,6 +535,11 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %Notification Hub %Service Attention
 /sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/            @tjsomasundaram
+
+# ServiceLabel: %Mixed Reality %Service Attention
+/sdk/objectanchors/                                 @crtreasu @rgarcia
+# PRLabel: %MixedReality
+/sdk/objectanchors/                                 @crtreasu @rgarcia @JoshLove-msft
 
 # PRLabel: %Operational Insights
 # ServiceLabel: %Operational Insights %Service Attention
@@ -673,7 +689,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @AzureAppServiceCLI @antcp
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/  @KrzysztofCwalina
+/sdk/webpubsub/  @vicancy @JialinXin @pallavit @KrzysztofCwalina
 
 # PRLabel: %WebPubSub %Functions
 /sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/  @vicancy
