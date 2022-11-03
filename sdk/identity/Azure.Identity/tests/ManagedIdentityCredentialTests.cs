@@ -692,7 +692,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task VerifyClientAuthenticateReturnsInvalidJson([Values(200, 404)] int status)
+        public async Task VerifyClientAuthenticateReturnsInvalidJson([Values(200, 404, 403)] int status)
         {
             using var environment = new TestEnvVar(
                 new()
