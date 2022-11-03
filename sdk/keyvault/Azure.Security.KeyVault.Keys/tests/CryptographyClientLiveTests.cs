@@ -175,7 +175,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
 
         [RecordedTest]
-        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
+        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K), nameof(SignatureAlgorithm.EdDSA) })] SignatureAlgorithm algorithm)
         {
 #if NET461
             if (algorithm.GetEcKeyCurveName() != default)
