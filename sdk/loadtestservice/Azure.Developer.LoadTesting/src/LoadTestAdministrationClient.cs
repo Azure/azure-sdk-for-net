@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 
 namespace Azure.Developer.LoadTesting
@@ -338,6 +339,106 @@ namespace Azure.Developer.LoadTesting
 
             Response response = await UploadTestFileAsync(testId, fileId, fileName, RequestContent.Create(file), fileType, context).ConfigureAwait(false);
             return response;
+        }
+
+        /// <summary>
+        /// Function to check test file (.jmx file) validation status for a given test
+        /// </summary>
+        /// <param name="testId"> unique identifier for the test</param>
+        /// <param name="refreshTime"> time in miliseconds to wait before checking the status of the JMX file (default = 10*1000 ms = 10 sec)</param>
+        /// <param name="timeOut"> time in miliseconds to wait before time out (default = 600*1000ms = 600 sec)</param>
+        /// <returns> TestFileValidationStatus enum with appropirate status flag</returns>
+        /// <exception cref="Exception"></exception>
+        public virtual TestFileValidationStatus CheckTestFileValidationStatus(string testId, int refreshTime = 10*1000, int timeOut = 600*1000)
+        {
+            DateTime startTime = DateTime.Now;
+            string status = TestFileValidationStatus.ValidationInitiated.ToString();
+
+            while (true)
+            {
+                Response respone = GetLoadTest(testId);
+
+                try
+                {
+                    JsonNode jsonDocument = JsonNode.Parse(respone.Content.ToString());
+                    JsonNode validationStatus = jsonDocument!["inputArtifacts"]!["testScriptUrl"]!["validationStatus"]!;
+
+                    status = validationStatus.ToString();
+                }
+                catch
+                {
+                    throw new Exception($"No JMX file found with the TestId: {testId}");
+                }
+
+                if (status.Equals("VALIDATION_SUCCESS"))
+                {
+                    return TestFileValidationStatus.ValidationSuccess;
+                }
+                else if (status.Equals("VALIDATION_FAILED"))
+                {
+                    return TestFileValidationStatus.ValidationFailed;
+                }
+
+                DateTime timer = DateTime.Now;
+                int nextHitTime = (int)(timer - startTime).TotalSeconds + refreshTime;
+
+                if (nextHitTime > timeOut)
+                {
+                    return TestFileValidationStatus.ValidationCheckTimeout;
+                }
+
+                Thread.Sleep(refreshTime * 1000);
+            }
+        }
+
+        /// <summary>
+        /// Function to check test file (.jmx file) validation status for a given test
+        /// </summary>
+        /// <param name="testId"> unique identifier for the test</param>
+        /// <param name="refreshTime"> time in miliseconds to wait before checking the status of the JMX file (default = 10*1000 ms = 10 sec)</param>
+        /// <param name="timeOut"> time in miliseconds to wait before time out (default = 600*1000ms = 600 sec)</param>
+        /// <returns> TestFileValidationStatus enum with appropirate status flag</returns>
+        /// <exception cref="Exception"></exception>
+        public virtual async Task<TestFileValidationStatus> CheckTestFileValidationStatusAsync(string testId, int refreshTime = 10 * 1000, int timeOut = 600 * 1000)
+        {
+            DateTime startTime = DateTime.Now;
+            string status = TestFileValidationStatus.ValidationInitiated.ToString();
+
+            while (true)
+            {
+                Response respone = await GetLoadTestAsync(testId).ConfigureAwait(false);
+
+                try
+                {
+                    JsonNode jsonDocument = JsonNode.Parse(respone.Content.ToString());
+                    JsonNode validationStatus = jsonDocument!["inputArtifacts"]!["testScriptUrl"]!["validationStatus"]!;
+
+                    status = validationStatus.ToString();
+                }
+                catch
+                {
+                    throw new Exception($"No JMX file found with the TestId: {testId}");
+                }
+
+                if (status.Equals("VALIDATION_SUCCESS"))
+                {
+                    return TestFileValidationStatus.ValidationSuccess;
+                }
+                else if (status.Equals("VALIDATION_FAILED"))
+                {
+                    return TestFileValidationStatus.ValidationFailed;
+                }
+
+                DateTime timer = DateTime.Now;
+                int nextHitTime = (int)(timer - startTime).TotalSeconds + refreshTime;
+
+                if (nextHitTime > timeOut)
+                {
+                    return TestFileValidationStatus.ValidationCheckTimeout;
+                }
+
+                await Task.Delay(refreshTime * 1000).ConfigureAwait(false);
+            }
         }
     }
 }
