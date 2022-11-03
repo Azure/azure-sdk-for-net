@@ -96,6 +96,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             var linuxProfile = new LinuxProfileProperties(null, sshPublicKeys);
 
             var agentPool = new NamedAgentPoolProfile();
+            agentPool.Name = "default-nodepool";
             agentPool.Count = 1;
             agentPool.VmSize = "Standard_A4_v2";
             agentPool.OSType = "Linux";
