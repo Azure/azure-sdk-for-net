@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="exception">The exception to return in the response.</param>
         /// <param name="internalError">Throw 500 internal server error.</param>
         /// <returns>The Underlying AuthEventResponse.</returns>
-        internal abstract Task<AuthenticationEventResponse> Failed(Exception exception,bool internalError);
+        internal abstract Task<AuthenticationEventResponse> Failed(Exception exception, bool internalError);
 
         /// <summary>Set the response to Failed mode.</summary>
         /// <param name="exception">The exception to return in the response.</param>
