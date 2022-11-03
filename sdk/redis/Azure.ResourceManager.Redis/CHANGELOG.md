@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0 (Unreleased)
+## 2.0.0 (2022-11-03)
 
 ### Features Added
 - ExportRdbContent has a new parameter PreferredDataArchiveAuthMethod
