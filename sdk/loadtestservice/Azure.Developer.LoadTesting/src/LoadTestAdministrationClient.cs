@@ -86,7 +86,7 @@ namespace Azure.Developer.LoadTesting
         /// }
         /// </code>
         /// </remarks>
-        public virtual Response UploadTestFile(string testId, string fileId, string fileName, RequestContent content, int? fileType = null, RequestContext context = null)
+        public virtual Response UploadTestFile(string testId, string fileId, string fileName, RequestContent content, string fileType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -180,7 +180,7 @@ namespace Azure.Developer.LoadTesting
         /// }
         /// </code>
         /// </remarks>
-        public virtual Response UploadTestFile(string testId, string fileId, FileStream file, int? fileType = null, RequestContext context = null)
+        public virtual Response UploadTestFile(string testId, string fileId, FileStream file, string fileType, RequestContext context = null)
         {
             string fileName = Path.GetFileName(file.Name);
             Console.WriteLine(fileName);
@@ -238,7 +238,7 @@ namespace Azure.Developer.LoadTesting
         /// }
         /// </code>
         /// </remarks>
-        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, string fileName, RequestContent content, int? fileType = null, RequestContext context = null)
+        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, string fileName, RequestContent content, string fileType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -331,7 +331,7 @@ namespace Azure.Developer.LoadTesting
         /// }
         /// </code>
         /// </remarks>
-        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, FileStream file, int? fileType = null, RequestContext context = null)
+        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, FileStream file, string fileType, RequestContext context = null)
         {
             string fileName = Path.GetFileName(file.Name);
             Console.WriteLine(fileName);
