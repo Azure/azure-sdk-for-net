@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("DynamicDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[1].Name);
 
             // List event subscriptions
-            var eventSubscriptionsPage = await ResourceGroup.GetRegionalEventSubscriptionsAsync(DefaultLocation).ToEnumerableAsync();
-            Assert.NotNull(eventSubscriptionsPage.FirstOrDefault(x => x.Data.Name.Equals(eventSubscriptionName)));
+            var eventSubscriptionsPage = await ResourceGroup.GetRegionalEventSubscriptionsDataAsync(DefaultLocation).ToEnumerableAsync();
+            Assert.NotNull(eventSubscriptionsPage.FirstOrDefault(x => x.Name.Equals(eventSubscriptionName)));
 
             // Delete the event subscription
             await eventSubscriptionResponse.DeleteAsync(WaitUntil.Completed);
