@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        public async Task AaaaRecordE2E()
+        public async Task AaaaRecordOperationTest()
         {
             var collection = _dnsZone.GetAaaaRecords();
             string aaaaRecordName = Recording.GenerateAssetName("aaaa");
