@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Data.SchemaRegistry.Models
+namespace Azure.Data.SchemaRegistry
 {
     /// <summary> The SchemaFormat. </summary>
     public readonly partial struct SchemaFormat : IEquatable<SchemaFormat>
@@ -22,16 +22,9 @@ namespace Azure.Data.SchemaRegistry.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ApplicationJsonSerializationAvroValue = "application/json; serialization=Avro";
-        private const string ApplicationJsonSerializationJsonValue = "application/json; serialization=Json";
-        private const string TextPlainCharsetUtf8Value = "text/plain; charset=utf-8";
-
-        /// <summary> application/json; serialization=Avro. </summary>
-        public static SchemaFormat ApplicationJsonSerializationAvro { get; } = new SchemaFormat(ApplicationJsonSerializationAvroValue);
-        /// <summary> application/json; serialization=Json. </summary>
-        public static SchemaFormat ApplicationJsonSerializationJson { get; } = new SchemaFormat(ApplicationJsonSerializationJsonValue);
-        /// <summary> text/plain; charset=utf-8. </summary>
-        public static SchemaFormat TextPlainCharsetUtf8 { get; } = new SchemaFormat(TextPlainCharsetUtf8Value);
+        private const string AvroValue = "application/json; serialization=Avro";
+        private const string JsonValue = "application/json; serialization=Json";
+        private const string CustomValue = "text/plain; charset=utf-8";
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are not the same. </summary>

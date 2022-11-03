@@ -7,7 +7,6 @@
 
 using Azure;
 using Azure.Core;
-using Azure.Data.SchemaRegistry.Models;
 
 namespace Azure.Data.SchemaRegistry
 {
