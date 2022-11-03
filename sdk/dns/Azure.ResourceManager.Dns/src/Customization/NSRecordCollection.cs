@@ -56,26 +56,26 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Creates or updates a record set within a DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{NSRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{nsRecordName}
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="NSRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="nsRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="NSRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NSRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string NSRecordName, NSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<NSRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string nsRecordName, NSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(NSRecordName, nameof(NSRecordName));
+            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _nsRecordRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), NSRecordName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _nsRecordRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), nsRecordName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation<NSRecordResource>(Response.FromValue(new NSRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -90,26 +90,26 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Creates or updates a record set within a DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{NSRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{nsRecordName}
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="NSRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="nsRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="NSRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NSRecordResource> CreateOrUpdate(WaitUntil waitUntil, string NSRecordName, NSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<NSRecordResource> CreateOrUpdate(WaitUntil waitUntil, string nsRecordName, NSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(NSRecordName, nameof(NSRecordName));
+            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _nsRecordRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), NSRecordName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var response = _nsRecordRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), nsRecordName, data, ifMatch, ifNoneMatch, cancellationToken);
                 var operation = new DnsArmOperation<NSRecordResource>(Response.FromValue(new NSRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -124,21 +124,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{NSRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{nsRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="NSRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="nsRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="NSRecordName"/> is null. </exception>
-        public virtual async Task<Response<NSRecordResource>> GetAsync(string NSRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
+        public virtual async Task<Response<NSRecordResource>> GetAsync(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(NSRecordName, nameof(NSRecordName));
+            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = await _nsRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), NSRecordName, cancellationToken).ConfigureAwait(false);
+                var response = await _nsRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), nsRecordName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{NSRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{nsRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="NSRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="nsRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="NSRecordName"/> is null. </exception>
-        public virtual Response<NSRecordResource> Get(string NSRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
+        public virtual Response<NSRecordResource> Get(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(NSRecordName, nameof(NSRecordName));
+            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = _nsRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), NSRecordName, cancellationToken);
+                var response = _nsRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), nsRecordName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
@@ -268,21 +268,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{NSRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{nsRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="NSRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="nsRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="NSRecordName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string NSRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(NSRecordName, nameof(NSRecordName));
+            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _nsRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), NSRecordName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _nsRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), nsRecordName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,21 +294,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{NSRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{nsRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="NSRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="nsRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="NSRecordName"/> is null. </exception>
-        public virtual Response<bool> Exists(string NSRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
+        public virtual Response<bool> Exists(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(NSRecordName, nameof(NSRecordName));
+            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = _nsRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), NSRecordName, cancellationToken: cancellationToken);
+                var response = _nsRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NS".ToDnsRecordType(), nsRecordName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
