@@ -11,17 +11,46 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 {
     public class DataFactoryExpressionsTests
     {
+        private class MyObject
+        {
+            public int X { get; set; }
+            public string Y { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                if (obj is null)
+                    return false;
+                if (obj is not MyObject that)
+                    return false;
+
+                return X == that.X && Y == that.Y;
+            }
+
+            public override int GetHashCode()
+            {
+#if NET461_OR_GREATER
+                return X.GetHashCode() ^ Y.GetHashCode();
+#else
+                return HashCode.Combine(X, Y);
+#endif
+            }
+        }
+
         private const string IntJson = "1";
         private const string ArrayJson = "[1,2]";
         private const string EmptyArrayJson = "[]";
+        private const string HeterogenousArrayJson = "[1,\"a\",{\"X\":1,\"Y\":\"a\"},1.1,true]";
         private const string BoolJson = "true";
         private const string DoubleJson = "1.1";
         private const string StringJson = "\"a\"";
         private const string ExpressionJson = "{\"type\":\"Expression\",\"value\":\"@{myExpression}\"}";
 
+        private const string HeterogenousArrayToString = "[1,a,Azure.Core.Expressions.DataFactory.Tests.DataFactoryExpressionsTests+MyObject,1.1,True]";
+
         private const int IntValue = 1;
         private static readonly Array ArrayValue = new object[] { 1, 2 };
         private static readonly Array EmptyArrayValue = new object[] { };
+        private static readonly Array HeterogenousArrayValue = new object[] { 1, "a", new MyObject { X = 1, Y = "a" }, 1.1, true };
         private const bool BoolValue = true;
         private const double DoubleValue = 1.1;
         private const string StringValue = "a";
@@ -45,6 +74,16 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
             dfe = ArrayValue;
             AssertArrayDfe(dfe);
+        }
+
+        [Test]
+        public void CreateFromHetergenousArrayLiteral()
+        {
+            var dfe = new DataFactoryExpression<Array>(HeterogenousArrayValue);
+            AssertHeterogenousArrayDfe(dfe);
+
+            dfe = HeterogenousArrayValue;
+            AssertHeterogenousArrayDfe(dfe);
         }
 
         [Test]
@@ -322,6 +361,18 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(ArrayJson, dfe.ToString());
         }
 
+        private static void AssertHeterogenousArrayDfe(DataFactoryExpression<Array> dfe)
+        {
+            Assert.IsTrue(dfe.HasLiteral);
+            Assert.AreEqual(5, dfe.Literal.Length);
+            Assert.AreEqual(1, dfe.Literal.GetValue(0));
+            Assert.AreEqual("a", dfe.Literal.GetValue(1));
+            Assert.AreEqual(new MyObject { X = 1, Y = "a" }, dfe.Literal.GetValue(2));
+            Assert.AreEqual(1.1, dfe.Literal.GetValue(3));
+            Assert.AreEqual(true, dfe.Literal.GetValue(4));
+            Assert.AreEqual(HeterogenousArrayToString, dfe.ToString());
+        }
+
         [Test]
         public void DeserailizationOfExpression()
         {
@@ -337,7 +388,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(ExpressionValue, dfe.ToString());
         }
 
-        private string GetSerializedString(IUtf8JsonSerializable payload, bool useConverter = false)
+        private string GetSerializedString<T>(DataFactoryExpression<T> payload, bool useConverter = false)
         {
             using var ms = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(ms);
@@ -347,7 +398,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             }
             else
             {
-                payload.Write(writer);
+                ((IUtf8JsonSerializable)payload).Write(writer);
             }
             writer.Flush();
 
@@ -356,49 +407,48 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             return sr.ReadToEnd();
         }
 
-        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForInt()
         {
             var dfe = JsonSerializer.Deserialize<DataFactoryExpression<int>>(IntJson);
-            var actual = GetSerializedString(dfe , true);
+            var actual = GetSerializedString(dfe, true);
             Assert.AreEqual(IntJson, actual);
         }
 
-        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForArray()
         {
             var dfe = JsonSerializer.Deserialize<DataFactoryExpression<Array>>(ArrayJson);
             var actual = GetSerializedString(dfe, true);
-            Assert.AreEqual(IntJson, actual);
+            Assert.AreEqual(ArrayJson, actual);
         }
 
-        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForBool()
         {
-            var dfe = JsonSerializer.Deserialize<DataFactoryExpression<int>>(BoolJson);
+            var dfe = JsonSerializer.Deserialize<DataFactoryExpression<bool>>(BoolJson);
             var actual = GetSerializedString(dfe, true);
-            Assert.AreEqual(IntJson, actual);
+            Assert.AreEqual(BoolJson, actual);
         }
 
-        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForDouble()
         {
             var dfe = JsonSerializer.Deserialize<DataFactoryExpression<double>>(DoubleJson);
             var actual = GetSerializedString(dfe, true);
-            Assert.AreEqual(IntJson, actual);
+#if NET461_OR_GREATER
+            Assert.AreEqual("1.1000000000000001", actual);
+#else
+            Assert.AreEqual(DoubleJson, actual);
+#endif
         }
 
-        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForEmptyArray()
         {
             var dfe = JsonSerializer.Deserialize<DataFactoryExpression<Array>>(EmptyArrayJson);
             var actual = GetSerializedString(dfe, true);
-            Assert.AreEqual(IntJson, actual);
+            Assert.AreEqual(EmptyArrayJson, actual);
         }
 
         [Ignore("Discussing if we should support SecureString or just string")]
@@ -407,25 +457,30 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = JsonSerializer.Deserialize<DataFactoryExpression<SecureString>>(StringJson);
             var actual = GetSerializedString(dfe, true);
-            Assert.AreEqual(IntJson, actual);
+            Assert.AreEqual(StringJson, actual);
         }
 
-        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForString()
         {
             var dfe = JsonSerializer.Deserialize<DataFactoryExpression<string>>(StringJson);
             var actual = GetSerializedString(dfe, true);
-            Assert.AreEqual(IntJson, actual);
+            Assert.AreEqual(StringJson, actual);
         }
 
-        [Ignore("Might remove these and provide extensions support in generator instead")]
         [Test]
         public void SerializationFromJsonConverterForExpression()
         {
             var dfe = JsonSerializer.Deserialize<DataFactoryExpression<int>>(ExpressionJson);
             var actual = GetSerializedString(dfe, true);
-            Assert.AreEqual(IntJson, actual);
+            Assert.AreEqual(ExpressionJson, actual);
+        }
+
+        [Test]
+        public void FailsIfCanConvertIsFalse()
+        {
+            var exception = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize<DataFactoryExpression<long>>(ExpressionJson));
+            Assert.IsTrue(exception.Message.StartsWith("The converter specified on"));
         }
     }
 }

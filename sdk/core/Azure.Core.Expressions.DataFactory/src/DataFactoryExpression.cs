@@ -50,18 +50,10 @@ namespace Azure.Core.Expressions.DataFactory
             }
         }
 
-        internal DataFactoryExpression(Optional<T> literal, string? expression)
+        internal DataFactoryExpression(string expression, string type)
         {
-            if (literal.HasValue)
-            {
-                HasLiteral = true;
-                _literal = literal.Value;
-            }
-            else
-            {
-                _type = "Expression";
-                _expression = expression;
-            }
+            _type = type;
+            _expression = expression;
         }
 
         /// <inheritdoc/>
@@ -85,7 +77,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// Converts a primitive value into a expression representing that value.
         /// </summary>
         /// <param name="literal"> The literal value. </param>
-        public static implicit operator DataFactoryExpression<T>(T literal) => new DataFactoryExpression<T>(literal, null);
+        public static implicit operator DataFactoryExpression<T>(T literal) => new DataFactoryExpression<T>(literal);
 
         /// <summary>
         /// Creates a new instance of DataFactoryExpression using the expression value.
@@ -95,8 +87,7 @@ namespace Azure.Core.Expressions.DataFactory
         public static DataFactoryExpression<T> FromExpression(string expression)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            Optional<T> literal = default;
-            return new DataFactoryExpression<T>(literal, expression);
+            return new DataFactoryExpression<T>(expression, "Expression");
         }
 
         /// <inheritdoc/>
