@@ -340,7 +340,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             message.Request.Uri = uri;
             message.Request.Headers.Add("Accept", "application/octet-stream");
 
-            await client.Pipeline.SendAsync(message, CancellationToken.None);
+            await client.Pipeline.SendAsync(message, context.CancellationToken);
 
             var response = message.Response;
             if (response.Status == 307 && response.Headers.TryGetValue("Location", out string value))
