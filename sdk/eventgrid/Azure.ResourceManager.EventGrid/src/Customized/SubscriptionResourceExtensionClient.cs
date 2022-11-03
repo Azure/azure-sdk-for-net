@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsForTopicTypeDataAsync(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicTypeAsync(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<EventGridSubscriptionData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsForTopicTypeData");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             async Task<Page<EventGridSubscriptionData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsForTopicTypeData");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsForTopicTypeData(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicType(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<EventGridSubscriptionData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsForTopicTypeData");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             Page<EventGridSubscriptionData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsForTopicTypeData");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsForTopicTypeDataAsync(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicTypeAsync(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<EventGridSubscriptionData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsForTopicTypeData");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             async Task<Page<EventGridSubscriptionData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsForTopicTypeData");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsForTopicTypeData(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicType(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<EventGridSubscriptionData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsForTopicTypeData");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             Page<EventGridSubscriptionData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsForTopicTypeData");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
