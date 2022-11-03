@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Compute
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/johnzhang-microsoft/azure-rest-api-specs/blob/dev/johnzhang/addReimageNotification/specification/compute/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "johnzhang-microsoft";
       public static readonly String GithubBranchName = "dev/johnzhang/addReimageNotification";
-      public static readonly String GithubCommidId = "44dd3528f8324e3c7431e8ba5ec8912d4a4a99dc";
+      public static readonly String GithubCommidId = "edb6fcd4fe01667973aac35696c455c652e1482e";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

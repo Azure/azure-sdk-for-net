@@ -9,14 +9,15 @@
       Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
       Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
     </Description>
-    <Version>58.1.0</Version>
+    <Version>58.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
         1. CloudService API calls updated to version 2022-04-04.
-        2. Addition of OS Image Scheduled Events for Virtual Machine Scale Sets
+        2. Adding OS Image Scheduled Events to the Scheduled Events Profile in Virtual Machines and Virtual Machine Scale Sets. This allows users to configure if a VM has scheduled events pop up when it's about to undergo an OS-related operation like a reimage or an OS upgrade.
+        3. Adding the Max Surge setting to the Rolling Upgrade Policy in Virtual Machine Scale Sets. Enabling Max Surge would create new VMs to upgrade the Scale Set, rather than updating the existing VMs. Existing VMs will be deleted once the new virtual machines are created for each batch.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

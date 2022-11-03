@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// determine the batch size.</param>
         /// <param name="prioritizeUnhealthyInstances">Upgrade all unhealthy
         /// instances in a scale set before any healthy instances.</param>
-        /// <param name="maxSurge">Create a new virtual machines to upgrade the
+        /// <param name="maxSurge">Create new virtual machines to upgrade the
         /// scale set, rather than updating the existing virtual machines.
         /// Existing virtual machines will be deleted once the new virtual
         /// machines are created for each batch.</param>
@@ -136,8 +136,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? PrioritizeUnhealthyInstances { get; set; }
 
         /// <summary>
-        /// Gets or sets create a new virtual machines to upgrade the scale
-        /// set, rather than updating the existing virtual machines. Existing
+        /// Gets or sets create new virtual machines to upgrade the scale set,
+        /// rather than updating the existing virtual machines. Existing
         /// virtual machines will be deleted once the new virtual machines are
         /// created for each batch.
         /// </summary>
