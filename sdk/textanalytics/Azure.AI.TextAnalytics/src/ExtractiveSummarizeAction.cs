@@ -9,26 +9,26 @@ namespace Azure.AI.TextAnalytics
     /// For example, set the model version, specify the order in which extracted
     /// sentences are returned, and more.
     /// </summary>
-    public class ExtractSummaryAction
+    public class ExtractiveSummarizeAction
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryAction"/>
+        /// Initializes a new instance of the <see cref="ExtractiveSummarizeAction"/>
         /// class which allows callers to specify details about how to execute
         /// an extractive text summarization action in a set of documents.
         /// For example, set the model version, specify the order in which extracted
         /// sentences are returned, and more.
         /// </summary>
-        public ExtractSummaryAction()
+        public ExtractiveSummarizeAction()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryAction"/>
-        /// class based on the values of a <see cref="ExtractSummaryOptions"/>.
+        /// Initializes a new instance of the <see cref="ExtractiveSummarizeAction"/>
+        /// class based on the values of a <see cref="ExtractiveSummarizeOptions"/>.
         /// It sets the <see cref="ModelVersion"/>, <see cref="DisableServiceLogs"/>,
         /// <see cref="MaxSentenceCount"/>, and <see cref="OrderBy"/> properties.
         /// </summary>
-        public ExtractSummaryAction(ExtractSummaryOptions options)
+        public ExtractiveSummarizeAction(ExtractiveSummarizeOptions options)
         {
             ModelVersion = options.ModelVersion;
             DisableServiceLogs = options.DisableServiceLogs;

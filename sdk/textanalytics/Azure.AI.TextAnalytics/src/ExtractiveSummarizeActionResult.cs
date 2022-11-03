@@ -7,16 +7,16 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the execution of an <see cref="ExtractSummaryAction"/> on the input documents.
+    /// The result of the execution of an <see cref="ExtractiveSummarizeAction"/> on the input documents.
     /// </summary>
-    public class ExtractSummaryActionResult : TextAnalyticsActionResult
+    public class ExtractiveSummarizeActionResult : TextAnalyticsActionResult
     {
-        private readonly ExtractSummaryResultCollection _documentsResults;
+        private readonly ExtractiveSummarizeResultCollection _documentsResults;
 
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal ExtractSummaryActionResult(ExtractSummaryResultCollection result, string actionName, DateTimeOffset completedOn)
+        internal ExtractiveSummarizeActionResult(ExtractiveSummarizeResultCollection result, string actionName, DateTimeOffset completedOn)
             : base(actionName, completedOn)
         {
             _documentsResults = result;
@@ -25,13 +25,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Action with an error.
         /// </summary>
-        internal ExtractSummaryActionResult(string actionName, DateTimeOffset completedOn, Error error)
+        internal ExtractiveSummarizeActionResult(string actionName, DateTimeOffset completedOn, Error error)
             : base(actionName, completedOn, error) { }
 
         /// <summary>
-        /// Gets the result of the execution of an <see cref="ExtractSummaryAction"/> per each input document.
+        /// Gets the result of the execution of an <see cref="ExtractiveSummarizeAction"/> per each input document.
         /// </summary>
-        public ExtractSummaryResultCollection DocumentsResults
+        public ExtractiveSummarizeResultCollection DocumentsResults
         {
             get
             {

@@ -10,25 +10,25 @@ namespace Azure.AI.TextAnalytics
     /// document, containing a collection of the <see cref="SummarySentence"/>
     /// objects extracted from that document.
     /// </summary>
-    public partial class ExtractSummaryResult : TextAnalyticsResult
+    public partial class ExtractiveSummarizeResult : TextAnalyticsResult
     {
         private readonly SummarySentenceCollection _sentences;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryResult"/> class.
+        /// Initializes a new instance of the <see cref="ExtractiveSummarizeResult"/> class.
         /// </summary>
-        internal ExtractSummaryResult(string id, TextDocumentStatistics statistics, SummarySentenceCollection sentences)
+        internal ExtractiveSummarizeResult(string id, TextDocumentStatistics statistics, SummarySentenceCollection sentences)
             : base(id, statistics)
         {
             _sentences = sentences;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryResult"/>.
+        /// Initializes a new instance of the <see cref="ExtractiveSummarizeResult"/>.
         /// </summary>
         /// <param name="id">Analyze operation id.</param>
         /// <param name="error">Operation error object.</param>
-        internal ExtractSummaryResult(string id, TextAnalyticsError error) : base(id, error) { }
+        internal ExtractiveSummarizeResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
         /// The collection of summary sentences extracted from the document.

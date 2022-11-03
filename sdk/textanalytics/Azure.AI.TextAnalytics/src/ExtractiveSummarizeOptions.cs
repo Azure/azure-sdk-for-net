@@ -7,13 +7,13 @@ namespace Azure.AI.TextAnalytics
     /// Options that allow callers to specify details about how the operation
     /// is run and what information is returned from it by the service.
     /// </summary>
-    public class ExtractSummaryOptions : TextAnalyticsRequestOptions
+    public class ExtractiveSummarizeOptions : TextAnalyticsRequestOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryOptions"/>
+        /// Initializes a new instance of the <see cref="ExtractiveSummarizeOptions"/>
         /// class.
         /// </summary>
-        public ExtractSummaryOptions()
+        public ExtractiveSummarizeOptions()
         {
         }
 
