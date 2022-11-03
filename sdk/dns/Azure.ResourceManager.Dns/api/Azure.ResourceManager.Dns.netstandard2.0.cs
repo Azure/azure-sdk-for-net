@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.AaaaRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.AaaaRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AaaaRecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class AaaaRecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public AaaaRecordData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.AaaaRecordInfo> AaaaRecords { get { throw null; } }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.ARecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.ARecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ARecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class ARecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public ARecordData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.ARecordInfo> ARecords { get { throw null; } }
@@ -71,22 +71,12 @@ namespace Azure.ResourceManager.Dns
     public partial class BaseRecordData : Azure.ResourceManager.Models.ResourceData
     {
         public BaseRecordData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.AaaaRecordInfo> AaaaRecords { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.ARecordInfo> ARecords { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.CaaRecordInfo> CaaRecords { get { throw null; } }
-        public string Cname { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.MXRecordInfo> MXRecords { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.NSRecordInfo> NSRecords { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.PtrRecordInfo> PtrRecords { get { throw null; } }
-        public Azure.ResourceManager.Dns.Models.SoaRecordInfo SoaRecordInfo { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.SrvRecordInfo> SrvRecords { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
         public long? TtlInSeconds { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.TxtRecordInfo> TxtRecords { get { throw null; } }
     }
     public partial class CaaRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.CaaRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.CaaRecordResource>, System.Collections.IEnumerable
     {
@@ -103,7 +93,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.CaaRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.CaaRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CaaRecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class CaaRecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public CaaRecordData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.CaaRecordInfo> CaaRecords { get { throw null; } }
@@ -137,7 +127,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.CnameRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.CnameRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CnameRecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class CnameRecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public CnameRecordData() { }
         public string Cname { get { throw null; } set { } }
@@ -219,8 +209,8 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.AaaaRecordResource> GetAaaaRecord(string aaaaRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.AaaaRecordResource>> GetAaaaRecordAsync(string aaaaRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.AaaaRecordCollection GetAaaaRecords() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dns.BaseRecordData> GetAllRecordData(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.BaseRecordData> GetAllRecordDataAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dns.RecordData> GetAllRecordData(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.RecordData> GetAllRecordDataAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.ARecordResource> GetARecord(string aRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.ARecordResource>> GetARecordAsync(string aRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.ARecordCollection GetARecords() { throw null; }
@@ -271,7 +261,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.MXRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.MXRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MXRecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class MXRecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public MXRecordData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.MXRecordInfo> MXRecords { get { throw null; } }
@@ -305,7 +295,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.NSRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.NSRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NSRecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class NSRecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public NSRecordData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.NSRecordInfo> NSRecords { get { throw null; } }
@@ -339,7 +329,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.PtrRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.PtrRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PtrRecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class PtrRecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public PtrRecordData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.PtrRecordInfo> PtrRecords { get { throw null; } }
@@ -358,15 +348,19 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.PtrRecordResource> Update(Azure.ResourceManager.Dns.PtrRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.PtrRecordResource>> UpdateAsync(Azure.ResourceManager.Dns.PtrRecordData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RecordData : Azure.ResourceManager.Models.ResourceData
+    public partial class RecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public RecordData() { }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public string Fqdn { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSeconds { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.AaaaRecordInfo> AaaaRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.ARecordInfo> ARecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.CaaRecordInfo> CaaRecords { get { throw null; } }
+        public string Cname { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.MXRecordInfo> MXRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.NSRecordInfo> NSRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.PtrRecordInfo> PtrRecords { get { throw null; } }
+        public Azure.ResourceManager.Dns.Models.SoaRecordInfo SoaRecordInfo { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.SrvRecordInfo> SrvRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.TxtRecordInfo> TxtRecords { get { throw null; } }
     }
     public partial class SoaRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.SoaRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.SoaRecordResource>, System.Collections.IEnumerable
     {
@@ -383,7 +377,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.SoaRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.SoaRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SoaRecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class SoaRecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public SoaRecordData() { }
         public Azure.ResourceManager.Dns.Models.SoaRecordInfo SoaRecord { get { throw null; } set { } }
@@ -417,7 +411,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.SrvRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.SrvRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SrvRecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class SrvRecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public SrvRecordData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.SrvRecordInfo> SrvRecords { get { throw null; } }
@@ -451,7 +445,7 @@ namespace Azure.ResourceManager.Dns
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.TxtRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.TxtRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TxtRecordData : Azure.ResourceManager.Dns.RecordData
+    public partial class TxtRecordData : Azure.ResourceManager.Dns.BaseRecordData
     {
         public TxtRecordData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.TxtRecordInfo> TxtRecords { get { throw null; } }

@@ -608,10 +608,10 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BaseRecordData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BaseRecordData> GetAllRecordDataAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RecordData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecordData> GetAllRecordDataAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BaseRecordData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RecordData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordData");
                 scope.Start();
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            async Task<Page<BaseRecordData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RecordData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordData");
                 scope.Start();
@@ -652,10 +652,10 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BaseRecordData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BaseRecordData> GetAllRecordData(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecordData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecordData> GetAllRecordData(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<BaseRecordData> FirstPageFunc(int? pageSizeHint)
+            Page<RecordData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordData");
                 scope.Start();
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            Page<BaseRecordData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RecordData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordData");
                 scope.Start();

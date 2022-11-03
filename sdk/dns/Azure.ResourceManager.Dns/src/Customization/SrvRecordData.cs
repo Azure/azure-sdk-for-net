@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the SrvRecord data model. </summary>
-    public partial class SrvRecordData : RecordData
+    public partial class SrvRecordData : BaseRecordData
     {
         /// <summary> Initializes a new instance of SrvRecordData. </summary>
         public SrvRecordData()

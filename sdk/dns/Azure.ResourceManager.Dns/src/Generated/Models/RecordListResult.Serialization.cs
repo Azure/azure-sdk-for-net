@@ -12,11 +12,11 @@ using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal partial class BaseRecordListResult
+    internal partial class RecordListResult
     {
-        internal static BaseRecordListResult DeserializeBaseRecordListResult(JsonElement element)
+        internal static RecordListResult DeserializeRecordListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<BaseRecordData>> value = default;
+            Optional<IReadOnlyList<RecordData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Dns.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BaseRecordData> array = new List<BaseRecordData>();
+                    List<RecordData> array = new List<RecordData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BaseRecordData.DeserializeBaseRecordData(item));
+                        array.Add(RecordData.DeserializeRecordData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new BaseRecordListResult(Optional.ToList(value), nextLink.Value);
+            return new RecordListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

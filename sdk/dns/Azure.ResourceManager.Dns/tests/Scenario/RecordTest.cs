@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsFalse(flag);
         }
 
-        private void ValidateRecordBaseInfo(RecordData recordData, string recordName)
+        private void ValidateRecordBaseInfo(BaseRecordData recordData, string recordName)
         {
             Assert.IsNotNull(recordData);
             Assert.IsNotNull(recordData.ETag);
