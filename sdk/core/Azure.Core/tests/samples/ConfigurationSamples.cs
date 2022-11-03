@@ -91,18 +91,18 @@ namespace Azure.Core.Samples
         [Test]
         public void SetPollyRetryPolicy()
         {
-            #region Snippet:SetPollyRetryPolicy
+            // #region Snippet:SetPollyRetryPolicy
             SecretClientOptions options = new SecretClientOptions()
             {
                 RetryPolicy = new PollyPolicy()
             };
-            #endregion
+            // #endregion
         }
 
         [Test]
         public void SetGlobalTimeoutRetryPolicy()
         {
-            #region Snippet:SetGlobalTimeoutRetryPolicy
+            // #region Snippet:SetGlobalTimeoutRetryPolicy
             var retryOptions = new RetryOptions
             {
                 Delay = TimeSpan.FromSeconds(2),
@@ -113,7 +113,7 @@ namespace Azure.Core.Samples
             {
                 RetryPolicy = new GlobalTimeoutRetryPolicy(retryOptions, timeout: TimeSpan.FromSeconds(30))
             };
-            #endregion
+            // #endregion
         }
     }
 }
