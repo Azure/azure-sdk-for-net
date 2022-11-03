@@ -18,12 +18,30 @@ namespace Azure.Data.SchemaRegistry.Tests
             TestDiagnostics = false;
         }
 
-        private SchemaRegistryClient CreateClient() =>
-            InstrumentClient(new SchemaRegistryClient(
-                TestEnvironment.SchemaRegistryEndpoint,
+        private SchemaRegistryClient CreateClient(string format)
+        {
+            string endpoint;
+            switch (format)
+            {
+                case "JSON":
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson;
+                    break;
+                case "Avro":
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
+                    break;
+                case "Custom":
+                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
+                    break;
+                default:
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
+                    break;
+            }
+
+            return InstrumentClient(new SchemaRegistryClient(
+                endpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new SchemaRegistryClientOptions())
-            ));
+                InstrumentClientOptions(new SchemaRegistryClientOptions())));
+        }
 
         private string GenerateSchemaName() => Recording.GenerateId("test-", 10);
 
@@ -35,16 +53,16 @@ namespace Azure.Data.SchemaRegistry.Tests
         // private BinaryData Custom_SchemaContent_V2 = BinaryData.FromString("Hello_V2"); TODO: update after new swagger
 
         private const string Avro = "Avro";
-        private const string Json = "Json";
+        private const string Json = "JSON";
         private const string Custom = "Custom";
 
         [RecordedTest]
         [TestCase(Avro)]
         [TestCase(Json)]
-        // [TestCase(Custom)] TODO update tests based on swagger
+        [TestCase(Custom)]
         public async Task CanRegisterSchema(string formatName)
         {
-            var client = CreateClient();
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -61,10 +79,10 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         [TestCase(Avro)]
         [TestCase(Json)]
-        // [TestCase(Custom)]
+        [TestCase(Custom)]
         public async Task CanRegisterNewVersionOfSchema(string formatName)
         {
-            var client = CreateClient();
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -86,10 +104,10 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         [TestCase(Avro)]
         [TestCase(Json)]
-        // [TestCase(Custom)]
+        [TestCase(Custom)]
         public async Task CanGetSchemaId(string formatName)
         {
-            var client = CreateClient();
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -106,10 +124,10 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         [TestCase(Avro)]
         [TestCase(Json)]
-        // [TestCase(Custom)]
+        [TestCase(Custom)]
         public async Task CanGetSchema(string formatName)
         {
-            var client = CreateClient();
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -126,10 +144,10 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         [TestCase(Avro)]
         [TestCase(Json)]
-        // [TestCase(Custom)]
+        [TestCase(Custom)]
         public async Task CanGetSchemaByVersion(string formatName)
         {
-            var client = CreateClient();
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -158,7 +176,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             var client = CreateClient();
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = new SchemaFormat("JSON");
+            var format = new SchemaFormat("NOTJSON");
             Assert.That(
                 async () => await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format),
                 Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
