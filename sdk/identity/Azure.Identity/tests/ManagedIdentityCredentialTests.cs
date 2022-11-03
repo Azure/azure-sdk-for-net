@@ -15,6 +15,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Diagnostics.Runtime.Interop;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -691,7 +692,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task VerifyClientAuthenticateReturnsInvalidJson([Values(200, 404)] int status)
+        public async Task VerifyClientAuthenticateReturnsInvalidJson([Values(200, 404, 403)] int status)
         {
             using var environment = new TestEnvVar(
                 new()
@@ -709,8 +710,8 @@ namespace Azure.Identity.Tests
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.IsInstanceOf(typeof(RequestFailedException), ex.InnerException);
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.IsInstanceOf(typeof(System.Text.Json.JsonException), ex.InnerException);
             Assert.That(ex.Message, Does.Contain(ManagedIdentitySource.UnexpectedResponse));
             await Task.CompletedTask;
         }
