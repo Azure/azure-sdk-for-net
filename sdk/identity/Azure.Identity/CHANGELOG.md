@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 - Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`.
+- `ManagedIdentityCredential` will no longer fail when a response received from the endpoint is invalid JSON. It now treats this scenario as if the credential is unavailable.
 
 ### Other Changes
 
