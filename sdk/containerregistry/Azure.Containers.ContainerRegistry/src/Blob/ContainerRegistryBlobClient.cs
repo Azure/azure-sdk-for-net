@@ -26,6 +26,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         /// <summary>
+        /// The HttpPipeline.
+        /// </summary>
+        public HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
         /// using anonymous access to the registry.  Only operations that support anonymous access are enabled.  Other service
         /// methods will throw <see cref="RequestFailedException"/> if called from this client.
