@@ -303,7 +303,7 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("NumberResolution")]
     public partial class NumberResolution
     {
-        internal NumberResolution(NumberKind numberKind, string value)
+        internal NumberResolution(NumberKind numberKind, double value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -312,7 +312,7 @@ namespace Azure.AI.TextAnalytics
             ResolutionKind = ResolutionKind.NumberResolution;
         }
 
-        internal NumberResolution(ResolutionKind resolutionKind, NumberKind numberKind, string value) : base(resolutionKind)
+        internal NumberResolution(ResolutionKind resolutionKind, NumberKind numberKind, double value) : base(resolutionKind)
         {
             NumberKind = numberKind;
             Value = value;
@@ -329,7 +329,7 @@ namespace Azure.AI.TextAnalytics
         /// A numeric representation of what the extracted text denotes.
         /// </summary>
         [CodeGenMember("Value")]
-        public string Value { get; }
+        public double Value { get; }
     }
 
     [CodeGenModel("NumericRangeResolution")]

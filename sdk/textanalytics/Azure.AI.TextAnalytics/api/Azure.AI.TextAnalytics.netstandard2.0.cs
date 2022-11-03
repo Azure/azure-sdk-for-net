@@ -790,7 +790,7 @@ namespace Azure.AI.TextAnalytics
     {
         internal NumberResolution() { }
         public Azure.AI.TextAnalytics.NumberKind NumberKind { get { throw null; } }
-        public string Value { get { throw null; } }
+        public double Value { get { throw null; } }
     }
     public partial class NumericRangeResolution : Azure.AI.TextAnalytics.BaseResolution
     {

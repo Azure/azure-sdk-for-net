@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics
             writer.WritePropertyName("numberKind");
             writer.WriteStringValue(NumberKind.ToString());
             writer.WritePropertyName("value");
-            writer.WriteStringValue(Value);
+            writer.WriteNumberValue(Value);
             writer.WritePropertyName("resolutionKind");
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics
         internal static NumberResolution DeserializeNumberResolution(JsonElement element)
         {
             NumberKind numberKind = default;
-            string value = default;
+            double value = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("value"))
                 {
-                    value = property.Value.GetString();
+                    value = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("resolutionKind"))
