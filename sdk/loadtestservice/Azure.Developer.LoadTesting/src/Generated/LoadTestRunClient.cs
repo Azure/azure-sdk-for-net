@@ -16,9 +16,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
-    // Data plane generated client. The TestRun service client.
-    /// <summary> The TestRun service client. </summary>
-    public partial class TestRunClient
+    // Data plane generated client. The LoadTestRun service client.
+    /// <summary> The LoadTestRun service client. </summary>
+    public partial class LoadTestRunClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,9 +32,35 @@ namespace Azure.Developer.LoadTesting
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of TestRunClient for mocking. </summary>
-        protected TestRunClient()
+        /// <summary> Initializes a new instance of LoadTestRunClient for mocking. </summary>
+        protected LoadTestRunClient()
         {
+        }
+
+        /// <summary> Initializes a new instance of LoadTestRunClient. </summary>
+        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public LoadTestRunClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of LoadTestRunClient. </summary>
+        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public LoadTestRunClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureLoadTestingClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary> Delete a test run by its name. </summary>
@@ -44,16 +70,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='DeleteAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string testRunId, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='DeleteTestRunAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteTestRunAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.DeleteTestRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(testRunId, context);
+                using HttpMessage message = CreateDeleteTestRunRequest(testRunId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -70,16 +96,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='Delete(String,RequestContext)']/*" />
-        public virtual Response Delete(string testRunId, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='DeleteTestRun(String,RequestContext)']/*" />
+        public virtual Response DeleteTestRun(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.DeleteTestRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(testRunId, context);
+                using HttpMessage message = CreateDeleteTestRunRequest(testRunId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -98,17 +124,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,RequestContent,String,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateTestRunAsync(String,RequestContent,String,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateTestRunAsync(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateTestRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(testRunId, content, oldTestRunId, context);
+                using HttpMessage message = CreateCreateOrUpdateTestRunRequest(testRunId, content, oldTestRunId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -127,17 +153,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,RequestContent,String,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateTestRun(String,RequestContent,String,RequestContext)']/*" />
+        public virtual Response CreateOrUpdateTestRun(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateTestRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(testRunId, content, oldTestRunId, context);
+                using HttpMessage message = CreateCreateOrUpdateTestRunRequest(testRunId, content, oldTestRunId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -154,12 +180,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetTestRunAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetTestRunAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetTestRun");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRun");
             scope.Start();
             try
             {
@@ -180,12 +206,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetTestRun(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRun(String,RequestContext)']/*" />
         public virtual Response GetTestRun(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetTestRun");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRun");
             scope.Start();
             try
             {
@@ -207,17 +233,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetFileAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetFileAsync(string testRunId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFileAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetTestRunFileAsync(string testRunId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileRequest(testRunId, fileId, context);
+                using HttpMessage message = CreateGetTestRunFileRequest(testRunId, fileId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -235,17 +261,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetFile(String,String,RequestContext)']/*" />
-        public virtual Response GetFile(string testRunId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFile(String,String,RequestContext)']/*" />
+        public virtual Response GetTestRunFile(string testRunId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileRequest(testRunId, fileId, context);
+                using HttpMessage message = CreateGetTestRunFileRequest(testRunId, fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -262,16 +288,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='StopAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> StopAsync(string testRunId, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRunAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> StopTestRunAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.Stop");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.StopTestRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopRequest(testRunId, context);
+                using HttpMessage message = CreateStopTestRunRequest(testRunId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -288,16 +314,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='Stop(String,RequestContext)']/*" />
-        public virtual Response Stop(string testRunId, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRun(String,RequestContext)']/*" />
+        public virtual Response StopTestRun(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.Stop");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.StopTestRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopRequest(testRunId, context);
+                using HttpMessage message = CreateStopTestRunRequest(testRunId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -314,12 +340,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetMetricNamespacesAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespacesAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetMetricNamespacesAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetMetricNamespaces");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricNamespaces");
             scope.Start();
             try
             {
@@ -340,12 +366,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetMetricNamespaces(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespaces(String,RequestContext)']/*" />
         public virtual Response GetMetricNamespaces(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetMetricNamespaces");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricNamespaces");
             scope.Start();
             try
             {
@@ -367,13 +393,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitionsAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitionsAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetMetricDefinitions");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDefinitions");
             scope.Start();
             try
             {
@@ -395,13 +421,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitions(String,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitions(String,String,RequestContext)']/*" />
         public virtual Response GetMetricDefinitions(string testRunId, string metricNamespace, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetMetricDefinitions");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDefinitions");
             scope.Start();
             try
             {
@@ -429,7 +455,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(String,String,String,String,String,RequestContent,String,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(String,String,String,String,String,RequestContent,String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string resultType, string timespan, RequestContent content, string aggregation = null, string interval = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
@@ -438,7 +464,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNull(resultType, nameof(resultType));
             Argument.AssertNotNull(timespan, nameof(timespan));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetMetrics");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetrics");
             scope.Start();
             try
             {
@@ -466,7 +492,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetMetrics(String,String,String,String,String,RequestContent,String,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetrics(String,String,String,String,String,RequestContent,String,String,RequestContext)']/*" />
         public virtual Response GetMetrics(string testRunId, string metricname, string metricNamespace, string resultType, string timespan, RequestContent content, string aggregation = null, string interval = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
@@ -475,7 +501,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNull(resultType, nameof(resultType));
             Argument.AssertNotNull(timespan, nameof(timespan));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetMetrics");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetrics");
             scope.Start();
             try
             {
@@ -497,13 +523,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAppComponentAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.CreateOrUpdateAppComponent");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateAppComponent");
             scope.Start();
             try
             {
@@ -525,13 +551,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponent(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponent(String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateAppComponent(string testRunId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.CreateOrUpdateAppComponent");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateAppComponent");
             scope.Start();
             try
             {
@@ -552,12 +578,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetAppComponentsAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetAppComponents");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetAppComponents");
             scope.Start();
             try
             {
@@ -578,12 +604,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetAppComponents(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponents(String,RequestContext)']/*" />
         public virtual Response GetAppComponents(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetAppComponents");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetAppComponents");
             scope.Start();
             try
             {
@@ -605,13 +631,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfigAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfigAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.CreateOrUpdateServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateServerMetricsConfig");
             scope.Start();
             try
             {
@@ -633,13 +659,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfig(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfig(String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateServerMetricsConfig(string testRunId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.CreateOrUpdateServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateServerMetricsConfig");
             scope.Start();
             try
             {
@@ -660,12 +686,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetServerMetricsConfigAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfig");
             scope.Start();
             try
             {
@@ -686,12 +712,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(String,RequestContext)']/*" />
         public virtual Response GetServerMetricsConfig(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestRunClient.GetServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfig");
             scope.Start();
             try
             {
@@ -717,10 +743,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetTestRunsAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunsAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string orderby = null, string continuationToken = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetTestRunsImplementationAsync("TestRunClient.GetTestRuns", orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+            return GetTestRunsImplementationAsync("LoadTestRunClient.GetTestRuns", orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetTestRunsImplementationAsync(string diagnosticsScopeName, string orderby, string continuationToken, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
@@ -752,10 +778,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/TestRunClient.xml" path="doc/members/member[@name='GetTestRuns(String,String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRuns(String,String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTestRuns(string orderby = null, string continuationToken = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetTestRunsImplementation("TestRunClient.GetTestRuns", orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+            return GetTestRunsImplementation("LoadTestRunClient.GetTestRuns", orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetTestRunsImplementation(string diagnosticsScopeName, string orderby, string continuationToken, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
@@ -775,7 +801,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string testRunId, RequestContext context)
+        internal HttpMessage CreateDeleteTestRunRequest(string testRunId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -791,7 +817,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string testRunId, RequestContent content, string oldTestRunId, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateTestRunRequest(string testRunId, RequestContent content, string oldTestRunId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -829,7 +855,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetFileRequest(string testRunId, string fileId, RequestContext context)
+        internal HttpMessage CreateGetTestRunFileRequest(string testRunId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -894,7 +920,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateStopRequest(string testRunId, RequestContext context)
+        internal HttpMessage CreateStopTestRunRequest(string testRunId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

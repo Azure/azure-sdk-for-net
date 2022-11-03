@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateLoadTestAsync(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+This sample shows how to call CreateOrUpdateLoadTestAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateAsync("<testId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateLoadTestAsync("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateLoadTestAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
@@ -65,7 +65,7 @@ var data = new {
     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
 };
 
-Response response = await client.CreateOrUpdateAsync("<testId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateLoadTestAsync("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
@@ -240,21 +240,21 @@ Schema for <c>Test</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateLoadTest(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+This sample shows how to call CreateOrUpdateLoadTest with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
-Response response = client.CreateOrUpdate("<testId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateLoadTest("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateLoadTest with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
@@ -304,7 +304,7 @@ var data = new {
     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
 };
 
-Response response = client.CreateOrUpdate("<testId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateLoadTest("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
@@ -479,38 +479,38 @@ Schema for <c>Test</c>:
 
 </remarks>
     </member>
-    <member name="DeleteAsync(String,RequestContext)">
+    <member name="DeleteLoadTestAsync(String,RequestContext)">
 <example>
-This sample shows how to call DeleteAsync with required parameters.
+This sample shows how to call DeleteLoadTestAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.DeleteAsync("<testId>");
+Response response = await client.DeleteLoadTestAsync("<testId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="Delete(String,RequestContext)">
+    <member name="DeleteLoadTest(String,RequestContext)">
 <example>
-This sample shows how to call Delete with required parameters.
+This sample shows how to call DeleteLoadTest with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = client.Delete("<testId>");
+Response response = client.DeleteLoadTest("<testId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetLoadTestAdministrationAsync(String,RequestContext)">
+    <member name="GetLoadTestAsync(String,RequestContext)">
 <example>
-This sample shows how to call GetLoadTestAdministrationAsync with required parameters and parse the result.
+This sample shows how to call GetLoadTestAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetLoadTestAdministrationAsync("<testId>");
+Response response = await client.GetLoadTestAsync("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
@@ -633,14 +633,14 @@ Schema for <c>Test</c>:
 
 </remarks>
     </member>
-    <member name="GetLoadTestAdministration(String,RequestContext)">
+    <member name="GetLoadTest(String,RequestContext)">
 <example>
-This sample shows how to call GetLoadTestAdministration with required parameters and parse the result.
+This sample shows how to call GetLoadTest with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetLoadTestAdministration("<testId>");
+Response response = client.GetLoadTest("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
@@ -763,28 +763,28 @@ Schema for <c>Test</c>:
 
 </remarks>
     </member>
-    <member name="UploadFileAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="UploadTestFileAsync(String,String,RequestContent,String,RequestContext)">
 <example>
-This sample shows how to call UploadFileAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call UploadTestFileAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = await client.UploadFileAsync("<testId>", "<fileId>", RequestContent.Create(data));
+Response response = await client.UploadTestFileAsync("<testId>", "<fileId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call UploadFileAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call UploadTestFileAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = await client.UploadFileAsync("<testId>", "<fileId>", RequestContent.Create(data), "<fileType>");
+Response response = await client.UploadTestFileAsync("<testId>", "<fileId>", RequestContent.Create(data), "<fileType>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -813,28 +813,28 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="UploadFile(String,String,RequestContent,String,RequestContext)">
+    <member name="UploadTestFile(String,String,RequestContent,String,RequestContext)">
 <example>
-This sample shows how to call UploadFile with required parameters and request content, and how to parse the result.
+This sample shows how to call UploadTestFile with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = client.UploadFile("<testId>", "<fileId>", RequestContent.Create(data));
+Response response = client.UploadTestFile("<testId>", "<fileId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call UploadFile with all parameters and request content, and how to parse the result.
+This sample shows how to call UploadTestFile with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = client.UploadFile("<testId>", "<fileId>", RequestContent.Create(data), "<fileType>");
+Response response = client.UploadTestFile("<testId>", "<fileId>", RequestContent.Create(data), "<fileType>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -863,14 +863,14 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetFileAsync(String,String,RequestContext)">
+    <member name="GetTestFileAsync(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFileAsync with required parameters and parse the result.
+This sample shows how to call GetTestFileAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetFileAsync("<testId>", "<fileId>");
+Response response = await client.GetTestFileAsync("<testId>", "<fileId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -899,14 +899,14 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetFile(String,String,RequestContext)">
+    <member name="GetTestFile(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFile with required parameters and parse the result.
+This sample shows how to call GetTestFile with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetFile("<testId>", "<fileId>");
+Response response = client.GetTestFile("<testId>", "<fileId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -935,26 +935,26 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="DeleteFileAsync(String,String,RequestContext)">
+    <member name="DeleteTestFileAsync(String,String,RequestContext)">
 <example>
-This sample shows how to call DeleteFileAsync with required parameters.
+This sample shows how to call DeleteTestFileAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.DeleteFileAsync("<testId>", "<fileId>");
+Response response = await client.DeleteTestFileAsync("<testId>", "<fileId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteFile(String,String,RequestContext)">
+    <member name="DeleteTestFile(String,String,RequestContext)">
 <example>
-This sample shows how to call DeleteFile with required parameters.
+This sample shows how to call DeleteTestFile with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = client.DeleteFile("<testId>", "<fileId>");
+Response response = client.DeleteTestFile("<testId>", "<fileId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1435,25 +1435,25 @@ Schema for <c>TestServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetLoadTestAdministrationsAsync(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
+    <member name="GetLoadTestsAsync(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
 <example>
-This sample shows how to call GetLoadTestAdministrationsAsync and parse the result.
+This sample shows how to call GetLoadTestsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetLoadTestAdministrationsAsync())
+await foreach (var data in client.GetLoadTestsAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetLoadTestAdministrationsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetLoadTestsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetLoadTestAdministrationsAsync("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234))
+await foreach (var data in client.GetLoadTestsAsync("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
@@ -1577,25 +1577,25 @@ Schema for <c>TestsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetLoadTestAdministrations(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
+    <member name="GetLoadTests(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
 <example>
-This sample shows how to call GetLoadTestAdministrations and parse the result.
+This sample shows how to call GetLoadTests and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetLoadTestAdministrations())
+foreach (var data in client.GetLoadTests())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetLoadTestAdministrations with all parameters, and how to parse the result.
+This sample shows how to call GetLoadTests with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetLoadTestAdministrations("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234))
+foreach (var data in client.GetLoadTests("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
@@ -1719,25 +1719,25 @@ Schema for <c>TestsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetFilesAsync(String,String,RequestContext)">
+    <member name="GetTestFilesAsync(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFilesAsync with required parameters and parse the result.
+This sample shows how to call GetTestFilesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetFilesAsync("<testId>"))
+await foreach (var data in client.GetTestFilesAsync("<testId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetFilesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetTestFilesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetFilesAsync("<testId>", "<continuationToken>"))
+await foreach (var data in client.GetTestFilesAsync("<testId>", "<continuationToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("url").ToString());
@@ -1767,25 +1767,25 @@ Schema for <c>FileInfoListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetFiles(String,String,RequestContext)">
+    <member name="GetTestFiles(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFiles with required parameters and parse the result.
+This sample shows how to call GetTestFiles with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetFiles("<testId>"))
+foreach (var data in client.GetTestFiles("<testId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetFiles with all parameters, and how to parse the result.
+This sample shows how to call GetTestFiles with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetFiles("<testId>", "<continuationToken>"))
+foreach (var data in client.GetTestFiles("<testId>", "<continuationToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("url").ToString());

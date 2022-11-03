@@ -45,17 +45,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string testId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateLoadTestAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateLoadTestAsync(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(testId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateLoadTestRequest(testId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -73,17 +73,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string testId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateLoadTest(String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdateLoadTest(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(testId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateLoadTestRequest(testId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -100,16 +100,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteLoadTestAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteLoadTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(testId, context);
+                using HttpMessage message = CreateDeleteLoadTestRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -126,16 +126,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='Delete(String,RequestContext)']/*" />
-        public virtual Response Delete(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteLoadTest(String,RequestContext)']/*" />
+        public virtual Response DeleteLoadTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(testId, context);
+                using HttpMessage message = CreateDeleteLoadTestRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -152,16 +152,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAdministrationAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetLoadTestAdministrationAsync(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetLoadTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestAdministration");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadTestAdministrationRequest(testId, context);
+                using HttpMessage message = CreateGetLoadTestRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -178,16 +178,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAdministration(String,RequestContext)']/*" />
-        public virtual Response GetLoadTestAdministration(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTest(String,RequestContext)']/*" />
+        public virtual Response GetLoadTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestAdministration");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadTestAdministrationRequest(testId, context);
+                using HttpMessage message = CreateGetLoadTestRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -207,18 +207,18 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadFileAsync(String,String,RequestContent,String,RequestContext)']/*" />
-        public virtual async Task<Response> UploadFileAsync(string testId, string fileId, RequestContent content, string fileType = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFileAsync(String,String,RequestContent,String,RequestContext)']/*" />
+        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadFileRequest(testId, fileId, content, fileType, context);
+                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -238,18 +238,18 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadFile(String,String,RequestContent,String,RequestContext)']/*" />
-        public virtual Response UploadFile(string testId, string fileId, RequestContent content, string fileType = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFile(String,String,RequestContent,String,RequestContext)']/*" />
+        public virtual Response UploadTestFile(string testId, string fileId, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadFileRequest(testId, fileId, content, fileType, context);
+                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -267,17 +267,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFileAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetFileAsync(string testId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFileAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetTestFileAsync(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -295,17 +295,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFile(String,String,RequestContext)']/*" />
-        public virtual Response GetFile(string testId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFile(String,String,RequestContext)']/*" />
+        public virtual Response GetTestFile(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -323,17 +323,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteFileAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteFileAsync(string testId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFileAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -351,17 +351,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteFile(String,String,RequestContext)']/*" />
-        public virtual Response DeleteFile(string testId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFile(String,String,RequestContext)']/*" />
+        public virtual Response DeleteTestFile(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -597,13 +597,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAdministrationsAsync(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetLoadTestAdministrationsAsync(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string continuationToken = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestsAsync(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetLoadTestsAsync(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string continuationToken = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetLoadTestAdministrationsImplementationAsync("LoadTestAdministrationClient.GetLoadTestAdministrations", orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+            return GetLoadTestsImplementationAsync("LoadTestAdministrationClient.GetLoadTests", orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
         }
 
-        private AsyncPageable<BinaryData> GetLoadTestAdministrationsImplementationAsync(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetLoadTestsImplementationAsync(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -611,8 +611,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLoadTestAdministrationsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context)
-                        : CreateGetLoadTestAdministrationsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+                        ? CreateGetLoadTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context)
+                        : CreateGetLoadTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -630,13 +630,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAdministrations(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetLoadTestAdministrations(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string continuationToken = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTests(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetLoadTests(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string continuationToken = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetLoadTestAdministrationsImplementation("LoadTestAdministrationClient.GetLoadTestAdministrations", orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+            return GetLoadTestsImplementation("LoadTestAdministrationClient.GetLoadTests", orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
         }
 
-        private Pageable<BinaryData> GetLoadTestAdministrationsImplementation(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetLoadTestsImplementation(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -644,8 +644,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLoadTestAdministrationsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context)
-                        : CreateGetLoadTestAdministrationsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+                        ? CreateGetLoadTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context)
+                        : CreateGetLoadTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -661,15 +661,15 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFilesAsync(String,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFilesAsync(String,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return GetFilesImplementationAsync("LoadTestAdministrationClient.GetFiles", testId, continuationToken, context);
+            return GetTestFilesImplementationAsync("LoadTestAdministrationClient.GetTestFiles", testId, continuationToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetFilesImplementationAsync(string diagnosticsScopeName, string testId, string continuationToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetTestFilesImplementationAsync(string diagnosticsScopeName, string testId, string continuationToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -677,8 +677,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetFilesRequest(testId, continuationToken, context)
-                        : CreateGetFilesNextPageRequest(nextLink, testId, continuationToken, context);
+                        ? CreateGetTestFilesRequest(testId, continuationToken, context)
+                        : CreateGetTestFilesNextPageRequest(nextLink, testId, continuationToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -694,15 +694,15 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFiles(String,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetFiles(string testId, string continuationToken = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFiles(String,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTestFiles(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return GetFilesImplementation("LoadTestAdministrationClient.GetFiles", testId, continuationToken, context);
+            return GetTestFilesImplementation("LoadTestAdministrationClient.GetTestFiles", testId, continuationToken, context);
         }
 
-        private Pageable<BinaryData> GetFilesImplementation(string diagnosticsScopeName, string testId, string continuationToken, RequestContext context)
+        private Pageable<BinaryData> GetTestFilesImplementation(string diagnosticsScopeName, string testId, string continuationToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -710,8 +710,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetFilesRequest(testId, continuationToken, context)
-                        : CreateGetFilesNextPageRequest(nextLink, testId, continuationToken, context);
+                        ? CreateGetTestFilesRequest(testId, continuationToken, context)
+                        : CreateGetTestFilesNextPageRequest(nextLink, testId, continuationToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -719,7 +719,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string testId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateLoadTestRequest(string testId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -737,7 +737,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string testId, RequestContext context)
+        internal HttpMessage CreateDeleteLoadTestRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -753,7 +753,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetLoadTestAdministrationRequest(string testId, RequestContext context)
+        internal HttpMessage CreateGetLoadTestRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -769,7 +769,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetLoadTestAdministrationsRequest(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetLoadTestsRequest(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -808,7 +808,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateUploadFileRequest(string testId, string fileId, RequestContent content, string fileType, RequestContext context)
+        internal HttpMessage CreateUploadTestFileRequest(string testId, string fileId, RequestContent content, string fileType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -832,7 +832,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateGetTestFileRequest(string testId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -850,7 +850,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateDeleteTestFileRequest(string testId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -868,7 +868,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetFilesRequest(string testId, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetTestFilesRequest(string testId, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -961,7 +961,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetLoadTestAdministrationsNextPageRequest(string nextLink, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetLoadTestsNextPageRequest(string nextLink, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -975,7 +975,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetFilesNextPageRequest(string nextLink, string testId, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetTestFilesNextPageRequest(string nextLink, string testId, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
