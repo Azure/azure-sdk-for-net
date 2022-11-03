@@ -17,7 +17,7 @@ namespace Azure.Data.AppConfiguration.Tests
     {
         private string specialChars = "~`!@#$^&()_+=[]{}|;\"'<>./-";
 
-        public ConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
