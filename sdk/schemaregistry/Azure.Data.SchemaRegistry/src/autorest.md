@@ -17,7 +17,7 @@ directive:
   from: swagger-document
   where: $.paths["/$schemaGroups/{groupName}/schemas/{schemaName}/versions/{schemaVersion}"].get
   transform: >
-    $.produces = ["application/json; serialization=Avro", "application/json; serialization=Json", "application/octet-stream"]
+    $.produces = ["application/json; serialization=Avro", "application/json; serialization=json", "application/octet-stream"]
 ```
 
 ### Update producers arrays - get id
@@ -45,7 +45,7 @@ directive:
       "type": "string",
       "enum": [
         "application/json; serialization=Avro",
-        "application/json; serialization=Json",
+        "application/json; serialization=json",
         "text/plain; charset=utf-8"
       ],
       "x-ms-enum": {
@@ -78,7 +78,7 @@ directive:
   transform: >
     $["Content-Type"]["enum"] = [
         "application/json; serialization=Avro",
-        "application/json; serialization=Json",
+        "application/json; serialization=json",
         "text/plain; charset=utf-8"
        ];
     $["Content-Type"]["x-ms-enum"] = {
@@ -94,7 +94,7 @@ directive:
   transform: >
     $["Content-Type"]["enum"] = [
         "application/json; serialization=Avro",
-        "application/json; serialization=Json",
+        "application/json; serialization=json",
         "text/plain; charset=utf-8"
        ];
     $["Content-Type"]["x-ms-enum"] = {
