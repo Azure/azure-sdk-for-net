@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation
             Optional<DateTimeOffset> creationTime = default;
             Optional<JobProvisioningState> provisioningState = default;
             Optional<string> runOn = default;
-            Optional<JobStatus> status = default;
+            Optional<AutomationJobStatus> status = default;
             Optional<string> statusDetails = default;
             Optional<DateTimeOffset?> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new JobStatus(property0.Value.GetString());
+                            status = new AutomationJobStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("statusDetails"))
