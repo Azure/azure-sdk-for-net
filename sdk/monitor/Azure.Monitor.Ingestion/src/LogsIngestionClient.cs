@@ -308,7 +308,7 @@ namespace Azure.Monitor.Ingestion
                                 continue;
                             }
                             // Check completed task for Exception/RequestFailedException and increase logsFailed count
-                            ProcessCompletedTask(ref exceptions, runningTasks, ref logsFailed, i, runningTask);
+                            ProcessCompletedTask(runningTasks[i], ref exceptions, ref logsFailed);
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
                             i--;
@@ -358,23 +358,23 @@ namespace Azure.Monitor.Ingestion
             return runningTasks.Select(_ => _.CurrentTask).Last().Result; //204 - response of last batch with header
         }
 
-        private static void ProcessCompletedTask(ref List<Exception> exceptions, List<(Task<Response> CurrentTask, int LogsCount)> runningTasks, ref int logsFailed, int i, Task<Response> runningTask)
+        private static void ProcessCompletedTask((Task<Response> CurrentTask, int LogsCount) runningTask, ref List<Exception> exceptions, ref int logsFailed)
         {
             // If current task has an exception, log the exception and add number of logs in this task to failed logs
-            if (runningTask.Exception != null)
+            if (runningTask.CurrentTask.Exception != null)
             {
                 AddException(
                     ref exceptions,
-                    runningTask.Exception);
-                logsFailed += runningTasks[i].LogsCount;
+                    runningTask.CurrentTask.Exception);
+                logsFailed += runningTask.LogsCount;
             }
             // If current task returned a response that was not a success, log the exception and add number of logs in this task to failed logs
-            else if (runningTask.Result.Status != 204)
+            else if (runningTask.CurrentTask.Result.Status != 204)
             {
                 AddException(
                     ref exceptions,
-                    new RequestFailedException(runningTask.Result));
-                logsFailed += runningTasks[i].LogsCount;
+                    new RequestFailedException(runningTask.CurrentTask.Result));
+                logsFailed += runningTask.LogsCount;
             }
         }
 
