@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -34,25 +37,25 @@ namespace Azure.Developer.LoadTesting
         {
         }
 
-        /// <summary> Associate an App Component (Azure resource) to a test or test run. </summary>
-        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Create a new test or update an existing test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentsAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string name, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAsync(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponents");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(name, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(testId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -62,25 +65,25 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Associate an App Component (Azure resource) to a test or test run. </summary>
-        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Create a new test or update an existing test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponents(String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdateAppComponents(string name, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdate(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponents");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(name, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(testId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -90,23 +93,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Delete an App Component. </summary>
-        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Delete a test by its name. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteAppComponentAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAppComponentAsync(string name, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(string testId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteAppComponent");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteAppComponentRequest(name, context);
+                using HttpMessage message = CreateDeleteRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -116,23 +119,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Delete an App Component. </summary>
-        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Delete a test by its name. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteAppComponent(String,RequestContext)']/*" />
-        public virtual Response DeleteAppComponent(string name, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='Delete(String,RequestContext)']/*" />
+        public virtual Response Delete(string testId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteAppComponent");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteAppComponentRequest(name, context);
+                using HttpMessage message = CreateDeleteRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -142,23 +145,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get App Component details by App Component name. </summary>
-        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Get load test details by test name. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentByNameAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetAppComponentByNameAsync(string name, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAdministrationAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetLoadTestAdministrationAsync(string testId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponentByName");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestAdministration");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAppComponentByNameRequest(name, context);
+                using HttpMessage message = CreateGetLoadTestAdministrationRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -168,23 +171,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get App Component details by App Component name. </summary>
-        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Get load test details by test name. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentByName(String,RequestContext)']/*" />
-        public virtual Response GetAppComponentByName(string name, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAdministration(String,RequestContext)']/*" />
+        public virtual Response GetLoadTestAdministration(string testId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponentByName");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestAdministration");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAppComponentByNameRequest(name, context);
+                using HttpMessage message = CreateGetLoadTestAdministrationRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -194,20 +197,28 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get App Components for a test or a test run by its name. </summary>
-        /// <param name="testRunId"> [Required, if testId is not provided] Test run Id. </param>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as multipart/form-data. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="fileType"> File type. Allowed values: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetAppComponentAsync(string testRunId = null, string testId = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadFileAsync(String,String,RequestContent,String,RequestContext)']/*" />
+        public virtual async Task<Response> UploadFileAsync(string testId, string fileId, RequestContent content, string fileType = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponent");
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAppComponentRequest(testRunId, testId, context);
+                using HttpMessage message = CreateUploadFileRequest(testId, fileId, content, fileType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -217,20 +228,28 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get App Components for a test or a test run by its name. </summary>
-        /// <param name="testRunId"> [Required, if testId is not provided] Test run Id. </param>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as multipart/form-data. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="fileType"> File type. Allowed values: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponent(String,String,RequestContext)']/*" />
-        public virtual Response GetAppComponent(string testRunId = null, string testId = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadFile(String,String,RequestContent,String,RequestContext)']/*" />
+        public virtual Response UploadFile(string testId, string fileId, RequestContent content, string fileType = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponent");
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAppComponentRequest(testRunId, testId, context);
+                using HttpMessage message = CreateUploadFileRequest(testId, fileId, content, fileType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -240,25 +259,245 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Configure server metrics for a test or test run. </summary>
-        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Get test file by the file name. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFileAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetFileAsync(string testId, string fileId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFileRequest(testId, fileId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get test file by the file name. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFile(String,String,RequestContext)']/*" />
+        public virtual Response GetFile(string testId, string fileId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFileRequest(testId, fileId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete file by the file name for a test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteFileAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteFileAsync(string testId, string fileId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteFileRequest(testId, fileId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete file by the file name for a test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteFile(String,String,RequestContext)']/*" />
+        public virtual Response DeleteFile(string testId, string fileId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteFileRequest(testId, fileId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Associate an app component (collection of azure resources) to a test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAppComponentAsync(string testId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateAppComponentRequest(testId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Associate an app component (collection of azure resources) to a test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponent(String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdateAppComponent(string testId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateAppComponentRequest(testId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get associated app component (collection of azure resources) for the given test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetAppComponentsAsync(string testId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponents");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAppComponentsRequest(testId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get associated app component (collection of azure resources) for the given test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponents(String,RequestContext)']/*" />
+        public virtual Response GetAppComponents(string testId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponents");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAppComponentsRequest(testId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Configure server metrics for a test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfigAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string name, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateServerMetricsConfig");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(name, content, context);
+                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(testId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -268,25 +507,25 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Configure server metrics for a test or test run. </summary>
-        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Configure server metrics for a test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfig(String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdateServerMetricsConfig(string name, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdateServerMetricsConfig(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateServerMetricsConfig");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(name, content, context);
+                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(testId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -296,365 +535,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get server metrics configuration by its name. </summary>
-        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsByNameAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetServerMetricsByNameAsync(string name, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsByName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetServerMetricsByNameRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get server metrics configuration by its name. </summary>
-        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsByName(String,RequestContext)']/*" />
-        public virtual Response GetServerMetricsByName(string name, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsByName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetServerMetricsByNameRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete server metrics configuration by its name. </summary>
-        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteServerMetricsAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteServerMetricsAsync(string name, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteServerMetrics");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteServerMetricsRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete server metrics configuration by its name. </summary>
-        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteServerMetrics(String,RequestContext)']/*" />
-        public virtual Response DeleteServerMetrics(string name, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteServerMetrics");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteServerMetricsRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get server metrics configuration for a test or test run by its name. </summary>
-        /// <param name="testRunId"> [Required, if testId is not provided] Test run Id. </param>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetServerMetricsAsync(string testRunId = null, string testId = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetrics");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetServerMetricsRequest(testRunId, testId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get server metrics configuration for a test or test run by its name. </summary>
-        /// <param name="testRunId"> [Required, if testId is not provided] Test run Id. </param>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetrics(String,String,RequestContext)']/*" />
-        public virtual Response GetServerMetrics(string testRunId = null, string testId = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetrics");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetServerMetricsRequest(testRunId, testId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get all default server metrics configuration for supported resource types. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerDefaultMetricsAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetServerDefaultMetricsAsync(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerDefaultMetrics");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetServerDefaultMetricsRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get all default server metrics configuration for supported resource types. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerDefaultMetrics(RequestContext)']/*" />
-        public virtual Response GetServerDefaultMetrics(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerDefaultMetrics");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetServerDefaultMetricsRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get all supported resource types for App Components(Azure resource types). </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetSupportedResourceTypesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetSupportedResourceTypesAsync(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetSupportedResourceTypes");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSupportedResourceTypesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get all supported resource types for App Components(Azure resource types). </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetSupportedResourceTypes(RequestContext)']/*" />
-        public virtual Response GetSupportedResourceTypes(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetSupportedResourceTypes");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSupportedResourceTypesRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a new test or Update an existing test. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateTestAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateTestAsync(string testId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateTestRequest(testId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a new test or Update an existing test. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateTest(String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdateTest(string testId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateTestRequest(testId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a test by its name. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteLoadTestAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteLoadTestAsync(string testId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteLoadTest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteLoadTestRequest(testId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a test by its name. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteLoadTest(String,RequestContext)']/*" />
-        public virtual Response DeleteLoadTest(string testId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteLoadTest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteLoadTestRequest(testId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get load test details by test name. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Get server metric configuration for the given test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetLoadTestAsync(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTest");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadTestRequest(testId, context);
+                using HttpMessage message = CreateGetServerMetricsConfigRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -664,23 +561,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get load test details by test name. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <summary> Get server metric configuration for the given test. </summary>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTest(String,RequestContext)']/*" />
-        public virtual Response GetLoadTest(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(String,RequestContext)']/*" />
+        public virtual Response GetServerMetricsConfig(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTest");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadTestRequest(testId, context);
+                using HttpMessage message = CreateGetServerMetricsConfigRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -691,288 +588,138 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
-        /// <param name="orderBy"> Sort on one of the field - lastModifiedDateTime, displayName, createdBy in (field asc/desc) format. eg: displayName asc. </param>
+        /// <param name="orderby"> Sort on one of the field - lastModifiedDateTime, displayName, createdBy in (field asc/desc) format. eg: displayName asc. </param>
         /// <param name="search"> Filter search based on searchable fields - testId, createdBy. </param>
-        /// <param name="lastUpdatedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
-        /// <param name="lastUpdatedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
-        /// <param name="maxPageSize"> Number of results in response. </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestSearchesAsync(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual async Task<Response> GetLoadTestSearchesAsync(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAdministrationsAsync(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetLoadTestAdministrationsAsync(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string continuationToken = null, int? maxpagesize = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestSearches");
-            scope.Start();
-            try
+            return GetLoadTestAdministrationsImplementationAsync("LoadTestAdministrationClient.GetLoadTestAdministrations", orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetLoadTestAdministrationsImplementationAsync(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using HttpMessage message = CreateGetLoadTestSearchesRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetLoadTestAdministrationsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context)
+                        : CreateGetLoadTestAdministrationsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
         /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
-        /// <param name="orderBy"> Sort on one of the field - lastModifiedDateTime, displayName, createdBy in (field asc/desc) format. eg: displayName asc. </param>
+        /// <param name="orderby"> Sort on one of the field - lastModifiedDateTime, displayName, createdBy in (field asc/desc) format. eg: displayName asc. </param>
         /// <param name="search"> Filter search based on searchable fields - testId, createdBy. </param>
-        /// <param name="lastUpdatedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
-        /// <param name="lastUpdatedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
-        /// <param name="maxPageSize"> Number of results in response. </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestSearches(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual Response GetLoadTestSearches(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAdministrations(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetLoadTestAdministrations(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string continuationToken = null, int? maxpagesize = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestSearches");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLoadTestSearchesRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetLoadTestAdministrationsImplementation("LoadTestAdministrationClient.GetLoadTestAdministrations", orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
         }
 
-        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as multipart/form-data. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="fileId"> Unique identifier for test file, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="fileType"> Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS). </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFileAsync(String,String,RequestContent,Int32,RequestContext)']/*" />
-        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
+        private Pageable<BinaryData> GetLoadTestAdministrationsImplementation(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
-            scope.Start();
-            try
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as multipart/form-data. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="fileId"> Unique identifier for test file, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="fileType"> Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS). </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFile(String,String,RequestContent,Int32,RequestContext)']/*" />
-        public virtual Response UploadTestFile(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get test file by the file name. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="fileId"> Unique identifier for test file, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFileAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetTestFileAsync(string testId, string fileId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get test file by the file name. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="fileId"> Unique identifier for test file, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFile(String,String,RequestContext)']/*" />
-        public virtual Response GetTestFile(string testId, string fileId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete file by the file name for a test. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="fileId"> Unique identifier for test file, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFileAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete file by the file name for a test. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="fileId"> Unique identifier for test file, must be a valid URL character ^[a-z0-9_-]*$. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFile(String,String,RequestContext)']/*" />
-        public virtual Response DeleteTestFile(string testId, string fileId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetLoadTestAdministrationsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context)
+                        : CreateGetLoadTestAdministrationsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
         /// <summary> Get all test files. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAllTestFilesAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetAllTestFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFilesAsync(String,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAllTestFiles");
-            scope.Start();
-            try
+            return GetFilesImplementationAsync("LoadTestAdministrationClient.GetFiles", testId, continuationToken, context);
+        }
+
+        private AsyncPageable<BinaryData> GetFilesImplementationAsync(string diagnosticsScopeName, string testId, string continuationToken, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using HttpMessage message = CreateGetAllTestFilesRequest(testId, continuationToken, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetFilesRequest(testId, continuationToken, context)
+                        : CreateGetFilesNextPageRequest(nextLink, testId, continuationToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
         /// <summary> Get all test files. </summary>
-        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAllTestFiles(String,String,RequestContext)']/*" />
-        public virtual Response GetAllTestFiles(string testId, string continuationToken = null, RequestContext context = null)
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFiles(String,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetFiles(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAllTestFiles");
-            scope.Start();
-            try
+            return GetFilesImplementation("LoadTestAdministrationClient.GetFiles", testId, continuationToken, context);
+        }
+
+        private Pageable<BinaryData> GetFilesImplementation(string diagnosticsScopeName, string testId, string continuationToken, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using HttpMessage message = CreateGetAllTestFilesRequest(testId, continuationToken, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetFilesRequest(testId, continuationToken, context)
+                        : CreateGetFilesNextPageRequest(nextLink, testId, continuationToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateAppComponentsRequest(string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string testId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -980,183 +727,7 @@ namespace Azure.Developer.LoadTesting
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/appcomponents/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteAppComponentRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/appcomponents/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAppComponentByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/appcomponents/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAppComponentRequest(string testRunId, string testId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/appcomponents", false);
-            if (testRunId != null)
-            {
-                uri.AppendQuery("testRunId", testRunId, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (testId != null)
-            {
-                uri.AppendQuery("testId", testId, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateServerMetricsConfigRequest(string name, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/serverMetricsConfig/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetServerMetricsByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/serverMetricsConfig/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteServerMetricsRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/serverMetricsConfig/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetServerMetricsRequest(string testRunId, string testId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/serverMetricsConfig", false);
-            if (testRunId != null)
-            {
-                uri.AppendQuery("testRunId", testRunId, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (testId != null)
-            {
-                uri.AppendQuery("testId", testId, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetServerDefaultMetricsRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/serverMetricsConfig/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetSupportedResourceTypesRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/serverMetricsConfig/supportedResourceTypes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateTestRequest(string testId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/loadtests/", false);
+            uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1166,7 +737,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteLoadTestRequest(string testId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -1174,7 +745,7 @@ namespace Azure.Developer.LoadTesting
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/loadtests/", false);
+            uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1182,7 +753,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetLoadTestRequest(string testId, RequestContext context)
+        internal HttpMessage CreateGetLoadTestAdministrationRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1190,7 +761,7 @@ namespace Azure.Developer.LoadTesting
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/loadtests/", false);
+            uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1198,7 +769,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetLoadTestSearchesRequest(string orderBy, string search, DateTimeOffset? lastUpdatedStartTime, DateTimeOffset? lastUpdatedEndTime, string continuationToken, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateGetLoadTestAdministrationsRequest(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1206,30 +777,30 @@ namespace Azure.Developer.LoadTesting
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/loadtests/sortAndFilter", false);
-            if (orderBy != null)
+            uri.AppendPath("/tests", false);
+            if (orderby != null)
             {
-                uri.AppendQuery("orderBy", orderBy, true);
+                uri.AppendQuery("orderby", orderby, true);
             }
             if (search != null)
             {
                 uri.AppendQuery("search", search, true);
             }
-            if (lastUpdatedStartTime != null)
+            if (lastModifiedStartTime != null)
             {
-                uri.AppendQuery("lastUpdatedStartTime", lastUpdatedStartTime.Value, "O", true);
+                uri.AppendQuery("lastModifiedStartTime", lastModifiedStartTime.Value, "O", true);
             }
-            if (lastUpdatedEndTime != null)
+            if (lastModifiedEndTime != null)
             {
-                uri.AppendQuery("lastUpdatedEndTime", lastUpdatedEndTime.Value, "O", true);
+                uri.AppendQuery("lastModifiedEndTime", lastModifiedEndTime.Value, "O", true);
             }
             if (continuationToken != null)
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);
             }
-            if (maxPageSize != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1237,7 +808,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateUploadTestFileRequest(string testId, string fileId, RequestContent content, int? fileType, RequestContext context)
+        internal HttpMessage CreateUploadFileRequest(string testId, string fileId, RequestContent content, string fileType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -1245,13 +816,13 @@ namespace Azure.Developer.LoadTesting
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/loadtests/", false);
+            uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileId, true);
             if (fileType != null)
             {
-                uri.AppendQuery("fileType", fileType.Value, true);
+                uri.AppendQuery("fileType", fileType, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1261,7 +832,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateGetFileRequest(string testId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1269,7 +840,7 @@ namespace Azure.Developer.LoadTesting
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/loadtests/", false);
+            uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileId, true);
@@ -1279,7 +850,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteTestFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateDeleteFileRequest(string testId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -1287,7 +858,7 @@ namespace Azure.Developer.LoadTesting
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/loadtests/", false);
+            uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileId, true);
@@ -1297,7 +868,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetAllTestFilesRequest(string testId, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetFilesRequest(string testId, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1305,14 +876,114 @@ namespace Azure.Developer.LoadTesting
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/loadtests/", false);
+            uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (continuationToken != null)
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateAppComponentRequest(string testId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/app-components", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetAppComponentsRequest(string testId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/app-components", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateServerMetricsConfigRequest(string testId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/server-metric-configs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetServerMetricsConfigRequest(string testId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/server-metric-configs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetLoadTestAdministrationsNextPageRequest(string nextLink, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetFilesNextPageRequest(string nextLink, string testId, string continuationToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
