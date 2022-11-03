@@ -30,12 +30,6 @@ namespace Azure
         public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
 
         /// <summary>
-        /// Gets or sets a value that indicates whether the request should follow redirection responses
-        /// during the current pipeline invocation.
-        /// </summary>
-        public bool AllowAutoRedirect { get; set; } = true;
-
-        /// <summary>
         /// The token to check for cancellation.
         /// </summary>
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;

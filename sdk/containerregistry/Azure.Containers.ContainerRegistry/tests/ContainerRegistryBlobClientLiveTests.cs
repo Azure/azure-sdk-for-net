@@ -277,82 +277,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetBlobLocation()
-        {
-            // Arrange
-            var client = CreateBlobClient("oci-artifact");
-            var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", blob);
-            string digest = default;
-            using (var fs = File.OpenRead(path))
-            {
-                var uploadResult = await client.UploadBlobAsync(fs);
-                digest = uploadResult.Value.Digest;
-            }
-
-            // Act
-            var context = new RequestContext()
-            {
-                AllowAutoRedirect = false
-            };
-
-            NullableResponse<DownloadBlobResult> result = await client.DownloadBlobAsync(digest, context);
-            Response response = result.GetRawResponse();
-
-            if (response.Status == 307 && response.Headers.TryGetValue("Location", out string value))
-            {
-                Uri redirectUri = new Uri(value);
-            }
-
-            // Clean up
-            await client.DeleteBlobAsync(digest);
-        }
-
-        [RecordedTest]
-        public async Task CanGetBlobLocation_Pipeline()
-        {
-            // Arrange
-            var client = CreateBlobClient("oci-artifact");
-            var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", blob);
-            string digest = default;
-            using (var fs = File.OpenRead(path))
-            {
-                var uploadResult = await client.UploadBlobAsync(fs);
-                digest = uploadResult.Value.Digest;
-            }
-
-            // Act
-            var context = new RequestContext()
-            {
-                AllowAutoRedirect = false
-            };
-
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(client.Endpoint.ToString(), false);
-            uri.AppendPath("/v2/", false);
-            uri.AppendPath(client.RepositoryName, true);
-            uri.AppendPath("/blobs/", false);
-            uri.AppendPath(digest, true);
-
-            var message = client.Pipeline.CreateMessage(context, new StatusCodeClassifier(stackalloc ushort[] { 200, 307 }));
-            message.Request.Method = RequestMethod.Get;
-            message.Request.Uri = uri;
-            message.Request.Headers.Add("Accept", "application/octet-stream");
-
-            await client.Pipeline.SendAsync(message, context.CancellationToken);
-
-            var response = message.Response;
-            if (response.Status == 307 && response.Headers.TryGetValue("Location", out string value))
-            {
-                Uri redirectUri = new Uri(value);
-            }
-
-            // Clean up
-            await client.DeleteBlobAsync(digest);
-        }
-
-        [RecordedTest]
         public async Task CanGetBlobLocation_Pipeline_HttpMessage()
         {
             // Arrange
@@ -375,7 +299,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             uri.AppendPath(digest, true);
 
             var message = client.Pipeline.CreateMessage();
-            message.SetProperty("AllowAutoRedirect", false);
+            message.AllowAutoRedirect = false;
             message.Request.Method = RequestMethod.Get;
             message.Request.Uri = uri;
             message.Request.Headers.Add("Accept", "application/octet-stream");

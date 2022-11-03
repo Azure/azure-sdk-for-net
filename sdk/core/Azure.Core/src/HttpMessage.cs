@@ -104,8 +104,6 @@ namespace Azure.Core
 
             context.Freeze();
 
-            AllowAutoRedirect = context.AllowAutoRedirect;
-
             if (context.Policies?.Count > 0)
             {
                 Policies ??= new(context.Policies.Count);
@@ -118,7 +116,11 @@ namespace Azure.Core
             }
         }
 
-        internal bool AllowAutoRedirect { get; private set; }
+        /// <summary>
+        /// Gets or sets a value that indicates whether the request should follow redirection responses
+        /// during the current pipeline invocation.
+        /// </summary>
+        public bool AllowAutoRedirect { get; set; } = true;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
