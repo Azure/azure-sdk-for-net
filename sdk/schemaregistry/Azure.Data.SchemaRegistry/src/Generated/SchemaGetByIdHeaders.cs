@@ -21,7 +21,7 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> URL location of schema, identified by schema group, schema name, and version. </summary>
         public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
         /// <summary> The content type for given schema. Each schema type has an associated content-type. </summary>
-        public Models.SchemaFormat? ContentType => _response.Headers.TryGetValue("Content-Type", out string value) ? new Models.SchemaFormat(value) : (Models.SchemaFormat?)null;
+        public SchemaFormat? ContentType => _response.Headers.TryGetValue("Content-Type", out string value) ? new SchemaFormat(value) : (SchemaFormat?)null;
         /// <summary> References specific schema in registry namespace. </summary>
         public string SchemaId => _response.Headers.TryGetValue("Schema-Id", out string value) ? value : null;
         /// <summary> URL location of schema, identified by schema ID. </summary>

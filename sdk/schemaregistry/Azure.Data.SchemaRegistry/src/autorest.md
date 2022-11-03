@@ -6,9 +6,20 @@ Run `dotnet build /t:GenerateCode` to generate code.
 title: SchemaRegistryClient
 require: https://github.com/Azure/azure-rest-api-specs/blob/70e53bf07d4f67000743c05d281930f2713a988e/specification/schemaregistry/data-plane/readme.md
 generation1-convenience-client: true
+save-inputs: true
 ```
 
 ## Swagger workarounds
+
+### Update producers arrays - get version
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths["/$schemaGroups/{groupName}/schemas/{schemaName}/versions/{schemaVersion}"].get
+  transform: |
+    $produces = ["application/json; serialization=Avro", "application/json; serialization=Json", "application/octet-stream"]
+```
 
 ### Add Content-Type header to GetById operation
 
