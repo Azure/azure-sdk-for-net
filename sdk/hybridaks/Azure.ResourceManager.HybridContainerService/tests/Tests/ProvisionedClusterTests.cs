@@ -27,25 +27,6 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
 
         [TestCase]
         [RecordedTest]
-        public void ListClustersInResourceGroup()
-        {
-            // ResourceIdentifier id = ProvisionedClustersResponseResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResourceGroup.Data.Name, "test-cluster");
-            ProvisionedClustersResponseCollection clusterCollection = new ProvisionedClustersResponseCollection(Client, ResourceGroup.Id);
-            var provisionedClusters = clusterCollection.GetAll();
-            Assert.AreEqual(provisionedClusters.ToList().Count, 0);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public void ListVnetsInResourceGroup()
-        {
-            VirtualNetworkCollection vnetCollection = new VirtualNetworkCollection(Client, ResourceGroup.Id);
-            var vnets = vnetCollection.GetAll();
-            Assert.AreEqual(vnets.ToList().Count, 0);
-        }
-
-        [TestCase]
-        [RecordedTest]
         public void CreateVnet()
         {
             VirtualNetworkCollection vnetCollection = new VirtualNetworkCollection(Client, ResourceGroup.Id);
@@ -65,6 +46,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Test exceeds global time limit of 15 seconds")]
         public void CreateProvisionedCluster()
         {
             // Create Vnet
