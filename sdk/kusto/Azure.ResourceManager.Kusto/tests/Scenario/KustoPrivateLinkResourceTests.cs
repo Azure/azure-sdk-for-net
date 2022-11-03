@@ -14,6 +14,12 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
         }
 
+        [SetUp]
+        protected async Task SetUp()
+        {
+            await BaseSetUp(cluster: true);
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task PrivateLinkResourceTests()

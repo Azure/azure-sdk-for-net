@@ -4,12 +4,15 @@ param(
 
     [Parameter(Mandatory)]
     [string] $ResourceGroup,
-    
+
     [Parameter(Mandatory)]
     [string] $SubscriptionId,
 
     [Parameter()]
-    [string] $IotHubName,
+    [string] $ClusterName,
+
+    [Parameter()]
+    [string] $DatabaseName,
 
     [Parameter()]
     [string] $AppRegistrationName
@@ -116,7 +119,7 @@ Write-Host("Writing user config file - $fileName`n")
 
 $config = @"
 {
-    "TestMode":  "Live"	
+    "TestMode":  "Live"
 }
 "@
 

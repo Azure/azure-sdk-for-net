@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Kusto.Models;
@@ -10,35 +11,54 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoAttachedDatabaseConfigurationTests : KustoManagementTestBase
     {
+        protected KustoClusterResource FollowerCluster { get; set; }
+
         public KustoAttachedDatabaseConfigurationTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
         {
+        }
+
+        [SetUp]
+        protected async Task SetUp()
+        {
+            await BaseSetUp(database: true);
+
+            FollowerCluster = (await ResourceGroup.GetKustoClusterAsync(TestEnvironment.FollowerClusterName)).Value;
         }
 
         [TestCase]
         [RecordedTest]
         public async Task AttachedDatabaseConfigurationTests()
         {
-            var attachedDatabaseConfigurationCollection = Cluster.GetKustoAttachedDatabaseConfigurations();
-            var attachedDatabaseConfigurationName = Recording.GenerateAssetName("sdkTestAttachedDatabaseConfiguration");
+            var attachedDatabaseConfigurationCollection = FollowerCluster.GetKustoAttachedDatabaseConfigurations();
+
+            var attachedDatabaseConfigurationName =
+                TestEnvironment.GenerateAssetName("sdkAttachedDatabaseConfiguration");
+
             var attachedDatabaseConfigurationDataCreate = new KustoAttachedDatabaseConfigurationData
             {
-                Location = KustoTestUtils.Location,
-                DatabaseName = "databasetest",
+                Location = Location,
+                DatabaseName = TestEnvironment.DatabaseName,
                 ClusterResourceId = Cluster.Id,
                 DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace
             };
+
             var attachedDatabaseConfigurationDataUpdate = new KustoAttachedDatabaseConfigurationData
             {
-                Location = KustoTestUtils.Location,
-                DatabaseName = "databasetest",
-                ClusterResourceId = ClientTestCluster.Id,
-                DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Union
+                Location = Location,
+                DatabaseName = TestEnvironment.DatabaseName,
+                ClusterResourceId = Cluster.Id,
+                DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
+                TableLevelSharingProperties = new KustoDatabaseTableLevelSharingProperties(
+                    new List<string> { "include" }, new List<string> { "exclude" },
+                    new List<string> { "externalInclude" }, new List<string> { "externalExclude" },
+                    new List<string> { "materializedViewInclude" }, new List<string> { "materializedViewExclude" }
+                )
             };
 
             Task<ArmOperation<KustoAttachedDatabaseConfigurationResource>>
                 CreateOrUpdateAttachedDatabaseConfigurationAsync(string attachedDatabaseConfigurationName,
-                    KustoAttachedDatabaseConfigurationData attachedDatabaseConfigurationData) =>
+                    KustoAttachedDatabaseConfigurationData attachedDatabaseConfigurationData, bool create) =>
                 attachedDatabaseConfigurationCollection.CreateOrUpdateAsync(WaitUntil.Completed,
                     attachedDatabaseConfigurationName, attachedDatabaseConfigurationData);
 

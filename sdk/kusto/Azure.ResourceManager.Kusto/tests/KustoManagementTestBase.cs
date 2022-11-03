@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Kusto.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -18,18 +15,12 @@ namespace Azure.ResourceManager.Kusto.Tests
 {
     public class KustoManagementTestBase : ManagementRecordedTestBase<KustoManagementTestEnvironment>
     {
-        protected ArmClient Client { get; private set; }
-        protected SubscriptionResource Subscription { get; private set; }
-        protected string SubscriptionId { get; private set; }
-        protected string ResourceGroupName { get; private set; }
-        protected ResourceGroupResource ResourceGroup { get; private set; }
-        protected string ClusterName { get; private set; }
-        protected KustoClusterData ClusterData { get; private set; }
-        protected KustoClusterResource Cluster { get; private set; }
-        protected KustoClusterResource ClientTestCluster { get; private set; }
-        protected string DatabaseName { get; private set; }
-        protected KustoReadWriteDatabase DatabaseData { get; private set; }
-        protected KustoDatabaseResource Database { get; private set; }
+        protected ArmClient Client { get; set; }
+        protected AzureLocation Location { get; set; }
+        protected SubscriptionResource Subscription { get; set; }
+        protected ResourceGroupResource ResourceGroup { get; set; }
+        protected KustoClusterResource Cluster { get; set; }
+        protected KustoDatabaseResource Database { get; set; }
 
         protected KustoManagementTestBase(bool isAsync, RecordedTestMode mode)
             : base(isAsync, mode)
@@ -41,50 +32,28 @@ namespace Azure.ResourceManager.Kusto.Tests
         {
         }
 
-        [SetUp]
-        public async Task BaseSetup()
+        protected async Task BaseSetUp(bool cluster = false, bool database = false)
         {
-            ResourceGroupName = Recording.GenerateAssetName("sdkTestResourceGroup");
-            ClusterName = Recording.GenerateAssetName("sdkTestCluster");
-            DatabaseName = Recording.GenerateAssetName("sdkTestDatabase");
-
             Client = GetArmClient();
-
             Subscription = await Client.GetDefaultSubscriptionAsync();
-            SubscriptionId = TestEnvironment.SubscriptionId;
+            Location = TestEnvironment.Location;
 
-            var resourceCollection = Subscription.GetResourceGroups();
-            var resourceGroupData = new ResourceGroupData(KustoTestUtils.Location);
-            ResourceGroup =
-                (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, ResourceGroupName,
-                    resourceGroupData)).Value;
+            ResourceGroup = (await Subscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup)).Value;
 
-            var clusterCollection = ResourceGroup.GetKustoClusters();
-            var clusterIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
-            var userAssignedIdentityResourceId = new ResourceIdentifier(
-                $"/subscriptions/{SubscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testclientidentity"
-            );
-            clusterIdentity.UserAssignedIdentities[userAssignedIdentityResourceId] = new UserAssignedIdentity();
-            ClusterData = new KustoClusterData(KustoTestUtils.Location, KustoTestUtils.Sku1) { Identity = clusterIdentity };
-            Cluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, ClusterName, ClusterData))
-                .Value;
-            ClientTestCluster = Client.GetKustoClusterResource(new ResourceIdentifier(
-                $"/subscriptions/{SubscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Kusto/clusters/eventgridclienttest"
-            ));
+            if (cluster || database)
+            {
+                Cluster = (await ResourceGroup.GetKustoClusterAsync(TestEnvironment.ClusterName)).Value;
+            }
 
-            // var databaseCollection = Cluster.GetKustoDatabases();
-            // DatabaseData = new KustoReadWriteDatabase
-            // {
-            //     Location = KustoTestUtils.Location,
-            //     SoftDeletePeriod = KustoTestUtils.SoftDeletePeriod1,
-            //     HotCachePeriod = KustoTestUtils.HotCachePeriod1
-            // };
-            // Database = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, DatabaseName, DatabaseData))
-            //     .Value;
+            if (database)
+            {
+                Database = (await Cluster.GetKustoDatabaseAsync(TestEnvironment.DatabaseName)).Value;
+            }
         }
 
         // Testing Methods
-        protected delegate Task<ArmOperation<T>> CreateOrUpdateAsync<T, S>(string resourceName, S resourceData);
+        protected delegate Task<ArmOperation<T>> CreateOrUpdateAsync<T, TS>(string resourceName, TS resourceData,
+            bool create);
 
         protected delegate Task<Response<T>> GetAsync<T>(string resourceName,
             CancellationToken cancellationToken = default);
@@ -94,34 +63,37 @@ namespace Azure.ResourceManager.Kusto.Tests
         protected delegate Task<Response<bool>> ExistsAsync(string resourceName,
             CancellationToken cancellationToken = default);
 
-        protected delegate void Validate<T, S>(T resource, string resourceName, S resourceData);
+        protected delegate void Validate<T, TS>(T resource, string resourceName, TS resourceData);
 
-        protected async Task CollectionTests<T, S>(
+        protected async Task CollectionTests<T, TS>(
             string resourceName,
-            S resourceDataCreate, S resourceDataUpdate,
-            CreateOrUpdateAsync<T, S> createOrUpdateAsync,
+            TS resourceDataCreate, TS resourceDataUpdate,
+            CreateOrUpdateAsync<T, TS> createOrUpdateAsync,
             GetAsync<T> getAsync,
             GetAllAsync<T> getAllAsync,
             ExistsAsync existsAsync,
-            Validate<T, S> validate,
-            T resource = default,
+            Validate<T, TS> validate,
             bool clusterChild = false,
             bool databaseChild = false
         )
         {
+            T resource;
+
             var fullResourceName = resourceName;
-            if (databaseChild) fullResourceName = $"{ClusterName}/{DatabaseName}/{resourceName}";
-            else if (clusterChild) fullResourceName = $"{ClusterName}/{DatabaseName}/{resourceName}";
+            if (databaseChild)
+                fullResourceName = $"{TestEnvironment.ClusterName}/{TestEnvironment.DatabaseName}/{resourceName}";
+            else if (clusterChild)
+                fullResourceName = $"{TestEnvironment.ClusterName}/{TestEnvironment.DatabaseName}/{resourceName}";
 
-            if (createOrUpdateAsync is not null)
+            if (resourceDataCreate is not null)
             {
-                if (resource is not null)
-                {
-                    resource = (await createOrUpdateAsync(resourceName, resourceDataCreate)).Value;
-                }
+                resource = (await createOrUpdateAsync(resourceName, resourceDataCreate, true)).Value;
                 // validate(resource, fullResourceName, resourceDataCreate);
+            }
 
-                resource = (await createOrUpdateAsync(resourceName, resourceDataUpdate)).Value;
+            if (resourceDataUpdate is not null)
+            {
+                resource = (await createOrUpdateAsync(resourceName, resourceDataUpdate, false)).Value;
                 // validate(resource, fullResourceName, resourceDataUpdate);
             }
 
@@ -138,20 +110,22 @@ namespace Azure.ResourceManager.Kusto.Tests
             // Assert.IsFalse(exists);
         }
 
-        protected async Task DeletionTest<T>(
+        protected static async Task DeletionTest<T>(
             string resourceName,
             GetAsync<T> getAsync,
             ExistsAsync existsAsync
         )
         {
-            var resource = await getAsync(resourceName);
+            var resource = (await getAsync(resourceName)).Value;
+
             var deleteAsync = resource.GetType().GetMethod("DeleteAsync");
-            // Assert.IsNotNull(deleteAsync);
-            var result = deleteAsync.Invoke(resource, new object[] { WaitUntil.Completed });
-            // Assert.IsNotNull(result);
+            Assert.IsNotNull(deleteAsync);
+            var result = deleteAsync.Invoke(resource, new object[] { WaitUntil.Completed, default });
+            Assert.IsNotNull(result);
             await (Task<ArmOperation>)result;
+
             var exists = await existsAsync(resourceName);
-            // Assert.IsFalse(exists);
+            Assert.IsFalse(exists);
         }
     }
 }

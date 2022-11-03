@@ -15,31 +15,41 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
         }
 
+        [SetUp]
+        protected async Task SetUp()
+        {
+            await BaseSetUp(cluster: true);
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task ManagedPrivateEndpointTests()
         {
             var managedPrivateEndpointCollection = Cluster.GetKustoManagedPrivateEndpoints();
-            var managedPrivateEndpointName = Recording.GenerateAssetName("sdkTestManagedPrivateEndpoint");
+
+            var managedPrivateEndpointName = TestEnvironment.GenerateAssetName("sdkManagedPrivateEndpoint");
+
             var managedPrivateEndpointDataCreate = new KustoManagedPrivateEndpointData
             {
                 PrivateLinkResourceId =
                     new ResourceIdentifier(
-                        $"/subscriptions/{SubscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22"),
+                        $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22"),
                 GroupId = "namespace",
                 RequestMessage = "Please Approve Kusto"
             };
+
             var managedPrivateEndpointDataUpdate = new KustoManagedPrivateEndpointData
             {
                 PrivateLinkResourceId =
                     new ResourceIdentifier(
-                        $"/subscriptions/{SubscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22"),
+                        $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22"),
                 GroupId = "namespace",
-                RequestMessage = "Approve Kusto"
+                RequestMessage = "Please Approve Kusto"
             };
 
             Task<ArmOperation<KustoManagedPrivateEndpointResource>> CreateOrUpdateManagedPrivateEndpointAsync(
-                string managedPrivateEndpointName, KustoManagedPrivateEndpointData managedPrivateEndpointData) =>
+                string managedPrivateEndpointName, KustoManagedPrivateEndpointData managedPrivateEndpointData,
+                bool create) =>
                 managedPrivateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, managedPrivateEndpointName,
                     managedPrivateEndpointData);
 

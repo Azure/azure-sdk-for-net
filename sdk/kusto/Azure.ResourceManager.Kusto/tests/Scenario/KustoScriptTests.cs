@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -15,33 +14,38 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
         }
 
+        [SetUp]
+        protected async Task SetUp()
+        {
+            await BaseSetUp(database: true);
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task ScriptTests()
         {
             var scriptCollection = Database.GetKustoScripts();
-            var scriptName = Recording.GenerateAssetName("sdkTestScript");
-            var scriptUri = new Uri("https://dortest.blob.core.windows.net/dor/df.txt");
-            var scriptUriSasToken = Environment.GetEnvironmentVariable("SCRIPTSASTOKEN");
+
+            var scriptName = "sdkScript";
+
             var scriptDataCreate = new KustoScriptData
             {
-                ScriptUri = scriptUri,
-                ScriptUriSasToken = scriptUriSasToken,
-                ForceUpdateTag = "tag1",
-                ShouldContinueOnErrors = false
-            };
-            var scriptDataUpdate = new KustoScriptData
-            {
-                ScriptUri = null,
-                ScriptUriSasToken = null,
                 ScriptContent =
                     ".create table table3 (Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32)",
                 ForceUpdateTag = "tag2",
                 ShouldContinueOnErrors = false
             };
 
+            var scriptDataUpdate = new KustoScriptData
+            {
+                ScriptUri = TestEnvironment.ScriptUri,
+                ScriptUriSasToken = TestEnvironment.ScriptSasToken,
+                ForceUpdateTag = "tag1",
+                ShouldContinueOnErrors = true
+            };
+
             Task<ArmOperation<KustoScriptResource>> CreateOrUpdateScriptAsync(string scriptName,
-                KustoScriptData scriptData) =>
+                KustoScriptData scriptData, bool create) =>
                 scriptCollection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, scriptData);
 
             await CollectionTests(

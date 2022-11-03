@@ -2,52 +2,40 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoPrivateEndpointConnectionTests : KustoManagementTestBase
     {
+        private PrivateEndpointData PrivateEndpointData;
+
         public KustoPrivateEndpointConnectionTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
         {
+        }
+
+        [SetUp]
+        protected async Task SetUp()
+        {
+            await BaseSetUp();
+
+            var privateEndpointCollection =
+                (await ResourceGroup.GetPrivateEndpointAsync(TestEnvironment.PrivateEndpointName)).Value;
+
+            PrivateEndpointData = privateEndpointCollection.Data;
         }
 
         [TestCase]
         [RecordedTest]
         public async Task PrivateEndpointConnectionTests()
         {
-            var privateEndpointCollection = ResourceGroup.GetPrivateEndpoints();
-            var privateEndpointName = Recording.GenerateAssetName("sdkTestPrivateEndpoint");
-            var privateEndpointData = new PrivateEndpointData
-            {
-                Location = KustoTestUtils.Location,
-                Subnet = new SubnetData
-                {
-                    Id = new ResourceIdentifier(
-                        $"/subscriptions/{SubscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Network/virtualNetworks/test-clients-vnet/subnets/default")
-                },
-                PrivateLinkServiceConnections =
-                {
-                    new NetworkPrivateLinkServiceConnection
-                    {
-                        Name = Recording.GenerateAssetName("sdkTestPrivateEndpoint"),
-                        GroupIds = { "cluster" },
-                        PrivateLinkServiceId = Cluster.Id,
-                        RequestMessage = "SDK test"
-                    }
-                },
-            };
-            await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName,
-                privateEndpointData);
             var privateEndpointConnectionCollection = Cluster.GetKustoPrivateEndpointConnections();
 
             await CollectionTests(
-                privateEndpointName, privateEndpointData, privateEndpointData,
+                TestEnvironment.PrivateEndpointName, PrivateEndpointData, PrivateEndpointData,
                 null,
                 privateEndpointConnectionCollection.GetAsync,
                 privateEndpointConnectionCollection.GetAllAsync,

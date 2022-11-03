@@ -16,18 +16,27 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
         }
 
+        [SetUp]
+        protected async Task SetUp()
+        {
+            await BaseSetUp(cluster: true);
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task ClusterPrincipalAssignmentTests()
         {
             var clusterPrincipalAssignmentCollection = Cluster.GetKustoClusterPrincipalAssignments();
-            var clusterPrincipalAssignmentName = Recording.GenerateAssetName("sdkTestClusterPrincipalAssignment");
+
+            var clusterPrincipalAssignmentName = TestEnvironment.GenerateAssetName("sdkClusterPrincipalAssignment");
+
             var clusterPrincipalAssignmentDataCreate = new KustoClusterPrincipalAssignmentData
             {
                 PrincipalId = Guid.Parse(TestEnvironment.ClientId),
                 Role = KustoClusterPrincipalRole.AllDatabasesViewer,
                 PrincipalType = KustoPrincipalAssignmentType.App
             };
+
             var clusterPrincipalAssignmentDataUpdate = new KustoClusterPrincipalAssignmentData
             {
                 PrincipalId = Guid.Parse(TestEnvironment.ClientId),
@@ -37,7 +46,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             Task<ArmOperation<KustoClusterPrincipalAssignmentResource>> CreateOrUpdateClusterPrincipalAssignmentAsync(
                 string clusterPrincipalAssignmentName,
-                KustoClusterPrincipalAssignmentData clusterPrincipalAssignmentData) =>
+                KustoClusterPrincipalAssignmentData clusterPrincipalAssignmentData, bool create) =>
                 clusterPrincipalAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed,
                     clusterPrincipalAssignmentName, clusterPrincipalAssignmentData);
 

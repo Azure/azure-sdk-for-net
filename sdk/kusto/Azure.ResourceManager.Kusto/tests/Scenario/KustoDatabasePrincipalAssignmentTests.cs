@@ -11,64 +11,60 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoDatabasePrincipalAssignmentTests : KustoManagementTestBase
     {
-        private KustoDatabasePrincipalAssignmentCollection _databasePrincipalAssignmentCollection;
-
-        private string _databasePrincipalAssignmentName;
-        private KustoDatabasePrincipalAssignmentData _databasePrincipalAssignmentDataCreate;
-        private KustoDatabasePrincipalAssignmentData _databasePrincipalAssignmentDataUpdate;
-
-        private CreateOrUpdateAsync<KustoDatabasePrincipalAssignmentResource, KustoDatabasePrincipalAssignmentData>
-            _createOrUpdateDatabasePrincipalAssignmentAsync;
-
         public KustoDatabasePrincipalAssignmentTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
-        public void DatabasePrincipalAssignmentSetup()
+        protected async Task SetUp()
         {
-            _databasePrincipalAssignmentCollection = Database.GetKustoDatabasePrincipalAssignments();
-
-            _databasePrincipalAssignmentName = Recording.GenerateAssetName("sdkTestDatabasePrincipalAssignment");
-            _databasePrincipalAssignmentDataCreate = new KustoDatabasePrincipalAssignmentData
-            {
-                PrincipalId = Guid.Parse(TestEnvironment.ClientId),
-                Role = KustoDatabasePrincipalRole.Admin,
-                PrincipalType = KustoPrincipalAssignmentType.App
-            };
-            _databasePrincipalAssignmentDataUpdate = new KustoDatabasePrincipalAssignmentData
-            {
-                PrincipalId = Guid.Parse(TestEnvironment.ClientId),
-                Role = KustoDatabasePrincipalRole.Viewer,
-                PrincipalType = KustoPrincipalAssignmentType.App
-            };
-
-            _createOrUpdateDatabasePrincipalAssignmentAsync =
-                (databasePrincipalAssignmentName, databasePrincipalAssignmentData) =>
-                    _databasePrincipalAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed,
-                        databasePrincipalAssignmentName, databasePrincipalAssignmentData);
+            await BaseSetUp(database: true);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task DatabasePrincipalAssignmentTests()
         {
+            var databasePrincipalAssignmentCollection = Database.GetKustoDatabasePrincipalAssignments();
+
+            var databasePrincipalAssignmentName = TestEnvironment.GenerateAssetName("sdkDatabasePrincipalAssignment");
+
+            var databasePrincipalAssignmentDataCreate = new KustoDatabasePrincipalAssignmentData
+            {
+                PrincipalId = Guid.Parse(TestEnvironment.ClientId),
+                Role = KustoDatabasePrincipalRole.Admin,
+                PrincipalType = KustoPrincipalAssignmentType.App
+            };
+
+            var databasePrincipalAssignmentDataUpdate = new KustoDatabasePrincipalAssignmentData
+            {
+                PrincipalId = Guid.Parse(TestEnvironment.ClientId),
+                Role = KustoDatabasePrincipalRole.Viewer,
+                PrincipalType = KustoPrincipalAssignmentType.App
+            };
+
+            Task<ArmOperation<KustoDatabasePrincipalAssignmentResource>>
+                CreateCreateOrUpdateDatabasePrincipalAssignmentAsync(string databasePrincipalAssignmentName,
+                    KustoDatabasePrincipalAssignmentData databasePrincipalAssignmentData, bool create) =>
+                databasePrincipalAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed,
+                    databasePrincipalAssignmentName, databasePrincipalAssignmentData);
+
             await CollectionTests(
-                _databasePrincipalAssignmentName, _databasePrincipalAssignmentDataCreate,
-                _databasePrincipalAssignmentDataUpdate,
-                _createOrUpdateDatabasePrincipalAssignmentAsync,
-                _databasePrincipalAssignmentCollection.GetAsync,
-                _databasePrincipalAssignmentCollection.GetAllAsync,
-                _databasePrincipalAssignmentCollection.ExistsAsync,
+                databasePrincipalAssignmentName, databasePrincipalAssignmentDataCreate,
+                databasePrincipalAssignmentDataUpdate,
+                CreateCreateOrUpdateDatabasePrincipalAssignmentAsync,
+                databasePrincipalAssignmentCollection.GetAsync,
+                databasePrincipalAssignmentCollection.GetAllAsync,
+                databasePrincipalAssignmentCollection.ExistsAsync,
                 ValidatePrincipalAssignment,
                 databaseChild: true
             );
 
             await DeletionTest(
-                _databasePrincipalAssignmentName,
-                _databasePrincipalAssignmentCollection.GetAsync,
-                _databasePrincipalAssignmentCollection.ExistsAsync
+                databasePrincipalAssignmentName,
+                databasePrincipalAssignmentCollection.GetAsync,
+                databasePrincipalAssignmentCollection.ExistsAsync
             );
 
             /*

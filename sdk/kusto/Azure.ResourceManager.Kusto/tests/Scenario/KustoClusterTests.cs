@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoClusterTests : KustoManagementTestBase
     {
+        private readonly KustoSku _sku1 = new(KustoSkuName.StandardD13V2, 2, KustoSkuTier.Standard);
+        private readonly KustoSku _sku2 = new(KustoSkuName.StandardD14V2, 2, KustoSkuTier.Standard);
+
         public KustoClusterTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
         {
@@ -24,48 +27,55 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         public async Task ClusterTests()
         {
             var clusterCollection = ResourceGroup.GetKustoClusters();
-            var clusterIdentity = ClusterData.Identity;
-            var userAssignedIdentityResourceId = clusterIdentity.UserAssignedIdentities.Keys.First().ToString();
-            var clusterDataUpdate = new KustoClusterData(KustoTestUtils.Location, KustoTestUtils.Sku2)
+
+            var clusterName = TestEnvironment.GenerateAssetName("sdkCluster") + "2";
+
+            var clusterIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
+            clusterIdentity.UserAssignedIdentities[TestEnvironment.UserAssignedIdentityId] = new UserAssignedIdentity();
+
+            var clusterDataCreate = new KustoClusterData(Location, _sku1) { Identity = clusterIdentity };
+
+            var clusterDataUpdate = new KustoClusterData(Location, _sku2)
             {
                 Identity = clusterIdentity,
                 TrustedExternalTenants = { new KustoClusterTrustedExternalTenant(TestEnvironment.TenantId) },
                 OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 100),
                 IsDiskEncryptionEnabled = true,
                 IsStreamingIngestEnabled = true,
-                // KeyVaultProperties = new KustoKeyVaultProperties(
-                //     "clientstestkv",
-                //     "6fd57d53ad6b4b53bacb062c98c761a0",
-                //     new Uri("https://clientstestkv.vault.azure.net/"),
-                //     userAssignedIdentityResourceId
-                // ),
-                PublicIPType = "DualStack"
+                PublicIPType = "DualStack",
+                KeyVaultProperties = new KustoKeyVaultProperties(
+                    TestEnvironment.KeyName,
+                    TestEnvironment.KeyVersion,
+                    TestEnvironment.KeyVaultUri,
+                    default
+                )
             };
 
-            Task<ArmOperation<KustoClusterResource>> CreateOrUpdateClusterAsync(string clusterName,
-                KustoClusterData clusterData) =>
-                clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
+            async Task<ArmOperation<KustoClusterResource>> CreateOrUpdateClusterAsync(string clusterName,
+                KustoClusterData clusterData, bool create)
+                => await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
 
             await CollectionTests(
-                ClusterName,
-                ClusterData, clusterDataUpdate,
+                clusterName,
+                clusterDataCreate, clusterDataUpdate,
                 CreateOrUpdateClusterAsync,
                 clusterCollection.GetAsync,
                 clusterCollection.GetAllAsync,
                 clusterCollection.ExistsAsync,
-                ValidateCluster,
-                resource: Cluster
+                ValidateCluster
             );
 
-            var cluster = (await clusterCollection.GetAsync(ClusterName)).Value;
-            await cluster.StopAsync(WaitUntil.Completed);
-            cluster = await clusterCollection.GetAsync(ClusterName);
-            // Assert.AreEqual(KustoClusterState.Stopped, cluster.Data.State);
-            await cluster.StartAsync(WaitUntil.Completed);
-            cluster = await clusterCollection.GetAsync(ClusterName);
-            // Assert.AreEqual(KustoClusterState.Running, cluster.Data.State);
+            var cluster = (await clusterCollection.GetAsync(clusterName)).Value;
 
-            await DeletionTest(ClusterName, clusterCollection.GetAsync, clusterCollection.ExistsAsync);
+            await cluster.StopAsync(WaitUntil.Completed);
+            cluster = await clusterCollection.GetAsync(clusterName);
+            Assert.AreEqual(KustoClusterState.Stopped, cluster.Data.State);
+
+            await cluster.StartAsync(WaitUntil.Completed);
+            cluster = await clusterCollection.GetAsync(clusterName);
+            Assert.AreEqual(KustoClusterState.Running, cluster.Data.State);
+
+            await DeletionTest(clusterName, clusterCollection.GetAsync, clusterCollection.ExistsAsync);
         }
 
         private void ValidateCluster(
@@ -92,13 +102,13 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
         private void AssertIdentityEquality(ManagedServiceIdentity identity1, ManagedServiceIdentity identity2)
         {
-            // Assert.IsNotNull(identity2?.PrincipalId);
-            // Assert.AreEqual(Guid.Parse(TestEnvironment.TenantId), identity2?.TenantId);
+            Assert.IsNotNull(identity2?.PrincipalId);
+            Assert.AreEqual(Guid.Parse(TestEnvironment.TenantId), identity2.TenantId);
             CollectionAssert.AreEqual(
                 identity1?.UserAssignedIdentities?.Keys.Select(resourceId => resourceId.ToString()).ToList(),
-                identity2?.UserAssignedIdentities?.Keys.Select(resourceId => resourceId.ToString()).ToList()
+                identity2.UserAssignedIdentities?.Keys.Select(resourceId => resourceId.ToString()).ToList()
             );
-            Assert.AreEqual(identity1?.ManagedServiceIdentityType, identity2?.ManagedServiceIdentityType);
+            Assert.AreEqual(identity1?.ManagedServiceIdentityType, identity2.ManagedServiceIdentityType);
         }
 
         private void AssertSkuEquality(KustoSku sku1, KustoSku sku2)

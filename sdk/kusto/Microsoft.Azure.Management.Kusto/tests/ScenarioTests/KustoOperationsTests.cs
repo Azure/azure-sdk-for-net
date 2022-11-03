@@ -692,6 +692,8 @@ namespace Kusto.Tests.ScenarioTests
             {
                 var testBase = new KustoTestBase(context);
 
+                testBase.client.Clusters.Update(testBase.resourceGroupForTest, testBase.clusterForKeyVaultPropertiesTest, null);
+
                 // Update the cluster with key vault properties
                 var cluster = testBase.client.Clusters.Update(testBase.resourceGroupForTest, testBase.clusterForKeyVaultPropertiesTest, new ClusterUpdate(keyVaultProperties: testBase.keyVaultProperties));
 
