@@ -1,7 +1,6 @@
 param id string
 param location string = resourceGroup().location
 
-id = '0000'
 output ID string = id
 
 module cluster 'cluster.bicep' = {

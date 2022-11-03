@@ -9,10 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.EventHubs" Version="1.0.0" />
-    <PackageReference Include="Azure.ResourceManager.IotHub" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Network" />
-    <PackageReference Include="Azure.ResourceManager.Storage" Version="1.0.0" />
     <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 </Project>

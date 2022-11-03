@@ -23,7 +23,7 @@ resource sdkUploadBlob 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     location: location
     kind: 'AzureCLI'
     properties: {
-        azCliVersion: '2.41.0'
+        azCliVersion: '2.26.1'
         retentionInterval: 'PT1H'
         environmentVariables: [
             {
@@ -39,7 +39,7 @@ resource sdkUploadBlob 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
                 value: fileContent
             }
         ]
-        scriptContent: 'echo $FILE_CONTENT > ${fileName} && az storage blob upload -f ${fileName} -c ${sdkContainer.name} -n ${fileName}'
+        scriptContent: 'echo "$FILE_CONTENT" > ${fileName}; az storage blob upload -f ${fileName} -c ${sdkContainer.name} -n ${fileName}'
     }
 }
 

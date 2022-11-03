@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Tests
 
         public ResourceIdentifier StorageAccountId => new(GetRecordedVariable("STORAGE_ACCOUNT_ID"));
         public Uri ScriptUri => new(GetRecordedVariable("SCRIPT_URI"));
-        public string ScriptSasToken => GetVariable("SCRIPT_SAS_TOKEN");
+        public string ScriptSasToken => GetRecordedVariable("SCRIPT_SAS_TOKEN");
 
         public ResourceIdentifier EventHubId => new(GetRecordedVariable("EVENT_HUB_ID"));
         public ResourceIdentifier IotHubId => new(GetRecordedVariable("IOT_HUB_ID"));
