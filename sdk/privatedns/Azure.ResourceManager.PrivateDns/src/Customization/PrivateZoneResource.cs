@@ -246,30 +246,30 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{MXRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{mxRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="MXRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="MXRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MXRecordResource>> GetMXRecordAsync(string MXRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MXRecordResource>> GetMXRecordAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetMXRecords().GetAsync(MXRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetMXRecords().GetAsync(mxRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{MXRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{mxRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="MXRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="MXRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MXRecordResource> GetMXRecord(string MXRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<MXRecordResource> GetMXRecord(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            return GetMXRecords().Get(MXRecordName, cancellationToken);
+            return GetMXRecords().Get(mxRecordName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PtrRecordResources in the PrivateZone. </summary>
