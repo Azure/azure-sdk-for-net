@@ -6,7 +6,7 @@ using System.Threading;
 namespace Azure.Messaging.WebPubSub.Clients
 {
     /// <summary>
-    /// The event args for message from server or groups
+    /// The event args for message from server
     /// </summary>
     public class WebPubSubServerMessageEventArgs
     {

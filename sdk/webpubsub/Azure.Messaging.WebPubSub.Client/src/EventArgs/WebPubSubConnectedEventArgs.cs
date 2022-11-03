@@ -24,14 +24,6 @@ namespace Azure.Messaging.WebPubSub.Clients
         public string ConnectionId { get; }
 
         /// <summary>
-        /// Groups that currently the client should in from client sdk's perspective. Groups that join or leave from server won't be taken into consideration.
-        /// E.g. Client A:  Join Group A ----------------> Leave Group A ------------> Join Group B ----------------> Reconnect
-        ///      Server:                                                                             Leave Group B
-        /// Then you will get Group B in the List. Because client can't recognize the operation from server.
-        /// </summary>
-        public IReadOnlyDictionary<string, Exception> GroupRestoreState { get; }
-
-        /// <summary>
         /// Gets a cancellation token related to the original operation that raised the event.
         /// </summary>
         public CancellationToken CancellationToken { get; }

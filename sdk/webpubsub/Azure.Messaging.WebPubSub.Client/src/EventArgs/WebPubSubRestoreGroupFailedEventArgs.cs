@@ -7,7 +7,10 @@ using System.Threading;
 namespace Azure.Messaging.WebPubSub.Clients
 {
     /// <summary>
-    /// The event args for stopped
+    /// Groups that have joined by client will be restore after reconnection. Groups that joined or leaved from server won't be taken into consideration.
+    /// E.g. Client A:  Join Group A ----------------> Leave Group A ------------> Join Group B ----------------> Reconnect
+    ///      Server:                                                                             Leave Group B
+    /// Then restore will contains Group B. Because client can't recognize the operation from server.
     /// </summary>
     public class WebPubSubRestoreGroupFailedEventArgs
     {
