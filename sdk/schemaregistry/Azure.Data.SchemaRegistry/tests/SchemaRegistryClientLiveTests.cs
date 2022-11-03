@@ -195,7 +195,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             Assert.That(
-                async () => await client.GetSchemaPropertiesAsync(schemaName, groupName, SchemaContent, SchemaFormat.ApplicationJsonSerializationAvro),
+                async () => await client.GetSchemaPropertiesAsync(schemaName, groupName, SchemaContent, SchemaFormat.Avro),
                 Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
                     .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
         }
@@ -231,11 +231,11 @@ namespace Azure.Data.SchemaRegistry.Tests
             switch (formatName)
             {
                 case Avro:
-                    return SchemaFormat.ApplicationJsonSerializationAvro;
+                    return SchemaFormat.Avro;
                 case Json:
-                    return SchemaFormat.ApplicationJsonSerializationJson;
+                    return SchemaFormat.Json;
                 case Custom:
-                    return SchemaFormat.TextPlainCharsetUtf8;
+                    return SchemaFormat.Custom;
                 default:
                     throw new ArgumentException("Format name was invalid.");
             }
