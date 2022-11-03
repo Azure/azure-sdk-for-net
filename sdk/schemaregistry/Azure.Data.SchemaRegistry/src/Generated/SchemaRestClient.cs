@@ -52,7 +52,7 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; serialization=Avro, application/json; serialization=json, text/plain; charset=utf-8");
+            request.Headers.Add("Accept", "application/json; serialization=Avro, application/json; serialization=Json, application/octet-stream");
             return message;
         }
 
@@ -61,7 +61,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
-        public async Task<ResponseWithHeaders<object, SchemaGetByIdHeaders>> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, SchemaGetByIdHeaders>> GetByIdAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -76,12 +76,6 @@ namespace Azure.Data.SchemaRegistry
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue<object, SchemaGetByIdHeaders>(value, headers, message.Response);
-                    }
-                case 200:
-                    {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
-                        object value = await streamReader.ReadToEndAsync().ConfigureAwait(false);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -94,7 +88,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
-        public ResponseWithHeaders<object, SchemaGetByIdHeaders> GetById(string id, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, SchemaGetByIdHeaders> GetById(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -109,12 +103,6 @@ namespace Azure.Data.SchemaRegistry
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue<object, SchemaGetByIdHeaders>(value, headers, message.Response);
-                    }
-                case 200:
-                    {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
-                        object value = streamReader.ReadToEnd();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -223,7 +211,7 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendPath(schemaVersion, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; serialization=Avro, application/json; serialization=json, text/plain; charset=utf-8");
+            request.Headers.Add("Accept", "application/json; serialization=Avro, application/json; serialization=Json, application/octet-stream");
             return message;
         }
 
@@ -234,7 +222,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
         /// <remarks> Gets one specific version of one schema. </remarks>
-        public async Task<ResponseWithHeaders<object, SchemaGetSchemaVersionHeaders>> GetSchemaVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, SchemaGetSchemaVersionHeaders>> GetSchemaVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -253,12 +241,6 @@ namespace Azure.Data.SchemaRegistry
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue<object, SchemaGetSchemaVersionHeaders>(value, headers, message.Response);
-                    }
-                case 200:
-                    {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
-                        object value = await streamReader.ReadToEndAsync().ConfigureAwait(false);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -273,7 +255,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
         /// <remarks> Gets one specific version of one schema. </remarks>
-        public ResponseWithHeaders<object, SchemaGetSchemaVersionHeaders> GetSchemaVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, SchemaGetSchemaVersionHeaders> GetSchemaVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -292,12 +274,6 @@ namespace Azure.Data.SchemaRegistry
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue<object, SchemaGetSchemaVersionHeaders>(value, headers, message.Response);
-                    }
-                case 200:
-                    {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
-                        object value = streamReader.ReadToEnd();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
