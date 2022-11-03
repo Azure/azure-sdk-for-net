@@ -46,7 +46,7 @@ namespace Azure.Developer.LoadTesting.Tests
             return InstrumentClient(new LoadTestingClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(new AzureLoadTestingClientOptions())).getLoadTestAdministration());
         }
 
-        private TestRunClient CreateTestRunClient()
+        private LoadTestRunClient CreateTestRunClient()
         {
             return InstrumentClient(new LoadTestingClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(new AzureLoadTestingClientOptions())).getLoadTestRun());
         }
@@ -120,7 +120,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task CreateAndUpdateTest()
         {
-            TestRunClient loadTestRun = CreateTestRunClient();
+            LoadTestRunClient loadTestRun = CreateTestRunClient();
 
             Response response = await loadTestRun.CreateAndUpdateTestAsync(testRunId, RequestContent.Create(
                     new

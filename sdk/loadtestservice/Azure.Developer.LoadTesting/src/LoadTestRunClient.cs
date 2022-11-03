@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class TestRunClient
+    public partial class LoadTestRunClient
     {
-        internal TestRunClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        internal LoadTestRunClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
         {
         }
 
-        internal TestRunClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        internal LoadTestRunClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));

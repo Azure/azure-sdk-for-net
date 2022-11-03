@@ -28,7 +28,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
 
             // getting appropriate Subclient
-            TestRunClient testRunClient = loadTestingClient.getLoadTestRun();
+            LoadTestRunClient testRunClient = loadTestingClient.getLoadTestRun();
 
             #region Snippet:Azure_Developer_LoadTesting_CreateAndUpdateTestAsync
 
