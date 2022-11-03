@@ -27,6 +27,14 @@ namespace Azure.Security.KeyVault.Keys
         public Azure.Security.KeyVault.Keys.KeyType KeyType { get { throw null; } }
         public string Name { get { throw null; } }
     }
+    public partial class CreateOkpKeyOptions : Azure.Security.KeyVault.Keys.CreateKeyOptions
+    {
+        public CreateOkpKeyOptions(string name, bool hardwareProtected = false) { }
+        public Azure.Security.KeyVault.Keys.KeyCurveName? CurveName { get { throw null; } set { } }
+        public bool HardwareProtected { get { throw null; } }
+        public Azure.Security.KeyVault.Keys.KeyType KeyType { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
     public partial class CreateRsaKeyOptions : Azure.Security.KeyVault.Keys.CreateKeyOptions
     {
         public CreateRsaKeyOptions(string name, bool hardwareProtected = false) { }
@@ -117,6 +125,8 @@ namespace Azure.Security.KeyVault.Keys
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateKeyAsync(string name, Azure.Security.KeyVault.Keys.KeyType keyType, Azure.Security.KeyVault.Keys.CreateKeyOptions keyOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> CreateOctKey(Azure.Security.KeyVault.Keys.CreateOctKeyOptions octKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateOctKeyAsync(Azure.Security.KeyVault.Keys.CreateOctKeyOptions octKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> CreateOkpKey(Azure.Security.KeyVault.Keys.CreateOkpKeyOptions okpKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateOkpKeyAsync(Azure.Security.KeyVault.Keys.CreateOkpKeyOptions okpKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> CreateRsaKey(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateRsaKeyAsync(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient GetCryptographyClient(string keyName, string keyVersion = null) { throw null; }
@@ -177,6 +187,7 @@ namespace Azure.Security.KeyVault.Keys
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public KeyCurveName(string value) { throw null; }
+        public static Azure.Security.KeyVault.Keys.KeyCurveName Ed25519 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyCurveName P256 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyCurveName P256K { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyCurveName P384 { get { throw null; } }
@@ -315,6 +326,8 @@ namespace Azure.Security.KeyVault.Keys
         public static Azure.Security.KeyVault.Keys.KeyType EcHsm { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyType Oct { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyType OctHsm { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.KeyType Okp { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.KeyType OkpHsm { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyType Rsa { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyType RsaHsm { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Keys.KeyType other) { throw null; }
@@ -567,6 +580,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SignatureAlgorithm(string value) { throw null; }
+        public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm EdDSA { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES256 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES256K { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES384 { get { throw null; } }
