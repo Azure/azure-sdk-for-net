@@ -11,6 +11,10 @@ namespace Azure.Data.SchemaRegistry
     [CodeGenModel("SchemaFormat")]
     public readonly partial struct SchemaFormat
     {
+        private const string AvroValue = "Avro";
+        private const string JsonValue = "JSON";
+        private const string CustomValue = "Custom";
+
         /// <summary> application/json; serialization=Avro. </summary>
         [CodeGenMember("ApplicationJsonSerializationAvro")]
         public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);

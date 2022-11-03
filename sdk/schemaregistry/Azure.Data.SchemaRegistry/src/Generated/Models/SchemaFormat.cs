@@ -21,10 +21,6 @@ namespace Azure.Data.SchemaRegistry
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
-
-        private const string AvroValue = "application/json; serialization=Avro";
-        private const string JsonValue = "application/json; serialization=Json";
-        private const string CustomValue = "text/plain; charset=utf-8";
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are not the same. </summary>

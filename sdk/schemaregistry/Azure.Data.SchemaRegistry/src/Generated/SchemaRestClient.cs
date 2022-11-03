@@ -211,7 +211,7 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendPath(schemaVersion, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; serialization=Avro, application/json; serialization=Json, application/octet-stream");
+            request.Headers.Add("Accept", "application/json; serialization=Avro, application/json; serialization=json, application/octet-stream");
             return message;
         }
 
