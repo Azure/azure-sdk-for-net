@@ -173,7 +173,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 
         public void CanCreateRegisterRequestForUnknownFormatType()
         {
-            var client = CreateClient();
+            var client = CreateClient("Avro");
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = new SchemaFormat("NOTJSON");
@@ -186,7 +186,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         public void CanCreateGetSchemaPropertiesRequestForUnknownFormatType()
         {
-            var client = CreateClient();
+            var client = CreateClient("Avro");
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = new SchemaFormat("NOTJSON");
@@ -199,7 +199,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         public void GetSchemaForNonexistentSchemaIdReturnsItemNotFoundErrorCode()
         {
-            var client = CreateClient();
+            var client = CreateClient("Avro");
             Assert.That(
                 async () => await client.GetSchemaAsync(Recording.Random.NewGuid().ToString()),
                 Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
@@ -209,7 +209,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         public void GetSchemaPropertiesForNonexistentSchemaReturnsItemNotFoundErrorCode()
         {
-            var client = CreateClient();
+            var client = CreateClient("Avro");
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             Assert.That(
