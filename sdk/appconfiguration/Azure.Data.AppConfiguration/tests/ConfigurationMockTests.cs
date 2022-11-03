@@ -860,17 +860,13 @@ namespace Azure.Data.AppConfiguration.Tests
         public async Task VerifyNullClientFilter()
         {
             var response = new MockResponse(200);
-
-            //response.SetContent(@"{{""id"":""flagtest"",""description"":""flagtestdesc"", ""enabled"": true, ""conditions"": {
-		    //""client_filters"": null}}");
-            //response.SetContent("{'id':'flagtest','description':'','enabled':true,'conditions':{}}");
-            response.SetContent(@"{""key"":""flagtestkey"",""id"":'flagtest"",""description"":"""",""enabled"":true,""conditions"":{""client_filters"":null}}");
+            response.SetContent("{\"key\":\".appconfig.featureflag/flagtest\",\"content_type\":\"application/vnd.microsoft.appconfig.ff+json;charset=utf-8\",\"value\":\"{\\\"id\\\":\\\"feature 1829697669\\\",\\\"enabled\\\":true,\\\"conditions\\\":{\\\"client_filters\\\":null}}\"}");
 
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            ConfigurationSetting setting = await service.GetConfigurationSettingAsync(s_testSetting.Key);
-            var feature = (FeatureFlagConfigurationSetting)setting;
+            var setting = await service.GetConfigurationSettingAsync(".appconfig.featureflag/flagtest");
+            var feature = (FeatureFlagConfigurationSetting)setting.Value;
             Assert.IsEmpty(feature.ClientFilters);
         }
 

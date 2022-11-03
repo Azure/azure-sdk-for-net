@@ -999,23 +999,18 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var settings = service.GetConfigurationSettingsAsync(new SettingSelector() { KeyFilter = "*" });
-                await foreach (var item in settings)
-                {
-                    var test = item.Value;
-                }
-                //await service.SetConfigurationSettingAsync(testSetting);
+                await service.SetConfigurationSettingAsync(testSetting);
 
-                //var selector = new SettingSelector { LabelFilter = testSetting.Label };
+                var selector = new SettingSelector { LabelFilter = testSetting.Label };
 
-                //Assert.AreEqual(null, selector.KeyFilter);
+                Assert.AreEqual(null, selector.KeyFilter);
 
-                //ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                //    .ToArray();
+                ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .ToArray();
 
-                ////At least there should be one key available
-                //CollectionAssert.IsNotEmpty(batch);
-                //Assert.AreEqual(testSetting.Label, batch[0].Label);
+                //At least there should be one key available
+                CollectionAssert.IsNotEmpty(batch);
+                Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
             finally
             {
