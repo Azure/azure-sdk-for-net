@@ -13,15 +13,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary> A class representing the VirtualNetwork data model. </summary>
-    public partial class VirtualNetworkData : TrackedResourceData
+    public partial class HybridContainerServiceVirtualNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualNetworkData(AzureLocation location) : base(location)
+        public HybridContainerServiceVirtualNetworkData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="location"> The location. </param>
         /// <param name="properties"> HybridAKSNetworkSpec defines the desired state of HybridAKSNetwork. </param>
         /// <param name="extendedLocation"></param>
-        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualNetworksProperties properties, VirtualNetworksExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridContainerServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualNetworksProperties properties, VirtualNetworksExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;

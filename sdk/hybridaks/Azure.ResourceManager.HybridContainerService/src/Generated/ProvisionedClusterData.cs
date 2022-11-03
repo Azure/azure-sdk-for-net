@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    /// <summary> A class representing the ProvisionedClustersResponse data model. </summary>
-    public partial class ProvisionedClustersResponseData : TrackedResourceData
+    /// <summary> A class representing the ProvisionedCluster data model. </summary>
+    public partial class ProvisionedClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersResponseData. </summary>
+        /// <summary> Initializes a new instance of ProvisionedClusterData. </summary>
         /// <param name="location"> The location. </param>
-        public ProvisionedClustersResponseData(AzureLocation location) : base(location)
+        public ProvisionedClusterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersResponseData. </summary>
+        /// <summary> Initializes a new instance of ProvisionedClusterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="identity"> Identity for the Provisioned cluster. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="properties"></param>
         /// <param name="extendedLocation"></param>
-        internal ProvisionedClustersResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisionedClustersResponseProperties properties, ProvisionedClustersResponseExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal ProvisionedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisionedClustersResponseProperties properties, ProvisionedClustersResponseExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Properties = properties;

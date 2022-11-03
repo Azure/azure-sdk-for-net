@@ -18,46 +18,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
-    /// A Class representing an AgentPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AgentPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAgentPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProvisionedClustersResponseResource" /> using the GetAgentPool method.
+    /// A Class representing a HybridContainerServiceAgentPool along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridContainerServiceAgentPoolResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetHybridContainerServiceAgentPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProvisionedClusterResource" /> using the GetHybridContainerServiceAgentPool method.
     /// </summary>
-    public partial class AgentPoolResource : ArmResource
+    public partial class HybridContainerServiceAgentPoolResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AgentPoolResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="HybridContainerServiceAgentPoolResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{provisionedClustersName}/agentPools/{agentPoolName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _agentPoolagentPoolClientDiagnostics;
-        private readonly AgentPoolRestOperations _agentPoolagentPoolRestClient;
-        private readonly AgentPoolData _data;
+        private readonly ClientDiagnostics _hybridContainerServiceAgentPoolagentPoolClientDiagnostics;
+        private readonly AgentPoolRestOperations _hybridContainerServiceAgentPoolagentPoolRestClient;
+        private readonly HybridContainerServiceAgentPoolData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AgentPoolResource"/> class for mocking. </summary>
-        protected AgentPoolResource()
+        /// <summary> Initializes a new instance of the <see cref="HybridContainerServiceAgentPoolResource"/> class for mocking. </summary>
+        protected HybridContainerServiceAgentPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AgentPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "HybridContainerServiceAgentPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AgentPoolResource(ArmClient client, AgentPoolData data) : this(client, data.Id)
+        internal HybridContainerServiceAgentPoolResource(ArmClient client, HybridContainerServiceAgentPoolData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AgentPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridContainerServiceAgentPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AgentPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridContainerServiceAgentPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _agentPoolagentPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string agentPoolagentPoolApiVersion);
-            _agentPoolagentPoolRestClient = new AgentPoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agentPoolagentPoolApiVersion);
+            _hybridContainerServiceAgentPoolagentPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hybridContainerServiceAgentPoolagentPoolApiVersion);
+            _hybridContainerServiceAgentPoolagentPoolRestClient = new AgentPoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridContainerServiceAgentPoolagentPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AgentPoolData Data
+        public virtual HybridContainerServiceAgentPoolData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Operation Id: agentPool_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AgentPoolResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.Get");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.Get");
             scope.Start();
             try
             {
-                var response = await _agentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgentPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Operation Id: agentPool_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AgentPoolResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HybridContainerServiceAgentPoolResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.Get");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.Get");
             scope.Start();
             try
             {
-                var response = _agentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgentPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.Delete");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.Delete");
             scope.Start();
             try
             {
-                var response = await _agentPoolagentPoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new HybridContainerServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.Delete");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.Delete");
             scope.Start();
             try
             {
-                var response = _agentPoolagentPoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new HybridContainerServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{provisionedClustersName}/agentPools/{agentPoolName}
         /// Operation Id: agentPool_Update
         /// </summary>
-        /// <param name="data"> The AgentPool to use. </param>
+        /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<AgentPoolResource>> UpdateAsync(AgentPoolData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> UpdateAsync(HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.Update");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.Update");
             scope.Start();
             try
             {
-                var response = await _agentPoolagentPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AgentPoolResource(Client, response.Value), response.GetRawResponse());
+                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,19 +218,19 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{provisionedClustersName}/agentPools/{agentPoolName}
         /// Operation Id: agentPool_Update
         /// </summary>
-        /// <param name="data"> The AgentPool to use. </param>
+        /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<AgentPoolResource> Update(AgentPoolData data, CancellationToken cancellationToken = default)
+        public virtual Response<HybridContainerServiceAgentPoolResource> Update(HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.Update");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.Update");
             scope.Start();
             try
             {
-                var response = _agentPoolagentPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new AgentPoolResource(Client, response.Value), response.GetRawResponse());
+                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AgentPoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.AddTag");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.AddTag");
             scope.Start();
             try
             {
@@ -262,13 +262,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _agentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AgentPoolData(current.Location);
+                    var patch = new HybridContainerServiceAgentPoolData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -294,12 +294,12 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AgentPoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<HybridContainerServiceAgentPoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.AddTag");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.AddTag");
             scope.Start();
             try
             {
@@ -308,13 +308,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _agentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AgentPoolData(current.Location);
+                    var patch = new HybridContainerServiceAgentPoolData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -339,11 +339,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AgentPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.SetTags");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.SetTags");
             scope.Start();
             try
             {
@@ -353,13 +353,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _agentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AgentPoolData(current.Location);
+                    var patch = new HybridContainerServiceAgentPoolData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -380,11 +380,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AgentPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<HybridContainerServiceAgentPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.SetTags");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.SetTags");
             scope.Start();
             try
             {
@@ -394,13 +394,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _agentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AgentPoolData(current.Location);
+                    var patch = new HybridContainerServiceAgentPoolData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -421,11 +421,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AgentPoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.RemoveTag");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.RemoveTag");
             scope.Start();
             try
             {
@@ -434,13 +434,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _agentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AgentPoolData(current.Location);
+                    var patch = new HybridContainerServiceAgentPoolData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -465,11 +465,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AgentPoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<HybridContainerServiceAgentPoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _agentPoolagentPoolClientDiagnostics.CreateScope("AgentPoolResource.RemoveTag");
+            using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.RemoveTag");
             scope.Start();
             try
             {
@@ -478,13 +478,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _agentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AgentPoolData(current.Location);
+                    var patch = new HybridContainerServiceAgentPoolData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

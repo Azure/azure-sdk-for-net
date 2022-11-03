@@ -13,16 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    public partial class ProvisionedClustersResponseData : IUtf8JsonSerializable
+    public partial class HybridContainerServiceVirtualNetworkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
@@ -49,11 +44,10 @@ namespace Azure.ResourceManager.HybridContainerService
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClustersResponseData DeserializeProvisionedClustersResponseData(JsonElement element)
+        internal static HybridContainerServiceVirtualNetworkData DeserializeVirtualNetworkData(JsonElement element)
         {
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ProvisionedClustersResponseProperties> properties = default;
-            Optional<ProvisionedClustersResponseExtendedLocation> extendedLocation = default;
+            Optional<VirtualNetworksProperties> properties = default;
+            Optional<VirtualNetworksExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -62,16 +56,6 @@ namespace Azure.ResourceManager.HybridContainerService
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -79,7 +63,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ProvisionedClustersResponseProperties.DeserializeProvisionedClustersResponseProperties(property.Value);
+                    properties = VirtualNetworksProperties.DeserializeVirtualNetworksProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"))
@@ -89,7 +73,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ProvisionedClustersResponseExtendedLocation.DeserializeProvisionedClustersResponseExtendedLocation(property.Value);
+                    extendedLocation = VirtualNetworksExtendedLocation.DeserializeVirtualNetworksExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -138,7 +122,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     continue;
                 }
             }
-            return new ProvisionedClustersResponseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, properties.Value, extendedLocation.Value);
+            return new HybridContainerServiceVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, extendedLocation.Value);
         }
     }
 }

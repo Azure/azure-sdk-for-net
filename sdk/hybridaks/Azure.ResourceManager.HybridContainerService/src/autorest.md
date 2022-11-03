@@ -25,6 +25,9 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
+rename-mapping:
+  ProvisionedClustersResponse: ProvisionedCluster
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -48,4 +51,7 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - AgentPool
+  - VirtualNetwork
 ```

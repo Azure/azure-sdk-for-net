@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
         [RecordedTest]
         public void CreateVnet()
         {
-            VirtualNetworkCollection vnetCollection = new VirtualNetworkCollection(Client, ResourceGroup.Id);
-            VirtualNetworkData vnetData = new VirtualNetworkData(DefaultLocation);
+            HybridContainerServiceVirtualNetworkCollection vnetCollection = new HybridContainerServiceVirtualNetworkCollection(Client, ResourceGroup.Id);
+            HybridContainerServiceVirtualNetworkData vnetData = new HybridContainerServiceVirtualNetworkData(DefaultLocation);
             vnetData.ExtendedLocation = new VirtualNetworksExtendedLocation();
             vnetData.ExtendedLocation.VirtualNetworksExtendedLocationType = "CustomLocation";
             vnetData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-1945484400/providers/microsoft.extendedlocation/customlocations/applhybridaks-1945484400-hybridaks-cl";
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
         public void CreateProvisionedCluster()
         {
             // Create Vnet
-            VirtualNetworkCollection vnetCollection = new VirtualNetworkCollection(Client, ResourceGroup.Id);
-            VirtualNetworkData vnetData = new VirtualNetworkData(DefaultLocation);
+            HybridContainerServiceVirtualNetworkCollection vnetCollection = new HybridContainerServiceVirtualNetworkCollection(Client, ResourceGroup.Id);
+            HybridContainerServiceVirtualNetworkData vnetData = new HybridContainerServiceVirtualNetworkData(DefaultLocation);
             vnetData.ExtendedLocation = new VirtualNetworksExtendedLocation();
             vnetData.ExtendedLocation.VirtualNetworksExtendedLocationType = "CustomLocation";
             vnetData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-1945484400/providers/microsoft.extendedlocation/customlocations/applhybridaks-1945484400-hybridaks-cl";
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             Assert.AreEqual(vnet.Value.Data.Properties.ProvisioningState, ProvisioningState.Succeeded);
 
             // Create Provisioned Cluster
-            ProvisionedClustersResponseCollection clusterCollection = new ProvisionedClustersResponseCollection(Client, ResourceGroup.Id);
-            ProvisionedClustersResponseCreateOrUpdateContent clusterData = new ProvisionedClustersResponseCreateOrUpdateContent(DefaultLocation);
+            var clusterCollection = new ProvisionedClusterCollection(Client, ResourceGroup.Id);
+            var clusterData = new ProvisionedClusterCreateOrUpdateContent(DefaultLocation);
             clusterData.ExtendedLocation = new ProvisionedClustersExtendedLocation();
             clusterData.ExtendedLocation.ProvisionedClustersExtendedLocationType = "CustomLocation";
             clusterData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-1945484400/providers/microsoft.extendedlocation/customlocations/applhybridaks-1945484400-hybridaks-cl";

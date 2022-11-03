@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClustersResponseCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ProvisionedClusterCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClustersResponseCreateOrUpdateContent DeserializeProvisionedClustersResponseCreateOrUpdateContent(JsonElement element)
+        internal static ProvisionedClusterCreateOrUpdateContent DeserializeProvisionedClusterCreateOrUpdateContent(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ProvisionedClustersAllProperties> properties = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ProvisionedClustersResponseCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, properties.Value, extendedLocation.Value);
+            return new ProvisionedClusterCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, properties.Value, extendedLocation.Value);
         }
     }
 }

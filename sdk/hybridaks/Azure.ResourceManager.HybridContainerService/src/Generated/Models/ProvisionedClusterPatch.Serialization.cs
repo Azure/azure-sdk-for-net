@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClustersResponsePatch : IUtf8JsonSerializable
+    public partial class ProvisionedClusterPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

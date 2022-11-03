@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    public partial class AgentPoolData : IUtf8JsonSerializable
+    public partial class HybridContainerServiceAgentPoolData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridContainerService
             writer.WriteEndObject();
         }
 
-        internal static AgentPoolData DeserializeAgentPoolData(JsonElement element)
+        internal static HybridContainerServiceAgentPoolData DeserializeHybridContainerServiceAgentPoolData(JsonElement element)
         {
             Optional<AgentPoolExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     continue;
                 }
             }
-            return new AgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(count), Optional.ToList(availabilityZones), Optional.ToNullable(maxCount), Optional.ToNullable(maxPods), Optional.ToNullable(minCount), Optional.ToNullable(mode), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(osType), nodeImageVersion.Value, vmSize.Value, cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value);
+            return new HybridContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(count), Optional.ToList(availabilityZones), Optional.ToNullable(maxCount), Optional.ToNullable(maxPods), Optional.ToNullable(minCount), Optional.ToNullable(mode), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(osType), nodeImageVersion.Value, vmSize.Value, cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value);
         }
     }
 }

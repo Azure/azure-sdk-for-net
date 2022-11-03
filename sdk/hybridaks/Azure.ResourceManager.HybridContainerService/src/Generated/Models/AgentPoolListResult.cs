@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of AgentPoolListResult. </summary>
         internal AgentPoolListResult()
         {
-            Value = new ChangeTrackingList<AgentPoolData>();
+            Value = new ChangeTrackingList<HybridContainerServiceAgentPoolData>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolListResult. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal AgentPoolListResult(IReadOnlyList<AgentPoolData> value, string nextLink)
+        internal AgentPoolListResult(IReadOnlyList<HybridContainerServiceAgentPoolData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<AgentPoolData> Value { get; }
+        public IReadOnlyList<HybridContainerServiceAgentPoolData> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

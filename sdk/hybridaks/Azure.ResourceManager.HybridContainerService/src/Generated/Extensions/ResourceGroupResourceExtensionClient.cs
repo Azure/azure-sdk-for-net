@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.HybridContainerService
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ProvisionedClustersResponseResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProvisionedClustersResponseResources and their operations over a ProvisionedClustersResponseResource. </returns>
-        public virtual ProvisionedClustersResponseCollection GetProvisionedClustersResponses()
+        /// <summary> Gets a collection of ProvisionedClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ProvisionedClusterResources and their operations over a ProvisionedClusterResource. </returns>
+        public virtual ProvisionedClusterCollection GetProvisionedClusters()
         {
-            return GetCachedClient(Client => new ProvisionedClustersResponseCollection(Client, Id));
+            return GetCachedClient(Client => new ProvisionedClusterCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
-        public virtual VirtualNetworkCollection GetVirtualNetworks()
+        /// <returns> An object representing collection of VirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
+        public virtual HybridContainerServiceVirtualNetworkCollection GetVirtualNetworks()
         {
-            return GetCachedClient(Client => new VirtualNetworkCollection(Client, Id));
+            return GetCachedClient(Client => new HybridContainerServiceVirtualNetworkCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of StorageSpaceResources in the ResourceGroupResource. </summary>

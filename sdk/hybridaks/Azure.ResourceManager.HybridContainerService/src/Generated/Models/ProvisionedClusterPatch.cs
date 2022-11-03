@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The provisionedClusters resource patch definition. </summary>
-    public partial class ProvisionedClustersResponsePatch
+    public partial class ProvisionedClusterPatch
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersResponsePatch. </summary>
-        public ProvisionedClustersResponsePatch()
+        /// <summary> Initializes a new instance of ProvisionedClusterPatch. </summary>
+        public ProvisionedClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

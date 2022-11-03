@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridContainerService
     /// A Class representing a HybridIdentityMetadata along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridIdentityMetadataResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetHybridIdentityMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProvisionedClustersResponseResource" /> using the GetHybridIdentityMetadata method.
+    /// Otherwise you can get one from its parent resource <see cref="ProvisionedClusterResource" /> using the GetHybridIdentityMetadata method.
     /// </summary>
     public partial class HybridIdentityMetadataResource : ArmResource
     {

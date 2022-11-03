@@ -22,28 +22,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProvisionedClustersResponseResource" /> and their operations.
-    /// Each <see cref="ProvisionedClustersResponseResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ProvisionedClustersResponseCollection" /> instance call the GetProvisionedClustersResponses method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ProvisionedClusterResource" /> and their operations.
+    /// Each <see cref="ProvisionedClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="ProvisionedClusterCollection" /> instance call the GetProvisionedClusters method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class ProvisionedClustersResponseCollection : ArmCollection, IEnumerable<ProvisionedClustersResponseResource>, IAsyncEnumerable<ProvisionedClustersResponseResource>
+    public partial class ProvisionedClusterCollection : ArmCollection, IEnumerable<ProvisionedClusterResource>, IAsyncEnumerable<ProvisionedClusterResource>
     {
-        private readonly ClientDiagnostics _provisionedClustersResponseProvisionedClustersClientDiagnostics;
-        private readonly ProvisionedClustersRestOperations _provisionedClustersResponseProvisionedClustersRestClient;
+        private readonly ClientDiagnostics _provisionedClusterClientDiagnostics;
+        private readonly ProvisionedClustersRestOperations _provisionedClusterRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProvisionedClustersResponseCollection"/> class for mocking. </summary>
-        protected ProvisionedClustersResponseCollection()
+        /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterCollection"/> class for mocking. </summary>
+        protected ProvisionedClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProvisionedClustersResponseCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ProvisionedClustersResponseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProvisionedClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _provisionedClustersResponseProvisionedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ProvisionedClustersResponseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ProvisionedClustersResponseResource.ResourceType, out string provisionedClustersResponseProvisionedClustersApiVersion);
-            _provisionedClustersResponseProvisionedClustersRestClient = new ProvisionedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, provisionedClustersResponseProvisionedClustersApiVersion);
+            _provisionedClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ProvisionedClusterResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ProvisionedClusterResource.ResourceType, out string provisionedClusterApiVersion);
+            _provisionedClusterRestClient = new ProvisionedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, provisionedClusterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,21 +62,21 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="content"> The ProvisionedClustersResponseCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The ProvisionedClusterCreateOrUpdateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="provisionedClustersName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="provisionedClustersName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProvisionedClustersResponseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string provisionedClustersName, ProvisionedClustersResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProvisionedClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string provisionedClustersName, ProvisionedClusterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.CreateOrUpdate");
+            using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _provisionedClustersResponseProvisionedClustersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<ProvisionedClustersResponseResource>(new ProvisionedClustersResponseOperationSource(Client), _provisionedClustersResponseProvisionedClustersClientDiagnostics, Pipeline, _provisionedClustersResponseProvisionedClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _provisionedClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,21 +95,21 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="content"> The ProvisionedClustersResponseCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The ProvisionedClusterCreateOrUpdateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="provisionedClustersName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="provisionedClustersName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ProvisionedClustersResponseResource> CreateOrUpdate(WaitUntil waitUntil, string provisionedClustersName, ProvisionedClustersResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProvisionedClusterResource> CreateOrUpdate(WaitUntil waitUntil, string provisionedClustersName, ProvisionedClusterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.CreateOrUpdate");
+            using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _provisionedClustersResponseProvisionedClustersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<ProvisionedClustersResponseResource>(new ProvisionedClustersResponseOperationSource(Client), _provisionedClustersResponseProvisionedClustersClientDiagnostics, Pipeline, _provisionedClustersResponseProvisionedClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _provisionedClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content, cancellationToken);
+                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="provisionedClustersName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="provisionedClustersName"/> is null. </exception>
-        public virtual async Task<Response<ProvisionedClustersResponseResource>> GetAsync(string provisionedClustersName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProvisionedClusterResource>> GetAsync(string provisionedClustersName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
 
-            using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.Get");
+            using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _provisionedClustersResponseProvisionedClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, cancellationToken).ConfigureAwait(false);
+                var response = await _provisionedClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProvisionedClustersResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProvisionedClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,18 +159,18 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="provisionedClustersName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="provisionedClustersName"/> is null. </exception>
-        public virtual Response<ProvisionedClustersResponseResource> Get(string provisionedClustersName, CancellationToken cancellationToken = default)
+        public virtual Response<ProvisionedClusterResource> Get(string provisionedClustersName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
 
-            using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.Get");
+            using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.Get");
             scope.Start();
             try
             {
-                var response = _provisionedClustersResponseProvisionedClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, cancellationToken);
+                var response = _provisionedClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProvisionedClustersResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProvisionedClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,17 +185,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Operation Id: ProvisionedClusters_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProvisionedClustersResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProvisionedClustersResponseResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProvisionedClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProvisionedClustersResponseResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ProvisionedClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.GetAll");
+                using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _provisionedClustersResponseProvisionedClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClustersResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _provisionedClusterRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.HybridContainerService
                     throw;
                 }
             }
-            async Task<Page<ProvisionedClustersResponseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ProvisionedClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.GetAll");
+                using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _provisionedClustersResponseProvisionedClustersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClustersResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _provisionedClusterRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -227,17 +227,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Operation Id: ProvisionedClusters_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProvisionedClustersResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProvisionedClustersResponseResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProvisionedClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ProvisionedClustersResponseResource> FirstPageFunc(int? pageSizeHint)
+            Page<ProvisionedClusterResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.GetAll");
+                using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _provisionedClustersResponseProvisionedClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClustersResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _provisionedClusterRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.HybridContainerService
                     throw;
                 }
             }
-            Page<ProvisionedClustersResponseResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ProvisionedClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.GetAll");
+                using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _provisionedClustersResponseProvisionedClustersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClustersResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _provisionedClusterRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -276,11 +276,11 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
 
-            using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.Exists");
+            using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _provisionedClustersResponseProvisionedClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _provisionedClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -303,11 +303,11 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
 
-            using var scope = _provisionedClustersResponseProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClustersResponseCollection.Exists");
+            using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.Exists");
             scope.Start();
             try
             {
-                var response = _provisionedClustersResponseProvisionedClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, cancellationToken: cancellationToken);
+                var response = _provisionedClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        IEnumerator<ProvisionedClustersResponseResource> IEnumerable<ProvisionedClustersResponseResource>.GetEnumerator()
+        IEnumerator<ProvisionedClusterResource> IEnumerable<ProvisionedClusterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HybridContainerService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ProvisionedClustersResponseResource> IAsyncEnumerable<ProvisionedClustersResponseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ProvisionedClusterResource> IAsyncEnumerable<ProvisionedClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

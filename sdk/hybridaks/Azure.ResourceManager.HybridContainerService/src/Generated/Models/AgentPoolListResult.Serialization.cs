@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static AgentPoolListResult DeserializeAgentPoolListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AgentPoolData>> value = default;
+            Optional<IReadOnlyList<HybridContainerServiceAgentPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AgentPoolData> array = new List<AgentPoolData>();
+                    List<HybridContainerServiceAgentPoolData> array = new List<HybridContainerServiceAgentPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolData.DeserializeAgentPoolData(item));
+                        array.Add(HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(item));
                     }
                     value = array;
                     continue;

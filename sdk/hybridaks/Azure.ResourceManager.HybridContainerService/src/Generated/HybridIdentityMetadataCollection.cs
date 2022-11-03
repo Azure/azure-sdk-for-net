@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A class representing a collection of <see cref="HybridIdentityMetadataResource" /> and their operations.
-    /// Each <see cref="HybridIdentityMetadataResource" /> in the collection will belong to the same instance of <see cref="ProvisionedClustersResponseResource" />.
-    /// To get a <see cref="HybridIdentityMetadataCollection" /> instance call the GetHybridIdentityMetadata method from an instance of <see cref="ProvisionedClustersResponseResource" />.
+    /// Each <see cref="HybridIdentityMetadataResource" /> in the collection will belong to the same instance of <see cref="ProvisionedClusterResource" />.
+    /// To get a <see cref="HybridIdentityMetadataCollection" /> instance call the GetHybridIdentityMetadata method from an instance of <see cref="ProvisionedClusterResource" />.
     /// </summary>
     public partial class HybridIdentityMetadataCollection : ArmCollection, IEnumerable<HybridIdentityMetadataResource>, IAsyncEnumerable<HybridIdentityMetadataResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProvisionedClustersResponseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProvisionedClustersResponseResource.ResourceType), nameof(id));
+            if (id.ResourceType != ProvisionedClusterResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProvisionedClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>
