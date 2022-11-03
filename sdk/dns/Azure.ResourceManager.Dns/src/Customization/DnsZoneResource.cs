@@ -16,7 +16,7 @@ using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 
 // <summary> Rename parameter: relativeRecordSetName to FooRecordName. </summary>
-[assembly: CodeGenSuppressType("MXRecordCollection")]
+[assembly: CodeGenSuppressType("DnsZoneResource")]
 
 namespace Azure.ResourceManager.Dns
 {
