@@ -856,6 +856,24 @@ namespace Azure.Data.AppConfiguration.Tests
             CollectionAssert.Contains(syncTokens, "syncToken1=val2");
         }
 
+        [Test]
+        public async Task VerifyNullClientFilter()
+        {
+            var response = new MockResponse(200);
+
+            //response.SetContent(@"{{""id"":""flagtest"",""description"":""flagtestdesc"", ""enabled"": true, ""conditions"": {
+		    //""client_filters"": null}}");
+            //response.SetContent("{'id':'flagtest','description':'','enabled':true,'conditions':{}}");
+            response.SetContent(@"{""key"":""flagtestkey"",""id"":'flagtest"",""description"":"""",""enabled"":true,""conditions"":{""client_filters"":null}}");
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.GetConfigurationSettingAsync(s_testSetting.Key);
+            var feature = (FeatureFlagConfigurationSetting)setting;
+            Assert.IsEmpty(feature.ClientFilters);
+        }
+
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
             using (var stream = new MemoryStream())
@@ -946,25 +964,6 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             json.WriteEndArray();
             json.WriteEndObject();
-        }
-
-        public async Task VerifyNullClientFilter()
-        {
-            var response = new MockResponse(200);
-            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
-
-            var mockTransport = new MockTransport(response);
-            ConfigurationClient service = CreateTestService(mockTransport);
-
-            ConfigurationSetting setting = await service.GetConfigurationSettingAsync(s_testSetting.Key);
-            var feature = new FeatureFlagConfigurationSetting();
-            feature.ClientFilters = null;
-            MockRequest request = mockTransport.SingleRequest;
-
-            AssertRequestCommon(request);
-            Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}", request.Uri.ToString());
-            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
     }
 }
