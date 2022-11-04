@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/topics/{topicName}";
 
             var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
-            var eventSubscription = new EventSubscriptionData()
+            var eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("TestSuffix", eventSubscriptionResponse.Data.Filter.SubjectEndsWith);
 
             // Update the event subscription
-            var eventSubscriptionUpdateParameters = new EventSubscriptionPatch()
+            var eventSubscriptionUpdateParameters = new EventGridSubscriptionPatch()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("DynamicDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[1].Name);
 
             // List event subscriptions
-            var eventSubscriptionsPage = await ResourceGroup.GetRegionalEventSubscriptionsAsync(DefaultLocation).ToEnumerableAsync();
-            Assert.NotNull(eventSubscriptionsPage.FirstOrDefault(x => x.Data.Name.Equals(eventSubscriptionName)));
+            var eventSubscriptionsPage = await ResourceGroup.GetRegionalEventSubscriptionsDataAsync(DefaultLocation).ToEnumerableAsync();
+            Assert.NotNull(eventSubscriptionsPage.FirstOrDefault(x => x.Name.Equals(eventSubscriptionName)));
 
             // Delete the event subscription
             await eventSubscriptionResponse.DeleteAsync(WaitUntil.Completed);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/domains/{domainName}";
 
             var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
-            var eventSubscription = new EventSubscriptionData()
+            var eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("TestSuffix", domainEventSubscriptionResponse.Data.Filter.SubjectEndsWith);
 
             // Update the event subscription
-            var eventSubscriptionUpdateParameters = new EventSubscriptionPatch()
+            var eventSubscriptionUpdateParameters = new EventGridSubscriptionPatch()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}";
 
             subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
-            eventSubscription = new EventSubscriptionData()
+            eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}";
             var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
 
-            var eventSubscription = new EventSubscriptionData()
+            var eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
