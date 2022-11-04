@@ -101,6 +101,8 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _threatIntelligenceIndicatorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
                 return response;
             }
             catch (Exception e)
@@ -123,6 +125,8 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _threatIntelligenceIndicatorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
                 return response;
             }
             catch (Exception e)

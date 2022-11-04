@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.CreateOrUpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _devTestLabVmScheduleVmSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
                 var operation = new DevTestLabsArmOperation<DevTestLabVmScheduleResource>(Response.FromValue(new DevTestLabVmScheduleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.CreateOrUpdate(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, name, data, cancellationToken);
+                var response = _devTestLabVmScheduleVmSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken);
                 var operation = new DevTestLabsArmOperation<DevTestLabVmScheduleResource>(Response.FromValue(new DevTestLabVmScheduleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, name, expand, cancellationToken);
+                var response = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = await _devTestLabVmScheduleVmSchedulesRestClient.ListAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _devTestLabVmScheduleVmSchedulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabVmScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = await _devTestLabVmScheduleVmSchedulesRestClient.ListNextPageAsync(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _devTestLabVmScheduleVmSchedulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabVmScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = _devTestLabVmScheduleVmSchedulesRestClient.List(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
+                    var response = _devTestLabVmScheduleVmSchedulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabVmScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = _devTestLabVmScheduleVmSchedulesRestClient.ListNextPage(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
+                    var response = _devTestLabVmScheduleVmSchedulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabVmScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, name, expand, cancellationToken: cancellationToken);
+                var response = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
