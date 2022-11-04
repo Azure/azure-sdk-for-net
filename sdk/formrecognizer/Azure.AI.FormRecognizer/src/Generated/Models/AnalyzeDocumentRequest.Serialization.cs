@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (Optional.IsDefined(UrlSource))
             {
                 writer.WritePropertyName("urlSource");
-                writer.WriteStringValue(UrlSource);
+                writer.WriteStringValue(UrlSource.AbsoluteUri);
             }
             if (Optional.IsDefined(Base64Source))
             {

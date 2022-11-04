@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer");
-                writer.WriteStringValue(Issuer);
+                writer.WriteStringValue(Issuer.AbsoluteUri);
             }
             if (Optional.IsDefined(Subject))
             {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> issuer = default;
+            Optional<Uri> issuer = default;
             Optional<string> subject = default;
             Optional<IList<string>> audiences = default;
             foreach (var property in element.EnumerateObject())
@@ -90,7 +91,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     {
                         if (property0.NameEquals("issuer"))
                         {
-                            issuer = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                issuer = null;
+                                continue;
+                            }
+                            issuer = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("subject"))

@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             writer.WriteStartObject();
             writer.WritePropertyName("containerUrl");
-            writer.WriteStringValue(ContainerUrl);
+            writer.WriteStringValue(ContainerUrl.AbsoluteUri);
             if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix");
