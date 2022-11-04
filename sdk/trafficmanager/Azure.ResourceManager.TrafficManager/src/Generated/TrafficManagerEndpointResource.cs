@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
@@ -26,9 +25,9 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TrafficManagerEndpointResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName)
+                public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/AzureEndpoints/{endpointName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/AzureEndpoints";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/{endpointType}";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.TrafficManager
             scope.Start();
             try
             {
-                var response = await _trafficManagerEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints".ToEndpointType(), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _trafficManagerEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.TrafficManager
             scope.Start();
             try
             {
-                var response = _trafficManagerEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints".ToEndpointType(), Id.Name, cancellationToken);
+                var response = _trafficManagerEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.TrafficManager
             scope.Start();
             try
             {
-                var response = await _trafficManagerEndpointEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints".ToEndpointType(), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _trafficManagerEndpointEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new TrafficManagerArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.TrafficManager
             scope.Start();
             try
             {
-                var response = _trafficManagerEndpointEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints".ToEndpointType(), Id.Name, cancellationToken);
+                var response = _trafficManagerEndpointEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType(), Id.Name, cancellationToken);
                 var operation = new TrafficManagerArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.TrafficManager
             scope.Start();
             try
             {
-                var response = await _trafficManagerEndpointEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints".ToEndpointType(), Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _trafficManagerEndpointEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,Id.ResourceType.GetLastType(), Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.TrafficManager
             scope.Start();
             try
             {
-                var response = _trafficManagerEndpointEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints".ToEndpointType(), Id.Name, data, cancellationToken);
+                var response = _trafficManagerEndpointEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType(), Id.Name, data, cancellationToken);
                 return Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -101,14 +101,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}
         /// Operation Id: Endpoints_Get
         /// </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            return await GetTrafficManagerEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetTrafficManagerEndpoints().GetAsync(endpointType, endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,14 +117,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}
         /// Operation Id: Endpoints_Get
         /// </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TrafficManagerEndpointResource> GetTrafficManagerEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerEndpointResource> GetTrafficManagerEndpoint(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            return GetTrafficManagerEndpoints().Get(endpointName, cancellationToken);
+            return GetTrafficManagerEndpoints().Get(endpointType, endpointName, cancellationToken);
         }
 
         /// <summary> Gets a collection of TrafficManagerHeatMapResources in the TrafficManagerProfile. </summary>
