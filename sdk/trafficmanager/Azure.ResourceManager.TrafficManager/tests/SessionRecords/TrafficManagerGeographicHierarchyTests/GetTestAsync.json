@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2018-08-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

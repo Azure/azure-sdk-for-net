@@ -51,7 +51,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/5941c11c-485a-4a27-a87f-db38d642b886/providers/Microsoft.Network/trafficManagerUserMetricsKeys?api-version=2018-08-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5941c11c-485a-4a27-a87f-db38d642b886/providers/Microsoft.Network/trafficManagerUserMetricsKeys?api-version=2022-04-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
