@@ -12,8 +12,6 @@
 ### Breaking Changes
 - Deleting a linked server is now a long running operation
 - Updating a cache is now a long running operation
-### Bugs Fixed
-
 ### Other Changes
 - API version 2022-06-01 will be used in HTTP requests
 
