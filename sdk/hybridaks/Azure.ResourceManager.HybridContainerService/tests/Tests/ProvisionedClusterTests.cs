@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             HybridContainerServiceVirtualNetworkData vnetData = new HybridContainerServiceVirtualNetworkData(DefaultLocation);
             vnetData.ExtendedLocation = new VirtualNetworksExtendedLocation();
             vnetData.ExtendedLocation.VirtualNetworksExtendedLocationType = "CustomLocation";
-            vnetData.ExtendedLocation.Name = "/subscriptions/3959ec86-5353-4b0c-b5d7-3877122861a0/resourcegroups/hyrbidakstesting/providers/microsoft.extendedlocation/customlocations/applhybridaks-cltest-hybridaks-cl";
+            vnetData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-1945484400/providers/microsoft.extendedlocation/customlocations/applhybridaks-1945484400-hybridaks-cl";
             vnetData.Properties = new VirtualNetworksProperties();
             vnetData.Properties.InfraVnetProfile = new VirtualNetworksPropertiesInfraVnetProfile();
             vnetData.Properties.InfraVnetProfile.Hci = new VirtualNetworksPropertiesInfraVnetProfileHci();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             HybridContainerServiceVirtualNetworkData vnetData = new HybridContainerServiceVirtualNetworkData(DefaultLocation);
             vnetData.ExtendedLocation = new VirtualNetworksExtendedLocation();
             vnetData.ExtendedLocation.VirtualNetworksExtendedLocationType = "CustomLocation";
-            vnetData.ExtendedLocation.Name = "/subscriptions/3959ec86-5353-4b0c-b5d7-3877122861a0/resourcegroups/hyrbidakstesting/providers/microsoft.extendedlocation/customlocations/applhybridaks-cltest-hybridaks-cl";
+            vnetData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-1945484400/providers/microsoft.extendedlocation/customlocations/applhybridaks-1945484400-hybridaks-cl";
             vnetData.Properties = new VirtualNetworksProperties();
             vnetData.Properties.InfraVnetProfile = new VirtualNetworksPropertiesInfraVnetProfile();
             vnetData.Properties.InfraVnetProfile.Hci = new VirtualNetworksPropertiesInfraVnetProfileHci();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             var clusterData = new ProvisionedClusterCreateOrUpdateContent(DefaultLocation);
             clusterData.ExtendedLocation = new ProvisionedClustersExtendedLocation();
             clusterData.ExtendedLocation.ProvisionedClustersExtendedLocationType = "CustomLocation";
-            clusterData.ExtendedLocation.Name = "/subscriptions/3959ec86-5353-4b0c-b5d7-3877122861a0/resourcegroups/hyrbidakstesting/providers/microsoft.extendedlocation/customlocations/applhybridaks-cltest-hybridaks-cl";
+            clusterData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-1945484400/providers/microsoft.extendedlocation/customlocations/applhybridaks-1945484400-hybridaks-cl";
 
             string sshKeyStr = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCAcY5kdMcyDHffly4RlpAy4WrBvnMEJ45v5AGCQZm0Vv1R5KYYG4+28E+csSdP8GNnxuJWegyqYS9XV0oWxCdN2Wtaqz9QJ2DcFG3panfNn+kWXZtqvf8/lXPEFpX9gmNvAsJYRHBzNnw9/YTbpeHAoQcQniVy616nsxpVyzQVMU2c6SQDapvdot5t9gey9YPhCYxVFZPWmyNL9lSkOAnkGBzDUIr2ne62MGHoyobkPyzPcGIPVV5bDZY2Afw6FvhC+aEZ4k4XRWAOrgRhJyZJe0loC9fc1zpB0LpRA3zaMf+u8hCmnJ8J61xFP4XaG5RJhWOq7syNkc5di3osiuv";
             var publicKeys = new List<LinuxProfilePropertiesSshPublicKeysItem>();
