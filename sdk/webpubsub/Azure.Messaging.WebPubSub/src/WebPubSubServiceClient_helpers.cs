@@ -19,15 +19,15 @@ namespace Azure.Messaging.WebPubSub
     /// </summary>
     public partial class WebPubSubServiceClient
     {
+        internal static byte[] s_role = Encoding.UTF8.GetBytes("role");
+        private static TimeSpan DefaultExpireTime = TimeSpan.FromHours(1);
+
         private const string EndpointPropertyName = "Endpoint";
         private const string AccessKeyPropertyName = "AccessKey";
         private const string PortPropertyName = "Port";
         private const string ClientTokenResponseTokenPropertyName = "token";
         private static readonly char[] KeyValueSeparator = { '=' };
         private static readonly char[] PropertySeparator = { ';' };
-
-        internal static byte[] s_role = Encoding.UTF8.GetBytes("role");
-
         /// <summary>
         /// Creates a URI with authentication token.
         /// </summary>
@@ -64,13 +64,13 @@ namespace Azure.Messaging.WebPubSub
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Uri GetClientAccessUri(
-            TimeSpan expiresAfter = default,
+            TimeSpan? expiresAfter = null,
             string userId = default,
             IEnumerable<string> roles = default,
             CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            return GetClientAccessUriInternal(expiresAfter, userId, roles, false, cancellationToken).EnsureCompleted();
+            return GetClientAccessUriInternal(expiresAfter ?? DefaultExpireTime, userId, roles, false, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -83,21 +83,90 @@ namespace Azure.Messaging.WebPubSub
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Uri> GetClientAccessUriAsync(
-            TimeSpan expiresAfter = default,
+            TimeSpan? expiresAfter = null,
             string userId = default,
             IEnumerable<string> roles = default,
             CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            return await GetClientAccessUriInternal(expiresAfter, userId, roles, true, cancellationToken).ConfigureAwait(false);
+            return await GetClientAccessUriInternal(expiresAfter ?? DefaultExpireTime, userId, roles, true, cancellationToken).ConfigureAwait(false);
         }
 
         internal static int GetMinutesToExpire(TimeSpan expiresAfter) => Math.Max((int)expiresAfter.TotalMinutes, 1);
 
         internal static int GetMinutesToExpire(DateTimeOffset expiresAt) => Math.Max((int)expiresAt.Subtract(DateTimeOffset.UtcNow).TotalMinutes, 1);
 
+        /// <summary>
+        /// Parse connection string to endpoint and credential.
+        /// </summary>
+        /// <returns></returns>
+        internal static (Uri Endpoint, AzureKeyCredential Credential) ParseConnectionString(string connectionString)
+        {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
+            var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);
+
+            var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var property in properties)
+            {
+                var kvp = property.Split(KeyValueSeparator, 2);
+                if (kvp.Length != 2)
+                    continue;
+
+                var key = kvp[0].Trim();
+                if (dict.ContainsKey(key))
+                {
+                    throw new ArgumentException($"Duplicate properties found in connection string: {key}.");
+                }
+
+                dict.Add(key, kvp[1].Trim());
+            }
+
+            if (!dict.TryGetValue(EndpointPropertyName, out var endpoint))
+            {
+                throw new ArgumentException($"Required property not found in connection string: {EndpointPropertyName}.");
+            }
+            endpoint = endpoint.TrimEnd('/');
+
+            if (!dict.TryGetValue(AccessKeyPropertyName, out var accessKey))
+            {
+                throw new ArgumentException($"Required property not found in connection string: {AccessKeyPropertyName}.");
+            }
+
+            int? port = null;
+            if (dict.TryGetValue(PortPropertyName, out var rawPort))
+            {
+                if (int.TryParse(rawPort, out var portValue) && portValue > 0 && portValue <= 0xFFFF)
+                {
+                    port = portValue;
+                }
+                else
+                {
+                    throw new ArgumentException($"Invalid Port value: {rawPort}");
+                }
+            }
+
+            var uriBuilder = new UriBuilder(endpoint);
+            if (port.HasValue)
+            {
+                uriBuilder.Port = port.Value;
+            }
+
+            return (uriBuilder.Uri, new AzureKeyCredential(accessKey));
+        }
+
+        internal static string PermissionToString(WebPubSubPermission permission)
+        {
+            return permission switch
+            {
+                WebPubSubPermission.SendToGroup => "sendToGroup",
+                WebPubSubPermission.JoinLeaveGroup => "joinLeaveGroup",
+                _ => throw new ArgumentOutOfRangeException(nameof(permission)),
+            };
+        }
+
         private async Task<Uri> GetClientAccessUriInternal(
-            DateTimeOffset expiresAt,
+                            DateTimeOffset expiresAt,
             string userId = default,
             IEnumerable<string> roles = default,
             bool async = true,
@@ -169,79 +238,6 @@ namespace Azure.Messaging.WebPubSub
 
             return new Uri($"{clientEndpoint}client/hubs/{_hub}?access_token={token}");
         }
-
-        /// <summary>
-        /// Parse connection string to endpoint and credential.
-        /// </summary>
-        /// <returns></returns>
-        internal static (Uri Endpoint, AzureKeyCredential Credential) ParseConnectionString(string connectionString)
-        {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
-            var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);
-
-            var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (var property in properties)
-            {
-                var kvp = property.Split(KeyValueSeparator, 2);
-                if (kvp.Length != 2)
-                    continue;
-
-                var key = kvp[0].Trim();
-                if (dict.ContainsKey(key))
-                {
-                    throw new ArgumentException($"Duplicate properties found in connection string: {key}.");
-                }
-
-                dict.Add(key, kvp[1].Trim());
-            }
-
-            if (!dict.TryGetValue(EndpointPropertyName, out var endpoint))
-            {
-                throw new ArgumentException($"Required property not found in connection string: {EndpointPropertyName}.");
-            }
-            endpoint = endpoint.TrimEnd('/');
-
-            if (!dict.TryGetValue(AccessKeyPropertyName, out var accessKey))
-            {
-                throw new ArgumentException($"Required property not found in connection string: {AccessKeyPropertyName}.");
-            }
-
-            int? port = null;
-            if (dict.TryGetValue(PortPropertyName, out var rawPort))
-            {
-                if (int.TryParse(rawPort, out var portValue) && portValue > 0 && portValue <= 0xFFFF)
-                {
-                    port = portValue;
-                }
-                else
-                {
-                    throw new ArgumentException($"Invalid Port value: {rawPort}");
-                }
-            }
-
-            var uriBuilder = new UriBuilder(endpoint);
-            if (port.HasValue)
-            {
-                uriBuilder.Port = port.Value;
-            }
-
-            return (uriBuilder.Uri, new AzureKeyCredential(accessKey));
-        }
-
-        internal static string PermissionToString(WebPubSubPermission permission)
-        {
-            switch (permission)
-            {
-                case WebPubSubPermission.SendToGroup:
-                    return "sendToGroup";
-                case WebPubSubPermission.JoinLeaveGroup:
-                    return "joinLeaveGroup";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(permission));
-            }
-        }
-
         private string GenerateTokenFromAzureKeyCredential(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default)
         {
             var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
