@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Create simple transfer single blob upload job
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: new LocalFileStorageResource(sourceLocalPath),
-                    destinationResource: new BlockBlobStorageResource(destinationBlob)).ConfigureAwait(false);
+                    destinationResource: new BlockBlobStorageResource(destinationBlob));
             }
             finally
             {
@@ -131,7 +131,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
                 await dataController.StartTransferAsync(
                     sourceResource,
-                    destinationResource).ConfigureAwait(false);
+                    destinationResource);
 
                 StorageResource sourceResource2 = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource2 = new LocalFileStorageResource(downloadPath2);
@@ -144,7 +144,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                                 Conditions = new BlobRequestConditions(){ LeaseId = "xyz" }
                             }
                         }),
-                    destinationResource: new LocalFileStorageResource(downloadPath2)).ConfigureAwait(false);
+                    destinationResource: new LocalFileStorageResource(downloadPath2));
             }
             finally
             {
@@ -226,7 +226,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: new LocalDirectoryStorageResourceContainer(sourcePath),
                     destinationResource: new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")),
-                    transferOptions: options).ConfigureAwait(false);
+                    transferOptions: options);
             }
             finally
             {
@@ -309,7 +309,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
                     new LocalDirectoryStorageResourceContainer(sourcePath),
-                    new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"))).ConfigureAwait(false);
+                    new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")));
             }
             finally
             {
@@ -409,7 +409,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
                     new LocalDirectoryStorageResourceContainer(sourcePath),
-                    new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"))).ConfigureAwait(false);
+                    new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")));
             }
             finally
             {
@@ -491,12 +491,12 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Simple Download Directory Job where we upload the directory and it's contents
                 await transferManager.StartTransferAsync(
-                    sourceDirectory, destinationDirectory).ConfigureAwait(false);
+                    sourceDirectory, destinationDirectory);
 
                 // Create different download transfer
                 DataTransfer downloadDirectoryJobId2 = await transferManager.StartTransferAsync(
                     sourceDirectory2,
-                    destinationDirectory2).ConfigureAwait(false);
+                    destinationDirectory2);
             }
             finally
             {
@@ -544,11 +544,11 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 TransferManager transferManager = new TransferManager(default);
 
                 // Create simple transfer single blob upload job
-                DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
+                DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
 
                 // Generous 10 second wait for our transfer to finish
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(10000);
-                await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+                await transfer.AwaitCompletion(cancellationTokenSource.Token);
             }
             finally
             {
@@ -626,7 +626,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 await dataController.StartTransferAsync(
                     sourceDirectory1,
-                    destinationDirectory1).ConfigureAwait(false);
+                    destinationDirectory1);
             }
             finally
             {
@@ -724,7 +724,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 };
                 DataTransfer jobProperties = await transferManager.StartTransferAsync(
                     sourceDirectory2,
-                    destinationDirectory2).ConfigureAwait(false);
+                    destinationDirectory2);
                 jobProperties.EnsureCompleted();
             }
             finally
@@ -809,11 +809,11 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 DataTransfer jobProps = await transferManager.StartTransferAsync(
                     sourceDirectory1,
                     destinationDirectory1,
-                    downloadOptions).ConfigureAwait(false);
+                    downloadOptions);
                 DataTransfer jobProps2 = await transferManager.StartTransferAsync(
                     sourceDirectory2,
                     destinationDirectory2,
-                    downloadOptions2).ConfigureAwait(false);
+                    downloadOptions2);
 
                 // Something else happens in the CX which causes them to pause all jobs the CX is using
                 // like an interrupt or something
@@ -901,13 +901,13 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Create transfers
                 DataTransfer transferInfo1 = await transferManager.StartTransferAsync(
                     sourceDirectory1,
-                    destinationDirectory1).ConfigureAwait(false);
+                    destinationDirectory1);
                 DataTransfer transferInfo2 = await transferManager.StartTransferAsync(
                     sourceDirectory2,
-                    destinationDirectory2).ConfigureAwait(false);
+                    destinationDirectory2);
                 DataTransfer transferInfo3 = await transferManager.StartTransferAsync(
                     sourceDirectory3,
-                    destinationDirectory3).ConfigureAwait(false);
+                    destinationDirectory3);
 
                 // Something else happens in the CX which causes them to pause all jobs the CX is using
                 // like an interrupt or something
@@ -1009,13 +1009,13 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
                 DataTransfer dataTranferInfo = await dataController.StartTransferAsync(
                     sourceDirectory1,
-                    destinationDirectory1).ConfigureAwait(false);
+                    destinationDirectory1);
                 DataTransfer dataTransferInfo2 = await dataController.StartTransferAsync(
                     sourceDirectory2,
-                    destinationDirectory2).ConfigureAwait(false);
+                    destinationDirectory2);
                 DataTransfer dataTransferInfo3 = await dataController.StartTransferAsync(
                     sourceDirectory3,
-                    destinationDirectory3).ConfigureAwait(false);
+                    destinationDirectory3);
 
                 // wait for all jobs to finish
 
@@ -1127,10 +1127,10 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 Dictionary<string, StoredCredentials> storedCredentials = new Dictionary<string, StoredCredentials>();
                 DataTransfer dataTransferInfo = await dataController.StartTransferAsync(
                     sourceDirectory1,
-                    destinationDirectory1).ConfigureAwait(false);
+                    destinationDirectory1);
                 DataTransfer dataTransferInfo2 = await dataController.StartTransferAsync(
                     sourceDirectory2,
-                    destinationDirectory2).ConfigureAwait(false);
+                    destinationDirectory2);
 
                 storedCredentials.Add(dataTransferInfo.Id, new StoredCredentials(sourceDirectory1, destinationDirectory1));
                 storedCredentials.Add(dataTransferInfo2.Id, new StoredCredentials(sourceDirectory2, destinationDirectory2));
@@ -1144,7 +1144,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 {
                     Checkpointer = localCheckpointer
                 };
-                List<string> savedTransfers = await checkpointer.GetStoredTransfersAsync().ConfigureAwait(false);
+                List<string> savedTransfers = await checkpointer.GetStoredTransfersAsync();
 
                 // Create Blob Transfer Manager
                 TransferManager transferManagerResume = new TransferManager(options2);
