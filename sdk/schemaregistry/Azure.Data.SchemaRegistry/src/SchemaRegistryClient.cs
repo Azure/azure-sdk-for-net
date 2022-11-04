@@ -123,11 +123,11 @@ namespace Azure.Data.SchemaRegistry
                 ResponseWithHeaders<SchemaRegisterHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.RegisterAsync(groupName, schemaName, format.ToString(), new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.RegisterAsync(groupName, schemaName, format.ContentType.ToString(), new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.Register(groupName, schemaName, format.ToString(), new BinaryData(schemaDefinition).ToStream(), cancellationToken);
+                    response = RestClient.Register(groupName, schemaName, format.ContentType.ToString(), new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
                 var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);

@@ -49,8 +49,8 @@ namespace Azure.Data.SchemaRegistry.Tests
         private const string SchemaContent_V2 = "{\"type\" : \"record\",\"namespace\" : \"TestSchema\",\"name\" : \"Employee_V2\",\"fields\" : [{ \"name\" : \"Name\" , \"type\" : \"string\" },{ \"name\" : \"Age\", \"type\" : \"int\" }]}";
         private const string Json_SchemaContent = "{\r\n  \"$id\": \"1\",\r\n  \"$schema\": \"Json\",\r\n  \"title\": \"Person\",\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"firstName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's first name.\"\r\n    },\r\n    \"lastName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's last name.\"\r\n    },\r\n    \"age\": {\r\n      \"description\": \"Age in years which must be equal to or greater than zero.\",\r\n      \"type\": \"integer\",\r\n      \"minimum\": 0\r\n    }\r\n  }\r\n}";
         private const string Json_SchemaContent_V2 = "{\r\n  \"$id\": \"2\",\r\n  \"$schema\": \"Json\",\r\n  \"title\": \"Person_V2\",\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"firstName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's first name.\"\r\n    },\r\n    \"lastName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's last name.\"\r\n    },\r\n    \"age\": {\r\n      \"description\": \"Age in years which must be equal to or greater than zero.\",\r\n      \"type\": \"integer\",\r\n      \"minimum\": 0\r\n    }\r\n  }\r\n}";
-        // private BinaryData Custom_SchemaContent = BinaryData.FromString("Hello"); TODO: update after new swagger
-        // private BinaryData Custom_SchemaContent_V2 = BinaryData.FromString("Hello_V2"); TODO: update after new swagger
+        private const string Custom_SchemaContent = "Hello";
+        private const string Custom_SchemaContent_V2 = "Hello_V2";
 
         private const string Avro = "Avro";
         private const string Json = "JSON";
@@ -276,7 +276,11 @@ namespace Azure.Data.SchemaRegistry.Tests
                     }
                     return Json_SchemaContent_V2;
                 case Custom:
-                    return "TODO";
+                    if (version == 1)
+                    {
+                        return Custom_SchemaContent;
+                    }
+                    return Custom_SchemaContent_V2;
                 default:
                     throw new ArgumentException("Format name was invalid.");
             }
