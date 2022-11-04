@@ -538,7 +538,6 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # ServiceLabel: %Notification Hub %Service Attention
 /sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/            @tjsomasundaram
 
-# ServiceLabel: %Mixed Reality %Service Attention
 /sdk/objectanchors/                                 @crtreasu @rgarcia
 # PRLabel: %MixedReality
 /sdk/objectanchors/                                 @crtreasu @rgarcia @JoshLove-msft
