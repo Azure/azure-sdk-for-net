@@ -157,6 +157,10 @@ namespace Azure.Messaging.WebPubSub
             }
             else if (_credential != null)
             {
+                if (expireAfter == default)
+                {
+                    expireAfter = TimeSpan.FromHours(1);
+                }
                 token = GenerateTokenFromAzureKeyCredential(DateTimeOffset.UtcNow.Add(expireAfter), userId, roles);
             }
             else
