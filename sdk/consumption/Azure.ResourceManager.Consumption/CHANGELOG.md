@@ -2,7 +2,7 @@
 
 ## 1.0.0 (2022-11-04)
 
-This package is the first stable release of the Redis management client library.
+This package is the first stable release of the Microsoft Azure Consumption management client library.
 
 ### Breaking Changes
 
