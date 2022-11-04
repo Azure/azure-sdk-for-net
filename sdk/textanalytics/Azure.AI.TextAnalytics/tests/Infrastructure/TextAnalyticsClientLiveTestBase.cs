@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
@@ -54,17 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (useTokenCredential)
             {
-                var token = useStaticResource
-                    ? new ClientSecretCredential(
-                        TestEnvironment.StaticTenantId,
-                        TestEnvironment.StaticClientId,
-                        TestEnvironment.StaticClientSecret,
-                        new ClientSecretCredentialOptions()
-                        {
-                            AuthorityHost = new Uri(TestEnvironment.StaticAuthorityHostUrl)
-                        })
-                    : TestEnvironment.Credential;
-                nonInstrumentedClient = new TextAnalyticsClient(endpoint, token, InstrumentClientOptions(options));
+                nonInstrumentedClient = new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options));
             }
             else
             {
