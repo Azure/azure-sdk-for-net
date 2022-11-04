@@ -173,6 +173,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                 catch
                 {
                     _clientState.ChangeState(WebPubSubClientState.Stopped);
+                    throw;
                 }
             }
             finally
@@ -203,6 +204,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                 catch
                 {
                     _clientState.ChangeState(WebPubSubClientState.Disconnected);
+                    throw;
                 }
             }
             finally
@@ -520,7 +522,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                         }
                         catch (Exception ex)
                         {
-                            WebPubSubClientEventSource.Log.FailedToHandleMessage(ex.Message);
+                            WebPubSubClientEventSource.Log.FailedToProcessMessage(ex.Message);
                         }
                     }
                 }
@@ -533,6 +535,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             {
                 try
                 {
+                    WebPubSubClientEventSource.Log.WebSocketClosed();
                     sequenceAckCts.Cancel();
                     sequenceAckCts.Dispose();
                     await sequenceAckTask.ConfigureAwait(false);
@@ -587,13 +590,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         {
             _clientState.ChangeState(WebPubSubClientState.Disconnected);
 
-            try
-            {
-                Disconnected?.Invoke(new WebPubSubDisconnectedEventArgs(_connectionId, disconnectedMessage)).FireAndForget();
-            }
-            catch
-            {
-            }
+            SafeInvkeDisconnectedAsync(new WebPubSubDisconnectedEventArgs(_connectionId, disconnectedMessage)).FireAndForget();
 
             if (_options.AutoReconnect)
             {
@@ -616,39 +613,91 @@ namespace Azure.Messaging.WebPubSub.Clients
                     }
                     catch (Exception ex)
                     {
-                        RestoreGroupFailed?.Invoke(new WebPubSubRestoreGroupFailedEventArgs(name, ex, token)).FireAndForget();
+                        SafeInvkeRestoreGroupFailedAsync(new WebPubSubRestoreGroupFailedEventArgs(name, ex, token)).FireAndForget();
                     }
                 }
             }
-            Connected?.Invoke(new WebPubSubConnectedEventArgs(connectedMessage, token)).FireAndForget();
+            SafeInvkeConnectedAsync(new WebPubSubConnectedEventArgs(connectedMessage, token)).FireAndForget();
         }
 
         private void HandleClientStopped()
         {
             _clientState.ChangeState(WebPubSubClientState.Stopped);
 
-            Stopped?.Invoke(new WebPubSubStoppedEventArgs(default)).FireAndForget();
+            SafeInvkeStoppedAsync(new WebPubSubStoppedEventArgs(default)).FireAndForget();
         }
 
-        private async Task SafeHandleGroupMessageAsync(GroupDataMessage message, CancellationToken token)
+        private async Task SafeInvokeGroupMessageReceivedAsync(WebPubSubGroupMessageEventArgs eventArgs)
         {
             try
             {
-                await (GroupMessageReceived?.Invoke(new WebPubSubGroupMessageEventArgs(message, token)) ?? Task.CompletedTask).ConfigureAwait(false);
+                await (GroupMessageReceived?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
             }
-            catch
+            catch (Exception ex)
             {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(GroupMessageReceived), ex.Message);
             }
         }
 
-        private async Task SafeHandleServerMessageAsync(ServerDataMessage message, CancellationToken token)
+        private async Task SafeInvokeServerMessageReceivedAsync(WebPubSubServerMessageEventArgs eventArgs)
         {
             try
             {
-                await (ServerMessageReceived?.Invoke(new WebPubSubServerMessageEventArgs(message, token)) ?? Task.CompletedTask).ConfigureAwait(false);
+                await (ServerMessageReceived?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
             }
-            catch
+            catch (Exception ex)
             {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(ServerMessageReceived), ex.Message);
+            }
+        }
+
+        private async Task SafeInvkeConnectedAsync(WebPubSubConnectedEventArgs eventArgs)
+        {
+            try
+            {
+                WebPubSubClientEventSource.Log.ConnectionConnected(_connectionId);
+                await (Connected?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(Connected), ex.Message);
+            }
+        }
+
+        private async Task SafeInvkeDisconnectedAsync(WebPubSubDisconnectedEventArgs eventArgs)
+        {
+            try
+            {
+                WebPubSubClientEventSource.Log.ConnectionDisconnected(_connectionId);
+                await (Disconnected?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(Disconnected), ex.Message);
+            }
+        }
+
+        private async Task SafeInvkeStoppedAsync(WebPubSubStoppedEventArgs eventArgs)
+        {
+            try
+            {
+                await (Stopped?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(Stopped), ex.Message);
+            }
+        }
+
+        private async Task SafeInvkeRestoreGroupFailedAsync(WebPubSubRestoreGroupFailedEventArgs eventArgs)
+        {
+            try
+            {
+                await (RestoreGroupFailed?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(RestoreGroupFailed), ex.Message);
             }
         }
 
@@ -666,8 +715,10 @@ namespace Azure.Messaging.WebPubSub.Clients
                         isSuccess = true;
                         return;
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        WebPubSubClientEventSource.Log.ReconnectAttemptFailed(_connectionId, ex.Message);
+
                         retryAttempt++;
                         var delay = _reconnectRetryPolicy.NextRetryDelay(new RetryContext { RetryAttempt = retryAttempt });
 
@@ -868,7 +919,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             {
                 while (reader.TryRead(out var message))
                 {
-                    await SafeHandleServerMessageAsync(message, default).ConfigureAwait(false);
+                    await SafeInvokeServerMessageReceivedAsync(new WebPubSubServerMessageEventArgs(message, default)).ConfigureAwait(false);
                 }
             }
         }
@@ -880,7 +931,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             {
                 while (reader.TryRead(out var message))
                 {
-                    await SafeHandleGroupMessageAsync(message, default).ConfigureAwait(false);
+                    await SafeInvokeGroupMessageReceivedAsync(new WebPubSubGroupMessageEventArgs(message, default)).ConfigureAwait(false);
                 }
             }
         }

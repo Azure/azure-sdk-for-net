@@ -37,7 +37,7 @@ namespace Azure.Messaging.WebPubSub.Clients
 
         public async Task ConnectAsync(CancellationToken token)
         {
-            WebPubSubClientEventSource.Log.ConnectionStarting(_protocol);
+            WebPubSubClientEventSource.Log.WebSocketConnecting(_protocol);
 
             await _socket.ConnectAsync(_uri, token).ConfigureAwait(false);
         }

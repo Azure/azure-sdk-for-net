@@ -21,13 +21,17 @@ namespace Azure.Messaging.WebPubSub.Clients
         // Having event ids defined as const makes it easy to keep track of them
         private const int ClientStartingId = 1;
         private const int ClientStateChangesId = 2;
-        private const int ConnectionStartingId = 3;
-        private const int ConnectionClosedId = 4;
-        private const int FailedToHandleMessageId = 5;
+        private const int WebSocketConnectingId = 3;
+        private const int WebSocketClosedId = 4;
+        private const int FailedToProcessMessageId = 5;
         private const int FailedReceivingBytesId = 6;
         private const int FailedToChangeClientStateId = 7;
         private const int StopRecoveryId = 8;
         private const int RecoveryAttemptFailedId = 9;
+        private const int FailedToInvokeEventId = 10;
+        private const int ConnectionConnectedId = 11;
+        private const int ConnectionDisconnectedId = 12;
+        private const int ReconnectAttemptFailedId = 13;
 
         public static WebPubSubClientEventSource Log { get; } = new WebPubSubClientEventSource();
 
@@ -40,7 +44,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(2, Level = EventLevel.Informational, Message = "The client state transient from the '{0}' state to the '{1}' state.")]
+        [Event(2, Level = EventLevel.Verbose, Message = "The client state transient from the '{0}' state to the '{1}' state.")]
         public virtual void ClientStateChanges(string newState, string currentState)
         {
             if (IsEnabled())
@@ -49,34 +53,34 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(3, Level = EventLevel.Informational, Message = "Connection start to connect with subprotocol {0}.")]
-        public virtual void ConnectionStarting(string subprotocol)
+        [Event(3, Level = EventLevel.Verbose, Message = "A new WebSocket connnection start to connect with subprotocol {0}.")]
+        public virtual void WebSocketConnecting(string subprotocol)
         {
             if (IsEnabled())
             {
-                WriteEvent(ConnectionStartingId, subprotocol);
+                WriteEvent(WebSocketConnectingId, subprotocol);
             }
         }
 
-        [Event(4, Level = EventLevel.Informational, Message = "Connection closed.")]
-        public virtual void ConnectionClosed()
+        [Event(4, Level = EventLevel.Verbose, Message = "WebSocket connection closed.")]
+        public virtual void WebSocketClosed()
         {
             if (IsEnabled())
             {
-                WriteEvent(ConnectionClosedId);
+                WriteEvent(WebSocketClosedId);
             }
         }
 
-        [Event(5, Level = EventLevel.Warning, Message = "An exception occurred while handling message from the service.")]
-        public virtual void FailedToHandleMessage(string errorMessage)
+        [Event(5, Level = EventLevel.Warning, Message = "An exception occurred while process message from the service. Error Message: {0}")]
+        public virtual void FailedToProcessMessage(string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(FailedToHandleMessageId, errorMessage);
+                WriteEvent(FailedToProcessMessageId, errorMessage);
             }
         }
 
-        [Event(6, Level = EventLevel.Informational, Message = "An exception occurred while receiving bytes.")]
+        [Event(6, Level = EventLevel.Informational, Message = "An exception occurred while receiving bytes. Error Message: {0}")]
         public virtual void FailedReceivingBytes(string errorMessage)
         {
             if (IsEnabled())
@@ -94,7 +98,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(8, Level = EventLevel.Warning, Message = "Stop try to recover the connection with connectionId: {0} cause of {1}.")]
+        [Event(8, Level = EventLevel.Warning, Message = "Stop try to recover the connection with connection ID: {0} cause of {1}.")]
         public virtual void StopRecovery(string connectionId, string reason)
         {
             if (IsEnabled())
@@ -103,12 +107,48 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(9, Level = EventLevel.Informational, Message = "An attempt to recover connection with connectionId: {0} failed, will retry later.")]
+        [Event(9, Level = EventLevel.Informational, Message = "An attempt to recover connection with connection ID: {0} failed, will retry later. Error Message: {1}")]
         public virtual void RecoveryAttemptFailed(string connectionId, string errorMessage)
         {
             if (IsEnabled())
             {
                 WriteEvent(RecoveryAttemptFailedId, connectionId, errorMessage);
+            }
+        }
+
+        [Event(10, Level = EventLevel.Warning, Message = "An exception occurred while invoking event handler {0}. Error Message: {1}")]
+        public virtual void FailedToInvokeEvent(string eventName, string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(FailedToInvokeEventId, eventName, errorMessage);
+            }
+        }
+
+        [Event(11, Level = EventLevel.Informational, Message = "Connection with connection ID: {0} connected.")]
+        public virtual void ConnectionConnected(string connectionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ConnectionConnectedId, connectionId);
+            }
+        }
+
+        [Event(11, Level = EventLevel.Informational, Message = "Connection with connection ID: {0} disconnected.")]
+        public virtual void ConnectionDisconnected(string connectionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ConnectionDisconnectedId, connectionId);
+            }
+        }
+
+        [Event(12, Level = EventLevel.Warning, Message = "An attempt to reconnect connection who is the successor of connection ID: {0} failed, will retry later. Error Message: {1}")]
+        public virtual void ReconnectAttemptFailed(string connectionId, string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReconnectAttemptFailedId, connectionId, errorMessage);
             }
         }
     }

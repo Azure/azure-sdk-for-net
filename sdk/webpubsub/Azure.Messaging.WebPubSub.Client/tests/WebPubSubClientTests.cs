@@ -71,6 +71,20 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         }
 
         [Fact]
+        public async Task WebPubSubClientStartFailedTest()
+        {
+            var client = new WebPubSubClient(new WebPubSubClientCredential(_ =>
+            {
+                return new ValueTask<Uri>(new Uri("wss://test.com"));
+            }));
+            // throw ex when starting
+            _webSocketClientMoc.Setup(c => c.ConnectAsync(It.IsAny<CancellationToken>())).Callback(() => throw new InvalidOperationException());
+            client.WebSocketClientFactory = _factoryMoc.Object;
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => client.StartAsync().OrTimeout());
+        }
+
+        [Fact]
         public async Task WebPubSubClientRecoverTest()
         {
             var idx = 0;
