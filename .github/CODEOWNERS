@@ -393,7 +393,7 @@
 # ServiceLabel: %Lab Services %Service Attention
 sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamath
 
-# ServiceLabel: %LoadTest Service %Service Attention
+# ServiceLabel: %Load Test Service %Service Attention
 sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain
 
 # PRLabel: %Load Test Service
