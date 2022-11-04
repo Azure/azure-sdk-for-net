@@ -66,7 +66,7 @@ if ($readmeFile) {
 }
 
 if ($relatedCadlProjectFolder) {
-  $cadlFolder = Resolve-Path (Join-Path $swaggerDir $cadlRelativeFolder)
+  $cadlFolder = Resolve-Path (Join-Path $swaggerDir $relatedCadlProjectFolder)
   $newPackageOutput = "newPackageOutput.json"
 
   Push-Location $cadlFolder
