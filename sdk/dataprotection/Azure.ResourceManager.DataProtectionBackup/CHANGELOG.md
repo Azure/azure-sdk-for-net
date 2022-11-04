@@ -2,6 +2,23 @@
 
 ## 1.0.0 (2022-11-04)
 
+This package is the first stable release of the Microsoft Azure Data Protection Backup management client library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected all acronyms that don't follow [.NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Changed API version to 2022-05-01.
+
 ## 1.0.0-beta.1 (2022-10-11)
 
 ### Breaking Changes

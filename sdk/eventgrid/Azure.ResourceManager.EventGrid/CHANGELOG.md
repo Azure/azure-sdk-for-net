@@ -2,7 +2,7 @@
 
 ## 1.0.0 (2022-11-04)
 
-This is the first stable release of the Microsoft Azure Event Grid management library.
+This package is the first stable release of the Microsoft Azure Event Grid management client library.
 
 ### Breaking Changes
 
@@ -11,13 +11,8 @@ Polishing since last public beta release:
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `Uri` type properties / parameters.
-- Corrected the format of all `ETag` type properties / parameters.
-- Corrected the format of all `AzureLocation` type properties / parameters.
-- Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
-- Corrected the name of interval / duration properties / parameters which end with units.
+- Corrected the return type and parameter name of some functions.
 - Optimized the name of some models and functions.
 
 ### Other Changes

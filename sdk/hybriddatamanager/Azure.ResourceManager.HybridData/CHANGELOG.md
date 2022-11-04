@@ -2,6 +2,12 @@
 
 ## 1.0.0 (2022-11-04)
 
+This package is the first stable release of the Microsoft Azure Hybrid Data management client library.
+
+### Other Changes
+
+- Updated the README file according to Azure SDK documentation guidelines.
+
 ## 1.0.0-beta.1 (2022-10-26)
 
 ### Breaking Changes
