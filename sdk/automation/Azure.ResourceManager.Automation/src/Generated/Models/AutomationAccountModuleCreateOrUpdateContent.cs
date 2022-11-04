@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationAccountModuleCreateOrUpdateContent. </summary>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
-        public AutomationAccountModuleCreateOrUpdateContent(ContentLink contentLink)
+        public AutomationAccountModuleCreateOrUpdateContent(AutomationContentLink contentLink)
         {
             Argument.AssertNotNull(contentLink, nameof(contentLink));
 
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the module content link. </summary>
-        public ContentLink ContentLink { get; }
+        public AutomationContentLink ContentLink { get; }
     }
 }

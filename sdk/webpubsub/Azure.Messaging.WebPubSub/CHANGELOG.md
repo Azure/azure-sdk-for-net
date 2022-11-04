@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.0 (2022-11-04)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix the issue that the token lifetime is 0 when `expiresAfter` is not given.
 
 ## 1.1.0 (2022-10-28)
 

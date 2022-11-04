@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Create an event subscription to this domain
             var domainEventSubscriptionsCollection = getDomainResponse.GetDomainEventSubscriptions();
             var eventSubscriptionName = Recording.GenerateAssetName("sdk-EventSubscription-");
-            var eventSubscription = new EventSubscriptionData()
+            var eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("TestSuffix", eventSubscriptionResponse.Data.Filter.SubjectEndsWith);
 
             // Update the event subscription
-            var eventSubscriptionUpdateParameters = new EventSubscriptionPatch()
+            var eventSubscriptionUpdateParameters = new EventGridSubscriptionPatch()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domainTopic = (await domainTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainTopicName)).Value;
             var domainTopicEventSubscriptionCollection = domainTopic.GetDomainTopicEventSubscriptions();
             eventSubscriptionName = Recording.GenerateAssetName("sdk-EventSubscription-");
-            eventSubscription = new EventSubscriptionData()
+            eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {

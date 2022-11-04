@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; }
         /// <summary> If a new build version of NodeConfiguration is required. </summary>
-        public bool? IncrementNodeConfigurationBuild { get; set; }
+        public bool? IsIncrementNodeConfigurationBuildRequired { get; set; }
     }
 }
