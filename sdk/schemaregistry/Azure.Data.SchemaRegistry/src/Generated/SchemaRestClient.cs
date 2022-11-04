@@ -281,7 +281,7 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        internal HttpMessage CreateQueryIdByContentRequest(string groupName, string schemaName, SchemaFormatInternal contentType, Stream schemaContent)
+        internal HttpMessage CreateQueryIdByContentRequest(string groupName, string schemaName, ContentTypeInternal contentType, Stream schemaContent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,7 +310,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <remarks> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
-        public async Task<ResponseWithHeaders<SchemaQueryIdByContentHeaders>> QueryIdByContentAsync(string groupName, string schemaName, SchemaFormatInternal contentType, Stream schemaContent, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SchemaQueryIdByContentHeaders>> QueryIdByContentAsync(string groupName, string schemaName, ContentTypeInternal contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -345,7 +345,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <remarks> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
-        public ResponseWithHeaders<SchemaQueryIdByContentHeaders> QueryIdByContent(string groupName, string schemaName, SchemaFormatInternal contentType, Stream schemaContent, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SchemaQueryIdByContentHeaders> QueryIdByContent(string groupName, string schemaName, ContentTypeInternal contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {

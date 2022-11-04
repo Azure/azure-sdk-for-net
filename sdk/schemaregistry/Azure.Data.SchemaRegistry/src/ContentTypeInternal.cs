@@ -9,27 +9,27 @@ namespace Azure.Data.SchemaRegistry
     /// Properties for a SchemaRegistry schema.
     /// </summary>
     [CodeGenModel("SchemaFormat")]
-    internal readonly partial struct SchemaFormatInternal
+    internal readonly partial struct ContentTypeInternal
     {
         /// <summary> application/json; serialization=Avro. </summary>
         [CodeGenMember("ApplicationJsonSerializationAvro")]
-        public static SchemaFormatInternal Avro { get; } = new SchemaFormatInternal(ApplicationJsonSerializationAvroValue);
+        public static ContentTypeInternal Avro { get; } = new ContentTypeInternal(AvroValue);
 
         /// <summary> application/json; serialization=json. </summary>
         [CodeGenMember("ApplicationJsonSerializationJson")]
-        public static SchemaFormatInternal Json { get; } = new SchemaFormatInternal(ApplicationJsonSerializationJsonValue);
+        public static ContentTypeInternal Json { get; } = new ContentTypeInternal(JsonValue);
 
         /// <summary> text/plain; charset=utf-8. </summary>
         [CodeGenMember("TextPlainCharsetUtf8")]
-        public static SchemaFormatInternal Custom { get; } = new SchemaFormatInternal(TextPlainCharsetUtf8Value);
+        public static ContentTypeInternal Custom { get; } = new ContentTypeInternal(CustomValue);
 
         internal SchemaFormat ToSchemaFormat()
         {
             switch (_value)
             {
-                case ApplicationJsonSerializationAvroValue:
+                case AvroValue:
                     return SchemaFormat.Avro;
-                case ApplicationJsonSerializationJsonValue:
+                case JsonValue:
                     return SchemaFormat.Json;
                 default:
                     return SchemaFormat.Custom;

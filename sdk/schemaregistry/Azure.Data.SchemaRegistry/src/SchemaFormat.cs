@@ -23,13 +23,13 @@ namespace Azure.Data.SchemaRegistry
             switch (value)
             {
                 case AvroValue:
-                    InternalFormat = SchemaFormatInternal.ApplicationJsonSerializationAvro;
+                    ContentType = ContentTypeInternal.Avro;
                     break;
                 case JsonValue:
-                    InternalFormat = SchemaFormatInternal.ApplicationJsonSerializationJson;
+                    ContentType = ContentTypeInternal.Json;
                     break;
                 default:
-                    InternalFormat = SchemaFormatInternal.TextPlainCharsetUtf8;
+                    ContentType = ContentTypeInternal.Custom;
                     break;
             }
         }
@@ -62,6 +62,6 @@ namespace Azure.Data.SchemaRegistry
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        internal SchemaFormatInternal InternalFormat { get; }
+        internal ContentTypeInternal ContentType { get; }
     }
 }
