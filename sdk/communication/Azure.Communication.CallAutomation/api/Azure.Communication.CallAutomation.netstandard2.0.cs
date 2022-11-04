@@ -77,7 +77,6 @@ namespace Azure.Communication.CallAutomation
         public const string InvalidInvitationTimeoutInSeconds = "InvitationTimeoutInSeconds has to be between 1 and 180 seconds.";
         public const string InvalidRepeatabilityHeadersMessage = "Invalid RepeatabilityHeaders. RepeatabilityHeaders is only valid when RepeatabilityRequestId and RepeatabilityFirstSent are set to non-default value.";
         public const string OperationContextExceedsMaxLength = "UserToUserInformation exceeds maximum string length of 5000.";
-        public const string UserToUserInformationExceedsMaxLength = "UserToUserInformation exceeds maximum string length of 5000.";
     }
     public abstract partial class CallAutomationEventBase
     {
