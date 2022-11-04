@@ -370,7 +370,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             RecoverDeletedSecretOperation operation = await Client.StartRecoverDeletedSecretAsync(secretName);
             SecretProperties recoverSecretResult = operation.Value;
 
-            await WaitForSecret(secretName);
+            await operation.WaitForCompletionAsync(); ;
 
             KeyVaultSecret recoveredSecret = await Client.GetSecretAsync(secretName);
 
