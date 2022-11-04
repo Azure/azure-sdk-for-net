@@ -62,7 +62,6 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            // Make the request
             var exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false); });
             Assert.AreEqual(1, exceptions.InnerExceptions.Count);
             Assert.AreEqual("1 out of the 801 logs failed to upload", exceptions.Message.Split('.')[0]);

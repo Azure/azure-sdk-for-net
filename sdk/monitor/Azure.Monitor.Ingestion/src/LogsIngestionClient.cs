@@ -188,7 +188,7 @@ namespace Azure.Monitor.Ingestion
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             Response response = null;
-            var exceptions = new List<Exception>();
+            List<Exception> exceptions = null;
 
             scope.Start();
             // Keep track of the number of failed logs across batches
@@ -215,10 +215,10 @@ namespace Azure.Monitor.Ingestion
                 catch (Exception ex)
                 {
                     logsFailed += batch.LogsList.Count;
-                    // If we have an error, add error from response into exceptions list which represents the errors from all the batches
+                    // If we have an error, add Exception from response into exceptions list without throwing
                     AddException(
-                    ref exceptions,
-                    ex);
+                        ref exceptions,
+                        ex);
                 }
             }
             if (exceptions?.Count > 0)
@@ -327,25 +327,7 @@ namespace Azure.Monitor.Ingestion
             // At this point, all tasks have completed. Examine tasks to see if they have exceptions. If Status code != 204, add RequestFailedException to list of exceptions. Increment logsFailed accordingly
             foreach (var task in runningTasks)
             {
-                // Check if an exception to log
-                if (task.CurrentTask.Exception != null)
-                {
-                    AddException(
-                        ref exceptions,
-                        task.CurrentTask.Exception);
-                    logsFailed += task.LogsCount;
-                }
-                // Check status code
-                else
-                {
-                    if (task.CurrentTask.Result.Status != 204)
-                    {
-                        AddException(
-                            ref exceptions,
-                            new RequestFailedException(task.CurrentTask.Result));
-                    }
-                    logsFailed += task.LogsCount;
-                }
+                ProcessCompletedTask(task, ref exceptions, ref logsFailed);
             }
             if (exceptions?.Count > 0)
             {
@@ -394,11 +376,10 @@ namespace Azure.Monitor.Ingestion
             return message.Response;
         }
 
-        private static List<Exception> AddException(ref List<Exception> exceptions, Exception ex)
+        private static void AddException(ref List<Exception> exceptions, Exception ex)
         {
             exceptions ??= new List<Exception>();
             exceptions.Add(ex);
-            return exceptions;
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
