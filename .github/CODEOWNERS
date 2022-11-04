@@ -477,7 +477,8 @@ sdk/monitor/ci.yml                         @nisha-bhatia @ShivangiReja
 
 # ServiceLabel: %Mixed Reality %Service Attention
 /sdk/mixedreality/                                 @crtreasu @rgarcia
-# PRLabel: %MixedReality
+
+# PRLabel: %Mixed Reality
 /sdk/mixedreality/                                 @crtreasu @rgarcia @JoshLove-msft
 
 # ServiceLabel: %Network %Service Attention
