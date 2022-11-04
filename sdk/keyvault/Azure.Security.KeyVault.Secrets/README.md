@@ -1,4 +1,5 @@
 # Azure Key Vault secret client library for .NET
+
 Azure Key Vault is a cloud service that provides a secure storage of secrets, such as passwords and database connection strings.
 
 The Azure Key Vault secrets client library allows you to securely store and control the access to tokens, passwords, API keys, and other secrets. This library offers operations to create, retrieve, update, delete, purge, backup, restore, and list the secrets and its versions.
@@ -8,6 +9,7 @@ The Azure Key Vault secrets client library allows you to securely store and cont
 ## Getting started
 
 ### Install the package
+
 Install the Azure Key Vault secrets client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
@@ -15,6 +17,7 @@ dotnet add package Azure.Security.KeyVault.Secrets
 ```
 
 ### Prerequisites
+
 * An [Azure subscription][azure_sub].
 * An existing Azure Key Vault. If you need to create an Azure Key Vault, you can use the Azure Portal or [Azure CLI][azure_cli].
 
@@ -25,6 +28,7 @@ az keyvault create --resource-group <your-resource-group-name> --name <your-key-
 ```
 
 ### Authenticate the client
+
 In order to interact with the Azure Key Vault service, you'll need to create an instance of the [SecretClient][secret_client_class] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
@@ -36,13 +40,17 @@ dotnet add package Azure.Identity
 ```
 
 #### Create/Get credentials
+
 Use the [Azure CLI][azure_cli] snippet below to create/get client secret credentials.
 
- * Create a service principal and configure its access to Azure resources:
+* Create a service principal and configure its access to Azure resources:
+
     ```PowerShell
     az ad sp create-for-rbac -n <your-application-name> --skip-assignment
     ```
+
     Output:
+
     ```json
     {
         "appId": "generated-app-ID",
@@ -52,28 +60,34 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
         "tenant": "tenant-ID"
     }
     ```
+
 * Use the returned credentials above to set  **AZURE_CLIENT_ID** (appId), **AZURE_CLIENT_SECRET** (password), and **AZURE_TENANT_ID** (tenant) environment variables. The following example shows a way to do this in Powershell:
+
     ```PowerShell
     $Env:AZURE_CLIENT_ID="generated-app-ID"
     $Env:AZURE_CLIENT_SECRET="random-password"
     $Env:AZURE_TENANT_ID="tenant-ID"
     ```
-    
+
 * Grant the above mentioned application authorization to perform secret operations on the Azure Key Vault:
+
     ```PowerShell
     az keyvault set-policy --name <your-key-vault-name> --spn $Env:AZURE_CLIENT_ID --secret-permissions backup delete get list set
     ```
+
     > --secret-permissions:
     > Accepted values: backup, delete, get, list, purge, recover, restore, set
 
     If you have enabled role-based access control (RBAC) for Key Vault instead, you can find roles like "Key Vault Secrets Officer" in our [RBAC guide][rbac_guide].
 
 * Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
+
     ```PowerShell
     az keyvault show --name <your-key-vault-name> --query properties.vaultUri --output tsv
     ```
 
 #### Create SecretClient
+
 Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET**, and **AZURE_TENANT_ID** environment variables, replace **vaultUrl** with the output of `az keyvault show` in the example below to create the [SecretClient][secret_client_class]:
 
 ```C# Snippet:CreateSecretClient
@@ -89,19 +103,23 @@ secret = client.GetSecret("secret-name");
 ```
 
 ## Key concepts
+
 ### KeyVaultSecret
+
 A `KeyVaultSecret` is the fundamental resource within Azure Key Vault. From a developer's perspective, Azure Key Vault APIs accept and return secret values as strings.
 
 ### SecretClient
+
 A `SecretClient` provides both synchronous and asynchronous operations in the SDK allowing for selection of a client based on an application's use case.
 Once you've initialized a `SecretClient`, you can interact with secrets in Azure Key Vault.
 
 ### Thread safety
+
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) | 
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
@@ -111,11 +129,13 @@ We guarantee that all client instance methods are thread-safe and independent of
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
+
 The Azure.Security.KeyVault.Secrets package supports synchronous and asynchronous APIs.
 
 The following section provides several code snippets using the `client` [created above](#create-secretclient), covering some of the most common Azure Key Vault secret service related tasks:
 
 ### Sync examples
+
 * [Create a secret](#create-a-secret)
 * [Retrieve a secret](#retrieve-a-secret)
 * [Update an existing secret](#update-an-existing-secret)
@@ -124,11 +144,13 @@ The following section provides several code snippets using the `client` [created
 * [List Secrets](#list-secrets)
 
 ### Async examples
+
 * [Create a secret asynchronously](#create-a-secret-asynchronously)
 * [List secrets asynchronously](#list-secrets-asynchronously)
 * [Delete a secret asynchronously](#delete-a-secret-asynchronously)
 
 ### Create a secret
+
 `SetSecret` creates a `KeyVaultSecret` to be stored in the Azure Key Vault. If a secret with the same name already exists, then a new version of the secret is created.
 
 ```C# Snippet:CreateSecret
@@ -141,6 +163,7 @@ Console.WriteLine(secret.Properties.Enabled);
 ```
 
 ### Retrieve a secret
+
 `GetSecret` retrieves a secret previously stored in the Azure Key Vault.
 
 ```C# Snippet:RetrieveSecret
@@ -151,6 +174,7 @@ Console.WriteLine(secret.Value);
 ```
 
 ### Update an existing secret
+
 `UpdateSecretProperties` updates a secret previously stored in the Azure Key Vault. Only the attributes of the secret are updated. To update the value, call `SecretClient.SetSecret` on a secret with the same name.
 
 ```C# Snippet:UpdateSecret
@@ -170,6 +194,7 @@ Console.WriteLine(updatedSecretProperties.ContentType);
 ```
 
 ### Delete a secret
+
 `StartDeleteSecret` starts a long-running operation to delete a secret previously stored in the Azure Key Vault.
 You can retrieve the secret immediately without waiting for the operation to complete.
 When [soft-delete][soft_delete] is not enabled for the Azure Key Vault, this operation permanently deletes the secret.
@@ -183,6 +208,7 @@ Console.WriteLine(secret.Value);
 ```
 
 ### Delete and purge a secret
+
 You will need to wait for the long-running operation to complete before trying to purge or recover the secret.
 You can do this by calling `UpdateStatus` in a loop as shown below:
 
@@ -203,6 +229,7 @@ client.PurgeDeletedSecret(secret.Name);
 ```
 
 ### List secrets
+
 This example lists all the secrets in the specified Azure Key Vault. The value is not returned when listing all secrets. You will need to call `SecretClient.GetSecret` to retrieve the value.
 
 ```C# Snippet:ListSecrets
@@ -215,6 +242,7 @@ foreach (SecretProperties secretProperties in allSecrets)
 ```
 
 ### Create a secret asynchronously
+
 The asynchronous APIs are identical to their synchronous counterparts, but return with the typical "Async" suffix for asynchronous methods and return a `Task`.
 
 This example creates a secret in the Azure Key Vault with the specified optional arguments.
@@ -227,6 +255,7 @@ Console.WriteLine(secret.Value);
 ```
 
 ### List secrets asynchronously
+
 Listing secrets does not rely on awaiting the `GetPropertiesOfSecretsAsync` method, but returns an `AsyncPageable<SecretProperties>` that you can use with the `await foreach` statement:
 
 ```C# Snippet:ListSecretsAsync
@@ -239,6 +268,7 @@ await foreach (SecretProperties secretProperties in allSecrets)
 ```
 
 ### Delete a secret asynchronously
+
 When deleting a secret asynchronously before you purge it, you can await the `WaitForCompletionAsync` method on the operation.
 By default, this loops indefinitely but you can cancel it by passing a `CancellationToken`.
 
@@ -258,6 +288,7 @@ See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/
 for details on how to diagnose various failure scenarios.
 
 ### General
+
 When you interact with the Azure Key Vault secret client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
 
 For example, if you try to retrieve a secret that doesn't exist in your Azure Key Vault, a `404` error is returned, indicating `Not Found`.
@@ -275,13 +306,13 @@ catch (RequestFailedException ex)
 
 You will notice that additional information is logged, like the Client Request ID of the operation.
 
-```
-Message: 
+```text
+Message:
     Azure.RequestFailedException : Service request failed.
-    Status: 404 (Not Found) 
+    Status: 404 (Not Found)
 Content:
     {"error":{"code":"SecretNotFound","message":"Secret not found: some_secret"}}
-    
+
 Headers:
     Cache-Control: no-cache
     Pragma: no-cache
@@ -301,7 +332,9 @@ Headers:
 ```
 
 ## Next steps
+
 Several Azure Key Vault secrets client library samples are available to you in this GitHub repository. These samples provide example code for additional scenarios commonly encountered while working with Azure Key Vault:
+
 * [Sample1_HelloWorld.md][hello_world_sample] - for working with Azure Key Vault, including:
   * Create a secret
   * Get an existing secret
@@ -319,15 +352,17 @@ Several Azure Key Vault secrets client library samples are available to you in t
   * Delete secrets from the Key Vault
   * List deleted secrets in the Key Vault
 
- ###  Additional Documentation
+### Additional Documentation
+
 * For more extensive documentation on Azure Key Vault, see the [API reference documentation][keyvault_rest].
 * For Keys client library see [Keys client library][keys_client_library].
 * For Certificates client library see [Certificates client library][certificates_client_library].
 
 ## Contributing
+
 See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to these libraries.
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit <https://cla.microsoft.com>.
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
