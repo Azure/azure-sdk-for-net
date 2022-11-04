@@ -3,15 +3,62 @@
 ## 1.0.0 (2022-12-01)
 
 ### Features Added
-- TO BE ADDED 
-### Breaking Changes
-- TO BE ADDED 
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.ListMetricNamespaces`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.ListMetricDefinitions`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.GetMetrics`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.CreateOrUpdateAppComponent`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.GetAppComponents`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.CreateOrUpdateServerMetricsConfig`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.GetServerMetricsConfig`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CheckTestFileValidationStatus`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CheckTestRunCompleted`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.ListMetricNamespacesAsync`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.ListMetricDefinitionsAsync`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.GetMetricsAsync`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.CreateOrUpdateAppComponentAsync`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.GetAppComponentsAsync`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.CreateOrUpdateServerMetricsConfigAsync`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.GetServerMetricsConfigAsync`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CheckTestFileValidationStatusAsync`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CheckTestRunCompletedAsync`
 
-### Bugs Fixed
-- TO BE ADDED 
+### Breaking Changes
+- Renamed sublcient from `TestRunClinet` to `LoadTestRunClient`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CreateOrUpdateTest` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CreateOrUpdateLoadTest`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetLoadTestSearches` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.ListLoadTests`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetAllTestFiles` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.ListTestFiles`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CreateOrUpdateAppComponents` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CreateOrUpdateAppComponent`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetAppComponent` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetAppComponents`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetServerMetrics` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetServerMetricsConfig`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.CreateAndUpdateTest` to `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.CreateOrUpdateTestRun`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.GetTestRunSearches` to `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.ListTestRuns`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CreateOrUpdateTestAsync` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CreateOrUpdateLoadTestAsync`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetLoadTestSearchesAsync` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.ListLoadTestsAsync`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetAllTestFilesAsync` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.ListTestFilesAsync`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CreateOrUpdateAppComponentsAsync` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CreateOrUpdateAppComponentAsync`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetAppComponentAsync` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetAppComponentsAsync`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetServerMetricsAsync` to `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetServerMetricsConfigAsync`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.CreateAndUpdateTestAsync` to `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.CreateOrUpdateTestRunAsync`
+- Renamed `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.GetTestRunSearchesAsync` to `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.ListTestRunsAsync`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.GetTestRunClientMetrics`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.GetTestRunClientMetricsAsync`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.GetTestRunClientMetricsFilters`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.TestRunClient.GetTestRunClientMetricsFiltersAsync`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.DeleteAppComponent`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.DeleteAppComponentAsync`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetAppComponentByName`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetAppComponentByNameAsync`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetServerMetricsByName`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetServerMetricsByNameAsync`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.DeleteServerMetrics`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.DeleteServerMetricsAsync`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetServerDefaultMetrics`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.GetServerDefaultMetricsAsync`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.ListSupportedResourceType`
+- Removed `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.ListSupportedResourceTypeAsync`
 
 ### Other Changes
-- TO BE ADDED 
+- README Updated 
 
 ## 1.0.0-beta.1 (2022-10-25)
 

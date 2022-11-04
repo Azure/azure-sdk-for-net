@@ -48,7 +48,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             try
             {
                 // starting test run
-                Response response = await testRunClient.CreateAndUpdateTestAsync(testRunId, RequestContent.Create(data));
+                Response response = await testRunClient.CreateOrUpdateTestRunAsync(testRunId, RequestContent.Create(data));
 
                 // if  successfully, printing response
                 Console.WriteLine(response.Content);

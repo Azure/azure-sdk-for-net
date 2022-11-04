@@ -10,7 +10,7 @@ using System.Text;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary>
-    /// enum to hold TestFileValidationStatus
+    /// enum to hold Test File ValidationStatus
     /// </summary>
     public enum TestFileValidationStatus
     {

@@ -23,7 +23,7 @@ directive:
       transform: $["operationId"] = "Test_GetLoadTest";
     - from: swagger-document 
       where: $["paths"]["/tests"].get
-      transform: $["operationId"] = "Test_ListLoadTest";
+      transform: $["operationId"] = "Test_ListLoadTests";
     - from: swagger-document 
       where: $["paths"]["/tests/{testId}/files/{fileId}"].put
       transform: $["operationId"] = "Test_UploadTestFile";

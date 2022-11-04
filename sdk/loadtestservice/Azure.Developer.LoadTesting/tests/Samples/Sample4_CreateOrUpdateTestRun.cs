@@ -52,7 +52,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             try
             {
                 // starting test run
-                Response response = testRunClient.CreateAndUpdateTest(testRunId, RequestContent.Create(data));
+                Response response = testRunClient.CreateOrUpdateTestRun(testRunId, RequestContent.Create(data));
 
                 // if successfully, printing response
                 Console.WriteLine(response.Content);

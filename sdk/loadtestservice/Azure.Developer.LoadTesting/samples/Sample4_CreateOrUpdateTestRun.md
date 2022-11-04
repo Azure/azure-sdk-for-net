@@ -13,7 +13,7 @@ TokenCredential credential = TestEnvironment.Credential;
 LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
 
 // getting appropriate Subclient
-TestRunClient testRunClient = loadTestingClient.getLoadTestRun();
+LoadTestRunClient testRunClient = loadTestingClient.getLoadTestRun();
 ```
 
 ## Calling CreateAndUpdateTest
@@ -34,7 +34,7 @@ var data = new
 try
 {
     // starting test run
-    Response response = testRunClient.CreateAndUpdateTest(testRunId, RequestContent.Create(data));
+    Response response = testRunClient.CreateOrUpdateTestRun(testRunId, RequestContent.Create(data));
 
     // if successfully, printing response
     Console.WriteLine(response.Content);

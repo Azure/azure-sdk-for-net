@@ -71,7 +71,7 @@ var data = new
 
 try
 {
-    Response response = loadTestAdministrationClient.CreateOrUpdateTest(testId, RequestContent.Create(data));
+    Response response = loadTestAdministrationClient.CreateOrUpdateLoadTest(testId, RequestContent.Create(data));
 
     // if the test is created successfully, printing response
     Console.WriteLine(response.Content);
