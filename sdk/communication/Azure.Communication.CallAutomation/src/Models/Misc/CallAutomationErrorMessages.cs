@@ -26,6 +26,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// OperationContext exceeds max length message.
         /// </summary>
-        public const string OperationContextExceedsMaxLength = "UserToUserInformation exceeds maximum string length of 5000.";
+        public const string OperationContextExceedsMaxLength = "OperationContext exceeds maximum string length of 5000.";
     }
 }
