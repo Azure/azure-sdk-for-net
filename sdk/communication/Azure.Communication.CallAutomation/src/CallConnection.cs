@@ -268,14 +268,7 @@ namespace Azure.Communication.CallAutomation
             TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
 
             request.TransfereeCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-            if (options.UserToUserInformation != null && options.UserToUserInformation.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-            {
-                throw new ArgumentException(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength);
-            }
-            else
-            {
-                request.UserToUserInformation = options.UserToUserInformation;
-            }
+
             if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
             {
                 throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);

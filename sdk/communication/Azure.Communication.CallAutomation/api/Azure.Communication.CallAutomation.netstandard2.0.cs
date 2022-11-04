@@ -650,6 +650,5 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
-        public string UserToUserInformation { get { throw null; } set { } }
     }
 }
