@@ -42,6 +42,11 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
     {
       Write-Host "API Review is approved for package $($packageName)"
     }
+    else if ($response.StatusCode -eq '202')
+    {
+      Write-Host "Package name $($packageName) is not yet approved by an SDK API approver. Package name must be approved to release a preview version if $($packageName) was never released as GA version."
+      Write-Host "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on package name Approval."
+    }
     else
     {
       Write-Warning "API Review is not approved for package $($packageName). Release pipeline will fail if API review is not approved."
