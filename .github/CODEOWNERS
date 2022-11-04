@@ -395,7 +395,8 @@ sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamat
 
 # ServiceLabel: %LoadTest Service %Service Attention
 sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain
-# PRLabel: %loadtestservice
+
+# PRLabel: %Load Test Service
 sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain @christothes
 
 
