@@ -4,7 +4,7 @@
 
 ### Features Added
 - ExportRdbContent has a new parameter PreferredDataArchiveAuthMethod
-- ImportRdbContent hasa new paramter PreferredDataArchiveAuthMethod
+- ImportRdbContent has a new parameter PreferredDataArchiveAuthMethod
 - RedisLinkedServerWithPropertyCreateOrUpdateContent has a new parameter GeoReplicatedPrimaryHostName
 - RedisLinkedServerWithPropertyCreateOrUpdateContent has a new parameter PrimaryHostName
 - RedisLinkedServerWithPropertyData has a new parameter GeoReplicatedPrimaryHostName
