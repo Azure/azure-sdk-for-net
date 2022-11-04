@@ -12,18 +12,18 @@ using Azure.ResourceManager.Dns;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The response to a record set List operation. </summary>
-    internal partial class RecordSetListResult
+    internal partial class RecordListResult
     {
-        /// <summary> Initializes a new instance of RecordSetListResult. </summary>
-        internal RecordSetListResult()
+        /// <summary> Initializes a new instance of RecordListResult. </summary>
+        internal RecordListResult()
         {
             Value = new ChangeTrackingList<RecordData>();
         }
 
-        /// <summary> Initializes a new instance of RecordSetListResult. </summary>
+        /// <summary> Initializes a new instance of RecordListResult. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal RecordSetListResult(IReadOnlyList<RecordData> value, string nextLink)
+        internal RecordListResult(IReadOnlyList<RecordData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

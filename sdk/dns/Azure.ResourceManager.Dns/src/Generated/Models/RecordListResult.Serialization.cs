@@ -12,9 +12,9 @@ using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal partial class RecordSetListResult
+    internal partial class RecordListResult
     {
-        internal static RecordSetListResult DeserializeRecordSetListResult(JsonElement element)
+        internal static RecordListResult DeserializeRecordListResult(JsonElement element)
         {
             Optional<IReadOnlyList<RecordData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new RecordSetListResult(Optional.ToList(value), nextLink.Value);
+            return new RecordListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

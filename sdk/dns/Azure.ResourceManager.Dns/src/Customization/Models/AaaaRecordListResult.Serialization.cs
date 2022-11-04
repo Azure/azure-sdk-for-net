@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     internal partial class AaaaRecordListResult
     {
-        internal static AaaaRecordListResult DeserializeAaaaRecordSetListResult(JsonElement element)
+        internal static AaaaRecordListResult DeserializeAaaaRecordListResult(JsonElement element)
         {
             Optional<IReadOnlyList<AaaaRecordData>> value = default;
             Optional<string> nextLink = default;
