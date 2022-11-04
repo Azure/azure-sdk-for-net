@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://hmlam-cbn04-503.servicebus.windows.net/$schemaGroups/$schemas/4c19ff8f-8023-2fc3-fd2c-54092515ca35?api-version=2021-10",
+      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/$schemas/2df19676-d3c6-b4b6-32a0-1ec84454560b?api-version=2021-10",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; serialization=Avro",
+        "Accept": "application/json; serialization=Avro, application/json; serialization=Json, application/octet-stream",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.3.0-alpha.20221011.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "066c866e4a2cc67e109d885428c447db",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.3.0-alpha.20221104.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9edbc120ae47b588c312bdf87d970dd4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 11 Oct 2022 14:55:58 GMT",
+        "Date": "Fri, 04 Nov 2022 22:47:16 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
@@ -23,14 +23,14 @@
       "ResponseBody": {
         "error": {
           "code": "ItemNotFound",
-          "message": "Schema id 4c19ff8f-8023-2fc3-fd2c-54092515ca35 does not exist. TrackingId:d63eb630-f1dc-40a9-8949-9be69b3ea8dd_G5, SystemTracker:hmlam-cbn04-503.servicebus.windows.net:$schemaGroups/$schemas/4c19ff8f-8023-2fc3-fd2c-54092515ca35, Timestamp:2022-10-11T14:55:58"
+          "message": "Schema id 2df19676-d3c6-b4b6-32a0-1ec84454560b does not exist. TrackingId:f41ba962-ddd9-4e38-b605-17772ebf26f3_G2, SystemTracker:mreddingschemaregistry-avro.servicebus.windows.net:$schemaGroups/$schemas/2df19676-d3c6-b4b6-32a0-1ec84454560b, Timestamp:2022-11-04T22:47:17"
         }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "940795591",
-    "SCHEMAREGISTRY_ENDPOINT": "hmlam-cbn04-503.servicebus.windows.net"
+    "RandomSeed": "943258012",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net"
   }
 }

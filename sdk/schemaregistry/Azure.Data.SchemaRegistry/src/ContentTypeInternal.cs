@@ -25,6 +25,11 @@ namespace Azure.Data.SchemaRegistry
 
         internal SchemaFormat ToSchemaFormat()
         {
+            var isJsonTemp = _value.Contains("+json");
+            if (isJsonTemp)
+            {
+                return SchemaFormat.Json;
+            }
             switch (_value)
             {
                 case AvroValue:
