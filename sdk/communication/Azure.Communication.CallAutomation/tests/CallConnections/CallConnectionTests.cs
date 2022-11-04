@@ -187,20 +187,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.OperationContextExceedsMaxLength));
         }
 
-        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
-        public void TransferCallToParticipant_ExceedsMaxUserToUserInformationLengthLength(CommunicationIdentifier targetParticipant)
-        {
-            var callConnection = CreateMockCallConnection(202);
-
-            var options = new TransferToParticipantOptions(targetParticipant)
-            {
-                UserToUserInformation = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
-            };
-            ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength));
-        }
-
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public async Task AddParticipantsAsync_202Accepted(CommunicationIdentifier[] participantsToAdd)
         {

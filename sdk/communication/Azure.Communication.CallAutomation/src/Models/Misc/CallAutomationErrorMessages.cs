@@ -24,13 +24,8 @@ namespace Azure.Communication.CallAutomation
         public const string InvalidInvitationTimeoutInSeconds = "InvitationTimeoutInSeconds has to be between 1 and 180 seconds.";
 
         /// <summary>
-        /// UserToUserInformation exceeds max length message.
-        /// </summary>
-        public const string UserToUserInformationExceedsMaxLength = "UserToUserInformation exceeds maximum string length of 5000.";
-
-        /// <summary>
         /// OperationContext exceeds max length message.
         /// </summary>
-        public const string OperationContextExceedsMaxLength = "UserToUserInformation exceeds maximum string length of 5000.";
+        public const string OperationContextExceedsMaxLength = "OperationContext exceeds maximum string length of 5000.";
     }
 }

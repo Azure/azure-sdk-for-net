@@ -31,11 +31,6 @@ namespace Azure.Communication.CallAutomation
         public PhoneNumberIdentifier SourceCallerId { get; set; }
 
         /// <summary>
-        /// The UserToUserInformation.
-        /// </summary>
-        public string UserToUserInformation { get; set; }
-
-        /// <summary>
         /// The operationContext for this transfer call.
         /// </summary>
         public string OperationContext { get; set; }
