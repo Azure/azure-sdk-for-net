@@ -31,7 +31,10 @@ namespace Azure.ResourceManager.EventGrid
 
             var resourceGroupResource = client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(scope.SubscriptionId, scope.ResourceGroupName));
 
-            return GetExtensionClient(resourceGroupResource).GetEventTypesAsync(scope.ResourceType.Namespace, scope.SubstringAfterProviderNamespace(), scope.Name, cancellationToken);
+            var parentPart = scope.Parent.SubstringAfterProviderNamespace();
+            var resourceTypeName = (string.IsNullOrEmpty(parentPart) ? string.Empty : $"{parentPart}/") + scope.ResourceType.GetLastType();
+
+            return GetExtensionClient(resourceGroupResource).GetEventTypesAsync(scope.ResourceType.Namespace, resourceTypeName, scope.Name, cancellationToken);
         }
 
         /// <summary>
@@ -50,7 +53,10 @@ namespace Azure.ResourceManager.EventGrid
 
             var resourceGroupResource = client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(scope.SubscriptionId, scope.ResourceGroupName));
 
-            return GetExtensionClient(resourceGroupResource).GetEventTypes(scope.ResourceType.Namespace, scope.SubstringAfterProviderNamespace(), scope.Name, cancellationToken);
+            var parentPart = scope.Parent.SubstringAfterProviderNamespace();
+            var resourceTypeName = (string.IsNullOrEmpty(parentPart) ? string.Empty : $"{parentPart}/") + scope.ResourceType.GetLastType();
+
+            return GetExtensionClient(resourceGroupResource).GetEventTypes(scope.ResourceType.Namespace, resourceTypeName, scope.Name, cancellationToken);
         }
 
         /// <summary>
