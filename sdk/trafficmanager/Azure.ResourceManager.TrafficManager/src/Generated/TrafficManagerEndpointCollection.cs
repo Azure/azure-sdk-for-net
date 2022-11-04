@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}
         /// Operation Id: Endpoints_Get
         /// </summary>
-         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -195,6 +195,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Exists");
@@ -223,6 +224,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Exists");

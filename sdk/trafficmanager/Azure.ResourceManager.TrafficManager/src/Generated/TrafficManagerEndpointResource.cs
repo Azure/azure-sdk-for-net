@@ -7,6 +7,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TrafficManagerEndpointResource"/> instance. </summary>
-                public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}";
             return new ResourceIdentifier(resourceId);
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.TrafficManager
             scope.Start();
             try
             {
-                var response = await _trafficManagerEndpointEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,Id.ResourceType.GetLastType(), Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _trafficManagerEndpointEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.GetLastType(), Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
