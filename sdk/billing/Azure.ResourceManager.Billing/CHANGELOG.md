@@ -1,14 +1,19 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2022-11-04)
 
-### Features Added
+This package is the first stable release of the Microsoft Azure Billing management client library.
 
 ### Breaking Changes
 
-### Bugs Fixed
+Polishing since last public beta release:
+- Prepended `Billing` prefix to all single / simple model names.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Optimized the name of some models and functions.
 
 ### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
 
 ## 1.0.0-beta.1 (2022-08-29)
 
