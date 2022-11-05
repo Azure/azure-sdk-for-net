@@ -534,9 +534,11 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
+                    var tracestateParameter = Expression.Parameter(typeof(string));
+                    var convertedParameter = Expression.Convert(tracestateParameter, method.GetParameters()[0].ParameterType);
                     SetTraceStateStringMethod = Expression.Lambda<Action<Activity, string?>>(
-                        Expression.Call(ActivityParameter, method),
-                        ActivityParameter).Compile();
+                        Expression.Call(ActivityParameter, method, convertedParameter),
+                        ActivityParameter, tracestateParameter).Compile();
                 }
             }
 
