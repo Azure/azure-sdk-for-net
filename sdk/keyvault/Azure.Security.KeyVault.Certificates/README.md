@@ -20,6 +20,7 @@ dotnet add package Azure.Security.KeyVault.Certificates
 
 * An [Azure subscription][azure_sub].
 * An existing Azure Key Vault. If you need to create an Azure Key Vault, you can use the Azure Portal or [Azure CLI][azure_cli].
+* Authorization to an existing Azure Key Vault using either [RBAC][rbac_guide] (recommended) or [access control][access_policy].
 
 If you use the Azure CLI, replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own, unique names:
 
@@ -30,65 +31,22 @@ az keyvault create --resource-group <your-resource-group-name> --name <your-key-
 ### Authenticate the client
 
 In order to interact with the Azure Key Vault service, you'll need to create an instance of the [CertificateClient][certificate_client_class] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
- and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
+and credentials to instantiate a client object.
 
-Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
-or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
+The examples shown below use a [`DefaultAzureCredential`][DefaultAzureCredential], which is appropriate for most scenarios including local development and production environments.
+Additionally, we recommend using a managed identity for authentication in production environments.
+You can find more information on different ways of authenticating and their corresponding credential types in the [Azure Identity][azure_identity] documentation.
+
+To use the `DefaultAzureCredential` provider shown below,
+or other credential providers provided with the Azure SDK, you must first install the Azure.Identity package:
 
 ```dotnetcli
 dotnet add package Azure.Identity
 ```
 
-#### Create/Get credentials
-
-Use the [Azure CLI][azure_cli] snippet below to create/get client secret credentials.
-
-* Create a service principal and configure its access to Azure resources:
-
-    ```PowerShell
-    az ad sp create-for-rbac -n <your-application-name> --skip-assignment
-    ```
-
-    Output:
-
-    ```json
-    {
-        "appId": "generated-app-ID",
-        "displayName": "dummy-app-name",
-        "name": "http://dummy-app-name",
-        "password": "random-password",
-        "tenant": "tenant-ID"
-    }
-    ```
-
-* Use the returned credentials above to set  **AZURE_CLIENT_ID** (appId), **AZURE_CLIENT_SECRET** (password), and **AZURE_TENANT_ID** (tenant) environment variables. The following example shows a way to do this in Powershell:
-
-    ```PowerShell
-    $Env:AZURE_CLIENT_ID="generated-app-ID"
-    $Env:AZURE_CLIENT_SECRET="random-password"
-    $Env:AZURE_TENANT_ID="tenant-ID"
-    ```
-
-* Grant the above mentioned application authorization to perform certificate operations on the Azure Key Vault:
-
-    ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $Env:AZURE_CLIENT_ID --certificate-permissions backup delete get list create update purge
-    ```
-
-    > --certificate-permissions:
-    > Allowed values: backup, create, delete, deleteissuers, get, getissuers, import, list, listissuers, managecontacts, manageissuers, purge, recover, restore, setissuers, update.
-
-    If you have enabled role-based access control (RBAC) for Key Vault instead, you can find roles like "Key Vault Certificates Officer" in our [RBAC guide][rbac_guide].
-
-* Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
-
-    ```PowerShell
-    az keyvault show --name <your-key-vault-name> --query properties.vaultUri --output tsv
-    ```
-
 #### Create CertificateClient
 
-Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET**, and **AZURE_TENANT_ID** environment variables, replace **vaultUrl** with the output of `az keyvault show` in the example below to create the [CertificateClient][certificate_client_class]:
+Instantiate a `DefaultAzureCredential` to pass to the client. You can use the same instance of a token credential provider with multiple clients to cache credentials when appropriate.
 
 ```C# Snippet:CreateCertificateClient
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
@@ -375,6 +333,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/MigrationGuide.md
-[rbac_guide]: https://docs.microsoft.com/azure/key-vault/general/rbac-guide
+[access_policy]: https://learn.microsoft.com/azure/key-vault/general/assign-access-policy
+[rbac_guide]: https://learn.microsoft.com/azure/key-vault/general/rbac-guide
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Certificates%2FREADME.png)
