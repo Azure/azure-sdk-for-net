@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Dns
     public partial class CnameRecordResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CnameRecordResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string cnameRecordName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{relativeRecordSetName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{cnameRecordName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _recordSetCnameRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _recordSetCnameRecordSetsRestClient;
+        private readonly ClientDiagnostics _cnameRecordInfoRecordSetsClientDiagnostics;
+        private readonly CnameRecordRestOperations _cnameRecordInfoRecordSetsRestClient;
         private readonly CnameRecordData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CnameRecordResource"/> class for mocking. </summary>
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CnameRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recordSetCnameRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string recordSetCnameRecordSetsApiVersion);
-            _recordSetCnameRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetCnameRecordSetsApiVersion);
+            _cnameRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cnameRecordInfoRecordSetsApiVersion);
+            _cnameRecordInfoRecordSetsRestClient = new CnameRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cnameRecordInfoRecordSetsApiVersion);
 #if DEBUG
-            ValidateResourceId(Id);
+			ValidateResourceId(Id);
 #endif
         }
 
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CnameRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Get");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _recordSetCnameRecordSetsRestClient.GetCnameRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cnameRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CnameRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Get");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _recordSetCnameRecordSetsRestClient.GetCnameRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cnameRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
@@ -140,16 +140,16 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Delete");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _recordSetCnameRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _cnameRecordInfoRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -167,16 +167,16 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Delete");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _recordSetCnameRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
+                var response = _cnameRecordInfoRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Update");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _recordSetCnameRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _cnameRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Update");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _recordSetCnameRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _cnameRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CNAME".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

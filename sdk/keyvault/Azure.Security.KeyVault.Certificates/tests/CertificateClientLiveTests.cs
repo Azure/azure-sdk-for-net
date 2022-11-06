@@ -1020,6 +1020,30 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task RecoverCertificate()
+        {
+            string certificateName = Recording.GenerateId();
+            CertificateOperation createOperation = await Client.StartCreateCertificateAsync(certificateName, CertificatePolicy.Default);
+            KeyVaultCertificateWithPolicy certificate = await createOperation.WaitForCompletionAsync();
+
+            DeleteCertificateOperation deleteOperation = await Client.StartDeleteCertificateAsync(certificateName);
+            await deleteOperation.WaitForCompletionAsync();
+
+            RecoverDeletedCertificateOperation recoverOperation = await Client.StartRecoverDeletedCertificateAsync(certificateName);
+            KeyVaultCertificateWithPolicy recoveredCertificate = await recoverOperation.WaitForCompletionAsync();
+
+            Assert.That(recoveredCertificate, Is.EqualTo(certificate).Using<KeyVaultCertificateWithPolicy>(AreEquivalent));
+        }
+
+        private static bool AreEquivalent(KeyVaultCertificateWithPolicy a, KeyVaultCertificateWithPolicy b) =>
+            string.Equals(a.Name, b.Name) &&
+            string.Equals(a.Properties.Version, b.Properties.Version) &&
+            a.Properties.CreatedOn == b.Properties.CreatedOn &&
+            string.Equals(a.Policy.Subject, b.Policy.Subject) &&
+            string.Equals(a.Policy.IssuerName, b.Policy.IssuerName) &&
+            string.Equals(a.Policy.CertificateType, b.Policy.CertificateType);
+
         public CryptographyClient GetCryptographyClient(Uri keyId) => InstrumentClient(
                 new CryptographyClient(
                     keyId,

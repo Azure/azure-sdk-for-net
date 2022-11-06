@@ -7,7 +7,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Samples
 {
-    #region Snippet:GlobalTimeoutRetryPolicy
+    // #region Snippet:GlobalTimeoutRetryPolicy
     internal class GlobalTimeoutRetryPolicy : RetryPolicy
     {
         private readonly TimeSpan _timeout;
@@ -37,5 +37,5 @@ namespace Azure.Core.Samples
             return async ? base.ShouldRetryAsync(message, exception) : new ValueTask<bool>(base.ShouldRetry(message, exception));
         }
     }
-    #endregion
+    // #endregion
 }
