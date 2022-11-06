@@ -1,9 +1,16 @@
+parameters:
+- name: Location
+  displayName: Location
+  type: string
+  default: eastus
+
 trigger: none
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: textanalytics
+    Location: "${{ parameters.Location }}"
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)

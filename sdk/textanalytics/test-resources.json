@@ -35,7 +35,7 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "eastus",
+            "defaultValue": "[resourceGroup().location]",
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
@@ -109,10 +109,6 @@
         "TEXT_ANALYTICS_ENDPOINT": {
             "type": "string",
             "value": "[variables('endpointValue')]"
-        },
-        "TEXTANALYTICS_ENDPOINT_SUFFIX": {
-            "type": "string",
-            "value": "[parameters('cognitiveServicesEndpointSuffix')]"
         }
     }
 }
