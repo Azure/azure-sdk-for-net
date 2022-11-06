@@ -135,7 +135,7 @@ namespace Azure.Core
         public Azure.Core.JsonData Add<T>(T[] serializable, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public static Azure.Core.JsonData EmptyArray() { throw null; }
         public static Azure.Core.JsonData EmptyObject() { throw null; }
-        public bool Equals(Azure.Core.JsonData? other) { throw null; }
+        public bool Equals(Azure.Core.JsonData other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
         public static Azure.Core.JsonData FromBytes(byte[] utf8Json) { throw null; }
         public static Azure.Core.JsonData FromBytes(System.ReadOnlyMemory<byte> utf8Json) { throw null; }
@@ -145,8 +145,8 @@ namespace Azure.Core
         public static Azure.Core.JsonData FromString(string json) { throw null; }
         public Azure.Core.JsonData? Get(string propertyName) { throw null; }
         public override int GetHashCode() { throw null; }
-        public T? Get<T>(string propertyName) { throw null; }
-        public T? Get<T>(string propertyName, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public T Get<T>(string propertyName) { throw null; }
+        public T Get<T>(string propertyName, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public static bool operator ==(Azure.Core.JsonData? left, string? right) { throw null; }
         public static bool operator ==(string? left, Azure.Core.JsonData? right) { throw null; }
         public static explicit operator bool (Azure.Core.JsonData json) { throw null; }
@@ -188,8 +188,8 @@ namespace Azure.Core
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public string ToJsonString() { throw null; }
         public override string ToString() { throw null; }
-        public T? To<T>() { throw null; }
-        public T? To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public T To<T>() { throw null; }
+        public T To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }
         public long WriteTo(System.IO.Stream stream) { throw null; }
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
     }

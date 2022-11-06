@@ -117,10 +117,10 @@ namespace Azure.Core
             }
         }
 
-        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has path. </summary>
+        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has a path. </summary>
         protected bool HasPath => PathLength > 0;
 
-        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has query. </summary>
+        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has a query. </summary>
         protected bool HasQuery => _queryIndex != -1;
 
         private int PathLength => HasQuery ? _queryIndex : _pathAndQuery.Length;

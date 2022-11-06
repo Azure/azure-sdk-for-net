@@ -193,7 +193,7 @@ namespace Azure.Core
         /// <param name="propertyName">The name of the property to get.</param>
         /// <returns>The value for a given property</returns>
         /// <remarks>If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.</remarks>
-        public T? Get<T>(string propertyName)
+        public T Get<T>(string propertyName)
         {
             return GetPropertyValue(propertyName).To<T>();
         }
@@ -206,7 +206,7 @@ namespace Azure.Core
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <returns>The value for a given property.</returns>
         /// <remarks>If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.</remarks>
-        public T? Get<T>(string propertyName, JsonSerializerOptions options)
+        public T Get<T>(string propertyName, JsonSerializerOptions options)
         {
             return GetPropertyValue(propertyName).To<T>(options);
         }
@@ -219,7 +219,7 @@ namespace Azure.Core
         /// <remarks>If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.</remarks>
         public JsonData? Get(string propertyName)
         {
-            if (EnsureObject().TryGetValue(propertyName, out var value))
+            if (EnsureObject().TryGetValue(propertyName, out JsonData value))
             {
                 return value;
             }
@@ -232,7 +232,7 @@ namespace Azure.Core
         /// </summary>
         /// <typeparam name="T">The type to convert the value into.</typeparam>
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
-        public T? To<T>() => To<T>(DefaultJsonSerializerOptions);
+        public T To<T>() => To<T>(DefaultJsonSerializerOptions);
 
         /// <summary>
         /// Deserializes the given JSON value into an instance of a given type.
@@ -240,7 +240,7 @@ namespace Azure.Core
         /// <typeparam name="T">The type to deserialize the value into</typeparam>
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
-        public T? To<T>(JsonSerializerOptions options)
+        public T To<T>(JsonSerializerOptions options)
         {
             return JsonSerializer.Deserialize<T>(ToJsonString(), options);
         }
@@ -919,33 +919,28 @@ namespace Azure.Core
                 return ToJsonString();
             }
 
-            return _value?.ToString() ?? "<null>";
+            return (_value ?? "<null>").ToString();
         }
 
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is string str)
+            if (obj is string)
             {
-                return this == str;
+                return this == ((string?)obj);
             }
 
-            if (obj is JsonData jsonData)
+            if (obj is JsonData)
             {
-                return Equals(jsonData);
+                return Equals((JsonData)obj);
             }
 
             return base.Equals(obj);
         }
 
         /// <inheritdoc />
-        public bool Equals(JsonData? other)
+        public bool Equals(JsonData other)
         {
-            if (other is null)
-            {
-                return false;
-            }
-
             if (_kind != other._kind)
             {
                 return false;
@@ -1048,7 +1043,7 @@ namespace Azure.Core
 
         private JsonData GetPropertyValue(string propertyName)
         {
-            if (EnsureObject().TryGetValue(propertyName, out var element))
+            if (EnsureObject().TryGetValue(propertyName, out JsonData element))
             {
                 return element;
             }
@@ -1070,7 +1065,7 @@ namespace Azure.Core
                 return Length;
             }
 
-            if (EnsureObject().TryGetValue(propertyName, out var element))
+            if (EnsureObject().TryGetValue(propertyName, out JsonData element))
             {
                 return element;
             }
@@ -1208,11 +1203,11 @@ namespace Azure.Core
 
         private class MetaObject : DynamicMetaObject
         {
-            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException($"{nameof(GetDynamicProperty)} method should be defined!");
+            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance);
 
-            private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException($"{nameof(GetDynamicEnumerable)} method should be defined!");
+            private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance);
 
-            private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException($"{nameof(SetValue)} method should be defined!");
+            private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance);
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
