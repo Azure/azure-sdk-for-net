@@ -9,80 +9,20 @@ namespace Azure.Communication.CallAutomation.Tests.Misc
     public class RepeatabilityHeadersTests
     {
         [Test]
-        public void RepeatablityHeaders_IsValid_BothHeadersAreNull()
+        public void RepeatablityHeaders_IsNotOverwrittenByDefaultIfSet()
         {
             // arrange
-            var headers = new RepeatabilityHeaders();
-
-            // act & assert
-            Assert.IsTrue(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
-        public void RepeatablityHeaders_IsValid_BothHeadersAreEmpty()
-        {
+            var repeatablityRequestId = Guid.NewGuid();
+            var repeatabilityFirstSent = DateTime.UtcNow;
             // arrange
-            var headers = new RepeatabilityHeaders {
-                RepeatabilityRequestId = Guid.Empty,
-                RepeatabilityFirstSent = ""
+            var options = new AnswerCallOptions("context", new Uri("https://contoso.com/callback"))
+            {
+                RepeatabilityHeaders = new RepeatabilityHeaders(repeatablityRequestId, repeatabilityFirstSent)
             };
 
             // act & assert
-            Assert.IsTrue(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
-        public void RepeatablityHeaders_IsValid_BothHeadersAreSet()
-        {
-            // arrange
-            var headers = new RepeatabilityHeaders
-            {
-                RepeatabilityRequestId = Guid.NewGuid(),
-                RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R")
-            };
-
-            // act & assert
-            Assert.IsTrue(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
-        public void RepeatablityHeaders_IsInvalid_RequestIdIsEmptyAndFirstSentIsNot()
-        {
-            // arrange
-            var headers = new RepeatabilityHeaders
-            {
-                RepeatabilityRequestId = Guid.Empty,
-                RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R")
-        };
-
-            // act & assert
-            Assert.IsFalse(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
-        public void RepeatablityHeaders_IsInvalid_RequestIdIsSetAndFirstSentIsNot()
-        {
-            // arrange
-            var headers = new RepeatabilityHeaders
-            {
-                RepeatabilityRequestId = Guid.NewGuid()
-            };
-
-            // act & assert
-            Assert.IsFalse(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
-        public void RepeatablityHeaders_IsInvalid_FirstSentIsSetAndRequestIdIsNot()
-        {
-            // arrange
-            var headers = new RepeatabilityHeaders
-            {
-                RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R")
-            };
-
-            // act & assert
-            Assert.IsFalse(headers.IsValidRepeatabilityHeaders());
+            Assert.AreEqual(repeatablityRequestId, options.RepeatabilityHeaders.RepeatabilityRequestId);
+            Assert.AreEqual(repeatabilityFirstSent.ToString("R"), options.RepeatabilityHeaders.GetRepeatabilityFirstSentString());
         }
     }
 }

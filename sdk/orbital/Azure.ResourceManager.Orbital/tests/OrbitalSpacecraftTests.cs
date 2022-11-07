@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Orbital.Tests
             // List available contacts
             var startTime = DateTime.Parse("2022-09-30T15:04:10.4408530Z");
             var endTime = DateTime.Parse("2022-10-02T15:04:10.4408530Z");
-            var content = new OrbitalSpacecraftAvailableContactsContent(new WritableSubResource() { Id = contactProfile.Id }, "WESTUS2_0", startTime, endTime);
+            var content = new OrbitalAvailableContactsContent(new WritableSubResource() { Id = contactProfile.Id }, "WESTUS2_0", startTime, endTime);
             var contactsLro = await spacecraft.GetAllAvailableContactsAsync(WaitUntil.Completed, content);
             Assert.Greater(contactsLro.Value.Values.Count, 0);
 

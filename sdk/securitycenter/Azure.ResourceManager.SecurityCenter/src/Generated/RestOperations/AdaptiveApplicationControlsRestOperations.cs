@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string ascLocation, string groupName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation ascLocation, string groupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -141,12 +141,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdaptiveApplicationControlGroupData>> GetAsync(string subscriptionId, string ascLocation, string groupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AdaptiveApplicationControlGroupData>> GetAsync(string subscriptionId, AzureLocation ascLocation, string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var message = CreateGetRequest(subscriptionId, ascLocation, groupName);
@@ -172,12 +171,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdaptiveApplicationControlGroupData> Get(string subscriptionId, string ascLocation, string groupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AdaptiveApplicationControlGroupData> Get(string subscriptionId, AzureLocation ascLocation, string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var message = CreateGetRequest(subscriptionId, ascLocation, groupName);
@@ -198,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreatePutRequest(string subscriptionId, string ascLocation, string groupName, AdaptiveApplicationControlGroupData data)
+        internal HttpMessage CreatePutRequest(string subscriptionId, AzureLocation ascLocation, string groupName, AdaptiveApplicationControlGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -228,12 +226,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="data"> The AdaptiveApplicationControlGroup to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/>, <paramref name="groupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdaptiveApplicationControlGroupData>> PutAsync(string subscriptionId, string ascLocation, string groupName, AdaptiveApplicationControlGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AdaptiveApplicationControlGroupData>> PutAsync(string subscriptionId, AzureLocation ascLocation, string groupName, AdaptiveApplicationControlGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -259,12 +256,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="data"> The AdaptiveApplicationControlGroup to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/>, <paramref name="groupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdaptiveApplicationControlGroupData> Put(string subscriptionId, string ascLocation, string groupName, AdaptiveApplicationControlGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AdaptiveApplicationControlGroupData> Put(string subscriptionId, AzureLocation ascLocation, string groupName, AdaptiveApplicationControlGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -284,7 +280,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string ascLocation, string groupName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, AzureLocation ascLocation, string groupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -309,12 +305,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string ascLocation, string groupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, AzureLocation ascLocation, string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var message = CreateDeleteRequest(subscriptionId, ascLocation, groupName);
@@ -335,12 +330,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string ascLocation, string groupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, AzureLocation ascLocation, string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var message = CreateDeleteRequest(subscriptionId, ascLocation, groupName);

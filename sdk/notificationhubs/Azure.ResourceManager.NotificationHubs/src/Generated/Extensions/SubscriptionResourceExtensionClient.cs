@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.NotificationHubs
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _namespacesClientDiagnostics;
-        private NamespacesRestOperations _namespacesRestClient;
         private ClientDiagnostics _notificationHubNamespaceNamespacesClientDiagnostics;
         private NamespacesRestOperations _notificationHubNamespaceNamespacesRestClient;
 
@@ -37,8 +35,6 @@ namespace Azure.ResourceManager.NotificationHubs
         {
         }
 
-        private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics NotificationHubNamespaceNamespacesClientDiagnostics => _notificationHubNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubNamespaceResource.ResourceType.Namespace, Diagnostics);
         private NamespacesRestOperations NotificationHubNamespaceNamespacesRestClient => _notificationHubNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NotificationHubNamespaceResource.ResourceType));
 
@@ -57,11 +53,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceAvailability");
+            using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceAvailability");
             scope.Start();
             try
             {
-                var response = await NamespacesRestClient.CheckAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await NotificationHubNamespaceNamespacesRestClient.CheckAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -80,11 +76,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceAvailability");
+            using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceAvailability");
             scope.Start();
             try
             {
-                var response = NamespacesRestClient.CheckAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = NotificationHubNamespaceNamespacesRestClient.CheckAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

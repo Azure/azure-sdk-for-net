@@ -11,6 +11,9 @@ developer/
 launch.json
 launchSettings.json
 
+# Default Assets restore directory
+.assets
+
 # Build results
 binaries/
 [Dd]ebug*/

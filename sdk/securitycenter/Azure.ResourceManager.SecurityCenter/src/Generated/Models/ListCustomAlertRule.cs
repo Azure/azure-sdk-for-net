@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="valueType"> The value type of the items in the list. </param>
-        internal ListCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, ValueType? valueType) : base(displayName, description, isEnabled, ruleType)
+        internal ListCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, SecurityValueType? valueType) : base(displayName, description, isEnabled, ruleType)
         {
             ValueType = valueType;
             RuleType = ruleType ?? "ListCustomAlertRule";
         }
 
         /// <summary> The value type of the items in the list. </summary>
-        public ValueType? ValueType { get; }
+        public SecurityValueType? ValueType { get; }
     }
 }

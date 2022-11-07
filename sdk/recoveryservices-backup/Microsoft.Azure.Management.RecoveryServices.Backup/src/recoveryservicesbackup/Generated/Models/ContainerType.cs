@@ -31,5 +31,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public const string SQLAGWorkLoadContainer = "SQLAGWorkLoadContainer";
         public const string StorageContainer = "StorageContainer";
         public const string GenericContainer = "GenericContainer";
+        public const string HanaHSRContainer = "HanaHSRContainer";
     }
 }

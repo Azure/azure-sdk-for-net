@@ -242,7 +242,8 @@ namespace Azure.ResourceManager.Tests
         public void TestDeserializeThenSerializeWithIdentity()
         {
             string json = "{\"identity\":{\"principalId\":\"22fdaec1-8b9f-49dc-bd72-ddaf8f215577\",\"tenantId\":\"72f988af-86f1-41af-91ab-2d7cd011db47\",\"type\":\"SystemAssigned\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using var jsonDocument = JsonDocument.Parse(json);
+            JsonElement element = jsonDocument.RootElement;
             PolicyAssignmentData data = PolicyAssignmentData.DeserializePolicyAssignmentData(element);
             Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
             Assert.AreEqual("22fdaec1-8b9f-49dc-bd72-ddaf8f215577", data.Identity.PrincipalId.ToString());
@@ -260,7 +261,8 @@ namespace Azure.ResourceManager.Tests
         public void TestDeserializeThenSerializeWithManagedIdentity()
         {
             string json = "{\"identity\":{\"principalId\":\"22fdaec1-8b9f-49dc-bd72-ddaf8f215577\",\"tenantId\":\"72f988af-86f1-41af-91ab-2d7cd011db47\",\"type\":\"SystemAssigned\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using var jsonDocument = JsonDocument.Parse(json);
+            JsonElement element = jsonDocument.RootElement;
             PolicyAssignmentData data = PolicyAssignmentData.DeserializePolicyAssignmentData(element);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
             Assert.AreEqual("22fdaec1-8b9f-49dc-bd72-ddaf8f215577", data.ManagedIdentity.PrincipalId.ToString());

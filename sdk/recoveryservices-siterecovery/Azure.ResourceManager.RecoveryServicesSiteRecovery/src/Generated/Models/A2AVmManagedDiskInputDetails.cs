@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,18 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/>, <paramref name="primaryStagingAzureStorageAccountId"/> or <paramref name="recoveryResourceGroupId"/> is null. </exception>
         public A2AVmManagedDiskInputDetails(string diskId, string primaryStagingAzureStorageAccountId, string recoveryResourceGroupId)
         {
-            if (diskId == null)
-            {
-                throw new ArgumentNullException(nameof(diskId));
-            }
-            if (primaryStagingAzureStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(primaryStagingAzureStorageAccountId));
-            }
-            if (recoveryResourceGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryResourceGroupId));
-            }
+            Argument.AssertNotNull(diskId, nameof(diskId));
+            Argument.AssertNotNull(primaryStagingAzureStorageAccountId, nameof(primaryStagingAzureStorageAccountId));
+            Argument.AssertNotNull(recoveryResourceGroupId, nameof(recoveryResourceGroupId));
 
             DiskId = diskId;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultArmId"/> or <paramref name="keyIdentifier"/> is null. </exception>
         public EncryptionKeyVaultProperties(string keyVaultArmId, string keyIdentifier)
         {
-            if (keyVaultArmId == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultArmId));
-            }
-            if (keyIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(keyIdentifier));
-            }
+            Argument.AssertNotNull(keyVaultArmId, nameof(keyVaultArmId));
+            Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
 
             KeyVaultArmId = keyVaultArmId;
             KeyIdentifier = keyIdentifier;

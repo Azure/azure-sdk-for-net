@@ -62,8 +62,10 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new ConversationsClientOptions();
 
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? ConversationsAudience.AzurePublicCloud : options.Audience)}/.default";
+
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, "https://cognitiveservices.azure.com/.default") }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }

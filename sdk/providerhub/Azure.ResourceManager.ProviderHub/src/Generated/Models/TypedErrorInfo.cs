@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="typedErrorInfoType"/> is null. </exception>
         public TypedErrorInfo(string typedErrorInfoType)
         {
-            if (typedErrorInfoType == null)
-            {
-                throw new ArgumentNullException(nameof(typedErrorInfoType));
-            }
+            Argument.AssertNotNull(typedErrorInfoType, nameof(typedErrorInfoType));
 
             TypedErrorInfoType = typedErrorInfoType;
         }

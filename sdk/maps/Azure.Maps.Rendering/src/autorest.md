@@ -39,4 +39,8 @@ directive:
   transform: |
     $["azure_auth"] = $["AADToken"];
     delete $["AADToken"];
+- from: swagger-document
+  where: $.securityDefinitions
+  transform: |
+    $["SharedKey"]["in"] = "header";
 ```

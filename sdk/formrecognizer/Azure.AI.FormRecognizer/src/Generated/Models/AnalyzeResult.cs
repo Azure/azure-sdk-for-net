@@ -24,18 +24,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="content"/> or <paramref name="pages"/> is null. </exception>
         internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<DocumentPage> pages)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-            if (pages == null)
-            {
-                throw new ArgumentNullException(nameof(pages));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(pages, nameof(pages));
 
             ApiVersion = apiVersion;
             ModelId = modelId;

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastModifiedOn"> Gets the last modified time of the job. </param>
         /// <param name="lastStatusModifiedOn"> Gets the last status modified time of the job. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        internal DscCompilationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscConfigurationAssociationProperty configuration, string startedBy, Guid? jobId, DateTimeOffset? createdOn, JobProvisioningState? provisioningState, string runOn, JobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters) : base(id, name, resourceType, systemData)
+        internal DscCompilationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscConfigurationAssociationProperty configuration, string startedBy, Guid? jobId, DateTimeOffset? createdOn, JobProvisioningState? provisioningState, string runOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters) : base(id, name, resourceType, systemData)
         {
             Configuration = configuration;
             StartedBy = startedBy;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
         public string RunOn { get; set; }
         /// <summary> Gets or sets the status of the job. </summary>
-        public JobStatus? Status { get; set; }
+        public AutomationJobStatus? Status { get; set; }
         /// <summary> Gets or sets the status details of the job. </summary>
         public string StatusDetails { get; set; }
         /// <summary> Gets the start time of the job. </summary>

@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         {
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Information;
+            ResolutionKind = ResolutionKind.InformationResolution;
         }
 
         /// <summary> Initializes a new instance of InformationResolution. </summary>

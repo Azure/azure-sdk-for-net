@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceSubTypeName"/> or <paramref name="severityFilter"/> is null. </exception>
         public FusionTemplateSourceSubType(string sourceSubTypeName, FusionTemplateSubTypeSeverityFilter severityFilter)
         {
-            if (sourceSubTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceSubTypeName));
-            }
-            if (severityFilter == null)
-            {
-                throw new ArgumentNullException(nameof(severityFilter));
-            }
+            Argument.AssertNotNull(sourceSubTypeName, nameof(sourceSubTypeName));
+            Argument.AssertNotNull(severityFilter, nameof(severityFilter));
 
             SourceSubTypeName = sourceSubTypeName;
             SeverityFilter = severityFilter;

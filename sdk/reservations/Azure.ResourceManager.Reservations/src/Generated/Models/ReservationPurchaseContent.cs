@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Type of the Applied Scope. </summary>
         public AppliedScopeType? AppliedScopeType { get; set; }
         /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </summary>
-        public IList<string> AppliedScopes { get; }
+        public IList<string> AppliedScopes { get; set; }
         /// <summary> Setting this to true will automatically purchase a new reservation on the expiration date time. </summary>
         public bool? IsRenewEnabled { get; set; }
         /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>

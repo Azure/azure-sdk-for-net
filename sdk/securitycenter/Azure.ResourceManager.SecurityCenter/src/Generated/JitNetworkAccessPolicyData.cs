@@ -22,13 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         public JitNetworkAccessPolicyData(IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines)
         {
-            if (virtualMachines == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachines));
-            }
+            Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
 
             VirtualMachines = virtualMachines.ToList();
-            Requests = new ChangeTrackingList<JitNetworkAccessRequest>();
+            Requests = new ChangeTrackingList<JitNetworkAccessRequestInfo>();
         }
 
         /// <summary> Initializes a new instance of JitNetworkAccessPolicyData. </summary>
@@ -41,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="provisioningState"> Gets the provisioning state of the Just-in-Time policy. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal JitNetworkAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, IList<JitNetworkAccessRequest> requests, string provisioningState, string kind, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal JitNetworkAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, IList<JitNetworkAccessRequestInfo> requests, string provisioningState, string kind, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             VirtualMachines = virtualMachines;
             Requests = requests;
@@ -53,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Configurations for Microsoft.Compute/virtualMachines resource type. </summary>
         public IList<JitNetworkAccessPolicyVirtualMachine> VirtualMachines { get; }
         /// <summary> Gets the requests. </summary>
-        public IList<JitNetworkAccessRequest> Requests { get; }
+        public IList<JitNetworkAccessRequestInfo> Requests { get; }
         /// <summary> Gets the provisioning state of the Just-in-Time policy. </summary>
         public string ProvisioningState { get; }
         /// <summary> Kind of the resource. </summary>

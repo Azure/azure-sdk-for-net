@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private ContentKeyPolicyCollection contentKeyPolicyCollection => _mediaService.GetContentKeyPolicies();
 
-        public ContentKeyPolicyTests(bool isAsync) : base(isAsync)
+        public ContentKeyPolicyTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

@@ -196,6 +196,126 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
                 Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
             }
+
+            var updatePrimaryKey = GenerateRandomKey();
+            ServiceBusAccessKeys currentKeys = keys3;
+
+            ServiceBusAccessKeys keys4 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.PrimaryKey)
+            {
+                Key = updatePrimaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
+                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+            }
+
+            currentKeys = keys4;
+            var updateSecondaryKey = GenerateRandomKey();
+            ServiceBusAccessKeys keys5 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.SecondaryKey)
+            {
+                Key = updateSecondaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
+                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
+            }
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task QueueCreateOrUpdateParameters()
+        {
+            //This test is written with an intention of testing each and every parameter on the queue
+            //create queue
+            string firstQueueName = Recording.GenerateAssetName("queue");
+            string secondQueueName = Recording.GenerateAssetName("queue");
+            string thirdQueueName = Recording.GenerateAssetName("queue");
+            string fourthQueueName = Recording.GenerateAssetName("queue");
+            ServiceBusQueueResource firstQueue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, firstQueueName, new ServiceBusQueueData())).Value;
+
+            ServiceBusQueueData queueData = new ServiceBusQueueData()
+            {
+                LockDuration = new TimeSpan(0, 3, 0),
+                MaxSizeInMegabytes = 4096,
+                DuplicateDetectionHistoryTimeWindow = new TimeSpan(0, 10, 0),
+                DeadLetteringOnMessageExpiration = true,
+                RequiresDuplicateDetection = true,
+                MaxDeliveryCount = 8,
+                Status = ServiceBusMessagingEntityStatus.Active,
+                DefaultMessageTimeToLive = new TimeSpan(428, 3, 11, 2),
+                EnableBatchedOperations = false,
+                ForwardTo = firstQueueName,
+                ForwardDeadLetteredMessagesTo = firstQueueName,
+                MaxMessageSizeInKilobytes = 102400
+            };
+
+            ServiceBusQueueResource secondQueue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, secondQueueName, queueData)).Value;
+            Assert.AreEqual(new TimeSpan(0, 3, 0), secondQueue.Data.LockDuration);
+            Assert.AreEqual(new TimeSpan(0, 10, 0), secondQueue.Data.DuplicateDetectionHistoryTimeWindow);
+            Assert.AreEqual(new TimeSpan(428, 3, 11, 2), secondQueue.Data.DefaultMessageTimeToLive);
+            Assert.AreEqual(4096, queueData.MaxSizeInMegabytes);
+            Assert.AreEqual(8, queueData.MaxDeliveryCount);
+            Assert.True(queueData.DeadLetteringOnMessageExpiration);
+            Assert.True(queueData.RequiresDuplicateDetection);
+            Assert.AreEqual(ServiceBusMessagingEntityStatus.Active, queueData.Status);
+            Assert.AreEqual(firstQueueName, queueData.ForwardTo);
+            Assert.AreEqual(firstQueueName, queueData.ForwardDeadLetteredMessagesTo);
+            Assert.AreEqual(102400, queueData.MaxMessageSizeInKilobytes);
+
+            secondQueue.Data.Status = ServiceBusMessagingEntityStatus.Disabled;
+            queueData = secondQueue.Data;
+            secondQueue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, secondQueueName, secondQueue.Data)).Value;
+            AssertQueuePropertiesOnUpdates(queueData, secondQueue.Data);
+
+            secondQueue.Data.Status = ServiceBusMessagingEntityStatus.ReceiveDisabled;
+            queueData = secondQueue.Data;
+            secondQueue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, secondQueueName, secondQueue.Data)).Value;
+            AssertQueuePropertiesOnUpdates(queueData, secondQueue.Data);
+
+            secondQueue.Data.Status = ServiceBusMessagingEntityStatus.SendDisabled;
+            queueData = secondQueue.Data;
+            secondQueue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, secondQueueName, secondQueue.Data)).Value;
+            AssertQueuePropertiesOnUpdates(queueData, secondQueue.Data);
+
+            queueData = new ServiceBusQueueData()
+            {
+                AutoDeleteOnIdle = new TimeSpan(7, 0, 0, 0),
+                RequiresSession = true
+            };
+
+            ServiceBusQueueResource thirdQueue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, thirdQueueName, queueData)).Value;
+            Assert.AreEqual(new TimeSpan(7, 0, 0, 0), thirdQueue.Data.AutoDeleteOnIdle);
+            Assert.True(thirdQueue.Data.RequiresSession);
+
+            //EnableExpress can only be set for Standard Namespaces
+            queueData = new ServiceBusQueueData()
+            {
+                EnableExpress = true
+            };
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, fourthQueueName, queueData); });
+            Assert.AreEqual(400, exception.Status);
+        }
+
+        public void AssertQueuePropertiesOnUpdates(ServiceBusQueueData actualQueue, ServiceBusQueueData expectedQueue)
+        {
+            Assert.AreEqual(expectedQueue.Location, actualQueue.Location);
+            Assert.AreEqual(expectedQueue.LockDuration, actualQueue.LockDuration);
+            Assert.AreEqual(expectedQueue.DefaultMessageTimeToLive, actualQueue.DefaultMessageTimeToLive);
+            Assert.AreEqual(expectedQueue.DuplicateDetectionHistoryTimeWindow, actualQueue.DuplicateDetectionHistoryTimeWindow);
+            Assert.AreEqual(expectedQueue.RequiresDuplicateDetection, actualQueue.RequiresDuplicateDetection);
+            Assert.AreEqual(expectedQueue.RequiresSession, actualQueue.RequiresSession);
+            Assert.AreEqual(expectedQueue.ForwardDeadLetteredMessagesTo, actualQueue.ForwardDeadLetteredMessagesTo);
+            Assert.AreEqual(expectedQueue.ForwardTo, actualQueue.ForwardTo);
+            Assert.AreEqual(expectedQueue.MaxDeliveryCount, actualQueue.MaxDeliveryCount);
+            Assert.AreEqual(expectedQueue.EnableBatchedOperations, actualQueue.EnableBatchedOperations);
+            Assert.AreEqual(expectedQueue.MaxMessageSizeInKilobytes, actualQueue.MaxMessageSizeInKilobytes);
+            Assert.AreEqual(expectedQueue.MaxSizeInMegabytes, actualQueue.MaxSizeInMegabytes);
+            Assert.AreEqual(expectedQueue.Status, actualQueue.Status);
+            Assert.AreEqual(expectedQueue.AutoDeleteOnIdle, actualQueue.AutoDeleteOnIdle);
+            Assert.AreEqual(expectedQueue.EnableExpress, actualQueue.EnableExpress);
+            Assert.AreEqual(expectedQueue.EnablePartitioning, actualQueue.EnablePartitioning);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The call transfer accepted event.
     /// </summary>
-    [CodeGenModel("CallTransferAcceptedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("CallTransferAccepted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class CallTransferAccepted : CallAutomationEventBase
     {
         /// <summary>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Reservations.Models;
+using Azure.ResourceManager.Reservations.Tests.Helper;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         public async Task TestCalculatePriceForSharedScopeMonthly()
         {
             var billingPlan = "Monthly";
-            var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Shared", billingPlan));
+            var response = await Tenant.CalculateReservationOrderAsync(TestHelpers.CreatePurchaseRequestContent("Shared", billingPlan));
             TestCalculatePriceResponse(response, billingPlan);
         }
 
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         public async Task TestCalculatePriceForSharedScopeUpfront()
         {
             var billingPlan = "Upfront";
-            var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Shared", billingPlan));
+            var response = await Tenant.CalculateReservationOrderAsync(TestHelpers.CreatePurchaseRequestContent("Shared", billingPlan));
             TestCalculatePriceResponse(response, billingPlan);
         }
 
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         public async Task TestCalculatePriceForSingleScopeMonthly()
         {
             var billingPlan = "Monthly";
-            var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Single", billingPlan));
+            var response = await Tenant.CalculateReservationOrderAsync(TestHelpers.CreatePurchaseRequestContent("Single", billingPlan));
             TestCalculatePriceResponse(response, billingPlan);
         }
 
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         public async Task TestCalculatePriceForSingleScopeUpfront()
         {
             var billingPlan = "Upfront";
-            var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Single", billingPlan));
+            var response = await Tenant.CalculateReservationOrderAsync(TestHelpers.CreatePurchaseRequestContent("Single", billingPlan));
             TestCalculatePriceResponse(response, billingPlan);
         }
 
@@ -95,31 +96,6 @@ namespace Azure.ResourceManager.Reservations.Tests
                     Assert.AreEqual(PaymentStatus.Scheduled, item.Status);
                 }
             }
-        }
-
-        private ReservationPurchaseContent CreatePurchaseRequestContent(string scope, string billingPlan)
-        {
-            var request = new ReservationPurchaseContent
-            {
-                Sku = new ReservationsSkuName("Standard_B1ls"),
-                Location = new Core.AzureLocation("westus"),
-                ReservedResourceType = new ReservedResourceType("VirtualMachines"),
-                BillingScopeId = new Core.ResourceIdentifier("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93"),
-                Term = new ReservationTerm("P1Y"),
-                BillingPlan = new ReservationBillingPlan(billingPlan),
-                Quantity = 1,
-                DisplayName = "testVM",
-                AppliedScopeType = new AppliedScopeType(scope),
-                IsRenewEnabled = false,
-                ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
-            };
-
-            if (scope.Equals("Single"))
-            {
-                request.AppliedScopes.Add("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93");
-            }
-
-            return request;
         }
     }
 }

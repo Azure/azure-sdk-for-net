@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         {
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Speed;
+            ResolutionKind = ResolutionKind.SpeedResolution;
         }
 
         /// <summary> Initializes a new instance of SpeedResolution. </summary>

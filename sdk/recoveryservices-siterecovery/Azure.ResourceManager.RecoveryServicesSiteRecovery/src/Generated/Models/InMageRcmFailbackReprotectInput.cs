@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="processServerId"/> or <paramref name="policyId"/> is null. </exception>
         public InMageRcmFailbackReprotectInput(string processServerId, string policyId)
         {
-            if (processServerId == null)
-            {
-                throw new ArgumentNullException(nameof(processServerId));
-            }
-            if (policyId == null)
-            {
-                throw new ArgumentNullException(nameof(policyId));
-            }
+            Argument.AssertNotNull(processServerId, nameof(processServerId));
+            Argument.AssertNotNull(policyId, nameof(policyId));
 
             ProcessServerId = processServerId;
             PolicyId = policyId;

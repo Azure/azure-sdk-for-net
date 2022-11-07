@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element);
                 }
             }
-            string workspaceId = default;
+            ResourceIdentifier workspaceId = default;
             Guid vmuuid = default;
             string sourceComputerId = default;
             string machineName = default;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 if (property.NameEquals("workspaceId"))
                 {
-                    workspaceId = property.Value.GetString();
+                    workspaceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vmuuid"))

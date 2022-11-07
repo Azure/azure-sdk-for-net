@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TopicEventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TopicEventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TopicEventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TopicEventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));

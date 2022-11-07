@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ServiceFabricList DeserializeServiceFabricList(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceFabricData>> value = default;
+            Optional<IReadOnlyList<DevTestLabServiceFabricData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceFabricData> array = new List<ServiceFabricData>();
+                    List<DevTestLabServiceFabricData> array = new List<DevTestLabServiceFabricData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricData.DeserializeServiceFabricData(item));
+                        array.Add(DevTestLabServiceFabricData.DeserializeDevTestLabServiceFabricData(item));
                     }
                     value = array;
                     continue;

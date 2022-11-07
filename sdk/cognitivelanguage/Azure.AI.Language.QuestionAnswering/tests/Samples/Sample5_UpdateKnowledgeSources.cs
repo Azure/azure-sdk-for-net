@@ -46,13 +46,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
-#if SNIPPET
             // Updated Knowledge Sources can be retrieved as follows
             Pageable<BinaryData> sources = updateSourcesOperation.Value;
-#else
-            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            Pageable<BinaryData> sources = client.GetSources(testProjectName);
-#endif
 
             Console.WriteLine("Sources: ");
             foreach (BinaryData source in sources)
@@ -89,13 +84,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Operation<Pageable<BinaryData>> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
-#if SNIPPET
             // QnAs can be retrieved as follows
             Pageable<BinaryData> qnas = updateQnasOperation.Value;
-#else
-            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            Pageable<BinaryData> qnas = client.GetQnas(testProjectName);
-#endif
 
             Console.WriteLine("Qnas: ");
             foreach (var qna in qnas)
@@ -201,13 +191,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
-#if SNIPPET
             // Updated Knowledge Sources can be retrieved as follows
             AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
-#else
-            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            AsyncPageable<BinaryData> sources = client.GetSourcesAsync(testProjectName);
-#endif
 
             Console.WriteLine("Sources: ");
             await foreach (BinaryData source in sources)
@@ -243,13 +228,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
-#if SNIPPET
             // QnAs can be retrieved as follows
             AsyncPageable<BinaryData> qnas = updateQnasOperation.Value;
-#else
-            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            AsyncPageable<BinaryData> qnas = client.GetQnasAsync(testProjectName);
-#endif
 
             Console.WriteLine("Qnas: ");
             await foreach (var qna in qnas)

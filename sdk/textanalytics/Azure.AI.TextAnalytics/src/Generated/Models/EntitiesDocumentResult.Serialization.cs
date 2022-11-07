@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntitiesDocumentResult DeserializeEntitiesDocumentResult(JsonElement element)
         {
-            IList<Entity> entities = default;
+            IList<EntityWithResolution> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -51,10 +51,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("entities"))
                 {
-                    List<Entity> array = new List<Entity>();
+                    List<EntityWithResolution> array = new List<EntityWithResolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Entity.DeserializeEntity(item));
+                        array.Add(EntityWithResolution.DeserializeEntityWithResolution(item));
                     }
                     entities = array;
                     continue;
