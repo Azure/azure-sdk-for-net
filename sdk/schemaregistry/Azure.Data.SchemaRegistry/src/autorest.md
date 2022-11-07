@@ -56,7 +56,7 @@ directive:
         "text/plain; charset=utf-8"
       ],
       "x-ms-enum": {
-        "name": "SchemaFormat",
+        "name": "ContentType",
         "modelAsString": true
        }});
 ```

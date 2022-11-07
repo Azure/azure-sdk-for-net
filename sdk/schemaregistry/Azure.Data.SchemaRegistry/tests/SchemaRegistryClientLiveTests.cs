@@ -18,6 +18,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             TestDiagnostics = false;
         }
 
+        [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10)]
         private SchemaRegistryClient CreateClient(string format)
         {
             string endpoint;

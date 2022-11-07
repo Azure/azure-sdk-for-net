@@ -8,7 +8,7 @@ namespace Azure.Data.SchemaRegistry
     /// <summary>
     /// Properties for a SchemaRegistry schema.
     /// </summary>
-    [CodeGenModel("SchemaFormat")]
+    [CodeGenModel("ContentType")]
     internal readonly partial struct ContentTypeInternal
     {
         /// <summary> application/json; serialization=Avro. </summary>
