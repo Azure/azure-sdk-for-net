@@ -112,8 +112,8 @@ namespace Azure.Messaging.WebPubSub
                 var minutesToExpire = GetMinutesToExpire(expiresAt);
 
                 Response clientTokenResponse = async ?
-                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, context).ConfigureAwait(false) :
-                    GenerateClientTokenImpl(userId, roles, minutesToExpire, context);
+                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, null, context).ConfigureAwait(false) :
+                    GenerateClientTokenImpl(userId, roles, minutesToExpire, null, context);
                 using var jsonDocument = JsonDocument.Parse(clientTokenResponse.Content);
                 token = jsonDocument.RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
@@ -150,8 +150,8 @@ namespace Azure.Messaging.WebPubSub
                 var minutesToExpire = GetMinutesToExpire(expireAfter);
 
                 Response clientTokenResponse = async ?
-                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, context).ConfigureAwait(false) :
-                    GenerateClientTokenImpl(userId, roles, minutesToExpire, context);
+                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, null, context).ConfigureAwait(false) :
+                    GenerateClientTokenImpl(userId, roles, minutesToExpire, null, context);
                 using var jsonDocument = JsonDocument.Parse(clientTokenResponse.Content);
                 token = jsonDocument.RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
