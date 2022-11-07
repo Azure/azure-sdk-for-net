@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             {
                 ItemsKeyValue =
                 {
-                    {"address", new BinaryData("1.1.1.2") }
+                    {"address", BinaryData.FromString("\"1.1.1.2\"")}
                 }
             };
         }
