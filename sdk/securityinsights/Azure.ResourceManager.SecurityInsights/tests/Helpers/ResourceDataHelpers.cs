@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             {
                 DisplayName = "SDKTestBookmark",
                 Query = "SecurityEvent | take 10",
-                EventOn = DateTimeOffset.Now
+                //EventOn = DateTimeOffset.Now
             };
             return data;
         }
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             AssertResource(data1, data2);
             Assert.AreEqual(data1.Kind, data2.Kind);
         }
-        public static DataConnectorData GetDataConnectorData(string defaultSubscription)
+        public static DataConnectorData GetDataConnectorData()
         {
             var data = new ASCDataConnector()
             {
                 Alerts = new DataConnectorDataTypeCommon(DataTypeState.Enabled),
-                SubscriptionId = defaultSubscription
+                SubscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
             };
             return data;
         }
@@ -322,6 +322,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             {
                 ItemsKeyValue =
                 {
+                    {"address", new BinaryData("1.1.1.2") }
                 }
             };
         }

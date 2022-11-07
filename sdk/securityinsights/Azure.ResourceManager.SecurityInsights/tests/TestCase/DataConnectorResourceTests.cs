@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         private async Task<DataConnectorResource> CreateDataConnectorAsync(ResourceGroupResource resourceGroup, string workspaceName, string dataName)
         {
             var collection = (await CreateResourceGroupAsync()).GetDataConnectors(workspaceName);
-            var input = ResourceDataHelpers.GetDataConnectorData(workspaceName);
+            var input = ResourceDataHelpers.GetDataConnectorData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataName, input);
             return lro.Value;
         }

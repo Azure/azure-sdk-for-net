@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         #endregion
         private async Task<AutomationRuleResource> CreateAutomationRuleAsync(ResourceGroupResource resourceGroup, string workspaceName, string automationName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetAutomationRules(workspaceName);
+            var collection = resourceGroup.GetAutomationRules(workspaceName);
             var input = ResourceDataHelpers.GetAutomationRuleData(resourceGroup.Data.Name);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, automationName, input);
             return lro.Value;
