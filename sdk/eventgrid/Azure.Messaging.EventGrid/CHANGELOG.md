@@ -9,7 +9,7 @@
 
 ### Breaking Changes
 
-- Stopped populating CloudEvents Distributed Tracing extension when distributed tracing is disabled.
+- Fixed bug where the CloudEvents Distributed Tracing extensions were populated even when distributed tracing was disabled.
 
 ## 4.11.0 (2022-07-07)
 
