@@ -166,8 +166,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             // Assert
             Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
             Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
-            Assert.True(blobData.TryGetValue("ContainerName", out var resultBlobName));
+            Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
 
+            Assert.AreEqual("", resultConnection);
             Assert.AreEqual(ContainerName, resultContainerName);
             Assert.AreEqual(BlobName, resultBlobName);
         }
