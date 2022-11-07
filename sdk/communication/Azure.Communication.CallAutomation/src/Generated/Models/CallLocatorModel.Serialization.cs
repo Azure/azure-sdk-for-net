@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class CallLocatorInternal : IUtf8JsonSerializable
+    public partial class CallLocatorModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
