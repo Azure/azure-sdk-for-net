@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Synapse
     /// Please note <see cref="DataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="EventGridDataConnection"/>, <see cref="EventHubDataConnection"/> and <see cref="IotHubDataConnection"/>.
     /// </summary>
-    public abstract partial class DataConnectionData : ResourceData
+    public partial class DataConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of DataConnectionData. </summary>
-        protected DataConnectionData()
+        public DataConnectionData()
         {
         }
 

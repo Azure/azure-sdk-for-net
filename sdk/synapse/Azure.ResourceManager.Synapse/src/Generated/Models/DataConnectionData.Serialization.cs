@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new Synapse.DataConnectionData(id, name, type, systemData.Value, Optional.ToNullable(location), kind);
+            return new DataConnectionData(id, name, type, systemData.Value, Optional.ToNullable(location), kind);
         }
     }
 }
