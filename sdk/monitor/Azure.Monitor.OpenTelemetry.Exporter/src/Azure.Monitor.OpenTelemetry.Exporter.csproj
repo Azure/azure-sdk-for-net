@@ -6,6 +6,7 @@
     <PackageTags>Azure Monitor OpenTelemetry Exporter</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
