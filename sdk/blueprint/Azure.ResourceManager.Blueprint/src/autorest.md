@@ -49,4 +49,6 @@ rename-rules:
 list-exception:
   - /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
 
+suppress-abstract-base-class:
+  - ArtifactData
 ```
