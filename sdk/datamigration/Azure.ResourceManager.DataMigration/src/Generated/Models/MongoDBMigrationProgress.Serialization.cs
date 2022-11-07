@@ -12,15 +12,78 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBMigrationProgress
+    public partial class MongoDBMigrationProgress : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Databases))
+            {
+                writer.WritePropertyName("databases");
+                writer.WriteStartObject();
+                foreach (var item in Databases)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("bytesCopied");
+            writer.WriteNumberValue(BytesCopied);
+            writer.WritePropertyName("documentsCopied");
+            writer.WriteNumberValue(DocumentsCopied);
+            writer.WritePropertyName("elapsedTime");
+            writer.WriteStringValue(ElapsedTime);
+            writer.WritePropertyName("errors");
+            writer.WriteStartObject();
+            foreach (var item in Errors)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("eventsPending");
+            writer.WriteNumberValue(EventsPending);
+            writer.WritePropertyName("eventsReplayed");
+            writer.WriteNumberValue(EventsReplayed);
+            if (Optional.IsDefined(LastEventOn))
+            {
+                writer.WritePropertyName("lastEventTime");
+                writer.WriteStringValue(LastEventOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastReplayOn))
+            {
+                writer.WritePropertyName("lastReplayTime");
+                writer.WriteStringValue(LastReplayOn.Value, "O");
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(QualifiedName))
+            {
+                writer.WritePropertyName("qualifiedName");
+                writer.WriteStringValue(QualifiedName);
+            }
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType.ToString());
+            writer.WritePropertyName("state");
+            writer.WriteStringValue(State.ToString());
+            writer.WritePropertyName("totalBytes");
+            writer.WriteNumberValue(TotalBytes);
+            writer.WritePropertyName("totalDocuments");
+            writer.WriteNumberValue(TotalDocuments);
+            writer.WriteEndObject();
+        }
+
         internal static MongoDBMigrationProgress DeserializeMongoDBMigrationProgress(JsonElement element)
         {
-            Optional<IReadOnlyDictionary<string, MongoDBDatabaseProgress>> databases = default;
+            Optional<IDictionary<string, MongoDBDatabaseProgress>> databases = default;
             long bytesCopied = default;
             long documentsCopied = default;
             string elapsedTime = default;
-            IReadOnlyDictionary<string, MongoDBError> errors = default;
+            IDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
             Optional<DateTimeOffset> lastEventTime = default;

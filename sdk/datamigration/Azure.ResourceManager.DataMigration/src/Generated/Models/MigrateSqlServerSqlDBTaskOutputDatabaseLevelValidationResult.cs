@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult : MigrateSqlServerSqlDBTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult. </summary>
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult()
+        public MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult()
         {
             ResultType = "MigrationDatabaseLevelValidationOutput";
         }

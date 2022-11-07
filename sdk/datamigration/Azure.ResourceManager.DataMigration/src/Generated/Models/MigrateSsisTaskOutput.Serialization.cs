@@ -10,8 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSsisTaskOutput
+    public partial class MigrateSsisTaskOutput : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType);
+            writer.WriteEndObject();
+        }
+
         internal static MigrateSsisTaskOutput DeserializeMigrateSsisTaskOutput(JsonElement element)
         {
             if (element.TryGetProperty("resultType", out JsonElement discriminator))
@@ -22,22 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     case "SsisProjectLevelOutput": return MigrateSsisTaskOutputProjectLevel.DeserializeMigrateSsisTaskOutputProjectLevel(element);
                 }
             }
-            Optional<string> id = default;
-            string resultType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMigrateSsisTaskOutput(id.Value, resultType);
+            return UnknownMigrateSsisTaskOutput.DeserializeUnknownMigrateSsisTaskOutput(element);
         }
     }
 }

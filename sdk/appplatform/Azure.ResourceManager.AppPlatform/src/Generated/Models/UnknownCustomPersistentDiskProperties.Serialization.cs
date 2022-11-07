@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static UnknownCustomPersistentDiskProperties DeserializeUnknownCustomPersistentDiskProperties(JsonElement element)
         {
-            UnderlyingResourceType type = default;
+            UnderlyingResourceType type = "Unknown";
             string mountPath = default;
             Optional<bool> readOnly = default;
             Optional<IList<string>> mountOptions = default;

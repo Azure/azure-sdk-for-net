@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Kusto
                     continue;
                 }
             }
-            return new KustoDatabaseData(id, name, type, systemData.Value, Optional.ToNullable(location), kind);
+            return new Kusto.KustoDatabaseData(id, name, type, systemData.Value, Optional.ToNullable(location), kind);
         }
     }
 }

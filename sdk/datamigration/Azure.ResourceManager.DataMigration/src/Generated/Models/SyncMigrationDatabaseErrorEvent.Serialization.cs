@@ -10,8 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SyncMigrationDatabaseErrorEvent
+    public partial class SyncMigrationDatabaseErrorEvent : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+
         internal static SyncMigrationDatabaseErrorEvent DeserializeSyncMigrationDatabaseErrorEvent(JsonElement element)
         {
             Optional<string> timestampString = default;

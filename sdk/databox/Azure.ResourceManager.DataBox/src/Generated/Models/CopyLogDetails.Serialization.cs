@@ -10,8 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class CopyLogDetails
+    public partial class CopyLogDetails : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("copyLogDetailsType");
+            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
+            writer.WriteEndObject();
+        }
+
         internal static CopyLogDetails DeserializeCopyLogDetails(JsonElement element)
         {
             if (element.TryGetProperty("copyLogDetailsType", out JsonElement discriminator))
@@ -24,16 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DataBoxHeavy": return DataBoxHeavyAccountCopyLogDetails.DeserializeDataBoxHeavyAccountCopyLogDetails(element);
                 }
             }
-            DataBoxOrderType copyLogDetailsType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("copyLogDetailsType"))
-                {
-                    copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
-                    continue;
-                }
-            }
-            return new UnknownCopyLogDetails(copyLogDetailsType);
+            return UnknownCopyLogDetails.DeserializeUnknownCopyLogDetails(element);
         }
     }
 }

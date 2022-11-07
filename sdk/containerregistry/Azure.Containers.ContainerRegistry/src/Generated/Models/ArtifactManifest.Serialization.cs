@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,7 +25,21 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static ArtifactManifest DeserializeArtifactManifest(JsonElement element)
         {
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest' not supported.");
+            Optional<int> schemaVersion = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("schemaVersion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    schemaVersion = property.Value.GetInt32();
+                    continue;
+                }
+            }
+            return new Specialized.ArtifactManifest(Optional.ToNullable(schemaVersion));
         }
     }
 }

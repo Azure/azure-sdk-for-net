@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeTriggerData(id, name, type, systemData.Value, kind);
+            return new DataBoxEdge.DataBoxEdgeTriggerData(id, name, type, systemData.Value, kind);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static UnknownJobSecrets DeserializeUnknownJobSecrets(JsonElement element)
         {
-            DataBoxOrderType jobSecretsType = default;
+            DataBoxOrderType jobSecretsType = "Unknown";
             Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())

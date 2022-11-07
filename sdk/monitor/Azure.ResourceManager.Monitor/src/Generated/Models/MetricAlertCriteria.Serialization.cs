@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MetricAlertCriteria(odataType, additionalProperties);
+            return new Models.MetricAlertCriteria(odataType, additionalProperties);
         }
     }
 }

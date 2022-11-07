@@ -11,12 +11,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBTaskOutputValidationResult
+    public partial class MigrateSqlServerSqlDBTaskOutputValidationResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(SummaryResults))
+            {
+                writer.WritePropertyName("summaryResults");
+                writer.WriteStartObject();
+                foreach (var item in SummaryResults)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType);
+            writer.WriteEndObject();
+        }
+
         internal static MigrateSqlServerSqlDBTaskOutputValidationResult DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(JsonElement element)
         {
             Optional<string> migrationId = default;
-            Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
+            Optional<IDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
             Optional<ValidationStatus> status = default;
             Optional<string> id = default;
             string resultType = default;

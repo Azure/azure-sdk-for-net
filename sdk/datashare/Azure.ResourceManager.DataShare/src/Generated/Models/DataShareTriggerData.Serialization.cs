@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataShare
                     continue;
                 }
             }
-            return new DataShareTriggerData(id, name, type, systemData.Value, kind);
+            return new DataShare.DataShareTriggerData(id, name, type, systemData.Value, kind);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ConnectToSourceSqlServerTaskOutputLoginLevel : ConnectToSourceSqlServerTaskOutput
     {
         /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputLoginLevel. </summary>
-        internal ConnectToSourceSqlServerTaskOutputLoginLevel()
+        public ConnectToSourceSqlServerTaskOutputLoginLevel()
         {
             ResultType = "LoginLevelOutput";
         }

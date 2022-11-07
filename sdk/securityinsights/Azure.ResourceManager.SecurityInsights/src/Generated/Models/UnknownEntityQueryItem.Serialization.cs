@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static UnknownEntityQueryItem DeserializeUnknownEntityQueryItem(JsonElement element)
         {
-            EntityQueryKind kind = default;
+            EntityQueryKind kind = "Unknown";
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

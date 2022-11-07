@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntime(type, description.Value, additionalProperties);
+            return new Models.IntegrationRuntime(type, description.Value, additionalProperties);
         }
     }
 }

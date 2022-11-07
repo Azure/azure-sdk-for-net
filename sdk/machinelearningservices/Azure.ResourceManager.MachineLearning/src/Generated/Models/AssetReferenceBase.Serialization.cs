@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "OutputPath": return OutputPathAssetReference.DeserializeOutputPathAssetReference(element);
                 }
             }
-            ReferenceType referenceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("referenceType"))
-                {
-                    referenceType = new ReferenceType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAssetReferenceBase(referenceType);
+            return UnknownAssetReferenceBase.DeserializeUnknownAssetReferenceBase(element);
         }
     }
 }

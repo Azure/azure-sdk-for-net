@@ -9,6 +9,7 @@ csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
 require: https://github.com/Azure/azure-rest-api-specs/blob/f7386016ed8edfdc59d00003c1298afa6966842c/specification/security/resource-manager/readme.md
+use: C:\Users\mingzhehuang\workspaces\archerzz\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

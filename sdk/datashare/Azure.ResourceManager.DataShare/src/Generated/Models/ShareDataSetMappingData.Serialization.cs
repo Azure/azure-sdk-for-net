@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataShare
                     continue;
                 }
             }
-            return new ShareDataSetMappingData(id, name, type, systemData.Value, kind);
+            return new DataShare.ShareDataSetMappingData(id, name, type, systemData.Value, kind);
         }
     }
 }

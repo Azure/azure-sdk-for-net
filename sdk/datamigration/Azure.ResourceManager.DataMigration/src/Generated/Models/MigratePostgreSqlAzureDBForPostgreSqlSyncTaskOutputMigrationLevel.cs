@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel. </summary>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel()
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel()
         {
             ResultType = "MigrationLevelOutput";
         }
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration status. </summary>
         public ReplicateMigrationState? State { get; }
         /// <summary> Number of databases to include. </summary>
-        public float? DatabaseCount { get; }
+        public float? DatabaseCount { get; set; }
     }
 }

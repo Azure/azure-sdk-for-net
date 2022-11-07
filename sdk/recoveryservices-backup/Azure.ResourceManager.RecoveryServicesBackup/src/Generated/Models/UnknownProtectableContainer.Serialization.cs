@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<string> friendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
-            ProtectableContainerType protectableContainerType = default;
+            ProtectableContainerType protectableContainerType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             Optional<string> healthStatus = default;
             Optional<string> containerId = default;
             foreach (var property in element.EnumerateObject())

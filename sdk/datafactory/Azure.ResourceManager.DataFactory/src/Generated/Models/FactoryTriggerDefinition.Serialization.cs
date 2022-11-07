@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FactoryTriggerDefinition(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties);
+            return new Models.FactoryTriggerDefinition(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties);
         }
     }
 }

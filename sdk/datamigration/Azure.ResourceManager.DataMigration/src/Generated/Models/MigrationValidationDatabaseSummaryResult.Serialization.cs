@@ -11,8 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrationValidationDatabaseSummaryResult
+    public partial class MigrationValidationDatabaseSummaryResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+
         internal static MigrationValidationDatabaseSummaryResult DeserializeMigrationValidationDatabaseSummaryResult(JsonElement element)
         {
             Optional<string> id = default;

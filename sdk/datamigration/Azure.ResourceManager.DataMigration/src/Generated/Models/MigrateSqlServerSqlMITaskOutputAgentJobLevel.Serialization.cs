@@ -12,8 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMITaskOutputAgentJobLevel
+    public partial class MigrateSqlServerSqlMITaskOutputAgentJobLevel : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType);
+            writer.WriteEndObject();
+        }
+
         internal static MigrateSqlServerSqlMITaskOutputAgentJobLevel DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(JsonElement element)
         {
             Optional<string> name = default;

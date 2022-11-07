@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Blueprint
                     continue;
                 }
             }
-            return new ArtifactData(id, name, type, systemData.Value, kind);
+            return new Blueprint.ArtifactData(id, name, type, systemData.Value, kind);
         }
     }
 }

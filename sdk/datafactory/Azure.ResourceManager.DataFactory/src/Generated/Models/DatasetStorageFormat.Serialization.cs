@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetStorageFormat(type, serializer.Value, deserializer.Value, additionalProperties);
+            return new Models.DatasetStorageFormat(type, serializer.Value, deserializer.Value, additionalProperties);
         }
     }
 }

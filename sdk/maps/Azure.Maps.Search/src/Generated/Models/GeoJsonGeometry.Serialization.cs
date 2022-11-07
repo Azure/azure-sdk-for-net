@@ -35,7 +35,7 @@ namespace Azure.Maps.Search.Models
                     case "Polygon": return GeoJsonPolygon.DeserializeGeoJsonPolygon(element);
                 }
             }
-            GeoJsonObjectType type = default;
+            GeoJsonObjectType type = "GeoJsonGeometry";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))

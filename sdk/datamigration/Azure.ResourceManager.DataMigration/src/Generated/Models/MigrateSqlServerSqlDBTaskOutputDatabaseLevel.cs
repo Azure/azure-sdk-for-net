@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevel : MigrateSqlServerSqlDBTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputDatabaseLevel. </summary>
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevel()
+        public MigrateSqlServerSqlDBTaskOutputDatabaseLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "DatabaseLevelOutput";

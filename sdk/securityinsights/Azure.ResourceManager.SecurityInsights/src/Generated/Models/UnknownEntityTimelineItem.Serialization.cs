@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static UnknownEntityTimelineItem DeserializeUnknownEntityTimelineItem(JsonElement element)
         {
-            EntityTimelineKind kind = default;
+            EntityTimelineKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))

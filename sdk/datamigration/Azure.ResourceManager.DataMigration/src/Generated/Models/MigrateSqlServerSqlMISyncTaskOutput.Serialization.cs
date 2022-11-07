@@ -10,8 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMISyncTaskOutput
+    public partial class MigrateSqlServerSqlMISyncTaskOutput : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType);
+            writer.WriteEndObject();
+        }
+
         internal static MigrateSqlServerSqlMISyncTaskOutput DeserializeMigrateSqlServerSqlMISyncTaskOutput(JsonElement element)
         {
             if (element.TryGetProperty("resultType", out JsonElement discriminator))
@@ -23,22 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     case "MigrationLevelOutput": return MigrateSqlServerSqlMISyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(element);
                 }
             }
-            Optional<string> id = default;
-            string resultType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMigrateSqlServerSqlMISyncTaskOutput(id.Value, resultType);
+            return UnknownMigrateSqlServerSqlMISyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlMISyncTaskOutput(element);
         }
     }
 }

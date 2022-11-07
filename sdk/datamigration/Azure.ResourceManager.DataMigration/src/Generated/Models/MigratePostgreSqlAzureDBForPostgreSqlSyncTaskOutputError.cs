@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError. </summary>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError()
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError()
         {
             Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
             ResultType = "ErrorOutput";
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="resultType"> Result type. </param>
         /// <param name="error"> Migration error. </param>
         /// <param name="events"> List of error events. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id, string resultType, ReportableException error, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType)
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id, string resultType, ReportableException error, IList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType)
         {
             Error = error;
             Events = events;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration error. </summary>
         public ReportableException Error { get; }
         /// <summary> List of error events. </summary>
-        public IReadOnlyList<SyncMigrationDatabaseErrorEvent> Events { get; }
+        public IList<SyncMigrationDatabaseErrorEvent> Events { get; }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MongoDBError
     {
         /// <summary> Initializes a new instance of MongoDBError. </summary>
-        internal MongoDBError()
+        public MongoDBError()
         {
         }
 
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> The non-localized, machine-readable code that describes the error or warning. </summary>
-        public string Code { get; }
+        public string Code { get; set; }
         /// <summary> The number of times the error or warning has occurred. </summary>
-        public int? Count { get; }
+        public int? Count { get; set; }
         /// <summary> The localized, human-readable message that describes the error or warning. </summary>
-        public string Message { get; }
+        public string Message { get; set; }
         /// <summary> The type of error or warning. </summary>
-        public MongoDBErrorType? ErrorType { get; }
+        public MongoDBErrorType? ErrorType { get; set; }
     }
 }

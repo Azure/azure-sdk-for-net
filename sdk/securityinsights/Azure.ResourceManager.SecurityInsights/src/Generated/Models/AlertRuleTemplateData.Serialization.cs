@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new AlertRuleTemplateData(id, name, type, systemData.Value, kind);
+            return new SecurityInsights.AlertRuleTemplateData(id, name, type, systemData.Value, kind);
         }
     }
 }

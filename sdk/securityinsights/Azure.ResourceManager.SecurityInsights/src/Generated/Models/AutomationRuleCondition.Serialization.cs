@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "PropertyChanged": return PropertyChangedConditionProperties.DeserializePropertyChangedConditionProperties(element);
                 }
             }
-            ConditionType conditionType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("conditionType"))
-                {
-                    conditionType = new ConditionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAutomationRuleCondition(conditionType);
+            return UnknownAutomationRuleCondition.DeserializeUnknownAutomationRuleCondition(element);
         }
     }
 }

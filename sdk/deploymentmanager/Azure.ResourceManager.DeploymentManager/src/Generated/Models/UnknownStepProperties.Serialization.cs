@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static UnknownStepProperties DeserializeUnknownStepProperties(JsonElement element)
         {
-            StepType stepType = default;
+            StepType stepType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stepType"))

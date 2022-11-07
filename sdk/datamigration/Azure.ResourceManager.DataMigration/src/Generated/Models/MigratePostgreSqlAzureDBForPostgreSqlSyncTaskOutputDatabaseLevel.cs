@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel. </summary>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel()
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel()
         {
             ResultType = "DatabaseLevelOutput";
         }

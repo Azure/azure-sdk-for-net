@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static UnknownTimeSeriesDatabaseConnectionProperties DeserializeUnknownTimeSeriesDatabaseConnectionProperties(JsonElement element)
         {
-            ConnectionType connectionType = default;
+            ConnectionType connectionType = "Unknown";
             Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

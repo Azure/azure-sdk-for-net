@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new ThreatIntelligenceInformation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
+            return new Models.ThreatIntelligenceInformation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
         }
     }
 }

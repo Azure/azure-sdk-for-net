@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataShare
                     continue;
                 }
             }
-            return new ShareDataSetData(id, name, type, systemData.Value, kind);
+            return new DataShare.ShareDataSetData(id, name, type, systemData.Value, kind);
         }
     }
 }

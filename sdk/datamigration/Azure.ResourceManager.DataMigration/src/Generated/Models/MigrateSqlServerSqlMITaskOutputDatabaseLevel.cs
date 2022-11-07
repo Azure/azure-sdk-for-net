@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMITaskOutputDatabaseLevel : MigrateSqlServerSqlMITaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputDatabaseLevel. </summary>
-        internal MigrateSqlServerSqlMITaskOutputDatabaseLevel()
+        public MigrateSqlServerSqlMITaskOutputDatabaseLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "DatabaseLevelOutput";

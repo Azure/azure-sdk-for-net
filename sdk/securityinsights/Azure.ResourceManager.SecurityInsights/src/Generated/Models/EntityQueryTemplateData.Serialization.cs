@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new EntityQueryTemplateData(id, name, type, systemData.Value, kind);
+            return new SecurityInsights.EntityQueryTemplateData(id, name, type, systemData.Value, kind);
         }
     }
 }

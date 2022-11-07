@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrationReportResult
     {
         /// <summary> Initializes a new instance of MigrationReportResult. </summary>
-        internal MigrationReportResult()
+        public MigrationReportResult()
         {
         }
 
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Migration validation result identifier. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> The url of the report. </summary>
-        public Uri ReportUri { get; }
+        public Uri ReportUri { get; set; }
     }
 }

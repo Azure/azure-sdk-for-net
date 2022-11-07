@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             long bytesCopied = default;
             long documentsCopied = default;
             string elapsedTime = default;
-            IReadOnlyDictionary<string, MongoDBError> errors = default;
+            IDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
             Optional<DateTimeOffset> lastEventTime = default;
             Optional<DateTimeOffset> lastReplayTime = default;
             Optional<string> name = default;
             Optional<string> qualifiedName = default;
-            MongoDBProgressResultType resultType = default;
+            MongoDBProgressResultType resultType = "Unknown";
             MongoDBMigrationState state = default;
             long totalBytes = default;
             long totalDocuments = default;

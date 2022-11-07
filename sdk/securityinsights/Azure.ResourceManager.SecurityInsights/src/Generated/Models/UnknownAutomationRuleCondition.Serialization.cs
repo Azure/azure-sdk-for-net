@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static UnknownAutomationRuleCondition DeserializeUnknownAutomationRuleCondition(JsonElement element)
         {
-            ConditionType conditionType = default;
+            ConditionType conditionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionType"))

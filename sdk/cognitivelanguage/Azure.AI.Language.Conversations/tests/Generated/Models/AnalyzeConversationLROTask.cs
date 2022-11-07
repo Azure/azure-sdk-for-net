@@ -7,7 +7,11 @@
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> The base class for an long running conversation input task. </summary>
+    /// <summary>
+    /// The base class for an long running conversation input task.
+    /// Please note <see cref="AnalyzeConversationLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AnalyzeConversationPIITask"/>, <see cref="AnalyzeConversationalSentimentTask"/> and <see cref="AnalyzeConversationSummarizationTask"/>.
+    /// </summary>
     public partial class AnalyzeConversationLROTask : TaskIdentifier
     {
         /// <summary> Initializes a new instance of AnalyzeConversationLROTask. </summary>

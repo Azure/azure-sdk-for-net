@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMISyncTaskOutputError : MigrateSqlServerSqlMISyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputError. </summary>
-        internal MigrateSqlServerSqlMISyncTaskOutputError()
+        public MigrateSqlServerSqlMISyncTaskOutputError()
         {
             ResultType = "ErrorOutput";
         }

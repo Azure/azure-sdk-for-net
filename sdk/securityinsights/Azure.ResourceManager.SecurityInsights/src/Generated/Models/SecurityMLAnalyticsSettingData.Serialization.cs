@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityMLAnalyticsSettingData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
+            return new SecurityInsights.SecurityMLAnalyticsSettingData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
         }
     }
 }
