@@ -120,7 +120,7 @@ namespace SecurityCenter.Tests
                     }
                 };
 
-                var assessmentMetadata = new SecurityAssessmentMetadata()
+                var assessmentMetadata = new SecurityAssessmentMetadataResponse()
                 {
                     DisplayName = "Customer managed metadata",
                     Description = "Customer managed description",
@@ -148,6 +148,15 @@ namespace SecurityCenter.Tests
             }
         }
 
+        private static void Validate(IPage<SecurityAssessmentResponse> ret)
+        {
+            Assert.True(ret.IsAny(), "Got empty list");
+            foreach (var item in ret)
+            {
+                Assert.NotNull(item);
+            }
+        }
+
         /// <summary>
         /// For each of the supported 'ResourceDetails' types, validates that the 'ResourceDetails' is at least one of them:
         /// assignable means not null: serialization \ deserialization was successful
@@ -165,8 +174,32 @@ namespace SecurityCenter.Tests
         /// For each of the supported 'ResourceDetails' types, validates that the 'ResourceDetails' is at least one of them:
         /// assignable means not null: serialization \ deserialization was successful
         /// </summary>
+        /// <param name="ret"></param>
+        private static void ValidateResourceDetails(IPage<SecurityAssessmentResponse> ret)
+        {
+            foreach (var item in ret)
+            {
+                ValidateResourceDetails(item);
+            }
+        }
+
+        /// <summary>
+        /// For each of the supported 'ResourceDetails' types, validates that the 'ResourceDetails' is at least one of them:
+        /// assignable means not null: serialization \ deserialization was successful
+        /// </summary>
         /// <param name="item"></param>
         private static void ValidateResourceDetails(SecurityAssessment item)
+        {
+            Assert.NotNull(item);
+            ValidateResourceDetails(item.ResourceDetails);
+        }
+
+        /// <summary>
+        /// For each of the supported 'ResourceDetails' types, validates that the 'ResourceDetails' is at least one of them:
+        /// assignable means not null: serialization \ deserialization was successful
+        /// </summary>
+        /// <param name="item"></param>
+        private static void ValidateResourceDetails(SecurityAssessmentResponse item)
         {
             Assert.NotNull(item);
             ValidateResourceDetails(item.ResourceDetails);
