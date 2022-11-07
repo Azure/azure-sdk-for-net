@@ -92,7 +92,7 @@ namespace Azure.Core
         /// <summary>
         /// The processing context for the message.
         /// </summary>
-        public ProcessingContext ProcessingContext => new(this);
+        internal ProcessingContext ProcessingContext => new(this);
 
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {

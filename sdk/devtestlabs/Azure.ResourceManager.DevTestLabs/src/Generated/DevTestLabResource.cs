@@ -1156,12 +1156,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesPolicySetAsync(string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesAsync(string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _policySetsClientDiagnostics.CreateScope("DevTestLabResource.EvaluatePoliciesPolicySet");
+            using var scope = _policySetsClientDiagnostics.CreateScope("DevTestLabResource.EvaluatePolicies");
             scope.Start();
             try
             {
@@ -1185,12 +1185,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<DevTestLabEvaluatePoliciesResult> EvaluatePoliciesPolicySet(string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabEvaluatePoliciesResult> EvaluatePolicies(string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _policySetsClientDiagnostics.CreateScope("DevTestLabResource.EvaluatePoliciesPolicySet");
+            using var scope = _policySetsClientDiagnostics.CreateScope("DevTestLabResource.EvaluatePolicies");
             scope.Start();
             try
             {

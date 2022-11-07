@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     internal partial class SoaRecordListResult
     {
-        internal static SoaRecordListResult DeserializeSoaRecordSetListResult(JsonElement element)
+        internal static SoaRecordListResult DeserializeSoaRecordListResult(JsonElement element)
         {
             Optional<IReadOnlyList<SoaRecordData>> value = default;
             Optional<string> nextLink = default;
