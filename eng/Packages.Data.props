@@ -81,7 +81,7 @@
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
 
     <!-- Azure SDK packages -->
-	  <PackageReference Update="Azure.Communication.Identity" Version="1.2.0" />
+    <PackageReference Update="Azure.Communication.Identity" Version="1.2.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.2.1" />
     <PackageReference Update="Azure.Core" Version="1.25.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
@@ -106,6 +106,7 @@
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.1.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.46.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.23.0" />
+	<PackageReference Update="RL.Net"  VersionOverride="0.2.0"/>
     <!--
       TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
       Currently, it is referencd by Azure.Identity.BrokeredAuthentication which is still in beta
