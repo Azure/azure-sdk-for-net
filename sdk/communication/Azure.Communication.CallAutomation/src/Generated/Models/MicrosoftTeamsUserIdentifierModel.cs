@@ -26,7 +26,7 @@ namespace Azure.Communication
         /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
         /// <param name="userId"></param>
         /// <param name="isAnonymous"></param>
-        /// <param name="cloud"></param>
+        /// <param name="cloud"> The cloud that the identifier belongs to. </param>
         internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud)
         {
             UserId = userId;
@@ -38,7 +38,7 @@ namespace Azure.Communication
         public string UserId { get; set; }
         /// <summary> Gets or sets the is anonymous. </summary>
         public bool? IsAnonymous { get; set; }
-        /// <summary> Gets or sets the cloud. </summary>
+        /// <summary> The cloud that the identifier belongs to. </summary>
         public CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }

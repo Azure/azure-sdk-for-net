@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ServerCallingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2022-04-07-preview")
+        public ServerCallingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -226,7 +226,6 @@ namespace Azure.Communication.CallAutomation
             {
                 request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(redirectCallRequest);
@@ -235,7 +234,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequest"> The redirect call request. </param>
+        /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,7 +258,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequest"> The redirect call request. </param>
+        /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -300,7 +299,6 @@ namespace Azure.Communication.CallAutomation
             {
                 request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(rejectCallRequest);

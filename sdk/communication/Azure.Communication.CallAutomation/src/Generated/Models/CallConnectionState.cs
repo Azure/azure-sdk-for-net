@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The state of the call connection. </summary>
+    /// <summary> The call connection state. </summary>
     public readonly partial struct CallConnectionState : IEquatable<CallConnectionState>
     {
         private readonly string _value;
@@ -63,4 +63,6 @@ namespace Azure.Communication.CallAutomation
         /// <inheritdoc />
         public override string ToString() => _value;
     }
+}
+ }
 }

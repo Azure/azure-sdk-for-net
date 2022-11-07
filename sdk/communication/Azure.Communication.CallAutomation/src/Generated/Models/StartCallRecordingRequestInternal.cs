@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of StartCallRecordingRequestInternal. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public StartCallRecordingRequestInternal(CallLocatorInternal callLocator)
+        public StartCallRecordingRequestInternal(CallLocatorModel callLocator)
         {
             Argument.AssertNotNull(callLocator, nameof(callLocator));
 
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> The call locator. </summary>
-        public CallLocatorInternal CallLocator { get; }
+        public CallLocatorModel CallLocator { get; }
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
         /// <summary> The content type of call recording. </summary>
@@ -43,5 +43,7 @@ namespace Azure.Communication.CallAutomation
         /// first audio was detected.  Channel to participant mapping details can be found in the metadata of the recording.
         /// </summary>
         public IList<CommunicationIdentifierModel> AudioChannelParticipantOrdering { get; }
+        /// <summary> Recording storage mode. `External` enables bring your own storage. </summary>
+        public RecordingStorageType? RecordingStorageType { get; set; }
     }
 }

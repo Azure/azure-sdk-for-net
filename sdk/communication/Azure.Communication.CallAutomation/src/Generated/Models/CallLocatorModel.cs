@@ -8,10 +8,10 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The locator used for joining or taking action on a call. </summary>
-    internal partial class CallLocatorInternal
+    public partial class CallLocatorModel
     {
-        /// <summary> Initializes a new instance of CallLocatorInternal. </summary>
-        public CallLocatorInternal()
+        /// <summary> Initializes a new instance of CallLocatorModel. </summary>
+        public CallLocatorModel()
         {
         }
 
@@ -20,6 +20,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The server call id. </summary>
         public string ServerCallId { get; set; }
         /// <summary> The call locator kind. </summary>
-        public CallLocatorKindInternal? Kind { get; set; }
+        public CallLocatorKindModel? Kind { get; set; }
     }
 }
