@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Models.FormatReadSettings(type, additionalProperties);
+            return new FormatReadSettings(type, additionalProperties);
         }
     }
 }

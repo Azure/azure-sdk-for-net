@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static UnknownSsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element)
         {
-            SsisObjectMetadataType type = "Unknown";
+            SsisObjectMetadataType type = default;
             Optional<long> id = default;
             Optional<string> name = default;
             Optional<string> description = default;

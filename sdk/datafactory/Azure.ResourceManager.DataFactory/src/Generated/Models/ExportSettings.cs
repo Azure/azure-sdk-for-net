@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="ExportSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureDatabricksDeltaLakeExportCommand"/> and <see cref="SnowflakeExportCopyCommand"/>.
     /// </summary>
-    public abstract partial class ExportSettings
+    public partial class ExportSettings
     {
         /// <summary> Initializes a new instance of ExportSettings. </summary>
-        protected ExportSettings()
+        public ExportSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }

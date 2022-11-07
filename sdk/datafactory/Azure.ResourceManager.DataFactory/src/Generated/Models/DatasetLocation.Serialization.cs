@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Models.DatasetLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+            return new DatasetLocation(type, folderPath.Value, fileName.Value, additionalProperties);
         }
     }
 }

@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="IntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ManagedIntegrationRuntimeStatus"/> and <see cref="SelfHostedIntegrationRuntimeStatus"/>.
     /// </summary>
-    public abstract partial class IntegrationRuntimeStatus
+    public partial class IntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeStatus. </summary>
-        protected IntegrationRuntimeStatus()
+        internal IntegrationRuntimeStatus()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
