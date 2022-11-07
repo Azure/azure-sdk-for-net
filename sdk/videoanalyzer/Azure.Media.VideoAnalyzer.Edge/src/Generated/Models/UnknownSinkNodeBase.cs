@@ -5,10 +5,20 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownSinkNodeBase. </summary>
     internal partial class UnknownSinkNodeBase : SinkNodeBase
     {
+        /// <summary> Initializes a new instance of UnknownSinkNodeBase. </summary>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        internal UnknownSinkNodeBase(string type, string name, IList<NodeInput> inputs) : base(type, name, inputs)
+        {
+            Type = type ?? "Unknown";
+        }
     }
 }

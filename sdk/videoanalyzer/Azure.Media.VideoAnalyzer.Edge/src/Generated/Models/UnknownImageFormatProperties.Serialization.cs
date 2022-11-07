@@ -5,9 +5,33 @@
 
 #nullable disable
 
+using System.Text.Json;
+using Azure.Core;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownImageFormatProperties
+    internal partial class UnknownImageFormatProperties : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("@type");
+            writer.WriteStringValue(Type);
+            writer.WriteEndObject();
+        }
+
+        internal static UnknownImageFormatProperties DeserializeUnknownImageFormatProperties(JsonElement element)
+        {
+            string type = "Unknown";
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("@type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new UnknownImageFormatProperties(type);
+        }
     }
 }

@@ -10,5 +10,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The UnknownCertificateSource. </summary>
     internal partial class UnknownCertificateSource : CertificateSource
     {
+        /// <summary> Initializes a new instance of UnknownCertificateSource. </summary>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        internal UnknownCertificateSource(string type) : base(type)
+        {
+            Type = type ?? "Unknown";
+        }
     }
 }

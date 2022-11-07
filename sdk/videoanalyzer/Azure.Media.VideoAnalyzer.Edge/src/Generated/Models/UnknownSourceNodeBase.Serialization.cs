@@ -5,9 +5,41 @@
 
 #nullable disable
 
+using System.Text.Json;
+using Azure.Core;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownSourceNodeBase
+    internal partial class UnknownSourceNodeBase : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("@type");
+            writer.WriteStringValue(Type);
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+            writer.WriteEndObject();
+        }
+
+        internal static UnknownSourceNodeBase DeserializeUnknownSourceNodeBase(JsonElement element)
+        {
+            string type = "Unknown";
+            string name = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("@type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new UnknownSourceNodeBase(type, name);
+        }
     }
 }
