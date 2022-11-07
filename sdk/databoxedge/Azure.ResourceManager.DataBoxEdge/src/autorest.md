@@ -14,6 +14,11 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+suppress-abstract-base-class:
+  - DataBoxEdgeRoleAddonData
+  - DataBoxEdgeRoleData
+  - DataBoxEdgeTriggerData
+
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/jobs/{name}
 

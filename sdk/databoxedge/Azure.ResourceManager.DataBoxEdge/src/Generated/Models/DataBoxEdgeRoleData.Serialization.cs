@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdge.DataBoxEdgeRoleData(id, name, type, systemData.Value, kind);
+            return new DataBoxEdgeRoleData(id, name, type, systemData.Value, kind);
         }
     }
 }
