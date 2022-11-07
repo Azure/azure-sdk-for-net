@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -20,18 +20,6 @@ namespace Azure.Data.SchemaRegistry
         public SchemaFormat(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
-            switch (value)
-            {
-                case AvroValue:
-                    ContentType = ContentTypeInternal.Avro;
-                    break;
-                case JsonValue:
-                    ContentType = ContentTypeInternal.Json;
-                    break;
-                default:
-                    ContentType = ContentTypeInternal.Custom;
-                    break;
-            }
         }
 
         /// <summary> Avro Serialization schema type. </summary>
@@ -62,6 +50,17 @@ namespace Azure.Data.SchemaRegistry
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        internal ContentTypeInternal ContentType { get; }
+        internal ContentType ToContentType()
+        {
+            switch (_value)
+            {
+                case AvroValue:
+                    return ContentType.Avro;
+                case JsonValue:
+                    return ContentType.Json;
+                default:
+                    return ContentType.Custom;
+            }
+        }
     }
 }
