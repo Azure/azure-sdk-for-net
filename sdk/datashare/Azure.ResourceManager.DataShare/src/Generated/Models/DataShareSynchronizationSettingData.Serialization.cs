@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataShare
                     continue;
                 }
             }
-            return new DataShare.DataShareSynchronizationSettingData(id, name, type, systemData.Value, kind);
+            return new DataShareSynchronizationSettingData(id, name, type, systemData.Value, kind);
         }
     }
 }
