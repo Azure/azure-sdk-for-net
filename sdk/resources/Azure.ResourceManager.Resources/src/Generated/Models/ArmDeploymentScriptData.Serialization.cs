@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new Resources.ArmDeploymentScriptData(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind);
+            return new ArmDeploymentScriptData(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind);
         }
     }
 }
