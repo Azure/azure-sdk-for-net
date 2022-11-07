@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityInsights
     /// Please note <see cref="EntityQueryData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ActivityEntityQuery"/> and <see cref="ExpansionEntityQuery"/>.
     /// </summary>
-    public abstract partial class EntityQueryData : ResourceData
+    public partial class EntityQueryData : ResourceData
     {
         /// <summary> Initializes a new instance of EntityQueryData. </summary>
-        protected EntityQueryData()
+        public EntityQueryData()
         {
         }
 

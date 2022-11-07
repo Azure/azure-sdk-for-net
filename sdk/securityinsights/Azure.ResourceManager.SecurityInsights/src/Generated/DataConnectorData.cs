@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityInsights
     /// Please note <see cref="DataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CodelessApiPollingDataConnector"/>, <see cref="AwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="AADDataConnector"/>, <see cref="AatpDataConnector"/>, <see cref="ASCDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="IoTDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MTPDataConnector"/>, <see cref="OfficeDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeATPDataConnector"/>, <see cref="OfficeIRMDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="TIDataConnector"/> and <see cref="TiTaxiiDataConnector"/>.
     /// </summary>
-    public abstract partial class DataConnectorData : ResourceData
+    public partial class DataConnectorData : ResourceData
     {
         /// <summary> Initializes a new instance of DataConnectorData. </summary>
-        protected DataConnectorData()
+        public DataConnectorData()
         {
         }
 

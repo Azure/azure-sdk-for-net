@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.SecurityInsights
     /// Please note <see cref="EntityData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AccountEntity"/>, <see cref="AzureResourceEntity"/>, <see cref="HuntingBookmark"/>, <see cref="CloudApplicationEntity"/>, <see cref="DnsEntity"/>, <see cref="FileEntity"/>, <see cref="FileHashEntity"/>, <see cref="HostEntity"/>, <see cref="IoTDeviceEntity"/>, <see cref="IPEntity"/>, <see cref="MailClusterEntity"/>, <see cref="MailMessageEntity"/>, <see cref="MailboxEntity"/>, <see cref="MalwareEntity"/>, <see cref="NicEntity"/>, <see cref="ProcessEntity"/>, <see cref="RegistryKeyEntity"/>, <see cref="RegistryValueEntity"/>, <see cref="SecurityAlert"/>, <see cref="SecurityGroupEntity"/>, <see cref="SubmissionMailEntity"/> and <see cref="UrlEntity"/>.
     /// </summary>
-    public abstract partial class EntityData : ResourceData
+    public partial class EntityData : ResourceData
     {
         /// <summary> Initializes a new instance of EntityData. </summary>
-        protected EntityData()
+        public EntityData()
         {
         }
 

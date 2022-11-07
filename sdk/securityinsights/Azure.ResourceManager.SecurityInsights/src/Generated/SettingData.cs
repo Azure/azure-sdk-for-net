@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityInsights
     /// Please note <see cref="SettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="Anomalies"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="Ueba"/>.
     /// </summary>
-    public abstract partial class SettingData : ResourceData
+    public partial class SettingData : ResourceData
     {
         /// <summary> Initializes a new instance of SettingData. </summary>
-        protected SettingData()
+        public SettingData()
         {
         }
 

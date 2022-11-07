@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsights.EntityData(id, name, type, systemData.Value, kind);
+            return new EntityData(id, name, type, systemData.Value, kind);
         }
     }
 }

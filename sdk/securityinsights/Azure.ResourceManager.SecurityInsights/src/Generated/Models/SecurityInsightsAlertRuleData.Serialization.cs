@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsights.SecurityInsightsAlertRuleData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
+            return new SecurityInsightsAlertRuleData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
         }
     }
 }

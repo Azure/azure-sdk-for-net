@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsights.DataConnectorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
+            return new DataConnectorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
         }
     }
 }

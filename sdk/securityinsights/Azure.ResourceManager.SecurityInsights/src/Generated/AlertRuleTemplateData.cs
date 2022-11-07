@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.SecurityInsights
     /// Please note <see cref="AlertRuleTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FusionAlertRuleTemplate"/>, <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="NrtAlertRuleTemplate"/>, <see cref="ScheduledAlertRuleTemplate"/> and <see cref="ThreatIntelligenceAlertRuleTemplate"/>.
     /// </summary>
-    public abstract partial class AlertRuleTemplateData : ResourceData
+    public partial class AlertRuleTemplateData : ResourceData
     {
         /// <summary> Initializes a new instance of AlertRuleTemplateData. </summary>
-        protected AlertRuleTemplateData()
+        public AlertRuleTemplateData()
         {
         }
 

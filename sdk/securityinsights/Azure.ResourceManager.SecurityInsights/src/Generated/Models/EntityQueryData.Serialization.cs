@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsights.EntityQueryData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
+            return new EntityQueryData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
         }
     }
 }
