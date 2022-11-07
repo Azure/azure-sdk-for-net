@@ -17,6 +17,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+suppress-abstract-base-class:
+  - CosmosDBServiceProperties
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default: CassandraTableThroughputSetting
