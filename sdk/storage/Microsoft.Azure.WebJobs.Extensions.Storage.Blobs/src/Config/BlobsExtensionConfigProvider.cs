@@ -29,7 +29,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 {
-    [Extension("AzureStorageBlobs", "Blobs")]
+    [Extension(Constants.WebJobsBlobExtensionName, "Blobs")]
     internal class BlobsExtensionConfigProvider : IExtensionConfigProvider,
         IConverter<BlobAttribute, BlobContainerClient>,
         IConverter<BlobAttribute, BlobsExtensionConfigProvider.MultiBlobContext>,
@@ -84,11 +84,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         public void Initialize(ExtensionConfigContext context)
         {
-            InitilizeBlobBindings(context);
+            InitializeBlobBindings(context);
             InitializeBlobTriggerBindings(context);
         }
 
-        private void InitilizeBlobBindings(ExtensionConfigContext context)
+        private void InitializeBlobBindings(ExtensionConfigContext context)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             Uri url = context.GetWebhookHandler();
@@ -210,32 +210,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             return (T)blob.BlobClient;
         }
 
-        private static ParameterBindingData ConvertToParameterBindingData(BlobAttribute blobAttribute)
+        private ParameterBindingData ConvertToParameterBindingData(BlobAttribute blobAttribute)
         {
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
 
-            dynamic blobDetails = new ExpandoObject();
-            blobDetails.Connection = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
-            blobDetails.BlobName = blobPath.BlobName;
-            blobDetails.ContainerName = blobPath.ContainerName;
+            var blobDetails = new BlobParameterBindingDataContent()
+            {
+                Connection = _nameResolver.Resolve(blobAttribute.Connection) ?? Constants.DefaultAzureStorageConnectionName,
+                BlobName = blobPath.BlobName,
+                ContainerName = blobPath.ContainerName
+            };
 
             return CreateParameterBindingData(blobDetails);
         }
 
-        private static ParameterBindingData ConvertToParameterBindingData(BlobBaseClient input, BlobTriggerAttribute blobAttribute)
+        private ParameterBindingData ConvertToParameterBindingData(BlobBaseClient input, BlobTriggerAttribute blobTriggerAttribute)
         {
-            dynamic blobDetails = new ExpandoObject();
-            blobDetails.Connection = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
-            blobDetails.BlobName = input.Name;
-            blobDetails.ContainerName = input.BlobContainerName;
+            var blobDetails = new BlobParameterBindingDataContent()
+            {
+                Connection = _nameResolver.Resolve(blobTriggerAttribute.Connection) ?? Constants.DefaultAzureStorageConnectionName,
+                BlobName = input.Name,
+                ContainerName = input.BlobContainerName
+            };
 
             return CreateParameterBindingData(blobDetails);
         }
 
-        private static ParameterBindingData CreateParameterBindingData(object blobDetails)
+        private static ParameterBindingData CreateParameterBindingData(BlobParameterBindingDataContent blobDetails)
         {
             var blobDetailsBinaryData = new BinaryData(blobDetails);
-            var bindingData = new ParameterBindingData("1.0", "AzureStorageBlobs", blobDetailsBinaryData, "application/json");
+            var bindingData = new ParameterBindingData("1.0", Constants.WebJobsBlobExtensionName, blobDetailsBinaryData, "application/json");
             return bindingData;
         }
 
@@ -522,6 +526,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 BlobName = blobUriBuilder.BlobName,
                 FunctionId = functionId
             };
+        }
+
+        /// <summary>
+        /// Type used to provide blob information that can be passed to
+        /// ParameterBindingData to enable workers to create a blob client
+        /// </summary>
+        private class BlobParameterBindingDataContent
+        {
+            public string Connection { get; set; }
+            public string ContainerName { get; set; }
+            public string BlobName { get; set; }
         }
     }
 }
