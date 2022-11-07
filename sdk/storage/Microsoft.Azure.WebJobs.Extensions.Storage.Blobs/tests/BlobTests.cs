@@ -112,6 +112,38 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Assert.AreEqual(expectedContent, content);
         }
 
+        [Test]
+        public async Task Blob_IfBoundToParameterBindingData_CreatesParameterBindingData()
+        {
+            // Arrange
+            var program = new BindToParameterBindingData();
+            IHost host = new HostBuilder()
+                .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
+                {
+                    builder.AddAzureStorageBlobs()
+                    .UseStorageServices(blobServiceClient, queueServiceClient);
+                })
+                .Build();
+
+            var jobHost = host.GetJobHost<BindToParameterBindingData>();
+
+            // Act
+            await jobHost.CallAsync(nameof(BindToParameterBindingData.Run));
+            ParameterBindingData result = program.Result;
+
+            Assert.NotNull(result);
+
+            var blobData = result?.Content.ToObjectFromJson<Dictionary<string,string>>();
+
+            // Assert
+            Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
+            Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
+            Assert.True(blobData.TryGetValue("ContainerName", out var resultBlobName));
+
+            Assert.AreEqual(ContainerName, resultContainerName);
+            Assert.AreEqual(BlobName, resultBlobName);
+        }
+
         private QueueClient CreateQueue(string queueName)
         {
             var queue = queueServiceClient.GetQueueClient(queueName);
@@ -169,6 +201,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             {
                 blob.Write(message);
                 blob.Flush();
+            }
+        }
+
+        private class BindToParameterBindingData
+        {
+            public ParameterBindingData Result { get; set; }
+
+            public void Run(
+                [Blob(BlobPath)] ParameterBindingData blobData)
+            {
+                this.Result = blobData;
             }
         }
     }
