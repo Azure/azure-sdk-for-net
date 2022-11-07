@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class WatchlistItemResourceTests : SecurityInsightsManagementTestBase
     {
         public WatchlistItemResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         #endregion
         private async Task<WatchlistItemResource> CreateWatchlistItemAsync(ResourceGroupResource resourceGroup, string workspaceName, string itemName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetWatchlists(workspaceName);
+            var collection = resourceGroup.GetWatchlists(workspaceName);
             var input = ResourceDataHelpers.GetWatchlistData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testWatchlists-"), input);
             var watchlistResource = lro.Value;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
             //1.Get
-            var itemName = Recording.GenerateAssetName("testWatchlistItems-");
+            var itemName = "6d37a904-d199-43ff-892b-53653b784122";
             var item1 = await CreateWatchlistItemAsync(resourceGroup, workspace.Data.Name, itemName);
             WatchlistItemResource item2 = await item1.GetAsync();
 

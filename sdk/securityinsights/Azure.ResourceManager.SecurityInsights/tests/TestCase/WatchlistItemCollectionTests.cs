@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class WatchlistItemCollectionTests : SecurityInsightsManagementTestBase
     {
         public WatchlistItemCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
