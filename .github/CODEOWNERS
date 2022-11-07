@@ -306,7 +306,7 @@
 
 
 # ServiceLabel: %DevCenter %Service Attention
-/sdk/devcenter/                                 @chrissmiller @mstark @maharlan
+#/<NotInRepo>/                                 @chrissmiller @mstark @maharlan
 
 # PRLabel: %DevCenter
 /sdk/devcenter/                                 @chrissmiller @shivangireja 
