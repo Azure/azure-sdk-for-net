@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new Models.MachineLearningJobProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, schedule.Value, Optional.ToDictionary(services), Optional.ToNullable(status));
+            return new MachineLearningJobProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, schedule.Value, Optional.ToDictionary(services), Optional.ToNullable(status));
         }
     }
 }

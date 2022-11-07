@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="OnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="KubernetesOnlineDeployment"/> and <see cref="ManagedOnlineDeployment"/>.
     /// </summary>
-    public abstract partial class OnlineDeploymentProperties : EndpointDeploymentPropertiesBase
+    public partial class OnlineDeploymentProperties : EndpointDeploymentPropertiesBase
     {
         /// <summary> Initializes a new instance of OnlineDeploymentProperties. </summary>
-        protected OnlineDeploymentProperties()
+        public OnlineDeploymentProperties()
         {
         }
 

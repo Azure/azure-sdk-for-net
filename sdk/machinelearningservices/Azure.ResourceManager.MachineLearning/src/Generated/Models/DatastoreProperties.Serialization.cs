@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new Models.DatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault));
+            return new DatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault));
         }
     }
 }

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="CommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
     /// </summary>
-    public abstract partial class MachineLearningJobProperties : ResourceBase
+    public partial class MachineLearningJobProperties : ResourceBase
     {
         /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
-        protected MachineLearningJobProperties()
+        public MachineLearningJobProperties()
         {
             Services = new ChangeTrackingDictionary<string, JobService>();
         }

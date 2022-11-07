@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="DataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/> and <see cref="UriFolderDataVersion"/>.
     /// </summary>
-    public abstract partial class DataVersionProperties : AssetBase
+    public partial class DataVersionProperties : AssetBase
     {
         /// <summary> Initializes a new instance of DataVersionProperties. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        protected DataVersionProperties(Uri dataUri)
+        public DataVersionProperties(Uri dataUri)
         {
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 
