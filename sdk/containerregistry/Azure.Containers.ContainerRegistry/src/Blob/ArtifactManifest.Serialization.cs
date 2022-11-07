@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -12,15 +13,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     public partial class ArtifactManifest : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static ArtifactManifest DeserializeArtifactManifest(JsonElement element)
         {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
+            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest' not supported.");
         }
     }
 }
