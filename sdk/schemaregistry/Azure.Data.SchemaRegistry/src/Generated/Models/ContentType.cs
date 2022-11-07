@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.SchemaRegistry
 {
     /// <summary> The ContentType. </summary>
-    public readonly partial struct ContentType : IEquatable<ContentType>
+    internal readonly partial struct ContentType : IEquatable<ContentType>
     {
 
         /// <summary> Initializes a new instance of <see cref="ContentType"/>. </summary>
@@ -21,16 +21,9 @@ namespace Azure.Data.SchemaRegistry
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ApplicationJsonSerializationAvroValue = "application/json; serialization=Avro";
-        private const string ApplicationJsonSerializationJsonValue = "application/json; serialization=json";
-        private const string TextPlainCharsetUtf8Value = "text/plain; charset=utf-8";
-
-        /// <summary> application/json; serialization=Avro. </summary>
-        public static ContentType ApplicationJsonSerializationAvro { get; } = new ContentType(ApplicationJsonSerializationAvroValue);
-        /// <summary> application/json; serialization=json. </summary>
-        public static ContentType ApplicationJsonSerializationJson { get; } = new ContentType(ApplicationJsonSerializationJsonValue);
-        /// <summary> text/plain; charset=utf-8. </summary>
-        public static ContentType TextPlainCharsetUtf8 { get; } = new ContentType(TextPlainCharsetUtf8Value);
+        private const string AvroValue = "application/json; serialization=Avro";
+        private const string JsonValue = "application/json; serialization=json";
+        private const string CustomValue = "text/plain; charset=utf-8";
         /// <summary> Determines if two <see cref="ContentType"/> values are the same. </summary>
         public static bool operator ==(ContentType left, ContentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentType"/> values are not the same. </summary>

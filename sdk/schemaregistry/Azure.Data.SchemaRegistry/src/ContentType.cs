@@ -9,21 +9,21 @@ namespace Azure.Data.SchemaRegistry
 {
     /// <summary> The SerializationType. </summary>
     [CodeGenModel("ContentType")]
-    public readonly partial struct ContentType : IEquatable<ContentType>
+    internal readonly partial struct ContentType : IEquatable<ContentType>
     {
         private readonly string _value;
 
         /// <summary> application/json; serialization=Avro. </summary>
-        [CodeGenMember("ApplicationJsonSerializationAvroValue")]
-        public static ContentType Avro { get; }
+        [CodeGenMember("ApplicationJsonSerializationAvro")]
+        public static ContentType Avro { get; } = new ContentType(AvroValue);
 
         /// <summary> application/json; serialization=json. </summary>
-        [CodeGenMember("ApplicationJsonSerializationJsonValue")]
-        public static ContentType Json { get; }
+        [CodeGenMember("ApplicationJsonSerializationJson")]
+        public static ContentType Json { get; } = new ContentType(JsonValue);
 
         /// <summary> text/plain; charset=utf-8. </summary>
-        [CodeGenMember("TextPlainCharsetUtf8Value")]
-        public static ContentType Custom { get; }
+        [CodeGenMember("TextPlainCharsetUtf8")]
+        public static ContentType Custom { get; } = new ContentType(CustomValue);
 
         /// <summary>
         /// Returns the format of this content type.
@@ -33,9 +33,9 @@ namespace Azure.Data.SchemaRegistry
         {
             switch (_value)
             {
-                case ApplicationJsonSerializationAvroValue:
+                case AvroValue:
                     return SchemaFormat.Avro;
-                case ApplicationJsonSerializationJsonValue:
+                case JsonValue:
                     return SchemaFormat.Json;
                 default:
                     return SchemaFormat.Custom;
