@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
     /// <summary>
     /// Provides queue length metrics for the <see cref="QueueTargetScaler"/>.
     /// </summary>
-    public sealed class QueueTargetScaler : ITargetScaler
+    internal sealed class QueueTargetScaler : ITargetScaler
     {
         private readonly string _functionId;
         private readonly QueueMetricsProvider _queueMetricsProvider;

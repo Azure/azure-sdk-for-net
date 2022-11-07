@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
     /// <summary>
     /// Used to retrieve metrics and make scale decisions for Queues.
     /// </summary>
-    public class QueueScaleMonitor : IScaleMonitor<QueueTriggerMetrics>
+    internal class QueueScaleMonitor : IScaleMonitor<QueueTriggerMetrics>
     {
         private const int NumberOfSamplesToConsider = 5;
 

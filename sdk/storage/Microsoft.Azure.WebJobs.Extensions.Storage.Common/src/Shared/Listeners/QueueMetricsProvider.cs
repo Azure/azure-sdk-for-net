@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
     /// <summary>
     /// Provides QueueTriggerMetrics from a specific queue entity.
     /// </summary>
-    public class QueueMetricsProvider
+    internal class QueueMetricsProvider
     {
         private readonly QueueClient _queue;
         private readonly ILogger _logger;
