@@ -306,10 +306,10 @@
 
 
 # ServiceLabel: %DevCenter %Service Attention
-#/<NotInRepo>/                                 @chrissmiller @mstark @maharlan
+#/<NotInRepo>/                                  @sebrenna @mharlan @chrissmiller
 
 # PRLabel: %DevCenter
-/sdk/devcenter/                                 @chrissmiller @shivangireja 
+/sdk/devcenter/                                 @sebrenna @mharlan @chrissmiller @shivangireja 
 
 # ServiceLabel: %Devtestlab %Service Attention
 /sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs/            @Tanmayeekamath
