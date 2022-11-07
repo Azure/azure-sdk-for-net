@@ -783,7 +783,7 @@
           "type": "string"
         },
         "x-recording-assets-file": {
-          "type:": "string"
+          "type": "string"
         }
       },
       "required": [
