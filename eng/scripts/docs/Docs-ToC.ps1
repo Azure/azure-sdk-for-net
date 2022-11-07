@@ -63,9 +63,15 @@ function Fetch-NamespacesFromNupkg ($package, $version) {
         }
         $dllFile = $dllFiles[0]
     }
-    elseif ($dllFile.Count -gt 1 -and (Test-Path "$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll")) {
+    elseif ($dllFile.Count -gt 1) {
         Write-Warning "There are multiple dll files in target netstandard2.0. Choose the one with package name."
-        $dllFile = [System.IO.DirectoryInfo]"$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll"
+        if (Test-Path "$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll")) {
+            Write-Host "Use the dll file $package.dll"
+            $dllFile = [System.IO.DirectoryInfo]"$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll"
+        }
+        else {
+            $dllFile = $dllFile[0]
+        }
     }
     Write-Host "Dll file found: $($dllFile.FullName)"
     $namespaces = Get-NamespacesFromDll $dllFile.FullName
