@@ -41,9 +41,9 @@ namespace Azure.AI.TextAnalytics.Tests
             bool useTokenCredential = default,
             bool useStaticResource = default)
         {
-            Uri endpoint = useStaticResource
-                ? new(TestEnvironment.StaticEndpoint)
-                : new(TestEnvironment.Endpoint);
+            Uri endpoint = new(useStaticResource
+                ? TestEnvironment.StaticEndpoint
+                : TestEnvironment.Endpoint);
             options ??= new TextAnalyticsClientOptions(ServiceVersion);
 
             // While we use a persistent resource for live tests, we need to increase our retries.
@@ -57,9 +57,9 @@ namespace Azure.AI.TextAnalytics.Tests
             }
             else
             {
-                credential ??= useStaticResource
-                    ? new AzureKeyCredential(TestEnvironment.StaticApiKey)
-                    : new AzureKeyCredential(TestEnvironment.ApiKey);
+                credential ??= new AzureKeyCredential(useStaticResource
+                    ? TestEnvironment.StaticApiKey
+                    : TestEnvironment.ApiKey);
                 nonInstrumentedClient = new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options));
             }
             return InstrumentClient(nonInstrumentedClient);
