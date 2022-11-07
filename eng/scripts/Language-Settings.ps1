@@ -405,11 +405,17 @@ function EnsureCustomSource($package) {
   }
 
   Write-Host "Checking custom package source for $($package.Name)"
-  $existingVersions = Find-Package `
-    -Name $package.Name `
-    -Source CustomPackageSource `
-    -AllVersions `
-    -AllowPrereleaseVersions
+  try {
+    $existingVersions = Find-Package `
+      -Name $package.Name `
+      -Source CustomPackageSource `
+      -AllVersions `
+      -AllowPrereleaseVersions
+  }
+  catch {
+    Write-Error $_ -ErrorAction Continue
+    return $package
+  }
   
   # Matches package version against output: 
   # "Azure.Security.KeyVault.Secrets 4.3.0-alpha.20210915.3"
