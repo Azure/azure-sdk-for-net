@@ -89,7 +89,7 @@ directive:
         "text/plain; charset=utf-8"
        ];
     $["Content-Type"]["x-ms-enum"] = {
-      "name": "SchemaFormat",
+      "name": "ContentType",
       "modelAsString": true
     };  
 ```
@@ -105,7 +105,7 @@ directive:
         "text/plain; charset=utf-8"
        ];
     $["Content-Type"]["x-ms-enum"] = {
-      "name": "SchemaFormat",
+      "name": "ContentType",
       "modelAsString": true
     };  
 ```

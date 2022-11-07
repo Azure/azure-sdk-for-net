@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Data.SchemaRegistry
 {
-    /// <summary> The SchemaFormat. </summary>
+    /// <summary> The ContentType. </summary>
     internal readonly partial struct ContentTypeInternal : IEquatable<ContentTypeInternal>
     {
         private readonly string _value;
@@ -24,7 +24,7 @@ namespace Azure.Data.SchemaRegistry
 
         private const string AvroValue = "application/json; serialization=Avro";
         private const string JsonValue = "application/json; serialization=json";
-        private const string CustomValue = "application/octet-stream";
+        private const string CustomValue = "text/plain; charset=utf-8";
         /// <summary> Determines if two <see cref="ContentTypeInternal"/> values are the same. </summary>
         public static bool operator ==(ContentTypeInternal left, ContentTypeInternal right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentTypeInternal"/> values are not the same. </summary>
