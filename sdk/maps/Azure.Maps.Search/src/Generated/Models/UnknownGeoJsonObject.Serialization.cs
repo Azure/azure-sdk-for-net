@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
 
         internal static UnknownGeoJsonObject DeserializeUnknownGeoJsonObject(JsonElement element)
         {
-            GeoJsonObjectType type = "Unknown";
+            GeoJsonObjectType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
