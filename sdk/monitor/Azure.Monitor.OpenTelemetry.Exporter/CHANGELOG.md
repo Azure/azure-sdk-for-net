@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+* Update OpenTelemetry dependencies ([]())
+  - OpenTelemetry v1.4.0-beta.3
+
 ## 1.0.0-beta.5 (2022-11-08)
 
 ### Features Added
