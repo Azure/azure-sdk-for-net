@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class VirtualNetworkPatch : IUtf8JsonSerializable
+    public partial class HybridContainerServiceVirtualNetworkPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

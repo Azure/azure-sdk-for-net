@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    public partial class VirtualNetworkData : IUtf8JsonSerializable
+    public partial class HybridContainerServiceVirtualNetworkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridContainerService
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkData DeserializeVirtualNetworkData(JsonElement element)
+        internal static HybridContainerServiceVirtualNetworkData DeserializeHybridContainerServiceVirtualNetworkData(JsonElement element)
         {
             Optional<VirtualNetworksProperties> properties = default;
             Optional<VirtualNetworksExtendedLocation> extendedLocation = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     continue;
                 }
             }
-            return new VirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, extendedLocation.Value);
+            return new HybridContainerServiceVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, extendedLocation.Value);
         }
     }
 }
