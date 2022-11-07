@@ -562,13 +562,13 @@ namespace Azure.Core
     public partial class RequestUriBuilder
     {
         public RequestUriBuilder() { }
+        protected bool HasPath { get { throw null; } }
+        protected bool HasQuery { get { throw null; } }
         public string? Host { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public string PathAndQuery { get { throw null; } }
-        protected int PathLength { get { throw null; } }
         public int Port { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
-        protected int QueryLength { get { throw null; } }
         public string? Scheme { get { throw null; } set { } }
         public void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
         public void AppendPath(string value) { }
