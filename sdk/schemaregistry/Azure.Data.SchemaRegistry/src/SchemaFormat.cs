@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -14,6 +15,9 @@ namespace Azure.Data.SchemaRegistry
         private const string AvroValue = "Avro";
         private const string JsonValue = "JSON";
         private const string CustomValue = "Custom";
+
+        private const string AvroContentType = "application/json; serialization=Avro";
+        private const string JsonContentType = "application/json; serialization=json";
 
         /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -60,6 +64,24 @@ namespace Azure.Data.SchemaRegistry
                     return ContentType.Json;
                 default:
                     return ContentType.Custom;
+            }
+        }
+
+        internal static SchemaFormat FromContentType(string contentTypeValue)
+        {
+            var isJsonTemp = contentTypeValue.Contains("+json");
+            if (isJsonTemp)
+            {
+                return SchemaFormat.Json;
+            }
+            switch (contentTypeValue)
+            {
+                case AvroContentType:
+                    return SchemaFormat.Avro;
+                case JsonContentType:
+                    return SchemaFormat.Json;
+                default:
+                    return SchemaFormat.Custom;
             }
         }
     }

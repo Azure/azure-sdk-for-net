@@ -277,7 +277,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetSchemaVersion(groupName, schemaName, version, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Headers.ContentType.Value.ToSchemaFormat(), response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
+                var properties = new SchemaProperties(SchemaFormat.FromContentType(response.Headers.ContentType.Value.ToString()), response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);
@@ -305,7 +305,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetById(schemaId, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Headers.ContentType.Value.ToSchemaFormat(), response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
+                var properties = new SchemaProperties(SchemaFormat.FromContentType(response.Headers.ContentType.Value.ToString()), response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);

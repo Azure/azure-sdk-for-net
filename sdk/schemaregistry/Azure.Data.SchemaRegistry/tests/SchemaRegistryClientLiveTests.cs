@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Data.SchemaRegistry.Models;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
+    [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10)]
     public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
-        public SchemaRegistryClientLiveTests(bool isAsync) : base(isAsync)
+        private readonly SchemaRegistryClientOptions.ServiceVersion _serviceVersion;
+        public SchemaRegistryClientLiveTests(bool isAsync, SchemaRegistryClientOptions.ServiceVersion version) : base(isAsync, RecordedTestMode.Record)
         {
             TestDiagnostics = false;
+            _serviceVersion = version;
         }
 
-        [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10)]
         private SchemaRegistryClient CreateClient(string format)
         {
             string endpoint;
@@ -74,7 +75,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(schemaProperties, schemaName, format);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
+            AssertPropertiesAreEqual(registerProperties, schemaProperties, format);
         }
 
         [RecordedTest]
@@ -95,7 +96,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, content_V1, format);
             AssertSchemaProperties(schemaProperties, schemaName, format);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
+            AssertPropertiesAreEqual(registerProperties, schemaProperties, format);
 
             SchemaProperties newVersion = await client.RegisterSchemaAsync(schemaProperties.GroupName, schemaProperties.Name, content_V2, schemaProperties.Format);
             AssertSchemaProperties(newVersion, schemaName, format);
@@ -119,7 +120,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(schemaProperties, schemaName, format);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
+            AssertPropertiesAreEqual(registerProperties, schemaProperties, format);
         }
 
         [RecordedTest]
@@ -139,7 +140,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Value.Id);
             AssertSchema(schema, schemaName, content, format);
-            AssertPropertiesAreEqual(registerProperties, schema.Properties);
+            AssertPropertiesAreEqual(registerProperties, schema.Properties, format);
         }
 
         [RecordedTest]
@@ -163,11 +164,11 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             SchemaRegistrySchema schemav1 = await client.GetSchemaAsync(groupName, schemaName, 1);
             AssertSchema(schemav1, schemaName, content_V1, format);
-            AssertPropertiesAreEqual(registerPropertiesv1, schemav1.Properties);
+            AssertPropertiesAreEqual(registerPropertiesv1, schemav1.Properties, format);
 
             SchemaRegistrySchema schemav2 = await client.GetSchemaAsync(groupName, schemaName, 2);
             AssertSchema(schemav2, schemaName, content_V2, format);
-            AssertPropertiesAreEqual(registerPropertiesv2, schemav2.Properties);
+            AssertPropertiesAreEqual(registerPropertiesv2, schemav2.Properties, format);
         }
 
         [RecordedTest]
@@ -221,6 +222,10 @@ namespace Azure.Data.SchemaRegistry.Tests
 
         private void AssertSchema(SchemaRegistrySchema schema, string expectedSchemaName, string expectedSchemaContent, SchemaFormat schemaFormat)
         {
+            if (_serviceVersion.Equals(SchemaRegistryClientOptions.ServiceVersion.V2021_10) && !schemaFormat.Equals(SchemaFormat.Avro))
+            {
+                return;
+            }
             AssertSchemaProperties(schema.Properties, expectedSchemaName, schemaFormat);
             Assert.AreEqual(
                 Regex.Replace(expectedSchemaContent, @"\s+", string.Empty),
@@ -229,6 +234,10 @@ namespace Azure.Data.SchemaRegistry.Tests
 
         private void AssertSchemaProperties(SchemaProperties properties, string schemaName, SchemaFormat schemaFormat)
         {
+            if (_serviceVersion.Equals(SchemaRegistryClientOptions.ServiceVersion.V2021_10) && !schemaFormat.Equals(SchemaFormat.Avro))
+            {
+                return;
+            }
             Assert.IsNotNull(properties);
             Assert.IsNotNull(properties.Id);
             Assert.IsTrue(Guid.TryParse(properties.Id, out Guid _));
@@ -237,8 +246,12 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.AreEqual(TestEnvironment.SchemaRegistryGroup, properties.GroupName);
         }
 
-        private void AssertPropertiesAreEqual(SchemaProperties registeredSchema, SchemaProperties schema)
+        private void AssertPropertiesAreEqual(SchemaProperties registeredSchema, SchemaProperties schema, SchemaFormat schemaFormat)
         {
+            if (_serviceVersion.Equals(SchemaRegistryClientOptions.ServiceVersion.V2021_10) && !schemaFormat.Equals(SchemaFormat.Avro))
+            {
+                return;
+            }
             Assert.AreEqual(registeredSchema.Id, schema.Id);
             Assert.AreEqual(registeredSchema.Format, schema.Format);
             Assert.AreEqual(registeredSchema.GroupName, schema.GroupName);

@@ -25,23 +25,6 @@ namespace Azure.Data.SchemaRegistry
         [CodeGenMember("TextPlainCharsetUtf8")]
         public static ContentType Custom { get; } = new ContentType(CustomValue);
 
-        /// <summary>
-        /// Returns the format of this content type.
-        /// </summary>
-        /// <returns></returns>
-        public SchemaFormat ToSchemaFormat()
-        {
-            switch (_value)
-            {
-                case AvroValue:
-                    return SchemaFormat.Avro;
-                case JsonValue:
-                    return SchemaFormat.Json;
-                default:
-                    return SchemaFormat.Custom;
-            }
-        }
-
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContentType other && Equals(other);
