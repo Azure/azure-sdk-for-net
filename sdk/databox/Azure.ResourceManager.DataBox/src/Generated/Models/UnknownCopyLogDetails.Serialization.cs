@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UnknownCopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element)
         {
-            DataBoxOrderType copyLogDetailsType = "Unknown";
+            DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("copyLogDetailsType"))

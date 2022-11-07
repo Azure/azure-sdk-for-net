@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<PackageShippingDetails> returnPackage = default;
             Optional<IList<DataImportDetails>> dataImportDetails = default;
             Optional<IList<DataExportDetails>> dataExportDetails = default;
-            DataBoxOrderType jobDetailsType = "Unknown";
+            DataBoxOrderType jobDetailsType = default;
             Optional<DataBoxOrderPreferences> preferences = default;
             Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
             Optional<string> reverseShipmentLabelSasKey = default;

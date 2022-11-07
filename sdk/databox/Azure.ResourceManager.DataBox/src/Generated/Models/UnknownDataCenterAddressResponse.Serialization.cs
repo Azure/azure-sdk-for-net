@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element)
         {
-            DataCenterAddressType dataCenterAddressType = "Unknown";
+            DataCenterAddressType dataCenterAddressType = default;
             Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
             Optional<AzureLocation> dataCenterAzureLocation = default;
             foreach (var property in element.EnumerateObject())

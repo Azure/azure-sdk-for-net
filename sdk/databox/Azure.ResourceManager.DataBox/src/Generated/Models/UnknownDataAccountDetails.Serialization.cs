@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UnknownDataAccountDetails DeserializeUnknownDataAccountDetails(JsonElement element)
         {
-            DataAccountType dataAccountType = "Unknown";
+            DataAccountType dataAccountType = default;
             Optional<string> sharePassword = default;
             foreach (var property in element.EnumerateObject())
             {
