@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         #endregion
         private async Task<SettingResource> CreateSettingAsync(ResourceGroupResource resourceGroup, string workspaceName, string alertRulesName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetSettings(workspaceName);
+            var collection = resourceGroup.GetSettings(workspaceName);
             var input = ResourceDataHelpers.GetSettingData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, alertRulesName, input);
             return lro.Value;

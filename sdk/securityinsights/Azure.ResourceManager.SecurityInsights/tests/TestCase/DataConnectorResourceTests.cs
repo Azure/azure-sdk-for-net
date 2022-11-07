@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class DataConnectorResourceTests : SecurityInsightsManagementTestBase
     {
         public DataConnectorResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         #endregion
         private async Task<DataConnectorResource> CreateDataConnectorAsync(ResourceGroupResource resourceGroup, string workspaceName, string dataName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetDataConnectors(workspaceName);
+            var collection = resourceGroup.GetDataConnectors(workspaceName);
             var input = ResourceDataHelpers.GetDataConnectorData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataName, input);
             return lro.Value;
