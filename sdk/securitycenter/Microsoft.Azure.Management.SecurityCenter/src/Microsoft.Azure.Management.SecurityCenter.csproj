@@ -10,9 +10,11 @@
     <AssemblyName>Microsoft.Azure.Management.SecurityCenter</AssemblyName>
     <PackageTags>management;security center;security;IoT security;</PackageTags>
     <PackageReleaseNotes>
-    1. Updated SDK client.
-    2. SecurityAssessmentMetadata name was changed to SecurityAssessmentMetadataResponse
-    3. Parameters order was changed for UpdateResourceGroupLevelStateToResolve, UpdateResourceGroupLevelStateToDismiss, UpdateResourceGroupLevelStateToActivate, GetResourceGroupLevel</PackageReleaseNotes>
+      1. Updated SDK client.
+      2. SecurityAssessmentMetadata name was changed to SecurityAssessmentMetadataResponse
+      3. SecurityAssessment name was changed to SecurityAssessmentResponse
+      4. Parameters order was changed for UpdateResourceGroupLevelStateToResolve, UpdateResourceGroupLevelStateToDismiss, UpdateResourceGroupLevelStateToActivate, GetResourceGroupLevel
+      5. Parameters order for was changed SecurityContact</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
