@@ -45,10 +45,11 @@ namespace Azure.Data.SchemaRegistry
     }
     public partial class SchemaRegistryClientOptions : Azure.Core.ClientOptions
     {
-        public SchemaRegistryClientOptions(Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion version = Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion.V2021_10) { }
+        public SchemaRegistryClientOptions(Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion version = Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion.V2022_10) { }
         public enum ServiceVersion
         {
             V2021_10 = 1,
+            V2022_10 = 2,
         }
     }
     public static partial class SchemaRegistryModelFactory
