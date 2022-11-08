@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 library-name: Automanage
-namespace: Azure.ResourceManager.Automanage
+<!-- namespace: Azure.ResourceManager.Automanage -->
 require: https://github.com/Azure/azure-rest-api-specs/blob/4b5fe2fb0a5066c4ff2bd429dbd5e1afda6afab3/specification/automanage/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -42,16 +42,6 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 directive:
-#remove these operations as they are currently not supported but will be in the future
-  - remove-operation: ConfigurationProfilesVersions_CreateOrUpdate
-  - remove-operation: ConfigurationProfilesVersions_Get
-  - remove-operation: ConfigurationProfilesVersions_Delete
-  - remove-operation: ConfigurationProfilesVersions_ListChildResources
-  - remove-operation: BestPracticesVersions_Get
-  - remove-operation: BestPracticesVersions_ListByTenant
-  - remove-operation: ServicePrincipals_ListBySubscription
-  - remove-operation: ServicePrincipals_Get
-
 #use scope parameter on the two paths that are defined multiple times
   - from: automanage.json
     where: $.paths
