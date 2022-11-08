@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="RL.Net" Version="0.2.0" />
+    <PackageReference Include="RL.Net" VersionOverride="0.2.0" />
   </ItemGroup>
 
 </Project>
