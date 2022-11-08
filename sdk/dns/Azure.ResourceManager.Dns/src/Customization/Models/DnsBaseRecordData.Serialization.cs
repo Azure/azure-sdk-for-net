@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class BaseRecordData : IUtf8JsonSerializable
+    public partial class DnsBaseRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dns
             writer.WriteEndObject();
         }
 
-        internal static BaseRecordData DeserializeBaseRecordData(JsonElement element)
+        internal static DnsBaseRecordData DeserializeBaseRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new BaseRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource);
+            return new DnsBaseRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource);
         }
     }
 }

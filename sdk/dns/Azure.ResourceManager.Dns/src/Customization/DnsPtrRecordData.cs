@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the DnsPtrRecord data model. </summary>
-    public partial class DnsPtrRecordData : BaseRecordData
+    public partial class DnsPtrRecordData : DnsBaseRecordData
     {
         /// <summary> Initializes a new instance of DnsPtrRecordData. </summary>
         public DnsPtrRecordData()

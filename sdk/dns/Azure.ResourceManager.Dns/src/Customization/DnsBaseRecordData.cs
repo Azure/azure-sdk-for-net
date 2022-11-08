@@ -13,10 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the DnsARecord data model. </summary>
-    public partial class BaseRecordData : ResourceData
+    public partial class DnsBaseRecordData : ResourceData
     {
         /// <summary> Initializes a new instance of DnsARecordData. </summary>
-        public BaseRecordData()
+        public DnsBaseRecordData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        internal BaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource) : base(id, name, resourceType, systemData)
+        internal DnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;

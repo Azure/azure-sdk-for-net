@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the Record data model. </summary>
-    public partial class DnsRecordData : BaseRecordData
+    public partial class DnsRecordData : DnsBaseRecordData
     {
         /// <summary> Initializes a new instance of RecordData. </summary>
         public DnsRecordData()
