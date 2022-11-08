@@ -199,7 +199,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [RecordedTest]
         public async Task EdDSASignVerifyRoundTrip()
         {
-            SignatureAlgorithm algorithm = SignatureAlgorithm.EdDSA;
+            SignatureAlgorithm algorithm = SignatureAlgorithm.EdDsa;
 
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);

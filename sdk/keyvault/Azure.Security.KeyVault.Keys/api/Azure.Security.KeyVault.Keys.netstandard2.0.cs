@@ -580,7 +580,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SignatureAlgorithm(string value) { throw null; }
-        public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm EdDSA { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm EdDsa { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES256 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES256K { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES384 { get { throw null; } }

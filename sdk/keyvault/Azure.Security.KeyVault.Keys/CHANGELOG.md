@@ -8,7 +8,7 @@
 - Added `KeyClient.CreateOkpKey` and `CreateOkpKeyAsync` to create an Octet Key Pair (OKP) on Managed HSM.
 - Added `KeyType.Okp` and `KeyType.OkpHsm` for `JsonWebKey`.
 - Added `KeyCurveName.Ed25519` to create an Octet Key Pair (OKP) using the Ed25519 curve.
-- Added `SignatureAlgorithm.EdDSA` to support signing and verifying with an Octet Key Pair (OKP) on Managed HSM.
+- Added `SignatureAlgorithm.EdDsa` to support signing and verifying using an Edwards Curve Digital Signature Algorithm (EdDSA) on Managed HSM.
 
 ### Breaking Changes
 
