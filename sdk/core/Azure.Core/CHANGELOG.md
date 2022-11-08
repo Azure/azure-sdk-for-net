@@ -1,15 +1,22 @@
 # Release History
 
-## 1.26.0-beta.1 (Unreleased)
+## 1.26.0-beta.1 (2022-11-08)
 
 ### Features Added
+
 - Introduced a new `NullableResponse<T>` type for scenarios where a service method may or may not return a value. One common example is `Get*IfExists` methods. `Response<T>` also now inherits from `NullableResponse<T>`.
+- Added `TryParse` method to the `ResourceIdentifier` type.
+- Added `AppendQuery` and `AppendPath` overloads to `RequestUriBuilder`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed issue where fixed delay was applied when the `RetryMode` was set to `Exponential` when retrying a request that resulted in an exception. 
+
 ### Other Changes
+
+- Azure.Core now targets .NET 6 in addition to the existing targets.
 
 ## 1.25.0 (2022-06-23)
 
