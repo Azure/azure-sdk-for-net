@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAsync(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call GetAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LongRunningClient(credential);
+
+var operation = await client.GetAsync(WaitUntil.Completed, "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("operationId").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>LongRunningOperationWithResponseHeaders</c>:
+<code>{
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: string, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+  operationId: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Get(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call Get with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LongRunningClient(credential);
+
+var operation = client.Get(WaitUntil.Completed, "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("operationId").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>LongRunningOperationWithResponseHeaders</c>:
+<code>{
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: string, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+  operationId: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
