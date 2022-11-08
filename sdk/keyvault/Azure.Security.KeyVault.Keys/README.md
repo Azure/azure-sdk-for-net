@@ -25,96 +25,40 @@ dotnet add package Azure.Security.KeyVault.Keys
 
 * An [Azure subscription][azure_sub].
 * An existing Azure Key Vault. If you need to create an Azure Key Vault, you can use the Azure Portal or [Azure CLI][azure_cli].
+* Authorization to an existing Azure Key Vault using either [RBAC][rbac_guide] (recommended) or [access control][access_policy].
 
-See the final two steps in the next section for details on creating the Key Vault with the Azure CLI.
-
-### Authenticate the client
-
-In order to interact with the Key Vault service, you'll need to create an instance of the [KeyClient][key_client_class] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
- and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
-
-Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
-or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
-
-```dotnetcli
-dotnet add package Azure.Identity
-```
-
-#### Create/Get credentials
-
-Use the [Azure CLI][azure_cli] snippet below to create/get client secret credentials.
-
-* Create a service principal and configure its access to Azure resources:
-
-    ```PowerShell
-    az ad sp create-for-rbac -n <your-application-name> --skip-assignment
-    ```
-
-    Output:
-
-    ```json
-    {
-        "appId": "generated-app-ID",
-        "displayName": "dummy-app-name",
-        "name": "http://dummy-app-name",
-        "password": "random-password",
-        "tenant": "tenant-ID"
-    }
-    ```
-
-* Take note of the service principal objectId
-
-    ```PowerShell
-    az ad sp show --id <appId> --query objectId
-    ```
-
-    Output:
-
-    ```PowerShell
-    "<your-service-principal-object-id>"
-    ```
-
-* Use the returned credentials above to set  **AZURE_CLIENT_ID** (appId), **AZURE_CLIENT_SECRET** (password), and **AZURE_TENANT_ID** (tenant) environment variables. The following example shows a way to do this in Powershell:
-
-    ```PowerShell
-    $Env:AZURE_CLIENT_ID="generated-app-ID"
-    $Env:AZURE_CLIENT_SECRET="random-password"
-    $Env:AZURE_TENANT_ID="tenant-ID"
-    ```
-
-* Grant the above mentioned application authorization to perform key operations on the Azure Key Vault:
-
-    ```PowerShell
-    # Use --hsm-name instead of --name for Managed HSM
-    az keyvault set-policy --name <your-key-vault-name> --spn $Env:AZURE_CLIENT_ID --key-permissions backup delete get list create encrypt decrypt update
-    ```
-
-    > --key-permissions:
-    > Accepted values: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify, wrapKey
-
-    If you have enabled role-based access control (RBAC) for Key Vault instead, you can find roles like "Key Vault Crypto Officer" in our [RBAC guide][rbac_guide].
-    If you are managing your keys using Managed HSM, read about its [access control][access_control] that supports different built-in roles isolated from Azure Resource Manager (ARM).
-
-* Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
-
-    ```PowerShell
-    # Use properties.hsmUri instead of properties.vaultUri for Managed HSM
-    az keyvault show --name <your-key-vault-name> --query properties.vaultUri --output tsv
-    ```
-
-* Create the Azure Key Vault or Managed HSM and grant the above mentioned application authorization to perform administrative operations on the Managed HSM
-(replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own unique names and `<your-service-principal-object-id>` with the value from above):
-
-If you are creating a standard Key Vault resource, use the following CLI command:
+If you are creating a standard Key Vault resource, run the following CLI command replacing `<your-resource-group-name>` and `<your-key-vault-name>` with your own, unique names:
 
 ```PowerShell
 az keyvault create --resource-group <your-resource-group-name> --name <your-key-vault-name>
 ```
 
-If you are creating a Managed HSM resource, use the following CLI command:
+If you are creating a Managed HSM resource, run the following CLI command:
 
 ```PowerShell
-    az keyvault create --hsm-name <your-key-vault-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
+az keyvault create --hsm-name <your-key-vault-name> --resource-group <your-resource-group-name> --administrators <your-user-object-id> --location <your-azure-location>
+```
+
+To get `<your-user-object-id>` you can run the following CLI command:
+
+```PowerShell
+az ad user show --id <your-user-principal> --query id
+```
+
+### Authenticate the client
+
+In order to interact with the Azure Key Vault service, you'll need to create an instance of the [KeyClient][key_client_class] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
+and credentials to instantiate a client object.
+
+The examples shown below use a [`DefaultAzureCredential`][DefaultAzureCredential], which is appropriate for most scenarios including local development and production environments utilizing managed identity authentication.
+Additionally, we recommend using a managed identity for authentication in production environments.
+You can find more information on different ways of authenticating and their corresponding credential types in the [Azure Identity][azure_identity] documentation.
+
+To use the `DefaultAzureCredential` provider shown below,
+or other credential providers provided with the Azure SDK, you must first install the Azure.Identity package:
+
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 #### Activate your managed HSM
@@ -148,7 +92,8 @@ az keyvault security-domain download --hsm-name <your-key-vault-name> --sd-wrapp
 
 #### Create KeyClient
 
-Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET**, and **AZURE_TENANT_ID** environment variables, replace **vaultUrl** with the output of `az keyvault show` in the example below to create the [KeyClient][key_client_class]:
+Instantiate a `DefaultAzureCredential` to pass to the client.
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:CreateKeyClient
 // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
@@ -500,8 +445,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 For more information see the [Code of Conduct FAQ][coc_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
-[API_reference]: https://docs.microsoft.com/dotnet/api/azure.security.keyvault.keys
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[API_reference]: https://learn.microsoft.com/dotnet/api/azure.security.keyvault.keys
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [backup_and_restore_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample2_BackupAndRestore.md
@@ -517,17 +462,17 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact opencode@
 [key_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Keys/
 [key_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples
 [key_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Keys/src
-[keyvault_docs]: https://docs.microsoft.com/azure/key-vault/
-[keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
+[keyvault_docs]: https://learn.microsoft.com/azure/key-vault/
+[keyvault_rest]: https://learn.microsoft.com/rest/api/keyvault/
 [JWK]: https://tools.ietf.org/html/rfc7517
 [nuget]: https://www.nuget.org/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets
-[soft_delete]: https://docs.microsoft.com/azure/key-vault/general/soft-delete-overview
+[soft_delete]: https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/MigrationGuide.md
-[access_control]: https://docs.microsoft.com/azure/key-vault/managed-hsm/access-control
-[rbac_guide]: https://docs.microsoft.com/azure/key-vault/general/rbac-guide
+[access_policy]: https://learn.microsoft.com/azure/key-vault/general/assign-access-policy
+[rbac_guide]: https://learn.microsoft.com/azure/key-vault/general/rbac-guide
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Keys%2FREADME.png)

@@ -97,8 +97,8 @@ This error indicates that the authenticated application or user does not have pe
 though the cause may vary.
 
 1. Check that the application or user has the appropriate permissions:
-   * [Access policies](https://docs.microsoft.com/azure/key-vault/general/assign-access-policy) (Key Vault)
-   * [Role-Based Access Control (RBAC)](https://docs.microsoft.com/azure/key-vault/general/rbac-guide) (Key Vault and Managed HSM)
+   * [Access policies](https://learn.microsoft.com/azure/key-vault/general/assign-access-policy) (Key Vault)
+   * [Role-Based Access Control (RBAC)](https://learn.microsoft.com/azure/key-vault/general/rbac-guide) (Key Vault and Managed HSM)
 2. If the appropriate permissions are assigned to your application or user, make sure you are authenticating as that user.
    If using the [DefaultAzureCredential] a different credential might've been used than one you expected.
    [Enable logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#logging)
@@ -124,7 +124,7 @@ Content:
 The error `message` may also contain the tenant ID (`tid`) and application ID (`appid`). This error may occur because:
 
 1. You have the **Allow trust services** option enabled and are trying to access the Key Vault from a service not on
-   [this list](https://docs.microsoft.com/azure/key-vault/general/overview-vnet-service-endpoints#trusted-services) of
+   [this list](https://learn.microsoft.com/azure/key-vault/general/overview-vnet-service-endpoints#trusted-services) of
    trusted services.
 2. You are authenticated against a Microsoft Account (MSA) in Visual Studio or another credential provider. See
    [above](#operation-not-permitted) for troubleshooting steps.
@@ -132,7 +132,7 @@ The error `message` may also contain the tenant ID (`tid`) and application ID (`
 ## Other Service Errors
 
 To troubleshoot additional HTTP service errors not described below,
-see [Azure Key Vault REST API Error Codes](https://docs.microsoft.com/azure/key-vault/general/rest-error-codes).
+see [Azure Key Vault REST API Error Codes](https://learn.microsoft.com/azure/key-vault/general/rest-error-codes).
 
 ### HTTP 429: Too Many Requests
 
@@ -143,12 +143,12 @@ Possible solutions include:
 1. Use a singleton for any `CertificateClient`, `KeyClient`, or `SecretClient` in your application for a single Key Vault.
    How you code this will depend on what application configuration library you use. You can find several examples using
    our [Microsoft.Extensions.Azure](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/Microsoft.Extensions.Azure/README.md)
-   package designed for configuring [ASP.NET](https://docs.microsoft.com/aspnet/core/fundamentals/configuration)
-   and other [.NET applications](https://docs.microsoft.com/dotnet/core/extensions/configuration).
+   package designed for configuring [ASP.NET](https://learn.microsoft.com/aspnet/core/fundamentals/configuration)
+   and other [.NET applications](https://learn.microsoft.com/dotnet/core/extensions/configuration).
 2. Use a single instance of [DefaultAzureCredential] or other credential you use to authenticate your clients for each
    Key Vault or Managed HSM endpoint you need to access.
 3. You could cache a certificate, key, or secret in memory for a time to reduce calls to retrieve them. See our
-   [caching proxy sample](https://docs.microsoft.com/samples/azure/azure-sdk-for-net/azure-key-vault-proxy/)
+   [caching proxy sample](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/azure-key-vault-proxy/)
    for one possible implementation.
 4. Use Azure App Configuration for storing non-secrets and references to Key Vault secrets. Storing all app configuration
    in Key Vault will increase the likelihood of requests being throttled as more application instances are started. See
@@ -156,7 +156,7 @@ Possible solutions include:
 5. If you are performing encryption or decryption operations, consider using wrap and unwrap operations
    for a symmetric key which may also improve application throughput.
 
-See our [Azure Key Vault throttling guide](https://docs.microsoft.com/azure/key-vault/general/overview-throttling)
+See our [Azure Key Vault throttling guide](https://learn.microsoft.com/azure/key-vault/general/overview-throttling)
 for more information.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
