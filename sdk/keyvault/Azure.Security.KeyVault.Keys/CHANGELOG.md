@@ -14,6 +14,8 @@
 
 ### Bugs Fixed
 
+- Fixed possible "ObjectIsBeingRecovered" error immediately after restoring certificates, keys, or secrets. ([#31581](https://github.com/Azure/azure-sdk-for-net/issues/31581))
+
 ### Other Changes
 
 - The default service version is now "7.4-preview.1".
