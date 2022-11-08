@@ -33,15 +33,13 @@ namespace Azure.ResourceManager.ManagementGroups
 
         internal ManagementGroupsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, out var id);
+            Id = id;
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ManagementGroupsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id { get; }
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

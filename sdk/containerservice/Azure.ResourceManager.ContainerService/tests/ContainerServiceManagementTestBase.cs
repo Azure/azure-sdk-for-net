@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Concurrent;
+using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService.Tests
             return lro.Value;
         }
 
-        protected async Task<ContainerServiceManagedClusterResource> CreateContainerServiceAsync(ResourceGroupResource resourceGroup, string clusterName, AzureLocation? location = null)
+        protected async Task<ArmOperation<ContainerServiceManagedClusterResource>> CreateContainerServiceAsync(WaitUntil waitUntil, ResourceGroupResource resourceGroup, string clusterName, AzureLocation? location = null)
         {
             var clusterData = new ContainerServiceManagedClusterData(location == null ? resourceGroup.Data.Location : location.Value)
             {
@@ -65,8 +66,8 @@ namespace Azure.ResourceManager.ContainerService.Tests
                 DnsPrefix = DnsPrefix,
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
-            var lro = await resourceGroup.GetContainerServiceManagedClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
-            return lro.Value;
+            var lro = await resourceGroup.GetContainerServiceManagedClusters().CreateOrUpdateAsync(waitUntil, clusterName, clusterData);
+            return lro;
         }
     }
 }

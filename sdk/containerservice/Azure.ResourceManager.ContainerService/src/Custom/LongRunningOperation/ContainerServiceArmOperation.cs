@@ -4,6 +4,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -27,20 +30,51 @@ namespace Azure.ResourceManager.ContainerService
 
         internal ContainerServiceArmOperation(Response response)
         {
+            var serializeOptions = new JsonSerializerOptions { Converters = { new NextLinkOperationImplementation.StreamConverter() } };
+            var lroDetails = new Dictionary<string, string>()
+            {
+                ["InitialResponse"] = BinaryData.FromObjectAsJson<Response>(response, serializeOptions).ToString()
+            };
+            var lroData = BinaryData.FromObjectAsJson(lroDetails);
+            Id = Convert.ToBase64String(lroData.ToArray());
             _operation = OperationInternal.Succeeded(response);
         }
 
         internal ContainerServiceArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string interimApiVersion = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, interimApiVersion);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, out var id, interimApiVersion);
+            Id = id;
+            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
+        internal ContainerServiceArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id, string interimApiVersion = null)
+        {
+            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
+            lroDetails.TryGetValue("NextRequestUri", out string nextRequestUri);
+            // TODO: should use deserialization directly
+            IDictionary<string, object> responseObj = BinaryData.FromString(lroDetails["InitialResponse"]).ToObjectFromJson<IDictionary<string, object>>();
+            Response response = new ContainerServiceArmOperation.ContainerServiceResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString(), new MemoryStream(), ((JsonElement)responseObj["ClientRequestId"]).GetString());
+
+            if (nextRequestUri == null)
+            {
+                Id = id;
+                _operation = OperationInternal.Succeeded(response);
+                return;
+            }
+            Uri.TryCreate(lroDetails["InitialUri"], UriKind.Absolute, out var startRequestUri);
+            string responseStr = lroDetails["InitialResponse"];
+            RequestMethod requestMethod = new RequestMethod(lroDetails["RequestMethod"]);
+            bool originalResponseHasLocation = bool.Parse(lroDetails["OriginalResponseHasLocation"]);
+            string lastKnownLocation = lroDetails["LastKnownLocation"];
+            if (!Enum.TryParse(lroDetails["FinalStateVia"], out OperationFinalStateVia finalStateVia))
+                finalStateVia = OperationFinalStateVia.Location;
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, requestMethod, startRequestUri, response, finalStateVia, nextRequestUri, lroDetails["HeaderSource"], originalResponseHasLocation, lastKnownLocation, interimApiVersion);
+            Id = id;
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id { get; }
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -65,5 +99,58 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <inheritdoc />
         public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
+
+        // TODO: use this class as a temporary workaround before https://github.com/Azure/autorest.csharp/issues/2231 is resolved so that we can deserialize to the original HttpWebResponseImplementation in LRO helper classes.
+        // No all methods and properties are implemented/populated as it's just for prototype.
+        internal class ContainerServiceResponse: Response
+        {
+            public ContainerServiceResponse()
+            {
+            }
+
+            internal ContainerServiceResponse(int status, string reasonPhase, Stream contentStream, string clientRequestId)
+            {
+                Status = status;
+                ReasonPhrase = reasonPhase;
+                ContentStream = contentStream;
+                ClientRequestId = clientRequestId;
+            }
+
+            public override int Status { get; }
+
+            public override string ReasonPhrase { get; }
+
+            public override Stream ContentStream
+            {
+                get;
+                set;
+            }
+            public override string ClientRequestId { get; set; }
+
+            public override void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override bool ContainsHeader(string name)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override bool TryGetHeader(string name, out string value)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

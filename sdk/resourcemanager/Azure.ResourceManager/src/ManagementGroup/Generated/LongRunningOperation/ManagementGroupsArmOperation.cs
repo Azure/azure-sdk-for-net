@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -28,20 +29,24 @@ namespace Azure.ResourceManager.ManagementGroups
 
         internal ManagementGroupsArmOperation(Response response)
         {
+            var lroDetails = new Dictionary<string, string>()
+            {
+                ["InitialResponse"] = response.ToString()
+            };
+            var lroData = BinaryData.FromObjectAsJson(lroDetails);
+            Id = Convert.ToBase64String(lroData.ToArray());
             _operation = OperationInternal.Succeeded(response);
         }
 
         internal ManagementGroupsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, out var id);
+            Id = id;
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "ManagementGroupsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id { get; }
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

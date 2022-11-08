@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -28,20 +31,110 @@ namespace Azure.ResourceManager.Resources
 
         internal ResourcesArmOperation(Response<T> response)
         {
+            var serializeOptions = new JsonSerializerOptions { Converters = { new NextLinkOperationImplementation.StreamConverter() } };
+            var lroDetails = new Dictionary<string, string>()
+            {
+                ["InitialResponse"] = BinaryData.FromObjectAsJson<Response>(response.GetRawResponse(), serializeOptions).ToString()
+            };
+            var lroData = BinaryData.FromObjectAsJson(lroDetails);
+            Id = Convert.ToBase64String(lroData.ToArray());
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
         internal ResourcesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, out var id);
+            Id = id;
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
+        internal ResourcesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id, string interimApiVersion = null)
+        {
+            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
+            lroDetails.TryGetValue("NextRequestUri", out string nextRequestUri);
+            IDictionary<string, object> responseObj = BinaryData.FromString(lroDetails["InitialResponse"]).ToObjectFromJson<IDictionary<string, object>>();
+            var content = BinaryData.FromObjectAsJson(responseObj["ContentStream"]);
+            var contentStream = new MemoryStream();
+            if (content != null)
+                content.ToStream().CopyTo(contentStream);
+            Response response = new ResourcesResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString(), contentStream, ((JsonElement)responseObj["ClientRequestId"]).GetString());
+            if (nextRequestUri == null)
+            {
+                Id = id;
+                _operation = OperationInternal<T>.Succeeded(response, source.CreateResult(response, CancellationToken.None));
+                return;
+            }
+            Uri.TryCreate(lroDetails["InitialUri"], UriKind.Absolute, out var startRequestUri);
+            string responseStr = lroDetails["InitialResponse"];
+            RequestMethod requestMethod = new RequestMethod(lroDetails["RequestMethod"]);
+            bool originalResponseHasLocation = bool.Parse(lroDetails["OriginalResponseHasLocation"]);
+            string lastKnownLocation = lroDetails["LastKnownLocation"];
+            if (!Enum.TryParse(lroDetails["FinalStateVia"], out OperationFinalStateVia finalStateVia))
+                finalStateVia = OperationFinalStateVia.Location;
+
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, requestMethod, startRequestUri, response, finalStateVia, nextRequestUri, lroDetails["HeaderSource"], originalResponseHasLocation, lastKnownLocation, interimApiVersion);
+            Id = id;
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
+        internal class ResourcesResponse: Response
+        {
+            public ResourcesResponse()
+            {
+            }
+
+            internal ResourcesResponse(int status, string reasonPhase, Stream contentStream, string clientRequestId)//, ResponseHeaders headers, bool isError)
+            {
+                Status = status;
+                ReasonPhrase = reasonPhase;
+                ContentStream = contentStream;
+                ClientRequestId = clientRequestId;
+                // contentStream.Flush();
+                //Headers = headers;
+                //IsError = isError;
+            }
+
+            public override int Status { get; }
+
+            public override string ReasonPhrase { get; }
+
+            public override Stream ContentStream
+            {
+                get;
+                set;
+            }
+            public override string ClientRequestId { get; set; }
+            //public override ResponseHeaders Headers { get; }
+            //public new bool IsError { get; }
+
+            public override void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override bool ContainsHeader(string name)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override bool TryGetHeader(string name, out string value)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id { get; }
 
         /// <inheritdoc />
         public override T Value => _operation.Value;
