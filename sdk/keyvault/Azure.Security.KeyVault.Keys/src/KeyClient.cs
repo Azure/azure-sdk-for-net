@@ -1550,6 +1550,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Updates the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
+        /// The new policy will be used for the next version of the key when rotated.
         /// </summary>
         /// <param name="keyName">The name of the key.</param>
         /// <param name="policy">The <see cref="KeyRotationPolicy"/> to update.</param>
@@ -1583,6 +1584,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Updates the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
+        /// The new policy will be used for the next version of the key when rotated.
         /// </summary>
         /// <param name="keyName">The name of the key.</param>
         /// <param name="policy">The <see cref="KeyRotationPolicy"/> to update.</param>
