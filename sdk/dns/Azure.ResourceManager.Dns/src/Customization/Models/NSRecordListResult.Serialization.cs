@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     internal partial class NSRecordListResult
     {
-        internal static NSRecordListResult DeserializeNSRecordSetListResult(JsonElement element)
+        internal static NSRecordListResult DeserializeNSRecordListResult(JsonElement element)
         {
             Optional<IReadOnlyList<NSRecordData>> value = default;
             Optional<string> nextLink = default;

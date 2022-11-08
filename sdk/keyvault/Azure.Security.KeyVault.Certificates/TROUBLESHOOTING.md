@@ -9,7 +9,7 @@ to troubleshoot issues common to the Azure Key Vault SDKs for .NET.
 
 ## Table of Contents
 
-* [Troubleshooting Azure.Security.KeyVault.Certificates Issues](#troubleshooting-azure.security.keyvault.certificates-issues)
+* [Troubleshooting Azure.Security.KeyVault.Certificates Issues](#troubleshooting-azuresecuritykeyvaultcertificates-issues)
   * [No Certificate with Private Key Found](#no-certificate-with-private-key-found)
 
 ## Troubleshooting Azure.Security.KeyVault.Certificates Issues
