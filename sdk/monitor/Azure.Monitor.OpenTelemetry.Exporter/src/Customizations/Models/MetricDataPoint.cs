@@ -44,10 +44,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     // if the value is within integer range we will use it otherwise ignore it.
                     Count = histogramCount <= int.MaxValue ? (int?)histogramCount : null;
 
-                    if (metricPoint.HasMinMax())
+                    if (metricPoint.TryGetHistogramMinMaxValues(out double min, out double max))
                     {
-                        Min = metricPoint.GetHistogramMin();
-                        Max = metricPoint.GetHistogramMax();
+                        Min = min;
+                        Max = max;
                     }
 
                     break;

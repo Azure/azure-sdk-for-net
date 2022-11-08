@@ -4,11 +4,21 @@
 
 ### Features Added
 
+- Added `CreateOkpKeyOptions` to pass key options when creating an Octet Key Pair (OKP) on Managed HSM.
+- Added `KeyClient.CreateOkpKey` and `CreateOkpKeyAsync` to create an Octet Key Pair (OKP) on Managed HSM.
+- Added `KeyType.Okp` and `KeyType.OkpHsm` for `JsonWebKey`.
+- Added `KeyCurveName.Ed25519` to create an Octet Key Pair (OKP) using the Ed25519 curve.
+- Added `SignatureAlgorithm.EdDSA` to support signing and verifying with an Octet Key Pair (OKP) on Managed HSM.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed possible "ObjectIsBeingRecovered" error immediately after restoring certificates, keys, or secrets. ([#31581](https://github.com/Azure/azure-sdk-for-net/issues/31581))
+
 ### Other Changes
+
+- The default service version is now "7.4-preview.1".
 
 ## 4.4.0 (2022-09-20)
 

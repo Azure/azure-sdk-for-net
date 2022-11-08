@@ -8,7 +8,7 @@ namespace Azure.Core
     /// <summary>
     /// Contains information related to the processing of the <see cref="HttpMessage"/> as it traverses the pipeline.
     /// </summary>
-    public readonly struct ProcessingContext
+    internal readonly struct ProcessingContext
     {
         /// <summary>
         /// The time that the pipeline processing started for the message.
@@ -26,15 +26,6 @@ namespace Azure.Core
         {
             get => _message.RetryNumber;
             set => _message.RetryNumber = value;
-        }
-
-        /// <summary>
-        /// The exception that occurred on the previous attempt, if any.
-        /// </summary>
-        public Exception? LastException
-        {
-            get => _message.LastException;
-            set => _message.LastException = value;
         }
 
         private readonly HttpMessage _message;

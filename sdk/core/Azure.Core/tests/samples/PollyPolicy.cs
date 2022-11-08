@@ -9,7 +9,7 @@ using Polly;
 
 namespace Azure.Core.Samples
 {
-    #region Snippet:PollyPolicy
+    // #region Snippet:PollyPolicy
     internal class PollyPolicy : HttpPipelinePolicy
     {
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -27,13 +27,9 @@ namespace Azure.Core.Samples
                     },
                     onRetry: (result, _) =>
                     {
-                        // Since we are overriding the RetryPolicy, it is our responsibility to maintain the ProcessingContext
+                        // Since we are overriding the RetryPolicy, it is our responsibility to increment the RetryNumber
                         // that other policies in the pipeline may be depending on.
                         var context = message.ProcessingContext;
-                        if (result.Exception != null)
-                        {
-                            context.LastException = result.Exception;
-                        }
                         context.RetryNumber++;
                     }
                 )
@@ -47,7 +43,7 @@ namespace Azure.Core.Samples
         // async version omitted for brevity
     }
 #endif
-        #endregion
+        // #endregion
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -64,13 +60,9 @@ namespace Azure.Core.Samples
                     },
                     onRetry: (result, _) =>
                     {
-                        // Since we are overriding the RetryPolicy, it is our responsibility to maintain the ProcessingContext
+                        // Since we are overriding the RetryPolicy, it is our responsibility to increment the RetryNumber
                         // that other policies in the pipeline may be depending on.
                         var context = message.ProcessingContext;
-                        if (result.Exception != null)
-                        {
-                            context.LastException = result.Exception;
-                        }
                         context.RetryNumber++;
                     })
                 .ExecuteAsync(async () =>

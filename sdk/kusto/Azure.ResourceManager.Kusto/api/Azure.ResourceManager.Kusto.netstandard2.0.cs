@@ -106,6 +106,9 @@ namespace Azure.ResourceManager.Kusto
     {
         public KustoClusterPrincipalAssignmentData() { }
         public System.Guid? AadObjectId { get { throw null; } }
+        public string ClusterPrincipalId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use ClusterPrincipalId instead.", false)]
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public string PrincipalName { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType? PrincipalType { get { throw null; } set { } }

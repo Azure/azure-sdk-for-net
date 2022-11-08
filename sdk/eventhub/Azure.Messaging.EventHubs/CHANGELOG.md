@@ -1,18 +1,18 @@
 # Release History
 
-## 5.8.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.7.4 (2022-11-08)
 
 ### Bugs Fixed
 
 - Telemetry will now use a parent activity instead of links when the event processor is configured to use a `eventBatchMaximumCount` of 1.
 
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.5.12.  This resolves a rare race condition encountered when creating an AMQP link that could cause the link to hang.
+
 ### Other Changes
 
 - Adjusted the frequency that a warning logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+
+- Added timing information to logs for AMQP publish and read operations.
 
 ## 5.7.3 (2022-10-11)
 
