@@ -74,20 +74,21 @@ directive:
   - from: privatedns.json
     where: $.definitions
     transform: >
-      $.RecordSet["x-ms-client-name"] = "Record";
-      $.PrivateDnsPtrRecord.properties.ptrdname["x-ms-client-name"] = "PtrDomainName";
+      $.RecordSet["x-ms-client-name"] = "PrivateDnsRecord";
+      $.RecordSetListResult["x-ms-client-name"] = "PrivateDnsRecordListResult";
+      $.RecordSetProperties["x-ms-client-name"] = "PrivateDnsRecordProperties";
       $.RecordSetProperties.properties.ttl["x-ms-client-name"] = "TtlInSeconds";
-      $.PrivateDnsTxtRecord.properties.value["x-ms-client-name"] = "values";
-      $.PrivateZoneProperties.properties.maxNumberOfRecordSets["x-ms-client-name"] = "maxNumberOfRecords";
-      $.PrivateZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
       $.RecordSetProperties.properties.mxRecords["x-ms-client-name"] = "PrivateDnsMXRecords";
+      $.PrivateZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
+      $.PtrRecord.properties.ptrdname["x-ms-client-name"] = "PtrDomainName";
+      $.TxtRecord.properties.value["x-ms-client-name"] = "values";
 
 # FooTime => FooTimeInSeconds
   - from: privatedns.json
     where: $.definitions
     transform: >
-      $.PrivateDnsSoaRecord.properties.expireTime["x-ms-client-name"] = "expireTimeInSeconds";
-      $.PrivateDnsSoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
-      $.PrivateDnsSoaRecord.properties.minimumTtl["x-ms-client-name"] = "minimumTtlInSeconds";
-      $.PrivateDnsSoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
+      $.SoaRecord.properties.expireTime["x-ms-client-name"] = "expireTimeInSeconds";
+      $.SoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
+      $.SoaRecord.properties.minimumTtl["x-ms-client-name"] = "minimumTtlInSeconds";
+      $.SoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
 ```

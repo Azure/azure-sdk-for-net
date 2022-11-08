@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
 
-[assembly: CodeGenSuppressType("RecordSetData")]
+[assembly: CodeGenSuppressType("PrivateDnsRecordData")]
 
 namespace Azure.ResourceManager.PrivateDns
 {

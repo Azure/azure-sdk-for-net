@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PrivateDns
             writer.WriteEndObject();
         }
 
-        internal static PrivateDnsRecordData DeserializeRecordSetData(JsonElement element)
+        internal static PrivateDnsRecordData DeserializePrivateDnsRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
