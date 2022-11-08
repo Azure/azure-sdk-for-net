@@ -1,14 +1,9 @@
 # Release History
 
-## 0.1.0-preview.23 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 0.1.0-preview.23 (2022-11-08)
 
 ### Other Changes
+- Added .NET 6 to the target frameworks
 
 ## 0.1.0-preview.22 (2022-04-04)
 
