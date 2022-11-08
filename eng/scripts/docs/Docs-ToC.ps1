@@ -28,7 +28,7 @@ function DownloadNugetPackage($package, $version, $destination) {
     # If it is empty then the property is not overridden.
     $customPackageSource = Get-Variable -Name 'PackageSourceOverride' -ValueOnly -ErrorAction 'Ignore'
     # Download package from nuget, if no package found in nuget, then search devops public feeds if set.
-    Write-Host "Downloading $package with version $version..."
+    Write-Host "Downloading source: '$customPackageSource'. If it is empty, we default to use nuget gallery."
     if ($customPackageSource) {
         nuget install -FallbackSource $customPackageSource $package -Version $version -DirectDownload -DependencyVersion Ignore -OutputDirectory $destination
     }
