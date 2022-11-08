@@ -308,7 +308,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task RecognizeEntitiesBatchWithResolutionsTest()
         {
-            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions() { ModelVersion = "2022-10-01-preview" };
+            TextAnalyticsRequestOptions options = new() { ModelVersion = "2022-10-01-preview" };
             TextAnalyticsClient client = GetClient();
 
             RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(new List<TextDocumentInput>() {
@@ -374,7 +374,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (resolution is SpeedResolution speed)
                 {
                     Assert.AreEqual(1300, speed.Value);
-                    // TODO: Assert.AreEqual(SpeedUnit.MilesPerHour, speed.Unit);
+                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32356
+                    // Assert.AreEqual(SpeedUnit.MilesPerHour, speed.Unit);
                 }
 
                 if (resolution is NumericRangeResolution numericRange)
@@ -414,7 +415,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (resolution is CurrencyResolution currency)
                 {
                     Assert.AreEqual(2000, currency.Value);
-                    // TODO: Assert.AreEqual("USD", currency.Iso4217);
+                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32357
+                    // Assert.AreEqual("USD", currency.Iso4217);
                     Assert.AreEqual("United States dollar", currency.Unit);
                 }
 
