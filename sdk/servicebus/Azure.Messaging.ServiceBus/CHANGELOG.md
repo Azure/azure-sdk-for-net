@@ -7,8 +7,6 @@
 - Telemetry will now use a parent activity instead of links when using the `ServiceBusProcessor` or `ServiceBusSessionProcessor`.
 - Attempt to drain the receiver when closing if there are outstanding credits.
 
-### Other Changes
-
 ## 7.11.0 (2022-10-11)
 
 ### Acknowledgments
