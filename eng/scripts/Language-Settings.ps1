@@ -38,7 +38,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       $defaultDll = Get-ChildItem "$dllFolder/Release/netstandard2.0/*" -Filter "$pkgName.dll" -Recurse
       if ($defaultDll -and (Test-Path $defaultDll)) {
         Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
-        $namespaces = @(Get-NamepspacesFromDll $defaultDll.FullName)
+        $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
       }
     }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)

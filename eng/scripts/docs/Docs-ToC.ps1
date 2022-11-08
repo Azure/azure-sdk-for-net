@@ -52,29 +52,30 @@ function Fetch-NamespacesFromNupkg ($package, $version) {
     Write-Host "Searching for dll file..."
     $dllFile = @()
     if (Test-Path "$tempLocation/$packageFolder/lib/netstandard2.0/"){
-        $dllFile = @(Get-ChildItem "$tempLocation/$packageFolder/lib/netstandard2.0/*" -Filter '*.dll' -Recurse)
+        $dllFiles = @(Get-ChildItem "$tempLocation/$packageFolder/lib/netstandard2.0/*" -Filter '*.dll' -Recurse)
+        $dllFileName = $dllFiles[0].FullName
     }
-    if (!$dllFile) {
+    if (!$dllFiles) {
         Write-Warning "Can't find any dll file from $tempLocation/$packageFolder with target netstandard2.0."
         $dllFiles = Get-ChildItem "$tempLocation/$packageFolder/lib/*" -Filter '*.dll' -Recurse
         if (!$dllFiles) {
-            Write-Error "Can't find any dll file from $tempLocation/$packageFolder." -ErrorAction Continue
+            Write-Error "Can't find any dll file from $tempLocation/$packageFolder."
             return @()
         }
-        $dllFile = $dllFiles[0]
+        $dllFileName = $dllFiles[0].FullName
     }
-    elseif ($dllFile.Count -gt 1) {
-        Write-Warning "There are multiple dll files in target netstandard2.0. Choose the one with package name."
-        if (Test-Path "$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll")) {
+    elseif ($dllFiles.Count -gt 1) {
+        if (Test-Path "$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll") {
             Write-Host "Use the dll file $package.dll"
-            $dllFile = [System.IO.DirectoryInfo]"$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll"
+            $dllFileName = "$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll"
         }
         else {
-            $dllFile = $dllFile[0]
+            $dllFileName = $dllFile[0].FullName
         }
+        Write-Warning "There are multiple dll files in target netstandard2.0. The chosen dll file name: $dllFileName. "
     }
-    Write-Host "Dll file found: $($dllFile.FullName)"
-    $namespaces = Get-NamespacesFromDll $dllFile.FullName
+    Write-Host "Dll file found: $dllFileName"
+    $namespaces = Get-NamespacesFromDll $dllFileName
     if (!$namespaces) {
         Write-Error "Can't find namespaces from dll file $($dllFile.FullName)." -ErrorAction Continue
         return @()
@@ -115,7 +116,7 @@ function GetPackageReadmeName($packageMetadata) {
       $packageLevelReadmeName = $readmeMetadata.DocsMsReadMeName
     }
     return $packageLevelReadmeName
-  }
+}
   
 function Get-dotnet-DocsMsTocData($packageMetadata, $docRepoLocation, $PackageSourceOverride) {
     $packageLevelReadmeName = GetPackageReadmeName -packageMetadata $packageMetadata
