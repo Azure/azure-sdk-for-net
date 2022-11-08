@@ -46,7 +46,8 @@ dotnet add package Azure.Identity
 
 #### Create CertificateClient
 
-Instantiate a `DefaultAzureCredential` to pass to the client. You can use the same instance of a token credential provider with multiple clients to cache credentials when appropriate.
+Instantiate a `DefaultAzureCredential` to pass to the client.
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:CreateCertificateClient
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,

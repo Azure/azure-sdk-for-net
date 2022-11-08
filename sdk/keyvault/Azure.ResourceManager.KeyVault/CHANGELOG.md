@@ -29,7 +29,7 @@ Polishing since last public beta release:
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms which not follow [.Net Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected all acronyms which do not follow [.NET Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters which end with units.

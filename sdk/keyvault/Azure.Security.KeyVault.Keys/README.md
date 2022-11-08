@@ -50,7 +50,7 @@ az ad user show --id <your-user-principal> --query id
 In order to interact with the Azure Key Vault service, you'll need to create an instance of the [KeyClient][key_client_class] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
 and credentials to instantiate a client object.
 
-The examples shown below use a [`DefaultAzureCredential`][DefaultAzureCredential], which is appropriate for most scenarios including local development and production environments.
+The examples shown below use a [`DefaultAzureCredential`][DefaultAzureCredential], which is appropriate for most scenarios including local development and production environments utilizing managed identity authentication.
 Additionally, we recommend using a managed identity for authentication in production environments.
 You can find more information on different ways of authenticating and their corresponding credential types in the [Azure Identity][azure_identity] documentation.
 
@@ -92,7 +92,8 @@ az keyvault security-domain download --hsm-name <your-key-vault-name> --sd-wrapp
 
 #### Create KeyClient
 
-Instantiate a `DefaultAzureCredential` to pass to the client. You can use the same instance of a token credential provider with multiple clients to cache credentials when appropriate.
+Instantiate a `DefaultAzureCredential` to pass to the client.
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:CreateKeyClient
 // Create a new key client using the default credential from Azure.Identity using environment variables previously set,

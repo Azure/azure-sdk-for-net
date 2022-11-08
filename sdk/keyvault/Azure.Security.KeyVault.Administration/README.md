@@ -95,7 +95,8 @@ Please read [best practices][best_practices] for properly securing your managed 
 
 #### Create KeyVaultAccessControlClient
 
-Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultAccessControlClient][rbac_client]. You can use the same instance of a token credential provider with multiple clients to cache credentials when appropriate.
+Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultAccessControlClient][rbac_client].
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:HelloCreateKeyVaultAccessControlClient
 KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
@@ -103,7 +104,8 @@ KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(man
 
 #### Create KeyVaultBackupClient
 
-Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultBackupClient][backup_client]. You can use the same instance of a token credential provider with multiple clients to cache credentials when appropriate.
+Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultBackupClient][backup_client].
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:HelloCreateKeyVaultBackupClient
 KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
@@ -111,7 +113,8 @@ KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), n
 
 #### Create KeyVaultSettingClient
 
-Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultSettingsClient][settings_client]. You can use the same instance of a token credential provider with multiple clients to cache credentials when appropriate.
+Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultSettingsClient][settings_client].
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:KeyVaultSettingsClient_Create
 KeyVaultSettingsClient client = new KeyVaultSettingsClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
