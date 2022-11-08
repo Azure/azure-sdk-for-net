@@ -1,14 +1,24 @@
 # Release History
 
-## 1.8.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.8.0 (2022-11-08)
 
 ### Bugs Fixed
+- Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`. [#26894](https://github.com/Azure/azure-sdk-for-net/issues/26894), [#29109](https://github.com/Azure/azure-sdk-for-net/issues/29109)
+- `ManagedIdentityCredential` will no longer fail when a response received from the endpoint is invalid JSON. It now treats this scenario as if the credential is unavailable. [#30467](https://github.com/Azure/azure-sdk-for-net/issues/30467), [#32061](https://github.com/Azure/azure-sdk-for-net/issues/32061)
 
-### Other Changes
+## 1.9.0-beta.1 (2022-10-13)
+
+### Features Added
+- Credentials that are implemented via launching a sub-process to acquire tokens now have configurable timeouts. This addresses scenarios where these proceses can take longer than the current default timeout values. (A community contribution, courtesy of _[reynaldoburgos](https://github.com/reynaldoburgos)_). The affected credentials and their associated options are:
+  - `AzureCliCredential` and `AzureCliCredentialOptions.CliProcessTimeout`
+  - `AzurePowerShellCredential` and `AzurePowerShellCredentialOptions.PowerShellProcessTimeout`
+  - `VisualStudioCredential` and `VisualStudioCredentialOptions.VisualStudioProcessTimeout`
+  - `DefaultAzureCredential` and `DefaultAzureCredentialOptions.DeveloperCredentialTimeout`  Note: this option applies to all developer credentials above when using `DefaultAzureCredential`.
+
+### Acknowledgments
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- _[reynaldoburgos](https://github.com/reynaldoburgos)_
 
 ## 1.8.0-beta.1 (2022-10-13)
 
@@ -104,7 +114,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Breaking Changes from 1.5.0-beta.4
 - The `AllowMultiTenantAuthentication` option has been removed and the default behavior is now as if it were true. The multi-tenant discovery feature can be totally disabled by either setting an `AppContext` switch named "Azure.Identity.DisableTenantDiscovery" to `true` or by setting the environment variable "AZURE_IDENTITY_DISABLE_MULTITENANTAUTH" to "true".
 - Removed the `IsPIILoggingEnabled` property from `TokenCredentialOptions`, similar functionality is planned to be added to `TokenCredentialOptions.Diagnostics` in a later release.
-- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type. This feature will stay in preview, and these APIs will be added back in `1.6.0-beta.1`.
+- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type.
 - Renamed struct `TokenCacheDetails` to `TokenCacheData`.
 - Renamed class `TokenCacheNotificationDetails` to `TokenCacheRefreshArgs`.
 - Updated `CacheBytes` property on `TokenCacheData` to be readonly and a required constructor parameter.
