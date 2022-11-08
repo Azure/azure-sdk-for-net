@@ -1,14 +1,5 @@
 namespace Azure.Messaging.WebPubSub
 {
-    public partial class WebPubSubClient
-    {
-        protected WebPubSubClient() { }
-        public WebPubSubClient(string endpoint) { }
-        public WebPubSubClient(string endpoint, Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response RemoveConnectionFromAllGroups(string hub, string connectionId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromAllGroupsAsync(string hub, string connectionId, Azure.RequestContext context = null) { throw null; }
-    }
     public enum WebPubSubPermission
     {
         SendToGroup = 1,
@@ -50,6 +41,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> GrantPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<bool> GroupExists(string group, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GroupExistsAsync(string group, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response RemoveConnectionFromAllGroups(string connectionId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromAllGroupsAsync(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveConnectionFromGroup(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromGroupAsync(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveUserFromAllGroups(string userId, Azure.RequestContext context = null) { throw null; }
