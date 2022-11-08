@@ -76,7 +76,7 @@ function Fetch-NamespacesFromNupkg ($package, $version) {
     Write-Host "Dll file found: $dllFileName"
     $namespaces = Get-NamespacesFromDll $dllFileName
     if (!$namespaces) {
-        Write-Error "Can't find namespaces from dll file $($dllFile.FullName)." -ErrorAction Continue
+        Write-Error "Can't find namespaces from dll file $dllFileName." -ErrorAction Continue
         return @()
     }
     return $namespaces
