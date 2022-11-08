@@ -13,19 +13,19 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PrivateDns.Models;
 
-[assembly: CodeGenSuppressType("SrvRecordResource")]
+[assembly: CodeGenSuppressType("PrivateDnsSrvRecordResource")]
 
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
-    /// A Class representing a SrvRecord along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SrvRecordResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSrvRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetSrvRecord method.
+    /// A Class representing a PrivateDnsSrvRecord along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateDnsSrvRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPrivateDnsSrvRecordResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetPrivateDnsSrvRecord method.
     /// </summary>
-    public partial class SrvRecordResource : ArmResource
+    public partial class PrivateDnsSrvRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SrvRecordResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PrivateDnsSrvRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string srvRecordName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/SRV/{srvRecordName}";
@@ -33,31 +33,31 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         private readonly ClientDiagnostics _srvRecordInfoRecordSetsClientDiagnostics;
-        private readonly SrvRecordRestOperations _srvRecordInfoRecordSetsRestClient;
-        private readonly SrvRecordData _data;
+        private readonly PrivateDnsSrvRecordRestOperations _srvRecordInfoRecordSetsRestClient;
+        private readonly PrivateDnsSrvRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SrvRecordResource"/> class for mocking. </summary>
-        protected SrvRecordResource()
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsSrvRecordResource"/> class for mocking. </summary>
+        protected PrivateDnsSrvRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SrvRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "PrivateDnsSrvRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SrvRecordResource(ArmClient client, SrvRecordData data) : this(client, data.Id)
+        internal PrivateDnsSrvRecordResource(ArmClient client, PrivateDnsSrvRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SrvRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsSrvRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SrvRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateDnsSrvRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _srvRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string srvRecordInfoRecordSetsApiVersion);
-            _srvRecordInfoRecordSetsRestClient = new SrvRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, srvRecordInfoRecordSetsApiVersion);
+            _srvRecordInfoRecordSetsRestClient = new PrivateDnsSrvRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, srvRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SrvRecordData Data
+        public virtual PrivateDnsSrvRecordData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SrvRecordResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsSrvRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Get");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSrvRecordResource.Get");
             scope.Start();
             try
             {
                 var response = await _srvRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsSrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SrvRecordResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsSrvRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Get");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSrvRecordResource.Get");
             scope.Start();
             try
             {
                 var response = _srvRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsSrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Delete");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSrvRecordResource.Delete");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Delete");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSrvRecordResource.Delete");
             scope.Start();
             try
             {
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SrvRecordResource>> UpdateAsync(SrvRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsSrvRecordResource>> UpdateAsync(PrivateDnsSrvRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Update");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSrvRecordResource.Update");
             scope.Start();
             try
             {
                 var response = await _srvRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsSrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SrvRecordResource> Update(SrvRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsSrvRecordResource> Update(PrivateDnsSrvRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("SrvRecordResource.Update");
+            using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSrvRecordResource.Update");
             scope.Start();
             try
             {
                 var response = _srvRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SRV".ToRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new SrvRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsSrvRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

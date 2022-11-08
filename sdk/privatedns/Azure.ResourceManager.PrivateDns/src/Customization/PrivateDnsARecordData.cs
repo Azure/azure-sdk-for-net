@@ -11,13 +11,13 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the ARecord data model. </summary>
-    public partial class ARecordData : RecordData
+    /// <summary> A class representing the PrivateDnsARecord data model. </summary>
+    public partial class PrivateDnsARecordData : RecordData
     {
-        /// <summary> Initializes a new instance of ARecordData. </summary>
-        public ARecordData()
+        /// <summary> Initializes a new instance of PrivateDnsARecordData. </summary>
+        public PrivateDnsARecordData()
         {
-            ARecords = new ChangeTrackingList<ARecordInfo>();
+            PrivateDnsARecords = new ChangeTrackingList<PrivateDnsARecordInfo>();
         }
 
         /// <summary> Initializes a new instance of RecordData. </summary>
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="aRecords"> The list of A records in the record set. </param>
-        internal ARecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<ARecordInfo> aRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
+        internal PrivateDnsARecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<PrivateDnsARecordInfo> aRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
         {
-            ARecords = aRecords;
+            PrivateDnsARecords = aRecords;
         }
 
         /// <summary> The list of A records in the record set. </summary>
-        public IList<ARecordInfo> ARecords { get; }
+        public IList<PrivateDnsARecordInfo> PrivateDnsARecords { get; }
     }
 }

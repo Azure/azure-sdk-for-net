@@ -13,19 +13,19 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PrivateDns.Models;
 
-[assembly: CodeGenSuppressType("SoaRecordResource")]
+[assembly: CodeGenSuppressType("PrivateDnsSoaRecordResource")]
 
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
-    /// A Class representing a SoaRecord along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SoaRecordResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSoaRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetSoaRecord method.
+    /// A Class representing a PrivateDnsSoaRecord along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateDnsSoaRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPrivateDnsSoaRecordResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetPrivateDnsSoaRecord method.
     /// </summary>
-    public partial class SoaRecordResource : ArmResource
+    public partial class PrivateDnsSoaRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SoaRecordResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PrivateDnsSoaRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string soaRecordName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/SOA/{soaRecordName}";
@@ -33,31 +33,31 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         private readonly ClientDiagnostics _soaRecordInfoRecordSetsClientDiagnostics;
-        private readonly SoaRecordRestOperations _soaRecordInfoRecordSetsRestClient;
-        private readonly SoaRecordData _data;
+        private readonly PrivateDnsSoaRecordRestOperations _soaRecordInfoRecordSetsRestClient;
+        private readonly PrivateDnsSoaRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SoaRecordResource"/> class for mocking. </summary>
-        protected SoaRecordResource()
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsSoaRecordResource"/> class for mocking. </summary>
+        protected PrivateDnsSoaRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SoaRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "PrivateDnsSoaRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SoaRecordResource(ArmClient client, SoaRecordData data) : this(client, data.Id)
+        internal PrivateDnsSoaRecordResource(ArmClient client, PrivateDnsSoaRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SoaRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsSoaRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SoaRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateDnsSoaRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _soaRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string soaRecordInfoRecordSetsApiVersion);
-            _soaRecordInfoRecordSetsRestClient = new SoaRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, soaRecordInfoRecordSetsApiVersion);
+            _soaRecordInfoRecordSetsRestClient = new PrivateDnsSoaRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, soaRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SoaRecordData Data
+        public virtual PrivateDnsSoaRecordData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SoaRecordResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsSoaRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Get");
+            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordResource.Get");
             scope.Start();
             try
             {
                 var response = await _soaRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SOA".ToRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsSoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SoaRecordResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsSoaRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Get");
+            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordResource.Get");
             scope.Start();
             try
             {
                 var response = _soaRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SOA".ToRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsSoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Delete");
+            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordResource.Delete");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Delete");
+            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordResource.Delete");
             scope.Start();
             try
             {
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SoaRecordResource>> UpdateAsync(SoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsSoaRecordResource>> UpdateAsync(PrivateDnsSoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Update");
+            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordResource.Update");
             scope.Start();
             try
             {
                 var response = await _soaRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SOA".ToRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsSoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SoaRecordResource> Update(SoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsSoaRecordResource> Update(PrivateDnsSoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Update");
+            using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordResource.Update");
             scope.Start();
             try
             {
                 var response = _soaRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "SOA".ToRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsSoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

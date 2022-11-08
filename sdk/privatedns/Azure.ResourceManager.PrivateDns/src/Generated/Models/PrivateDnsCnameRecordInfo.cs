@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> A CNAME record. </summary>
-    internal partial class CnameRecordInfo
+    internal partial class PrivateDnsCnameRecordInfo
     {
-        /// <summary> Initializes a new instance of CnameRecordInfo. </summary>
-        public CnameRecordInfo()
+        /// <summary> Initializes a new instance of PrivateDnsCnameRecordInfo. </summary>
+        public PrivateDnsCnameRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of CnameRecordInfo. </summary>
+        /// <summary> Initializes a new instance of PrivateDnsCnameRecordInfo. </summary>
         /// <param name="cname"> The canonical name for this CNAME record. </param>
-        internal CnameRecordInfo(string cname)
+        internal PrivateDnsCnameRecordInfo(string cname)
         {
             Cname = cname;
         }

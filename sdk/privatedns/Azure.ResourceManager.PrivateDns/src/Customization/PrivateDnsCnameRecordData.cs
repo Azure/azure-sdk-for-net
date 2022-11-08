@@ -11,11 +11,11 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the CnameRecord data model. </summary>
-    public partial class CnameRecordData : RecordData
+    /// <summary> A class representing the PrivateDnsCnameRecord data model. </summary>
+    public partial class PrivateDnsCnameRecordData : RecordData
     {
-        /// <summary> Initializes a new instance of CnameRecordData. </summary>
-        public CnameRecordData()
+        /// <summary> Initializes a new instance of PrivateDnsCnameRecordData. </summary>
+        public PrivateDnsCnameRecordData()
         {
         }
 
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="cnameRecord"> The CNAME record in the  record set. </param>
-        internal CnameRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, CnameRecordInfo cnameRecord) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
+        internal PrivateDnsCnameRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, PrivateDnsCnameRecordInfo cnameRecord) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
         {
-            CnameRecord = cnameRecord;
+            PrivateDnsCnameRecord = cnameRecord;
         }
 
         /// <summary> The CNAME record in the  record set. </summary>
-        internal CnameRecordInfo CnameRecord { get; set; }
+        internal PrivateDnsCnameRecordInfo PrivateDnsCnameRecord { get; set; }
         /// <summary> The canonical name for this CNAME record. </summary>
         public string Cname
         {
-            get => CnameRecord is null ? default : CnameRecord.Cname;
+            get => PrivateDnsCnameRecord is null ? default : PrivateDnsCnameRecord.Cname;
             set
             {
-                if (CnameRecord is null)
-                    CnameRecord = new CnameRecordInfo();
-                CnameRecord.Cname = value;
+                if (PrivateDnsCnameRecord is null)
+                    PrivateDnsCnameRecord = new PrivateDnsCnameRecordInfo();
+                PrivateDnsCnameRecord.Cname = value;
             }
         }
     }

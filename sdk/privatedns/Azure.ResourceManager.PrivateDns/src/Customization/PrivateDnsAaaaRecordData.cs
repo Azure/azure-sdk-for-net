@@ -11,13 +11,13 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the AaaaRecord data model. </summary>
-    public partial class AaaaRecordData : RecordData
+    /// <summary> A class representing the PrivateDnsAaaaRecord data model. </summary>
+    public partial class PrivateDnsAaaaRecordData : RecordData
     {
-        /// <summary> Initializes a new instance of AaaaRecordData. </summary>
-        public AaaaRecordData()
+        /// <summary> Initializes a new instance of PrivateDnsAaaaRecordData. </summary>
+        public PrivateDnsAaaaRecordData()
         {
-            AaaaRecords = new ChangeTrackingList<AaaaRecordInfo>();
+            PrivateDnsAaaaRecords = new ChangeTrackingList<PrivateDnsAaaaRecordInfo>();
         }
 
         /// <summary> Initializes a new instance of RecordData. </summary>
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
-        internal AaaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<AaaaRecordInfo> aaaaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
+        internal PrivateDnsAaaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<PrivateDnsAaaaRecordInfo> aaaaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
         {
-            AaaaRecords = aaaaRecords;
+            PrivateDnsAaaaRecords = aaaaRecords;
         }
 
         /// <summary> The list of AAAA records in the record set. </summary>
-        public IList<AaaaRecordInfo> AaaaRecords { get; }
+        public IList<PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get; }
     }
 }

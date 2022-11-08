@@ -10,25 +10,25 @@ using Azure.ResourceManager.PrivateDns;
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> The response to a record set List operation. </summary>
-    internal partial class SoaRecordListResult
+    internal partial class PrivateDnsSoaRecordListResult
     {
-        /// <summary> Initializes a new instance of SoaRecordSetListResult. </summary>
-        internal SoaRecordListResult()
+        /// <summary> Initializes a new instance of PrivateDnsSoaRecordSetListResult. </summary>
+        internal PrivateDnsSoaRecordListResult()
         {
-            Value = new ChangeTrackingList<SoaRecordData>();
+            Value = new ChangeTrackingList<PrivateDnsSoaRecordData>();
         }
 
-        /// <summary> Initializes a new instance of SoaRecordSetListResult. </summary>
+        /// <summary> Initializes a new instance of PrivateDnsSoaRecordSetListResult. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal SoaRecordListResult(IReadOnlyList<SoaRecordData> value, string nextLink)
+        internal PrivateDnsSoaRecordListResult(IReadOnlyList<PrivateDnsSoaRecordData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Information about the record sets in the response. </summary>
-        public IReadOnlyList<SoaRecordData> Value { get; }
+        public IReadOnlyList<PrivateDnsSoaRecordData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.PrivateDns
             return GetVirtualNetworkLinks().Get(virtualNetworkLinkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ARecordResources in the PrivateZone. </summary>
-        /// <returns> An object representing collection of ARecordResources and their operations over a ARecordResource. </returns>
-        public virtual ARecordCollection GetARecords()
+        /// <summary> Gets a collection of PrivateDnsARecordResources in the PrivateZone. </summary>
+        /// <returns> An object representing collection of PrivateDnsARecordResources and their operations over a PrivateDnsARecordResource. </returns>
+        public virtual PrivateDnsARecordCollection GetPrivateDnsARecords()
         {
-            return GetCachedClient(Client => new ARecordCollection(Client, Id));
+            return GetCachedClient(Client => new PrivateDnsARecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ARecordResource>> GetARecordAsync(string aRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsARecordResource>> GetPrivateDnsARecordAsync(string aRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetARecords().GetAsync(aRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateDnsARecords().GetAsync(aRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,30 +162,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ARecordResource> GetARecord(string aRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsARecordResource> GetPrivateDnsARecord(string aRecordName, CancellationToken cancellationToken = default)
         {
-            return GetARecords().Get(aRecordName, cancellationToken);
+            return GetPrivateDnsARecords().Get(aRecordName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AaaaRecordResources in the PrivateZone. </summary>
-        /// <returns> An object representing collection of AaaaRecordResources and their operations over a AaaaRecordResource. </returns>
-        public virtual AaaaRecordCollection GetAaaaRecords()
+        /// <summary> Gets a collection of PrivateDnsAaaaRecordResources in the PrivateZone. </summary>
+        /// <returns> An object representing collection of PrivateDnsAaaaRecordResources and their operations over a PrivateDnsAaaaRecordResource. </returns>
+        public virtual PrivateDnsAaaaRecordCollection GetPrivateDnsAaaaRecords()
         {
-            return GetCachedClient(Client => new AaaaRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{aaaaRecordName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aaaaRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AaaaRecordResource>> GetAaaaRecordAsync(string aaaaRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetAaaaRecords().GetAsync(aaaaRecordName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new PrivateDnsAaaaRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -197,16 +183,30 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aaaaRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AaaaRecordResource> GetAaaaRecord(string aaaaRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsAaaaRecordResource>> GetPrivateDnsAaaaRecordAsync(string aaaaRecordName, CancellationToken cancellationToken = default)
         {
-            return GetAaaaRecords().Get(aaaaRecordName, cancellationToken);
+            return await GetPrivateDnsAaaaRecords().GetAsync(aaaaRecordName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of CnameRecordResources in the PrivateZone. </summary>
-        /// <returns> An object representing collection of CnameRecordResources and their operations over a CnameRecordResource. </returns>
-        public virtual CnameRecordCollection GetCnameRecords()
+        /// <summary>
+        /// Gets a record set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{aaaaRecordName}
+        /// Operation Id: RecordSets_Get
+        /// </summary>
+        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aaaaRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PrivateDnsAaaaRecordResource> GetPrivateDnsAaaaRecord(string aaaaRecordName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new CnameRecordCollection(Client, Id));
+            return GetPrivateDnsAaaaRecords().Get(aaaaRecordName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PrivateDnsCnameRecordResources in the PrivateZone. </summary>
+        /// <returns> An object representing collection of PrivateDnsCnameRecordResources and their operations over a PrivateDnsCnameRecordResource. </returns>
+        public virtual PrivateDnsCnameRecordCollection GetPrivateDnsCnameRecords()
+        {
+            return GetCachedClient(Client => new PrivateDnsCnameRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -218,9 +218,9 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CnameRecordResource>> GetCnameRecordAsync(string cnameRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsCnameRecordResource>> GetPrivateDnsCnameRecordAsync(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetCnameRecords().GetAsync(cnameRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateDnsCnameRecords().GetAsync(cnameRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -232,30 +232,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CnameRecordResource> GetCnameRecord(string cnameRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsCnameRecordResource> GetPrivateDnsCnameRecord(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            return GetCnameRecords().Get(cnameRecordName, cancellationToken);
+            return GetPrivateDnsCnameRecords().Get(cnameRecordName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MXRecordResources in the PrivateZone. </summary>
-        /// <returns> An object representing collection of MXRecordResources and their operations over a MXRecordResource. </returns>
-        public virtual MXRecordCollection GetMXRecords()
+        /// <summary> Gets a collection of PrivateDnsMXRecordResources in the PrivateZone. </summary>
+        /// <returns> An object representing collection of PrivateDnsMXRecordResources and their operations over a PrivateDnsMXRecordResource. </returns>
+        public virtual PrivateDnsMXRecordCollection GetPrivateDnsMXRecords()
         {
-            return GetCachedClient(Client => new MXRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{mxRecordName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MXRecordResource>> GetMXRecordAsync(string mxRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetMXRecords().GetAsync(mxRecordName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new PrivateDnsMXRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -267,16 +253,30 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MXRecordResource> GetMXRecord(string mxRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsMXRecordResource>> GetPrivateDnsMXRecordAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            return GetMXRecords().Get(mxRecordName, cancellationToken);
+            return await GetPrivateDnsMXRecords().GetAsync(mxRecordName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of PtrRecordResources in the PrivateZone. </summary>
-        /// <returns> An object representing collection of PtrRecordResources and their operations over a PtrRecordResource. </returns>
-        public virtual PtrRecordCollection GetPtrRecords()
+        /// <summary>
+        /// Gets a record set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{mxRecordName}
+        /// Operation Id: RecordSets_Get
+        /// </summary>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PrivateDnsMXRecordResource> GetPrivateDnsMXRecord(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new PtrRecordCollection(Client, Id));
+            return GetPrivateDnsMXRecords().Get(mxRecordName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PrivateDnsPtrRecordResources in the PrivateZone. </summary>
+        /// <returns> An object representing collection of PrivateDnsPtrRecordResources and their operations over a PrivateDnsPtrRecordResource. </returns>
+        public virtual PrivateDnsPtrRecordCollection GetPrivateDnsPtrRecords()
+        {
+            return GetCachedClient(Client => new PrivateDnsPtrRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PtrRecordResource>> GetPtrRecordAsync(string ptrRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsPtrRecordResource>> GetPrivateDnsPtrRecordAsync(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetPtrRecords().GetAsync(ptrRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateDnsPtrRecords().GetAsync(ptrRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -302,30 +302,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PtrRecordResource> GetPtrRecord(string ptrRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsPtrRecordResource> GetPrivateDnsPtrRecord(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            return GetPtrRecords().Get(ptrRecordName, cancellationToken);
+            return GetPrivateDnsPtrRecords().Get(ptrRecordName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SoaRecordResources in the PrivateZone. </summary>
-        /// <returns> An object representing collection of SoaRecordResources and their operations over a SoaRecordResource. </returns>
-        public virtual SoaRecordCollection GetSoaRecords()
+        /// <summary> Gets a collection of PrivateDnsSoaRecordResources in the PrivateZone. </summary>
+        /// <returns> An object representing collection of PrivateDnsSoaRecordResources and their operations over a PrivateDnsSoaRecordResource. </returns>
+        public virtual PrivateDnsSoaRecordCollection GetPrivateDnsSoaRecords()
         {
-            return GetCachedClient(Client => new SoaRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{soaRecordName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SoaRecordResource>> GetSoaRecordAsync(string soaRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetSoaRecords().GetAsync(soaRecordName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new PrivateDnsSoaRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -337,16 +323,30 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SoaRecordResource> GetSoaRecord(string soaRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsSoaRecordResource>> GetPrivateDnsSoaRecordAsync(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            return GetSoaRecords().Get(soaRecordName, cancellationToken);
+            return await GetPrivateDnsSoaRecords().GetAsync(soaRecordName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of SrvRecordResources in the PrivateZone. </summary>
-        /// <returns> An object representing collection of SrvRecordResources and their operations over a SrvRecordResource. </returns>
-        public virtual SrvRecordCollection GetSrvRecords()
+        /// <summary>
+        /// Gets a record set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{soaRecordName}
+        /// Operation Id: RecordSets_Get
+        /// </summary>
+        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PrivateDnsSoaRecordResource> GetPrivateDnsSoaRecord(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new SrvRecordCollection(Client, Id));
+            return GetPrivateDnsSoaRecords().Get(soaRecordName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PrivateDnsSrvRecordResources in the PrivateZone. </summary>
+        /// <returns> An object representing collection of PrivateDnsSrvRecordResources and their operations over a PrivateDnsSrvRecordResource. </returns>
+        public virtual PrivateDnsSrvRecordCollection GetPrivateDnsSrvRecords()
+        {
+            return GetCachedClient(Client => new PrivateDnsSrvRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -358,9 +358,9 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SrvRecordResource>> GetSrvRecordAsync(string srvRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsSrvRecordResource>> GetPrivateDnsSrvRecordAsync(string srvRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetSrvRecords().GetAsync(srvRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateDnsSrvRecords().GetAsync(srvRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -372,30 +372,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SrvRecordResource> GetSrvRecord(string srvRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsSrvRecordResource> GetPrivateDnsSrvRecord(string srvRecordName, CancellationToken cancellationToken = default)
         {
-            return GetSrvRecords().Get(srvRecordName, cancellationToken);
+            return GetPrivateDnsSrvRecords().Get(srvRecordName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TxtRecordResources in the PrivateZone. </summary>
-        /// <returns> An object representing collection of TxtRecordResources and their operations over a TxtRecordResource. </returns>
-        public virtual TxtRecordCollection GetTxtRecords()
+        /// <summary> Gets a collection of PrivateDnsTxtRecordResources in the PrivateZone. </summary>
+        /// <returns> An object representing collection of PrivateDnsTxtRecordResources and their operations over a PrivateDnsTxtRecordResource. </returns>
+        public virtual PrivateDnsTxtRecordCollection GetPrivateDnsTxtRecords()
         {
-            return GetCachedClient(Client => new TxtRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{txtRecordName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TxtRecordResource>> GetTxtRecordAsync(string txtRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetTxtRecords().GetAsync(txtRecordName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new PrivateDnsTxtRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -407,9 +393,23 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TxtRecordResource> GetTxtRecord(string txtRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsTxtRecordResource>> GetPrivateDnsTxtRecordAsync(string txtRecordName, CancellationToken cancellationToken = default)
         {
-            return GetTxtRecords().Get(txtRecordName, cancellationToken);
+            return await GetPrivateDnsTxtRecords().GetAsync(txtRecordName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a record set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{txtRecordName}
+        /// Operation Id: RecordSets_Get
+        /// </summary>
+        /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PrivateDnsTxtRecordResource> GetPrivateDnsTxtRecord(string txtRecordName, CancellationToken cancellationToken = default)
+        {
+            return GetPrivateDnsTxtRecords().Get(txtRecordName, cancellationToken);
         }
 
         /// <summary>

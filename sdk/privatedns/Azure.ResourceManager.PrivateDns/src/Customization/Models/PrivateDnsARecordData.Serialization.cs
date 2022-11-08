@@ -12,7 +12,7 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class ARecordData : IUtf8JsonSerializable
+    public partial class PrivateDnsARecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("ttl");
                 writer.WriteNumberValue(TtlInSeconds.Value);
             }
-            if (Optional.IsCollectionDefined(ARecords))
+            if (Optional.IsCollectionDefined(PrivateDnsARecords))
             {
                 writer.WritePropertyName("aRecords");
                 writer.WriteStartArray();
-                foreach (var item in ARecords)
+                foreach (var item in PrivateDnsARecords)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PrivateDns
             writer.WriteEndObject();
         }
 
-        internal static ARecordData DeserializeARecordData(JsonElement element)
+        internal static PrivateDnsARecordData DeserializePrivateDnsARecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<long> ttl = default;
             Optional<string> fqdn = default;
             Optional<bool> isAutoRegistered = default;
-            Optional<IList<ARecordInfo>> aRecords = default;
+            Optional<IList<PrivateDnsARecordInfo>> aRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ARecordInfo> array = new List<ARecordInfo>();
+                            List<PrivateDnsARecordInfo> array = new List<PrivateDnsARecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ARecordInfo.DeserializeARecordInfo(item));
+                                array.Add(PrivateDnsARecordInfo.DeserializePrivateDnsARecordInfo(item));
                             }
                             aRecords = array;
                             continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PrivateDns
                     continue;
                 }
             }
-            return new ARecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(aRecords));
+            return new PrivateDnsARecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(aRecords));
         }
     }
 }

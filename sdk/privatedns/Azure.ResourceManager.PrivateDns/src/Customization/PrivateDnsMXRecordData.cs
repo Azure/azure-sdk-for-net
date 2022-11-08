@@ -11,13 +11,13 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the MXRecord data model. </summary>
-    public partial class MXRecordData : RecordData
+    /// <summary> A class representing the PrivateDnsMXRecord data model. </summary>
+    public partial class PrivateDnsMXRecordData : RecordData
     {
-        /// <summary> Initializes a new instance of MXRecordData. </summary>
-        public MXRecordData()
+        /// <summary> Initializes a new instance of PrivateDnsMXRecordData. </summary>
+        public PrivateDnsMXRecordData()
         {
-            MXRecords = new ChangeTrackingList<MXRecordInfo>();
+            PrivateDnsMXRecords = new ChangeTrackingList<PrivateDnsMXRecordInfo>();
         }
 
         /// <summary> Initializes a new instance of RecordData. </summary>
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="mxRecords"> The list of MX records in the record set. </param>
-        internal MXRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<MXRecordInfo> mxRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
+        internal PrivateDnsMXRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<PrivateDnsMXRecordInfo> mxRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
         {
-            MXRecords = mxRecords;
+            PrivateDnsMXRecords = mxRecords;
         }
 
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<MXRecordInfo> MXRecords { get; }
+        public IList<PrivateDnsMXRecordInfo> PrivateDnsMXRecords { get; }
     }
 }

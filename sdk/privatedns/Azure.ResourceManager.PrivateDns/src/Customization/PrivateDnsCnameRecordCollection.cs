@@ -16,33 +16,33 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PrivateDns.Models;
 
-[assembly: CodeGenSuppressType("CnameRecordCollection")]
+[assembly: CodeGenSuppressType("PrivateDnsCnameRecordCollection")]
 
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CnameRecordResource" /> and their operations.
-    /// Each <see cref="CnameRecordResource" /> in the collection will belong to the same instance of <see cref="PrivateZoneResource" />.
-    /// To get a <see cref="CnameRecordCollection" /> instance call the GetCnameRecords method from an instance of <see cref="PrivateZoneResource" />.
+    /// A class representing a collection of <see cref="PrivateDnsCnameRecordResource" /> and their operations.
+    /// Each <see cref="PrivateDnsCnameRecordResource" /> in the collection will belong to the same instance of <see cref="PrivateZoneResource" />.
+    /// To get a <see cref="PrivateDnsCnameRecordCollection" /> instance call the GetPrivateDnsCnameRecords method from an instance of <see cref="PrivateZoneResource" />.
     /// </summary>
-    public partial class CnameRecordCollection : ArmCollection, IEnumerable<CnameRecordResource>, IAsyncEnumerable<CnameRecordResource>
+    public partial class PrivateDnsCnameRecordCollection : ArmCollection, IEnumerable<PrivateDnsCnameRecordResource>, IAsyncEnumerable<PrivateDnsCnameRecordResource>
     {
         private readonly ClientDiagnostics _cnameRecordInfoRecordSetsClientDiagnostics;
-        private readonly CnameRecordRestOperations _cnameRecordInfoRecordSetsRestClient;
+        private readonly PrivateDnsCnameRecordRestOperations _cnameRecordInfoRecordSetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CnameRecordCollection"/> class for mocking. </summary>
-        protected CnameRecordCollection()
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsCnameRecordCollection"/> class for mocking. </summary>
+        protected PrivateDnsCnameRecordCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CnameRecordCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsCnameRecordCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal CnameRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateDnsCnameRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cnameRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", CnameRecordResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CnameRecordResource.ResourceType, out string cnameRecordInfoRecordSetsApiVersion);
-            _cnameRecordInfoRecordSetsRestClient = new CnameRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cnameRecordInfoRecordSetsApiVersion);
+            _cnameRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateDnsCnameRecordResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PrivateDnsCnameRecordResource.ResourceType, out string cnameRecordInfoRecordSetsApiVersion);
+            _cnameRecordInfoRecordSetsRestClient = new PrivateDnsCnameRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cnameRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CnameRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cnameRecordName, CnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateDnsCnameRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cnameRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.CreateOrUpdate");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _cnameRecordInfoRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToRecordType(), cnameRecordName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateDnsArmOperation<CnameRecordResource>(Response.FromValue(new CnameRecordResource(Client, response), response.GetRawResponse()));
+                var operation = new PrivateDnsArmOperation<PrivateDnsCnameRecordResource>(Response.FromValue(new PrivateDnsCnameRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CnameRecordResource> CreateOrUpdate(WaitUntil waitUntil, string cnameRecordName, CnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateDnsCnameRecordResource> CreateOrUpdate(WaitUntil waitUntil, string cnameRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.CreateOrUpdate");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _cnameRecordInfoRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToRecordType(), cnameRecordName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new PrivateDnsArmOperation<CnameRecordResource>(Response.FromValue(new CnameRecordResource(Client, response), response.GetRawResponse()));
+                var operation = new PrivateDnsArmOperation<PrivateDnsCnameRecordResource>(Response.FromValue(new PrivateDnsCnameRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
-        public virtual async Task<Response<CnameRecordResource>> GetAsync(string cnameRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsCnameRecordResource>> GetAsync(string cnameRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
 
-            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Get");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.Get");
             scope.Start();
             try
             {
                 var response = await _cnameRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToRecordType(), cnameRecordName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsCnameRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
-        public virtual Response<CnameRecordResource> Get(string cnameRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsCnameRecordResource> Get(string cnameRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
 
-            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Get");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.Get");
             scope.Start();
             try
             {
                 var response = _cnameRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToRecordType(), cnameRecordName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsCnameRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,17 +186,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CnameRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CnameRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateDnsCnameRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateDnsCnameRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<CnameRecordResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateDnsCnameRecordResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
+                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _cnameRecordInfoRecordSetsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsCnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            async Task<Page<CnameRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PrivateDnsCnameRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
+                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _cnameRecordInfoRecordSetsRestClient.ListByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsCnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,17 +230,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CnameRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CnameRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateDnsCnameRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateDnsCnameRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<CnameRecordResource> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateDnsCnameRecordResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
+                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _cnameRecordInfoRecordSetsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsCnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            Page<CnameRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PrivateDnsCnameRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
+                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _cnameRecordInfoRecordSetsRestClient.ListByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsCnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
 
-            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Exists");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.Exists");
             scope.Start();
             try
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
 
-            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Exists");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsCnameRecordCollection.Exists");
             scope.Start();
             try
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.PrivateDns
             }
         }
 
-        IEnumerator<CnameRecordResource> IEnumerable<CnameRecordResource>.GetEnumerator()
+        IEnumerator<PrivateDnsCnameRecordResource> IEnumerable<PrivateDnsCnameRecordResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PrivateDns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CnameRecordResource> IAsyncEnumerable<CnameRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PrivateDnsCnameRecordResource> IAsyncEnumerable<PrivateDnsCnameRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

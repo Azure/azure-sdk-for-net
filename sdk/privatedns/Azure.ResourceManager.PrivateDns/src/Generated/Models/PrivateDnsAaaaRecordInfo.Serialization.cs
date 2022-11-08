@@ -11,36 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    public partial class ARecordInfo : IUtf8JsonSerializable
+    public partial class PrivateDnsAaaaRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPv4Address))
+            if (Optional.IsDefined(IPv6Address))
             {
-                writer.WritePropertyName("ipv4Address");
-                writer.WriteStringValue(IPv4Address.ToString());
+                writer.WritePropertyName("ipv6Address");
+                writer.WriteStringValue(IPv6Address.ToString());
             }
             writer.WriteEndObject();
         }
 
-        internal static ARecordInfo DeserializeARecordInfo(JsonElement element)
+        internal static PrivateDnsAaaaRecordInfo DeserializePrivateDnsAaaaRecordInfo(JsonElement element)
         {
-            Optional<IPAddress> ipv4Address = default;
+            Optional<IPAddress> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipv4Address"))
+                if (property.NameEquals("ipv6Address"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ipv4Address = IPAddress.Parse(property.Value.GetString());
+                    ipv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
             }
-            return new ARecordInfo(ipv4Address.Value);
+            return new PrivateDnsAaaaRecordInfo(ipv6Address.Value);
         }
     }
 }

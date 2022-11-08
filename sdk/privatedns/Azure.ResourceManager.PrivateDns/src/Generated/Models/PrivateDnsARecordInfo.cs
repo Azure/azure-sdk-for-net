@@ -10,16 +10,16 @@ using System.Net;
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> An A record. </summary>
-    public partial class ARecordInfo
+    public partial class PrivateDnsARecordInfo
     {
-        /// <summary> Initializes a new instance of ARecordInfo. </summary>
-        public ARecordInfo()
+        /// <summary> Initializes a new instance of PrivateDnsARecordInfo. </summary>
+        public PrivateDnsARecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ARecordInfo. </summary>
+        /// <summary> Initializes a new instance of PrivateDnsARecordInfo. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
-        internal ARecordInfo(IPAddress ipv4Address)
+        internal PrivateDnsARecordInfo(IPAddress ipv4Address)
         {
             IPv4Address = ipv4Address;
         }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    public partial class SoaRecordInfo : IUtf8JsonSerializable
+    public partial class PrivateDnsSoaRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,30 +30,30 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 writer.WritePropertyName("serialNumber");
                 writer.WriteNumberValue(SerialNumber.Value);
             }
-            if (Optional.IsDefined(RefreshTimeInSeconds))
+            if (Optional.IsDefined(RefreshTime))
             {
                 writer.WritePropertyName("refreshTime");
-                writer.WriteNumberValue(RefreshTimeInSeconds.Value);
+                writer.WriteNumberValue(RefreshTime.Value);
             }
-            if (Optional.IsDefined(RetryTimeInSeconds))
+            if (Optional.IsDefined(RetryTime))
             {
                 writer.WritePropertyName("retryTime");
-                writer.WriteNumberValue(RetryTimeInSeconds.Value);
+                writer.WriteNumberValue(RetryTime.Value);
             }
-            if (Optional.IsDefined(ExpireTimeInSeconds))
+            if (Optional.IsDefined(ExpireTime))
             {
                 writer.WritePropertyName("expireTime");
-                writer.WriteNumberValue(ExpireTimeInSeconds.Value);
+                writer.WriteNumberValue(ExpireTime.Value);
             }
-            if (Optional.IsDefined(MinimumTtlInSeconds))
+            if (Optional.IsDefined(MinimumTtl))
             {
                 writer.WritePropertyName("minimumTtl");
-                writer.WriteNumberValue(MinimumTtlInSeconds.Value);
+                writer.WriteNumberValue(MinimumTtl.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static SoaRecordInfo DeserializeSoaRecordInfo(JsonElement element)
+        internal static PrivateDnsSoaRecordInfo DeserializePrivateDnsSoaRecordInfo(JsonElement element)
         {
             Optional<string> host = default;
             Optional<string> email = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     continue;
                 }
             }
-            return new SoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTtl));
+            return new PrivateDnsSoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTtl));
         }
     }
 }

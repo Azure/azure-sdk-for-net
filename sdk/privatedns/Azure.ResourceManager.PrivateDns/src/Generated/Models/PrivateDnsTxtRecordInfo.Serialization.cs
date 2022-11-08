@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    public partial class TxtRecordInfo : IUtf8JsonSerializable
+    public partial class PrivateDnsTxtRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Values))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value");
                 writer.WriteStartArray();
-                foreach (var item in Values)
+                foreach (var item in Value)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             writer.WriteEndObject();
         }
 
-        internal static TxtRecordInfo DeserializeTxtRecordInfo(JsonElement element)
+        internal static PrivateDnsTxtRecordInfo DeserializePrivateDnsTxtRecordInfo(JsonElement element)
         {
             Optional<IList<string>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     continue;
                 }
             }
-            return new TxtRecordInfo(Optional.ToList(value));
+            return new PrivateDnsTxtRecordInfo(Optional.ToList(value));
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class CnameRecordData : IUtf8JsonSerializable
+    public partial class PrivateDnsCnameRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("ttl");
                 writer.WriteNumberValue(TtlInSeconds.Value);
             }
-            if (Optional.IsDefined(CnameRecord))
+            if (Optional.IsDefined(PrivateDnsCnameRecord))
             {
                 writer.WritePropertyName("cnameRecord");
-                writer.WriteObjectValue(CnameRecord);
+                writer.WriteObjectValue(PrivateDnsCnameRecord);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static CnameRecordData DeserializeCnameRecordData(JsonElement element)
+        internal static PrivateDnsCnameRecordData DeserializePrivateDnsCnameRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<long> ttl = default;
             Optional<string> fqdn = default;
             Optional<bool> isAutoRegistered = default;
-            Optional<CnameRecordInfo> cnameRecordInfo = default;
+            Optional<PrivateDnsCnameRecordInfo> cnameRecordInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cnameRecordInfo = CnameRecordInfo.DeserializeCnameRecordInfo(property0.Value);
+                            cnameRecordInfo = PrivateDnsCnameRecordInfo.DeserializePrivateDnsCnameRecordInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CnameRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), cnameRecordInfo.Value);
+            return new PrivateDnsCnameRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), cnameRecordInfo.Value);
         }
     }
 }

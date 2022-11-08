@@ -16,33 +16,33 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PrivateDns.Models;
 
-[assembly: CodeGenSuppressType("TxtRecordCollection")]
+[assembly: CodeGenSuppressType("PrivateDnsTxtRecordCollection")]
 
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TxtRecordResource" /> and their operations.
-    /// Each <see cref="TxtRecordResource" /> in the collection will belong to the same instance of <see cref="PrivateZoneResource" />.
-    /// To get a <see cref="TxtRecordCollection" /> instance call the GetTxtRecords method from an instance of <see cref="PrivateZoneResource" />.
+    /// A class representing a collection of <see cref="PrivateDnsTxtRecordResource" /> and their operations.
+    /// Each <see cref="PrivateDnsTxtRecordResource" /> in the collection will belong to the same instance of <see cref="PrivateZoneResource" />.
+    /// To get a <see cref="PrivateDnsTxtRecordCollection" /> instance call the GetPrivateDnsTxtRecords method from an instance of <see cref="PrivateZoneResource" />.
     /// </summary>
-    public partial class TxtRecordCollection : ArmCollection, IEnumerable<TxtRecordResource>, IAsyncEnumerable<TxtRecordResource>
+    public partial class PrivateDnsTxtRecordCollection : ArmCollection, IEnumerable<PrivateDnsTxtRecordResource>, IAsyncEnumerable<PrivateDnsTxtRecordResource>
     {
         private readonly ClientDiagnostics _txtRecordInfoRecordSetsClientDiagnostics;
-        private readonly TxtRecordRestOperations _txtRecordInfoRecordSetsRestClient;
+        private readonly PrivateDnsTxtRecordRestOperations _txtRecordInfoRecordSetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="TxtRecordCollection"/> class for mocking. </summary>
-        protected TxtRecordCollection()
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsTxtRecordCollection"/> class for mocking. </summary>
+        protected PrivateDnsTxtRecordCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TxtRecordCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsTxtRecordCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal TxtRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateDnsTxtRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _txtRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", TxtRecordResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TxtRecordResource.ResourceType, out string txtRecordInfoRecordSetsApiVersion);
-            _txtRecordInfoRecordSetsRestClient = new TxtRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, txtRecordInfoRecordSetsApiVersion);
+            _txtRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateDnsTxtRecordResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PrivateDnsTxtRecordResource.ResourceType, out string txtRecordInfoRecordSetsApiVersion);
+            _txtRecordInfoRecordSetsRestClient = new PrivateDnsTxtRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, txtRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TxtRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string txtRecordName, TxtRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateDnsTxtRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string txtRecordName, PrivateDnsTxtRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(txtRecordName, nameof(txtRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.CreateOrUpdate");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _txtRecordInfoRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), txtRecordName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateDnsArmOperation<TxtRecordResource>(Response.FromValue(new TxtRecordResource(Client, response), response.GetRawResponse()));
+                var operation = new PrivateDnsArmOperation<PrivateDnsTxtRecordResource>(Response.FromValue(new PrivateDnsTxtRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TxtRecordResource> CreateOrUpdate(WaitUntil waitUntil, string txtRecordName, TxtRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateDnsTxtRecordResource> CreateOrUpdate(WaitUntil waitUntil, string txtRecordName, PrivateDnsTxtRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(txtRecordName, nameof(txtRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.CreateOrUpdate");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _txtRecordInfoRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), txtRecordName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new PrivateDnsArmOperation<TxtRecordResource>(Response.FromValue(new TxtRecordResource(Client, response), response.GetRawResponse()));
+                var operation = new PrivateDnsArmOperation<PrivateDnsTxtRecordResource>(Response.FromValue(new PrivateDnsTxtRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> is null. </exception>
-        public virtual async Task<Response<TxtRecordResource>> GetAsync(string txtRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsTxtRecordResource>> GetAsync(string txtRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(txtRecordName, nameof(txtRecordName));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.Get");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.Get");
             scope.Start();
             try
             {
                 var response = await _txtRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), txtRecordName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TxtRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsTxtRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> is null. </exception>
-        public virtual Response<TxtRecordResource> Get(string txtRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsTxtRecordResource> Get(string txtRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(txtRecordName, nameof(txtRecordName));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.Get");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.Get");
             scope.Start();
             try
             {
                 var response = _txtRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), txtRecordName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TxtRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsTxtRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,17 +186,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TxtRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TxtRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateDnsTxtRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateDnsTxtRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TxtRecordResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateDnsTxtRecordResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.GetAll");
+                using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _txtRecordInfoRecordSetsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsTxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            async Task<Page<TxtRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PrivateDnsTxtRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.GetAll");
+                using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _txtRecordInfoRecordSetsRestClient.ListByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsTxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,17 +230,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TxtRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TxtRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateDnsTxtRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateDnsTxtRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<TxtRecordResource> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateDnsTxtRecordResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.GetAll");
+                using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _txtRecordInfoRecordSetsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsTxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            Page<TxtRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PrivateDnsTxtRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.GetAll");
+                using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _txtRecordInfoRecordSetsRestClient.ListByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsTxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Argument.AssertNotNull(txtRecordName, nameof(txtRecordName));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.Exists");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.Exists");
             scope.Start();
             try
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Argument.AssertNotNull(txtRecordName, nameof(txtRecordName));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordCollection.Exists");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsTxtRecordCollection.Exists");
             scope.Start();
             try
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.PrivateDns
             }
         }
 
-        IEnumerator<TxtRecordResource> IEnumerable<TxtRecordResource>.GetEnumerator()
+        IEnumerator<PrivateDnsTxtRecordResource> IEnumerable<PrivateDnsTxtRecordResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PrivateDns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<TxtRecordResource> IAsyncEnumerable<TxtRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PrivateDnsTxtRecordResource> IAsyncEnumerable<PrivateDnsTxtRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

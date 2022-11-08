@@ -12,7 +12,7 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class SoaRecordData : IUtf8JsonSerializable
+    public partial class PrivateDnsSoaRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("ttl");
                 writer.WriteNumberValue(TtlInSeconds.Value);
             }
-            if (Optional.IsDefined(SoaRecord))
+            if (Optional.IsDefined(PrivateDnsSoaRecord))
             {
                 writer.WritePropertyName("soaRecord");
-                writer.WriteObjectValue(SoaRecord);
+                writer.WriteObjectValue(PrivateDnsSoaRecord);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static SoaRecordData DeserializeSoaRecordData(JsonElement element)
+        internal static PrivateDnsSoaRecordData DeserializePrivateDnsSoaRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<long> ttl = default;
             Optional<string> fqdn = default;
             Optional<bool> isAutoRegistered = default;
-            Optional<SoaRecordInfo> soaRecordInfo = default;
+            Optional<PrivateDnsSoaRecordInfo> soaRecordInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            soaRecordInfo = SoaRecordInfo.DeserializeSoaRecordInfo(property0.Value);
+                            soaRecordInfo = PrivateDnsSoaRecordInfo.DeserializePrivateDnsSoaRecordInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SoaRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), soaRecordInfo.Value);
+            return new PrivateDnsSoaRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), soaRecordInfo.Value);
         }
     }
 }

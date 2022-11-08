@@ -10,25 +10,25 @@ using Azure.ResourceManager.PrivateDns;
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> The response to a record set List operation. </summary>
-    internal partial class TxtRecordListResult
+    internal partial class PrivateDnsTxtRecordListResult
     {
-        /// <summary> Initializes a new instance of TxtRecordSetListResult. </summary>
-        internal TxtRecordListResult()
+        /// <summary> Initializes a new instance of PrivateDnsTxtRecordSetListResult. </summary>
+        internal PrivateDnsTxtRecordListResult()
         {
-            Value = new ChangeTrackingList<TxtRecordData>();
+            Value = new ChangeTrackingList<PrivateDnsTxtRecordData>();
         }
 
-        /// <summary> Initializes a new instance of TxtRecordSetListResult. </summary>
+        /// <summary> Initializes a new instance of PrivateDnsTxtRecordSetListResult. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal TxtRecordListResult(IReadOnlyList<TxtRecordData> value, string nextLink)
+        internal PrivateDnsTxtRecordListResult(IReadOnlyList<PrivateDnsTxtRecordData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Information about the record sets in the response. </summary>
-        public IReadOnlyList<TxtRecordData> Value { get; }
+        public IReadOnlyList<PrivateDnsTxtRecordData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

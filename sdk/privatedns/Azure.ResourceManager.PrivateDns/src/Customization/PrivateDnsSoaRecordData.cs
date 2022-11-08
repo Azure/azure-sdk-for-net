@@ -11,11 +11,11 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the SoaRecord data model. </summary>
-    public partial class SoaRecordData : RecordData
+    /// <summary> A class representing the PrivateDnsSoaRecord data model. </summary>
+    public partial class PrivateDnsSoaRecordData : RecordData
     {
-        /// <summary> Initializes a new instance of SoaRecordData. </summary>
-        public SoaRecordData()
+        /// <summary> Initializes a new instance of PrivateDnsSoaRecordData. </summary>
+        public PrivateDnsSoaRecordData()
         {
         }
 
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="soaRecord"> The SOA record in the record set. </param>
-        internal SoaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, SoaRecordInfo soaRecord) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
+        internal PrivateDnsSoaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, PrivateDnsSoaRecordInfo soaRecord) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
         {
-            SoaRecord = soaRecord;
+            PrivateDnsSoaRecord = soaRecord;
         }
 
         /// <summary> The SOA record in the record set. </summary>
-        public SoaRecordInfo SoaRecord { get; set; }
+        public PrivateDnsSoaRecordInfo PrivateDnsSoaRecord { get; set; }
     }
 }

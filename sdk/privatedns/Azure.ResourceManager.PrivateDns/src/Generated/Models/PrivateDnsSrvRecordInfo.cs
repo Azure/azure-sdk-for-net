@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> An SRV record. </summary>
-    public partial class SrvRecordInfo
+    public partial class PrivateDnsSrvRecordInfo
     {
-        /// <summary> Initializes a new instance of SrvRecordInfo. </summary>
-        public SrvRecordInfo()
+        /// <summary> Initializes a new instance of PrivateDnsSrvRecordInfo. </summary>
+        public PrivateDnsSrvRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SrvRecordInfo. </summary>
+        /// <summary> Initializes a new instance of PrivateDnsSrvRecordInfo. </summary>
         /// <param name="priority"> The priority value for this SRV record. </param>
         /// <param name="weight"> The weight value for this SRV record. </param>
         /// <param name="port"> The port value for this SRV record. </param>
         /// <param name="target"> The target domain name for this SRV record. </param>
-        internal SrvRecordInfo(int? priority, int? weight, int? port, string target)
+        internal PrivateDnsSrvRecordInfo(int? priority, int? weight, int? port, string target)
         {
             Priority = priority;
             Weight = weight;

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    internal partial class CnameRecordInfo : IUtf8JsonSerializable
+    internal partial class PrivateDnsCnameRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             writer.WriteEndObject();
         }
 
-        internal static CnameRecordInfo DeserializeCnameRecordInfo(JsonElement element)
+        internal static PrivateDnsCnameRecordInfo DeserializePrivateDnsCnameRecordInfo(JsonElement element)
         {
             Optional<string> cname = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     continue;
                 }
             }
-            return new CnameRecordInfo(cname.Value);
+            return new PrivateDnsCnameRecordInfo(cname.Value);
         }
     }
 }

@@ -48,48 +48,46 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-  ARecord: ARecordInfo
-  AaaaRecord: AaaaRecordInfo
-  MxRecord: MXRecordInfo
-  NsRecord: NSRecordInfo
-  PtrRecord: PtrRecordInfo
-  SrvRecord: SrvRecordInfo
-  TxtRecord: TxtRecordInfo
-  CnameRecord: CnameRecordInfo
-  SoaRecord: SoaRecordInfo
-  CaaRecord: CaaRecordInfo
+  ARecord: PrivateDnsARecordInfo
+  AaaaRecord: PrivateDnsAaaaRecordInfo
+  CnameRecord: PrivateDnsCnameRecordInfo
+  MxRecord: PrivateDnsMXRecordInfo
+  PtrRecord: PrivateDnsPtrRecordInfo
+  SoaRecord: PrivateDnsSoaRecordInfo
+  SrvRecord: PrivateDnsSrvRecordInfo
+  TxtRecord: PrivateDnsTxtRecordInfo
 
 override-operation-name:
   RecordSets_List: GetRecords
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/A: ARecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/AAAA: AaaaRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/CNAME: CnameRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/MX: MXRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/PTR: PtrRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/SOA: SoaRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/SRV: SrvRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/TXT: TxtRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/A: PrivateDnsARecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/AAAA: PrivateDnsAaaaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/CNAME: PrivateDnsCnameRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/MX: PrivateDnsMXRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/PTR: PrivateDnsPtrRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/SOA: PrivateDnsSoaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/SRV: PrivateDnsSrvRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/privateDnsZones/TXT: PrivateDnsTxtRecord
 
 directive:
   - from: privatedns.json
     where: $.definitions
     transform: >
       $.RecordSet["x-ms-client-name"] = "BaseRecord";
-      $.PtrRecord.properties.ptrdname["x-ms-client-name"] = "PtrDomainName";
+      $.PrivateDnsPtrRecord.properties.ptrdname["x-ms-client-name"] = "PtrDomainName";
       $.RecordSetProperties.properties.ttl["x-ms-client-name"] = "TtlInSeconds";
-      $.TxtRecord.properties.value["x-ms-client-name"] = "values";
+      $.PrivateDnsTxtRecord.properties.value["x-ms-client-name"] = "values";
       $.PrivateZoneProperties.properties.maxNumberOfRecordSets["x-ms-client-name"] = "maxNumberOfRecords";
       $.PrivateZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
-      $.RecordSetProperties.properties.mxRecords["x-ms-client-name"] = "MXRecords";
+      $.RecordSetProperties.properties.mxRecords["x-ms-client-name"] = "PrivateDnsMXRecords";
 
 # FooTime => FooTimeInSeconds
   - from: privatedns.json
     where: $.definitions
     transform: >
-      $.SoaRecord.properties.expireTime["x-ms-client-name"] = "expireTimeInSeconds";
-      $.SoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
-      $.SoaRecord.properties.minimumTtl["x-ms-client-name"] = "minimumTtlInSeconds";
-      $.SoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
+      $.PrivateDnsSoaRecord.properties.expireTime["x-ms-client-name"] = "expireTimeInSeconds";
+      $.PrivateDnsSoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
+      $.PrivateDnsSoaRecord.properties.minimumTtl["x-ms-client-name"] = "minimumTtlInSeconds";
+      $.PrivateDnsSoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
 ```

@@ -11,13 +11,13 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the TxtRecord data model. </summary>
-    public partial class TxtRecordData : RecordData
+    /// <summary> A class representing the PrivateDnsTxtRecord data model. </summary>
+    public partial class PrivateDnsTxtRecordData : RecordData
     {
-        /// <summary> Initializes a new instance of TxtRecordData. </summary>
-        public TxtRecordData()
+        /// <summary> Initializes a new instance of PrivateDnsTxtRecordData. </summary>
+        public PrivateDnsTxtRecordData()
         {
-            TxtRecords = new ChangeTrackingList<TxtRecordInfo>();
+            PrivateDnsTxtRecords = new ChangeTrackingList<PrivateDnsTxtRecordInfo>();
         }
 
         /// <summary> Initializes a new instance of RecordData. </summary>
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        internal TxtRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<TxtRecordInfo> txtRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
+        internal PrivateDnsTxtRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<PrivateDnsTxtRecordInfo> txtRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered)
         {
-            TxtRecords = txtRecords;
+            PrivateDnsTxtRecords = txtRecords;
         }
 
         /// <summary> The list of Txt records in the record set. </summary>
-        public IList<TxtRecordInfo> TxtRecords { get; }
+        public IList<PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get; }
     }
 }

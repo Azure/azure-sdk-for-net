@@ -10,16 +10,16 @@ using System.Net;
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> An AAAA record. </summary>
-    public partial class AaaaRecordInfo
+    public partial class PrivateDnsAaaaRecordInfo
     {
-        /// <summary> Initializes a new instance of AaaaRecordInfo. </summary>
-        public AaaaRecordInfo()
+        /// <summary> Initializes a new instance of PrivateDnsAaaaRecordInfo. </summary>
+        public PrivateDnsAaaaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AaaaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of PrivateDnsAaaaRecordInfo. </summary>
         /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
-        internal AaaaRecordInfo(IPAddress ipv6Address)
+        internal PrivateDnsAaaaRecordInfo(IPAddress ipv6Address)
         {
             IPv6Address = ipv6Address;
         }

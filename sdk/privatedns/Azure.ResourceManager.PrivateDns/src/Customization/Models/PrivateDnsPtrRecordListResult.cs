@@ -10,25 +10,25 @@ using Azure.ResourceManager.PrivateDns;
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> The response to a record set List operation. </summary>
-    internal partial class PtrRecordListResult
+    internal partial class PrivateDnsPtrRecordListResult
     {
-        /// <summary> Initializes a new instance of PtrRecordSetListResult. </summary>
-        internal PtrRecordListResult()
+        /// <summary> Initializes a new instance of PrivateDnsPtrRecordSetListResult. </summary>
+        internal PrivateDnsPtrRecordListResult()
         {
-            Value = new ChangeTrackingList<PtrRecordData>();
+            Value = new ChangeTrackingList<PrivateDnsPtrRecordData>();
         }
 
-        /// <summary> Initializes a new instance of PtrRecordSetListResult. </summary>
+        /// <summary> Initializes a new instance of PrivateDnsPtrRecordSetListResult. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal PtrRecordListResult(IReadOnlyList<PtrRecordData> value, string nextLink)
+        internal PrivateDnsPtrRecordListResult(IReadOnlyList<PrivateDnsPtrRecordData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Information about the record sets in the response. </summary>
-        public IReadOnlyList<PtrRecordData> Value { get; }
+        public IReadOnlyList<PrivateDnsPtrRecordData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }
