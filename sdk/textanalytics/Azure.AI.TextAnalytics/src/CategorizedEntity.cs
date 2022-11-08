@@ -74,7 +74,8 @@ namespace Azure.AI.TextAnalytics
         public int Length { get; }
 
         /// <summary>
-        /// Gets the collection of entity resolutions.
+        /// Gets the collection of entity resolutions. To learn more, see
+        /// <see href=" https://aka.ms/azsdk/language/ner-resolutions"/>
         /// </summary>
         public IReadOnlyCollection<BaseResolution> Resolutions { get; }
     }
