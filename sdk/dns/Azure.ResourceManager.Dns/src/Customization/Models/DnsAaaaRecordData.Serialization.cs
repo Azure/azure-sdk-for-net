@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class AaaaRecordData : IUtf8JsonSerializable
+    public partial class DnsAaaaRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsCollectionDefined(AaaaRecords))
+            if (Optional.IsCollectionDefined(DnsAaaaRecords))
             {
-                writer.WritePropertyName("AAAARecords");
+                writer.WritePropertyName("AAADnsARecords");
                 writer.WriteStartArray();
-                foreach (var item in AaaaRecords)
+                foreach (var item in DnsAaaaRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Dns
             writer.WriteEndObject();
         }
 
-        internal static AaaaRecordData DeserializeAaaaRecordData(JsonElement element)
+        internal static DnsAaaaRecordData DeserializeDnsAaaaRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<AaaaRecordInfo>> aaaaRecords = default;
+            Optional<IList<DnsAaaaRecordInfo>> aaaaRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("AAAARecords"))
+                        if (property0.NameEquals("AAADnsARecords"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AaaaRecordInfo> array = new List<AaaaRecordInfo>();
+                            List<DnsAaaaRecordInfo> array = new List<DnsAaaaRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AaaaRecordInfo.DeserializeAaaaRecordInfo(item));
+                                array.Add(DnsAaaaRecordInfo.DeserializeDnsAaaaRecordInfo(item));
                             }
                             aaaaRecords = array;
                             continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new AaaaRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource,  Optional.ToList(aaaaRecords));
+            return new DnsAaaaRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource,  Optional.ToList(aaaaRecords));
         }
     }
 }

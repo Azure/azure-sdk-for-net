@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the CaaRecord data model. </summary>
-    public partial class CaaRecordData : BaseRecordData
+    /// <summary> A class representing the DnsCaaRecord data model. </summary>
+    public partial class DnsCaaRecordData : BaseRecordData
     {
-        /// <summary> Initializes a new instance of CaaRecordData. </summary>
-        public CaaRecordData()
+        /// <summary> Initializes a new instance of DnsCaaRecordData. </summary>
+        public DnsCaaRecordData()
         {
-            CaaRecords = new ChangeTrackingList<CaaRecordInfo>();
+            DnsCaaRecords = new ChangeTrackingList<DnsCaaRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of CaaRecordData. </summary>
+        /// <summary> Initializes a new instance of DnsCaaRecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal CaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<CaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsCaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsCaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
         {
-            CaaRecords = caaRecords;
+            DnsCaaRecords = caaRecords;
         }
 
         /// <summary> The list of CAA records in the record set. </summary>
-        public IList<CaaRecordInfo> CaaRecords { get; }
+        public IList<DnsCaaRecordInfo> DnsCaaRecords { get; }
     }
 }

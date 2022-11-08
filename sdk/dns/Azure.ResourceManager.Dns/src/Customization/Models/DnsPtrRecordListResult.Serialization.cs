@@ -10,11 +10,11 @@ using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal partial class PtrRecordListResult
+    internal partial class DnsPtrRecordListResult
     {
-        internal static PtrRecordListResult DeserializePtrRecordListResult(JsonElement element)
+        internal static DnsPtrRecordListResult DeserializeDnsPtrRecordListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PtrRecordData>> value = default;
+            Optional<IReadOnlyList<DnsPtrRecordData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Dns.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PtrRecordData> array = new List<PtrRecordData>();
+                    List<DnsPtrRecordData> array = new List<DnsPtrRecordData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PtrRecordData.DeserializePtrRecordData(item));
+                        array.Add(DnsPtrRecordData.DeserializeDnsPtrRecordData(item));
                     }
                     value = array;
                     continue;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new PtrRecordListResult(Optional.ToList(value), nextLink.Value);
+            return new DnsPtrRecordListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

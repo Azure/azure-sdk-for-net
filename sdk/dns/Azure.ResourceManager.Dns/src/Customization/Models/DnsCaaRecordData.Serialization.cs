@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class CaaRecordData : IUtf8JsonSerializable
+    public partial class DnsCaaRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsCollectionDefined(CaaRecords))
+            if (Optional.IsCollectionDefined(DnsCaaRecords))
             {
                 writer.WritePropertyName("caaRecords");
                 writer.WriteStartArray();
-                foreach (var item in CaaRecords)
+                foreach (var item in DnsCaaRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Dns
             writer.WriteEndObject();
         }
 
-        internal static CaaRecordData DeserializeCaaRecordData(JsonElement element)
+        internal static DnsCaaRecordData DeserializeDnsCaaRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<CaaRecordInfo>> caaRecords = default;
+            Optional<IList<DnsCaaRecordInfo>> caaRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<CaaRecordInfo> array = new List<CaaRecordInfo>();
+                            List<DnsCaaRecordInfo> array = new List<DnsCaaRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CaaRecordInfo.DeserializeCaaRecordInfo(item));
+                                array.Add(DnsCaaRecordInfo.DeserializeDnsCaaRecordInfo(item));
                             }
                             caaRecords = array;
                             continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new CaaRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(caaRecords));
+            return new DnsCaaRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(caaRecords));
         }
     }
 }

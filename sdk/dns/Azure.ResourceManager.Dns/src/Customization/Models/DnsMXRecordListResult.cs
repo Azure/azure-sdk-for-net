@@ -10,25 +10,25 @@ using Azure.ResourceManager.Dns;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The response to a record set List operation. </summary>
-    internal partial class MXRecordListResult
+    internal partial class DnsMXRecordListResult
     {
-        /// <summary> Initializes a new instance of MXRecordSetListResult. </summary>
-        internal MXRecordListResult()
+        /// <summary> Initializes a new instance of DnsMXRecordSetListResult. </summary>
+        internal DnsMXRecordListResult()
         {
-            Value = new ChangeTrackingList<MXRecordData>();
+            Value = new ChangeTrackingList<DnsMXRecordData>();
         }
 
-        /// <summary> Initializes a new instance of MXRecordSetListResult. </summary>
+        /// <summary> Initializes a new instance of DnsMXRecordSetListResult. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal MXRecordListResult(IReadOnlyList<MXRecordData> value, string nextLink)
+        internal DnsMXRecordListResult(IReadOnlyList<DnsMXRecordData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Information about the record sets in the response. </summary>
-        public IReadOnlyList<MXRecordData> Value { get; }
+        public IReadOnlyList<DnsMXRecordData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

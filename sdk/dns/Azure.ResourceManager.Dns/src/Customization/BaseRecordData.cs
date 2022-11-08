@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the ARecord data model. </summary>
+    /// <summary> A class representing the DnsARecord data model. </summary>
     public partial class BaseRecordData : ResourceData
     {
-        /// <summary> Initializes a new instance of ARecordData. </summary>
+        /// <summary> Initializes a new instance of DnsARecordData. </summary>
         public BaseRecordData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ARecordData. </summary>
+        /// <summary> Initializes a new instance of DnsARecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

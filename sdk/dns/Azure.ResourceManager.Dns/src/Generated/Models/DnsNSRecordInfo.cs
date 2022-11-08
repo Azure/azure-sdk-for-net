@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An NS record. </summary>
-    public partial class NSRecordInfo
+    public partial class DnsNSRecordInfo
     {
-        /// <summary> Initializes a new instance of NSRecordInfo. </summary>
-        public NSRecordInfo()
+        /// <summary> Initializes a new instance of DnsNSRecordInfo. </summary>
+        public DnsNSRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NSRecordInfo. </summary>
+        /// <summary> Initializes a new instance of DnsNSRecordInfo. </summary>
         /// <param name="dnsNSDomainName"> The name server name for this NS record. </param>
-        internal NSRecordInfo(string dnsNSDomainName)
+        internal DnsNSRecordInfo(string dnsNSDomainName)
         {
             DnsNSDomainName = dnsNSDomainName;
         }

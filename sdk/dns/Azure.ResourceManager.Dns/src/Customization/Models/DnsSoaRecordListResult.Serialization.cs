@@ -10,11 +10,11 @@ using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal partial class SoaRecordListResult
+    internal partial class DnsSoaRecordListResult
     {
-        internal static SoaRecordListResult DeserializeSoaRecordListResult(JsonElement element)
+        internal static DnsSoaRecordListResult DeserializeDnsSoaRecordListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SoaRecordData>> value = default;
+            Optional<IReadOnlyList<DnsSoaRecordData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Dns.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SoaRecordData> array = new List<SoaRecordData>();
+                    List<DnsSoaRecordData> array = new List<DnsSoaRecordData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SoaRecordData.DeserializeSoaRecordData(item));
+                        array.Add(DnsSoaRecordData.DeserializeDnsSoaRecordData(item));
                     }
                     value = array;
                     continue;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new SoaRecordListResult(Optional.ToList(value), nextLink.Value);
+            return new DnsSoaRecordListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -16,33 +16,33 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
-[assembly: CodeGenSuppressType("CaaRecordCollection")]
+[assembly: CodeGenSuppressType("DnsCaaRecordCollection")]
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CaaRecordResource" /> and their operations.
-    /// Each <see cref="CaaRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="CaaRecordCollection" /> instance call the GetCaaRecords method from an instance of <see cref="DnsZoneResource" />.
+    /// A class representing a collection of <see cref="DnsCaaRecordResource" /> and their operations.
+    /// Each <see cref="DnsCaaRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="DnsCaaRecordCollection" /> instance call the GetDnsCaaRecords method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
-    public partial class CaaRecordCollection : ArmCollection, IEnumerable<CaaRecordResource>, IAsyncEnumerable<CaaRecordResource>
+    public partial class DnsCaaRecordCollection : ArmCollection, IEnumerable<DnsCaaRecordResource>, IAsyncEnumerable<DnsCaaRecordResource>
     {
         private readonly ClientDiagnostics _caaRecordInfoRecordSetsClientDiagnostics;
-        private readonly CaaRecordRestOperations _caaRecordInfoRecordSetsRestClient;
+        private readonly DnsCaaRecordRestOperations _caaRecordInfoRecordSetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CaaRecordCollection"/> class for mocking. </summary>
-        protected CaaRecordCollection()
+        /// <summary> Initializes a new instance of the <see cref="DnsCaaRecordCollection"/> class for mocking. </summary>
+        protected DnsCaaRecordCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CaaRecordCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsCaaRecordCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal CaaRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DnsCaaRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _caaRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", CaaRecordResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CaaRecordResource.ResourceType, out string caaRecordInfoRecordSetsApiVersion);
-            _caaRecordInfoRecordSetsRestClient = new CaaRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, caaRecordInfoRecordSetsApiVersion);
+            _caaRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsCaaRecordResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DnsCaaRecordResource.ResourceType, out string caaRecordInfoRecordSetsApiVersion);
+            _caaRecordInfoRecordSetsRestClient = new DnsCaaRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, caaRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CaaRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string caaRecordName, CaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DnsCaaRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string caaRecordName, DnsCaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.CreateOrUpdate");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _caaRecordInfoRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CAA".ToDnsRecordType(), caaRecordName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation<CaaRecordResource>(Response.FromValue(new CaaRecordResource(Client, response), response.GetRawResponse()));
+                var operation = new DnsArmOperation<DnsCaaRecordResource>(Response.FromValue(new DnsCaaRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CaaRecordResource> CreateOrUpdate(WaitUntil waitUntil, string caaRecordName, CaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DnsCaaRecordResource> CreateOrUpdate(WaitUntil waitUntil, string caaRecordName, DnsCaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.CreateOrUpdate");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _caaRecordInfoRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CAA".ToDnsRecordType(), caaRecordName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsArmOperation<CaaRecordResource>(Response.FromValue(new CaaRecordResource(Client, response), response.GetRawResponse()));
+                var operation = new DnsArmOperation<DnsCaaRecordResource>(Response.FromValue(new DnsCaaRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="caaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> is null. </exception>
-        public virtual async Task<Response<CaaRecordResource>> GetAsync(string caaRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsCaaRecordResource>> GetAsync(string caaRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
 
-            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.Get");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.Get");
             scope.Start();
             try
             {
                 var response = await _caaRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CAA".ToDnsRecordType(), caaRecordName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CaaRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsCaaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="caaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> is null. </exception>
-        public virtual Response<CaaRecordResource> Get(string caaRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<DnsCaaRecordResource> Get(string caaRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
 
-            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.Get");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.Get");
             scope.Start();
             try
             {
                 var response = _caaRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CAA".ToDnsRecordType(), caaRecordName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CaaRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsCaaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,17 +186,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CaaRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CaaRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DnsCaaRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsCaaRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<CaaRecordResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DnsCaaRecordResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.GetAll");
+                using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _caaRecordInfoRecordSetsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CAA".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CaaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsCaaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            async Task<Page<CaaRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DnsCaaRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.GetAll");
+                using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _caaRecordInfoRecordSetsRestClient.ListByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CAA".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CaaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsCaaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,17 +230,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CaaRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CaaRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DnsCaaRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DnsCaaRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<CaaRecordResource> FirstPageFunc(int? pageSizeHint)
+            Page<DnsCaaRecordResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.GetAll");
+                using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _caaRecordInfoRecordSetsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CAA".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CaaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsCaaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            Page<CaaRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DnsCaaRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.GetAll");
+                using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _caaRecordInfoRecordSetsRestClient.ListByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CAA".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CaaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsCaaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
 
-            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.Exists");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.Exists");
             scope.Start();
             try
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
 
-            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordCollection.Exists");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.Exists");
             scope.Start();
             try
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        IEnumerator<CaaRecordResource> IEnumerable<CaaRecordResource>.GetEnumerator()
+        IEnumerator<DnsCaaRecordResource> IEnumerable<DnsCaaRecordResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Dns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CaaRecordResource> IAsyncEnumerable<CaaRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DnsCaaRecordResource> IAsyncEnumerable<DnsCaaRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

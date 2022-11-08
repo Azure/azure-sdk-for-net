@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class MXRecordData : IUtf8JsonSerializable
+    public partial class DnsMXRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsCollectionDefined(MXRecords))
+            if (Optional.IsCollectionDefined(DnsMXRecords))
             {
-                writer.WritePropertyName(nameof(MXRecords));
+                writer.WritePropertyName(nameof(DnsMXRecords));
                 writer.WriteStartArray();
-                foreach (var item in MXRecords)
+                foreach (var item in DnsMXRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Dns
             writer.WriteEndObject();
         }
 
-        internal static MXRecordData DeserializeMXRecordData(JsonElement element)
+        internal static DnsMXRecordData DeserializeDnsMXRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<MXRecordInfo>> mxRecords = default;
+            Optional<IList<DnsMXRecordInfo>> mxRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("MXRecords"))
+                        if (property0.NameEquals("DnsMXRecords"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MXRecordInfo> array = new List<MXRecordInfo>();
+                            List<DnsMXRecordInfo> array = new List<DnsMXRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MXRecordInfo.DeserializeMXRecordInfo(item));
+                                array.Add(DnsMXRecordInfo.DeserializeDnsMXRecordInfo(item));
                             }
                             mxRecords = array;
                             continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new MXRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(mxRecords));
+            return new DnsMXRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(mxRecords));
         }
     }
 }

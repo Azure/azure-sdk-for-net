@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class CaaRecordInfo : IUtf8JsonSerializable
+    public partial class DnsCaaRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static CaaRecordInfo DeserializeCaaRecordInfo(JsonElement element)
+        internal static DnsCaaRecordInfo DeserializeDnsCaaRecordInfo(JsonElement element)
         {
             Optional<int> flags = default;
             Optional<string> tag = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new CaaRecordInfo(Optional.ToNullable(flags), tag.Value, value.Value);
+            return new DnsCaaRecordInfo(Optional.ToNullable(flags), tag.Value, value.Value);
         }
     }
 }

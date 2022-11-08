@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class SrvRecordData : IUtf8JsonSerializable
+    public partial class DnsSrvRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsCollectionDefined(SrvRecords))
+            if (Optional.IsCollectionDefined(DnsSrvRecords))
             {
                 writer.WritePropertyName("SRVRecords");
                 writer.WriteStartArray();
-                foreach (var item in SrvRecords)
+                foreach (var item in DnsSrvRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Dns
             writer.WriteEndObject();
         }
 
-        internal static SrvRecordData DeserializeSrvRecordData(JsonElement element)
+        internal static DnsSrvRecordData DeserializeDnsSrvRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<SrvRecordInfo>> srvRecords = default;
+            Optional<IList<DnsSrvRecordInfo>> srvRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SrvRecordInfo> array = new List<SrvRecordInfo>();
+                            List<DnsSrvRecordInfo> array = new List<DnsSrvRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SrvRecordInfo.DeserializeSrvRecordInfo(item));
+                                array.Add(DnsSrvRecordInfo.DeserializeDnsSrvRecordInfo(item));
                             }
                             srvRecords = array;
                             continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new SrvRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(srvRecords));
+            return new DnsSrvRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(srvRecords));
         }
     }
 }

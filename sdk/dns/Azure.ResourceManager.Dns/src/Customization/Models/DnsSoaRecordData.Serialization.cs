@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class SoaRecordData : IUtf8JsonSerializable
+    public partial class DnsSoaRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsDefined(SoaRecord))
+            if (Optional.IsDefined(DnsSoaRecord))
             {
-                writer.WritePropertyName("SOARecord");
-                writer.WriteObjectValue(SoaRecord);
+                writer.WritePropertyName("SODnsARecord");
+                writer.WriteObjectValue(DnsSoaRecord);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static SoaRecordData DeserializeSoaRecordData(JsonElement element)
+        internal static DnsSoaRecordData DeserializeDnsSoaRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<SoaRecordInfo> soaRecord = default;
+            Optional<DnsSoaRecordInfo> soaRecord = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -154,21 +154,21 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("SOARecord"))
+                        if (property0.NameEquals("SODnsARecord"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            soaRecord = SoaRecordInfo.DeserializeSoaRecordInfo(property0.Value);
+                            soaRecord = DnsSoaRecordInfo.DeserializeDnsSoaRecordInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SoaRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, soaRecord.Value);
+            return new DnsSoaRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, soaRecord.Value);
         }
     }
 }

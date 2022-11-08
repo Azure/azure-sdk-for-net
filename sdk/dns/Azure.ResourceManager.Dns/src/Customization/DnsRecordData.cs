@@ -10,24 +10,24 @@ using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-[assembly: CodeGenSuppressType("RecordData")]
+[assembly: CodeGenSuppressType("DnsRecordData")]
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the Record data model. </summary>
-    public partial class RecordData : BaseRecordData
+    public partial class DnsRecordData : BaseRecordData
     {
         /// <summary> Initializes a new instance of RecordData. </summary>
-        public RecordData()
+        public DnsRecordData()
         {
-            ARecords = new ChangeTrackingList<ARecordInfo>();
-            AaaaRecords = new ChangeTrackingList<AaaaRecordInfo>();
-            MXRecords = new ChangeTrackingList<MXRecordInfo>();
-            NSRecords = new ChangeTrackingList<NSRecordInfo>();
-            PtrRecords = new ChangeTrackingList<PtrRecordInfo>();
-            SrvRecords = new ChangeTrackingList<SrvRecordInfo>();
-            TxtRecords = new ChangeTrackingList<TxtRecordInfo>();
-            CaaRecords = new ChangeTrackingList<CaaRecordInfo>();
+            DnsARecords = new ChangeTrackingList<DnsARecordInfo>();
+            DnsAaaaRecords = new ChangeTrackingList<DnsAaaaRecordInfo>();
+            DnsMXRecords = new ChangeTrackingList<DnsMXRecordInfo>();
+            DnsNSRecords = new ChangeTrackingList<DnsNSRecordInfo>();
+            DnsPtrRecords = new ChangeTrackingList<DnsPtrRecordInfo>();
+            DnsSrvRecords = new ChangeTrackingList<DnsSrvRecordInfo>();
+            DnsTxtRecords = new ChangeTrackingList<DnsTxtRecordInfo>();
+            DnsCaaRecords = new ChangeTrackingList<DnsCaaRecordInfo>();
         }
 
         /// <summary> Initializes a new instance of RecordData. </summary>
@@ -51,51 +51,51 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cnameRecordInfo"> The CNAME record in the  record set. </param>
         /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal RecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<ARecordInfo> aRecords, IList<AaaaRecordInfo> aaaaRecords, IList<MXRecordInfo> mxRecords, IList<NSRecordInfo> nsRecords, IList<PtrRecordInfo> ptrRecords, IList<SrvRecordInfo> srvRecords, IList<TxtRecordInfo> txtRecords, CnameRecordInfo cnameRecordInfo, SoaRecordInfo soaRecordInfo, IList<CaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, DnsCnameRecordInfo cnameRecordInfo, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
         {
-            ARecords = aRecords;
-            AaaaRecords = aaaaRecords;
-            MXRecords = mxRecords;
-            NSRecords = nsRecords;
-            PtrRecords = ptrRecords;
-            SrvRecords = srvRecords;
-            TxtRecords = txtRecords;
-            CnameRecordInfo = cnameRecordInfo;
-            SoaRecordInfo = soaRecordInfo;
-            CaaRecords = caaRecords;
+            DnsARecords = aRecords;
+            DnsAaaaRecords = aaaaRecords;
+            DnsMXRecords = mxRecords;
+            DnsNSRecords = nsRecords;
+            DnsPtrRecords = ptrRecords;
+            DnsSrvRecords = srvRecords;
+            DnsTxtRecords = txtRecords;
+            DnsCnameRecordInfo = cnameRecordInfo;
+            DnsSoaRecordInfo = soaRecordInfo;
+            DnsCaaRecords = caaRecords;
         }
 
         /// <summary> The list of A records in the record set. </summary>
-        public IList<ARecordInfo> ARecords { get; }
+        public IList<DnsARecordInfo> DnsARecords { get; }
         /// <summary> The list of AAAA records in the record set. </summary>
-        public IList<AaaaRecordInfo> AaaaRecords { get; }
+        public IList<DnsAaaaRecordInfo> DnsAaaaRecords { get; }
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<MXRecordInfo> MXRecords { get; }
+        public IList<DnsMXRecordInfo> DnsMXRecords { get; }
         /// <summary> The list of NS records in the record set. </summary>
-        public IList<NSRecordInfo> NSRecords { get; }
+        public IList<DnsNSRecordInfo> DnsNSRecords { get; }
         /// <summary> The list of PTR records in the record set. </summary>
-        public IList<PtrRecordInfo> PtrRecords { get; }
+        public IList<DnsPtrRecordInfo> DnsPtrRecords { get; }
         /// <summary> The list of SRV records in the record set. </summary>
-        public IList<SrvRecordInfo> SrvRecords { get; }
+        public IList<DnsSrvRecordInfo> DnsSrvRecords { get; }
         /// <summary> The list of TXT records in the record set. </summary>
-        public IList<TxtRecordInfo> TxtRecords { get; }
+        public IList<DnsTxtRecordInfo> DnsTxtRecords { get; }
         /// <summary> The CNAME record in the  record set. </summary>
-        internal CnameRecordInfo CnameRecordInfo { get; set; }
+        internal DnsCnameRecordInfo DnsCnameRecordInfo { get; set; }
         /// <summary> The canonical name for this CNAME record. </summary>
         public string Cname
         {
-            get => CnameRecordInfo is null ? default : CnameRecordInfo.Cname;
+            get => DnsCnameRecordInfo is null ? default : DnsCnameRecordInfo.Cname;
             set
             {
-                if (CnameRecordInfo is null)
-                    CnameRecordInfo = new CnameRecordInfo();
-                CnameRecordInfo.Cname = value;
+                if (DnsCnameRecordInfo is null)
+                    DnsCnameRecordInfo = new DnsCnameRecordInfo();
+                DnsCnameRecordInfo.Cname = value;
             }
         }
 
         /// <summary> The SOA record in the record set. </summary>
-        public SoaRecordInfo SoaRecordInfo { get; set; }
+        public DnsSoaRecordInfo DnsSoaRecordInfo { get; set; }
         /// <summary> The list of CAA records in the record set. </summary>
-        public IList<CaaRecordInfo> CaaRecords { get; }
+        public IList<DnsCaaRecordInfo> DnsCaaRecords { get; }
     }
 }

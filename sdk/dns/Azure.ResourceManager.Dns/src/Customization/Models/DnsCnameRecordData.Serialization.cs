@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class CnameRecordData : IUtf8JsonSerializable
+    public partial class DnsCnameRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsDefined(CnameRecord))
+            if (Optional.IsDefined(DnsCnameRecord))
             {
                 writer.WritePropertyName("CNAMERecord");
-                writer.WriteObjectValue(CnameRecord);
+                writer.WriteObjectValue(DnsCnameRecord);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static CnameRecordData DeserializeCnameRecordData(JsonElement element)
+        internal static DnsCnameRecordData DeserializeDnsCnameRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<CnameRecordInfo> cnameRecord = default;
+            Optional<DnsCnameRecordInfo> cnameRecord = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cnameRecord = CnameRecordInfo.DeserializeCnameRecordInfo(property0.Value);
+                            cnameRecord = DnsCnameRecordInfo.DeserializeDnsCnameRecordInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CnameRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource,  cnameRecord.Value);
+            return new DnsCnameRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource,  cnameRecord.Value);
         }
     }
 }

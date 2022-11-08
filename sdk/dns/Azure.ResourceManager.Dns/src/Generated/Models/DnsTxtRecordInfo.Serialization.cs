@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class TxtRecordInfo : IUtf8JsonSerializable
+    public partial class DnsTxtRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static TxtRecordInfo DeserializeTxtRecordInfo(JsonElement element)
+        internal static DnsTxtRecordInfo DeserializeDnsTxtRecordInfo(JsonElement element)
         {
             Optional<IList<string>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new TxtRecordInfo(Optional.ToList(value));
+            return new DnsTxtRecordInfo(Optional.ToList(value));
         }
     }
 }

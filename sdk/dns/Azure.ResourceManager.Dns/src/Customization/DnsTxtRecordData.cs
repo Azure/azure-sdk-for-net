@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the TxtRecord data model. </summary>
-    public partial class TxtRecordData : BaseRecordData
+    /// <summary> A class representing the DnsTxtRecord data model. </summary>
+    public partial class DnsTxtRecordData : BaseRecordData
     {
-        /// <summary> Initializes a new instance of TxtRecordData. </summary>
-        public TxtRecordData()
+        /// <summary> Initializes a new instance of DnsTxtRecordData. </summary>
+        public DnsTxtRecordData()
         {
-            TxtRecords = new ChangeTrackingList<TxtRecordInfo>();
+            DnsTxtRecords = new ChangeTrackingList<DnsTxtRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of TxtRecordData. </summary>
+        /// <summary> Initializes a new instance of DnsTxtRecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        internal TxtRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<TxtRecordInfo> txtRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsTxtRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsTxtRecordInfo> txtRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
         {
-            TxtRecords = txtRecords;
+            DnsTxtRecords = txtRecords;
         }
 
         /// <summary> The list of TXT records in the record set. </summary>
-        public IList<TxtRecordInfo> TxtRecords { get; }
+        public IList<DnsTxtRecordInfo> DnsTxtRecords { get; }
     }
 }

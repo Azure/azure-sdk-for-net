@@ -10,11 +10,11 @@ using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal partial class MXRecordListResult
+    internal partial class DnsMXRecordListResult
     {
-        internal static MXRecordListResult DeserializeMXRecordListResult(JsonElement element)
+        internal static DnsMXRecordListResult DeserializeDnsMXRecordListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MXRecordData>> value = default;
+            Optional<IReadOnlyList<DnsMXRecordData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Dns.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MXRecordData> array = new List<MXRecordData>();
+                    List<DnsMXRecordData> array = new List<DnsMXRecordData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MXRecordData.DeserializeMXRecordData(item));
+                        array.Add(DnsMXRecordData.DeserializeDnsMXRecordData(item));
                     }
                     value = array;
                     continue;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new MXRecordListResult(Optional.ToList(value), nextLink.Value);
+            return new DnsMXRecordListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

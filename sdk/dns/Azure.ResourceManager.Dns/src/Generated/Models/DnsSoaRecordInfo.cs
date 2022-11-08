@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An SOA record. </summary>
-    public partial class SoaRecordInfo
+    public partial class DnsSoaRecordInfo
     {
-        /// <summary> Initializes a new instance of SoaRecordInfo. </summary>
-        public SoaRecordInfo()
+        /// <summary> Initializes a new instance of DnsSoaRecordInfo. </summary>
+        public DnsSoaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SoaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of DnsSoaRecordInfo. </summary>
         /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
         /// <param name="email"> The email contact for this SOA record. </param>
         /// <param name="serialNumber"> The serial number for this SOA record. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="retryTimeInSeconds"> The retry time for this SOA record. </param>
         /// <param name="expireTimeInSeconds"> The expire time for this SOA record. </param>
         /// <param name="minimumTtlInSeconds"> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </param>
-        internal SoaRecordInfo(string host, string email, long? serialNumber, long? refreshTimeInSeconds, long? retryTimeInSeconds, long? expireTimeInSeconds, long? minimumTtlInSeconds)
+        internal DnsSoaRecordInfo(string host, string email, long? serialNumber, long? refreshTimeInSeconds, long? retryTimeInSeconds, long? expireTimeInSeconds, long? minimumTtlInSeconds)
         {
             Host = host;
             Email = email;

@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the SrvRecord data model. </summary>
-    public partial class SrvRecordData : BaseRecordData
+    /// <summary> A class representing the DnsSrvRecord data model. </summary>
+    public partial class DnsSrvRecordData : BaseRecordData
     {
-        /// <summary> Initializes a new instance of SrvRecordData. </summary>
-        public SrvRecordData()
+        /// <summary> Initializes a new instance of DnsSrvRecordData. </summary>
+        public DnsSrvRecordData()
         {
-            SrvRecords = new ChangeTrackingList<SrvRecordInfo>();
+            DnsSrvRecords = new ChangeTrackingList<DnsSrvRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of SrvRecordData. </summary>
+        /// <summary> Initializes a new instance of DnsSrvRecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="srvRecords"> The list of SRV records in the record set. </param>
-        internal SrvRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource ,IList<SrvRecordInfo> srvRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsSrvRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource ,IList<DnsSrvRecordInfo> srvRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
         {
-            SrvRecords = srvRecords;
+            DnsSrvRecords = srvRecords;
         }
 
         /// <summary> The list of SRV records in the record set. </summary>
-        public IList<SrvRecordInfo> SrvRecords { get; }
+        public IList<DnsSrvRecordInfo> DnsSrvRecords { get; }
     }
 }

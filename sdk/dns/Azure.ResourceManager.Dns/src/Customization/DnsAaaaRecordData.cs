@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the AaaaRecord data model. </summary>
-    public partial class AaaaRecordData : BaseRecordData
+    /// <summary> A class representing the DnsAaaaRecord data model. </summary>
+    public partial class DnsAaaaRecordData : BaseRecordData
     {
-        /// <summary> Initializes a new instance of AaaaRecordData. </summary>
-        public AaaaRecordData()
+        /// <summary> Initializes a new instance of DnsAaaaRecordData. </summary>
+        public DnsAaaaRecordData()
         {
-            AaaaRecords = new ChangeTrackingList<AaaaRecordInfo>();
+            DnsAaaaRecords = new ChangeTrackingList<DnsAaaaRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of AaaaRecordData. </summary>
+        /// <summary> Initializes a new instance of DnsAaaaRecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
-        internal AaaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<AaaaRecordInfo> aaaaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsAaaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsAaaaRecordInfo> aaaaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
         {
-            AaaaRecords = aaaaRecords;
+            DnsAaaaRecords = aaaaRecords;
         }
 
         /// <summary> The list of AAAA records in the record set. </summary>
-        public IList<AaaaRecordInfo> AaaaRecords { get; }
+        public IList<DnsAaaaRecordInfo> DnsAaaaRecords { get; }
     }
 }

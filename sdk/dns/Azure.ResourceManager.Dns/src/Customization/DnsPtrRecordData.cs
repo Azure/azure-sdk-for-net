@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the PtrRecord data model. </summary>
-    public partial class PtrRecordData : BaseRecordData
+    /// <summary> A class representing the DnsPtrRecord data model. </summary>
+    public partial class DnsPtrRecordData : BaseRecordData
     {
-        /// <summary> Initializes a new instance of PtrRecordData. </summary>
-        public PtrRecordData()
+        /// <summary> Initializes a new instance of DnsPtrRecordData. </summary>
+        public DnsPtrRecordData()
         {
-            PtrRecords = new ChangeTrackingList<PtrRecordInfo>();
+            DnsPtrRecords = new ChangeTrackingList<DnsPtrRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of PtrRecordData. </summary>
+        /// <summary> Initializes a new instance of DnsPtrRecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
-        internal PtrRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<PtrRecordInfo> ptrRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsPtrRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsPtrRecordInfo> ptrRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
         {
-            PtrRecords = ptrRecords;
+            DnsPtrRecords = ptrRecords;
         }
 
         /// <summary> The list of PTR records in the record set. </summary>
-        public IList<PtrRecordInfo> PtrRecords { get; }
+        public IList<DnsPtrRecordInfo> DnsPtrRecords { get; }
     }
 }

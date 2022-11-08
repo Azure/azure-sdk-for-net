@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> A PTR record. </summary>
-    public partial class PtrRecordInfo
+    public partial class DnsPtrRecordInfo
     {
-        /// <summary> Initializes a new instance of PtrRecordInfo. </summary>
-        public PtrRecordInfo()
+        /// <summary> Initializes a new instance of DnsPtrRecordInfo. </summary>
+        public DnsPtrRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PtrRecordInfo. </summary>
+        /// <summary> Initializes a new instance of DnsPtrRecordInfo. </summary>
         /// <param name="dnsPtrDomainName"> The PTR target domain name for this PTR record. </param>
-        internal PtrRecordInfo(string dnsPtrDomainName)
+        internal DnsPtrRecordInfo(string dnsPtrDomainName)
         {
             DnsPtrDomainName = dnsPtrDomainName;
         }

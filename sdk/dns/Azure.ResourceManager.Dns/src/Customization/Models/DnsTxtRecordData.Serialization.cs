@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class TxtRecordData : IUtf8JsonSerializable
+    public partial class DnsTxtRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsCollectionDefined(TxtRecords))
+            if (Optional.IsCollectionDefined(DnsTxtRecords))
             {
                 writer.WritePropertyName("TXTRecords");
                 writer.WriteStartArray();
-                foreach (var item in TxtRecords)
+                foreach (var item in DnsTxtRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Dns
             writer.WriteEndObject();
         }
 
-        internal static TxtRecordData DeserializeTxtRecordData(JsonElement element)
+        internal static DnsTxtRecordData DeserializeDnsTxtRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<TxtRecordInfo>> txtRecords = default;
+            Optional<IList<DnsTxtRecordInfo>> txtRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TxtRecordInfo> array = new List<TxtRecordInfo>();
+                            List<DnsTxtRecordInfo> array = new List<DnsTxtRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TxtRecordInfo.DeserializeTxtRecordInfo(item));
+                                array.Add(DnsTxtRecordInfo.DeserializeDnsTxtRecordInfo(item));
                             }
                             txtRecords = array;
                             continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new TxtRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(txtRecords));
+            return new DnsTxtRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(txtRecords));
         }
     }
 }

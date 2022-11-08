@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class NSRecordInfo : IUtf8JsonSerializable
+    public partial class DnsNSRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static NSRecordInfo DeserializeNSRecordInfo(JsonElement element)
+        internal static DnsNSRecordInfo DeserializeDnsNSRecordInfo(JsonElement element)
         {
             Optional<string> nsdname = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new NSRecordInfo(nsdname.Value);
+            return new DnsNSRecordInfo(nsdname.Value);
         }
     }
 }

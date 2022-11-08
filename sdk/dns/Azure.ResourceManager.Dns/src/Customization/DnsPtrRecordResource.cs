@@ -13,19 +13,19 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
-[assembly: CodeGenSuppressType("PtrRecordResource")]
+[assembly: CodeGenSuppressType("DnsPtrRecordResource")]
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a PtrRecord along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PtrRecordResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPtrRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetPtrRecord method.
+    /// A Class representing a DnsPtrRecord along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsPtrRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDnsPtrRecordResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetDnsPtrRecord method.
     /// </summary>
-    public partial class PtrRecordResource : ArmResource
+    public partial class DnsPtrRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PtrRecordResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DnsPtrRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string ptrRecordName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{ptrRecordName}";
@@ -33,31 +33,31 @@ namespace Azure.ResourceManager.Dns
         }
 
         private readonly ClientDiagnostics _ptrRecordInfoRecordSetsClientDiagnostics;
-        private readonly PtrRecordRestOperations _ptrRecordInfoRecordSetsRestClient;
-        private readonly PtrRecordData _data;
+        private readonly DnsPtrRecordRestOperations _ptrRecordInfoRecordSetsRestClient;
+        private readonly DnsPtrRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PtrRecordResource"/> class for mocking. </summary>
-        protected PtrRecordResource()
+        /// <summary> Initializes a new instance of the <see cref="DnsPtrRecordResource"/> class for mocking. </summary>
+        protected DnsPtrRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PtrRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DnsPtrRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PtrRecordResource(ArmClient client, PtrRecordData data) : this(client, data.Id)
+        internal DnsPtrRecordResource(ArmClient client, DnsPtrRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PtrRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsPtrRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PtrRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DnsPtrRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ptrRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string ptrRecordInfoRecordSetsApiVersion);
-            _ptrRecordInfoRecordSetsRestClient = new PtrRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ptrRecordInfoRecordSetsApiVersion);
+            _ptrRecordInfoRecordSetsRestClient = new DnsPtrRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ptrRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PtrRecordData Data
+        public virtual DnsPtrRecordData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PtrRecordResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsPtrRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Get");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordResource.Get");
             scope.Start();
             try
             {
                 var response = await _ptrRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PtrRecordResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DnsPtrRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Get");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordResource.Get");
             scope.Start();
             try
             {
                 var response = _ptrRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Delete");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordResource.Delete");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Delete");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordResource.Delete");
             scope.Start();
             try
             {
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<PtrRecordResource>> UpdateAsync(PtrRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsPtrRecordResource>> UpdateAsync(DnsPtrRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Update");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordResource.Update");
             scope.Start();
             try
             {
                 var response = await _ptrRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<PtrRecordResource> Update(PtrRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DnsPtrRecordResource> Update(DnsPtrRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Update");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordResource.Update");
             scope.Start();
             try
             {
                 var response = _ptrRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

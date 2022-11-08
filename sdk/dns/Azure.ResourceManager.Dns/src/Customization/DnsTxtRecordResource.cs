@@ -13,19 +13,19 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
-[assembly: CodeGenSuppressType("TxtRecordResource")]
+[assembly: CodeGenSuppressType("DnsTxtRecordResource")]
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a TxtRecord along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TxtRecordResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTxtRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetTxtRecord method.
+    /// A Class representing a DnsTxtRecord along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsTxtRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDnsTxtRecordResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetDnsTxtRecord method.
     /// </summary>
-    public partial class TxtRecordResource : ArmResource
+    public partial class DnsTxtRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="TxtRecordResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DnsTxtRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string txtRecordName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TXT/{txtRecordName}";
@@ -33,31 +33,31 @@ namespace Azure.ResourceManager.Dns
         }
 
         private readonly ClientDiagnostics _txtRecordInfoRecordSetsClientDiagnostics;
-        private readonly TxtRecordRestOperations _txtRecordInfoRecordSetsRestClient;
-        private readonly TxtRecordData _data;
+        private readonly DnsTxtRecordRestOperations _txtRecordInfoRecordSetsRestClient;
+        private readonly DnsTxtRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="TxtRecordResource"/> class for mocking. </summary>
-        protected TxtRecordResource()
+        /// <summary> Initializes a new instance of the <see cref="DnsTxtRecordResource"/> class for mocking. </summary>
+        protected DnsTxtRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TxtRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DnsTxtRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TxtRecordResource(ArmClient client, TxtRecordData data) : this(client, data.Id)
+        internal DnsTxtRecordResource(ArmClient client, DnsTxtRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TxtRecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsTxtRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TxtRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DnsTxtRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _txtRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string txtRecordInfoRecordSetsApiVersion);
-            _txtRecordInfoRecordSetsRestClient = new TxtRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, txtRecordInfoRecordSetsApiVersion);
+            _txtRecordInfoRecordSetsRestClient = new DnsTxtRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, txtRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual TxtRecordData Data
+        public virtual DnsTxtRecordData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TxtRecordResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsTxtRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Get");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsTxtRecordResource.Get");
             scope.Start();
             try
             {
                 var response = await _txtRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TxtRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsTxtRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TxtRecordResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DnsTxtRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Get");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsTxtRecordResource.Get");
             scope.Start();
             try
             {
                 var response = _txtRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TxtRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsTxtRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Delete");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsTxtRecordResource.Delete");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Delete");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsTxtRecordResource.Delete");
             scope.Start();
             try
             {
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<TxtRecordResource>> UpdateAsync(TxtRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsTxtRecordResource>> UpdateAsync(DnsTxtRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Update");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsTxtRecordResource.Update");
             scope.Start();
             try
             {
                 var response = await _txtRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new TxtRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsTxtRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<TxtRecordResource> Update(TxtRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DnsTxtRecordResource> Update(DnsTxtRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Update");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsTxtRecordResource.Update");
             scope.Start();
             try
             {
                 var response = _txtRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new TxtRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsTxtRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

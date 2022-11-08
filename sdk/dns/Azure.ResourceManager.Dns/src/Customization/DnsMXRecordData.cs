@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the MXRecord data model. </summary>
-    public partial class MXRecordData : BaseRecordData
+    /// <summary> A class representing the DnsMXRecord data model. </summary>
+    public partial class DnsMXRecordData : BaseRecordData
     {
-        /// <summary> Initializes a new instance of MXRecordData. </summary>
-        public MXRecordData()
+        /// <summary> Initializes a new instance of DnsMXRecordData. </summary>
+        public DnsMXRecordData()
         {
-            MXRecords = new ChangeTrackingList<MXRecordInfo>();
+            DnsMXRecords = new ChangeTrackingList<DnsMXRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of MXRecordData. </summary>
+        /// <summary> Initializes a new instance of DnsMXRecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="mxRecords"> The list of MX records in the record set. </param>
-        internal MXRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<MXRecordInfo> mxRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsMXRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsMXRecordInfo> mxRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
         {
-            MXRecords = mxRecords;
+            DnsMXRecords = mxRecords;
         }
 
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<MXRecordInfo> MXRecords { get; }
+        public IList<DnsMXRecordInfo> DnsMXRecords { get; }
     }
 }

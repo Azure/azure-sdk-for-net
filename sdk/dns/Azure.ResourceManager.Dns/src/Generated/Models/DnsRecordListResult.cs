@@ -12,25 +12,25 @@ using Azure.ResourceManager.Dns;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The response to a record set List operation. </summary>
-    internal partial class RecordListResult
+    internal partial class DnsRecordListResult
     {
-        /// <summary> Initializes a new instance of RecordListResult. </summary>
-        internal RecordListResult()
+        /// <summary> Initializes a new instance of DnsRecordListResult. </summary>
+        internal DnsRecordListResult()
         {
-            Value = new ChangeTrackingList<RecordData>();
+            Value = new ChangeTrackingList<DnsRecordData>();
         }
 
-        /// <summary> Initializes a new instance of RecordListResult. </summary>
+        /// <summary> Initializes a new instance of DnsRecordListResult. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal RecordListResult(IReadOnlyList<RecordData> value, string nextLink)
+        internal DnsRecordListResult(IReadOnlyList<DnsRecordData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Information about the record sets in the response. </summary>
-        public IReadOnlyList<RecordData> Value { get; }
+        public IReadOnlyList<DnsRecordData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class PtrRecordData : IUtf8JsonSerializable
+    public partial class DnsPtrRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsCollectionDefined(PtrRecords))
+            if (Optional.IsCollectionDefined(DnsPtrRecords))
             {
                 writer.WritePropertyName("PTRRecords");
                 writer.WriteStartArray();
-                foreach (var item in PtrRecords)
+                foreach (var item in DnsPtrRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Dns
             writer.WriteEndObject();
         }
 
-        internal static PtrRecordData DeserializePtrRecordData(JsonElement element)
+        internal static DnsPtrRecordData DeserializeDnsPtrRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<PtrRecordInfo>> ptrRecords = default;
+            Optional<IList<DnsPtrRecordInfo>> ptrRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PtrRecordInfo> array = new List<PtrRecordInfo>();
+                            List<DnsPtrRecordInfo> array = new List<DnsPtrRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PtrRecordInfo.DeserializePtrRecordInfo(item));
+                                array.Add(DnsPtrRecordInfo.DeserializeDnsPtrRecordInfo(item));
                             }
                             ptrRecords = array;
                             continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new PtrRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(ptrRecords));
+            return new DnsPtrRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(ptrRecords));
         }
     }
 }

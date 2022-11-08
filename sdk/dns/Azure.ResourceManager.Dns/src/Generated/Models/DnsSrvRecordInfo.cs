@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An SRV record. </summary>
-    public partial class SrvRecordInfo
+    public partial class DnsSrvRecordInfo
     {
-        /// <summary> Initializes a new instance of SrvRecordInfo. </summary>
-        public SrvRecordInfo()
+        /// <summary> Initializes a new instance of DnsSrvRecordInfo. </summary>
+        public DnsSrvRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SrvRecordInfo. </summary>
+        /// <summary> Initializes a new instance of DnsSrvRecordInfo. </summary>
         /// <param name="priority"> The priority value for this SRV record. </param>
         /// <param name="weight"> The weight value for this SRV record. </param>
         /// <param name="port"> The port value for this SRV record. </param>
         /// <param name="target"> The target domain name for this SRV record. </param>
-        internal SrvRecordInfo(int? priority, int? weight, int? port, string target)
+        internal DnsSrvRecordInfo(int? priority, int? weight, int? port, string target)
         {
             Priority = priority;
             Weight = weight;

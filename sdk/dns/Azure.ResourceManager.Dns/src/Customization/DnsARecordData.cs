@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the ARecord data model. </summary>
-    public partial class ARecordData : BaseRecordData
+    /// <summary> A class representing the DnsARecord data model. </summary>
+    public partial class DnsARecordData : BaseRecordData
     {
-        /// <summary> Initializes a new instance of ARecordData. </summary>
-        public ARecordData()
+        /// <summary> Initializes a new instance of DnsARecordData. </summary>
+        public DnsARecordData()
         {
-            ARecords = new ChangeTrackingList<ARecordInfo>();
+            DnsARecords = new ChangeTrackingList<DnsARecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of ARecordData. </summary>
+        /// <summary> Initializes a new instance of DnsARecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="aRecords"> The list of A records in the record set. </param>
-        internal ARecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<ARecordInfo> aRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsARecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsARecordInfo> aRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
         {
-            ARecords = aRecords;
+            DnsARecords = aRecords;
         }
 
         /// <summary> The list of A records in the record set. </summary>
-        public IList<ARecordInfo> ARecords { get; }
+        public IList<DnsARecordInfo> DnsARecords { get; }
     }
 }
