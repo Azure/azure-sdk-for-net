@@ -8,8 +8,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ## Swagger Source(s)
 ``` yaml
 title: WebPubSubServiceClient
-require:
-- https://github.com/Azure/azure-rest-api-specs/blob/1735a92bdc79b446385a36ba063ea5235680709f/specification/webpubsub/data-plane/readme.md
+input-file:
+- https://github.com/Azure/azure-rest-api-specs/blob/1735a92bdc79b446385a36ba063ea5235680709f/specification/webpubsub/data-plane/WebPubSub/stable/2022-11-01/webpubsub.json
 credential-types: AzureKeyCredential
 credential-header-name: Ocp-Apim-Subscription-Key
 ```
@@ -269,5 +269,16 @@ directive:
   transform: return "WebPubSubService_CloseUserConnections";
 - from: swagger-document
   where: $.paths["/api/hubs/{hub}/users/{userId}/:closeConnections"].post.parameters["0"]
+  transform: $["x-ms-parameter-location"] = "client"
+```
+
+### RemoveConnectionFromAllGroups
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/connections/{connectionId}/groups"].delete.operationId
+  transform: return "WebPubSubService_RemoveConnectionFromAllGroups";
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/connections/{connectionId}/groups"].delete.parameters["0"]
   transform: $["x-ms-parameter-location"] = "client"
 ```

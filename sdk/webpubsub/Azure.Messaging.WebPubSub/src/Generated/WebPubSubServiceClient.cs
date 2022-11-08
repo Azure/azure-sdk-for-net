@@ -350,6 +350,58 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        /// <summary> Remove a connection from all groups. </summary>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromAllGroupsAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> RemoveConnectionFromAllGroupsAsync(string connectionId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromAllGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionFromAllGroupsRequest(connectionId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a connection from all groups. </summary>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromAllGroups(String,RequestContext)']/*" />
+        public virtual Response RemoveConnectionFromAllGroups(string connectionId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromAllGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionFromAllGroupsRequest(connectionId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1174,6 +1226,24 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveConnectionFromAllGroupsRequest(string connectionId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/connections/", false);
+            uri.AppendPath(connectionId, true);
+            uri.AppendPath("/groups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
