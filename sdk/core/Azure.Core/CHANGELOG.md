@@ -8,8 +8,6 @@
 - Added `TryParse` method to the `ResourceIdentifier` type.
 - Added `AppendQuery` and `AppendPath` overloads to `RequestUriBuilder`.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed issue where fixed delay was applied when the `RetryMode` was set to `Exponential` when retrying a request that resulted in an exception. 
