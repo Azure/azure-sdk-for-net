@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         [RecordedTest]
         public async Task AaaaRecordOperationTest()
         {
-            var collection = _privateDns.GetAaaaRecords();
+            var collection = _privateDns.GetPrivateDnsAaaaRecords();
             string aaaaRecordName = Recording.GenerateAssetName("aaaa");
             string ipv6AddressValue1 = "3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55";
             string ipv6AddressValue2 = "3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d66";
 
             // CreateOrUpdate
-            var data = new AaaaRecordData()
+            var data = new PrivateDnsAaaaRecordData()
             {
                 TtlInSeconds = 3600,
-                AaaaRecords =
+                PrivateDnsAaaaRecords =
                 {
-                    new AaaaRecordInfo()
+                    new PrivateDnsAaaaRecordInfo()
                     {
                         IPv6Address = IPAddress.Parse(ipv6AddressValue1)
                     },
-                    new AaaaRecordInfo()
+                    new PrivateDnsAaaaRecordInfo()
                     {
                         IPv6Address = IPAddress.Parse(ipv6AddressValue2)
                     },
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             ValidateRecordBaseInfo(aaaaRecord.Value.Data, aaaaRecordName);
             Assert.AreEqual("privateDnsZones/AAAA", aaaaRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, aaaaRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv6AddressValue1, aaaaRecord.Value.Data.AaaaRecords[0].IPv6Address.ToString());
-            Assert.AreEqual(ipv6AddressValue2, aaaaRecord.Value.Data.AaaaRecords[1].IPv6Address.ToString());
+            Assert.AreEqual(ipv6AddressValue1, aaaaRecord.Value.Data.PrivateDnsAaaaRecords[0].IPv6Address.ToString());
+            Assert.AreEqual(ipv6AddressValue2, aaaaRecord.Value.Data.PrivateDnsAaaaRecords[1].IPv6Address.ToString());
 
             // Exist
             bool flag = await collection.ExistsAsync(aaaaRecordName);
             Assert.IsTrue(flag);
 
             // Update
-            await aaaaRecord.Value.UpdateAsync(new AaaaRecordData() { TtlInSeconds = 7200 });
+            await aaaaRecord.Value.UpdateAsync(new PrivateDnsAaaaRecordData() { TtlInSeconds = 7200 });
 
             // Get
             var getResponse = await collection.GetAsync(aaaaRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, aaaaRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv6AddressValue1, getResponse.Value.Data.AaaaRecords[0].IPv6Address.ToString());
-            Assert.AreEqual(ipv6AddressValue2, getResponse.Value.Data.AaaaRecords[1].IPv6Address.ToString());
+            Assert.AreEqual(ipv6AddressValue1, getResponse.Value.Data.PrivateDnsAaaaRecords[0].IPv6Address.ToString());
+            Assert.AreEqual(ipv6AddressValue2, getResponse.Value.Data.PrivateDnsAaaaRecords[1].IPv6Address.ToString());
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -88,22 +88,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         [RecordedTest]
         public async Task ARecordOperationTest()
         {
-            var collection = _privateDns.GetARecords();
+            var collection = _privateDns.GetPrivateDnsARecords();
             string aRecordName = Recording.GenerateAssetName("a");
             string ipv4AddressValue1 = "10.10.0.1";
             string ipv4AddressValue2 = "10.10.0.2";
 
             // CreateOrUpdate
-            var data = new ARecordData()
+            var data = new PrivateDnsARecordData()
             {
                 TtlInSeconds = 3600,
-                ARecords =
+                PrivateDnsARecords =
                 {
-                    new ARecordInfo()
+                    new PrivateDnsARecordInfo()
                     {
                         IPv4Address =  IPAddress.Parse(ipv4AddressValue1)
                     },
-                    new ARecordInfo()
+                    new PrivateDnsARecordInfo()
                     {
                         IPv4Address =  IPAddress.Parse(ipv4AddressValue2)
                     },
@@ -113,22 +113,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             ValidateRecordBaseInfo(aRecord.Value.Data, aRecordName);
             Assert.AreEqual("privateDnsZones/A", aRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, aRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv4AddressValue1, aRecord.Value.Data.ARecords[0].IPv4Address.ToString());
-            Assert.AreEqual(ipv4AddressValue2, aRecord.Value.Data.ARecords[1].IPv4Address.ToString());
+            Assert.AreEqual(ipv4AddressValue1, aRecord.Value.Data.PrivateDnsARecords[0].IPv4Address.ToString());
+            Assert.AreEqual(ipv4AddressValue2, aRecord.Value.Data.PrivateDnsARecords[1].IPv4Address.ToString());
 
             // Exist
             bool flag = await collection.ExistsAsync(aRecordName);
             Assert.IsTrue(flag);
 
             // Update
-            await aRecord.Value.UpdateAsync(new ARecordData() { TtlInSeconds = 7200 });
+            await aRecord.Value.UpdateAsync(new PrivateDnsARecordData() { TtlInSeconds = 7200 });
 
             // Get
             var getResponse = await collection.GetAsync(aRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, aRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv4AddressValue1, getResponse.Value.Data.ARecords[0].IPv4Address.ToString());
-            Assert.AreEqual(ipv4AddressValue2, getResponse.Value.Data.ARecords[1].IPv4Address.ToString());
+            Assert.AreEqual(ipv4AddressValue1, getResponse.Value.Data.PrivateDnsARecords[0].IPv4Address.ToString());
+            Assert.AreEqual(ipv4AddressValue2, getResponse.Value.Data.PrivateDnsARecords[1].IPv4Address.ToString());
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         [RecordedTest]
         public async Task CnameRecordOperationTest()
         {
-            var collection = _privateDns.GetCnameRecords();
+            var collection = _privateDns.GetPrivateDnsCnameRecords();
             string cnameRecordName = Recording.GenerateAssetName("cname");
             string aliasValue = "mycontoso.com";
 
             // CreateOrUpdate
-            var data = new CnameRecordData()
+            var data = new PrivateDnsCnameRecordData()
             {
                 TtlInSeconds = 3600,
                 Cname = aliasValue
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsTrue(flag);
 
             // Update
-            await cnameRecord.Value.UpdateAsync(new CnameRecordData() { TtlInSeconds = 7200 });
+            await cnameRecord.Value.UpdateAsync(new PrivateDnsCnameRecordData() { TtlInSeconds = 7200 });
 
             // Get
             var getResponse = await collection.GetAsync(cnameRecordName);
@@ -187,23 +187,23 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         [RecordedTest]
         public async Task MXRecordOperationTest()
         {
-            var collection = _privateDns.GetMXRecords();
+            var collection = _privateDns.GetPrivateDnsMXRecords();
             string mxRecordName = Recording.GenerateAssetName("mx");
             string mailExchangeValue1 = "mymail1.contoso.com";
             string mailExchangeValue2 = "mymail2.contoso.com";
 
             // CreateOrUpdate
-            var data = new MXRecordData()
+            var data = new PrivateDnsMXRecordData()
             {
                 TtlInSeconds = 3600,
-                MXRecords =
+                PrivateDnsMXRecords =
                 {
-                    new MXRecordInfo()
+                    new PrivateDnsMXRecordInfo()
                     {
                         Preference = 10,
                         Exchange = mailExchangeValue1
                     },
-                    new MXRecordInfo()
+                    new PrivateDnsMXRecordInfo()
                     {
                         Preference = 11,
                         Exchange = mailExchangeValue2
@@ -214,26 +214,26 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             ValidateRecordBaseInfo(mxRecord.Value.Data, mxRecordName);
             Assert.AreEqual("privateDnsZones/MX", mxRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, mxRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(10, mxRecord.Value.Data.MXRecords[0].Preference);
-            Assert.AreEqual(11, mxRecord.Value.Data.MXRecords[1].Preference);
-            Assert.AreEqual(mailExchangeValue1, mxRecord.Value.Data.MXRecords[0].Exchange);
-            Assert.AreEqual(mailExchangeValue2, mxRecord.Value.Data.MXRecords[1].Exchange);
+            Assert.AreEqual(10, mxRecord.Value.Data.PrivateDnsMXRecords[0].Preference);
+            Assert.AreEqual(11, mxRecord.Value.Data.PrivateDnsMXRecords[1].Preference);
+            Assert.AreEqual(mailExchangeValue1, mxRecord.Value.Data.PrivateDnsMXRecords[0].Exchange);
+            Assert.AreEqual(mailExchangeValue2, mxRecord.Value.Data.PrivateDnsMXRecords[1].Exchange);
 
             // Exist
             bool flag = await collection.ExistsAsync(mxRecordName);
             Assert.IsTrue(flag);
 
             // Update
-            await mxRecord.Value.UpdateAsync(new MXRecordData() { TtlInSeconds = 7200 });
+            await mxRecord.Value.UpdateAsync(new PrivateDnsMXRecordData() { TtlInSeconds = 7200 });
 
             // Get
             var getResponse = await collection.GetAsync(mxRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, mxRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(10, getResponse.Value.Data.MXRecords[0].Preference);
-            Assert.AreEqual(11, getResponse.Value.Data.MXRecords[1].Preference);
-            Assert.AreEqual(mailExchangeValue1, getResponse.Value.Data.MXRecords[0].Exchange);
-            Assert.AreEqual(mailExchangeValue2, getResponse.Value.Data.MXRecords[1].Exchange);
+            Assert.AreEqual(10, getResponse.Value.Data.PrivateDnsMXRecords[0].Preference);
+            Assert.AreEqual(11, getResponse.Value.Data.PrivateDnsMXRecords[1].Preference);
+            Assert.AreEqual(mailExchangeValue1, getResponse.Value.Data.PrivateDnsMXRecords[0].Exchange);
+            Assert.AreEqual(mailExchangeValue2, getResponse.Value.Data.PrivateDnsMXRecords[1].Exchange);
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -249,22 +249,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         [RecordedTest]
         public async Task PtrRecordOperationTest()
         {
-            var collection = _privateDns.GetPtrRecords();
+            var collection = _privateDns.GetPrivateDnsPtrRecords();
             string ptrRecordName = Recording.GenerateAssetName("ptr");
             string domainNameValue1 = "contoso1.com";
             string domainNameValue2 = "contoso2.com";
 
             // CreateOrUpdate
-            var data = new PtrRecordData()
+            var data = new PrivateDnsPtrRecordData()
             {
                 TtlInSeconds = 3600,
-                PtrRecords =
+                PrivateDnsPtrRecords =
                 {
-                    new PtrRecordInfo()
+                    new PrivateDnsPtrRecordInfo()
                     {
                         PtrDomainName = domainNameValue1
                     },
-                    new PtrRecordInfo()
+                    new PrivateDnsPtrRecordInfo()
                     {
                         PtrDomainName = domainNameValue2
                     },
@@ -274,22 +274,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             ValidateRecordBaseInfo(ptrRecord.Value.Data, ptrRecordName);
             Assert.AreEqual("privateDnsZones/PTR", ptrRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, ptrRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(domainNameValue1, ptrRecord.Value.Data.PtrRecords[0].PtrDomainName);
-            Assert.AreEqual(domainNameValue2, ptrRecord.Value.Data.PtrRecords[1].PtrDomainName);
+            Assert.AreEqual(domainNameValue1, ptrRecord.Value.Data.PrivateDnsPtrRecords[0].PtrDomainName);
+            Assert.AreEqual(domainNameValue2, ptrRecord.Value.Data.PrivateDnsPtrRecords[1].PtrDomainName);
 
             // Exist
             bool flag = await collection.ExistsAsync(ptrRecordName);
             Assert.IsTrue(flag);
 
             // Update
-            await ptrRecord.Value.UpdateAsync(new PtrRecordData() { TtlInSeconds = 7200 });
+            await ptrRecord.Value.UpdateAsync(new PrivateDnsPtrRecordData() { TtlInSeconds = 7200 });
 
             // Get
             var getResponse = await collection.GetAsync(ptrRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, ptrRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(domainNameValue1, getResponse.Value.Data.PtrRecords[0].PtrDomainName);
-            Assert.AreEqual(domainNameValue2, getResponse.Value.Data.PtrRecords[1].PtrDomainName);
+            Assert.AreEqual(domainNameValue1, getResponse.Value.Data.PrivateDnsPtrRecords[0].PtrDomainName);
+            Assert.AreEqual(domainNameValue2, getResponse.Value.Data.PrivateDnsPtrRecords[1].PtrDomainName);
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -305,41 +305,41 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         [RecordedTest]
         public async Task SoaRecordOperationTest()
         {
-            var collection = _privateDns.GetSoaRecords();
+            var collection = _privateDns.GetPrivateDnsSoaRecords();
             string soaRecordName = "@";
 
             // CreateOrUpdate
-            var data = new SoaRecordData()
+            var data = new PrivateDnsSoaRecordData()
             {
                 TtlInSeconds = 3600
             };
             var soaRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, soaRecordName, data);
             ValidateRecordBaseInfo(soaRecord.Value.Data, soaRecordName);
-            Assert.IsNotNull(soaRecord.Value.Data.SoaRecord.Email);
+            Assert.IsNotNull(soaRecord.Value.Data.PrivateDnsSoaRecord.Email);
             Assert.AreEqual("privateDnsZones/SOA", soaRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, soaRecord.Value.Data.TtlInSeconds);
-            Assert.IsTrue(soaRecord.Value.Data.SoaRecord.RefreshTimeInSeconds > 0);
-            Assert.IsTrue(soaRecord.Value.Data.SoaRecord.RetryTimeInSeconds > 0);
-            Assert.IsTrue(soaRecord.Value.Data.SoaRecord.ExpireTimeInSeconds > 0);
-            Assert.IsTrue(soaRecord.Value.Data.SoaRecord.MinimumTtlInSeconds > 0);
+            Assert.IsTrue(soaRecord.Value.Data.PrivateDnsSoaRecord.RefreshTimeInSeconds > 0);
+            Assert.IsTrue(soaRecord.Value.Data.PrivateDnsSoaRecord.RetryTimeInSeconds > 0);
+            Assert.IsTrue(soaRecord.Value.Data.PrivateDnsSoaRecord.ExpireTimeInSeconds > 0);
+            Assert.IsTrue(soaRecord.Value.Data.PrivateDnsSoaRecord.MinimumTtlInSeconds > 0);
 
             // Exist
             bool flag = await collection.ExistsAsync(soaRecordName);
             Assert.IsTrue(flag);
 
             // Update
-            await soaRecord.Value.UpdateAsync(new SoaRecordData() { TtlInSeconds = 7200 });
+            await soaRecord.Value.UpdateAsync(new PrivateDnsSoaRecordData() { TtlInSeconds = 7200 });
 
             // Get
             var getResponse = await collection.GetAsync(soaRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, soaRecordName);
-            Assert.IsNotNull(getResponse.Value.Data.SoaRecord.Email);
+            Assert.IsNotNull(getResponse.Value.Data.PrivateDnsSoaRecord.Email);
             Assert.AreEqual("privateDnsZones/SOA", getResponse.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.IsTrue(getResponse.Value.Data.SoaRecord.RefreshTimeInSeconds > 0);
-            Assert.IsTrue(getResponse.Value.Data.SoaRecord.RetryTimeInSeconds > 0);
-            Assert.IsTrue(getResponse.Value.Data.SoaRecord.ExpireTimeInSeconds > 0);
-            Assert.IsTrue(getResponse.Value.Data.SoaRecord.MinimumTtlInSeconds > 0);
+            Assert.IsTrue(getResponse.Value.Data.PrivateDnsSoaRecord.RefreshTimeInSeconds > 0);
+            Assert.IsTrue(getResponse.Value.Data.PrivateDnsSoaRecord.RetryTimeInSeconds > 0);
+            Assert.IsTrue(getResponse.Value.Data.PrivateDnsSoaRecord.ExpireTimeInSeconds > 0);
+            Assert.IsTrue(getResponse.Value.Data.PrivateDnsSoaRecord.MinimumTtlInSeconds > 0);
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -353,25 +353,25 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         [RecordedTest]
         public async Task SrvRecordOperationTest()
         {
-            var collection = _privateDns.GetSrvRecords();
+            var collection = _privateDns.GetPrivateDnsSrvRecords();
             string srvRecordName = Recording.GenerateAssetName("srv");
             string targetValue1 = "target1.contoso.com";
             string targetValue2 = "target2.contoso.com";
 
             // CreateOrUpdate
-            var data = new SrvRecordData()
+            var data = new PrivateDnsSrvRecordData()
             {
                 TtlInSeconds = 3600,
-                SrvRecords =
+                PrivateDnsSrvRecords =
                 {
-                    new SrvRecordInfo()
+                    new PrivateDnsSrvRecordInfo()
                     {
                         Priority = 1,
                         Weight = 1,
                         Port = 1,
                         Target = targetValue1,
                     },
-                    new SrvRecordInfo()
+                    new PrivateDnsSrvRecordInfo()
                     {
                         Priority = 1,
                         Weight = 1,
@@ -384,22 +384,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             ValidateRecordBaseInfo(srvRecord.Value.Data, srvRecordName);
             Assert.AreEqual("privateDnsZones/SRV", srvRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, srvRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(targetValue1, srvRecord.Value.Data.SrvRecords[0].Target);
-            Assert.AreEqual(targetValue2, srvRecord.Value.Data.SrvRecords[1].Target);
+            Assert.AreEqual(targetValue1, srvRecord.Value.Data.PrivateDnsSrvRecords[0].Target);
+            Assert.AreEqual(targetValue2, srvRecord.Value.Data.PrivateDnsSrvRecords[1].Target);
 
             // Exist
             bool flag = await collection.ExistsAsync(srvRecordName);
             Assert.IsTrue(flag);
 
             // Update
-            await srvRecord.Value.UpdateAsync(new SrvRecordData() { TtlInSeconds = 7200 });
+            await srvRecord.Value.UpdateAsync(new PrivateDnsSrvRecordData() { TtlInSeconds = 7200 });
 
             // Get
             var getResponse = await collection.GetAsync(srvRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, srvRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(targetValue1, getResponse.Value.Data.SrvRecords[0].Target);
-            Assert.AreEqual(targetValue2, getResponse.Value.Data.SrvRecords[1].Target);
+            Assert.AreEqual(targetValue1, getResponse.Value.Data.PrivateDnsSrvRecords[0].Target);
+            Assert.AreEqual(targetValue2, getResponse.Value.Data.PrivateDnsSrvRecords[1].Target);
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
@@ -415,20 +415,20 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         [RecordedTest]
         public async Task TxtRecordOperationTest()
         {
-            var collection = _privateDns.GetTxtRecords();
+            var collection = _privateDns.GetPrivateDnsTxtRecords();
             string txtRecordName = Recording.GenerateAssetName("txt");
 
             // CreateOrUpdate
-            var data = new TxtRecordData()
+            var data = new PrivateDnsTxtRecordData()
             {
                 TtlInSeconds = 3600,
-                TxtRecords =
+                PrivateDnsTxtRecords =
                 {
-                    new TxtRecordInfo()
+                    new PrivateDnsTxtRecordInfo()
                     {
                         Values  ={"value1", "value2" }
                     },
-                    new TxtRecordInfo()
+                    new PrivateDnsTxtRecordInfo()
                     {
                         Values  ={"value3", "value4", "value5" }
                     },
@@ -438,20 +438,20 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             ValidateRecordBaseInfo(txtRecord.Value.Data, txtRecordName);
             Assert.AreEqual("privateDnsZones/TXT", txtRecord.Value.Data.ResourceType.Type.ToString());
             Assert.AreEqual(3600, txtRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(2, txtRecord.Value.Data.TxtRecords.Count);
+            Assert.AreEqual(2, txtRecord.Value.Data.PrivateDnsTxtRecords.Count);
 
             // Exist
             bool flag = await collection.ExistsAsync(txtRecordName);
             Assert.IsTrue(flag);
 
             // Update
-            await txtRecord.Value.UpdateAsync(new TxtRecordData() { TtlInSeconds = 7200 });
+            await txtRecord.Value.UpdateAsync(new PrivateDnsTxtRecordData() { TtlInSeconds = 7200 });
 
             // Get
             var getResponse = await collection.GetAsync(txtRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, txtRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(2, getResponse.Value.Data.TxtRecords.Count);
+            Assert.AreEqual(2, getResponse.Value.Data.PrivateDnsTxtRecords.Count);
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();

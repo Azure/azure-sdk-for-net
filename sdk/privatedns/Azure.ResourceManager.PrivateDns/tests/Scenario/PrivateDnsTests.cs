@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             var records = await privateZone.GetRecordsAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(records);
-            Assert.IsNotNull(records.First().SoaRecordInfo);
+            Assert.IsNotNull(records.First().PrivateDnsSoaRecordInfo);
         }
 
         [TestCase(null)]
