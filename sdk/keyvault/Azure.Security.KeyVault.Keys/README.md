@@ -444,8 +444,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 For more information see the [Code of Conduct FAQ][coc_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
-[API_reference]: https://docs.microsoft.com/dotnet/api/azure.security.keyvault.keys
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[API_reference]: https://learn.microsoft.com/dotnet/api/azure.security.keyvault.keys
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [backup_and_restore_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample2_BackupAndRestore.md
@@ -461,12 +461,12 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact opencode@
 [key_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Keys/
 [key_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples
 [key_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Keys/src
-[keyvault_docs]: https://docs.microsoft.com/azure/key-vault/
-[keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
+[keyvault_docs]: https://learn.microsoft.com/azure/key-vault/
+[keyvault_rest]: https://learn.microsoft.com/rest/api/keyvault/
 [JWK]: https://tools.ietf.org/html/rfc7517
 [nuget]: https://www.nuget.org/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets
-[soft_delete]: https://docs.microsoft.com/azure/key-vault/general/soft-delete-overview
+[soft_delete]: https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
