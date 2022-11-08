@@ -134,7 +134,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(11, Level = EventLevel.Informational, Message = "Connection with connection ID: {0} disconnected.")]
+        [Event(12, Level = EventLevel.Informational, Message = "Connection with connection ID: {0} disconnected.")]
         public virtual void ConnectionDisconnected(string connectionId)
         {
             if (IsEnabled())
@@ -143,7 +143,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(12, Level = EventLevel.Warning, Message = "An attempt to reconnect connection who is the successor of connection ID: {0} failed, will retry later. Error Message: {1}")]
+        [Event(13, Level = EventLevel.Warning, Message = "An attempt to reconnect connection who is the successor of connection ID: {0} failed, will retry later. Error Message: {1}")]
         public virtual void ReconnectAttemptFailed(string connectionId, string errorMessage)
         {
             if (IsEnabled())
