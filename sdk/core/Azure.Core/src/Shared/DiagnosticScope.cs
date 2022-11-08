@@ -260,7 +260,7 @@ namespace Azure.Core.Pipeline
                         }
                     }
 
-                    var link = ActivityExtensions.CreateActivityLink(activity.ParentId!, activity.TraceStateString, linkTagsCollection);
+                    var link = ActivityExtensions.CreateActivityLink(activity.ParentId!, activity.GetTraceState(), linkTagsCollection);
                     if (link != null)
                     {
                         linkCollection.Add(link);
@@ -275,7 +275,7 @@ namespace Azure.Core.Pipeline
                 var linkedActivity = new Activity("LinkedActivity");
                 linkedActivity.SetW3CFormat();
                 linkedActivity.SetParentId(traceparent);
-                linkedActivity.TraceStateString = tracestate;
+                linkedActivity.SetTraceState(tracestate);
 
                 if (attributes != null)
                 {
@@ -401,6 +401,7 @@ namespace Azure.Core.Pipeline
 
         private static Action<Activity, int>? SetIdFormatMethod;
         private static Func<Activity, string?>? GetTraceStateStringMethod;
+        private static Action<Activity, string?>? SetTraceStateStringMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
         private static Action<Activity, string, object?>? ActivityAddTagMethod;
         private static Func<object, string, int, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
@@ -520,6 +521,28 @@ namespace Azure.Core.Pipeline
             }
 
             return GetTraceStateStringMethod(activity);
+        }
+
+        public static void SetTraceState(this Activity activity, string? tracestate)
+        {
+            if (SetTraceStateStringMethod == null)
+            {
+                var method = typeof(Activity).GetProperty("TraceStateString")?.SetMethod;
+                if (method == null)
+                {
+                    SetTraceStateStringMethod = (_, _) => { };
+                }
+                else
+                {
+                    var tracestateParameter = Expression.Parameter(typeof(string));
+                    var convertedParameter = Expression.Convert(tracestateParameter, method.GetParameters()[0].ParameterType);
+                    SetTraceStateStringMethod = Expression.Lambda<Action<Activity, string?>>(
+                        Expression.Call(ActivityParameter, method, convertedParameter),
+                        ActivityParameter, tracestateParameter).Compile();
+                }
+            }
+
+            SetTraceStateStringMethod(activity, tracestate);
         }
 
         public static void AddObjectTag(this Activity activity, string name, object value)
