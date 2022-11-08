@@ -1,0 +1,42 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using Azure.Core.Foundations.Extensions;
+using OpenAPI;
+using Autorest;
+using ADP.DataManagement.Classifications;
+
+@tag("MeasuremenClassifications")
+namespace ADP.DataManagement.Measurements.Classifications {
+  @client(Clients.MeasurementClassificationsClient)
+  interface MeasurementClassifications {
+    @doc("Get measurement classification by schema name.")
+    get is ResourceRead<MeasurementClassification>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Assigns classification to the measurement.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    create is CustomLongRunningResourceCreateUsingHttpPost<
+      MeasurementClassification,
+      CustomBodyWrapper<MeasurementClassificationCreationParameters>
+    >;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Unassign the classification from the measurement.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    delete is CustomLongRunningResourceDelete<MeasurementClassification>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Lists the classifications assigned to the measurement.")
+    list is CustomResourceList<MeasurementClassification>;
+  }
+}

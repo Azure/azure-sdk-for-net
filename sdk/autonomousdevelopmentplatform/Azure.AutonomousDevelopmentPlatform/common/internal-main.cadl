@@ -1,0 +1,5 @@
+import "./models.cadl";
+import "./lro/common";
+import "./lro/internal";
+
+namespace ADP.Common;

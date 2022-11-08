@@ -1,0 +1,320 @@
+using Cadl.Http;
+using Cadl.Rest;
+using Cadl.Rest.Resource;
+
+@doc("Azure Active Directory OAuth2 Flow")
+model ImplicitAuthorizationFlow {
+  @doc("Use implicit authorization flow type")
+  type: OAuth2FlowType.implicit;
+
+  @doc("Authorization URL")
+  authorizationUrl: "https://login.microsoftonline.com/common/oauth2/authorize";
+
+  @doc("ADP Scope: impersonate user account")
+  scopes: ["https://adp.azure.com/.default"];
+}
+
+// TODO: Stop using the proprietary models; Use foundation models and templates where possible!
+@doc("The eTag property envelope.")
+model EntityTag {
+  @doc("""
+  If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.
+  Entity tags are used for comparing two or more entities from the same requested resource.
+  HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.
+  """)
+  @visibility("read")
+  eTag?: string;
+}
+
+@doc("Pageable collection request parameters.")
+model CommonCollectionRequestParameters {
+  @doc("The maximum number of resources to include in a single response.")
+  @query
+  maxpagesize?: int32 = 1000;
+}
+
+@doc("Error code header.")
+model XMsErrorCodeHeader {
+  @doc("Error code for specific error that occurred.")
+  @header
+  "x-ms-error-code": string;
+}
+
+@doc("Long running request headers.")
+model LongRunningOperationRequestHeaders {
+  @doc("Request Operation-Id header.")
+  @minLength(1)
+  @header
+  "operation-id"?: string;
+}
+
+@doc("Metadata for long running operation status monitor locations")
+model LongRunningOperationResponseHeaders {
+  @doc("The location for monitoring the operation state.")
+  @header("Operation-Location")
+  operationLocation: string;
+}
+
+@doc("Operation completed successfully.")
+model CommonOKResponse<T = {}> {
+  ...OkResponse;
+  ...Body<T>;
+}
+
+@doc("Create operation completed successfully.")
+model CommonCreatedResponse<T> {
+  ...CreatedResponse;
+  ...Azure.Core.Foundations.RetryAfterHeader;
+  ...Body<T>;
+}
+
+@doc("Resource deleted successfully.")
+model CommonDeletedResponse {
+  ...OkResponse;
+}
+
+@doc("Resource operation accepted.")
+model CommonOperationAcceptedResponse {
+  ...AcceptedResponse;
+  ...LongRunningOperationResponseHeaders;
+  ...Azure.Core.Foundations.RetryAfterHeader;
+}
+
+@doc(TMessage)
+model CommonNoContentResponse<TMessage> {
+  ...NoContentResponse;
+}
+
+model CommonDeletedNoContentResponse
+  is CommonNoContentResponse<"Resource deleted successfully.">;
+
+@error
+@doc("Common error response for all Azure APIs to return error details for failed operations.")
+model CommonError {
+  @doc("The error object.")
+  @visibility("read", "write")
+  error: ErrorDetail;
+  ...XMsErrorCodeHeader;
+}
+
+@doc("The error detail.")
+model ErrorDetail {
+  @doc("The error code.")
+  @visibility("read", "write")
+  code: string;
+
+  @doc("The error message.")
+  @visibility("read", "write")
+  message: string;
+
+  @doc("The error target.")
+  @visibility("read")
+  target?: string;
+
+  @doc("The error details.")
+  @visibility("read")
+  details?: ErrorDetail[];
+}
+
+@doc("Supported API versions.")
+@knownValues(SupportedApiVersionsKV)
+model ApiVersion is string;
+enum SupportedApiVersionsKV {
+  v2022_11_30_preview: "2022-11-30-preview",
+  v2022_08_01_preview: "2022-08-01-preview",
+  v2022_02_01_preview: "2022-02-01-preview",
+  v2022_01_01_preview: "2022-01-01-preview",
+}
+
+@doc("The async operation")
+model AsyncOperation {
+  @doc("The final location for the operation.")
+  @header("Location")
+  location?: string;
+
+  @doc("The operation Id.")
+  @visibility("read", "write")
+  @key
+  operationId: string;
+
+  @doc("The operation status.")
+  @visibility("read", "write")
+  status: AsyncOperationStatus;
+
+  @doc("The operation type.")
+  @visibility("read")
+  operationType?: string;
+
+  @doc("The operation error.")
+  @visibility("read")
+  error?: ErrorDetail;
+}
+
+@doc("Long running (LRO) operation on resource accepted.")
+model ResourceOperationAcceptedResponse<TBody> {
+  ...AcceptedResponse;
+
+  @body
+  body: TBody;
+}
+
+@doc("The async operation status")
+@knownValues(AsyncOperationStatusKV)
+model AsyncOperationStatus is string;
+enum AsyncOperationStatusKV {
+  Created,
+  InProgress,
+  Succeeded,
+  Failed,
+  Canceled,
+}
+
+@doc("The state of an asynchronous operation")
+@knownValues(AsyncOperationStateKV)
+model AsyncOperationState is string;
+enum AsyncOperationStateKV {
+  Running,
+  Succeeded,
+  Aborted,
+  Failed,
+  PartiallySucceeded,
+}
+
+@doc("A machine-readable format for specifying errors in HTTP API  based on https://tools.ietf.org/html/rfc7807")
+model ProblemDetails<ErrorCode> {
+  @doc("The error code of the problem")
+  @visibility("read")
+  errorCode?: ErrorCode;
+
+  @doc("A human-readable explanation specific to this occurrence of the problem")
+  @visibility("read")
+  detail?: string;
+}
+
+@doc("Extended problem details for the operation")
+model OperationProblemDetails<OperationErrorCode> {
+  @doc("The error details associated with the initiated operation (if the operation has failed)")
+  @visibility("read")
+  problemDetails?: InnerOperationProblemDetails<OperationErrorCode>;
+}
+
+@doc("Extended problem details for the operation")
+model InnerOperationProblemDetails<ErrorCode> {
+  ...ProblemDetails<ErrorCode>;
+
+  @doc("Extends the problem details object with additional members")
+  @visibility("read")
+  extensions?: Record<string>;
+}
+
+@doc("A response returned when a long running asynchronous operation is initiated")
+model CommonAsyncOperationResponse {
+  @doc("The ID of the initiated operation")
+  @visibility("read", "write")
+  operationId: string;
+
+  @doc("The state of the async operation")
+  @visibility("read")
+  operationState?: AsyncOperationState;
+  ...CommonResourceEndpoint;
+
+  @doc("The error associated with the async operation, if any")
+  @visibility("read")
+  operationError?: string;
+}
+
+@doc("A response returned when a long running asynchronous operation is initiated")
+model CommonAsyncOperationWithTypeResponse<OperationType> {
+  @doc("The ID of the initiated operation")
+  @visibility("read", "write")
+  @key
+  operationId: string;
+
+  @doc("Type of action.")
+  @visibility("read")
+  operationType: OperationType;
+
+  @doc("The state of the async operation")
+  @visibility("read")
+  operationState?: AsyncOperationState;
+  ...CommonResourceEndpoint;
+
+  @doc("The error associated with the async operation, if any")
+  @visibility("read")
+  operationError?: string;
+}
+
+@doc("Internal - the model for internal use")
+model CommonResourceEndpoint {
+  @doc("The endpoint uri of the owning resource")
+  @format("uri")
+  @visibility("read")
+  resourceEndpoint?: string;
+}
+
+@doc("Internal - generic Key/Value model for internal use")
+model CommonKeyValuePair {
+  @doc("The key")
+  @key
+  key: string;
+
+  @doc("The value")
+  value: string;
+}
+
+@doc("Internal - LRO status query parameters - for internal use")
+@deprecated("TODO: remove after migrating DMS")
+model CommonAsyncOperationStatusQueryParameters {
+  @doc("The asynchronous operation identifier.")
+  @segment("operations")
+  @key
+  @path
+  operationId: string;
+}
+
+@doc("The common request parameters")
+model CommonRequestParameters<
+  RequestParameters,
+  TDescription = "Request parameters"
+> {
+  @doc(TDescription)
+  @visibility("read", "write")
+  @body
+  body?: RequestParameters;
+}
+
+@doc("The common request parameters")
+model CommonCreatonRequestParameters<
+  ResourceCreationParameters,
+  TDescription = "Request parameters"
+> {
+  @doc(TDescription)
+  @visibility("read", "write")
+  @body
+  resource: ResourceCreationParameters;
+}
+
+@doc("Common parameters for long running operations.")
+model CommonOperationParameters {
+  @doc("The asynchronous operation identifier.")
+  @key
+  @path
+  operationId: string;
+}
+
+namespace ADP.Common {
+  @doc("Common query parameters.")
+  model ResourceListQueryParameters {
+    @doc("An expression on the resource type that selects the resources to be returned.")
+    @query
+    filter?: string;
+
+    @doc("A list of expressions that specify the order of the returned resources.")
+    @query
+    orderby?: string[];
+
+    @doc("A list of field names to be returned for each resource.")
+    @query
+    select?: string[];
+  }
+}

@@ -1,0 +1,32 @@
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+
+namespace ADP.DataManagement.Classifications {
+  @doc("Classification resource.")
+  model Classification {
+    @doc("Classification schema name.")
+    @key
+    @minLength(1)
+    @maxLength(256)
+    schemaName: string;
+
+    @doc("Classification object model (JSON as string)")
+    @visibility("create")
+    @minLength(2)
+    classificationObject: string;
+    ...EntityTag;
+  }
+
+  @doc("Represents sample classification parameters.")
+  model ClassificationQueryParameters<TResource> {
+    ...Foundations.CollectionKeysOf<TResource>;
+
+    @doc("Classification schema name.")
+    @key
+    @path
+    @minLength(1)
+    @maxLength(256)
+    schemaName: string;
+  }
+}

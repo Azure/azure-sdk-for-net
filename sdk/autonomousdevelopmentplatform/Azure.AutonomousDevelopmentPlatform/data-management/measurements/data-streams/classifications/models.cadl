@@ -1,0 +1,31 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using OpenAPI;
+using Autorest;
+
+namespace ADP.DataManagement.Measurements.DataStreams.Classifications {
+  enum Clients {
+    DataStreamClassificationsClient,
+  }
+
+  @doc("The data-stream classification.")
+  @resource("classifications")
+  @parentResource(ADP.DataManagement.Measurements.DataStreams.DataStream)
+  @friendlyName("DataStreamClassification")
+  model DataStreamClassification {
+    ...ADP.DataManagement.Classifications.Classification;
+  }
+
+  @doc("{name} resource creation parameters.", DataStreamClassification)
+  @friendlyName("DataStreamClassificationCreationParameters")
+  @withVisibility("create")
+  model DataStreamClassificationCreationParameters {
+    ...DataStreamClassification;
+  }
+}

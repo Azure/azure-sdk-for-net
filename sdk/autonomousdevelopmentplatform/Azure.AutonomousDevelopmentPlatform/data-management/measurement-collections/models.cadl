@@ -1,0 +1,185 @@
+import "@cadl-lang/rest";
+
+using Cadl.Http;
+using Cadl.Rest.Resource;
+
+model CommonMeasurementCollectionQueryPrameters {
+  ...ApiVersionParameter;
+
+  @doc("The measurement collection identifier.")
+  @key
+  @path
+  collectionId: string;
+}
+
+@withOptionalProperties
+model CommonPagingQueryParameters {
+  @doc("The amount of entries to skip.")
+  @query
+  skip?: int32 | null;
+
+  @doc("The maximum amount of entries to return (the page size).")
+  @query
+  top?: int32 | null;
+}
+
+@withOptionalProperties
+model CommonFilterQueryParameter {
+  @doc("The parameter and value to filter by. Currently the only supported filter function is 'contains'. I.e.: \"contains(name, \"abc\")\".")
+  @query
+  filter?: string;
+}
+
+@withOptionalProperties
+model CommonOrderByQueryParameter {
+  @doc("The parameter to order by and the direction in case it's descending. I.e.: \"name desc\" or \"name\".")
+  @query
+  orderBy?: string;
+}
+
+@doc("Internal - the model for internal use")
+@withOptionalProperties
+model CommonMeasurementCollectionRequestParameters {
+  @doc("The name of the measurement collection")
+  @visibility("read", "write")
+  name: string;
+
+  @doc("The description of the measurement collection")
+  @visibility("read", "write")
+  description?: string | null;
+}
+
+@doc("Internal - the model for internal use")
+@withOptionalProperties
+model CommonMeasurementCollectionResponseParameters {
+  @doc("The name of the measurement collection")
+  @visibility("read")
+  name: string;
+
+  @doc("The description of the measurement collection")
+  @visibility("read")
+  description?: string | null;
+}
+
+@doc("A response returned when an asynchronous measurement collection API endpoint command is initiated")
+@withOptionalProperties
+model MeasurementCollectionAsyncOperationResponse {
+  @doc("The Id of the measurement collection")
+  @visibility("read")
+  id: string;
+  ...CommonAsyncOperationResponse;
+}
+
+@doc("The creation parameters for a measurement collection")
+@withOptionalProperties
+model MeasurementCollectionCreationParameters {
+  ...CommonMeasurementCollectionRequestParameters;
+}
+
+@doc("""
+The update parameters for a measurement collection.
+TODO: consider using unified model for create/update of measurement collection
+""")
+@withOptionalProperties
+model MeasurementCollectionUpdateParameters {
+  ...CommonMeasurementCollectionRequestParameters;
+}
+
+@doc("The information of the measurement collection")
+model MeasurementCollectionResponse {
+  @doc("The Id of the measurement collection")
+  @visibility("read")
+  @key
+  id: string;
+  ...CommonMeasurementCollectionResponseParameters;
+
+  @doc("The time the creation of the measurement collection")
+  @visibility("read")
+  creationTimeUtc: zonedDateTime;
+
+  @doc("The time of the last update of the measurement collection")
+  @visibility("read")
+  lastUpdateTimeUtc: zonedDateTime;
+
+  @doc("The measurements that are in the measurement collection")
+  @visibility("read", "write")
+  measurements: MeasurementInCollection[];
+  ...CommonResourceEndpoint;
+
+  @doc("A link to the next page in the measurements list, if exists")
+  @visibility("read")
+  @format("uri")
+  nextPage: string;
+
+  @doc("A link to the previous page in the measurements list, if exists")
+  @visibility("read")
+  @format("uri")
+  previousPage: string;
+}
+
+@doc("The information of each measurement in the measurement collection")
+model MeasurementInCollection {
+  @doc("The measurement identifier.")
+  @visibility("read", "write")
+  @key
+  measurementId: string;
+  ...CommonResourceEndpoint;
+}
+
+@doc("""
+Add multiple measurements to collection command request body
+TODO: batch operations should be deprecated as they are not idempotent.
+""")
+@withOptionalProperties
+model AddMultipleMeasurementsToCollectionRequest {
+  @doc("The measurements list.")
+  @visibility("read", "write")
+  measurements: MeasurementInCollection[];
+}
+
+@doc("""
+Remove multiple measurements from collection command request body
+TODO: batch operations should be deprecated as they are not idempotent.
+""")
+@withOptionalProperties
+model RemoveMultipleMeasurementsFromCollectionRequest {
+  @doc("The measurement Ids list.")
+  @visibility("read", "write")
+  measurementIds: string[];
+}
+
+@doc("The response containing a list of measurement collections, and the next and previous pages to read")
+@withOptionalProperties
+model PagedMeasurementCollectionListResponse {
+  @doc("The list of measurement collections")
+  @visibility("read")
+  measurementCollections: MeasurementCollectionInCollectionList[];
+
+  @doc("A link to the next page in the measurements list, if exists")
+  @visibility("read")
+  @format("uri")
+  nextPage: string;
+
+  @doc("A link to the previous page in the measurements list, if exists")
+  @visibility("read")
+  @format("uri")
+  previousPage: string;
+}
+
+@doc("Information about the measurement collection in collection list")
+model MeasurementCollectionInCollectionList {
+  @doc("The Id of the measurement collection")
+  @visibility("read")
+  @key
+  id: string;
+  ...CommonMeasurementCollectionResponseParameters;
+
+  @doc("The time the creation of the measurement collection")
+  @visibility("read")
+  creationTimeUtc: zonedDateTime;
+
+  @doc("The time of the last update of the measurement collection")
+  @visibility("read")
+  lastUpdateTimeUtc: zonedDateTime;
+  ...CommonResourceEndpoint;
+}

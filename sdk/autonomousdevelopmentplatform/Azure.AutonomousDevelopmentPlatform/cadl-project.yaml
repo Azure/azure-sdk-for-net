@@ -1,0 +1,5 @@
+emitters:
+  "@azure-tools/cadl-autorest":
+    output-file: data-management/preview/2022-11-30-preview/adp-data-management-api.json
+
+  "@cadl-lang/openapi3" : true

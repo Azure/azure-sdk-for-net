@@ -1,0 +1,49 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+
+@resource("classifications")
+@parentResource(SampleResource)
+model ClassificationResponse {
+  @doc("Classification schema name.")
+  @key
+  @visibility("read", "write")
+  schemaName: string;
+
+  @doc("Classification object model (JSON as string)")
+  classificationObject: string;
+  ...EntityTag;
+}
+
+@doc("Classification instance creation parameters")
+model SampleClassificationCreationParameters {
+  ...ApiVersionParameter;
+
+  @doc("The Sample identifier.")
+  @path
+  sampleId: string;
+
+  @doc("Classification schema name.")
+  @path
+  @visibility("read")
+  schemaName: string;
+
+  @doc("Classification object model (JSON as string)")
+  @body
+  classificationObject: string;
+}
+
+@doc("Represents sample classification parameters.")
+model SampleClassificationQueryParameters {
+  ...CommonSampleQueryParameters;
+
+  @doc("Classification schema name.")
+  @key
+  @path
+  @visibility("read", "write")
+  schemaName: string;
+}

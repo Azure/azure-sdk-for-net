@@ -1,0 +1,106 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using Azure.Core.Foundations.Extensions;
+using OpenAPI;
+using Autorest;
+
+@tag("Measurements")
+namespace ADP.DataManagement.Measurements {
+  @client(Clients.MeasurementClient)
+  interface Measurements {
+    @doc("Get measurement by ID.")
+    get is ResourceRead<Measurement>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Deletes the measurement.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    delete is CustomLongRunningResourceDelete<Measurement>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Initiates process that validates correctness of the measurement structure")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    validate is CustomLongRunningResourceAction<Measurement>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Changes measurement state.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    changeState is CustomLongRunningResourceActionWithParameters<
+      Measurement,
+      CustomBodyWrapper<ChangeMeasurementStateRequestParameters>
+    >;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Changes measurement state. This is example demonstrates usage of TCustom parameters from Foundations library.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    changeStateUsingFoundationsInfra is CustomLongRunningResourceAction<
+      Measurement,
+      CustomBodyWrapper<ChangeMeasurementStateRequestParameters>
+    >;
+
+    @doc("""
+    Returns a SAS-signed URI for uploading a metadata file for the measurement.
+    This URI expires in 24 hours.
+    """)
+    provideMetadataFileUploadInformation is ResourceAction<
+      Measurement,
+      {},
+      MetadataFileUploadInformationResponse
+    >;
+
+    @doc("""
+    Returns a SAS-signed URI for downloading a metadata file for the measurement.
+    This URI expires in 24 hours.
+    """)
+    provideMetadataFileDownloadInformation is ResourceAction<
+      Measurement,
+      {},
+      FileDownloadInformationResponse
+    >;
+
+    @doc("""
+    Returns a SAS-signed URI for downloading a metadata schema file for the measurement.
+    This URI expires in 24 hours.
+    """)
+    provideMetadataSchemaFileDownloadInformation is ResourceAction<
+      Measurement,
+      {},
+      FileDownloadInformationResponse
+    >;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Initiates a process that replaces the measurement's metadata file")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    completeMetadataFileUpload is CustomLongRunningResourceActionWithParameters<
+      Measurement,
+      CustomBodyWrapper<CompleteUploadMetadataFileRequest>
+    >;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Lists the measurements in a workspace.")
+    list is CustomResourceList<Measurement>;
+
+    @doc("Lists the measurements in a workspace that are in the given measurement IDs list.")
+    @deprecated("Use list measurements API with filter instead")
+    findByIds is ResourceCollectionAction<
+      Measurement,
+      CustomBodyWrapper<MeasurementListRequestParameters>,
+      Page<Measurement>
+    >;
+  }
+}

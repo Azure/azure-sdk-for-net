@@ -1,0 +1,28 @@
+{
+  "operationId": "Discovery_Get",
+  "title": "Returns discovery by ID.",
+  "parameters": {
+    "api-version": "2022-11-30-preview",
+    "discoveryId": "string"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "discoveryId": "string",
+        "externalPackageId": "string",
+        "manifestUploadUri": "https://some-workspace/manifest.json",
+        "status": "Created"
+      }
+    },
+    "default": {
+      "body": {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    }
+  }
+}

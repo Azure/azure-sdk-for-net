@@ -1,0 +1,22 @@
+{
+  "value": [
+    {
+      "operationId": "string",
+      "status": "Created",
+      "operationType": "string",
+      "error": {
+        "code": "string",
+        "message": "string",
+        "target": "string",
+        "details": [
+          "string"
+        ],
+        "innererror": {
+          "code": "string",
+          "innererror": "string"
+        }
+      }
+    }
+  ],
+  "nextLink": "string"
+}

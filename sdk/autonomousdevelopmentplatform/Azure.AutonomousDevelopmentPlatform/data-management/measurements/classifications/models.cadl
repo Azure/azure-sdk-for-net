@@ -1,0 +1,31 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using OpenAPI;
+using Autorest;
+
+namespace ADP.DataManagement.Measurements.Classifications {
+  enum Clients {
+    MeasurementClassificationsClient,
+  }
+
+  @doc("Measurement classification")
+  @resource("classifications")
+  @parentResource(ADP.DataManagement.Measurements.Measurement)
+  @friendlyName("MeasurementClassification")
+  model MeasurementClassification {
+    ...ADP.DataManagement.Classifications.Classification;
+  }
+
+  @doc("{name} resource creation parameters.", MeasurementClassification)
+  @friendlyName("MeasurementClassificationCreationParameters")
+  @withVisibility("create")
+  model MeasurementClassificationCreationParameters {
+    ...MeasurementClassification;
+  }
+}

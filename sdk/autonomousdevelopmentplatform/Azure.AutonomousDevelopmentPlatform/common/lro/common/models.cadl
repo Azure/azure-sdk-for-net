@@ -1,0 +1,134 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@azure-tools/cadl-azure-core";
+
+@tag("LongRunningOperations")
+namespace ADP.Common.Operations;
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using Azure.Core.Foundations;
+
+enum LongRunningOperationClients {
+  LongRunningOperationsInternalClient,
+  LongRunningOperationsPublicClient,
+}
+
+@doc("A long running operation resource.")
+@resource("operations")
+@friendlyName("LongRunningOperation")
+model LongRunningOperation {
+  ...LongRunningOperationWithoutKey;
+
+  @doc("The operation Id.")
+  @key
+  @minLength(1)
+  @maxLength(36)
+  operationId: string;
+}
+
+@doc("Standard Azure LRO response headers.")
+@friendlyName("LongRunningOperationWithResponseHeaders")
+model LongRunningOperationWithResponseHeaders {
+  ...LongRunningOperation;
+  ...Foundations.RetryAfterHeader;
+  ...LongRunningOperationResultLocation;
+}
+
+@doc("Metadata for long running operation status monitor locations")
+model LongRunningOperationStatusLocation {
+  @pollingLocation
+  @doc("The location for monitoring the operation state.")
+  @header("Operation-Location")
+  operationLocation: ResourceLocation<LongRunningOperationStatus>;
+}
+
+@doc("Final location of the operation result.")
+model LongRunningOperationResultLocation {
+  @doc("Final location of the operation result.")
+  @finalLocation
+  @header("Location")
+  @format("uri")
+  location?: string;
+}
+
+@doc("""
+Client specific long running operation identifier.
+This identifier will serve as idempotence key to ensure idempotensy of the long running operation.
+""")
+@friendlyName("LongRunningOperationIdHeader")
+model LongRunningOperationId {
+  @doc("The long running operation identifier. Operation-Id should be valid UUID string.")
+  @format("uuid")
+  @header
+  "operation-id"?: string;
+}
+
+@doc("The long running operation model without the key.")
+model LongRunningOperationWithoutKey<TOperationType = string> {
+  @doc("The operation status.")
+  status: LongRunningOperationStatus;
+
+  @doc("The operation type.")
+  operationType?: TOperationType;
+
+  @doc("The operation error.")
+  error?: Azure.Core.Foundations.Error;
+}
+
+@doc("The long running operation response")
+@friendlyName("LongRunningOperationResponse")
+model LongRunningOperationResponse<TOperationType = string> {
+  @doc("The operation Id.")
+  @minLength(1)
+  @maxLength(36)
+  operationId: string;
+  ...LongRunningOperationWithoutKey<TOperationType>;
+}
+
+@doc("The async operation status")
+@knownValues(LongRunningOperationStatusKV)
+@friendlyName("LongRunningOperationStatus")
+model LongRunningOperationStatus is string;
+enum LongRunningOperationStatusKV {
+  Created,
+  InProgress,
+  Succeeded,
+  Failed,
+  Canceled,
+}
+
+@doc("The OperationCompletionRequest.")
+@friendlyName("CompleteLongRunningOperationRequestParams")
+model CompleteLongRunningOperationRequestParams {
+  @doc("""
+  The operation HTTP status code. 
+  The status code will be returned to the client after the completion action will finish.
+  """)
+  httpStatusCode?: SupportedHttpStatusCode;
+
+  @doc("The result resource URL.")
+  resultUri?: string;
+}
+
+@doc("The supported status codes.")
+@knownValues(SupportedHttpStatusCodesKV)
+@friendlyName("SupportedHttpStatusCode")
+model SupportedHttpStatusCode is string;
+enum SupportedHttpStatusCodesKV {
+  OK,
+  Accepted,
+  NoContent,
+  PartialContent,
+  BadRequest,
+  NotFound,
+  Conflict,
+}
+
+@doc("The long running operation failure request parameters.")
+@friendlyName("FailLongRunningOperationRequestParams")
+model FailLongRunningOperationRequestParams {
+  @doc("Error details.")
+  error: Azure.Core.Foundations.Error;
+}

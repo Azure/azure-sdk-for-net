@@ -1,0 +1,189 @@
+import "@cadl-lang/rest";
+
+using Cadl.Http;
+using Cadl.Rest;
+
+namespace ADP.DataManagement.Measurements.DataStreams {
+  enum Clients {
+    DataStreamClient,
+  }
+
+  @doc("A data-stream resource")
+  @resource("dataStreams")
+  @parentResource(Measurement)
+  @friendlyName("DataStream")
+  model DataStream {
+    @doc("The data stream identifier")
+    @key
+    dataStreamId: string;
+    ...CommonResourceEndpoint;
+
+    @doc("The data stream lineage information")
+    @visibility("create")
+    lineage: DataStreamLineage;
+
+    @doc("The data stream list of tags")
+    @visibility("create")
+    tags: string[];
+
+    @doc("The data stream status")
+    status: DataStreamStatus;
+
+    @doc("The data stream type")
+    type: DataStreamType;
+
+    @doc("The data stream rolling information")
+    @visibility("read")
+    rollingInformation?: DataStreamRollingInformation;
+
+    @doc("""
+    SAS signed URI for downloading the data stream manifest file from Azure Storage.
+    This URI expires in 24 hours.
+    """)
+    @format("uri")
+    @visibility("read")
+    dataStreamManifestFileUri?: string;
+
+    @doc("The list of shards associated with the data stream")
+    @visibility("read")
+    shards?: DataStreamShardAccessInformation[];
+  }
+
+  @doc("DataStream resource creation parameters")
+  @friendlyName("DataStreamCreationParameters")
+  @withVisibility("create")
+  @withoutOmittedProperties("dataStreamId")
+  model DataStreamCreationParameters {
+    ...DataStream;
+  }
+
+  @doc("A wrapper for the list of data streams")
+  @withOptionalProperties
+  model DataStreamListResponse {
+    @doc("Collection of the data stream's channels")
+    @visibility("read")
+    dataStreams: DataStream[];
+  }
+
+  @doc("Graph of matched data streams by processing objects graph")
+  @friendlyName("DataStreamsGraph")
+  @withOptionalProperties
+  model DataStreamsGraph {
+    @doc("Dictionary of data stream by processing object id")
+    dataStreamByProcessingObjectId: Record<DataStream>;
+  }
+
+  @doc("List of graphs of matched data streams by processing objects graph")
+  @friendlyName("DataStreamsGraphListResponse")
+  @withOptionalProperties
+  model DataStreamsGraphListResponse {
+    @doc("List of data streams matched graphs")
+    dataStreamsGraphs: DataStreamsGraph[];
+  }
+
+  @doc("Data stream search by type query parameters")
+  @withOptionalProperties
+  @friendlyName("FindDataStreamByTypeRequestParameters")
+  model FindDataStreamByTypeRequestParameters {
+    @doc("The data-stream type to search for")
+    type: DataStreamType;
+  }
+
+  @doc("TODO: remove")
+  @friendlyName("FindDataStreamByTypeRequestCustomizations")
+  model FindDataStreamByTypeRequestCustomizations {
+    @doc("TODO: remove")
+    parameters: FindDataStreamByTypeRequestParameters;
+  }
+
+  @doc("Data stream search by lineage query parameters")
+  @friendlyName("FindDataStreamByLineageRequestParameters")
+  @withOptionalProperties
+  model FindDataStreamByLineageRequestParameters {
+    @doc("The data-stream lineage to search for")
+    lineage: DataStreamLineage;
+  }
+
+  @doc("TODO: remove")
+  @friendlyName("FindDataStreamByLineageRequestCustomizations")
+  model FindDataStreamByLineageRequestCustomizations {
+    @doc("TODO: remove")
+    parameters: FindDataStreamByLineageRequestParameters;
+  }
+
+  @doc("Data stream search by tags parameters")
+  @friendlyName("FindDataStreamByTagsRequestParameters")
+  @withOptionalProperties
+  model FindDataStreamByTagsRequestParameters {
+    @doc("The list of tags to search for")
+    tags: string[];
+  }
+
+  @doc("TODO: remove")
+  @friendlyName("FindDataStreamByTagsRequestCustomizations")
+  model FindDataStreamByTagsRequestCustomizations {
+    @doc("TODO: remove")
+    parameters: FindDataStreamByLineageRequestParameters;
+  }
+
+  @doc("Data stream lineage information")
+  @friendlyName("DataStreamLineage")
+  @withOptionalProperties
+  model DataStreamLineage {
+    @doc("The data stream's metadata")
+    producerMetadata: Record<string>;
+
+    @doc("The data stream's inputs")
+    inputs: DataStreamInput[];
+  }
+
+  @doc("TODO: remove")
+  @friendlyName("DataStreamInput")
+  model DataStreamInput {
+    @doc("The source data-stream identifier")
+    sourceDataStreamId: string;
+
+    @doc("Collection of the data stream's channels")
+    channels?: string[];
+  }
+
+  @doc("Processing objects graph")
+  @friendlyName("FindDataStreamByLineageGraphRequestParameters")
+  model FindDataStreamByLineageGraphRequestParameters {
+    @doc("The processing objects")
+    processingObjects: ProcessingObject[];
+
+    @doc("The processing objects edges")
+    edges: ProcessingObjectEdge[];
+  }
+
+  @doc("TODO: remove")
+  @friendlyName("FindDataStreamByLineageGraphRequestCustomizations")
+  model FindDataStreamByLineageGraphRequestCustomizations {
+    @doc("TODO: remove")
+    parameters: FindDataStreamByLineageGraphRequestParameters;
+  }
+
+  @doc("Processing object node information in a processing objects Graph")
+  @friendlyName("ProcessingObject")
+  model ProcessingObject {
+    @doc("The processing object metadata")
+    @visibility("read", "write")
+    metadata: Record<string> | null;
+
+    @doc("A request unique ID to identify processing objects in graph")
+    @visibility("read", "write")
+    id: string;
+  }
+
+  @doc("Processing objects edge")
+  @friendlyName("ProcessingObjectEdge")
+  @withOptionalProperties
+  model ProcessingObjectEdge {
+    @doc("The source processing object ID")
+    sourceId: string;
+
+    @doc("The target processing object ID")
+    targetId: string;
+  }
+}

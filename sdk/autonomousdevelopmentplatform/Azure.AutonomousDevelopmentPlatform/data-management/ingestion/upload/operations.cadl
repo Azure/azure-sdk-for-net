@@ -1,0 +1,94 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using Azure.Core.Foundations.Extensions;
+using OpenAPI;
+using Autorest;
+
+@tag("Uploads")
+namespace ADP.DataManagement.Ingestion.Uploads {
+  @client(UploadClients.UploadClient)
+  interface Uploads {
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Creates a new ingestion upload instance.")
+    createOrReplace is CustomResourceCreateOrReplace<
+      Upload,
+      CustomBodyWrapper<UploadCreationParameters>
+    >;
+
+    @doc("Get discovery by ID.")
+    get is ResourceRead<Upload>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom LRO response template the LRO actions."
+    @doc("Initiates the process of completing the upload and creating the measurements.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    complete is CustomLongRunningResourceAction<
+      Upload,
+      {},
+      {},
+      UploadLroResponse
+    >;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom LRO response template the LRO actions."
+    @doc("Initiates the process of cancelling the upload.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    cancel is CustomLongRunningResourceAction<
+      Upload,
+      {},
+      {},
+      UploadLroResponse
+    >;
+  }
+
+  @client(UploadClients.UploadSpecialFilesClient)
+  interface UploadSpecialFiles {
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom resource list operation."
+    @doc("List special files for the upload.")
+    list is CustomResourceList<UploadSpecialFile>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom LRO response template the LRO actions."
+    @doc("Initiates the process of generating SAS signed URIs for uploading special files for the upload.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    generate is CustomLongRunningResourceCollectionAction<
+      UploadSpecialFile,
+      {},
+      UploadLroResponse
+    >;
+  }
+
+  @client(UploadClients.UploadDataFilesClient)
+  interface UploadDataFiles {
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom resource list operation."
+    @doc("List data files for the upload.")
+    list is CustomResourceList<UploadDataFile>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom LRO response template the LRO actions."
+    @doc("Initiates the process of sharding the data files.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    generate is CustomLongRunningResourceCollectionAction<
+      UploadDataFile,
+      {},
+      UploadLroResponse
+    >;
+  }
+
+  @client(UploadClients.UploadMeasurementsClient)
+  interface UploadResultMeasurements {
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom resource list operation."
+    @doc("List of the measurement identifiers that have been created by the upload.")
+    list is CustomResourceList<UploadResultMeasurement>;
+  }
+}

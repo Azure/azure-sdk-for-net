@@ -1,0 +1,29 @@
+{
+  "operationId": "Upload_Get",
+  "title": "Returns upload by ID.",
+  "parameters": {
+    "api-version": "2022-11-30-preview",
+    "uploadId": "string"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "externalPackageId": "string",
+        "discoveryId": "string",
+        "manifestUploadUri": "https://some-storage-account/path/manifest.json",
+        "resourceEndpoint": "https://some-workspace/some-resource",
+        "status": "Created"
+      }
+    },
+    "default": {
+      "body": {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    }
+  }
+}

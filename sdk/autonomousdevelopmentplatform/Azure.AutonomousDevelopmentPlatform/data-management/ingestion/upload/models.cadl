@@ -1,0 +1,261 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+
+namespace ADP.DataManagement.Ingestion.Uploads.Private {
+  @doc("Internal - the model for internal use")
+  @friendlyName("UploadIdentifier")
+  model UploadIdentifier {
+    @doc("The upload resource identifier.")
+    @visibility("read", "write", "update")
+    @key
+    @path
+    @minLength(1)
+    @maxLength(36)
+    uploadId: string;
+  }
+}
+
+namespace ADP.DataManagement.Ingestion.Uploads {
+  enum UploadClients {
+    UploadClient,
+    UploadSpecialFilesClient,
+    UploadDataFilesClient,
+    UploadMeasurementsClient,
+  }
+
+  @doc("Upload resource creation parameters")
+  @friendlyName("UploadCreationParameters")
+  @withVisibility("create")
+  @withoutOmittedProperties("uploadId")
+  model UploadCreationParameters {
+    ...Upload;
+  }
+
+  @doc("An upload resource.")
+  @resource("uploads")
+  @friendlyName("Upload")
+  model Upload {
+    ...Private.UploadIdentifier;
+
+    @doc("ID of the external package (for example, the disk which contained data) which was used upon the creation of upload.")
+    @visibility("read", "create")
+    externalPackageId?: string;
+
+    @doc("The discovery identifier.")
+    @visibility("read", "create")
+    @minLength(1)
+    @maxLength(36)
+    discoveryId?: string;
+
+    @format("uri")
+    @doc("""
+    SAS signed URI for uploading or reading the upload manifest file on Azure Storage.
+    Note, if the upload status is 'Created' then the URI is signed with 'Write' permissions, otherwise with 'Read' permission.
+    This URI expires in 24 hours.
+    """)
+    @visibility("read")
+    manifestUploadUri?: string;
+
+    @doc("The upload state")
+    @visibility("read")
+    @knownValues(KnownUploadStatuses)
+    status?: UploadStatus;
+    ...CommonResourceEndpoint;
+  }
+
+  @doc("Special file resource.")
+  @resource("specialFilesUploadInfo")
+  @parentResource(Upload)
+  @friendlyName("UploadSpecialFile")
+  model UploadSpecialFile {
+    ...FileUploadInformation;
+  }
+
+  @doc("Data file resource.")
+  @resource("dataFilesUploadInfo")
+  @parentResource(Upload)
+  @friendlyName("UploadDataFile")
+  model UploadDataFile {
+    ...FileUploadInformation;
+  }
+
+  @doc("A measurement resource created as result of the upload.")
+  @resource("measurements")
+  @parentResource(Upload)
+  @friendlyName("UploadResultMeasurement")
+  model UploadResultMeasurement {
+    @doc("Measurement identifier.")
+    @key
+    measurementId: string;
+  }
+
+  @doc("Upload resource response.")
+  @friendlyName("UploadIdentifierAndEndpoint")
+  model UploadIdentifierAndEndpoint {
+    @doc("The upload identifier.")
+    @minLength(1)
+    @maxLength(36)
+    uploadId: string;
+    ...CommonResourceEndpoint;
+  }
+
+  @doc("A response providing the results of an upload")
+  @friendlyName("UploadResultsResponse")
+  model UploadResultsResponse {
+    ...UploadIdentifierAndEndpoint;
+
+    @doc("The measurement IDs that been created by the upload")
+    measurementIds: string[];
+  }
+
+  @doc("A response describing the list of special files to be uploaded")
+  @friendlyName("UploadSpecialFilesResponse")
+  model UploadSpecialFilesResponse {
+    ...UploadIdentifierAndEndpoint;
+
+    @doc("List of the special files")
+    @visibility("read", "write")
+    files: FileUploadInformation[];
+  }
+
+  @doc("Provides upload manifest URI on Azure Storage.")
+  @friendlyName("GetUploadManifestUriResponse")
+  model GetUploadManifestUriResponse {
+    @doc("The upload identifier.")
+    @minLength(1)
+    @maxLength(36)
+    uploadId: string;
+
+    @format("uri")
+    @doc("""
+    SAS signed URI for uploading the manifest file to Azure Storage.
+    This URI expires in 24 hours.
+    """)
+    @visibility("read", "write")
+    manifestUploadUri: string;
+    ...CommonResourceEndpoint;
+  }
+
+  @doc("Parameters to the upload URIs retrieval request")
+  @friendlyName("UploadFilesRequest")
+  model UploadFilesRequest {
+    @doc("List of client file names for which the upload URIs are requested")
+    @visibility("read", "write")
+    clientFileNames: string[];
+  }
+
+  @doc("A response providing the list of upload Uris for the files to be uploaded")
+  @withOptionalProperties
+  @friendlyName("UploadFilesResponse")
+  model UploadFilesResponse {
+    @doc("The upload identifier.")
+    @minLength(1)
+    @maxLength(36)
+    uploadId: string;
+    ...CommonResourceEndpoint;
+
+    @doc("List of SAS-signed file upload URIs")
+    @visibility("read", "write")
+    files: FileUploadInformation[];
+  }
+
+  @friendlyName("UploadLroResponse")
+  model UploadLroResponse
+    is ADP.Common.Operations.LongRunningOperationResponse<UploadOperationType>;
+
+  @doc("Known upload types.")
+  @knownValues(KnownUploadStatuses)
+  @friendlyName("UploadStatus")
+  model UploadStatus is string;
+
+  @doc("The state of the upload")
+  enum KnownUploadStatuses {
+    @doc("The upload process has been initiated. The client should upload the upload manifest file using the SAS-signed upload URI provided by the system")
+    Created: "Created",
+
+    @doc("The system is analyzing the upload manifest file uploaded by the client and generating the upload information for uploading special files.")
+    GeneratingSpecialFilesUploadInfo: "GeneratingSpecialFilesUploadInfo",
+
+    @doc("The system has analyzed the upload manifest file and generated the upload information for uploading special files.")
+    GeneratedSpecialFilesUploadInfo: "GeneratedSpecialFilesUploadInfo",
+
+    @doc("The system is sharding the files and generating the upload information for uploading data files.")
+    GeneratingDataFilesUploadInfo: "GeneratingDataFilesUploadInfo",
+
+    @doc("The system has sharded the files and generated the upload information for uploading data files. The client should upload the measurement files using the SAS-signed upload URIs provided by the system.")
+    GeneratedDataFilesUploadInfo: "GeneratedDataFilesUploadInfo",
+
+    @doc("The system is completing the upload process (creating measurements etc.)")
+    Completing: "Completing",
+
+    @doc("The system completed the upload process")
+    Completed: "Completed",
+
+    @doc("The system is cancelling the upload process")
+    Aborting: "Aborting",
+
+    @doc("The system cancelled the upload process")
+    Aborted: "Aborted",
+
+    @doc("The system marked the upload process as failed")
+    Failed: "Failed",
+  }
+
+  @doc("Known upload operation types.")
+  @knownValues(KnownUploadOperationTypes)
+  @friendlyName("UploadOperationType")
+  model UploadOperationType is string;
+
+  @doc("The supported operations of the upload")
+  enum KnownUploadOperationTypes {
+    @doc("The process of finalizing the file list of the upload")
+    FinalizeFileList: "FinalizeFileList",
+
+    @doc("The process of sharding the files for the upload")
+    ShardFiles: "ShardFiles",
+
+    @doc("The process of completing the upload")
+    CompleteUpload: "CompleteUpload",
+
+    @doc("The process of cancelling the upload")
+    AbortUpload: "AbortUpload",
+  }
+
+  @doc("Known upload types.")
+  @knownValues(KnownUploadOperationErrorCodes)
+  @friendlyName("UploadOperationErrorCode")
+  model UploadOperationErrorCode is string;
+
+  enum KnownUploadOperationErrorCodes {
+    @doc("The operation has succeeded")
+    Succeeded: "Succeeded",
+
+    @doc("Upload manifest file doesn't exist")
+    UploadManifestNotFound: "UploadManifestNotFound",
+
+    @doc("Invalid upload manifest format")
+    InvalidUploadManifestFormat: "InvalidUploadManifestFormat",
+
+    @doc("Invalid disk structure")
+    InvalidDiskFolderStructure: "InvalidDiskFolderStructure",
+
+    @doc("One or more special files was of an invalid format")
+    InvalidSpecialFileFormat: "InvalidSpecialFileFormat",
+
+    @doc("One or more special files assigned the measurement to a different data pool than that of the upload.")
+    DataPoolMismatch: "DataPoolMismatch",
+
+    @doc("One or more special files doesn't exist")
+    SpecialFileNotFound: "SpecialFileNotFound",
+
+    @doc("Expected data files are missing from one or more shards")
+    MissingDataFiles: "MissingDataFiles",
+
+    @doc("The operation has failed with unknown error")
+    Unknown: "Unknown",
+  }
+}

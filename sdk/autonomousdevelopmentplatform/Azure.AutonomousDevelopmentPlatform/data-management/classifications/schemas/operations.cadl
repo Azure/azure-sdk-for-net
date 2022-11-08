@@ -1,0 +1,42 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using Azure.Core.Foundations.Extensions;
+using OpenAPI;
+using Autorest;
+
+@tag("ClassificationSchemas")
+namespace ADP.DataManagement.ClassificationSchemas {
+  @client(Clients.ClassificationSchemasClient)
+  interface ClassificationSchemas {
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom resource read operation."
+    @doc("Get classification schema by name.")
+    get is ResourceRead<ClassificationSchema>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom LRO POST action for creating resources."
+    @doc("Creates new classification schema.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    create is CustomLongRunningResourceCreateUsingHttpPost<
+      ClassificationSchema,
+      CustomBodyWrapper<ClassificationSchemaCreationParameters>
+    >;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom LRO DELETE action for deleting resources."
+    @doc("Deletes the classification schema and all related classification assignments (instances).")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    delete is CustomLongRunningResourceDelete<ClassificationSchema>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom resource list operation."
+    @doc("List all classification schemas.")
+    list is CustomResourceList<ClassificationSchema>;
+  }
+}

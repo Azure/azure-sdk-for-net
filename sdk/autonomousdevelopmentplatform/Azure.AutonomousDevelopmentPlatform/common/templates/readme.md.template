@@ -1,0 +1,42 @@
+# Autonomous Development Platform (ADP) Client API
+
+> see https://aka.ms/autorest
+This is the AutoRest configuration file for Autonomous Development Platform (ADP).
+
+
+---
+## Getting Started
+To build the SDK for Autonomous Development Platform (ADP), simply [Install AutoRest](https://aka.ms/autorest/install) and in this folder, run:
+
+> `autorest`
+To see additional help and options, run:
+
+> `autorest --help`
+---
+## Configuration
+
+
+### Basic Information
+These are the global settings for the Autonomous Development Platform (ADP) API.
+
+```yaml
+title: AutonomousDevelopmentPlatformClient
+description: Autonomous Development Platform Client
+tag: package-2022-11-30-preview
+modelerfour:
+  lenient-model-deduplication: true
+clear-output-folder: false
+public-clients: true
+openapi-type: data-plane
+```
+
+
+### Tag: package-2022-11-30-preview
+
+These settings apply only when `--tag=package-2022-11-30-preview` is specified on the command line.
+
+``` yaml $(tag) == 'package-2022-11-30-preview'
+input-file:
+  - data-management/preview/2022-11-30-preview/adp-data-management-api.json
+```
+

@@ -1,0 +1,40 @@
+{
+  "operationId": "Upload_CreateOrReplace",
+  "title": "Creates a new ingestion upload instance.",
+  "parameters": {
+    "api-version": "2022-11-30-preview",
+    "uploadId": "string",
+    "externalPackageId": "string",
+    "discoveryId": "string"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "externalPackageId": "string",
+        "discoveryId": "string",
+        "resourceEndpoint": "https://some-workspace/some-resource",
+        "manifestUploadUri": "https://somewhere/file.ext",
+        "status": "Created"
+      }
+    },
+    "201": {
+      "body": {
+        "externalPackageId": "string",
+        "discoveryId": "string",
+        "resourceEndpoint": "https://some-workspace/some-resource",
+        "manifestUploadUri": "https://somewhere/file.ext",
+        "status": "Created"
+      }
+    },
+    "default": {
+      "body": {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    }
+  }
+}

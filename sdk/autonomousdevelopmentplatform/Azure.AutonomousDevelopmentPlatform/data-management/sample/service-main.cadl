@@ -1,0 +1,8 @@
+import "../common";
+import "./models.cadl";
+import "./operations.cadl";
+
+// Note, this "main" was created to allow building the "sample-v2" independently.
+@serviceTitle("Autonomous Development Platform")
+@serviceVersion("2022-11-30-preview")
+namespace ADP.Sample;

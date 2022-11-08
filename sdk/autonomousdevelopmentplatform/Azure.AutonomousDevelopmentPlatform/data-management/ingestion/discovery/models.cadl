@@ -1,0 +1,200 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+
+namespace ADP.DataManagement.Ingestion.Discoveries.Private {
+  @doc("Internal - the model for internal use")
+  @friendlyName("DiscoveryIdentifier")
+  model DiscoveryIdentifier {
+    @doc("The discovery identifier.")
+    @key
+    @minLength(1)
+    @maxLength(36)
+    discoveryId: string;
+  }
+}
+
+namespace ADP.DataManagement.Ingestion.Discoveries {
+  enum DiscoveryClients {
+    DiscoveryClient,
+    DiscoverySpecialFilesClient,
+    DiscoveryUploadsClient,
+  }
+
+  @doc("Discovery long running operation response.")
+  @friendlyName("DiscoveryLroResponse")
+  model DiscoveryLroResponse
+    is ADP.Common.Operations.LongRunningOperationResponse<DiscoveryOperationType>;
+
+  @doc("Discovery resource creation parameters.")
+  @friendlyName("DiscoveryCreationParameters")
+  @withVisibility("create")
+  @withoutOmittedProperties("discoveryId")
+  model DiscoveryCreationParameters {
+    ...Discovery;
+  }
+
+  @doc("A discovery resource.")
+  @resource("discoveries")
+  @friendlyName("Discovery")
+  model Discovery {
+    ...Private.DiscoveryIdentifier;
+
+    @doc("ID of the external package (for example, the disk which contained data) which was used upon the creation of upload")
+    @visibility("read", "create")
+    externalPackageId?: string;
+
+    @format("uri")
+    @doc("""
+    SAS signed URI for uploading or reading the discovery manifest file on Azure Storage.
+    Note, if the discovery status is 'Created' then the URI is signed with 'Write' permissions, otherwise with 'Read' permission.
+    This URI expires in 24 hours.
+    """)
+    @visibility("read")
+    manifestUploadUri?: string;
+
+    @doc("The discovery status.")
+    @visibility("read")
+    status?: DiscoveryStatus;
+  }
+
+  @doc("A discovery special file resource.")
+  @resource("specialFilesUploadInfo")
+  @parentResource(Discovery)
+  @friendlyName("DiscoverySpecialFile")
+  model DiscoverySpecialFile {
+    @doc("Client file name.")
+    @key
+    clientFileName: string;
+
+    @doc("File name on storage.")
+    fileUploadUri: string;
+  }
+
+  @doc("A discovery upload resource.")
+  @resource("uploads")
+  @parentResource(Discovery)
+  @friendlyName("DiscoveryUpload")
+  model DiscoveryUpload {
+    @doc("Upload identifier.")
+    @key
+    @minLength(1)
+    @maxLength(36)
+    uploadId: string;
+
+    @doc("""
+    SAS signed URI for downloading the manifest file from Azure Storage.
+    The manifest file contains list of all files in the group.
+    This URI expires in 24 hours.
+    """)
+    @format("uri")
+    manifestDownloadUri: string;
+    ...CommonResourceEndpoint;
+  }
+
+  @deprecated("There is no need to return discovery ID in discovery LRO response.")
+  @doc("Discovery action response properties")
+  @friendlyName("DiscoveryActionCustomResponseProperties")
+  model DiscoveryActionCustomResponseProperties {
+    @doc("The discovery identifier.")
+    @minLength(1)
+    @maxLength(36)
+    discoveryId: string;
+  }
+
+  @doc("Describes the list of special files to be uploaded")
+  @friendlyName("DiscoverySpecialFilesResponse")
+  model DiscoverySpecialFilesResponse {
+    ...Private.DiscoveryIdentifier;
+
+    @doc("List of the special files")
+    @visibility("read", "write")
+    files: FileUploadInformation[];
+  }
+
+  @doc("Known discovery operation types.")
+  @knownValues(KnownDiscoveryOperationTypes)
+  @friendlyName("DiscoveryOperationType")
+  model DiscoveryOperationType is string;
+
+  @doc("The supported actions on discovery")
+  enum KnownDiscoveryOperationTypes {
+    @doc("The process of completing the discovery")
+    CompleteDiscovery: "CompleteDiscovery",
+
+    @doc("The process of finalizing the file list of the discovery")
+    FinalizeFileList: "FinalizeFileList",
+
+    @doc("The process of cancelling the discovery")
+    AbortDiscovery: "AbortDiscovery",
+  }
+
+  @doc("Known discovery error codes.")
+  @knownValues(KnownDiscoveryOperationErrorCodes)
+  @friendlyName("DiscoveryOperationErrorCode")
+  model DiscoveryOperationErrorCode is string;
+
+  enum KnownDiscoveryOperationErrorCodes {
+    @doc("The operation has succeeded")
+    Succeeded: "Succeeded",
+
+    @doc("Discovery manifest file doesn't exist")
+    DiscoveryManifestNotFound: "DiscoveryManifestNotFound",
+
+    @doc("Invalid discovery manifest format")
+    InvalidDiscoveryManifestFormat: "InvalidDiscoveryManifestFormat",
+
+    @doc("The special file doesn't exist")
+    SpecialFileNotFound: "SpecialFileNotFound",
+
+    @doc("The special file has an invalid format")
+    InvalidSpecialFileFormat: "InvalidSpecialFileFormat",
+
+    @doc("Data pool doesn't exist")
+    DataPoolDoesNotExist: "DataPoolDoesNotExist",
+
+    @doc("Workspace doesn't exist")
+    WorkspaceDoesNotExist: "WorkspaceDoesNotExist",
+
+    @doc("Invalid disk structure")
+    InvalidDiskFolderStructure: "InvalidDiskFolderStructure",
+
+    @doc("The operation has failed with unknown error")
+    Unknown: "Unknown",
+  }
+
+  @doc("Known discovery statuses.")
+  @knownValues(KnownDiscoveryStatuses)
+  @friendlyName("DiscoveryStatus")
+  model DiscoveryStatus is string;
+
+  @doc("The status of the discovery")
+  enum KnownDiscoveryStatuses {
+    @doc("The discovery process has been initiated")
+    Created: "Created",
+
+    @doc("The system is analyzing the discovery manifest file uploaded by the client and generating the upload information for uploading special files.")
+    GeneratingSpecialFilesUploadInfo: "GeneratingSpecialFilesUploadInfo",
+
+    @doc("The system has analyzed the discovery manifest file and generated the upload information for uploading special files.")
+    GeneratedSpecialFilesUploadInfo: "GeneratedSpecialFilesUploadInfo",
+
+    @doc("The system is processing the special files uploaded by the client")
+    Completing: "Completing",
+
+    @doc("The system has finished the analysis of special files")
+    Completed: "Completed",
+
+    @doc("The system is cancelling the discovery process")
+    Aborting: "Aborting",
+
+    @doc("The discovery process has been aborted")
+    Aborted: "Aborted",
+
+    @doc("The discovery process has been failed")
+    Failed: "Failed",
+  }
+}

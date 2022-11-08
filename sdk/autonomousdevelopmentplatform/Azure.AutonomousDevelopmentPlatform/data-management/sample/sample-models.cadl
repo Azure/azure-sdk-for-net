@@ -1,0 +1,63 @@
+import "@cadl-lang/rest";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+
+@doc("Represents sample resource")
+@resource("samples")
+model SampleResource {
+  @doc("Resource identifier.")
+  @key
+  @visibility("read", "write")
+  id: string;
+
+  @doc("The resource state.")
+  @visibility("read", "write")
+  state: SampleState;
+
+  @doc("Resource labels.")
+  @visibility("read", "write")
+  labels?: string[];
+}
+
+@doc("Represents sample resource in collections (exposes eTag)")
+model SampleResourceWithEtag {
+  ...SampleResource;
+  ...EntityTag;
+}
+
+@doc("The Sample resource to be created.")
+model SampleResourceCreationParameters is SampleResource;
+
+@doc("The sample labels to be set (replace).")
+model SampleSetLabelsRequestParameters {
+  @doc("Resource labels.")
+  @visibility("read", "write")
+  @body
+  labels?: string[];
+}
+
+@doc("Sample patch request parameters exposes only updatable properties of Sample resource.")
+model SamplePatchRequestParameters {
+  ...SampleSetLabelsRequestParameters;
+  @Cadl.Http.header "content-type": "application/merge-patch+json";
+}
+
+@doc("Represents sample resource state.")
+@knownValues(SampleStateKV)
+model SampleState is string;
+enum SampleStateKV {
+  Inactive,
+  Activating,
+  Active,
+}
+
+@doc("Represents sample resource identifier.")
+model CommonSampleQueryParameters {
+  ...ApiVersionParameter;
+
+  @doc("The Sample identifier.")
+  @path
+  sampleId: string;
+}

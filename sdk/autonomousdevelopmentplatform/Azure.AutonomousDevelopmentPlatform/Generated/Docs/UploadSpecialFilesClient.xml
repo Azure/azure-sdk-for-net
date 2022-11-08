@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="ListAsync(String,RequestContext)">
+<example>
+This sample shows how to call ListAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFilesClient(credential);
+
+await foreach (var data in client.ListAsync("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUploadUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUploadUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="List(String,RequestContext)">
+<example>
+This sample shows how to call List with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFilesClient(credential);
+
+foreach (var data in client.List("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUploadUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUploadUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateAsync(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call GenerateAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFilesClient(credential);
+
+var operation = await client.GenerateAsync(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>UploadLroResponse</c>:
+<code>{
+  operationId: string, # Required.
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: &quot;FinalizeFileList&quot; | &quot;ShardFiles&quot; | &quot;CompleteUpload&quot; | &quot;AbortUpload&quot;, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Generate(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call Generate with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFilesClient(credential);
+
+var operation = client.Generate(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>UploadLroResponse</c>:
+<code>{
+  operationId: string, # Required.
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: &quot;FinalizeFileList&quot; | &quot;ShardFiles&quot; | &quot;CompleteUpload&quot; | &quot;AbortUpload&quot;, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

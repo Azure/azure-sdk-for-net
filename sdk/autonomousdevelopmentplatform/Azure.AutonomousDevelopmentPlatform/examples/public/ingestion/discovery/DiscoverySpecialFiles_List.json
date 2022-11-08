@@ -1,0 +1,36 @@
+{
+  "operationId": "DiscoverySpecialFiles_List",
+  "title": "List special file detail for the discovery resource.",
+  "parameters": {
+    "api-version": "2022-11-30-preview",
+    "discoveryId": "string",
+    "operation-id": "string"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "clientFileName": "file-1.ext",
+            "fileUploadUri": "https://some-storage-account/path/special-file-1.ext"
+          },
+          {
+            "clientFileName": "file-2.ext",
+            "fileUploadUri": "https://some-storage-account/path/special-file-2.ext"
+          }
+        ],
+        "nextLink": "https://workspace/path-to-collection?continuationToken=123"
+      }
+    },
+    "default": {
+      "body": {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    }
+  }
+}

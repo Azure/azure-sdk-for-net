@@ -1,0 +1,33 @@
+{
+  "operationId": "Upload_Results",
+  "title": "Returns the final result of the discovery process.",
+  "parameters": {
+    "api-version": "2022-11-30-preview",
+    "uploadId": "string"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "measurementId": "measurement-1"
+          },
+          {
+            "measurementId": "measurement-2"
+          }
+        ],
+        "nextLink": "https://workspace/path-to-collection?continuationToken=123"
+      }
+    },
+    "default": {
+      "body": {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    }
+  }
+}

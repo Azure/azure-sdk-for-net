@@ -1,0 +1,36 @@
+{
+  "operationId": "LongRunningOperations_Get",
+  "title": "Get status of the long running operation. (LRO)",
+  "parameters": {
+    "api-version": "2020-11-30-preview",
+    "operationId": "00000000-0000-0000-0000-000000000001"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Retry-After": 5
+      },
+      "body": {
+        "operationId": "00000000-0000-0000-0000-000000000001",
+        "status": "Failed",
+        "operationType": "string",
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    },
+    "default": {
+      "body": {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    }
+  }
+}

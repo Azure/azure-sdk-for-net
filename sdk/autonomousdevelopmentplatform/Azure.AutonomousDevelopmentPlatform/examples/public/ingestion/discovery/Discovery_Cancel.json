@@ -1,0 +1,38 @@
+{
+  "operationId": "Discovery_Cancel",
+  "title": "Initiates the process of cancelling the discovery.",
+  "parameters": {
+    "api-version": "2022-11-30-preview",
+    "discoveryId": "string",
+    "operation-id": "string"
+  },
+  "responses": {
+    "202": {
+      "headers": {
+        "location": "https://workspace-name-hash.workspaces.region.adp.azure.com/operations/00000000-0000-0000-0000-000000000123/result?api-version=2022-11-30-preview",
+        "operation-location": "https://workspace-name-hash.workspaces.region.adp.azure.com/operations/00000000-0000-0000-0000-000000000123?api-version=2022-11-30-preview"
+      },
+      "body": {
+        "operationId": "string",
+        "status": "Created",
+        "operationType": "string",
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    },
+    "default": {
+      "body": {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    }
+  }
+}

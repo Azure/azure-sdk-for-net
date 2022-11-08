@@ -1,0 +1,35 @@
+{
+  "operationId": "Upload_ProvideSpecialFilesUploadUris",
+  "title": "Returns SAS signed URIs for uploading special files for given upload resource.",
+  "parameters": {
+    "api-version": "2022-11-30-preview",
+    "uploadId": "string"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "clientFileName": "file-1.ext",
+            "fileUploadUri": "https://somewhere/file-1.ext"
+          },
+          {
+            "clientFileName": "file-2.ext",
+            "fileUploadUri": "https://somewhere/file-2.ext"
+          }
+        ],
+        "nextLink": "https://workspace/path-to-collection?continuationToken=123"
+      }
+    },
+    "default": {
+      "body": {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "target": "string",
+          "details": []
+        }
+      }
+    }
+  }
+}

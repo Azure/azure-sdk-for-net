@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateOrReplaceAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var data = new {};
+
+Response response = await client.CreateOrReplaceAsync("<discoveryId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var data = new {
+    externalPackageId = "<externalPackageId>",
+};
+
+Response response = await client.CreateOrReplaceAsync("<discoveryId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUploadUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DiscoveryCreationParameters</c>:
+<code>{
+  externalPackageId: string, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUploadUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplace(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplace with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var data = new {};
+
+Response response = client.CreateOrReplace("<discoveryId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+]]></code>
+This sample shows how to call CreateOrReplace with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var data = new {
+    externalPackageId = "<externalPackageId>",
+};
+
+Response response = client.CreateOrReplace("<discoveryId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUploadUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DiscoveryCreationParameters</c>:
+<code>{
+  externalPackageId: string, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUploadUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+Response response = await client.GetAsync("<discoveryId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUploadUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUploadUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Get(String,RequestContext)">
+<example>
+This sample shows how to call Get with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+Response response = client.Get("<discoveryId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUploadUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUploadUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CompleteAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CompleteAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var operation = await client.CompleteAsync(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call CompleteAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var operation = await client.CompleteAsync(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DiscoveryLroResponse</c>:
+<code>{
+  operationId: string, # Required.
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: &quot;CompleteDiscovery&quot; | &quot;FinalizeFileList&quot; | &quot;AbortDiscovery&quot;, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Complete(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call Complete with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var operation = client.Complete(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call Complete with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var operation = client.Complete(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DiscoveryLroResponse</c>:
+<code>{
+  operationId: string, # Required.
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: &quot;CompleteDiscovery&quot; | &quot;FinalizeFileList&quot; | &quot;AbortDiscovery&quot;, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CancelAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CancelAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var operation = await client.CancelAsync(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call CancelAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var operation = await client.CancelAsync(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DiscoveryLroResponse</c>:
+<code>{
+  operationId: string, # Required.
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: &quot;CompleteDiscovery&quot; | &quot;FinalizeFileList&quot; | &quot;AbortDiscovery&quot;, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Cancel(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call Cancel with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var operation = client.Cancel(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call Cancel with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DiscoveriesClient(credential);
+
+var operation = client.Cancel(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DiscoveryLroResponse</c>:
+<code>{
+  operationId: string, # Required.
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: &quot;CompleteDiscovery&quot; | &quot;FinalizeFileList&quot; | &quot;AbortDiscovery&quot;, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

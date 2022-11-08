@@ -1,0 +1,76 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using Azure.Core.Foundations.Extensions;
+using OpenAPI;
+using Autorest;
+
+@tag("Discoveries")
+namespace ADP.DataManagement.Ingestion.Discoveries {
+  @client(DiscoveryClients.DiscoveryClient)
+  interface Discoveries {
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom operation."
+    @doc("Creates a new ingestion discovery instance.")
+    createOrReplace is CustomResourceCreateOrReplace<
+      Discovery,
+      CustomBodyWrapper<DiscoveryCreationParameters>
+    >;
+
+    @doc("Get discovery by ID.")
+    get is ResourceRead<Discovery>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom LRO response template the LRO actions."
+    @doc("Initiates the process of completing the discovery and creating the upload file grouping manifest files.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    complete is CustomLongRunningResourceAction<
+      Discovery,
+      {},
+      {},
+      DiscoveryLroResponse
+    >;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom LRO response template the LRO actions."
+    @doc("Initiates the process of cancelling the discovery.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    cancel is CustomLongRunningResourceAction<
+      Discovery,
+      {},
+      {},
+      DiscoveryLroResponse
+    >;
+  }
+
+  @client(DiscoveryClients.DiscoverySpecialFilesClient)
+  interface DiscoverySpecialFiles {
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom resource list operation."
+    @doc("List special files details for the discovery resource.")
+    list is CustomResourceList<DiscoverySpecialFile>;
+
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom LRO response template the LRO actions."
+    @doc("Initiates the process of generating SAS signed URIs for uploading special files for the discovery.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    @pollingOperation(ADP.Common.Operations.LongRunningOperationStatusLocation)
+    generate is CustomLongRunningResourceCollectionAction<
+      DiscoverySpecialFile,
+      {},
+      DiscoveryLroResponse
+    >;
+  }
+
+  @client(DiscoveryClients.DiscoveryUploadsClient)
+  interface DiscoveryResultUploads {
+    #suppress "@azure-tools/cadl-azure-core/use-standard-operations" "ADP data-plane API uses custom resource list operation."
+    @doc("List upload detail for the discovery resource.")
+    list is CustomResourceList<DiscoveryUpload>;
+  }
+}

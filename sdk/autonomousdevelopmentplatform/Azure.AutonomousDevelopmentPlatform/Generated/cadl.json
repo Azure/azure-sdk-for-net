@@ -1,0 +1,3539 @@
+{
+ "$id": "1",
+ "Name": "ADP",
+ "ApiVersions": [
+  "2022-11-30-preview"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Name": "LongRunningOperationStatus",
+   "Namespace": "ADP.Common.Operations",
+   "Description": "The async operation status",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "Created",
+     "Value": "Created"
+    },
+    {
+     "$id": "4",
+     "Name": "InProgress",
+     "Value": "InProgress"
+    },
+    {
+     "$id": "5",
+     "Name": "Succeeded",
+     "Value": "Succeeded"
+    },
+    {
+     "$id": "6",
+     "Name": "Failed",
+     "Value": "Failed"
+    },
+    {
+     "$id": "7",
+     "Name": "Canceled",
+     "Value": "Canceled"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "8",
+   "Name": "DiscoveryStatus",
+   "Namespace": "ADP.DataManagement.Ingestion.Discoveries",
+   "Description": "Known discovery statuses.",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "9",
+     "Name": "Created",
+     "Value": "Created",
+     "Description": "The discovery process has been initiated"
+    },
+    {
+     "$id": "10",
+     "Name": "GeneratingSpecialFilesUploadInfo",
+     "Value": "GeneratingSpecialFilesUploadInfo",
+     "Description": "The system is analyzing the discovery manifest file uploaded by the client and generating the upload information for uploading special files."
+    },
+    {
+     "$id": "11",
+     "Name": "GeneratedSpecialFilesUploadInfo",
+     "Value": "GeneratedSpecialFilesUploadInfo",
+     "Description": "The system has analyzed the discovery manifest file and generated the upload information for uploading special files."
+    },
+    {
+     "$id": "12",
+     "Name": "Completing",
+     "Value": "Completing",
+     "Description": "The system is processing the special files uploaded by the client"
+    },
+    {
+     "$id": "13",
+     "Name": "Completed",
+     "Value": "Completed",
+     "Description": "The system has finished the analysis of special files"
+    },
+    {
+     "$id": "14",
+     "Name": "Aborting",
+     "Value": "Aborting",
+     "Description": "The system is cancelling the discovery process"
+    },
+    {
+     "$id": "15",
+     "Name": "Aborted",
+     "Value": "Aborted",
+     "Description": "The discovery process has been aborted"
+    },
+    {
+     "$id": "16",
+     "Name": "Failed",
+     "Value": "Failed",
+     "Description": "The discovery process has been failed"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "17",
+   "Name": "DiscoveryOperationType",
+   "Namespace": "ADP.DataManagement.Ingestion.Discoveries",
+   "Description": "Known discovery operation types.",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "18",
+     "Name": "CompleteDiscovery",
+     "Value": "CompleteDiscovery",
+     "Description": "The process of completing the discovery"
+    },
+    {
+     "$id": "19",
+     "Name": "FinalizeFileList",
+     "Value": "FinalizeFileList",
+     "Description": "The process of finalizing the file list of the discovery"
+    },
+    {
+     "$id": "20",
+     "Name": "AbortDiscovery",
+     "Value": "AbortDiscovery",
+     "Description": "The process of cancelling the discovery"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "21",
+   "Name": "UploadStatus",
+   "Namespace": "ADP.DataManagement.Ingestion.Uploads",
+   "Description": "Known upload types.",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "22",
+     "Name": "Created",
+     "Value": "Created",
+     "Description": "The upload process has been initiated. The client should upload the upload manifest file using the SAS-signed upload URI provided by the system"
+    },
+    {
+     "$id": "23",
+     "Name": "GeneratingSpecialFilesUploadInfo",
+     "Value": "GeneratingSpecialFilesUploadInfo",
+     "Description": "The system is analyzing the upload manifest file uploaded by the client and generating the upload information for uploading special files."
+    },
+    {
+     "$id": "24",
+     "Name": "GeneratedSpecialFilesUploadInfo",
+     "Value": "GeneratedSpecialFilesUploadInfo",
+     "Description": "The system has analyzed the upload manifest file and generated the upload information for uploading special files."
+    },
+    {
+     "$id": "25",
+     "Name": "GeneratingDataFilesUploadInfo",
+     "Value": "GeneratingDataFilesUploadInfo",
+     "Description": "The system is sharding the files and generating the upload information for uploading data files."
+    },
+    {
+     "$id": "26",
+     "Name": "GeneratedDataFilesUploadInfo",
+     "Value": "GeneratedDataFilesUploadInfo",
+     "Description": "The system has sharded the files and generated the upload information for uploading data files. The client should upload the measurement files using the SAS-signed upload URIs provided by the system."
+    },
+    {
+     "$id": "27",
+     "Name": "Completing",
+     "Value": "Completing",
+     "Description": "The system is completing the upload process (creating measurements etc.)"
+    },
+    {
+     "$id": "28",
+     "Name": "Completed",
+     "Value": "Completed",
+     "Description": "The system completed the upload process"
+    },
+    {
+     "$id": "29",
+     "Name": "Aborting",
+     "Value": "Aborting",
+     "Description": "The system is cancelling the upload process"
+    },
+    {
+     "$id": "30",
+     "Name": "Aborted",
+     "Value": "Aborted",
+     "Description": "The system cancelled the upload process"
+    },
+    {
+     "$id": "31",
+     "Name": "Failed",
+     "Value": "Failed",
+     "Description": "The system marked the upload process as failed"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "32",
+   "Name": "UploadOperationType",
+   "Namespace": "ADP.DataManagement.Ingestion.Uploads",
+   "Description": "Known upload operation types.",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "33",
+     "Name": "FinalizeFileList",
+     "Value": "FinalizeFileList",
+     "Description": "The process of finalizing the file list of the upload"
+    },
+    {
+     "$id": "34",
+     "Name": "ShardFiles",
+     "Value": "ShardFiles",
+     "Description": "The process of sharding the files for the upload"
+    },
+    {
+     "$id": "35",
+     "Name": "CompleteUpload",
+     "Value": "CompleteUpload",
+     "Description": "The process of completing the upload"
+    },
+    {
+     "$id": "36",
+     "Name": "AbortUpload",
+     "Value": "AbortUpload",
+     "Description": "The process of cancelling the upload"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "37",
+   "Name": "LongRunningOperationWithResponseHeaders",
+   "Namespace": "ADP.Common.Operations",
+   "Description": "Standard Azure LRO response headers.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "38",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "39",
+     "Name": "operationType",
+     "SerializedName": "operationType",
+     "Description": "",
+     "Type": {
+      "$id": "40",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "41",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "",
+     "Type": {
+      "$id": "42",
+      "Name": "Error",
+      "Namespace": "Azure.Core.Foundations",
+      "Description": "The error object.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "43",
+        "Name": "code",
+        "SerializedName": "code",
+        "Description": "",
+        "Type": {
+         "$id": "44",
+         "Name": "string",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "IsDiscriminator": false
+       },
+       {
+        "$id": "45",
+        "Name": "message",
+        "SerializedName": "message",
+        "Description": "",
+        "Type": {
+         "$id": "46",
+         "Name": "string",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "IsDiscriminator": false
+       },
+       {
+        "$id": "47",
+        "Name": "target",
+        "SerializedName": "target",
+        "Description": "",
+        "Type": {
+         "$id": "48",
+         "Name": "string",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "IsDiscriminator": false
+       },
+       {
+        "$id": "49",
+        "Name": "details",
+        "SerializedName": "details",
+        "Description": "",
+        "Type": {
+         "$id": "50",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "42"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "IsDiscriminator": false
+       },
+       {
+        "$id": "51",
+        "Name": "innererror",
+        "SerializedName": "innererror",
+        "Description": "",
+        "Type": {
+         "$id": "52",
+         "Name": "InnerError",
+         "Namespace": "Azure.Core.Foundations",
+         "Description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+         "IsNullable": false,
+         "Usage": "Output",
+         "Properties": [
+          {
+           "$id": "53",
+           "Name": "code",
+           "SerializedName": "code",
+           "Description": "",
+           "Type": {
+            "$id": "54",
+            "Name": "string",
+            "Kind": "String",
+            "IsNullable": false
+           },
+           "IsRequired": true,
+           "IsReadOnly": false,
+           "IsDiscriminator": false
+          },
+          {
+           "$id": "55",
+           "Name": "innererror",
+           "SerializedName": "innererror",
+           "Description": "",
+           "Type": {
+            "$ref": "52"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false,
+           "IsDiscriminator": false
+          }
+         ]
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "IsDiscriminator": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "56",
+     "Name": "operationId",
+     "SerializedName": "operationId",
+     "Description": "",
+     "Type": {
+      "$id": "57",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$ref": "42"
+  },
+  {
+   "$ref": "52"
+  },
+  {
+   "$id": "58",
+   "Name": "DiscoveryCreationParameters",
+   "Namespace": "ADP.DataManagement.Ingestion.Discoveries",
+   "Description": "Discovery resource creation parameters.",
+   "IsNullable": false,
+   "Usage": "Input",
+   "Properties": [
+    {
+     "$id": "59",
+     "Name": "externalPackageId",
+     "SerializedName": "externalPackageId",
+     "Description": "",
+     "Type": {
+      "$id": "60",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$id": "61",
+   "Name": "Discovery",
+   "Namespace": "ADP.DataManagement.Ingestion.Discoveries",
+   "Description": "A discovery resource.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "62",
+     "Name": "discoveryId",
+     "SerializedName": "discoveryId",
+     "Description": "",
+     "Type": {
+      "$id": "63",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "64",
+     "Name": "externalPackageId",
+     "SerializedName": "externalPackageId",
+     "Description": "",
+     "Type": {
+      "$id": "65",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "66",
+     "Name": "manifestUploadUri",
+     "SerializedName": "manifestUploadUri",
+     "Description": "",
+     "Type": {
+      "$id": "67",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "68",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "",
+     "Type": {
+      "$ref": "8"
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$id": "69",
+   "Name": "DiscoveryLroResponse",
+   "Namespace": "ADP.DataManagement.Ingestion.Discoveries",
+   "Description": "Discovery long running operation response.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "70",
+     "Name": "operationId",
+     "SerializedName": "operationId",
+     "Description": "",
+     "Type": {
+      "$id": "71",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "72",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "73",
+     "Name": "operationType",
+     "SerializedName": "operationType",
+     "Description": "",
+     "Type": {
+      "$ref": "17"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "74",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "",
+     "Type": {
+      "$ref": "42"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$id": "75",
+   "Name": "PagedDiscoverySpecialFile",
+   "Namespace": "Azure.Core",
+   "Description": "Paged collection of DiscoverySpecialFile items",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "76",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "",
+     "Type": {
+      "$id": "77",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "78",
+       "Name": "DiscoverySpecialFile",
+       "Namespace": "ADP.DataManagement.Ingestion.Discoveries",
+       "Description": "A discovery special file resource.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "79",
+         "Name": "clientFileName",
+         "SerializedName": "clientFileName",
+         "Description": "",
+         "Type": {
+          "$id": "80",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "IsDiscriminator": false
+        },
+        {
+         "$id": "81",
+         "Name": "fileUploadUri",
+         "SerializedName": "fileUploadUri",
+         "Description": "",
+         "Type": {
+          "$id": "82",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "IsDiscriminator": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "83",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "",
+     "Type": {
+      "$id": "84",
+      "Name": "ResourceLocation",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$ref": "78"
+  },
+  {
+   "$id": "85",
+   "Name": "PagedDiscoveryUpload",
+   "Namespace": "Azure.Core",
+   "Description": "Paged collection of DiscoveryUpload items",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "86",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "",
+     "Type": {
+      "$id": "87",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "88",
+       "Name": "DiscoveryUpload",
+       "Namespace": "ADP.DataManagement.Ingestion.Discoveries",
+       "Description": "A discovery upload resource.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "89",
+         "Name": "uploadId",
+         "SerializedName": "uploadId",
+         "Description": "",
+         "Type": {
+          "$id": "90",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "IsDiscriminator": false
+        },
+        {
+         "$id": "91",
+         "Name": "manifestDownloadUri",
+         "SerializedName": "manifestDownloadUri",
+         "Description": "",
+         "Type": {
+          "$id": "92",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "IsDiscriminator": false
+        },
+        {
+         "$id": "93",
+         "Name": "resourceEndpoint",
+         "SerializedName": "resourceEndpoint",
+         "Description": "",
+         "Type": {
+          "$id": "94",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true,
+         "IsDiscriminator": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "95",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "",
+     "Type": {
+      "$id": "96",
+      "Name": "ResourceLocation",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$ref": "88"
+  },
+  {
+   "$id": "97",
+   "Name": "UploadCreationParameters",
+   "Namespace": "ADP.DataManagement.Ingestion.Uploads",
+   "Description": "Upload resource creation parameters",
+   "IsNullable": false,
+   "Usage": "Input",
+   "Properties": [
+    {
+     "$id": "98",
+     "Name": "externalPackageId",
+     "SerializedName": "externalPackageId",
+     "Description": "",
+     "Type": {
+      "$id": "99",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "100",
+     "Name": "discoveryId",
+     "SerializedName": "discoveryId",
+     "Description": "",
+     "Type": {
+      "$id": "101",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$id": "102",
+   "Name": "Upload",
+   "Namespace": "ADP.DataManagement.Ingestion.Uploads",
+   "Description": "An upload resource.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "103",
+     "Name": "externalPackageId",
+     "SerializedName": "externalPackageId",
+     "Description": "",
+     "Type": {
+      "$id": "104",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "105",
+     "Name": "discoveryId",
+     "SerializedName": "discoveryId",
+     "Description": "",
+     "Type": {
+      "$id": "106",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "107",
+     "Name": "manifestUploadUri",
+     "SerializedName": "manifestUploadUri",
+     "Description": "",
+     "Type": {
+      "$id": "108",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "109",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "",
+     "Type": {
+      "$ref": "21"
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "110",
+     "Name": "resourceEndpoint",
+     "SerializedName": "resourceEndpoint",
+     "Description": "",
+     "Type": {
+      "$id": "111",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$id": "112",
+   "Name": "UploadLroResponse",
+   "Namespace": "ADP.DataManagement.Ingestion.Uploads",
+   "Description": "The long running operation response",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "113",
+     "Name": "operationId",
+     "SerializedName": "operationId",
+     "Description": "",
+     "Type": {
+      "$id": "114",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "115",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "116",
+     "Name": "operationType",
+     "SerializedName": "operationType",
+     "Description": "",
+     "Type": {
+      "$ref": "32"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "117",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "",
+     "Type": {
+      "$ref": "42"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$id": "118",
+   "Name": "PagedUploadSpecialFile",
+   "Namespace": "Azure.Core",
+   "Description": "Paged collection of UploadSpecialFile items",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "119",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "",
+     "Type": {
+      "$id": "120",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "121",
+       "Name": "UploadSpecialFile",
+       "Namespace": "ADP.DataManagement.Ingestion.Uploads",
+       "Description": "Special file resource.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "122",
+         "Name": "clientFileName",
+         "SerializedName": "clientFileName",
+         "Description": "",
+         "Type": {
+          "$id": "123",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "IsDiscriminator": false
+        },
+        {
+         "$id": "124",
+         "Name": "fileUploadUri",
+         "SerializedName": "fileUploadUri",
+         "Description": "",
+         "Type": {
+          "$id": "125",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "IsDiscriminator": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "126",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "",
+     "Type": {
+      "$id": "127",
+      "Name": "ResourceLocation",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$ref": "121"
+  },
+  {
+   "$id": "128",
+   "Name": "PagedUploadDataFile",
+   "Namespace": "Azure.Core",
+   "Description": "Paged collection of UploadDataFile items",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "129",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "",
+     "Type": {
+      "$id": "130",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "131",
+       "Name": "UploadDataFile",
+       "Namespace": "ADP.DataManagement.Ingestion.Uploads",
+       "Description": "Data file resource.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "132",
+         "Name": "clientFileName",
+         "SerializedName": "clientFileName",
+         "Description": "",
+         "Type": {
+          "$id": "133",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "IsDiscriminator": false
+        },
+        {
+         "$id": "134",
+         "Name": "fileUploadUri",
+         "SerializedName": "fileUploadUri",
+         "Description": "",
+         "Type": {
+          "$id": "135",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "IsDiscriminator": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "136",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "",
+     "Type": {
+      "$id": "137",
+      "Name": "ResourceLocation",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$ref": "131"
+  },
+  {
+   "$id": "138",
+   "Name": "PagedUploadResultMeasurement",
+   "Namespace": "Azure.Core",
+   "Description": "Paged collection of UploadResultMeasurement items",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "139",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "",
+     "Type": {
+      "$id": "140",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "141",
+       "Name": "UploadResultMeasurement",
+       "Namespace": "ADP.DataManagement.Ingestion.Uploads",
+       "Description": "A measurement resource created as result of the upload.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "142",
+         "Name": "measurementId",
+         "SerializedName": "measurementId",
+         "Description": "",
+         "Type": {
+          "$id": "143",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "IsDiscriminator": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    },
+    {
+     "$id": "144",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "",
+     "Type": {
+      "$id": "145",
+      "Name": "ResourceLocation",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "IsDiscriminator": false
+    }
+   ]
+  },
+  {
+   "$ref": "141"
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "146",
+   "Name": "LongRunningOperations",
+   "Operations": [
+    {
+     "$id": "147",
+     "Name": "get",
+     "Description": "Get the details of an LRO.",
+     "Parameters": [
+      {
+       "$id": "148",
+       "Name": "operationId",
+       "NameInRequest": "operationId",
+       "Description": "The operation Id.",
+       "Type": {
+        "$id": "149",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "150",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "151",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$id": "152",
+        "Type": {
+         "$id": "153",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "2022-11-30-preview"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "154",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "155",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "156",
+        "Type": {
+         "$ref": "155"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "157",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "37"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "158",
+         "Name": "Retry-After",
+         "NameInResponse": "retryAfter",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "159",
+          "Name": "int32",
+          "Kind": "Int32",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "160",
+         "Name": "Location",
+         "NameInResponse": "location",
+         "Description": "Final location of the operation result.",
+         "Type": {
+          "$id": "161",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/operations/{operationId}",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "162",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "163",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "37"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "164",
+         "Name": "Retry-After",
+         "NameInResponse": "retryAfter",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "165",
+          "Name": "int32",
+          "Kind": "Int32",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "166",
+         "Name": "Location",
+         "NameInResponse": "location",
+         "Description": "Final location of the operation result.",
+         "Type": {
+          "$id": "167",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     },
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "168"
+   }
+  },
+  {
+   "$id": "169",
+   "Name": "Discoveries",
+   "Operations": [
+    {
+     "$id": "170",
+     "Name": "createOrReplace",
+     "Description": "Creates a new ingestion discovery instance.",
+     "Parameters": [
+      {
+       "$id": "171",
+       "Name": "discoveryId",
+       "NameInRequest": "discoveryId",
+       "Description": "The discovery identifier.",
+       "Type": {
+        "$id": "172",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "173",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "174",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "175",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "Auto-generated wrapper for template parameter 'DiscoveryCreationParameters'",
+       "Type": {
+        "$ref": "58"
+       },
+       "Location": "Body",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "176",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "177",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "178",
+        "Type": {
+         "$ref": "177"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "179",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "180",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "181",
+        "Type": {
+         "$ref": "180"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "182",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "61"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "183",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "61"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/discoveries/{discoveryId}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "184",
+     "Name": "get",
+     "Description": "Get discovery by ID.",
+     "Parameters": [
+      {
+       "$id": "185",
+       "Name": "discoveryId",
+       "NameInRequest": "discoveryId",
+       "Description": "The discovery identifier.",
+       "Type": {
+        "$id": "186",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "187",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "188",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "189",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "190",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "191",
+        "Type": {
+         "$ref": "190"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "192",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "61"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/discoveries/{discoveryId}",
+     "BufferResponse": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "193",
+     "Name": "complete",
+     "Description": "Initiates the process of completing the discovery and creating the upload file grouping manifest files.",
+     "Parameters": [
+      {
+       "$id": "194",
+       "Name": "discoveryId",
+       "NameInRequest": "discoveryId",
+       "Description": "The discovery identifier.",
+       "Type": {
+        "$id": "195",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "196",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "197",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "198",
+       "Name": "operation-id",
+       "NameInRequest": "operation-id",
+       "Description": "The long running operation identifier. Operation-Id should be valid UUID string.",
+       "Type": {
+        "$id": "199",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "200",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "201",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "202",
+        "Type": {
+         "$ref": "201"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "203",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "69"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "204",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "205",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/discoveries/{discoveryId}:complete",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "206",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "207",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "69"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "208",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "209",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     },
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "210",
+     "Name": "cancel",
+     "Description": "Initiates the process of cancelling the discovery.",
+     "Parameters": [
+      {
+       "$id": "211",
+       "Name": "discoveryId",
+       "NameInRequest": "discoveryId",
+       "Description": "The discovery identifier.",
+       "Type": {
+        "$id": "212",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "213",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "214",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "215",
+       "Name": "operation-id",
+       "NameInRequest": "operation-id",
+       "Description": "The long running operation identifier. Operation-Id should be valid UUID string.",
+       "Type": {
+        "$id": "216",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "217",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "218",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "219",
+        "Type": {
+         "$ref": "218"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "220",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "69"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "221",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "222",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/discoveries/{discoveryId}:cancel",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "223",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "224",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "69"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "225",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "226",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     },
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "227"
+   }
+  },
+  {
+   "$id": "228",
+   "Name": "DiscoverySpecialFiles",
+   "Operations": [
+    {
+     "$id": "229",
+     "Name": "list",
+     "Description": "List special files details for the discovery resource.",
+     "Parameters": [
+      {
+       "$id": "230",
+       "Name": "discoveryId",
+       "NameInRequest": "discoveryId",
+       "Description": "The discovery identifier.",
+       "Type": {
+        "$id": "231",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "232",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "233",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "234",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "235",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "236",
+        "Type": {
+         "$ref": "235"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "237",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "75"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/discoveries/{discoveryId}/specialFilesUploadInfo",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "238",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "239",
+     "Name": "generate",
+     "Description": "Initiates the process of generating SAS signed URIs for uploading special files for the discovery.",
+     "Parameters": [
+      {
+       "$id": "240",
+       "Name": "discoveryId",
+       "NameInRequest": "discoveryId",
+       "Description": "The discovery identifier.",
+       "Type": {
+        "$id": "241",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "242",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "243",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "244",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "245",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "246",
+        "Type": {
+         "$ref": "245"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "247",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "69"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "248",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "249",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/discoveries/{discoveryId}/specialFilesUploadInfo:generate",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "250",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "251",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "69"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "252",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "253",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     },
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "254"
+   }
+  },
+  {
+   "$id": "255",
+   "Name": "DiscoveryResultUploads",
+   "Operations": [
+    {
+     "$id": "256",
+     "Name": "list",
+     "Description": "List upload detail for the discovery resource.",
+     "Parameters": [
+      {
+       "$id": "257",
+       "Name": "discoveryId",
+       "NameInRequest": "discoveryId",
+       "Description": "The discovery identifier.",
+       "Type": {
+        "$id": "258",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "259",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "260",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "261",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "262",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "263",
+        "Type": {
+         "$ref": "262"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "264",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "85"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/discoveries/{discoveryId}/uploads",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "265",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "266"
+   }
+  },
+  {
+   "$id": "267",
+   "Name": "Uploads",
+   "Operations": [
+    {
+     "$id": "268",
+     "Name": "createOrReplace",
+     "Description": "Creates a new ingestion upload instance.",
+     "Parameters": [
+      {
+       "$id": "269",
+       "Name": "uploadId",
+       "NameInRequest": "uploadId",
+       "Description": "The upload resource identifier.",
+       "Type": {
+        "$id": "270",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "271",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "272",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "273",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "Auto-generated wrapper for template parameter 'UploadCreationParameters'",
+       "Type": {
+        "$ref": "97"
+       },
+       "Location": "Body",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "274",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "275",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "276",
+        "Type": {
+         "$ref": "275"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "277",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "278",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "279",
+        "Type": {
+         "$ref": "278"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "280",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "102"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "281",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "102"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/uploads/{uploadId}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "282",
+     "Name": "get",
+     "Description": "Get discovery by ID.",
+     "Parameters": [
+      {
+       "$id": "283",
+       "Name": "uploadId",
+       "NameInRequest": "uploadId",
+       "Description": "The upload resource identifier.",
+       "Type": {
+        "$id": "284",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "285",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "286",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "287",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "288",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "289",
+        "Type": {
+         "$ref": "288"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "290",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "102"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/uploads/{uploadId}",
+     "BufferResponse": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "291",
+     "Name": "complete",
+     "Description": "Initiates the process of completing the upload and creating the measurements.",
+     "Parameters": [
+      {
+       "$id": "292",
+       "Name": "uploadId",
+       "NameInRequest": "uploadId",
+       "Description": "The upload resource identifier.",
+       "Type": {
+        "$id": "293",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "294",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "295",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "296",
+       "Name": "operation-id",
+       "NameInRequest": "operation-id",
+       "Description": "The long running operation identifier. Operation-Id should be valid UUID string.",
+       "Type": {
+        "$id": "297",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "298",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "299",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "300",
+        "Type": {
+         "$ref": "299"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "301",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "112"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "302",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "303",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/uploads/{uploadId}:complete",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "304",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "305",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "112"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "306",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "307",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     },
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "308",
+     "Name": "cancel",
+     "Description": "Initiates the process of cancelling the upload.",
+     "Parameters": [
+      {
+       "$id": "309",
+       "Name": "uploadId",
+       "NameInRequest": "uploadId",
+       "Description": "The upload resource identifier.",
+       "Type": {
+        "$id": "310",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "311",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "312",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "313",
+       "Name": "operation-id",
+       "NameInRequest": "operation-id",
+       "Description": "The long running operation identifier. Operation-Id should be valid UUID string.",
+       "Type": {
+        "$id": "314",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "315",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "316",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "317",
+        "Type": {
+         "$ref": "316"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "318",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "112"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "319",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "320",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/uploads/{uploadId}:cancel",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "321",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "322",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "112"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "323",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "324",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     },
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "325"
+   }
+  },
+  {
+   "$id": "326",
+   "Name": "UploadSpecialFiles",
+   "Operations": [
+    {
+     "$id": "327",
+     "Name": "list",
+     "Description": "List special files for the upload.",
+     "Parameters": [
+      {
+       "$id": "328",
+       "Name": "uploadId",
+       "NameInRequest": "uploadId",
+       "Description": "The upload resource identifier.",
+       "Type": {
+        "$id": "329",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "330",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "331",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "332",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "333",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "334",
+        "Type": {
+         "$ref": "333"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "335",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "118"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/uploads/{uploadId}/specialFilesUploadInfo",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "336",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "337",
+     "Name": "generate",
+     "Description": "Initiates the process of generating SAS signed URIs for uploading special files for the upload.",
+     "Parameters": [
+      {
+       "$id": "338",
+       "Name": "uploadId",
+       "NameInRequest": "uploadId",
+       "Description": "The upload resource identifier.",
+       "Type": {
+        "$id": "339",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "340",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "341",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "342",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "343",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "344",
+        "Type": {
+         "$ref": "343"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "345",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "112"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "346",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "347",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/uploads/{uploadId}/specialFilesUploadInfo:generate",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "348",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "349",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "112"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "350",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "351",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     },
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "352"
+   }
+  },
+  {
+   "$id": "353",
+   "Name": "UploadDataFiles",
+   "Operations": [
+    {
+     "$id": "354",
+     "Name": "list",
+     "Description": "List data files for the upload.",
+     "Parameters": [
+      {
+       "$id": "355",
+       "Name": "uploadId",
+       "NameInRequest": "uploadId",
+       "Description": "The upload resource identifier.",
+       "Type": {
+        "$id": "356",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "357",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "358",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "359",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "360",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "361",
+        "Type": {
+         "$ref": "360"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "362",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "128"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/uploads/{uploadId}/dataFilesUploadInfo",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "363",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "364",
+     "Name": "generate",
+     "Description": "Initiates the process of sharding the data files.",
+     "Parameters": [
+      {
+       "$id": "365",
+       "Name": "uploadId",
+       "NameInRequest": "uploadId",
+       "Description": "The upload resource identifier.",
+       "Type": {
+        "$id": "366",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "367",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "368",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "369",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "370",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "371",
+        "Type": {
+         "$ref": "370"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "372",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "112"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "373",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "374",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/uploads/{uploadId}/dataFilesUploadInfo:generate",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "375",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "376",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "112"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "377",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "378",
+          "Name": "ResourceLocation",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     },
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "379"
+   }
+  },
+  {
+   "$id": "380",
+   "Name": "UploadResultMeasurements",
+   "Operations": [
+    {
+     "$id": "381",
+     "Name": "list",
+     "Description": "List of the measurement identifiers that have been created by the upload.",
+     "Parameters": [
+      {
+       "$id": "382",
+       "Name": "uploadId",
+       "NameInRequest": "uploadId",
+       "Description": "The upload resource identifier.",
+       "Type": {
+        "$id": "383",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "384",
+       "Name": "api-version",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "385",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "152"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "386",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "387",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "388",
+        "Type": {
+         "$ref": "387"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "389",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "138"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "Json",
+     "Uri": "",
+     "Path": "/uploads/{uploadId}/measurements",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "390",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "391"
+   }
+  }
+ ],
+ "Auth": {
+  "$id": "392",
+  "OAuth2": {
+   "$id": "393",
+   "Scopes": [
+    "https://adp.azure.com/.default"
+   ]
+  }
+ }
+}

@@ -1,0 +1,7 @@
+import "./models.cadl";
+import "./lro/common";
+import "./lro/public";
+import "./operations.cadl";
+import "./azure-core-foundations-extensions.cadl";
+
+namespace ADP.Common;

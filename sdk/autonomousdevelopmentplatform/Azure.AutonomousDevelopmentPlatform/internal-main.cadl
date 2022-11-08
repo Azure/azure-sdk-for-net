@@ -1,0 +1,7 @@
+import "./common/internal-main.cadl";
+import "./data-management/internal-main.cadl";
+import "./compute/internal-main.cadl";
+
+@serviceTitle("Autonomous Development Platform")
+@serviceVersion("2022-11-30-internal")
+namespace ADP;

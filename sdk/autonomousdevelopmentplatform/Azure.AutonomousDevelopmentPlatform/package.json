@@ -1,0 +1,42 @@
+{
+  "name": "adp-sample",
+  "version": "2022-11-30-preview",
+  "description": "ADP Data Management API",
+  "main": "index.js",
+  "config": {
+    "DataManagementOutputFile": "preview/2022-11-30-preview/adp-data-management-api.json",
+    "ComputeOutputFile": "preview/2022-11-30-preview/adp-compute-api.json",
+    "ClientPath": "../../../clients/Clients.DataManagement.vDraftCompliantV2",
+    "ClientNamespace": "Microsoft.Azure.Adp.DataManagement.Clients.vDraftCompliantV2",
+    "PublishOutputFileName": "../../draftcompliant/apispec.core.datamanagement.2022-11-30-draftcompliant.json",
+    "PathToAzureApiReviewRepository": "C:/Users/igmakhli/source/repos/imakhlin/azure-rest-api-specs-pr/specification/adp/data-plane/data-management/preview",
+    "AutorestManifestFile": "../data-plane/common/build/autorest.md"
+  },
+  "scripts": {
+    "buildDataManagementPublicApi": "pwsh ./common/build/compile.ps1 -IsPublicApi -InputCadl . -OutputPath ./generated/cadl-autorest/public/DataManagement -OutputFile %npm_package_config_DataManagementOutputFile%",
+    "buildDataManagementInternalApi": "pwsh ./common/build/compile.ps1 -InputCadl ./internal-main.cadl -OutputPath ./generated/cadl-autorest/internal/DataManagement -OutputFile %npm_package_config_DataManagementOutputFile%",
+    "publishDataManagement": "pwsh ./common/build/publish.ps1 -SourcePath ./generated/cadl-autorest/public/DataManagement/%npm_package_config_DataManagementOutputFile% -OutputPath %npm_package_config_PublishOutputFileName% -PathToAzureApiReviewRepository %npm_package_config_PathToAzureApiReviewRepository%",
+    "generateAutorestClientForDataManagement": "pwsh ./common/build/autorest-generator.ps1 -InputOpenApiSpecFile ./generated/cadl-autorest/public/DataManagement/%npm_package_config_DataManagementOutputFile% -OutputPath %npm_package_config_ClientPath%/generated -Namespace %npm_package_config_ClientNamespace% -AutorestManifestFile %npm_package_config_AutorestManifestFile%",
+    "validateSpecDataManagementPublic": "pwsh ./common/build/validate-spec.ps1 -OpenApiSpecFile ./generated/cadl-autorest/public/DataManagement/%npm_package_config_DataManagementOutputFile% && pwsh ./common/build/validate-examples.ps1 -OpenApiSpecFile ./generated/cadl-autorest/public/DataManagement/%npm_package_config_DataManagementOutputFile%",
+    "generateExamplesDataManagementPublic": "pwsh ./common/build/generate-examples.ps1 -OpenApiSpecFile ./generated/cadl-autorest/public/DataManagement/%npm_package_config_DataManagementOutputFile%",
+    "buildComputePublicApi": "pwsh ./common/build/compile.ps1 -IsPublicApi -InputCadl . -OutputPath ./generated/cadl-autorest/public/Compute -OutputFile %npm_package_config_ComputeOutputFile%",
+    "buildComputeInternalApi": "pwsh ./common/build/compile.ps1 -InputCadl ./internal-main.cadl -OutputPath ./generated/cadl-autorest/internal/Compute -OutputFile %npm_package_config_ComputeOutputFile%",
+    "format": "npx cadl format --pretty ./**/*.cadl"
+  },
+  "keywords": [],
+  "author": "igmakhli@microsoft.com",
+  "license": "MIT",
+  "dependencies": {
+    "@azure-tools/cadl-autorest": "latest",
+    "@azure-tools/cadl-azure-core": "latest",
+    "@cadl-lang/openapi": "latest",
+    "@cadl-lang/openapi3": "latest",
+    "@cadl-lang/rest": "latest",
+    "@cadl-lang/versioning": "latest"
+  },
+  "devDependencies": {
+    "@cadl-lang/compiler": "latest",
+    "prettier": "^2.7.1",
+    "avocado": "^1.0.0"
+  }
+}

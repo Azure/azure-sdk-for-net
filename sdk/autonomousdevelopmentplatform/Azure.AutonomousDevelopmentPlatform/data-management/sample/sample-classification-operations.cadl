@@ -1,0 +1,41 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using OpenAPI;
+using Autorest;
+
+namespace ADP.Sample.Classifications {
+  @client(Clients.SampleClassificationsClient)
+  interface Classifications {
+    @doc("Get sample classification by schema name.")
+    get is ResourceRead<ClassificationResponse>;
+
+    @doc("Creates new classification in context of the sample resource.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    create is CustomLongRunningResourceCreateWithServiceProvidedName<ClassificationResponse>;
+
+    @doc("Deletes the sample classification assignment.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    delete is LongRunningResourceDelete<ClassificationResponse>;
+
+    @doc("Lists the existing Sample Classifications.")
+    list is ResourceList<ClassificationResponse>;
+
+    @doc("Processes all available Sample Classifications.")
+    @collectionAction(ClassificationResponse, "performAction")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    process is ResourceCollectionAction<
+      ClassificationResponse,
+      {},
+      Foundations.AcceptedResponse & Foundations.LongRunningStatusLocation
+    >;
+  }
+}

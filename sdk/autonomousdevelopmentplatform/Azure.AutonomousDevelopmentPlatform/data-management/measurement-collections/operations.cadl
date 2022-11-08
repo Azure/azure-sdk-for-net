@@ -1,0 +1,136 @@
+import "@cadl-lang/rest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-autorest";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Cadl.Rest.Resource;
+using OpenAPI;
+using Autorest;
+
+@tag("MeasurementCollections")
+@route("measurementCollections")
+namespace ADP.DataManagement.MeasurementCollection {
+  @doc("Creates a new measurement collection.")
+  @operationId("CreateMeasurementCollection")
+  @extension("x-ms-long-running-operation", true)
+  @asyncOperationOptions("location")
+  @post
+  op create(
+    ...ApiVersionParameter,
+    ...LongRunningOperationRequestHeaders,
+
+    @doc("The measurement collection creation parameters")
+    @body
+    body?: MeasurementCollectionCreationParameters
+  ): CommonOperationAcceptedResponse | CommonOKResponse<MeasurementCollectionAsyncOperationResponse> | CommonError;
+
+  @doc("""
+  Changes measurement collection metadata.
+  TODO: use PATCH for updating measurement collection
+  """)
+  @operationId("ChangeMeasurementCollectionMetadata")
+  @post
+  @route("{collectionId}/update")
+  op update(
+    ...CommonMeasurementCollectionQueryPrameters,
+
+    @doc("The measurement collection update parameters")
+    @body
+    body?: MeasurementCollectionUpdateParameters
+  ): CommonOKResponse<MeasurementCollectionAsyncOperationResponse> | CommonError;
+
+  @doc("Get measurement collection by identifier.")
+  @operationId("GetMeasurementCollectionById")
+  @get
+  op read(
+    ...CommonMeasurementCollectionQueryPrameters,
+    ...CommonPagingQueryParameters
+  ): CommonOKResponse<MeasurementCollectionResponse> | CommonError;
+
+  @doc("""
+  Adds a measurement to measurement collection.
+  TODO: use PUT for adding measurement to collection
+  """)
+  @operationId("AddMeasurementToCollection")
+  @post
+  @route("{collectionId}/measurements")
+  op addMeasurement(
+    ...CommonMeasurementCollectionQueryPrameters,
+
+    @doc("The measurement to be added to the collection")
+    @body
+    body?: MeasurementInCollection
+  ): CommonOKResponse<MeasurementCollectionAsyncOperationResponse> | CommonError;
+
+  @doc("""
+  Adds multiple measurements to measurement collection.
+  TODO: DON'T use batch operations as they are not idempotent by definition
+  """)
+  @operationId("AddMultipleMeasurementsToCollection")
+  @post
+  @route("{collectionId}/measurements/addMultiple")
+  op addMultipleMeasurements(
+    ...CommonMeasurementCollectionQueryPrameters,
+
+    @doc("The measurements to be added to the collection")
+    @body
+    body: AddMultipleMeasurementsToCollectionRequest
+  ): CommonOKResponse<MeasurementCollectionAsyncOperationResponse> | CommonError;
+
+  @summary("Removes a measurement from measurement collection.")
+  @operationId("RemoveMeasurementFromCollection")
+  @delete
+  @autoRoute
+  op deleteMeasurement(
+    ...CommonMeasurementCollectionQueryPrameters,
+
+    @doc("The measurement identifier to be removed from the collection")
+    @segment("measurements")
+    @path
+    measurementId: string
+  ): CommonOKResponse<MeasurementCollectionAsyncOperationResponse> | CommonError;
+
+  @doc("""
+  Removes multiple measurements from measurement collection.
+  TODO: DON'T use batch operations as they are not idempotent by definition, and use HTTP verbs as appropriate (DELETE)
+  """)
+  @operationId("RemoveMultipleMeasurementsFromCollection")
+  @post
+  @route("{collectionId}/measurements/removeMultiple")
+  op deleteMultipleMeasurements(
+    ...CommonMeasurementCollectionQueryPrameters,
+
+    @doc("The measurements to be added to the collection")
+    @body
+    body?: RemoveMultipleMeasurementsFromCollectionRequest
+  ): CommonOKResponse<MeasurementCollectionAsyncOperationResponse> | CommonError;
+
+  @summary("Deletes a measurement collection.")
+  @operationId("DeleteMeasurementCollection")
+  @delete
+  @autoRoute
+  op deleteMeasurementCollection(
+    ...CommonMeasurementCollectionQueryPrameters
+  ): CommonOKResponse<MeasurementCollectionAsyncOperationResponse> | CommonError;
+
+  @doc("Lists measurement collections.")
+  @operationId("ListMeasurementCollections")
+  @get
+  op listCollections(
+    ...ApiVersionParameter,
+    ...CommonPagingQueryParameters,
+    ...CommonFilterQueryParameter,
+    ...CommonOrderByQueryParameter
+  ): CommonOKResponse<PagedMeasurementCollectionListResponse> | CommonError;
+
+  @doc("Gets the information about a specific asynchronous operation performed in the context of the measurement collection")
+  @operationId("GetMeasurementCollectionOperationStatus")
+  @autoRoute
+  @get
+  op GetOperationStatus(
+    ...CommonMeasurementCollectionQueryPrameters,
+    ...CommonAsyncOperationStatusQueryParameters
+  ): CommonOKResponse<MeasurementCollectionAsyncOperationResponse> | CommonError;
+}

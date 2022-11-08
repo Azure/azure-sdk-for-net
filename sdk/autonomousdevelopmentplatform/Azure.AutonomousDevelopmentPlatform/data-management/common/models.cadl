@@ -1,0 +1,97 @@
+import "@cadl-lang/rest";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Cadl.Rest.Resource;
+
+@doc("File upload information")
+model FileUploadInformation {
+  @doc("File name specified by the client")
+  @key
+  clientFileName: string;
+
+  @doc("""
+  SAS signed URI for uploading file to Azure Storage.
+  This URI expires in 24 hours.
+  """)
+  @format("uri")
+  fileUploadUri: string;
+}
+
+@doc("Get changes events by a continuation token request")
+@withOptionalProperties
+model ContinueReadingNotificationsFrom {
+  @doc("A specification for the required domain of events")
+  @visibility("read", "write")
+  domain: EventsDomain;
+
+  @doc("A hint for the requested number of events to retrieve. Less events could be received if less events are stored in the system.Several more events could be received in some cases.")
+  @visibility("read", "write")
+  hintForNumberOfEventsToRead: int32;
+
+  @doc("A continuation token to retrieve the event from the point represented in it")
+  @visibility("read", "write")
+  continuationToken: string;
+}
+
+@doc("Event domain name")
+union EventsDomain {
+  Measurements: "Measurements",
+}
+
+@doc("The event grid events list response object.")
+@withOptionalProperties
+model EventGridEventsListResponse {
+  @doc("The received business events")
+  @visibility("read")
+  events: EventGridEvent[];
+
+  @doc("Continuation token allowing continuation of reading from a specific point in the event feed")
+  @visibility("read")
+  continuationToken: string;
+}
+
+@doc("Event grid event info")
+@withOptionalProperties
+model EventGridEvent {
+  @doc("Subject of the event")
+  @visibility("read")
+  subject: string;
+
+  @doc("Type of the event")
+  @visibility("read")
+  eventType: string;
+
+  @doc("Time the event took place")
+  @visibility("read")
+  eventTime: zonedDateTime;
+
+  @doc("Event grid data version")
+  @visibility("read")
+  dataVersion: string;
+
+  @doc("Data of the event")
+  @visibility("read")
+  data?: null;
+}
+
+@doc("Get change events by a start time")
+@withOptionalProperties
+model StartReadingNotificationsFrom {
+  @doc("A specification for the required domain of events")
+  @visibility("read", "write")
+  domain: EventsDomain;
+
+  @doc("""
+    A hint for the requested number of events to retrieve.
+    Less events could be received if less events are stored in the system.
+    Several more events could be received in some cases.
+    """)
+  @visibility("read", "write")
+  hintForNumberOfEventsToRead: int32;
+
+  @doc("Start time to read the events from in UTC.")
+  @doc("If the provided start time is earlier than 7 days ago, the start time will be taken as 7 days ago.")
+  @visibility("read", "write")
+  startTimeUtc: zonedDateTime;
+}

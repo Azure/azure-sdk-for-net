@@ -1,0 +1,5 @@
+import "../../common";
+import "./models.cadl";
+import "./operations.cadl";
+
+namespace ADP.DataManagement.Common;

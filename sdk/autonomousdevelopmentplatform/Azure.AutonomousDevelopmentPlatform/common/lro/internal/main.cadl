@@ -1,0 +1,42 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@azure-tools/cadl-azure-core";
+import "../common";
+
+namespace ADP.Common.Operations;
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+
+@client(LongRunningOperationClients.LongRunningOperationsInternalClient)
+interface LongRunningOperations {
+  @doc("Creates a new LRO or replaces an existing one.")
+  create is ResourceCreateOrReplace<LongRunningOperation>;
+
+  @doc("Deletes an LRO.")
+  delete is ResourceDelete<LongRunningOperation>;
+
+  @doc("Lists the existing LROs.")
+  list is ResourceList<LongRunningOperation>;
+
+  @doc("Complete a long running operation.")
+  start is ResourceAction<LongRunningOperation, {}, NoContentResponse>;
+
+  @doc("Complete a long running operation.")
+  complete is ResourceAction<
+    LongRunningOperation,
+    CompleteLongRunningOperationRequestParams,
+    NoContentResponse
+  >;
+
+  @doc("Complete a long running operation.")
+  fail is ResourceAction<
+    LongRunningOperation,
+    FailLongRunningOperationRequestParams,
+    NoContentResponse
+  >;
+
+  @doc("Complete a long running operation.")
+  cancel is ResourceAction<LongRunningOperation, {}, NoContentResponse>;
+}

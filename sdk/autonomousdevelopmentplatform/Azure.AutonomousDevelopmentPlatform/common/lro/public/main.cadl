@@ -1,0 +1,18 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@azure-tools/cadl-azure-core";
+import "../common";
+
+namespace ADP.Common.Operations;
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using Autorest;
+
+@client(LongRunningOperationClients.LongRunningOperationsPublicClient)
+interface LongRunningOperations {
+  @doc("Get the details of an LRO.")
+  @pollingOperation
+  get is ResourceRead<LongRunningOperationWithResponseHeaders>;
+}

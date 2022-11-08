@@ -1,0 +1,31 @@
+import "@cadl-lang/rest";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+
+@doc("Classification schema resource model.")
+@resource("classificationSchemas")
+model ClassificationSchemaResource {
+  @doc("Schema identifier.")
+  @key
+  @visibility("read", "write")
+  name: string;
+
+  @doc("Classification schema definition (JSON schema as string).")
+  @visibility("read", "write")
+  schemaDefinition: string;
+  ...EntityTag;
+}
+
+@doc("Exposes updatable properties of Classification Schema resource.")
+@withoutOmittedProperties("eTag")
+model ClassificationSchemaRegistrationParameters {
+  @doc("Schema identifier.")
+  @visibility("read", "write")
+  name: string;
+
+  @doc("Classification schema definition (JSON schema as string).")
+  @visibility("read", "write")
+  schemaDefinition: string;
+}

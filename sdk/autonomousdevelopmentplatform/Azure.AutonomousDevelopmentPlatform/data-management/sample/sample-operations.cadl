@@ -1,0 +1,48 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using OpenAPI;
+using Autorest;
+
+@tag("Samples")
+namespace ADP.Sample {
+  @client(Clients.SamplesClient)
+  interface Samples {
+    @doc("Get the details of a Sample.")
+    get is ResourceRead<SampleResource>;
+
+    @doc("Creates a new Sample or replaces an existing one.")
+    create is ResourceCreateWithServiceProvidedName<SampleResource>;
+
+    @doc("Deletes a Sample.")
+    @extension("x-ms-long-running-operation", true)
+    delete is LongRunningResourceDelete<SampleResource>;
+
+    @doc("Lists the existing Samples.")
+    list is ResourceList<SampleResource>;
+
+    @doc("Processes all available Samples.")
+    @collectionAction(SampleResource, "performAction")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    process is ResourceCollectionAction<
+      SampleResource,
+      {},
+      Foundations.AcceptedResponse & Foundations.LongRunningStatusLocation
+    >;
+
+    @doc("Set labels for a Samples.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    setLabels is ResourceAction<
+      SampleResource,
+      SampleSetLabelsRequestParameters,
+      Foundations.AcceptedResponse & Foundations.LongRunningStatusLocation
+    >;
+  }
+}

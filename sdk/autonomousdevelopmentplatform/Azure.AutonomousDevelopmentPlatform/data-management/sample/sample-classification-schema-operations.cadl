@@ -1,0 +1,33 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-autorest";
+import "@cadl-lang/openapi";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+using Azure.Core.Foundations.Extensions;
+using OpenAPI;
+using Autorest;
+
+@tag("ClassificationSchemas")
+namespace ADP.Sample.ClassificationSchemas {
+  @client(Clients.ClassificationSchemasClient)
+  interface ClassificationSchemas {
+    @doc("Get classification schema.")
+    get is ResourceRead<ClassificationSchemaResource>;
+
+    @doc("Creates new classification schema.")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    create is CustomLongRunningResourceCreateUsingHttpPost<ClassificationSchemaResource>;
+
+    @doc("Deletes the classification schema and all related classification assignments (instances).")
+    @extension("x-ms-long-running-operation", true)
+    @asyncOperationOptions("location")
+    delete is LongRunningResourceDelete<ClassificationSchemaResource>;
+
+    @doc("List all classification schemas.")
+    list is ResourceList<ClassificationSchemaResource>;
+  }
+}

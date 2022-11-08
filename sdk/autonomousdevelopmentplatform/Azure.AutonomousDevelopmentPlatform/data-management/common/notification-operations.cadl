@@ -1,0 +1,29 @@
+import "@cadl-lang/rest";
+import "@cadl-lang/openapi";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Cadl.Rest.Resource;
+using OpenAPI;
+
+@tag("Notifications")
+@route("measurements/notifications")
+namespace ADP.DataManagement.Notifications {
+  @summary("Returns a list of business events, using a start time of occurrence")
+  @operationId("StartFrom")
+  @post
+  @route("startFrom")
+  op startFrom(
+    ...ApiVersionParameter,
+    ...CommonRequestParameters<StartReadingNotificationsFrom>
+  ): CommonOKResponse<EventGridEventsListResponse> | CommonError;
+
+  @summary("Returns a list of business events, using a continuation token")
+  @operationId("ContinueFrom")
+  @post
+  @route("continueFrom")
+  op continueFrom(
+    ...ApiVersionParameter,
+    ...CommonRequestParameters<ContinueReadingNotificationsFrom>
+  ): CommonOKResponse<EventGridEventsListResponse> | CommonError;
+}

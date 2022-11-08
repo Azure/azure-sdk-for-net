@@ -1,0 +1,11 @@
+import "./common";
+import "./data-management";
+import "./compute";
+
+using Cadl.Http;
+@service({
+  title: "Autonomous Development Platform",
+  version: "2022-11-30-preview",
+})
+@useAuth(OAuth2Auth<[ImplicitAuthorizationFlow]>)
+namespace ADP;

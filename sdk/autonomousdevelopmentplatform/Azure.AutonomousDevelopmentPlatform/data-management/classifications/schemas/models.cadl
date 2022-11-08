@@ -1,0 +1,41 @@
+import "@cadl-lang/rest";
+
+using Cadl.Http;
+using Cadl.Rest;
+using Azure.Core;
+
+namespace ADP.DataManagement.ClassificationSchemas;
+
+enum Clients {
+  ClassificationSchemasClient,
+}
+
+@doc("Classification schema identifier.")
+model ClassificationSchemaIdentifier {
+  @doc("Classification schema identifier.")
+  @key
+  @minLength(1)
+  @maxLength(256)
+  name: string;
+}
+
+@doc("Classification schema resource model.")
+@resource("classificationSchemas")
+@friendlyName("ClassificationSchema")
+model ClassificationSchema {
+  ...ClassificationSchemaIdentifier;
+
+  @doc("Classification schema definition (JSON schema as string).")
+  @visibility("create")
+  @minLength(2)
+  schemaDefinition: string;
+  ...EntityTag;
+}
+
+@doc("{name} resource creation parameters.", ClassificationSchema)
+@friendlyName("ClassificationSchemaCreationParameters")
+@withVisibility("create")
+@withoutOmittedProperties("name")
+model ClassificationSchemaCreationParameters {
+  ...ClassificationSchema;
+}
