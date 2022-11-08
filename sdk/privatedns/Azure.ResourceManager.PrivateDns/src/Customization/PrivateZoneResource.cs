@@ -584,10 +584,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BaseRecordData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BaseRecordData> GetRecordsAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateDnsBaseRecordData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateDnsRecordData> GetRecordsAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BaseRecordData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateDnsRecordData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecords");
                 scope.Start();
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            async Task<Page<BaseRecordData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PrivateDnsRecordData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecords");
                 scope.Start();
@@ -628,10 +628,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BaseRecordData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BaseRecordData> GetRecords(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateDnsBaseRecordData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateDnsRecordData> GetRecords(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<BaseRecordData> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateDnsRecordData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecords");
                 scope.Start();
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            Page<BaseRecordData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PrivateDnsRecordData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecords");
                 scope.Start();

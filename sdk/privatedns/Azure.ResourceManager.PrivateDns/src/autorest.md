@@ -74,7 +74,7 @@ directive:
   - from: privatedns.json
     where: $.definitions
     transform: >
-      $.RecordSet["x-ms-client-name"] = "BaseRecord";
+      $.RecordSet["x-ms-client-name"] = "Record";
       $.PrivateDnsPtrRecord.properties.ptrdname["x-ms-client-name"] = "PtrDomainName";
       $.RecordSetProperties.properties.ttl["x-ms-client-name"] = "TtlInSeconds";
       $.PrivateDnsTxtRecord.properties.value["x-ms-client-name"] = "values";

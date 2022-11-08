@@ -12,10 +12,10 @@ using Azure.ResourceManager.PrivateDns.Models;
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary> A class representing the Record data model. </summary>
-    public partial class RecordData : ResourceData
+    public partial class PrivateDnsBaseRecordData : ResourceData
     {
         /// <summary> Initializes a new instance of RecordData. </summary>
-        public RecordData()
+        public PrivateDnsBaseRecordData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
-        internal RecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered) : base(id, name, resourceType, systemData)
+        internal PrivateDnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;

@@ -12,7 +12,7 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class RecordData : IUtf8JsonSerializable
+    public partial class PrivateDnsBaseRecordData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PrivateDns
             writer.WriteEndObject();
         }
 
-        internal static RecordData DeserializeRecordData(JsonElement element)
+        internal static PrivateDnsBaseRecordData DeserializeRecordData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PrivateDns
                     continue;
                 }
             }
-            return new RecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered));
+            return new PrivateDnsBaseRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered));
         }
     }
 }

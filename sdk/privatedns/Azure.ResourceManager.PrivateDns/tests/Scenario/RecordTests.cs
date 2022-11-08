@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateRecordBaseInfo(RecordData recordData, string recordDataName)
+        private void ValidateRecordBaseInfo(PrivateDnsBaseRecordData recordData, string recordDataName)
         {
             Assert.IsNotNull(recordData);
             Assert.IsNotNull(recordData.ETag);

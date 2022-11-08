@@ -12,7 +12,7 @@ using Azure.ResourceManager.PrivateDns.Models;
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary> A class representing the PrivateDnsSoaRecord data model. </summary>
-    public partial class PrivateDnsSoaRecordData : RecordData
+    public partial class PrivateDnsSoaRecordData : PrivateDnsBaseRecordData
     {
         /// <summary> Initializes a new instance of PrivateDnsSoaRecordData. </summary>
         public PrivateDnsSoaRecordData()

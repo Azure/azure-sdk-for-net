@@ -12,7 +12,7 @@ using Azure.ResourceManager.PrivateDns.Models;
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary> A class representing the PrivateDnsSrvRecord data model. </summary>
-    public partial class PrivateDnsSrvRecordData : RecordData
+    public partial class PrivateDnsSrvRecordData : PrivateDnsBaseRecordData
     {
         /// <summary> Initializes a new instance of PrivateDnsSrvRecordData. </summary>
         public PrivateDnsSrvRecordData()
