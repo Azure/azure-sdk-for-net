@@ -77,7 +77,7 @@ function Fetch-NamespacesFromNupkg ($package, $version) {
     LogDebug "Dll file found: $dllFileName"
     $namespaces = Get-NamespacesFromDll $dllFileName
     if (!$namespaces) {
-        LogError "Can't find namespaces from dll file $dllFileName." -ErrorAction Continue
+        LogError "Can't find namespaces from dll file $dllFileName."
         return @()
     }
     return $namespaces
@@ -95,7 +95,7 @@ function Get-dotnet-OnboardedDocsMsPackages($DocRepoLocation) {
         foreach ($spec in $onboardingSpec) {
             $packageInfo = $spec -split ","
             if (!$packageInfo -or ($packageInfo.Count -lt 2)) {
-                LogError "Please check the package info in csv file $file. Please have at least one package and follow the format {name index, package name, version(optional)}" -ErrorAction Continue
+                LogError "Please check the package info in csv file $file. Please have at least one package and follow the format {name index, package name, version(optional)}"
                 return $null
             }
             $packageName = $packageInfo[1].Trim() -replace "\[.*\](.*)", '$1'
