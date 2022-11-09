@@ -298,13 +298,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         [Test]
         [LiveOnly]
+        // TODO: why not sync/async in tests
+        // TODO: test for chunks where chunk size is uniform + test where last chunk is smaller than others.
         public async Task CanPushLargeArtifact()
         {
             // Arrange
             var name = "oci-artifact-large";
-            var sizeInMiB = 32;
+            var sizeInMiB = 1;
             var tag = $"big-{sizeInMiB}";
-            var size = (1024 * 1024 * sizeInMiB) + 17;
+            var size = (1024 * sizeInMiB) + 17;
             var client = CreateBlobClient(name);
 
             // Act

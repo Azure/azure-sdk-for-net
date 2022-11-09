@@ -28,6 +28,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static string ComputeDigest(Stream stream)
         {
+            // Note: this method assumes the input stream is seekable and
+            // resets stream.Position after computing the hash of stream contents.
             using (SHA256 sha256 = SHA256.Create())
             {
                 var position = stream.Position;
@@ -38,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 {
                     stream.Position = 0;
                     var hashValue = sha256.ComputeHash(stream);
-                    digest = "sha256:" + BytesToString(hashValue);
+                    digest = FormatDigest(hashValue);
                 }
                 catch (IOException e)
                 {
@@ -59,7 +61,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
-        internal static string BytesToString(byte[] bytes)
+        internal static string FormatDigest(byte[] hash)
+        {
+            return $"sha256:{BytesToString(hash)}";
+        }
+
+        private static string BytesToString(byte[] bytes)
         {
             var builder = new StringBuilder();
             for (int i = 0; i < bytes.Length; i++)
