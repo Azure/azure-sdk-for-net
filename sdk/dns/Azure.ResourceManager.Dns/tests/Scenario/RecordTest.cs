@@ -67,7 +67,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // Update
-            await aaaaRecord.Value.UpdateAsync(new DnsAaaaRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await aaaaRecord.Value.UpdateAsync(new DnsAaaaRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(aaaaRecordName);
@@ -123,7 +124,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // Update
-            await aRecord.Value.UpdateAsync(new DnsARecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await aRecord.Value.UpdateAsync(new DnsARecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(aRecordName);
@@ -181,7 +183,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // update
-            await caaRecord.Value.UpdateAsync(new DnsCaaRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await caaRecord.Value.UpdateAsync(new DnsCaaRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // get
             var getResponse = await collection.GetAsync(name);
@@ -224,7 +227,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // Update
-            await cnameRecord.Value.UpdateAsync(new DnsCnameRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await cnameRecord.Value.UpdateAsync(new DnsCnameRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(cnameRecordName);
@@ -283,7 +287,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // Update
-            await mxRecord.Value.UpdateAsync(new DnsMXRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await mxRecord.Value.UpdateAsync(new DnsMXRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(mxRecordName);
@@ -335,7 +340,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // update
-            await NSRecord.Value.UpdateAsync(new DnsNSRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await NSRecord.Value.UpdateAsync(new DnsNSRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // get
             var getResponse = await collection.GetAsync(_recordSetName);
@@ -390,7 +396,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // Update
-            await ptrRecord.Value.UpdateAsync(new DnsPtrRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await ptrRecord.Value.UpdateAsync(new DnsPtrRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(ptrRecordName);
@@ -446,7 +453,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // Update
-            await soaRecord.Value.UpdateAsync(new DnsSoaRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await soaRecord.Value.UpdateAsync(new DnsSoaRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(soaRecordName);
@@ -510,7 +518,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // Update
-            await srvRecord.Value.UpdateAsync(new DnsSrvRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await srvRecord.Value.UpdateAsync(new DnsSrvRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(srvRecordName);
@@ -563,7 +572,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
 
             // Update
-            await txtRecord.Value.UpdateAsync(new DnsTxtRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await txtRecord.Value.UpdateAsync(new DnsTxtRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(txtRecordName);

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsDefined(DnsSoaRecord))
             {
-                writer.WritePropertyName("SODnsARecord");
+                writer.WritePropertyName("DnsSOARecord");
                 writer.WriteObjectValue(DnsSoaRecord);
             }
             writer.WriteEndObject();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("SODnsARecord"))
+                        if (property0.NameEquals("DnsSOARecord"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

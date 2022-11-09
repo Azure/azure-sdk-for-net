@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsCollectionDefined(DnsAaaaRecords))
             {
-                writer.WritePropertyName("AAADnsARecords");
+                writer.WritePropertyName("DnsAAAARecords");
                 writer.WriteStartArray();
                 foreach (var item in DnsAaaaRecords)
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsDefined(DnsSoaRecordInfo))
             {
-                writer.WritePropertyName("SODnsARecord");
+                writer.WritePropertyName("DnsSOARecord");
                 writer.WriteObjectValue(DnsSoaRecordInfo);
             }
             if (Optional.IsCollectionDefined(DnsCaaRecords))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Dns
                             aRecords = array;
                             continue;
                         }
-                        if (property0.NameEquals("AAADnsARecords"))
+                        if (property0.NameEquals("DnsAAAARecords"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Dns
                             cnameRecord = DnsCnameRecordInfo.DeserializeDnsCnameRecordInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("SODnsARecord"))
+                        if (property0.NameEquals("DnsSOARecord"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
