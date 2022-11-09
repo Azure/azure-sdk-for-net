@@ -42,18 +42,10 @@ public class Program
         // See if there are environment variables available to use in the .env file
         var environment = new Dictionary<string, string>();
         var environmentFile = Environment.GetEnvironmentVariable("ENV_FILE");
-        if (!(string.IsNullOrEmpty(environmentFile)))
-        {
-            environment = EnvironmentReader.LoadFromFile(environmentFile);
-        }
+        environment = EnvironmentReader.LoadFromFile(environmentFile);
 
         environment.TryGetValue(EnvironmentVariables.ApplicationInsightsKey, out var appInsightsKey);
         environment.TryGetValue(EnvironmentVariables.ServiceBusConnectionString, out var serviceBusConnectionString);
-
-        // If not, and this is an interactive run, try and get them from the user.
-
-        serviceBusConnectionString = PromptForResources("Service Bus Connection String", "all test runs", serviceBusConnectionString, opts.Interactive);
-        appInsightsKey = PromptForResources("Application Insights Instrumentation Key", "all test runs", appInsightsKey, opts.Interactive);
 
         // If a job index is provided, a single role is started, otherwise, all specified roles within the
         // test scenario runs are run in parallel.
@@ -86,7 +78,6 @@ public class Program
                 {
                     case TestScenario.SendReceiveTest:
                         environment.TryGetValue(EnvironmentVariables.ServiceBusSendReceiveTest, out queueName);
-                        testParameters.QueueName = PromptForResources("Queue Name", testName, queueName, opts.Interactive);
 
                         var sendReceiveTest = new SendReceiveTest(testParameters, metrics, opts.Role);
                         testScenarioTasks.Add(sendReceiveTest.RunTestAsync(cancellationSource.Token));
@@ -150,49 +141,11 @@ public class Program
     };
 
     /// <summary>
-    ///   Prompts the user using the command line for resources if they have not been provided yet.
-    /// </summary>
-    ///
-    /// <param name="resourceName">The name of the needed resource.</param>
-    /// <param name="testName">Which test(s) for which the resource is needed.</param>
-    /// <param name="currentValue">The current value of the resource.</param>
-    ///
-    /// <returns>The value of the <paramref name="resourceName"/> either previously provided or received through the command line.</returns>
-    ///
-    /// <exception cref="ArgumentNullException">Occurs when no resource was provided for the test through the environment file or the command line.</exception>
-    ///
-    private static string PromptForResources(string resourceName, string testName, string currentValue, bool interactive)
-    {
-        // If the resource hasn't been provided already, wait for it to be provided through the CLI
-        if (interactive)
-        {
-            while (string.IsNullOrEmpty(currentValue))
-            {
-                Console.Write($"Please provide the {resourceName} for {testName}: ");
-                currentValue = Console.ReadLine().Trim();
-            }
-        }
-
-        if (string.IsNullOrEmpty(currentValue))
-        {
-            throw new ArgumentNullException(resourceName);
-        }
-
-        return currentValue;
-    }
-
-    /// <summary>
     ///   The available command line options that can be parsed.
     /// </summary>
     ///
     internal class Options
     {
-        [Option('i', "interactive", HelpText = "Set up stress tests in interactive mode.")]
-        public bool Interactive { get; set; }
-
-        [Option("all", HelpText = "Run all available tests.")]
-        public bool All { get; set; }
-
         [Option('t', "test", HelpText = "Enter which test to run for a single test run.")]
         public string Test { get; set; }
 
