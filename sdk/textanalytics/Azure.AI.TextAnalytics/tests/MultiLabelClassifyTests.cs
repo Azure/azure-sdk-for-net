@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyWithDisableServiceLogs()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchWithErrorTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             var documents = new List<string>
             {
@@ -103,7 +103,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchConvenienceTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchConvenienceWithStatisticsTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -162,7 +162,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -189,7 +189,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchWithStatisticsTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -222,7 +222,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task MultiLabelClassifyWithMultipleActions()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -259,7 +259,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task StartMultiLabelClassify()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             ClassifyDocumentOperation operation = await client.StartMultiLabelClassifyAsync(s_multiLabelClassifyBatchDocuments, TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName);
 
             await PollUntilTimeout(operation);
@@ -273,7 +273,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task StartMultiLabelClassifyWithName()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             ClassifyDocumentOperation operation = await client.StartMultiLabelClassifyAsync(s_multiLabelClassifyBatchDocuments, TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName, new MultiLabelClassifyOptions
             {
                 DisplayName = "StartMultiLabelClassifyWithName",
