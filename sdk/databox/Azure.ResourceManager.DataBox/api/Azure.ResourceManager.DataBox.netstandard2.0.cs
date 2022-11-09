@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataBox.Models
     }
     public partial class DataBoxAccountCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails
     {
-        internal DataBoxAccountCopyLogDetails() { }
+        public DataBoxAccountCopyLogDetails() { }
         public string AccountName { get { throw null; } }
         public string CopyLogLink { get { throw null; } }
         public string CopyVerboseLogLink { get { throw null; } }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataBox.Models
     }
     public partial class DataBoxCustomerDiskCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails
     {
-        internal DataBoxCustomerDiskCopyLogDetails() { }
+        public DataBoxCustomerDiskCopyLogDetails() { }
         public string ErrorLogLink { get { throw null; } }
         public string SerialNumber { get { throw null; } }
         public string VerboseLogLink { get { throw null; } }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.DataBox.Models
     }
     public partial class DataBoxDiskCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails
     {
-        internal DataBoxDiskCopyLogDetails() { }
+        public DataBoxDiskCopyLogDetails() { }
         public string DiskSerialNumber { get { throw null; } }
         public string ErrorLogLink { get { throw null; } }
         public string VerboseLogLink { get { throw null; } }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DataBox.Models
     }
     public partial class DataBoxHeavyAccountCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails
     {
-        internal DataBoxHeavyAccountCopyLogDetails() { }
+        public DataBoxHeavyAccountCopyLogDetails() { }
         public string AccountName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> CopyLogLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> CopyVerboseLogLink { get { throw null; } }
@@ -628,12 +628,12 @@ namespace Azure.ResourceManager.DataBox.Models
     }
     public partial class DataCenterAddressInstructionResult : Azure.ResourceManager.DataBox.Models.DataCenterAddressResult
     {
-        internal DataCenterAddressInstructionResult() { }
+        public DataCenterAddressInstructionResult() { }
         public string CommunicationInstruction { get { throw null; } }
     }
     public partial class DataCenterAddressLocationResult : Azure.ResourceManager.DataBox.Models.DataCenterAddressResult
     {
-        internal DataCenterAddressLocationResult() { }
+        public DataCenterAddressLocationResult() { }
         public string AdditionalShippingInformation { get { throw null; } }
         public string AddressType { get { throw null; } }
         public string City { get { throw null; } }

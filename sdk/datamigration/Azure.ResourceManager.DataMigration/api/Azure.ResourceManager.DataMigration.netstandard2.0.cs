@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class ConnectToSourceSqlServerTaskOutputAgentJobLevel : Azure.ResourceManager.DataMigration.Models.ConnectToSourceSqlServerTaskOutput
     {
-        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel() { }
+        public ConnectToSourceSqlServerTaskOutputAgentJobLevel() { }
         public bool? IsEnabled { get { throw null; } }
         public string JobCategory { get { throw null; } }
         public string JobOwner { get { throw null; } }
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class ConnectToSourceSqlServerTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.ConnectToSourceSqlServerTaskOutput
     {
-        internal ConnectToSourceSqlServerTaskOutputDatabaseLevel() { }
+        public ConnectToSourceSqlServerTaskOutputDatabaseLevel() { }
         public Azure.ResourceManager.DataMigration.Models.DatabaseCompatLevel? CompatibilityLevel { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.DatabaseFileInfo> DatabaseFiles { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.DatabaseState? DatabaseState { get { throw null; } }
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class ConnectToSourceSqlServerTaskOutputLoginLevel : Azure.ResourceManager.DataMigration.Models.ConnectToSourceSqlServerTaskOutput
     {
-        internal ConnectToSourceSqlServerTaskOutputLoginLevel() { }
+        public ConnectToSourceSqlServerTaskOutputLoginLevel() { }
         public string DefaultDatabase { get { throw null; } }
         public bool? IsEnabled { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.LoginType? LoginType { get { throw null; } }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class ConnectToSourceSqlServerTaskOutputTaskLevel : Azure.ResourceManager.DataMigration.Models.ConnectToSourceSqlServerTaskOutput
     {
-        internal ConnectToSourceSqlServerTaskOutputTaskLevel() { }
+        public ConnectToSourceSqlServerTaskOutputTaskLevel() { }
         public string AgentJobs { get { throw null; } }
         public string Databases { get { throw null; } }
         public string DatabaseTdeCertificateMapping { get { throw null; } }
@@ -1366,7 +1366,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel() { }
+        public MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel() { }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public long? ErrorCount { get { throw null; } }
@@ -1385,20 +1385,20 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputError() { }
+        public MigrateMySqlAzureDBForMySqlOfflineTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel() { }
-        public string Databases { get { throw null; } }
+        public MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel() { }
+        public string Databases { get { throw null; } set { } }
         public string DatabaseSummary { get { throw null; } }
         public long? DurationInSeconds { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ExceptionsAndWarnings { get { throw null; } }
         public System.DateTimeOffset? LastStorageUpdate { get { throw null; } }
         public string Message { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.MigrationReportResult MigrationReportResult { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.MigrationReportResult MigrationReportResult { get { throw null; } set { } }
         public string SourceServerBrandVersion { get { throw null; } }
         public string SourceServerVersion { get { throw null; } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
@@ -1409,7 +1409,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel() { }
+        public MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string ErrorPrefix { get { throw null; } }
         public long? ItemsCompletedCount { get { throw null; } }
@@ -1453,13 +1453,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError() { }
-        public string ErrorMessage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
+        public MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError() { }
+        public string ErrorMessage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel() { }
+        public MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel() { }
         public long? AppliedChanges { get { throw null; } }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
@@ -1478,12 +1478,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputError() { }
+        public MigrateMySqlAzureDBForMySqlSyncTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel() { }
+        public MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServer { get { throw null; } }
         public string SourceServerVersion { get { throw null; } }
@@ -1493,7 +1493,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel() { }
+        public MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel() { }
         public string CdcDeleteCounter { get { throw null; } }
         public string CdcInsertCounter { get { throw null; } }
         public string CdcUpdateCounter { get { throw null; } }
@@ -1546,13 +1546,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError() { }
-        public string ErrorMessage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
+        public MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError() { }
+        public string ErrorMessage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel() { }
+        public MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel() { }
         public long? AppliedChanges { get { throw null; } }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
@@ -1571,12 +1571,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputError() { }
+        public MigrateOracleAzureDBPostgreSqlSyncTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel() { }
+        public MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServer { get { throw null; } }
         public string SourceServerVersion { get { throw null; } }
@@ -1586,7 +1586,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel() { }
+        public MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel() { }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
         public long? CdcUpdateCounter { get { throw null; } }
@@ -1633,13 +1633,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError() { }
-        public string ErrorMessage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError() { }
+        public string ErrorMessage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel() { }
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel() { }
         public long? AppliedChanges { get { throw null; } }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
@@ -1658,14 +1658,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError() { }
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel() { }
-        public float? DatabaseCount { get { throw null; } }
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel() { }
+        public float? DatabaseCount { get { throw null; } set { } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServer { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.ScenarioSource? SourceServerType { get { throw null; } }
@@ -1678,7 +1678,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel() { }
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel() { }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
         public long? CdcUpdateCounter { get { throw null; } }
@@ -1724,7 +1724,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel() { }
+        public MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel() { }
         public string DatabaseErrorResultPrefix { get { throw null; } }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
@@ -1738,13 +1738,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        internal MigrateSchemaSqlServerSqlDBTaskOutputError() { }
+        public MigrateSchemaSqlServerSqlDBTaskOutputError() { }
         public string CommandText { get { throw null; } }
         public string ErrorText { get { throw null; } }
     }
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        internal MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel() { }
+        public MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServerBrandVersion { get { throw null; } }
         public string SourceServerVersion { get { throw null; } }
@@ -1764,7 +1764,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSchemaSqlTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        internal MigrateSchemaSqlTaskOutputError() { }
+        public MigrateSchemaSqlTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
     public partial class MigrateSqlServerSqlDBDatabaseInput
@@ -1802,13 +1802,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseError() { }
-        public string ErrorMessage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
+        public MigrateSqlServerSqlDBSyncTaskOutputDatabaseError() { }
+        public string ErrorMessage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
     public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel() { }
+        public MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel() { }
         public long? AppliedChanges { get { throw null; } }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
@@ -1827,12 +1827,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlDBSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDBSyncTaskOutputError() { }
+        public MigrateSqlServerSqlDBSyncTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
     public partial class MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel() { }
+        public MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel() { }
         public int? DatabaseCount { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServer { get { throw null; } }
@@ -1843,7 +1843,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlDBSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDBSyncTaskOutputTableLevel() { }
+        public MigrateSqlServerSqlDBSyncTaskOutputTableLevel() { }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
         public long? CdcUpdateCounter { get { throw null; } }
@@ -1879,7 +1879,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevel() { }
+        public MigrateSqlServerSqlDBTaskOutputDatabaseLevel() { }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public long? ErrorCount { get { throw null; } }
@@ -1897,7 +1897,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult() { }
+        public MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult() { }
         public Azure.ResourceManager.DataMigration.Models.DataIntegrityValidationResult DataIntegrityValidationResult { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string MigrationId { get { throw null; } }
@@ -1910,20 +1910,20 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlDBTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDBTaskOutputError() { }
+        public MigrateSqlServerSqlDBTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
     public partial class MigrateSqlServerSqlDBTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDBTaskOutputMigrationLevel() { }
+        public MigrateSqlServerSqlDBTaskOutputMigrationLevel() { }
         public string Databases { get { throw null; } }
         public string DatabaseSummary { get { throw null; } }
         public long? DurationInSeconds { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ExceptionsAndWarnings { get { throw null; } }
         public string Message { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.MigrationReportResult MigrationReportResult { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.MigrationValidationResult MigrationValidationResult { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.MigrationReportResult MigrationReportResult { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MigrationValidationResult MigrationValidationResult { get { throw null; } set { } }
         public string SourceServerBrandVersion { get { throw null; } }
         public string SourceServerVersion { get { throw null; } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
@@ -1934,7 +1934,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlDBTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDBTaskOutputTableLevel() { }
+        public MigrateSqlServerSqlDBTaskOutputTableLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string ErrorPrefix { get { throw null; } }
         public long? ItemsCompletedCount { get { throw null; } }
@@ -1947,10 +1947,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlDBTaskOutputValidationResult : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDBTaskOutputValidationResult() { }
+        public MigrateSqlServerSqlDBTaskOutputValidationResult() { }
         public string MigrationId { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.ValidationStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MigrationValidationDatabaseSummaryResult> SummaryResults { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MigrationValidationDatabaseSummaryResult> SummaryResults { get { throw null; } }
     }
     public partial class MigrateSqlServerSqlDBTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
@@ -1982,7 +1982,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMISyncTaskOutput
     {
-        internal MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel() { }
+        public MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.BackupSetInfo> ActiveBackupSets { get { throw null; } }
         public string ContainerName { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
@@ -1997,12 +1997,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlMISyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMISyncTaskOutput
     {
-        internal MigrateSqlServerSqlMISyncTaskOutputError() { }
+        public MigrateSqlServerSqlMISyncTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
     public partial class MigrateSqlServerSqlMISyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMISyncTaskOutput
     {
-        internal MigrateSqlServerSqlMISyncTaskOutputMigrationLevel() { }
+        public MigrateSqlServerSqlMISyncTaskOutputMigrationLevel() { }
         public int? DatabaseCount { get { throw null; } }
         public int? DatabaseErrorCount { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
@@ -2042,7 +2042,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlMITaskOutputAgentJobLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMITaskOutput
     {
-        internal MigrateSqlServerSqlMITaskOutputAgentJobLevel() { }
+        public MigrateSqlServerSqlMITaskOutputAgentJobLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ExceptionsAndWarnings { get { throw null; } }
         public bool? IsEnabled { get { throw null; } }
@@ -2053,7 +2053,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlMITaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMITaskOutput
     {
-        internal MigrateSqlServerSqlMITaskOutputDatabaseLevel() { }
+        public MigrateSqlServerSqlMITaskOutputDatabaseLevel() { }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ExceptionsAndWarnings { get { throw null; } }
@@ -2065,12 +2065,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlMITaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMITaskOutput
     {
-        internal MigrateSqlServerSqlMITaskOutputError() { }
+        public MigrateSqlServerSqlMITaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
     public partial class MigrateSqlServerSqlMITaskOutputLoginLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMITaskOutput
     {
-        internal MigrateSqlServerSqlMITaskOutputLoginLevel() { }
+        public MigrateSqlServerSqlMITaskOutputLoginLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ExceptionsAndWarnings { get { throw null; } }
         public string LoginName { get { throw null; } }
@@ -2081,7 +2081,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlMITaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMITaskOutput
     {
-        internal MigrateSqlServerSqlMITaskOutputMigrationLevel() { }
+        public MigrateSqlServerSqlMITaskOutputMigrationLevel() { }
         public string AgentJobs { get { throw null; } }
         public string Databases { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
@@ -2120,7 +2120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSsisTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSsisTaskOutput
     {
-        internal MigrateSsisTaskOutputMigrationLevel() { }
+        public MigrateSsisTaskOutputMigrationLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ExceptionsAndWarnings { get { throw null; } }
         public string Message { get { throw null; } }
@@ -2134,7 +2134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSsisTaskOutputProjectLevel : Azure.ResourceManager.DataMigration.Models.MigrateSsisTaskOutput
     {
-        internal MigrateSsisTaskOutputProjectLevel() { }
+        public MigrateSsisTaskOutputProjectLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ExceptionsAndWarnings { get { throw null; } }
         public string FolderName { get { throw null; } }
@@ -2182,9 +2182,9 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrationReportResult
     {
-        internal MigrationReportResult() { }
-        public string Id { get { throw null; } }
-        public System.Uri ReportUri { get { throw null; } }
+        public MigrationReportResult() { }
+        public string Id { get { throw null; } set { } }
+        public System.Uri ReportUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MigrationState : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MigrationState>
@@ -2254,7 +2254,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrationValidationDatabaseSummaryResult
     {
-        internal MigrationValidationDatabaseSummaryResult() { }
+        public MigrationValidationDatabaseSummaryResult() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public string MigrationId { get { throw null; } }
@@ -2272,11 +2272,11 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrationValidationResult
     {
-        internal MigrationValidationResult() { }
+        public MigrationValidationResult() { }
         public string Id { get { throw null; } }
         public string MigrationId { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.ValidationStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MigrationValidationDatabaseSummaryResult> SummaryResults { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MigrationValidationDatabaseSummaryResult> SummaryResults { get { throw null; } }
     }
     public partial class MISqlConnectionInfo : Azure.ResourceManager.DataMigration.Models.ConnectionInfo
     {
@@ -2328,7 +2328,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MongoDBCollectionProgress : Azure.ResourceManager.DataMigration.Models.MongoDBProgress
     {
-        internal MongoDBCollectionProgress() : base (default(long), default(long), default(string), default(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState), default(long), default(long)) { }
+        public MongoDBCollectionProgress(long bytesCopied, long documentsCopied, string elapsedTime, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> errors, long eventsPending, long eventsReplayed, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState state, long totalBytes, long totalDocuments) : base (default(long), default(long), default(string), default(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState), default(long), default(long)) { }
     }
     public partial class MongoDBCollectionSettings
     {
@@ -2365,8 +2365,8 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MongoDBDatabaseProgress : Azure.ResourceManager.DataMigration.Models.MongoDBProgress
     {
-        internal MongoDBDatabaseProgress() : base (default(long), default(long), default(string), default(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState), default(long), default(long)) { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBCollectionProgress> Collections { get { throw null; } }
+        public MongoDBDatabaseProgress(long bytesCopied, long documentsCopied, string elapsedTime, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> errors, long eventsPending, long eventsReplayed, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState state, long totalBytes, long totalDocuments) : base (default(long), default(long), default(string), default(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState), default(long), default(long)) { }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBCollectionProgress> Collections { get { throw null; } }
     }
     public partial class MongoDBDatabaseSettings
     {
@@ -2376,11 +2376,11 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MongoDBError
     {
-        internal MongoDBError() { }
-        public string Code { get { throw null; } }
-        public int? Count { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDBErrorType? ErrorType { get { throw null; } }
-        public string Message { get { throw null; } }
+        public MongoDBError() { }
+        public string Code { get { throw null; } set { } }
+        public int? Count { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBErrorType? ErrorType { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MongoDBErrorType : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDBErrorType>
@@ -2413,8 +2413,8 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MongoDBMigrationProgress : Azure.ResourceManager.DataMigration.Models.MongoDBProgress
     {
-        internal MongoDBMigrationProgress() : base (default(long), default(long), default(string), default(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState), default(long), default(long)) { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBDatabaseProgress> Databases { get { throw null; } }
+        public MongoDBMigrationProgress(long bytesCopied, long documentsCopied, string elapsedTime, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> errors, long eventsPending, long eventsReplayed, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState state, long totalBytes, long totalDocuments) : base (default(long), default(long), default(string), default(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState), default(long), default(long)) { }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBDatabaseProgress> Databases { get { throw null; } }
     }
     public partial class MongoDBMigrationSettings
     {
@@ -2464,20 +2464,20 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MongoDBProgress
     {
-        protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> errors, long eventsPending, long eventsReplayed, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState state, long totalBytes, long totalDocuments) { }
-        public long BytesCopied { get { throw null; } }
-        public long DocumentsCopied { get { throw null; } }
-        public string ElapsedTime { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> Errors { get { throw null; } }
-        public long EventsPending { get { throw null; } }
-        public long EventsReplayed { get { throw null; } }
-        public System.DateTimeOffset? LastEventOn { get { throw null; } }
-        public System.DateTimeOffset? LastReplayOn { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string QualifiedName { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState State { get { throw null; } }
-        public long TotalBytes { get { throw null; } }
-        public long TotalDocuments { get { throw null; } }
+        protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> errors, long eventsPending, long eventsReplayed, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState state, long totalBytes, long totalDocuments) { }
+        public long BytesCopied { get { throw null; } set { } }
+        public long DocumentsCopied { get { throw null; } set { } }
+        public string ElapsedTime { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> Errors { get { throw null; } }
+        public long EventsPending { get { throw null; } set { } }
+        public long EventsReplayed { get { throw null; } set { } }
+        public System.DateTimeOffset? LastEventOn { get { throw null; } set { } }
+        public System.DateTimeOffset? LastReplayOn { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string QualifiedName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState State { get { throw null; } set { } }
+        public long TotalBytes { get { throw null; } set { } }
+        public long TotalDocuments { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MongoDBReplication : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDBReplication>
@@ -3359,7 +3359,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class SyncMigrationDatabaseErrorEvent
     {
-        internal SyncMigrationDatabaseErrorEvent() { }
+        public SyncMigrationDatabaseErrorEvent() { }
         public string EventText { get { throw null; } }
         public string EventTypeString { get { throw null; } }
         public string TimestampString { get { throw null; } }
