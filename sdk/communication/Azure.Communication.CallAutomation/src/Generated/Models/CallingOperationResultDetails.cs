@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The result details of calling operation. </summary>
-    internal partial class CallingOperationResultDetails
+    public partial class CallingOperationResultDetails
     {
         /// <summary> Initializes a new instance of CallingOperationResultDetails. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
@@ -17,6 +17,17 @@ namespace Azure.Communication.CallAutomation
         {
             Code = code;
             Subcode = subcode;
+        }
+
+        /// <summary> Initializes a new instance of CallingOperationResultDetails. </summary>
+        /// <param name="code"> The result code associated with the operation. </param>
+        /// <param name="subcode"> The subcode that further classifies the result. </param>
+        /// <param name="message"> The message is a detail explanation of subcode. </param>
+        internal CallingOperationResultDetails(int code, int subcode, string message)
+        {
+            Code = code;
+            Subcode = subcode;
+            Message = message;
         }
 
         /// <summary> The result code associated with the operation. </summary>

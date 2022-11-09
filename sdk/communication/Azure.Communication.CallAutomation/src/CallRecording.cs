@@ -64,7 +64,8 @@ namespace Azure.Communication.CallAutomation
                     RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
-                    RecordingFormatType = options.RecordingFormat
+                    RecordingFormatType = options.RecordingFormat,
+                    RecordingStorageType = options.RecordingStorageType
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -106,7 +107,8 @@ namespace Azure.Communication.CallAutomation
                     RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
-                    RecordingFormatType = options.RecordingFormat
+                    RecordingFormatType = options.RecordingFormat,
+                    RecordingStorageType = options.RecordingStorageType
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())

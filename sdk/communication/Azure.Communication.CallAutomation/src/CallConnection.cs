@@ -348,8 +348,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="participantMri">The participant's MRI.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual async Task<Response<CallParticipant>> GetParticipantAsync(string participantMri, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="CallParticipantModel"/>.</returns>
+        public virtual async Task<Response<CallParticipantModel>> GetParticipantAsync(string participantMri, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
             scope.Start();
@@ -361,7 +361,7 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
-                return Response.FromValue(new CallParticipant(response.Value), response.GetRawResponse());
+                return Response.FromValue(new CallParticipantModel(response.Value), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -374,8 +374,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="participantMri">The participant MRI.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual Response<CallParticipant> GetParticipant(string participantMri, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="CallParticipantModel"/>.</returns>
+        public virtual Response<CallParticipantModel> GetParticipant(string participantMri, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
             scope.Start();
@@ -387,7 +387,7 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     );
 
-                return Response.FromValue(new CallParticipant(response.Value), response.GetRawResponse());
+                return Response.FromValue(new CallParticipantModel(response.Value), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -399,8 +399,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Get participants from a call. </summary>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
-        public virtual async Task<Response<IReadOnlyList<CallParticipant>>> GetParticipantsAsync(CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="IEnumerable{CallParticipantModel}"/>.</returns>
+        public virtual async Task<Response<IReadOnlyList<CallParticipantModel>>> GetParticipantsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipants)}");
             scope.Start();
@@ -411,7 +411,7 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
-                IReadOnlyList<CallParticipant> result = response.Value.Values.Select(t => new CallParticipant(t)).ToList();
+                IReadOnlyList<CallParticipantModel> result = response.Value.Values.Select(t => new CallParticipantModel(t)).ToList();
 
                 return Response.FromValue(result, response.GetRawResponse());
             }
@@ -425,8 +425,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Get participants from a call. </summary>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
-        public virtual Response<IReadOnlyList<CallParticipant>> GetParticipants(CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="IEnumerable{CallParticipantModel}"/>.</returns>
+        public virtual Response<IReadOnlyList<CallParticipantModel>> GetParticipants(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipants)}");
             scope.Start();
@@ -437,7 +437,7 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     );
 
-                IReadOnlyList<CallParticipant> result = response.Value.Values.Select(t => new CallParticipant(t)).ToList();
+                IReadOnlyList<CallParticipantModel> result = response.Value.Values.Select(t => new CallParticipantModel(t)).ToList();
 
                 return Response.FromValue(result, response.GetRawResponse());
             }

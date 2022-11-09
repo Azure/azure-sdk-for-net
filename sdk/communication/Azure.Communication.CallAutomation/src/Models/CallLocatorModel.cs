@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("RecognitionType", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial struct CallMediaRecognitionType
+    [CodeGenModel("CallLocator")]
+    internal partial class CallLocatorModel
     {
     }
 }

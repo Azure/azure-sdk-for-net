@@ -4,23 +4,23 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The participant in a call. </summary>
-    public class CallParticipant
+    public class CallParticipantModel
     {
-        /// <summary> Initializes a new instance of CallParticipant. </summary>
+        /// <summary> Initializes a new instance of CallParticipantModel. </summary>
         /// <param name="identifier"> The communication identifier. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        internal CallParticipant(CommunicationIdentifier identifier, bool isMuted)
+        internal CallParticipantModel(CommunicationIdentifier identifier, bool isMuted)
         {
             Identifier = identifier;
             IsMuted = isMuted;
         }
 
-        /// <summary> Initializes a new instance of CallParticipant. </summary>
-        /// <param name="callParticipantInternal"> The internal call participant. </param>
-        internal CallParticipant(AcsCallParticipantInternal callParticipantInternal)
+        /// <summary> Initializes a new instance of CallParticipantModel. </summary>
+        /// <param name="callParticipantModelInternal"> The internal call participant. </param>
+        internal CallParticipantModel(AcsCallParticipantInternal callParticipantModelInternal)
         {
-            Identifier = CommunicationIdentifierSerializer.Deserialize(callParticipantInternal.Identifier);
-            IsMuted = (bool)callParticipantInternal.IsMuted;
+            Identifier = CommunicationIdentifierSerializer.Deserialize(callParticipantModelInternal.Identifier);
+            IsMuted = (bool)callParticipantModelInternal.IsMuted;
         }
 
         /// <summary> The communication identifier. </summary>
