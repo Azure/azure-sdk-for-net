@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class SettingResourceTests : SecurityInsightsManagementTestBase
     {
         public SettingResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
             //1.Get
-            var applicationName = Recording.GenerateAssetName("testSettings-");
+            var applicationName = "EyesOn";
             var setting1 = await CreateSettingAsync(resourceGroup, workspace.Data.Name, applicationName);
             SettingResource setting2 = await setting1.GetAsync();
 

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class MetadataModelCollectionTests : SecurityInsightsManagementTestBase
     {
         public MetadataModelCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
         private async Task<ResourceGroupResource> GetResourceGroupAsync()
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var onboardInput = ResourceDataHelpers.GetSentinelOnboardingStateData();
             var lroo = await onboardCollection.CreateOrUpdateAsync(WaitUntil.Completed, onboardName, onboardInput);
             SentinelOnboardingStateResource onboard1 = lroo.Value;
-            var name = Recording.GenerateAssetName("TestFrontDoor");
-            var name2 = Recording.GenerateAssetName("TestFrontDoor");
-            var name3 = Recording.GenerateAssetName("TestFrontDoor");
+            var name = Recording.GenerateAssetName("TestMata");
+            var name2 = Recording.GenerateAssetName("TestMata");
+            var name3 = Recording.GenerateAssetName("TestMata");
             var input = ResourceDataHelpers.GetMetadataModelData(DefaultSubscription.Data.Id, groupName, workspaceName1);
             var input2 = ResourceDataHelpers.GetMetadataModelData(DefaultSubscription.Data.Id, groupName, workspaceName1);
             var input3 = ResourceDataHelpers.GetMetadataModelData(DefaultSubscription.Data.Id, groupName, workspaceName1);
@@ -78,14 +78,12 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             ResourceDataHelpers.AssertMetadataModelData(model1.Data, model2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input2);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input3);
             int count = 0;
             await foreach (var num in collection.GetAllAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.GreaterOrEqual(count, 1);
             //4Exists
             Assert.IsTrue(await collection.ExistsAsync(name));
             Assert.IsFalse(await collection.ExistsAsync(name + "1"));

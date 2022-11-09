@@ -5,5 +5,6 @@
 
   <ItemGroup>
     <ProjectReference Include="E:\AzureWork\GitHub\azure-sdk-for-net\sdk\operationalinsights\Azure.ResourceManager.OperationalInsights\src\Azure.ResourceManager.OperationalInsights.csproj" />
+    <ProjectReference Include="E:\AzureWork\GitHub\azure-sdk-for-net\sdk\logic\Azure.ResourceManager.Logic\src\Azure.ResourceManager.Logic.csproj" />
   </ItemGroup>
 </Project>

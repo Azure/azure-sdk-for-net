@@ -13,6 +13,9 @@ using Azure.ResourceManager.Resources;
 using System.Threading.Tasks;
 using ContentType = Azure.ResourceManager.SecurityInsights.Models.ContentType;
 using NUnit.Framework.Internal;
+using Azure.ResourceManager.Logic;
+using Azure.ResourceManager.Logic.Models;
+using System.IO;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
 {
@@ -72,6 +75,30 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         }
         #endregion
 
+        #region IntegrationAccount
+        public static IntegrationAccountData GetIntegrationAccountData(ResourceGroupResource resourceGroup)
+        {
+            IntegrationAccountData data = new IntegrationAccountData(resourceGroup.Data.Location)
+            {
+                SkuName = IntegrationAccountSkuName.Standard,
+            };
+            return data;
+        }
+        #endregion
+
+        #region workflowData
+        public static LogicWorkflowData GetWorkflowData(ResourceGroupResource resourceGroup, ResourceIdentifier integrationAccountIdentifier, string logicWorkflowName)
+        {
+            byte[] definition = File.ReadAllBytes(@"/./AzureWork/GitHub/azure-sdk-for-net/sdk/securityinsights/Azure.ResourceManager.SecurityInsights/tests/TestData/WorkflowDefinition.json");
+            LogicWorkflowData data = new LogicWorkflowData(resourceGroup.Data.Location)
+            {
+                Definition = new BinaryData(definition),
+                IntegrationAccount = new LogicResourceReference() { Id = integrationAccountIdentifier },
+            };
+            return data;
+        }
+        #endregion
+
         #region AutomationRuleData
         public static void AssertAutomationRuleData(AutomationRuleData data1, AutomationRuleData data2)
         {
@@ -80,7 +107,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.Order, data2.Order);
             Assert.AreEqual(data1.LastModifiedTimeUtc, data2.LastModifiedTimeUtc);
         }
-        public static AutomationRuleData GetAutomationRuleData(string resourcegroup)
+        public static AutomationRuleData GetAutomationRuleData(string resourcegroup, string workflowName)
         {
             var trigger = new AutomationRuleTriggeringLogic(false, TriggersOn.Alerts, TriggersWhen.Created);
             IEnumerable<AutomationRuleRunPlaybookAction> action = new List<AutomationRuleRunPlaybookAction>()
@@ -89,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
                 {
                     ActionConfiguration = new PlaybookActionProperties()
                     {
-                        LogicAppResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/" + resourcegroup + "/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook",
+                        LogicAppResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/" + resourcegroup + "/providers/Microsoft.Logic/workflows/" + workflowName,
                         TenantId = Guid.Parse("d23e3eef-eed0-428f-a2d5-bc48c268e31d")
                     }
                 }
@@ -224,8 +251,8 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             var data = new MetadataModelData()
             {
                 Kind = SecurityInsightsKind.AnalyticsRule,
-                ParentId = defaultSubscription + "/resourceGroups/"+ resourceGroup + "/providers/" + "Microsoft.OperationalInsights" + "/workspaces/" + workspaceName + "/providers/Microsoft.SecurityInsights/alertRules/" + Guid.NewGuid().ToString(),
-                ContentId = Guid.NewGuid().ToString(),
+                ParentId = defaultSubscription + "/resourceGroups/"+ resourceGroup + "/providers/" + "Microsoft.OperationalInsights" + "/workspaces/" + workspaceName + "/providers/Microsoft.SecurityInsights/alertRules/" + "9c251d58-a711-4883-8",
+                ContentId = "ea26fc04-3702-46be-8",
             };
             return data;
         }
@@ -238,13 +265,16 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         }
         public static SettingData GetSettingData()
         {
-            var data = new Ueba()
+            /*var data = new Ueba()
             {
                 DataSources =
                 {
                     UebaDataSource.AuditLogs
                 },
                 ETag = ETag.All
+            };*/
+            var data = new EyesOn()
+            {
             };
             return data;
         }
@@ -268,7 +298,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
                 RepoType = RepoType.Github,
                 ContentTypes =
                 {
-                    ContentType.AnalyticRule,
+                    ContentType.Workbook,
                 },
                 Repository = new Repository()
                 {
