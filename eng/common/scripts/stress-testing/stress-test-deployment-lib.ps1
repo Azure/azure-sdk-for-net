@@ -5,6 +5,19 @@ $FailedCommands = New-Object Collections.Generic.List[hashtable]
 
 . (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
 
+$limitRangeSpec = @"
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-resource-request
+spec:
+  limits:
+  - defaultRequest:
+      cpu: 100m
+      memory: 100Mi
+    type: Container
+"@
+
 # Powershell does not (at time of writing) treat exit codes from external binaries
 # as cause for stopping execution, so do this via a wrapper function.
 # See https://github.com/PowerShell/PowerShell-RFC/pull/277
@@ -190,6 +203,9 @@ function DeployStressPackage(
 
     Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
     kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
+    if ($LASTEXITCODE) {exit $LASTEXITCODE}
+    Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
+    $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
     if ($LASTEXITCODE) {exit $LASTEXITCODE}
 
     $dockerBuildConfigs = @()

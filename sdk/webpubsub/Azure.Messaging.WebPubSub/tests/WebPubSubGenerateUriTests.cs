@@ -94,7 +94,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             var source = new CancellationTokenSource();
             RequestContext context = new() { CancellationToken = source.Token };
             var expectRoles = new[] { "a", "b" };
-            var request = client.CreateGenerateClientTokenImplRequest("foo", new[] {"a", "b"}, 1, context);
+            var request = client.CreateGenerateClientTokenImplRequest("foo", new[] {"a", "b"}, 1, null, context);
 
             var url = request.Request.Uri.ToString();
             var queryString = url.Substring(url.IndexOf('?'));
