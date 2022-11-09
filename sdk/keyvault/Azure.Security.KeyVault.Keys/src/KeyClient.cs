@@ -320,6 +320,64 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
+        /// Creates and stores a new Octet Key Pair (OKP) in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="okpKeyOptions">The key options object containing information about the Octet Key Pair (OKP) being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="okpKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<KeyVaultKey> CreateOkpKey(CreateOkpKeyOptions okpKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(okpKeyOptions, nameof(okpKeyOptions));
+
+            var parameters = new KeyRequestParameters(okpKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOkpKey)}");
+            scope.AddAttribute("key", okpKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(okpKeyOptions.Name), cancellationToken, KeysPath, okpKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new Octet Key Pair (OKP) in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="okpKeyOptions">The key options object containing information about the Octet Key Pair (OKP) being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="okpKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<KeyVaultKey>> CreateOkpKeyAsync(CreateOkpKeyOptions okpKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(okpKeyOptions, nameof(okpKeyOptions));
+
+            var parameters = new KeyRequestParameters(okpKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOkpKey)}");
+            scope.AddAttribute("key", okpKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(okpKeyOptions.Name), cancellationToken, KeysPath, okpKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// The update key operation changes specified attributes of a stored key and
         /// can be applied to any key type and key version stored in Azure Key Vault.
         /// </summary>
@@ -1492,6 +1550,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Updates the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
+        /// The new policy will be used for the next version of the key when rotated.
         /// </summary>
         /// <param name="keyName">The name of the key.</param>
         /// <param name="policy">The <see cref="KeyRotationPolicy"/> to update.</param>
@@ -1525,6 +1584,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Updates the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
+        /// The new policy will be used for the next version of the key when rotated.
         /// </summary>
         /// <param name="keyName">The name of the key.</param>
         /// <param name="policy">The <see cref="KeyRotationPolicy"/> to update.</param>

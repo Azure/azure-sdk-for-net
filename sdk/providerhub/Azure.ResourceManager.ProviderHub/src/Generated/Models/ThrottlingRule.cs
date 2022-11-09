@@ -21,14 +21,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="metrics"/> is null. </exception>
         public ThrottlingRule(string action, IEnumerable<ThrottlingMetric> metrics)
         {
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNull(action, nameof(action));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             Action = action;
             Metrics = metrics.ToList();

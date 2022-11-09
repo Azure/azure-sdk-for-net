@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="artifactStorageAccessMode"></param>
         /// <param name="frontEndServiceConfiguration"></param>
         /// <param name="kubeConfig"></param>
-        internal ArcConfiguration(StorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig)
+        internal ArcConfiguration(ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig)
         {
             ArtifactsStorageType = artifactsStorageType;
             ArtifactStorageClassName = artifactStorageClassName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the artifacts storage type. </summary>
-        public StorageType? ArtifactsStorageType { get; set; }
+        public ArtifactStorageType? ArtifactsStorageType { get; set; }
         /// <summary> Gets or sets the artifact storage class name. </summary>
         public string ArtifactStorageClassName { get; set; }
         /// <summary> Gets or sets the artifact storage mount path. </summary>

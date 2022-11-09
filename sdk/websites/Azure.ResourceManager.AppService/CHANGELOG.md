@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-09-29)
+
+This is the first stable release of the AppService Management library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Corrected the format of all `IPAddress` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.4 (2022-08-29)
 

@@ -106,5 +106,10 @@ namespace Microsoft.Azure.Management.Redis
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
+        /// <summary>
+        /// Gets the IAsyncOperationStatusOperations.
+        /// </summary>
+        IAsyncOperationStatusOperations AsyncOperationStatus { get; }
+
     }
 }

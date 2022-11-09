@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "257",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f05738049f4fbb04bba28d30dda56c3a-54a2c5814dfc40d4-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "55d7dc9de4375d955a2bd3fe6ad55c31",
+        "traceparent": "00-4606865bcf66e567d9cd6cb567d5bb13-830107d92f716571-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7318385c882078e4360b495c57dda725",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -35,9 +35,9 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "c335073b-a64d-413d-9278-fe0c845b6da0",
+        "apim-request-id": "97e6f7a1-5d70-4a27-84db-0817dbde8dbb",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 23:22:36 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
@@ -49,14 +49,14 @@
           "message": "Invalid parameter in request",
           "innererror": {
             "code": "InvalidParameterValue",
-            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2019-10-01,2020-07-01,2021-06-01,2022-07-01."
+            "message": "Job task parameter value \u0027InvalidVersion\u0027 is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest, 2019-10-01, 2020-07-01, 2021-06-01, 2022-07-01, 2022-10-01."
           }
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1477819646",
+    "RandomSeed": "354258765",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

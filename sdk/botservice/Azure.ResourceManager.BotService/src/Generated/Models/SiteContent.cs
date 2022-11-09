@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public SiteContent(string siteName, Key key)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNull(siteName, nameof(siteName));
 
             SiteName = siteName;
             Key = key;

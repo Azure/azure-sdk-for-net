@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Preview))
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("preview");
-                writer.WriteBooleanValue(Preview.Value);
+                writer.WriteBooleanValue(IsPreview.Value);
             }
             writer.WritePropertyName("assessmentType");
             writer.WriteStringValue(AssessmentType.ToString());
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static SecurityAssessmentMetadataProperties DeserializeSecurityAssessmentMetadataProperties(JsonElement element)
         {
             string displayName = default;
-            Optional<string> policyDefinitionId = default;
+            Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> description = default;
             Optional<string> remediationDescription = default;
-            Optional<IList<Category>> categories = default;
-            Severity severity = default;
-            Optional<UserImpact> userImpact = default;
+            Optional<IList<SecurityAssessmentResourceCategory>> categories = default;
+            SecurityAssessmentSeverity severity = default;
+            Optional<SecurityAssessmentUserImpact> userImpact = default;
             Optional<ImplementationEffort> implementationEffort = default;
-            Optional<IList<Threat>> threats = default;
+            Optional<IList<SecurityThreat>> threats = default;
             Optional<bool> preview = default;
-            AssessmentType assessmentType = default;
-            Optional<SecurityAssessmentMetadataPartnerData> partnerData = default;
+            SecurityAssessmentType assessmentType = default;
+            Optional<SecurityAssessmentMetadataPartner> partnerData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"))
@@ -98,7 +98,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("policyDefinitionId"))
                 {
-                    policyDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -118,17 +123,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Category> array = new List<Category>();
+                    List<SecurityAssessmentResourceCategory> array = new List<SecurityAssessmentResourceCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Category(item.GetString()));
+                        array.Add(new SecurityAssessmentResourceCategory(item.GetString()));
                     }
                     categories = array;
                     continue;
                 }
                 if (property.NameEquals("severity"))
                 {
-                    severity = new Severity(property.Value.GetString());
+                    severity = new SecurityAssessmentSeverity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userImpact"))
@@ -138,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    userImpact = new UserImpact(property.Value.GetString());
+                    userImpact = new SecurityAssessmentUserImpact(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("implementationEffort"))
@@ -158,10 +163,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Threat> array = new List<Threat>();
+                    List<SecurityThreat> array = new List<SecurityThreat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Threat(item.GetString()));
+                        array.Add(new SecurityThreat(item.GetString()));
                     }
                     threats = array;
                     continue;
@@ -178,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("assessmentType"))
                 {
-                    assessmentType = new AssessmentType(property.Value.GetString());
+                    assessmentType = new SecurityAssessmentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("partnerData"))
@@ -188,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partnerData = SecurityAssessmentMetadataPartnerData.DeserializeSecurityAssessmentMetadataPartnerData(property.Value);
+                    partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property.Value);
                     continue;
                 }
             }

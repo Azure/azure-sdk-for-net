@@ -97,7 +97,7 @@ GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new G
     MapImageLayer = MapImageLayer.Basic,
     MapImageStyle = MapImageStyle.Dark,
     ZoomLevel = 10,
-    Language = RenderingLanguage.EnglishUSA,
+    Language = RenderingLanguage.EnglishUsa,
 };
 
 // Get static image
@@ -163,7 +163,7 @@ GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(
     MapImageLayer = MapImageLayer.Basic,
     MapImageStyle = MapImageStyle.Dark,
     ZoomLevel = 10,
-    Language = RenderingLanguage.EnglishUSA
+    Language = RenderingLanguage.EnglishUsa
 };
 
 // Get static image

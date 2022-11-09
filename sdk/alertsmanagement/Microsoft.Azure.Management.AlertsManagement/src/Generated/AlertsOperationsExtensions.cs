@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// <param name='comment'>
             /// reason of change alert state
             /// </param>
-            public static Alert ChangeState(this IAlertsOperations operations, string alertId, string newState, string comment = default(string))
+            public static Alert ChangeState(this IAlertsOperations operations, string alertId, string newState, Comments comment = default(Comments))
             {
                 return operations.ChangeStateAsync(alertId, newState, comment).GetAwaiter().GetResult();
             }
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Alert> ChangeStateAsync(this IAlertsOperations operations, string alertId, string newState, string comment = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Alert> ChangeStateAsync(this IAlertsOperations operations, string alertId, string newState, Comments comment = default(Comments), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ChangeStateWithHttpMessagesAsync(alertId, newState, comment, null, cancellationToken).ConfigureAwait(false))
                 {

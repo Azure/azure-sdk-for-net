@@ -21,6 +21,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("revisionSuffix");
                 writer.WriteStringValue(RevisionSuffix);
             }
+            if (Optional.IsCollectionDefined(InitContainers))
+            {
+                writer.WritePropertyName("initContainers");
+                writer.WriteStartArray();
+                foreach (var item in InitContainers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers");
@@ -52,6 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static ContainerAppTemplate DeserializeContainerAppTemplate(JsonElement element)
         {
             Optional<string> revisionSuffix = default;
+            Optional<IList<InitContainer>> initContainers = default;
             Optional<IList<ContainerAppContainer>> containers = default;
             Optional<ContainerAppScale> scale = default;
             Optional<IList<ContainerAppVolume>> volumes = default;
@@ -60,6 +71,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("revisionSuffix"))
                 {
                     revisionSuffix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("initContainers"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<InitContainer> array = new List<InitContainer>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InitContainer.DeserializeInitContainer(item));
+                    }
+                    initContainers = array;
                     continue;
                 }
                 if (property.NameEquals("containers"))
@@ -103,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppTemplate(revisionSuffix.Value, Optional.ToList(containers), scale.Value, Optional.ToList(volumes));
+            return new ContainerAppTemplate(revisionSuffix.Value, Optional.ToList(initContainers), Optional.ToList(containers), scale.Value, Optional.ToList(volumes));
         }
     }
 }

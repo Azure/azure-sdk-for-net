@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, Channel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
+        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
         {
             RecommendationName = recommendationName;
             DisplayName = displayName;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Level of impact indicating how critical this rule is. </summary>
         public NotificationLevel? Level { get; set; }
         /// <summary> List of available channels that this rule applies. </summary>
-        public Channel? Channels { get; set; }
+        public RecommendationChannel? Channels { get; set; }
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
         public IReadOnlyList<string> CategoryTags { get; }
         /// <summary> True if this is associated with a dynamically added rule. </summary>

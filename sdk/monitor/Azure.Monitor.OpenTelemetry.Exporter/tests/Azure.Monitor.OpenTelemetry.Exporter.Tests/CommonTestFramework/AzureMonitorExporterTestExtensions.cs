@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             telemetryItems = new ConcurrentBag<TelemetryItem>();
 
-            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems))));
+            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems))));
         }
 
         /// <summary>
@@ -47,6 +47,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             {
                 TemporalityPreference = MetricReaderTemporalityPreference.Delta
             });
+        }
+
+        /// <summary>
+        /// Extension methods to simplify registering of <see cref="AzureMonitorMetricExporter"/> with <see cref="MockTransmitter"/> for unit tests.
+        /// </summary>
+        internal static MeterProviderBuilder AddAzureMonitorMetricExporterForTest(this MeterProviderBuilder builder, out ConcurrentBag<TelemetryItem> telemetryItems, out MetricReader metricReader)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            telemetryItems = new ConcurrentBag<TelemetryItem>();
+
+            metricReader = new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(telemetryItems)));
+
+            return builder.AddReader(metricReader);
         }
 
         /// <summary>

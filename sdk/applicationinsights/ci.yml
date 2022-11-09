@@ -8,6 +8,8 @@ trigger:
   paths:
     include:
     - sdk/applicationinsights/
+    exclude:
+    - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights/
 
 pr:
   branches:
@@ -19,6 +21,8 @@ pr:
   paths:
     include:
     - sdk/applicationinsights/
+    exclude:
+    - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

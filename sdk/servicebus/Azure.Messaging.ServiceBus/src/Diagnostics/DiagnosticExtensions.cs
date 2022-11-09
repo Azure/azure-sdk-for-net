@@ -22,6 +22,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             scope.AddLinkedDiagnostics(message);
         }
 
+        public static void SetMessageAsParent(this DiagnosticScope scope, ServiceBusReceivedMessage message)
+        {
+            if (EntityScopeFactory.TryExtractDiagnosticId(
+                    message.ApplicationProperties,
+                    out string diagnosticId))
+            {
+                scope.SetTraceparent(diagnosticId);
+            }
+        }
+
         public static void SetMessageData(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusReceivedMessage> messages)
         {
             scope.AddLinkedDiagnostics(messages);

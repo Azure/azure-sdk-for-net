@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of RulesResults. </summary>
         internal RulesResults()
         {
-            Value = new ChangeTrackingList<RuleResultData>();
+            Value = new ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData>();
         }
 
         /// <summary> Initializes a new instance of RulesResults. </summary>
         /// <param name="value"> List of rule results. </param>
-        internal RulesResults(IReadOnlyList<RuleResultData> value)
+        internal RulesResults(IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData> value)
         {
             Value = value;
         }
 
         /// <summary> List of rule results. </summary>
-        public IReadOnlyList<RuleResultData> Value { get; }
+        public IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData> Value { get; }
     }
 }

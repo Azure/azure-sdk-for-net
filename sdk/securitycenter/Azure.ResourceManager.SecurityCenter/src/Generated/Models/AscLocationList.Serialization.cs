@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AscLocationList DeserializeAscLocationList(JsonElement element)
         {
-            Optional<IReadOnlyList<AscLocationData>> value = default;
+            Optional<IReadOnlyList<SecurityCenterLocationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AscLocationData> array = new List<AscLocationData>();
+                    List<SecurityCenterLocationData> array = new List<SecurityCenterLocationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AscLocationData.DeserializeAscLocationData(item));
+                        array.Add(SecurityCenterLocationData.DeserializeSecurityCenterLocationData(item));
                     }
                     value = array;
                     continue;

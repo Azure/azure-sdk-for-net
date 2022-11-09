@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of JitNetworkAccessRequestPort. </summary>
         /// <param name="number"></param>
-        /// <param name="endTimeUtc"> The date &amp; time at which the request ends in UTC. </param>
+        /// <param name="endOn"> The date &amp; time at which the request ends in UTC. </param>
         /// <param name="status"> The status of the port. </param>
         /// <param name="statusReason"> A description of why the `status` has its value. </param>
-        public JitNetworkAccessRequestPort(int number, DateTimeOffset endTimeUtc, Status status, StatusReason statusReason)
+        public JitNetworkAccessRequestPort(int number, DateTimeOffset endOn, JitNetworkAccessPortStatus status, JitNetworkAccessPortStatusReason statusReason)
         {
             Number = number;
             AllowedSourceAddressPrefixes = new ChangeTrackingList<string>();
-            EndTimeUtc = endTimeUtc;
+            EndOn = endOn;
             Status = status;
             StatusReason = statusReason;
         }
@@ -32,16 +32,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="number"></param>
         /// <param name="allowedSourceAddressPrefix"> Mutually exclusive with the &quot;allowedSourceAddressPrefixes&quot; parameter. Should be an IP address or CIDR, for example &quot;192.168.0.3&quot; or &quot;192.168.0.0/16&quot;. </param>
         /// <param name="allowedSourceAddressPrefixes"> Mutually exclusive with the &quot;allowedSourceAddressPrefix&quot; parameter. </param>
-        /// <param name="endTimeUtc"> The date &amp; time at which the request ends in UTC. </param>
+        /// <param name="endOn"> The date &amp; time at which the request ends in UTC. </param>
         /// <param name="status"> The status of the port. </param>
         /// <param name="statusReason"> A description of why the `status` has its value. </param>
         /// <param name="mappedPort"> The port which is mapped to this port&apos;s `number` in the Azure Firewall, if applicable. </param>
-        internal JitNetworkAccessRequestPort(int number, string allowedSourceAddressPrefix, IList<string> allowedSourceAddressPrefixes, DateTimeOffset endTimeUtc, Status status, StatusReason statusReason, int? mappedPort)
+        internal JitNetworkAccessRequestPort(int number, string allowedSourceAddressPrefix, IList<string> allowedSourceAddressPrefixes, DateTimeOffset endOn, JitNetworkAccessPortStatus status, JitNetworkAccessPortStatusReason statusReason, int? mappedPort)
         {
             Number = number;
             AllowedSourceAddressPrefix = allowedSourceAddressPrefix;
             AllowedSourceAddressPrefixes = allowedSourceAddressPrefixes;
-            EndTimeUtc = endTimeUtc;
+            EndOn = endOn;
             Status = status;
             StatusReason = statusReason;
             MappedPort = mappedPort;
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Mutually exclusive with the &quot;allowedSourceAddressPrefix&quot; parameter. </summary>
         public IList<string> AllowedSourceAddressPrefixes { get; }
         /// <summary> The date &amp; time at which the request ends in UTC. </summary>
-        public DateTimeOffset EndTimeUtc { get; set; }
+        public DateTimeOffset EndOn { get; set; }
         /// <summary> The status of the port. </summary>
-        public Status Status { get; set; }
+        public JitNetworkAccessPortStatus Status { get; set; }
         /// <summary> A description of why the `status` has its value. </summary>
-        public StatusReason StatusReason { get; set; }
+        public JitNetworkAccessPortStatusReason StatusReason { get; set; }
         /// <summary> The port which is mapped to this port&apos;s `number` in the Azure Firewall, if applicable. </summary>
         public int? MappedPort { get; set; }
     }

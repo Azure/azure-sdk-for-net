@@ -9,7 +9,6 @@ csharp: true
 library-name: Orbital
 namespace: Azure.ResourceManager.Orbital
 require: https://github.com/Azure/azure-rest-api-specs/blob/e686ed79e9b0bbc10355fd8d7ba36d1a07e4ba28/specification/orbital/resource-manager/readme.md
-tag: package-2022-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -41,9 +40,9 @@ rename-mapping:
   SpacecraftLink: OrbitalSpacecraftLink
   SpacecraftListResult: OrbitalSpacecraftListResult
   TagsObject: OrbitalSpacecraftTags
-  AvailableContacts: OrbitalSpacecraftAvailableContact
-  ContactParameters: OrbitalSpacecraftAvailableContactsContent
-  AvailableContactsListResult: OrbitalSpacecraftAvailableContactListResult
+  AvailableContacts: OrbitalAvailableContact
+  ContactParameters: OrbitalAvailableContactsContent
+  AvailableContactsListResult: OrbitalAvailableContactsResult
 
 format-by-name-rules:
   'sourceIPs': 'ip-address'

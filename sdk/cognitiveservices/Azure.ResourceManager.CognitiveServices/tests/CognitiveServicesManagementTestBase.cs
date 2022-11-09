@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
     public class CognitiveServicesManagementTestBase : ManagementRecordedTestBase<CognitiveServicesManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected AzureLocation DefaultLocation => AzureLocation.WestUS;
+        protected AzureLocation DefaultLocation => AzureLocation.CentralUS;
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected CognitiveServicesManagementTestBase(bool isAsync, RecordedTestMode mode)

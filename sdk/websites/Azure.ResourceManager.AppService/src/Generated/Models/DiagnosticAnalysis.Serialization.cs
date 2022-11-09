@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<IList<AbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<AnalysisData>> payload = default;
+            Optional<IList<AnalysisDetectorEvidences>> payload = default;
             Optional<IList<DetectorDefinition>> nonCorrelatedDetectors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AnalysisData> array = new List<AnalysisData>();
+                            List<AnalysisDetectorEvidences> array = new List<AnalysisDetectorEvidences>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AnalysisData.DeserializeAnalysisData(item));
+                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item));
                             }
                             payload = array;
                             continue;

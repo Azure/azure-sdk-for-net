@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support.Models
     {
         internal static ServicesListResult DeserializeServicesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceData>> value = default;
+            Optional<IReadOnlyList<SupportAzureServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Support.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceData> array = new List<ServiceData>();
+                    List<SupportAzureServiceData> array = new List<SupportAzureServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceData.DeserializeServiceData(item));
+                        array.Add(SupportAzureServiceData.DeserializeSupportAzureServiceData(item));
                     }
                     value = array;
                     continue;

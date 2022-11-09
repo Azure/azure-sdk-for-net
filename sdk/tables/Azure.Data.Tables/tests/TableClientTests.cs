@@ -525,7 +525,7 @@ namespace Azure.Data.Tables.Tests
 
         [Test]
         [NonParallelizable]
-        public async Task CreateClientRespectsSingleQuoteEscapeCompatSwithc(
+        public async Task CreateClientRespectsSingleQuoteEscapeCompatSwitch(
             [Values(true, false, null)] bool? setDisableSwitch,
             [Values(true, false, null)] bool? setDisableEnvVar)
         {
@@ -549,6 +549,60 @@ namespace Azure.Data.Tables.Tests
                 var client = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
 
                 await client.GetEntityAsync<TableEntity>("fo'o", "ba'r");
+
+                if (setDisableSwitch.HasValue)
+                {
+                    if (setDisableSwitch.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+                else
+                {
+                    if (setDisableEnvVar.HasValue && setDisableEnvVar.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+            }
+            finally
+            {
+                ctx?.Dispose();
+                env?.Dispose();
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task CreateClientRespectsSingleQuoteEscapeCompatSwitchForDelete(
+            [Values(true, false, null)] bool? setDisableSwitch,
+            [Values(true, false, null)] bool? setDisableEnvVar)
+        {
+            TestAppContextSwitch ctx = null;
+            TestEnvVar env = null;
+            try
+            {
+                if (setDisableSwitch.HasValue)
+                {
+                    ctx = new TestAppContextSwitch(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnDeleteEntitySwitchName, setDisableSwitch.Value.ToString());
+                }
+                if (setDisableEnvVar.HasValue)
+                {
+                    env = new TestEnvVar(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnDeleteEntityEnvVar, setDisableEnvVar.Value.ToString());
+                }
+                var response = new MockResponse(204);
+                var transport = new MockTransport(_ => response);
+                var client = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
+
+                await client.DeleteEntityAsync("fo'o", "ba'r");
 
                 if (setDisableSwitch.HasValue)
                 {

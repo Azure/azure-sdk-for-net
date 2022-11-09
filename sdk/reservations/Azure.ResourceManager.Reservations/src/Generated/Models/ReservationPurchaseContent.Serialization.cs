@@ -65,13 +65,20 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             if (Optional.IsCollectionDefined(AppliedScopes))
             {
-                writer.WritePropertyName("appliedScopes");
-                writer.WriteStartArray();
-                foreach (var item in AppliedScopes)
+                if (AppliedScopes != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("appliedScopes");
+                    writer.WriteStartArray();
+                    foreach (var item in AppliedScopes)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("appliedScopes");
+                }
             }
             if (Optional.IsDefined(IsRenewEnabled))
             {
@@ -201,7 +208,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                appliedScopes = null;
                                 continue;
                             }
                             List<string> array = new List<string>();

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of BudgetsListResult. </summary>
         internal BudgetsListResult()
         {
-            Value = new ChangeTrackingList<BudgetData>();
+            Value = new ChangeTrackingList<ConsumptionBudgetData>();
         }
 
         /// <summary> Initializes a new instance of BudgetsListResult. </summary>
         /// <param name="value"> The list of budgets. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal BudgetsListResult(IReadOnlyList<BudgetData> value, string nextLink)
+        internal BudgetsListResult(IReadOnlyList<ConsumptionBudgetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of budgets. </summary>
-        public IReadOnlyList<BudgetData> Value { get; }
+        public IReadOnlyList<ConsumptionBudgetData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
