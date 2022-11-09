@@ -116,5 +116,36 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             Assert.NotNull(assignment.Data.Id);
             Assert.AreEqual(vm.Id, assignment.Data.Properties.TargetId);
         }
+
+        [TestCase]
+        public async Task CanDeleteConfigurationProfileVersion()
+        {
+            // arrange
+            string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
+
+            // act
+            var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
+
+            // create configuration profile
+            var profileCollection = rg.GetConfigurationProfiles();
+            var profile = await CreateConfigurationProfile(profileCollection, profileName);
+
+            // create configuration profile version
+            var versionCollection = profile.GetConfigurationProfileVersions();
+            var version = await CreateConfigurationProfileVersion(versionCollection, "1");
+
+            // delete version
+            var res = await version.DeleteAsync(WaitUntil.Completed);
+            var statusCode = res.WaitForCompletionResponseAsync().Result.Status;
+
+            // count versions
+            int count = 0;
+            await foreach (var v in versionCollection)
+                count++;
+
+            // assert
+            Assert.AreEqual(0, count);
+            Assert.AreEqual(200, statusCode);
+        }
     }
 }
