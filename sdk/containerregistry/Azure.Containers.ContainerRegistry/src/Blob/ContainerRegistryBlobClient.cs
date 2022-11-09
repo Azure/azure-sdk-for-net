@@ -374,16 +374,19 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         private async Task<ChunkedUploadResult> UploadInChunks(string location, Stream stream, int chunkSize, bool async = true, CancellationToken cancellationToken = default)
         {
-            ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = null;
-
+			// TODO: don't allocate a large buffer unless we need it.  How will we know?
             byte[] buffer = new byte[chunkSize];
             using SHA256 sha256 = SHA256.Create();
 
-            long blobLength = 0;
             int chunkCount = 0;
+            long blobLength = 0;
+
+            // Read first chunk into buffer.
             int bytesRead = async ?
-                    await stream.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
-                    stream.Read(buffer, 0, chunkSize);
+                await stream.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
+                stream.Read(buffer, 0, chunkSize);
+
+            ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = null;
 
             while (bytesRead > 0)
             {
@@ -392,7 +395,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 // TODO: do we need range allocation?  Unroll this for perf.
                 HttpRange range = new HttpRange(chunkCount * chunkSize, bytesRead);
 
-                // incrementally compute digest
+                // Incrementally compute hash for digest.
                 sha256.TransformBlock(buffer, 0, bytesRead, buffer, 0);
 
                 using (Stream chunk = new MemoryStream(buffer, 0, bytesRead))
@@ -408,8 +411,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 bytesRead = async ?
                     await stream.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
                     stream.Read(buffer, 0, chunkSize);
+
+                chunkCount++;
             }
 
+            // Complete hash computation.
             sha256.TransformFinalBlock(buffer, 0, 0);
 
             return new ChunkedUploadResult(OciBlobDescriptor.FormatDigest(sha256.Hash), uploadChunkResult.Headers.Location, blobLength);
