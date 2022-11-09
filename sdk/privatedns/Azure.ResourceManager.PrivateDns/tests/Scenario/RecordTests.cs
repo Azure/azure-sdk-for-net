@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsTrue(flag);
 
             // Update
-            await aaaaRecord.Value.UpdateAsync(new PrivateDnsAaaaRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await aaaaRecord.Value.UpdateAsync(new PrivateDnsAaaaRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(aaaaRecordName);
@@ -121,7 +122,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsTrue(flag);
 
             // Update
-            await aRecord.Value.UpdateAsync(new PrivateDnsARecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await aRecord.Value.UpdateAsync(new PrivateDnsARecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(aRecordName);
@@ -165,7 +167,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsTrue(flag);
 
             // Update
-            await cnameRecord.Value.UpdateAsync(new PrivateDnsCnameRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await cnameRecord.Value.UpdateAsync(new PrivateDnsCnameRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(cnameRecordName);
@@ -224,7 +227,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsTrue(flag);
 
             // Update
-            await mxRecord.Value.UpdateAsync(new PrivateDnsMXRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await mxRecord.Value.UpdateAsync(new PrivateDnsMXRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(mxRecordName);
@@ -282,7 +286,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsTrue(flag);
 
             // Update
-            await ptrRecord.Value.UpdateAsync(new PrivateDnsPtrRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await ptrRecord.Value.UpdateAsync(new PrivateDnsPtrRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(ptrRecordName);
@@ -328,7 +333,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsTrue(flag);
 
             // Update
-            await soaRecord.Value.UpdateAsync(new PrivateDnsSoaRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await soaRecord.Value.UpdateAsync(new PrivateDnsSoaRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(soaRecordName);
@@ -392,7 +398,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsTrue(flag);
 
             // Update
-            await srvRecord.Value.UpdateAsync(new PrivateDnsSrvRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await srvRecord.Value.UpdateAsync(new PrivateDnsSrvRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(srvRecordName);
@@ -445,7 +452,8 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsTrue(flag);
 
             // Update
-            await txtRecord.Value.UpdateAsync(new PrivateDnsTxtRecordData() { TtlInSeconds = 7200 });
+            var updateResponse = await txtRecord.Value.UpdateAsync(new PrivateDnsTxtRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
 
             // Get
             var getResponse = await collection.GetAsync(txtRecordName);
