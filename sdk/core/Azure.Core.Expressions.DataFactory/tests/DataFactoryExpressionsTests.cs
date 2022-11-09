@@ -126,19 +126,6 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             AssertStringDfe(dfe, ExpressionValue);
         }
 
-        [Ignore("Discussing if we should support SecureString or just string")]
-        [Test]
-        public void CreateFromSecureStringLiteral()
-        {
-            var secureString = new SecureString();
-            secureString.AppendChar('a');
-            var dfe = new DataFactoryExpression<SecureString>(secureString);
-            AssertSecureStringDfe(dfe, secureString);
-
-            dfe = secureString;
-            AssertSecureStringDfe(dfe, secureString);
-        }
-
         [Test]
         public void CreateFromExpression()
         {
@@ -150,15 +137,6 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         public void NullValueForString()
         {
             var dfe = new DataFactoryExpression<string>(null);
-            Assert.IsTrue(dfe.HasLiteral);
-            Assert.AreEqual(null, dfe.Literal);
-            Assert.AreEqual(null, dfe.ToString());
-        }
-
-        [Test]
-        public void NullValueForSecureString()
-        {
-            var dfe = new DataFactoryExpression<SecureString>(null);
             Assert.IsTrue(dfe.HasLiteral);
             Assert.AreEqual(null, dfe.Literal);
             Assert.AreEqual(null, dfe.ToString());
@@ -221,17 +199,6 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 #else
             Assert.AreEqual(DoubleJson, actual);
 #endif
-        }
-
-        [Ignore("Discussing if we should support SecureString or just string")]
-        [Test]
-        public void SerailizationOfSecureStringValue()
-        {
-            var secureString = new SecureString();
-            secureString.AppendChar('a');
-            var dfe = new DataFactoryExpression<SecureString>(secureString);
-            var actual = GetSerializedString(dfe);
-            Assert.AreEqual(StringValue, actual);
         }
 
         [Test]
@@ -316,24 +283,6 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.IsTrue(dfe.HasLiteral);
             Assert.AreEqual(DoubleValue, dfe.Literal);
             Assert.AreEqual(DoubleJson, dfe.ToString());
-        }
-
-        [Ignore("Discussing if we should support SecureString or just string")]
-        [Test]
-        public void DeserailizationOfSecureStringValue()
-        {
-            var doc = JsonDocument.Parse(StringJson);
-            var dfe = DataFactoryExpression<SecureString>.DeserializeDataFactoryExpression(doc.RootElement);
-            var secureString = new SecureString();
-            secureString.AppendChar('a');
-            AssertSecureStringDfe(dfe, secureString);
-        }
-
-        private static void AssertSecureStringDfe(DataFactoryExpression<SecureString> dfe, SecureString secureString)
-        {
-            Assert.IsTrue(dfe.HasLiteral);
-            Assert.AreEqual(secureString, dfe.Literal);
-            Assert.AreEqual(secureString.ToString(), dfe.ToString());
         }
 
         [Test]
@@ -449,15 +398,6 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var dfe = JsonSerializer.Deserialize<DataFactoryExpression<Array>>(EmptyArrayJson);
             var actual = GetSerializedString(dfe, true);
             Assert.AreEqual(EmptyArrayJson, actual);
-        }
-
-        [Ignore("Discussing if we should support SecureString or just string")]
-        [Test]
-        public void SerializationFromJsonConverterForSecureString()
-        {
-            var dfe = JsonSerializer.Deserialize<DataFactoryExpression<SecureString>>(StringJson);
-            var actual = GetSerializedString(dfe, true);
-            Assert.AreEqual(StringJson, actual);
         }
 
         [Test]

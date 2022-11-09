@@ -12,7 +12,7 @@ namespace Azure.Core.Expressions.DataFactory
     /// A class representing either a primitive value or an expression.
     /// For details on DataFactoryExpressions see https://learn.microsoft.com/en-us/azure/data-factory/control-flow-expression-language-functions#expressions.
     /// </summary>
-    /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="Array"/>, <see cref="SecureString"/>. </typeparam>
+    /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="Array"/>. </typeparam>
 #pragma warning disable SA1649 // File name should match first type name
     public sealed partial class DataFactoryExpression<T> : IUtf8JsonSerializable
 #pragma warning restore SA1649 // File name should match first type name
