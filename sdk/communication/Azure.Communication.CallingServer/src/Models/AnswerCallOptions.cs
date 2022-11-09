@@ -14,9 +14,11 @@ namespace Azure.Communication.CallingServer
         /// Creates a new AnswerCallOptions object.
         /// </summary>
         /// <param name="incomingCallContext"></param>
-        public AnswerCallOptions(string incomingCallContext)
+        /// <param name="callbackUri"></param>
+        public AnswerCallOptions(string incomingCallContext, Uri callbackUri)
         {
             IncomingCallContext = incomingCallContext;
+            CallbackUri = callbackUri;
         }
 
         /// <summary>
@@ -27,11 +29,11 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// The callback uri.
         /// </summary>
-        public Uri CallbackEndpoint { get; set; }
+        public Uri CallbackUri { get; }
 
         /// <summary>
         /// Media Streaming Configuration.
         /// </summary>
-        public MediaStreamingConfiguration MediaStreamingConfiguration { get; set; }
+        public MediaStreamingOptions MediaStreamingOptions { get; set; }
     }
 }

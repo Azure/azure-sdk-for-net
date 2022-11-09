@@ -4,6 +4,20 @@
 
 ### Features Added
 
+- Added `ConversationsClientOptions.Audience` to set the audience to use for authentication with Azure Active Directory (AAD).
+- Added methods to the `ConversationAuthoringClient` to manage deployment resources:
+  - `AssignDeploymentResources` and `AssignDeploymentResourcesAsync`
+  - `DeleteDeploymentFromResources` and `DeleteDeploymentFromResourcesAsync`
+  - `GetAssignDeploymentResourcesStatus` and `GetAssignDeploymentResourcesStatusAsync`
+  - `GetAssignedResourceDeployments` and `GetAssignedResourceDeploymentsAsync`
+  - `GetDeploymentDeleteFromResourcesStatus` and `GetDeploymentDeleteFromResourcesStatusAsync`
+  - `GetDeploymentResources` and `GetDeploymentResourcesAsync`
+  - `GetLoadSnapshotStatus` and `GetLoadSnapshotStatusAsync`
+  - `GetUnassignDeploymentResourcesStatus` and `GetUnassignDeploymentResourcesStatusAsync`
+  - `LoadSnapshot` and `LoadSnapshotAsync`
+  - `UnassignDeploymentResources` and `UnassignDeploymentResourcesAsync`
+- Added an overload to `ConversationAuthoringClient.ExportProject` and `ExportProjectAsync` to add the `trainedModelLabel` parameter.
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="osType"> The OSType affected, Windows or Linux. </param>
         /// <param name="vmSizes"> The list of virtual machine sizes to include or exclude. </param>
         /// <param name="espApplied"> Whether apply for ESP cluster. &apos;true&apos; means only for ESP, &apos;false&apos; means only for non-ESP, null or empty string or others mean for both. </param>
-        /// <param name="computeIsolationSupported"> Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster. </param>
-        internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IReadOnlyList<string> regions, IReadOnlyList<string> clusterFlavors, IReadOnlyList<string> nodeTypes, IReadOnlyList<string> clusterVersions, IReadOnlyList<HDInsightOSType> osType, IReadOnlyList<string> vmSizes, string espApplied, string computeIsolationSupported)
+        /// <param name="isComputeIsolationSupported"> Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster. </param>
+        internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IReadOnlyList<string> regions, IReadOnlyList<string> clusterFlavors, IReadOnlyList<string> nodeTypes, IReadOnlyList<string> clusterVersions, IReadOnlyList<HDInsightOSType> osType, IReadOnlyList<string> vmSizes, string espApplied, string isComputeIsolationSupported)
         {
             FilterMode = filterMode;
             Regions = regions;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             OSType = osType;
             VmSizes = vmSizes;
             EspApplied = espApplied;
-            ComputeIsolationSupported = computeIsolationSupported;
+            IsComputeIsolationSupported = isComputeIsolationSupported;
         }
 
         /// <summary> The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular set. </summary>
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Whether apply for ESP cluster. &apos;true&apos; means only for ESP, &apos;false&apos; means only for non-ESP, null or empty string or others mean for both. </summary>
         public string EspApplied { get; }
         /// <summary> Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster. </summary>
-        public string ComputeIsolationSupported { get; }
+        public string IsComputeIsolationSupported { get; }
     }
 }

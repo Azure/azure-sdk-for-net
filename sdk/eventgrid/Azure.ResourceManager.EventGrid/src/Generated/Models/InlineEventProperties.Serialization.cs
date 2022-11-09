@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             Optional<string> description = default;
             Optional<string> displayName = default;
-            Optional<Uri> documentationUrl = default;
-            Optional<Uri> dataSchemaUrl = default;
+            Optional<Uri> documentationUri = default;
+            Optional<Uri> dataSchemaUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"))
@@ -61,24 +61,24 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        documentationUrl = null;
+                        documentationUri = null;
                         continue;
                     }
-                    documentationUrl = new Uri(property.Value.GetString());
+                    documentationUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSchemaUrl"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataSchemaUrl = null;
+                        dataSchemaUri = null;
                         continue;
                     }
-                    dataSchemaUrl = new Uri(property.Value.GetString());
+                    dataSchemaUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new InlineEventProperties(description.Value, displayName.Value, documentationUrl.Value, dataSchemaUrl.Value);
+            return new InlineEventProperties(description.Value, displayName.Value, documentationUri.Value, dataSchemaUri.Value);
         }
     }
 }

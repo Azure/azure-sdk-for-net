@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(KdcIP))
             {
                 writer.WritePropertyName("kdcIP");
-                writer.WriteStringValue(KdcIP);
+                writer.WriteStringValue(KdcIP.ToString());
             }
             if (Optional.IsDefined(AdName))
             {
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> site = default;
             Optional<IList<string>> backupOperators = default;
             Optional<IList<string>> administrators = default;
-            Optional<string> kdcIP = default;
+            Optional<IPAddress> kdcIP = default;
             Optional<string> adName = default;
             Optional<string> serverRootCACertificate = default;
             Optional<bool> aesEncryption = default;
@@ -259,7 +260,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (property.NameEquals("kdcIP"))
                 {
-                    kdcIP = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kdcIP = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("adName"))

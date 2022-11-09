@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define an exchange peering facility. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="facilityIPv6Prefix"> The IPv6 prefixes associated with the exchange peering facility. </param>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
         /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
-        internal ExchangePeeringFacility(string exchangeName, int? bandwidthInMbps, string microsoftIPv4Address, string microsoftIPv6Address, string facilityIPv4Prefix, string facilityIPv6Prefix, int? peeringDBFacilityId, string peeringDBFacilityLink)
+        internal ExchangePeeringFacility(string exchangeName, int? bandwidthInMbps, IPAddress microsoftIPv4Address, IPAddress microsoftIPv6Address, string facilityIPv4Prefix, string facilityIPv6Prefix, int? peeringDBFacilityId, string peeringDBFacilityLink)
         {
             ExchangeName = exchangeName;
             BandwidthInMbps = bandwidthInMbps;
@@ -41,9 +43,9 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> The bandwidth of the connection between Microsoft and the exchange peering facility. </summary>
         public int? BandwidthInMbps { get; set; }
         /// <summary> The IPv4 address of Microsoft at the exchange peering facility. </summary>
-        public string MicrosoftIPv4Address { get; set; }
+        public IPAddress MicrosoftIPv4Address { get; set; }
         /// <summary> The IPv6 address of Microsoft at the exchange peering facility. </summary>
-        public string MicrosoftIPv6Address { get; set; }
+        public IPAddress MicrosoftIPv6Address { get; set; }
         /// <summary> The IPv4 prefixes associated with the exchange peering facility. </summary>
         public string FacilityIPv4Prefix { get; set; }
         /// <summary> The IPv6 prefixes associated with the exchange peering facility. </summary>

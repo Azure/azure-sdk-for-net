@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ContentTypeListResult DeserializeContentTypeListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ApiManagementContentTypeData>> value = default;
+            Optional<IReadOnlyList<ApiManagementContentType>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApiManagementContentTypeData> array = new List<ApiManagementContentTypeData>();
+                    List<ApiManagementContentType> array = new List<ApiManagementContentType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementContentTypeData.DeserializeApiManagementContentTypeData(item));
+                        array.Add(ApiManagementContentType.DeserializeApiManagementContentType(item));
                     }
                     value = array;
                     continue;

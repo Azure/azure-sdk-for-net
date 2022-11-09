@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -53,10 +54,10 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth");
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             if (Optional.IsDefined(PartnerTopicRoutingMode))
             {
@@ -77,10 +78,10 @@ namespace Azure.ResourceManager.EventGrid
             Optional<SystemData> systemData = default;
             Optional<IReadOnlyList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<PartnerNamespaceProvisioningState> provisioningState = default;
-            Optional<string> partnerRegistrationFullyQualifiedId = default;
-            Optional<string> endpoint = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<InboundIPRule>> inboundIPRules = default;
+            Optional<ResourceIdentifier> partnerRegistrationFullyQualifiedId = default;
+            Optional<Uri> endpoint = default;
+            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
             Optional<bool> disableLocalAuth = default;
             Optional<PartnerTopicRoutingMode> partnerTopicRoutingMode = default;
             foreach (var property in element.EnumerateObject())
@@ -166,12 +167,22 @@ namespace Azure.ResourceManager.EventGrid
                         }
                         if (property0.NameEquals("partnerRegistrationFullyQualifiedId"))
                         {
-                            partnerRegistrationFullyQualifiedId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            partnerRegistrationFullyQualifiedId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("endpoint"))
                         {
-                            endpoint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                endpoint = null;
+                                continue;
+                            }
+                            endpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
@@ -181,7 +192,7 @@ namespace Azure.ResourceManager.EventGrid
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new EventGridPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("inboundIpRules"))
@@ -191,10 +202,10 @@ namespace Azure.ResourceManager.EventGrid
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<InboundIPRule> array = new List<InboundIPRule>();
+                            List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InboundIPRule.DeserializeInboundIPRule(item));
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
                             }
                             inboundIPRules = array;
                             continue;

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="weight"> Weight of the device. </param>
         /// <param name="depth"> Depth of the device. </param>
         /// <param name="weightUnit"> Unit for the dimensions of weight. </param>
-        internal ProductDimensions(double? length, double? height, double? width, LengthHeightUnit? lengthHeightUnit, double? weight, double? depth, WeightMeasurementUnit? weightUnit)
+        internal ProductDimensions(double? length, double? height, double? width, ProductLengthHeightWidthUnit? lengthHeightUnit, double? weight, double? depth, ProductWeightMeasurementUnit? weightUnit)
         {
             Length = length;
             Height = height;
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Width of the device. </summary>
         public double? Width { get; }
         /// <summary> Unit for the dimensions of length, height and width. </summary>
-        public LengthHeightUnit? LengthHeightUnit { get; }
+        public ProductLengthHeightWidthUnit? LengthHeightUnit { get; }
         /// <summary> Weight of the device. </summary>
         public double? Weight { get; }
         /// <summary> Depth of the device. </summary>
         public double? Depth { get; }
         /// <summary> Unit for the dimensions of weight. </summary>
-        public WeightMeasurementUnit? WeightUnit { get; }
+        public ProductWeightMeasurementUnit? WeightUnit { get; }
     }
 }

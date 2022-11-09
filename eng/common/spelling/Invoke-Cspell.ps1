@@ -84,7 +84,7 @@ if (!(Test-Path $CSpellConfigPath)) {
 
 function Test-VersionReportMatches() {
   # Arrange
-  $expectedPackageVersion = '5.12.3'
+  $expectedPackageVersion = '6.12.0'
 
   # Act
   $actual = &"$PSSCriptRoot/Invoke-Cspell.ps1" `
@@ -167,10 +167,12 @@ $originalLocation = Get-Location
 
 try {
   Set-Location $PackageInstallCache
+  npm install npx | Out-Null
+  npm install cspell | Out-Null
   npm install | Out-Null
 
   # Use the mutated configuration file when calling cspell
-  $command = "npx --no-install cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --relative"
+  $command = "npx cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --relative"
   Write-Host $command
   $cspellOutput = npx  `
     --no-install `

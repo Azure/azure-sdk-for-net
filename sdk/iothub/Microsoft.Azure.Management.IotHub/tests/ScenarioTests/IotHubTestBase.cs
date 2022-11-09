@@ -13,6 +13,7 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.ServiceBus;
 using Microsoft.Azure.Management.ServiceBus.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -33,6 +34,14 @@ namespace IotHub.Tests.ScenarioTests
         protected object _initializeLock = new object();
         protected string _location;
         protected TestEnvironment _testEnvironment;
+
+        static IotHubTestBase()
+        {
+            RecorderUtilities.JsonPathSanitizers.Add("$..primaryKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..secondaryKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..PrimaryKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..SecondaryKey");
+        }
 
         protected void Initialize(MockContext context)
         {

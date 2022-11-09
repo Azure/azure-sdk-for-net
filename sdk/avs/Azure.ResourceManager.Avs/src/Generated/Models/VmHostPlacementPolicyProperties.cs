@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -19,16 +20,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="hostMembers"> Host members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> or <paramref name="hostMembers"/> is null. </exception>
-        public VmHostPlacementPolicyProperties(IEnumerable<string> vmMembers, IEnumerable<string> hostMembers, AffinityType affinityType)
+        public VmHostPlacementPolicyProperties(IEnumerable<ResourceIdentifier> vmMembers, IEnumerable<string> hostMembers, AvsPlacementPolicyAffinityType affinityType)
         {
-            if (vmMembers == null)
-            {
-                throw new ArgumentNullException(nameof(vmMembers));
-            }
-            if (hostMembers == null)
-            {
-                throw new ArgumentNullException(nameof(hostMembers));
-            }
+            Argument.AssertNotNull(vmMembers, nameof(vmMembers));
+            Argument.AssertNotNull(hostMembers, nameof(hostMembers));
 
             VmMembers = vmMembers.ToList();
             HostMembers = hostMembers.ToList();
@@ -44,19 +39,27 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="hostMembers"> Host members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
-        internal VmHostPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IList<string> vmMembers, IList<string> hostMembers, AffinityType affinityType) : base(policyType, state, displayName, provisioningState)
+        /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
+        /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
+        internal VmHostPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, AvsPlacementPolicyAffinityType affinityType, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType) : base(policyType, state, displayName, provisioningState)
         {
             VmMembers = vmMembers;
             HostMembers = hostMembers;
             AffinityType = affinityType;
+            AffinityStrength = affinityStrength;
+            AzureHybridBenefitType = azureHybridBenefitType;
             PolicyType = policyType;
         }
 
         /// <summary> Virtual machine members list. </summary>
-        public IList<string> VmMembers { get; }
+        public IList<ResourceIdentifier> VmMembers { get; }
         /// <summary> Host members list. </summary>
         public IList<string> HostMembers { get; }
         /// <summary> placement policy affinity type. </summary>
-        public AffinityType AffinityType { get; set; }
+        public AvsPlacementPolicyAffinityType AffinityType { get; set; }
+        /// <summary> vm-host placement policy affinity strength (should/must). </summary>
+        public VmHostPlacementPolicyAffinityStrength? AffinityStrength { get; set; }
+        /// <summary> placement policy azure hybrid benefit opt-in type. </summary>
+        public AzureHybridBenefitType? AzureHybridBenefitType { get; set; }
     }
 }

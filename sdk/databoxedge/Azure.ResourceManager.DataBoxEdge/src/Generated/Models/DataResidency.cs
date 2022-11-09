@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of DataResidency. </summary>
         /// <param name="residencyType"> DataResidencyType enum. </param>
-        internal DataResidency(DataResidencyType? residencyType)
+        internal DataResidency(DataBoxEdgeDataResidencyType? residencyType)
         {
             ResidencyType = residencyType;
         }
 
         /// <summary> DataResidencyType enum. </summary>
-        public DataResidencyType? ResidencyType { get; set; }
+        public DataBoxEdgeDataResidencyType? ResidencyType { get; set; }
     }
 }

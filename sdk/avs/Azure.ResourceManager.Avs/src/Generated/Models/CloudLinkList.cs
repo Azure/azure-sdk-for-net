@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of CloudLinkList. </summary>
         internal CloudLinkList()
         {
-            Value = new ChangeTrackingList<CloudLinkData>();
+            Value = new ChangeTrackingList<AvsCloudLinkData>();
         }
 
         /// <summary> Initializes a new instance of CloudLinkList. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal CloudLinkList(IReadOnlyList<CloudLinkData> value, string nextLink)
+        internal CloudLinkList(IReadOnlyList<AvsCloudLinkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on a page. </summary>
-        public IReadOnlyList<CloudLinkData> Value { get; }
+        public IReadOnlyList<AvsCloudLinkData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

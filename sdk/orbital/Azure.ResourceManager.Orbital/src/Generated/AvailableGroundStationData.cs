@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="latitudeDegrees"> Latitude of the ground station in decimal degrees. </param>
         /// <param name="altitudeMeters"> Altitude of the ground station. </param>
         /// <param name="releaseMode"> Release Status of a ground station. </param>
-        internal AvailableGroundStationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string city, string providerName, float? longitudeDegrees, float? latitudeDegrees, float? altitudeMeters, ReleaseMode? releaseMode) : base(id, name, resourceType, systemData)
+        internal AvailableGroundStationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string city, string providerName, float? longitudeDegrees, float? latitudeDegrees, float? altitudeMeters, GroundStationReleaseMode? releaseMode) : base(id, name, resourceType, systemData)
         {
             Location = location;
             City = city;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Orbital
         /// <summary> Altitude of the ground station. </summary>
         public float? AltitudeMeters { get; }
         /// <summary> Release Status of a ground station. </summary>
-        public ReleaseMode? ReleaseMode { get; }
+        public GroundStationReleaseMode? ReleaseMode { get; }
     }
 }

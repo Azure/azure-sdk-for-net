@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static ListResourceSkusResult DeserializeListResourceSkusResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AzureResourceSku>> value = default;
+            Optional<IReadOnlyList<KustoAvailableSkuDetails>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureResourceSku> array = new List<AzureResourceSku>();
+                    List<KustoAvailableSkuDetails> array = new List<KustoAvailableSkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureResourceSku.DeserializeAzureResourceSku(item));
+                        array.Add(KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails(item));
                     }
                     value = array;
                     continue;

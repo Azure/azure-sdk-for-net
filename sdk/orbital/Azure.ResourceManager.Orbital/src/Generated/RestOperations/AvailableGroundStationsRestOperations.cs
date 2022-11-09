@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Orbital
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListByCapabilityRequest(string subscriptionId, CapabilityParameter capability)
+        internal HttpMessage CreateListByCapabilityRequest(string subscriptionId, GroundStationCapability capability)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailableGroundStationListResult>> ListByCapabilityAsync(string subscriptionId, CapabilityParameter capability, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableGroundStationListResult>> ListByCapabilityAsync(string subscriptionId, GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailableGroundStationListResult> ListByCapability(string subscriptionId, CapabilityParameter capability, CancellationToken cancellationToken = default)
+        public Response<AvailableGroundStationListResult> ListByCapability(string subscriptionId, GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Orbital
             }
         }
 
-        internal HttpMessage CreateListByCapabilityNextPageRequest(string nextLink, string subscriptionId, CapabilityParameter capability)
+        internal HttpMessage CreateListByCapabilityNextPageRequest(string nextLink, string subscriptionId, GroundStationCapability capability)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailableGroundStationListResult>> ListByCapabilityNextPageAsync(string nextLink, string subscriptionId, CapabilityParameter capability, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableGroundStationListResult>> ListByCapabilityNextPageAsync(string nextLink, string subscriptionId, GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailableGroundStationListResult> ListByCapabilityNextPage(string nextLink, string subscriptionId, CapabilityParameter capability, CancellationToken cancellationToken = default)
+        public Response<AvailableGroundStationListResult> ListByCapabilityNextPage(string nextLink, string subscriptionId, GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

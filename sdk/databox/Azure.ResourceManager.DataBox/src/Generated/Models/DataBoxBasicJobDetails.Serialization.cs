@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("keyEncryptionKey");
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Optional.IsDefined(ExpectedDataSizeInTeraBytes))
+            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes");
-                writer.WriteNumberValue(ExpectedDataSizeInTeraBytes.Value);
+                writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
             writer.WriteEndObject();
         }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> chainOfCustodySasKey = default;
             Optional<DeviceErasureDetails> deviceErasureDetails = default;
             Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
-            Optional<int> expectedDataSizeInTeraBytes = default;
+            Optional<int> expectedDataSizeInTerabytes = default;
             Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
             Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
             Optional<DataCenterAddressResult> dataCenterAddress = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expectedDataSizeInTeraBytes = property.Value.GetInt32();
+                    expectedDataSizeInTerabytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("actions"))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new UnknownDataBoxBasicJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTeraBytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode));
+            return new UnknownDataBoxBasicJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode));
         }
     }
 }

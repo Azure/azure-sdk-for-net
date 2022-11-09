@@ -1,0 +1,437 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OnTokenIssuanceStart",
+    "version": "10-01-2021-preview",
+    "contact": {
+      "name": "Microsoft"
+    },
+    "summary": "OnTokenIssuanceStart 10-01-2021-preview",
+    "description": "API outline for OnTokenIssuanceStart 10-01-2021-preview"
+  },
+  "servers": [
+    {
+      "url": ""
+    }
+  ],
+  "paths": {
+    "/onTokenIssuanceStart/10-01-2021-preview": {
+      "post": {
+        "tags": [
+          "Authentication Events",
+          "OnTokenIssuanceStart",
+          "10-01-2021-preview"
+        ],
+        "summary": "",
+        "operationId": "post-preview_10_01_2021",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "http://json-schema.org/draft-04/schema",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "onTokenIssuanceStartCustomExtension"
+                      ]
+                    },
+                    "apiSchemaVersion": {
+                      "type": "string",
+                      "enum": [
+                        "10-01-2021-preview"
+                      ]
+                    },
+                    "actions": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "ProvideClaimsForToken"
+                            ]
+                          }
+                        },
+                        "allOf": [
+                          {
+                            "anyOf": [
+                              {
+                                "not": {
+                                  "properties": {
+                                    "type": {
+                                      "enum": [
+                                        "ProvideClaimsForToken"
+                                      ]
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "properties": {
+                                  "claims": {
+                                    "$ref": "#/components/schemas/claimsForToken"
+                                  }
+                                },
+                                "required": [
+                                  "claims"
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "required": [
+                          "type"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "apiSchemaVersion",
+                    "actions"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "http://json-schema.org/draft-04/schema",
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "onTokenIssuanceStartCustomExtension"
+                    ],
+                    "description": "OnTokenIssuanceStart Event"
+                  },
+                  "apiSchemaVersion": {
+                    "type": "string",
+                    "enum": [
+                      "10-01-2021-preview"
+                    ]
+                  },
+                  "time": {
+                    "type": "string"
+                  },
+                  "eventListenerId": {
+                    "type": "string"
+                  },
+                  "customExtensionId": {
+                    "type": "string"
+                  },
+                  "context": {
+                    "$ref": "#/components/schemas/context"
+                  }
+                },
+                "required": [
+                  "type",
+                  "apiSchemaVersion",
+                  "time",
+                  "eventListenerId",
+                  "customExtensionId",
+                  "context"
+                ]
+              }
+            }
+          },
+          "description": "OnTokenIssuanceStart payload"
+        },
+        "description": "When a new token is issued"
+      },
+      "parameters": []
+    }
+  },
+  "components": {
+    "schemas": {
+      "context": {
+        "type": "object",
+        "properties": {
+          "correlationId": {
+            "type": "string"
+          },
+          "client": {
+            "$ref": "#/components/schemas/clientContext"
+          },
+          "authProtocol": {
+            "$ref": "#/components/schemas/authProtocolContext"
+          },
+          "clientServicePrincipal": {
+            "$ref": "#/components/schemas/servicePrincipalContext"
+          },
+          "resourceServicePrincipal": {
+            "$ref": "#/components/schemas/servicePrincipalContext"
+          },
+          "roles": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/userAppRole"
+            }
+          },
+          "user": {
+            "$ref": "#/components/schemas/userPrincipalContext"
+          }
+        },
+        "required": [
+          "correlationId",
+          "client",
+          "authProtocol",
+          "clientServicePrincipal",
+          "resourceServicePrincipal",
+          "user"
+        ]
+      },
+      "clientContext": {
+        "type": "object",
+        "properties": {
+          "ip": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "market": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ip"
+        ]
+      },
+      "authProtocolContext": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "tenantId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "tenantId"
+        ]
+      },
+      "servicePrincipalContext": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "appId": {
+            "type": "string"
+          },
+          "appDisplayName": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "servicePrincipalNames": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "appId",
+          "appDisplayName",
+          "displayName",
+          "servicePrincipalNames"
+        ]
+      },
+      "userAppRole": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "value"
+        ]
+      },
+      "userPrincipalContext": {
+        "type": "object",
+        "properties": {
+          "ageGroup": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "companyName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "country": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "createdDateTime": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "creationType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "department": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "displayName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "givenName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "lastPasswordChangeDateTime": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "mail": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "onPremisesSamAccountName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "onPremisesSecurityIdentifier": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "onPremiseUserPrincipalName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "preferredDataLocation": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "preferredLanguage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "surname": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "userPrincipalName": {
+            "type": "string"
+          },
+          "userType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "userPrincipalName"
+        ]
+      },
+      "claimsForToken": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/claim"
+        }
+      },
+      "claim": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "value"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "10-01-2021-preview"
+    },
+    {
+      "name": "Authentication Events"
+    },
+    {
+      "name": "OnTokenIssuanceStart"
+    }
+  ]
+}

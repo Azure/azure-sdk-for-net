@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("expectedDataSizeInTeraBytes");
-            writer.WriteNumberValue(ExpectedDataSizeInTeraBytes);
+            writer.WriteNumberValue(ExpectedDataSizeInTerabytes);
             writer.WritePropertyName("storageLocation");
             writer.WriteStringValue(StorageLocation);
             writer.WritePropertyName("skuName");

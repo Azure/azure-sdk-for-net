@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AzureStoragePropertyDictionary. </summary>
         public AzureStoragePropertyDictionary()
         {
-            Properties = new ChangeTrackingDictionary<string, AzureStorageInfoValue>();
+            Properties = new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
         }
 
         /// <summary> Initializes a new instance of AzureStoragePropertyDictionary. </summary>
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Azure storage accounts. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AzureStoragePropertyDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, AzureStorageInfoValue> properties, string kind) : base(id, name, resourceType, systemData)
+        internal AzureStoragePropertyDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, AppServiceStorageAccessInfo> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
         }
 
         /// <summary> Azure storage accounts. </summary>
-        public IDictionary<string, AzureStorageInfoValue> Properties { get; }
+        public IDictionary<string, AppServiceStorageAccessInfo> Properties { get; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

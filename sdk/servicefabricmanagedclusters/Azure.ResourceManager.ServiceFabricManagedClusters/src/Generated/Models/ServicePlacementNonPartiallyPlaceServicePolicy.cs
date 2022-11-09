@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> ServicePlacementNonPartiallyPlaceServicePolicy. </summary>
-    public partial class ServicePlacementNonPartiallyPlaceServicePolicy : ServicePlacementPolicy
+    public partial class ServicePlacementNonPartiallyPlaceServicePolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of ServicePlacementNonPartiallyPlaceServicePolicy. </summary>
         public ServicePlacementNonPartiallyPlaceServicePolicy()
         {
-            PolicyType = ServicePlacementPolicyType.NonPartiallyPlaceService;
+            ServicePlacementPolicyType = ServicePlacementPolicyType.NonPartiallyPlaceService;
         }
 
         /// <summary> Initializes a new instance of ServicePlacementNonPartiallyPlaceServicePolicy. </summary>
-        /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
-        internal ServicePlacementNonPartiallyPlaceServicePolicy(ServicePlacementPolicyType policyType) : base(policyType)
+        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        internal ServicePlacementNonPartiallyPlaceServicePolicy(ServicePlacementPolicyType servicePlacementPolicyType) : base(servicePlacementPolicyType)
         {
-            PolicyType = policyType;
+            ServicePlacementPolicyType = servicePlacementPolicyType;
         }
     }
 }

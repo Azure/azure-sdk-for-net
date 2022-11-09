@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static VideoOverlay DeserializeVideoOverlay(JsonElement element)
         {
-            Optional<RectangularWindowProperties> position = default;
+            Optional<RectangularWindow> position = default;
             Optional<double> opacity = default;
-            Optional<RectangularWindowProperties> cropRectangle = default;
+            Optional<RectangularWindow> cropRectangle = default;
             string odataType = default;
             string inputLabel = default;
             Optional<TimeSpan> start = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    position = RectangularWindowProperties.DeserializeRectangularWindowProperties(property.Value);
+                    position = RectangularWindow.DeserializeRectangularWindow(property.Value);
                     continue;
                 }
                 if (property.NameEquals("opacity"))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    cropRectangle = RectangularWindowProperties.DeserializeRectangularWindowProperties(property.Value);
+                    cropRectangle = RectangularWindow.DeserializeRectangularWindow(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))

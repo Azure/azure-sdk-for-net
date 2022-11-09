@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     internal partial class CaaRecordListResult
     {
-        internal static CaaRecordListResult DeserializeCaaRecordSetListResult(JsonElement element)
+        internal static CaaRecordListResult DeserializeCaaRecordListResult(JsonElement element)
         {
             Optional<IReadOnlyList<CaaRecordData>> value = default;
             Optional<string> nextLink = default;

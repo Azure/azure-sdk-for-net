@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         {
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Age;
+            ResolutionKind = ResolutionKind.AgeResolution;
         }
 
         /// <summary> Initializes a new instance of AgeResolution. </summary>

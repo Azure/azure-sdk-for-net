@@ -23,18 +23,20 @@ namespace Azure.AI.Language.Conversations
         }
 
         private const string AddressValue = "Address";
-        private const string CreditCardValue = "CreditCard";
+        private const string CreditCardNumberValue = "CreditCardNumber";
         private const string EmailValue = "Email";
         private const string NameValue = "Name";
         private const string NumericIdentifierValue = "NumericIdentifier";
         private const string PhoneNumberValue = "PhoneNumber";
+        private const string USSocialSecurityNumberValue = "USSocialSecurityNumber";
+        private const string MiscellaneousValue = "Miscellaneous";
         private const string AllValue = "All";
         private const string DefaultValue = "Default";
 
         /// <summary> Address. </summary>
         public static ConversationPIICategory Address { get; } = new ConversationPIICategory(AddressValue);
-        /// <summary> CreditCard. </summary>
-        public static ConversationPIICategory CreditCard { get; } = new ConversationPIICategory(CreditCardValue);
+        /// <summary> CreditCardNumber. </summary>
+        public static ConversationPIICategory CreditCardNumber { get; } = new ConversationPIICategory(CreditCardNumberValue);
         /// <summary> Email. </summary>
         public static ConversationPIICategory Email { get; } = new ConversationPIICategory(EmailValue);
         /// <summary> Name. </summary>
@@ -43,6 +45,10 @@ namespace Azure.AI.Language.Conversations
         public static ConversationPIICategory NumericIdentifier { get; } = new ConversationPIICategory(NumericIdentifierValue);
         /// <summary> PhoneNumber. </summary>
         public static ConversationPIICategory PhoneNumber { get; } = new ConversationPIICategory(PhoneNumberValue);
+        /// <summary> USSocialSecurityNumber. </summary>
+        public static ConversationPIICategory USSocialSecurityNumber { get; } = new ConversationPIICategory(USSocialSecurityNumberValue);
+        /// <summary> Miscellaneous. </summary>
+        public static ConversationPIICategory Miscellaneous { get; } = new ConversationPIICategory(MiscellaneousValue);
         /// <summary> All. </summary>
         public static ConversationPIICategory All { get; } = new ConversationPIICategory(AllValue);
         /// <summary> Default. </summary>

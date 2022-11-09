@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="thumbprint"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AzureResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, HostNameType? hostNameType, SslState? sslState, string thumbprint, string virtualIP, string kind) : base(id, name, resourceType, systemData)
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, BinaryData thumbprint, string virtualIP, string kind) : base(id, name, resourceType, systemData)
         {
             SiteName = siteName;
             DomainId = domainId;
@@ -55,15 +56,44 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Azure resource name. </summary>
         public string AzureResourceName { get; set; }
         /// <summary> Azure resource type. </summary>
-        public AzureResourceType? AzureResourceType { get; set; }
+        public AppServiceResourceType? AzureResourceType { get; set; }
         /// <summary> Custom DNS record type. </summary>
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
         /// <summary> Hostname type. </summary>
-        public HostNameType? HostNameType { get; set; }
+        public AppServiceHostNameType? HostNameType { get; set; }
         /// <summary> SSL type. </summary>
-        public SslState? SslState { get; set; }
-        /// <summary> SSL certificate thumbprint. </summary>
-        public string Thumbprint { get; set; }
+        public HostNameBindingSslState? SslState { get; set; }
+        /// <summary>
+        /// SSL certificate thumbprint
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Thumbprint { get; set; }
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
         public string VirtualIP { get; }
         /// <summary> Kind of resource. </summary>

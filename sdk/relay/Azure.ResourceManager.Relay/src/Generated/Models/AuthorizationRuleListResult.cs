@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
         internal AuthorizationRuleListResult()
         {
-            Value = new ChangeTrackingList<AuthorizationRuleData>();
+            Value = new ChangeTrackingList<RelayAuthorizationRuleData>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
         /// <param name="value"> Result of the list authorization rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list of authorization rules. </param>
-        internal AuthorizationRuleListResult(IReadOnlyList<AuthorizationRuleData> value, string nextLink)
+        internal AuthorizationRuleListResult(IReadOnlyList<RelayAuthorizationRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the list authorization rules operation. </summary>
-        public IReadOnlyList<AuthorizationRuleData> Value { get; }
+        public IReadOnlyList<RelayAuthorizationRuleData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if value contains incomplete list of authorization rules. </summary>
         public string NextLink { get; }
     }

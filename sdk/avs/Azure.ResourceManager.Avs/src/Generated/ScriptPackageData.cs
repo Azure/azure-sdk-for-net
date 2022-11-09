@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -25,15 +26,23 @@ namespace Azure.ResourceManager.Avs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> User friendly description of the package. </param>
         /// <param name="version"> Module version. </param>
-        internal ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string version) : base(id, name, resourceType, systemData)
+        /// <param name="company"> Company that created and supports the package. </param>
+        /// <param name="uri"> Link to support by the package vendor. </param>
+        internal ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string version, string company, Uri uri) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Version = version;
+            Company = company;
+            Uri = uri;
         }
 
         /// <summary> User friendly description of the package. </summary>
         public string Description { get; }
         /// <summary> Module version. </summary>
         public string Version { get; }
+        /// <summary> Company that created and supports the package. </summary>
+        public string Company { get; }
+        /// <summary> Link to support by the package vendor. </summary>
+        public Uri Uri { get; }
     }
 }

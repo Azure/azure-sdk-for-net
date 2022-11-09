@@ -64,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element);
                     case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
+                    case "Fail": return FailActivity.DeserializeFailActivity(element);
                     case "Filter": return FilterActivity.DeserializeFilterActivity(element);
                     case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
                     case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);

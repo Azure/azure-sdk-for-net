@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SecurityPolicyProperties(type);
+            return new UnknownSecurityPolicyProperties(type);
         }
     }
 }

@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.DigitalTwins
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<DigitalTwinsProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<IList<DigitalTwinsPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<PublicNetworkAccess?> publicNetworkAccess = default;
+            Optional<DigitalTwinsPublicNetworkAccess?> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DigitalTwins
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DigitalTwinsProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostName"))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DigitalTwins
                                 publicNetworkAccess = null;
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new DigitalTwinsPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }

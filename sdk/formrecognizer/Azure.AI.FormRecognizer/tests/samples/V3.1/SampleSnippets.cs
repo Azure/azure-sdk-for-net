@@ -99,5 +99,29 @@ namespace Azure.AI.FormRecognizer.Samples
             var formTrainingClient = new FormTrainingClient(new Uri(endpoint), credential);
             #endregion
         }
+
+        [RecordedTest]
+        public async Task StartLongRunningOperation()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            var credential = new AzureKeyCredential(apiKey);
+            var client = new FormTrainingClient(new Uri(endpoint), credential);
+
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
+            TrainingOperation trainingOperation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false);
+            Response<CustomFormModel> operationResponse = await trainingOperation.WaitForCompletionAsync();
+            CustomFormModel model = operationResponse.Value;
+
+            string resourceId = TestEnvironment.TargetResourceId;
+            string resourceRegion = TestEnvironment.TargetResourceRegion;
+            string modelId = model.ModelId;
+            CopyAuthorization authorization = await client.GetCopyAuthorizationAsync(resourceId, resourceRegion);
+
+            #region Snippet:WaitForLongRunningOperationV2
+            CopyModelOperation operation = await client.StartCopyModelAsync(modelId, authorization);
+            await operation.WaitForCompletionAsync();
+            #endregion
+        }
     }
 }

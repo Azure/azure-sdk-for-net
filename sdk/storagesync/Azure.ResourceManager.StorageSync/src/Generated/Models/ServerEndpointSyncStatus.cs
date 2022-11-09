@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="combinedHealth"> Combined Health Status. </param>
         /// <param name="syncActivity"> Sync activity. </param>
         /// <param name="totalPersistentFilesNotSyncingCount"> Total count of persistent files not syncing (combined upload + download). </param>
-        /// <param name="lastUpdatedTimestamp"> Last Updated Timestamp. </param>
+        /// <param name="lastUpdatedOn"> Last Updated Timestamp. </param>
         /// <param name="uploadStatus"> Upload Status. </param>
         /// <param name="downloadStatus"> Download Status. </param>
         /// <param name="uploadActivity"> Upload sync activity. </param>
         /// <param name="downloadActivity"> Download sync activity. </param>
         /// <param name="offlineDataTransferStatus"> Offline Data Transfer State. </param>
         /// <param name="backgroundDataDownloadActivity"> Background data download activity. </param>
-        internal ServerEndpointSyncStatus(ServerEndpointHealthState? downloadHealth, ServerEndpointHealthState? uploadHealth, ServerEndpointHealthState? combinedHealth, ServerEndpointSyncActivityState? syncActivity, long? totalPersistentFilesNotSyncingCount, DateTimeOffset? lastUpdatedTimestamp, ServerEndpointSyncSessionStatus uploadStatus, ServerEndpointSyncSessionStatus downloadStatus, ServerEndpointSyncActivityStatus uploadActivity, ServerEndpointSyncActivityStatus downloadActivity, ServerEndpointOfflineDataTransferState? offlineDataTransferStatus, ServerEndpointBackgroundDataDownloadActivity backgroundDataDownloadActivity)
+        internal ServerEndpointSyncStatus(ServerEndpointHealthState? downloadHealth, ServerEndpointHealthState? uploadHealth, ServerEndpointHealthState? combinedHealth, ServerEndpointSyncActivityState? syncActivity, long? totalPersistentFilesNotSyncingCount, DateTimeOffset? lastUpdatedOn, ServerEndpointSyncSessionStatus uploadStatus, ServerEndpointSyncSessionStatus downloadStatus, ServerEndpointSyncActivityStatus uploadActivity, ServerEndpointSyncActivityStatus downloadActivity, ServerEndpointOfflineDataTransferState? offlineDataTransferStatus, ServerEndpointBackgroundDataDownloadActivity backgroundDataDownloadActivity)
         {
             DownloadHealth = downloadHealth;
             UploadHealth = uploadHealth;
             CombinedHealth = combinedHealth;
             SyncActivity = syncActivity;
             TotalPersistentFilesNotSyncingCount = totalPersistentFilesNotSyncingCount;
-            LastUpdatedTimestamp = lastUpdatedTimestamp;
+            LastUpdatedOn = lastUpdatedOn;
             UploadStatus = uploadStatus;
             DownloadStatus = downloadStatus;
             UploadActivity = uploadActivity;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Total count of persistent files not syncing (combined upload + download). </summary>
         public long? TotalPersistentFilesNotSyncingCount { get; }
         /// <summary> Last Updated Timestamp. </summary>
-        public DateTimeOffset? LastUpdatedTimestamp { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> Upload Status. </summary>
         public ServerEndpointSyncSessionStatus UploadStatus { get; }
         /// <summary> Download Status. </summary>

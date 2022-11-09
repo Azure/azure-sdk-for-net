@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a WorkloadNetworkSegment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkSegmentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkSegmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource" /> using the GetWorkloadNetworkSegment method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkSegment method.
     /// </summary>
     public partial class WorkloadNetworkSegmentResource : ArmResource
     {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
         internal static ScheduledSourceSynchronizationSetting DeserializeScheduledSourceSynchronizationSetting(JsonElement element)
         {
             SourceShareSynchronizationSettingKind kind = default;
-            Optional<RecurrenceInterval> recurrenceInterval = default;
+            Optional<DataShareSynchronizationRecurrenceInterval> recurrenceInterval = default;
             Optional<DateTimeOffset> synchronizationTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataShare.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            recurrenceInterval = new RecurrenceInterval(property0.Value.GetString());
+                            recurrenceInterval = new DataShareSynchronizationRecurrenceInterval(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("synchronizationTime"))

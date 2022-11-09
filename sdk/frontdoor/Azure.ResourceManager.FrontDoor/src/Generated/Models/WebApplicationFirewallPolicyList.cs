@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyList. </summary>
         internal WebApplicationFirewallPolicyList()
         {
-            Value = new ChangeTrackingList<WebApplicationFirewallPolicyData>();
+            Value = new ChangeTrackingList<FrontDoorWebApplicationFirewallPolicyData>();
         }
 
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyList. </summary>
         /// <param name="value"> List of WebApplicationFirewallPolicies within a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </param>
-        internal WebApplicationFirewallPolicyList(IReadOnlyList<WebApplicationFirewallPolicyData> value, string nextLink)
+        internal WebApplicationFirewallPolicyList(IReadOnlyList<FrontDoorWebApplicationFirewallPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of WebApplicationFirewallPolicies within a resource group. </summary>
-        public IReadOnlyList<WebApplicationFirewallPolicyData> Value { get; }
+        public IReadOnlyList<FrontDoorWebApplicationFirewallPolicyData> Value { get; }
         /// <summary> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </summary>
         public string NextLink { get; }
     }

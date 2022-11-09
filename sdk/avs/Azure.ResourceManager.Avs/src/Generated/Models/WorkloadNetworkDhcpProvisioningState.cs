@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static WorkloadNetworkDhcpProvisioningState Succeeded { get; } = new WorkloadNetworkDhcpProvisioningState(SucceededValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkDhcpProvisioningState Deleting { get; } = new WorkloadNetworkDhcpProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static WorkloadNetworkDhcpProvisioningState Updating { get; } = new WorkloadNetworkDhcpProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static WorkloadNetworkDhcpProvisioningState Canceled { get; } = new WorkloadNetworkDhcpProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkDhcpProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkDhcpProvisioningState left, WorkloadNetworkDhcpProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkDhcpProvisioningState"/> values are not the same. </summary>

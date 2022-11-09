@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastSeen"> Gets or sets the last seen time of the node. </param>
+        /// <param name="lastSeenOn"> Gets or sets the last seen time of the node. </param>
         /// <param name="registrationOn"> Gets or sets the registration time of the node. </param>
         /// <param name="ip"> Gets or sets the ip of the node. </param>
         /// <param name="accountId"> Gets or sets the account id of the node. </param>
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Automation
         /// <param name="totalCount"> Gets the total number of records matching filter criteria. </param>
         /// <param name="extensionHandler"> Gets or sets the list of extensionHandler properties for a Node. </param>
         /// <param name="namePropertiesNodeConfigurationName"> Gets or sets the name of the dsc node configuration. </param>
-        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeen, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName) : base(id, name, resourceType, systemData)
+        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeenOn, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName) : base(id, name, resourceType, systemData)
         {
-            LastSeen = lastSeen;
+            LastSeenOn = lastSeenOn;
             RegistrationOn = registrationOn;
             IP = ip;
             AccountId = accountId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Gets or sets the last seen time of the node. </summary>
-        public DateTimeOffset? LastSeen { get; set; }
+        public DateTimeOffset? LastSeenOn { get; set; }
         /// <summary> Gets or sets the registration time of the node. </summary>
         public DateTimeOffset? RegistrationOn { get; set; }
         /// <summary> Gets or sets the ip of the node. </summary>

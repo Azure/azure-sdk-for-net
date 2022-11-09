@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of RemediationFilters. </summary>
         public RemediationFilters()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of RemediationFilters. </summary>
         /// <param name="locations"> The resource locations that will be remediated. </param>
-        internal RemediationFilters(IList<string> locations)
+        internal RemediationFilters(IList<AzureLocation> locations)
         {
             Locations = locations;
         }
 
         /// <summary> The resource locations that will be remediated. </summary>
-        public IList<string> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
     }
 }

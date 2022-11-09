@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string GETValue = "GET";
+        private const string GetValue = "GET";
         private const string HeadValue = "HEAD";
 
         /// <summary> GET. </summary>
-        public static FrontDoorHealthProbeMethod GET { get; } = new FrontDoorHealthProbeMethod(GETValue);
+        public static FrontDoorHealthProbeMethod Get { get; } = new FrontDoorHealthProbeMethod(GetValue);
         /// <summary> HEAD. </summary>
         public static FrontDoorHealthProbeMethod Head { get; } = new FrontDoorHealthProbeMethod(HeadValue);
         /// <summary> Determines if two <see cref="FrontDoorHealthProbeMethod"/> values are the same. </summary>

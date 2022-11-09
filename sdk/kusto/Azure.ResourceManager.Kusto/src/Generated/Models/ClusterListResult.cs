@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()
         {
-            Value = new ChangeTrackingList<ClusterData>();
+            Value = new ChangeTrackingList<KustoClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         /// <param name="value"> The list of Kusto clusters. </param>
-        internal ClusterListResult(IReadOnlyList<ClusterData> value)
+        internal ClusterListResult(IReadOnlyList<KustoClusterData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of Kusto clusters. </summary>
-        public IReadOnlyList<ClusterData> Value { get; }
+        public IReadOnlyList<KustoClusterData> Value { get; }
     }
 }

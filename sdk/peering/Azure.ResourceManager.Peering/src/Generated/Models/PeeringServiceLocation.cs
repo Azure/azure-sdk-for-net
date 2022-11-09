@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="country"> Country of the customer. </param>
         /// <param name="state"> State of the customer. </param>
         /// <param name="azureRegion"> Azure region for the location. </param>
-        internal PeeringServiceLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string country, string state, string azureRegion) : base(id, name, resourceType, systemData)
+        internal PeeringServiceLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string country, string state, AzureLocation? azureRegion) : base(id, name, resourceType, systemData)
         {
             Country = country;
             State = state;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> State of the customer. </summary>
         public string State { get; set; }
         /// <summary> Azure region for the location. </summary>
-        public string AzureRegion { get; set; }
+        public AzureLocation? AzureRegion { get; set; }
     }
 }

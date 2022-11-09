@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy");
                 writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
-            if (Optional.IsDefined(InstanceCloseDelayDuration))
+            if (Optional.IsDefined(InstanceCloseDelayDurationInSeconds))
             {
                 writer.WritePropertyName("instanceCloseDelayDuration");
-                writer.WriteNumberValue(InstanceCloseDelayDuration.Value);
+                writer.WriteNumberValue(InstanceCloseDelayDurationInSeconds.Value);
             }
             if (Optional.IsDefined(UpgradeMode))
             {

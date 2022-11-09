@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static AddonProvisioningState Succeeded { get; } = new AddonProvisioningState(SucceededValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static AddonProvisioningState Deleting { get; } = new AddonProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static AddonProvisioningState Updating { get; } = new AddonProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static AddonProvisioningState Canceled { get; } = new AddonProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="AddonProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AddonProvisioningState left, AddonProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AddonProvisioningState"/> values are not the same. </summary>

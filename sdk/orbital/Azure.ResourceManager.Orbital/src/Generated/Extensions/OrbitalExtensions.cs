@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Orbital.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Orbital
@@ -76,10 +75,10 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SpacecraftResource> GetSpacecraftsAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OrbitalSpacecraftResource> GetOrbitalSpacecraftsAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSpacecraftsAsync(skiptoken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOrbitalSpacecraftsAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -90,10 +89,10 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SpacecraftResource> GetSpacecrafts(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OrbitalSpacecraftResource> GetOrbitalSpacecrafts(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSpacecrafts(skiptoken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOrbitalSpacecrafts(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -104,10 +103,10 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContactProfileResource> GetContactProfilesAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OrbitalContactProfileResource> GetOrbitalContactProfilesAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetContactProfilesAsync(skiptoken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOrbitalContactProfilesAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -118,48 +117,10 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContactProfileResource> GetContactProfiles(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OrbitalContactProfileResource> GetOrbitalContactProfiles(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetContactProfiles(skiptoken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns operation results.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/locations/{location}/operationResults/{operationId}
-        /// Operation Id: OperationsResults_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static async Task<ArmOperation<OperationResult>> GetOperationsResultAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(subscriptionResource).GetOperationsResultAsync(waitUntil, location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns operation results.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/locations/{location}/operationResults/{operationId}
-        /// Operation Id: OperationsResults_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static ArmOperation<OperationResult> GetOperationsResult(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetOperationsResult(waitUntil, location, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOrbitalContactProfiles(skiptoken, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -171,12 +132,12 @@ namespace Azure.ResourceManager.Orbital
             );
         }
 
-        /// <summary> Gets a collection of SpacecraftResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of OrbitalSpacecraftResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SpacecraftResources and their operations over a SpacecraftResource. </returns>
-        public static SpacecraftCollection GetSpacecrafts(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of OrbitalSpacecraftResources and their operations over a OrbitalSpacecraftResource. </returns>
+        public static OrbitalSpacecraftCollection GetOrbitalSpacecrafts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSpacecrafts();
+            return GetExtensionClient(resourceGroupResource).GetOrbitalSpacecrafts();
         }
 
         /// <summary>
@@ -190,9 +151,9 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SpacecraftResource>> GetSpacecraftAsync(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
+        public static async Task<Response<OrbitalSpacecraftResource>> GetOrbitalSpacecraftAsync(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSpacecrafts().GetAsync(spacecraftName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetOrbitalSpacecrafts().GetAsync(spacecraftName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -206,17 +167,17 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SpacecraftResource> GetSpacecraft(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
+        public static Response<OrbitalSpacecraftResource> GetOrbitalSpacecraft(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSpacecrafts().Get(spacecraftName, cancellationToken);
+            return resourceGroupResource.GetOrbitalSpacecrafts().Get(spacecraftName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContactProfileResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of OrbitalContactProfileResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ContactProfileResources and their operations over a ContactProfileResource. </returns>
-        public static ContactProfileCollection GetContactProfiles(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of OrbitalContactProfileResources and their operations over a OrbitalContactProfileResource. </returns>
+        public static OrbitalContactProfileCollection GetOrbitalContactProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetContactProfiles();
+            return GetExtensionClient(resourceGroupResource).GetOrbitalContactProfiles();
         }
 
         /// <summary>
@@ -230,9 +191,9 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ContactProfileResource>> GetContactProfileAsync(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
+        public static async Task<Response<OrbitalContactProfileResource>> GetOrbitalContactProfileAsync(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetContactProfiles().GetAsync(contactProfileName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetOrbitalContactProfiles().GetAsync(contactProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -246,63 +207,63 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ContactProfileResource> GetContactProfile(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
+        public static Response<OrbitalContactProfileResource> GetOrbitalContactProfile(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetContactProfiles().Get(contactProfileName, cancellationToken);
+            return resourceGroupResource.GetOrbitalContactProfiles().Get(contactProfileName, cancellationToken);
         }
 
-        #region SpacecraftResource
+        #region OrbitalSpacecraftResource
         /// <summary>
-        /// Gets an object representing a <see cref="SpacecraftResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SpacecraftResource.CreateResourceIdentifier" /> to create a <see cref="SpacecraftResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OrbitalSpacecraftResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OrbitalSpacecraftResource.CreateResourceIdentifier" /> to create an <see cref="OrbitalSpacecraftResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SpacecraftResource" /> object. </returns>
-        public static SpacecraftResource GetSpacecraftResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OrbitalSpacecraftResource" /> object. </returns>
+        public static OrbitalSpacecraftResource GetOrbitalSpacecraftResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SpacecraftResource.ValidateResourceId(id);
-                return new SpacecraftResource(client, id);
+                OrbitalSpacecraftResource.ValidateResourceId(id);
+                return new OrbitalSpacecraftResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ContactResource
+        #region OrbitalContactResource
         /// <summary>
-        /// Gets an object representing a <see cref="ContactResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContactResource.CreateResourceIdentifier" /> to create a <see cref="ContactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OrbitalContactResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OrbitalContactResource.CreateResourceIdentifier" /> to create an <see cref="OrbitalContactResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContactResource" /> object. </returns>
-        public static ContactResource GetContactResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OrbitalContactResource" /> object. </returns>
+        public static OrbitalContactResource GetOrbitalContactResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ContactResource.ValidateResourceId(id);
-                return new ContactResource(client, id);
+                OrbitalContactResource.ValidateResourceId(id);
+                return new OrbitalContactResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ContactProfileResource
+        #region OrbitalContactProfileResource
         /// <summary>
-        /// Gets an object representing a <see cref="ContactProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContactProfileResource.CreateResourceIdentifier" /> to create a <see cref="ContactProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OrbitalContactProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OrbitalContactProfileResource.CreateResourceIdentifier" /> to create an <see cref="OrbitalContactProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContactProfileResource" /> object. </returns>
-        public static ContactProfileResource GetContactProfileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OrbitalContactProfileResource" /> object. </returns>
+        public static OrbitalContactProfileResource GetOrbitalContactProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ContactProfileResource.ValidateResourceId(id);
-                return new ContactProfileResource(client, id);
+                OrbitalContactProfileResource.ValidateResourceId(id);
+                return new OrbitalContactProfileResource(client, id);
             }
             );
         }

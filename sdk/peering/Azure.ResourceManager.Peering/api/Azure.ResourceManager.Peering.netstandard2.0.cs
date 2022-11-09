@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Peering.Models
     public partial class CdnPeeringPrefix : Azure.ResourceManager.Models.ResourceData
     {
         public CdnPeeringPrefix() { }
-        public string AzureRegion { get { throw null; } }
+        public Azure.Core.AzureLocation? AzureRegion { get { throw null; } }
         public string AzureService { get { throw null; } }
         public string BgpCommunity { get { throw null; } }
         public bool? IsPrimaryRegion { get { throw null; } }
@@ -411,8 +411,8 @@ namespace Azure.ResourceManager.Peering.Models
         public string ExchangeName { get { throw null; } set { } }
         public string FacilityIPv4Prefix { get { throw null; } set { } }
         public string FacilityIPv6Prefix { get { throw null; } set { } }
-        public string MicrosoftIPv4Address { get { throw null; } set { } }
-        public string MicrosoftIPv6Address { get { throw null; } set { } }
+        public System.Net.IPAddress MicrosoftIPv4Address { get { throw null; } set { } }
+        public System.Net.IPAddress MicrosoftIPv6Address { get { throw null; } set { } }
         public int? PeeringDBFacilityId { get { throw null; } set { } }
         public string PeeringDBFacilityLink { get { throw null; } set { } }
     }
@@ -522,10 +522,10 @@ namespace Azure.ResourceManager.Peering.Models
         public int? MaxPrefixesAdvertisedV4 { get { throw null; } set { } }
         public int? MaxPrefixesAdvertisedV6 { get { throw null; } set { } }
         public string Md5AuthenticationKey { get { throw null; } set { } }
-        public string MicrosoftSessionIPv4Address { get { throw null; } set { } }
-        public string MicrosoftSessionIPv6Address { get { throw null; } set { } }
-        public string PeerSessionIPv4Address { get { throw null; } set { } }
-        public string PeerSessionIPv6Address { get { throw null; } set { } }
+        public System.Net.IPAddress MicrosoftSessionIPv4Address { get { throw null; } set { } }
+        public System.Net.IPAddress MicrosoftSessionIPv6Address { get { throw null; } set { } }
+        public System.Net.IPAddress PeerSessionIPv4Address { get { throw null; } set { } }
+        public System.Net.IPAddress PeerSessionIPv6Address { get { throw null; } set { } }
         public string SessionPrefixV4 { get { throw null; } set { } }
         public string SessionPrefixV6 { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringSessionStateV4? SessionStateV4 { get { throw null; } }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Peering.Models
     {
         public PeeringExchangeConnection() { }
         public Azure.ResourceManager.Peering.Models.PeeringBgpSession BgpSession { get { throw null; } set { } }
-        public string ConnectionIdentifier { get { throw null; } set { } }
+        public System.Guid? ConnectionIdentifier { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringConnectionState? ConnectionState { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public int? PeeringDBFacilityId { get { throw null; } set { } }
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Peering.Models
     public partial class PeeringLocation : Azure.ResourceManager.Models.ResourceData
     {
         public PeeringLocation() { }
-        public string AzureRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? AzureRegion { get { throw null; } set { } }
         public string Country { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties Direct { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility> ExchangePeeringFacilities { get { throw null; } }
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Peering.Models
     public partial class PeeringServiceLocation : Azure.ResourceManager.Models.ResourceData
     {
         public PeeringServiceLocation() { }
-        public string AzureRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? AzureRegion { get { throw null; } set { } }
         public string Country { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
     }

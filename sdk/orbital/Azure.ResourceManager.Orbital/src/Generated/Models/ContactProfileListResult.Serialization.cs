@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         internal static ContactProfileListResult DeserializeContactProfileListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ContactProfileData>> value = default;
+            Optional<IReadOnlyList<OrbitalContactProfileData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Orbital.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ContactProfileData> array = new List<ContactProfileData>();
+                    List<OrbitalContactProfileData> array = new List<OrbitalContactProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContactProfileData.DeserializeContactProfileData(item));
+                        array.Add(OrbitalContactProfileData.DeserializeOrbitalContactProfileData(item));
                     }
                     value = array;
                     continue;

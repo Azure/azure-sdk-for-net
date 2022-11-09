@@ -103,6 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapCloudForCustomerSource": return SapCloudForCustomerSource.DeserializeSapCloudForCustomerSource(element);
                     case "SapEccSource": return SapEccSource.DeserializeSapEccSource(element);
                     case "SapHanaSource": return SapHanaSource.DeserializeSapHanaSource(element);
+                    case "SapOdpSource": return SapOdpSource.DeserializeSapOdpSource(element);
                     case "SapOpenHubSource": return SapOpenHubSource.DeserializeSapOpenHubSource(element);
                     case "SapTableSource": return SapTableSource.DeserializeSapTableSource(element);
                     case "ServiceNowSource": return ServiceNowSource.DeserializeServiceNowSource(element);

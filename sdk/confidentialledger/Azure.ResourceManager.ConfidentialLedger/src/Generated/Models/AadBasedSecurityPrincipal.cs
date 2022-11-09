@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="principalId"> UUID/GUID based Principal Id of the Security Principal. </param>
         /// <param name="tenantId"> UUID/GUID based Tenant Id of the Security Principal. </param>
         /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
-        internal AadBasedSecurityPrincipal(Guid? principalId, Guid? tenantId, LedgerRoleName? ledgerRoleName)
+        internal AadBasedSecurityPrincipal(Guid? principalId, Guid? tenantId, ConfidentialLedgerRoleName? ledgerRoleName)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> UUID/GUID based Tenant Id of the Security Principal. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> LedgerRole associated with the Security Principal of Ledger. </summary>
-        public LedgerRoleName? LedgerRoleName { get; set; }
+        public ConfidentialLedgerRoleName? LedgerRoleName { get; set; }
     }
 }

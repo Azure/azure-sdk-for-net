@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,14 +15,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Initializes a new instance of NetAppVolumeMountTarget. </summary>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemId"/> is null. </exception>
-        internal NetAppVolumeMountTarget(string fileSystemId)
+        internal NetAppVolumeMountTarget(Guid fileSystemId)
         {
-            if (fileSystemId == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemId));
-            }
-
             FileSystemId = fileSystemId;
         }
 
@@ -30,7 +25,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="ipAddress"> The mount target&apos;s IPv4 address. </param>
         /// <param name="smbServerFqdn"> The SMB server&apos;s Fully Qualified Domain Name, FQDN. </param>
-        internal NetAppVolumeMountTarget(string mountTargetId, string fileSystemId, string ipAddress, string smbServerFqdn)
+        internal NetAppVolumeMountTarget(Guid? mountTargetId, Guid fileSystemId, IPAddress ipAddress, string smbServerFqdn)
         {
             MountTargetId = mountTargetId;
             FileSystemId = fileSystemId;
@@ -39,11 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> UUID v4 used to identify the MountTarget. </summary>
-        public string MountTargetId { get; }
+        public Guid? MountTargetId { get; }
         /// <summary> UUID v4 used to identify the MountTarget. </summary>
-        public string FileSystemId { get; }
+        public Guid FileSystemId { get; }
         /// <summary> The mount target&apos;s IPv4 address. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> The SMB server&apos;s Fully Qualified Domain Name, FQDN. </summary>
         public string SmbServerFqdn { get; }
     }

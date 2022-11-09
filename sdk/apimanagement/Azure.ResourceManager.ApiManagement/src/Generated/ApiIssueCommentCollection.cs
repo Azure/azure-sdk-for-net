@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiIssueCommentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string commentId, ApiIssueCommentData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiIssueCommentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string commentId, ApiIssueCommentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
             Argument.AssertNotNull(data, nameof(data));
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiIssueCommentResource> CreateOrUpdate(WaitUntil waitUntil, string commentId, ApiIssueCommentData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiIssueCommentResource> CreateOrUpdate(WaitUntil waitUntil, string commentId, ApiIssueCommentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
             Argument.AssertNotNull(data, nameof(data));

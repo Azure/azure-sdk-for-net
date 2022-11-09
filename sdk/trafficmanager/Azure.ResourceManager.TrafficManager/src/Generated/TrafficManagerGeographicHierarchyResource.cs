@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> Initializes a new instance of the <see cref = "TrafficManagerGeographicHierarchyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TrafficManagerGeographicHierarchyResource(ArmClient client, TrafficManagerGeographicHierarchyData data) : this(client, new ResourceIdentifier(data.Id))
+        internal TrafficManagerGeographicHierarchyResource(ArmClient client, TrafficManagerGeographicHierarchyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

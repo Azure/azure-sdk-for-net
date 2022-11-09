@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> prefix = default;
-            Optional<string> azureRegion = default;
+            Optional<AzureLocation> azureRegion = default;
             Optional<string> azureService = default;
             Optional<bool> isPrimaryRegion = default;
             Optional<string> bgpCommunity = default;
@@ -76,7 +76,12 @@ namespace Azure.ResourceManager.Peering.Models
                         }
                         if (property0.NameEquals("azureRegion"))
                         {
-                            azureRegion = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            azureRegion = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("azureService"))
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new CdnPeeringPrefix(id, name, type, systemData.Value, prefix.Value, azureRegion.Value, azureService.Value, Optional.ToNullable(isPrimaryRegion), bgpCommunity.Value);
+            return new CdnPeeringPrefix(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(azureRegion), azureService.Value, Optional.ToNullable(isPrimaryRegion), bgpCommunity.Value);
         }
     }
 }

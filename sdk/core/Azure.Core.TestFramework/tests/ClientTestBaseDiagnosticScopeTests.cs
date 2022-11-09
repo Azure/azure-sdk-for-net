@@ -34,6 +34,7 @@ namespace Azure.Core.TestFramework.Tests
             StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
         }
 
+#if NET5_0_OR_GREATER
         [Test]
         public void ThrowsWhenDuplicateDiagnosticScope_DirectAncestor()
         {
@@ -49,6 +50,7 @@ namespace Azure.Core.TestFramework.Tests
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.DuplicateScopeAncestorAsync());
             StringAssert.Contains($"A scope has already started for event '{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.DuplicateScopeAncestor)}'", ex.Message);
         }
+#endif
 
         [Test]
         public async Task DoesNotThrowWhenDuplicateDiagnosticScopeProperlyDisposed()

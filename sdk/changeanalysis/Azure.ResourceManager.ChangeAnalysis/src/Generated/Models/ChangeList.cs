@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <summary> Initializes a new instance of ChangeList. </summary>
         internal ChangeList()
         {
-            Value = new ChangeTrackingList<Change>();
+            Value = new ChangeTrackingList<DetectedChangeData>();
         }
 
         /// <summary> Initializes a new instance of ChangeList. </summary>
         /// <param name="value"> The list of changes. </param>
         /// <param name="nextLink"> The URI that can be used to request the next page of changes. </param>
-        internal ChangeList(IReadOnlyList<Change> value, string nextLink)
+        internal ChangeList(IReadOnlyList<DetectedChangeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of changes. </summary>
-        public IReadOnlyList<Change> Value { get; }
+        public IReadOnlyList<DetectedChangeData> Value { get; }
         /// <summary> The URI that can be used to request the next page of changes. </summary>
         public string NextLink { get; }
     }

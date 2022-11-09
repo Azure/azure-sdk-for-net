@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="source"> Source for the system topic. </param>
         /// <param name="topicType"> TopicType for the system topic. </param>
         /// <param name="metricResourceId"> Metric resource id for the system topic. </param>
-        internal SystemTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IdentityInfo identity, ResourceProvisioningState? provisioningState, string source, string topicType, string metricResourceId) : base(id, name, resourceType, systemData, tags, location)
+        internal SystemTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, EventGridResourceProvisioningState? provisioningState, ResourceIdentifier source, string topicType, Guid? metricResourceId) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -43,14 +44,14 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Identity information for the resource. </summary>
-        public IdentityInfo Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the system topic. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public EventGridResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Source for the system topic. </summary>
-        public string Source { get; set; }
+        public ResourceIdentifier Source { get; set; }
         /// <summary> TopicType for the system topic. </summary>
         public string TopicType { get; set; }
         /// <summary> Metric resource id for the system topic. </summary>
-        public string MetricResourceId { get; }
+        public Guid? MetricResourceId { get; }
     }
 }

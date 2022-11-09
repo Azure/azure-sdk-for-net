@@ -7,26 +7,26 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Severity Level of Alert. </summary>
+    /// <summary> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </summary>
     public readonly partial struct AlertSeverity : IEquatable<AlertSeverity>
     {
-        private readonly string _value;
+        private readonly long _value;
 
         /// <summary> Initializes a new instance of <see cref="AlertSeverity"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AlertSeverity(string value)
+        public AlertSeverity(long value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            _value = value;
         }
 
-        private const string ZeroValue = "0";
-        private const string OneValue = "1";
-        private const string TwoValue = "2";
-        private const string ThreeValue = "3";
-        private const string FourValue = "4";
+        private const long ZeroValue = 0L;
+        private const long OneValue = 1L;
+        private const long TwoValue = 2L;
+        private const long ThreeValue = 3L;
+        private const long FourValue = 4L;
 
         /// <summary> 0. </summary>
         public static AlertSeverity Zero { get; } = new AlertSeverity(ZeroValue);
@@ -43,18 +43,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Determines if two <see cref="AlertSeverity"/> values are not the same. </summary>
         public static bool operator !=(AlertSeverity left, AlertSeverity right) => !left.Equals(right);
         /// <summary> Converts a string to a <see cref="AlertSeverity"/>. </summary>
-        public static implicit operator AlertSeverity(string value) => new AlertSeverity(value);
+        public static implicit operator AlertSeverity(long value) => new AlertSeverity(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AlertSeverity other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(AlertSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AlertSeverity other) => Equals(_value, other._value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value.GetHashCode();
         /// <inheritdoc />
-        public override string ToString() => _value;
+        public override string ToString() => _value.ToString(CultureInfo.InvariantCulture);
     }
 }

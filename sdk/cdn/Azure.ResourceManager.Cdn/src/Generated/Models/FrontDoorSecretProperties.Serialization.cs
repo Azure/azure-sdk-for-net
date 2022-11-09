@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new FrontDoorSecretProperties(type);
+            return new UnknownFrontDoorSecretProperties(type);
         }
     }
 }

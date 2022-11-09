@@ -15,21 +15,31 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyAssignmentSummary DeserializePolicyAssignmentSummary(JsonElement element)
         {
-            Optional<string> policyAssignmentId = default;
-            Optional<string> policySetDefinitionId = default;
-            Optional<SummaryResults> results = default;
+            Optional<ResourceIdentifier> policyAssignmentId = default;
+            Optional<ResourceIdentifier> policySetDefinitionId = default;
+            Optional<PolicySummaryResults> results = default;
             Optional<IReadOnlyList<PolicyDefinitionSummary>> policyDefinitions = default;
             Optional<IReadOnlyList<PolicyGroupSummary>> policyGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyAssignmentId"))
                 {
-                    policyAssignmentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyAssignmentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policySetDefinitionId"))
                 {
-                    policySetDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policySetDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("results"))
@@ -39,7 +49,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    results = SummaryResults.DeserializeSummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policyDefinitions"))

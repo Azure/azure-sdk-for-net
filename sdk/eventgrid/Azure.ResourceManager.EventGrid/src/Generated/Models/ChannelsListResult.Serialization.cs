@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static ChannelsListResult DeserializeChannelsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ChannelData>> value = default;
+            Optional<IReadOnlyList<PartnerNamespaceChannelData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ChannelData> array = new List<ChannelData>();
+                    List<PartnerNamespaceChannelData> array = new List<PartnerNamespaceChannelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChannelData.DeserializeChannelData(item));
+                        array.Add(PartnerNamespaceChannelData.DeserializePartnerNamespaceChannelData(item));
                     }
                     value = array;
                     continue;

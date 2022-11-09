@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("assetName");
                 writer.WriteStringValue(AssetName);
             }
-            if (Optional.IsDefined(StartsOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartsOn.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndsOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndsOn.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(StreamingLocatorId))
             {

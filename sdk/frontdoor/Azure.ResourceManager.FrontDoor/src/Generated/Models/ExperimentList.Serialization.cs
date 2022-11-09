@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static ExperimentList DeserializeExperimentList(JsonElement element)
         {
-            Optional<IReadOnlyList<ExperimentData>> value = default;
+            Optional<IReadOnlyList<FrontDoorExperimentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExperimentData> array = new List<ExperimentData>();
+                    List<FrontDoorExperimentData> array = new List<FrontDoorExperimentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExperimentData.DeserializeExperimentData(item));
+                        array.Add(FrontDoorExperimentData.DeserializeFrontDoorExperimentData(item));
                     }
                     value = array;
                     continue;

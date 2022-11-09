@@ -15,16 +15,21 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyDefinitionSummary DeserializePolicyDefinitionSummary(JsonElement element)
         {
-            Optional<string> policyDefinitionId = default;
+            Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> policyDefinitionReferenceId = default;
             Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
             Optional<string> effect = default;
-            Optional<SummaryResults> results = default;
+            Optional<PolicySummaryResults> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"))
                 {
-                    policyDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyDefinitionReferenceId"))
@@ -59,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    results = SummaryResults.DeserializeSummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
                     continue;
                 }
             }

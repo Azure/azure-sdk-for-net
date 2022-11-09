@@ -70,8 +70,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machine.</param>
         /// <param name="diskSizeGB">Specifies the size of an empty data disk
         /// in gigabytes. This element can be used to overwrite the size of the
-        /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
-        /// cannot be larger than 1023 GB</param>
+        /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; diskSizeGB is
+        /// the number of bytes x 1024^3 for the disk and the value cannot be
+        /// larger than 1023</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
         /// <param name="deleteOption">Specifies whether OS Disk should be
         /// deleted or detached upon VM deletion. &lt;br&gt;&lt;br&gt; Possible
@@ -189,8 +190,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the size of an empty data disk in gigabytes.
         /// This element can be used to overwrite the size of the disk in a
-        /// virtual machine image. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This
-        /// value cannot be larger than 1023 GB
+        /// virtual machine image. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// diskSizeGB is the number of bytes x 1024^3 for the disk and the
+        /// value cannot be larger than 1023
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIp");
-                writer.WriteStringValue(DnsServiceIP);
+                writer.WriteStringValue(DnsServiceIP.ToString());
             }
             if (Optional.IsDefined(DefaultDnsZone))
             {
@@ -66,11 +67,11 @@ namespace Azure.ResourceManager.Avs
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
-            Optional<string> dnsServiceIP = default;
+            Optional<IPAddress> dnsServiceIP = default;
             Optional<string> defaultDnsZone = default;
             Optional<IList<string>> fqdnZones = default;
-            Optional<DnsServiceLogLevelEnum> logLevel = default;
-            Optional<DnsServiceStatusEnum> status = default;
+            Optional<DnsServiceLogLevel> logLevel = default;
+            Optional<DnsServiceStatus> status = default;
             Optional<WorkloadNetworkDnsServiceProvisioningState> provisioningState = default;
             Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,12 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("dnsServiceIp"))
                         {
-                            dnsServiceIP = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dnsServiceIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("defaultDnsZone"))
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logLevel = new DnsServiceLogLevelEnum(property0.Value.GetString());
+                            logLevel = new DnsServiceLogLevel(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))
@@ -156,7 +162,7 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new DnsServiceStatusEnum(property0.Value.GetString());
+                            status = new DnsServiceStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

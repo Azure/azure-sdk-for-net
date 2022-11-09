@@ -429,6 +429,46 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets the Ddos Protection Status of a Public IP Address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP address.
+            /// </param>
+            public static PublicIpDdosProtectionStatusResult DdosProtectionStatus(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            {
+                return operations.DdosProtectionStatusAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of a Public IP Address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP address.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PublicIpDdosProtectionStatusResult> DdosProtectionStatusAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DdosProtectionStatusWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets information about all public IP addresses on a virtual machine scale
             /// set level.
             /// </summary>
@@ -678,6 +718,46 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<PublicIPAddress> BeginCreateOrUpdateAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of a Public IP Address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP address.
+            /// </param>
+            public static PublicIpDdosProtectionStatusResult BeginDdosProtectionStatus(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            {
+                return operations.BeginDdosProtectionStatusAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of a Public IP Address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP address.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PublicIpDdosProtectionStatusResult> BeginDdosProtectionStatusAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDdosProtectionStatusWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

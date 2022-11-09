@@ -1,28 +1,29 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?language=es\u0026multilingual=false\u0026api-version=2022-05-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?language=es\u0026multilingual=false\u0026api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d5020e1d13b15823af2d57b01fffa9f7-df31158ef328fe97-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220616.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "9fa7279161b88a7fab40bc73a7de0c28",
+        "traceparent": "00-b206994dd3a7ba0f2fddca2269ec4f81-c31ac7dcfbfe307a-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "49d4d6c39914958e566e1b70296c5189",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "ab3dd034-879c-4626-808f-cd8d4b6e12e8",
+        "apim-request-id": "0ed049fe-3a57-4064-8b74-f071c5cf55bc",
         "Content-Length": "1656",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Jun 2022 00:30:34 GMT",
-        "request-id": "ab3dd034-879c-4626-808f-cd8d4b6e12e8",
+        "Date": "Thu, 20 Oct 2022 00:18:32 GMT",
+        "request-id": "0ed049fe-3a57-4064-8b74-f071c5cf55bc",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "19"
+        "x-envoy-upstream-service-time": "39",
+        "x-ms-region": "UK South"
       },
       "ResponseBody": {
         "value": [
@@ -99,6 +100,6 @@
   "Variables": {
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "46712923"
+    "RandomSeed": "2040686979"
   }
 }

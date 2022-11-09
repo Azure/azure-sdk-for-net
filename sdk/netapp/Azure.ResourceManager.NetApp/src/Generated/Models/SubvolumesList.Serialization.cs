@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static SubvolumesList DeserializeSubvolumesList(JsonElement element)
         {
-            Optional<IReadOnlyList<NetAppSubvolumeData>> value = default;
+            Optional<IReadOnlyList<NetAppSubvolumeInfoData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetAppSubvolumeData> array = new List<NetAppSubvolumeData>();
+                    List<NetAppSubvolumeInfoData> array = new List<NetAppSubvolumeInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppSubvolumeData.DeserializeNetAppSubvolumeData(item));
+                        array.Add(NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(item));
                     }
                     value = array;
                     continue;

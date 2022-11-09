@@ -8,7 +8,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexerSkillset
     {
-        [CodeGenMember("etag")]
+        [CodeGenMember("ETag")]
         private string _etag;
 
         /// <summary>

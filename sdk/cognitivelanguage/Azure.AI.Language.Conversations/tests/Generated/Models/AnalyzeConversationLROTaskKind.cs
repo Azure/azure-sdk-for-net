@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> Enumeration of supported analysis tasks on a collection of conversations. </summary>
+    /// <summary> Enumeration of supported analysis tasks on a collection of conversation. </summary>
     public readonly partial struct AnalyzeConversationLROTaskKind : IEquatable<AnalyzeConversationLROTaskKind>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.AI.Language.Conversations
 
         private const string ConversationalPIITaskValue = "ConversationalPIITask";
         private const string ConversationalSummarizationTaskValue = "ConversationalSummarizationTask";
+        private const string ConversationalSentimentTaskValue = "ConversationalSentimentTask";
 
         /// <summary> ConversationalPIITask. </summary>
         public static AnalyzeConversationLROTaskKind ConversationalPIITask { get; } = new AnalyzeConversationLROTaskKind(ConversationalPIITaskValue);
         /// <summary> ConversationalSummarizationTask. </summary>
         public static AnalyzeConversationLROTaskKind ConversationalSummarizationTask { get; } = new AnalyzeConversationLROTaskKind(ConversationalSummarizationTaskValue);
+        /// <summary> ConversationalSentimentTask. </summary>
+        public static AnalyzeConversationLROTaskKind ConversationalSentimentTask { get; } = new AnalyzeConversationLROTaskKind(ConversationalSentimentTaskValue);
         /// <summary> Determines if two <see cref="AnalyzeConversationLROTaskKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeConversationLROTaskKind left, AnalyzeConversationLROTaskKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeConversationLROTaskKind"/> values are not the same. </summary>

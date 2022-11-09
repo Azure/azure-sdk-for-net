@@ -1,0 +1,157 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "303",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-5944e633c11ad8c0f9b3325723674979-bcc3c20b6a7f7257-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4ae8bd94642b87e9cf97149389dacd86",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "Pike place market is my favorite Seattle attraction.",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit",
+          "loggingOptOut": true
+        },
+        "kind": "EntityLinking"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4be86841-edd7-4a72-8cf5-a179e718b9e7",
+        "Content-Length": "1476",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Fri, 14 Oct 2022 22:22:42 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
+      },
+      "ResponseBody": {
+        "kind": "EntityLinkingResults",
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "entities": [
+                {
+                  "bingId": "a093e9b9-90f5-a3d5-c4b8-5855e1b01f85",
+                  "name": "Microsoft",
+                  "matches": [
+                    {
+                      "text": "Microsoft",
+                      "offset": 0,
+                      "length": 9,
+                      "confidenceScore": 0.49
+                    }
+                  ],
+                  "language": "en",
+                  "id": "Microsoft",
+                  "url": "https://en.wikipedia.org/wiki/Microsoft",
+                  "dataSource": "Wikipedia"
+                },
+                {
+                  "bingId": "0d47c987-0042-5576-15e8-97af601614fa",
+                  "name": "Bill Gates",
+                  "matches": [
+                    {
+                      "text": "Bill Gates",
+                      "offset": 25,
+                      "length": 10,
+                      "confidenceScore": 0.52
+                    }
+                  ],
+                  "language": "en",
+                  "id": "Bill Gates",
+                  "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                  "dataSource": "Wikipedia"
+                },
+                {
+                  "bingId": "df2c4376-9923-6a54-893f-2ee5a5badbc7",
+                  "name": "Paul Allen",
+                  "matches": [
+                    {
+                      "text": "Paul Allen",
+                      "offset": 40,
+                      "length": 10,
+                      "confidenceScore": 0.54
+                    }
+                  ],
+                  "language": "en",
+                  "id": "Paul Allen",
+                  "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                  "dataSource": "Wikipedia"
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "id": "1",
+              "entities": [
+                {
+                  "bingId": "38b9431e-cf91-93be-0584-c42a3ecbfdc7",
+                  "name": "Pike Place Market",
+                  "matches": [
+                    {
+                      "text": "Pike place market",
+                      "offset": 0,
+                      "length": 17,
+                      "confidenceScore": 0.86
+                    }
+                  ],
+                  "language": "en",
+                  "id": "Pike Place Market",
+                  "url": "https://en.wikipedia.org/wiki/Pike_Place_Market",
+                  "dataSource": "Wikipedia"
+                },
+                {
+                  "bingId": "5fbba6b8-85e1-4d41-9444-d9055436e473",
+                  "name": "Seattle",
+                  "matches": [
+                    {
+                      "text": "Seattle",
+                      "offset": 33,
+                      "length": 7,
+                      "confidenceScore": 0.27
+                    }
+                  ],
+                  "language": "en",
+                  "id": "Seattle",
+                  "url": "https://en.wikipedia.org/wiki/Seattle",
+                  "dataSource": "Wikipedia"
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2021-06-01"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "861855008",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}

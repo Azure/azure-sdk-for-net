@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static ClusterList DeserializeClusterList(JsonElement element)
         {
-            Optional<IReadOnlyList<ClusterData>> value = default;
+            Optional<IReadOnlyList<AvsPrivateCloudClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ClusterData> array = new List<ClusterData>();
+                    List<AvsPrivateCloudClusterData> array = new List<AvsPrivateCloudClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterData.DeserializeClusterData(item));
+                        array.Add(AvsPrivateCloudClusterData.DeserializeAvsPrivateCloudClusterData(item));
                     }
                     value = array;
                     continue;

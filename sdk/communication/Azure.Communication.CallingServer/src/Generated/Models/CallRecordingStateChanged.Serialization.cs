@@ -15,23 +15,22 @@ namespace Azure.Communication.CallingServer
     {
         internal static CallRecordingStateChanged DeserializeCallRecordingStateChanged(JsonElement element)
         {
-            Optional<AcsEventType> type = default;
+            Optional<string> eventSource = default;
             Optional<string> recordingId = default;
             Optional<RecordingState> state = default;
             Optional<DateTimeOffset> startDateTime = default;
+            Optional<string> version = default;
+            Optional<string> operationContext = default;
+            Optional<ResultInformation> resultInformation = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
+            Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("eventSource"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    type = new AcsEventType(property.Value.GetString());
+                    eventSource = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("recordingId"))
@@ -59,6 +58,26 @@ namespace Azure.Communication.CallingServer
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("version"))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("operationContext"))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultInformation"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("callConnectionId"))
                 {
                     callConnectionId = property.Value.GetString();
@@ -74,8 +93,13 @@ namespace Azure.Communication.CallingServer
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("publicEventType"))
+                {
+                    publicEventType = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CallRecordingStateChanged(type, recordingId.Value, state, Optional.ToNullable(startDateTime), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallRecordingStateChanged(eventSource.Value, recordingId.Value, state, Optional.ToNullable(startDateTime), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

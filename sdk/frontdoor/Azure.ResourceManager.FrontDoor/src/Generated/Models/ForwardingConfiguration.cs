@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
         /// <param name="cacheConfiguration"> The caching configuration associated with this rule. </param>
         /// <param name="backendPool"> A reference to the BackendPool which this rule routes to. </param>
-        internal ForwardingConfiguration(string odataType, string customForwardingPath, FrontDoorForwardingProtocol? forwardingProtocol, CacheConfiguration cacheConfiguration, WritableSubResource backendPool) : base(odataType)
+        internal ForwardingConfiguration(string odataType, string customForwardingPath, FrontDoorForwardingProtocol? forwardingProtocol, FrontDoorCacheConfiguration cacheConfiguration, WritableSubResource backendPool) : base(odataType)
         {
             CustomForwardingPath = customForwardingPath;
             ForwardingProtocol = forwardingProtocol;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
         public FrontDoorForwardingProtocol? ForwardingProtocol { get; set; }
         /// <summary> The caching configuration associated with this rule. </summary>
-        public CacheConfiguration CacheConfiguration { get; set; }
+        public FrontDoorCacheConfiguration CacheConfiguration { get; set; }
         /// <summary> A reference to the BackendPool which this rule routes to. </summary>
         internal WritableSubResource BackendPool { get; set; }
         /// <summary> Gets or sets Id. </summary>

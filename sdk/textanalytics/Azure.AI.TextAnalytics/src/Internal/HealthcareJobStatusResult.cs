@@ -15,5 +15,6 @@ namespace Azure.AI.TextAnalytics.Models
         public TextAnalyticsOperationStatus Status { get; set; }
         public List<Error> Errors { get; } = new();
         public AnalyzeHealthcareEntitiesResultCollection Result { get; set; }
+        public string DisplayName { get; set; }
     }
 }

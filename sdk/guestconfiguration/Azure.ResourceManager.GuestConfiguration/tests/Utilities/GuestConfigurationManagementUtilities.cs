@@ -12,8 +12,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Utilities
         public static AzureLocation DefaultResourceLocation = new AzureLocation("westcentralus");
         public static string DefaultResourceType = "ApplyAndAutoCorrect";
         public const string DefaultAzureVMName = "SDKTestVM";
-        public static AssignmentType DefaultAssignmentType = new AssignmentType("ApplyAndAutoCorrect");
-        public static ConfigurationMode DefaultConfigurationMode= new ConfigurationMode("ApplyAndAutoCorrect");
+        public static GuestConfigurationAssignmentType DefaultAssignmentType = new GuestConfigurationAssignmentType("ApplyAndAutoCorrect");
+        public static LcmConfigurationMode DefaultConfigurationMode = new LcmConfigurationMode("ApplyAndAutoCorrect");
         public static GuestConfigurationKind DefaultKind = new GuestConfigurationKind("DSC");
         public const string DefaultAssignmentVersion = "1.0.0.3";
         public const string DefaultContext = "Azure policy";
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Utilities
         public const string DefaultAssignmentName = "AuditSecureProtocol";
 
         public const string VMSSRG = "aashishDeleteRG";
-        public const string VMSSName = "vmss1";
+        public const string VMSSName = "vmssNeela";
         public const string VMSSAssignmentName = "EnforcePasswordHistory$pidrt3t6jlihetr2";
-        public const string VMSSReportID = "521eacf2-fbc8-4bb9-8ca3-05e336803416";
+        public const string VMSSReportID = "da034575-e995-4ac2-af28-7efc2fac1efa";
     }
 }

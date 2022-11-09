@@ -11,9 +11,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\SviCRUDTests\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

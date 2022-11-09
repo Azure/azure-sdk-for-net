@@ -90,6 +90,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 return true;
             }
 
+            if (containerName.Equals("$web", StringComparison.InvariantCulture))
+            {
+                return true;
+            }
+
             return Regex.IsMatch(containerName, @"^[a-z0-9](([a-z0-9\-[^\-])){1,61}[a-z0-9]$");
         }
 

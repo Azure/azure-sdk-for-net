@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
@@ -67,6 +69,57 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // If prefetch is enabled, timeout 0 secs will not be replaced with default timeout.
                 // In such case, only prefetched messages will be returned and no call to server will be made and call will be very fast.
                 Assert.IsTrue(durationWithPrefetchModeInSecs < 1);
+            }
+        }
+
+        /// <summary>
+        /// This test validates that outstanding link credits are drained when the receiver is closed so messages do not remain locked.
+        /// This is a best effort attempt at draining until better support is added in the AMQP library, <see href="https://github.com/Azure/azure-amqp/issues/229"/>.
+        /// </summary>
+        [Test]
+        public async Task ReceiverDrainsOnClosing()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: ShortLockDuration))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                using var cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromSeconds(30));
+
+                List<Task> tasks = new();
+                tasks.Add(Send());
+
+                for (int i = 0; i < 100; i++)
+                {
+                    tasks.Add(Receive());
+                }
+
+                await Task.WhenAll(tasks);
+
+                async Task Receive()
+                {
+                    while (!cts.IsCancellationRequested)
+                    {
+                        await using var receiver = client.CreateReceiver(scope.QueueName);
+
+                        var message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2));
+
+                        if (message != null)
+                        {
+                            Assert.AreEqual(1, message.DeliveryCount);
+                            await receiver.CompleteMessageAsync(message);
+                        }
+                    }
+                }
+
+                async Task Send()
+                {
+                    while (!cts.IsCancellationRequested)
+                    {
+                        await Task.Delay(500);
+                        await using var sender = client.CreateSender(scope.QueueName);
+                        await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+                    }
+                }
             }
         }
 
@@ -515,6 +568,92 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         remainingMessages--;
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        await deadLetterReceiver.CompleteMessageAsync(item);
+                    }
+                }
+                Assert.AreEqual(0, remainingMessages);
+
+                var deadLetterMessage = deadLetterReceiver.PeekMessageAsync();
+                Assert.IsNull(deadLetterMessage.Result);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeadLetterMessagesModifiesProperties(bool setInPropertiesDict)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var messageCount = 10;
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.GetMessages(messageCount);
+
+                await sender.SendMessagesAsync(messages);
+
+                var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions
+                {
+                    PrefetchCount = 10
+                });
+                var remainingMessages = messageCount;
+                var messageEnum = messages.GetEnumerator();
+
+                var propertyReason = "property-reason";
+                var propertyDescription = "property-description";
+                var overloadReason = "overload-reason";
+                var overloadDescription = "overload-description";
+
+                var propertiesToModify = new Dictionary<string, object>();
+                propertiesToModify.Add(AmqpMessageConstants.DeadLetterReasonHeader, propertyReason);
+                propertiesToModify.Add(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, propertyDescription);
+
+                while (remainingMessages > 0)
+                {
+                    foreach (var item in await receiver.ReceiveMessagesAsync(remainingMessages))
+                    {
+                        remainingMessages--;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.Body.ToArray(), item.Body.ToArray());
+                        if (setInPropertiesDict)
+                        {
+                            await receiver.DeadLetterMessageAsync(item, propertiesToModify);
+                        }
+                        else
+                        {
+                            await receiver.DeadLetterMessageAsync(item, overloadReason, overloadDescription);
+                        }
+                    }
+                }
+                Assert.AreEqual(0, remainingMessages);
+
+                var peekedMessage = receiver.PeekMessageAsync();
+                Assert.IsNull(peekedMessage.Result);
+
+                messageEnum.Reset();
+                string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
+                var deadLetterReceiver = client.CreateReceiver(deadLetterQueuePath);
+                remainingMessages = messageCount;
+
+                while (remainingMessages > 0)
+                {
+                    foreach (ServiceBusReceivedMessage item in await deadLetterReceiver.ReceiveMessagesAsync(remainingMessages))
+                    {
+                        remainingMessages--;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        if (setInPropertiesDict)
+                        {
+                            Assert.AreEqual(item.DeadLetterReason, propertyReason);
+                            Assert.AreEqual(item.DeadLetterErrorDescription, propertyDescription);
+                        }
+                        else
+                        {
+                            Assert.AreEqual(item.DeadLetterReason, overloadReason);
+                            Assert.AreEqual(item.DeadLetterErrorDescription, overloadDescription);
+                        }
                         await deadLetterReceiver.CompleteMessageAsync(item);
                     }
                 }

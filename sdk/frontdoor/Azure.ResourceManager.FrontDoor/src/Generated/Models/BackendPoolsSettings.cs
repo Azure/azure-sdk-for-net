@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Initializes a new instance of BackendPoolsSettings. </summary>
         /// <param name="enforceCertificateNameCheck"> Whether to enforce certificate name check on HTTPS requests to all backend pools. No effect on non-HTTPS requests. </param>
-        /// <param name="sendRecvTimeoutSeconds"> Send and receive timeout on forwarding request to the backend. When timeout is reached, the request fails and returns. </param>
-        internal BackendPoolsSettings(EnforceCertificateNameCheckEnabledState? enforceCertificateNameCheck, int? sendRecvTimeoutSeconds)
+        /// <param name="sendRecvTimeoutInSeconds"> Send and receive timeout on forwarding request to the backend. When timeout is reached, the request fails and returns. </param>
+        internal BackendPoolsSettings(EnforceCertificateNameCheckEnabledState? enforceCertificateNameCheck, int? sendRecvTimeoutInSeconds)
         {
             EnforceCertificateNameCheck = enforceCertificateNameCheck;
-            SendRecvTimeoutSeconds = sendRecvTimeoutSeconds;
+            SendRecvTimeoutInSeconds = sendRecvTimeoutInSeconds;
         }
 
         /// <summary> Whether to enforce certificate name check on HTTPS requests to all backend pools. No effect on non-HTTPS requests. </summary>
         public EnforceCertificateNameCheckEnabledState? EnforceCertificateNameCheck { get; set; }
         /// <summary> Send and receive timeout on forwarding request to the backend. When timeout is reached, the request fails and returns. </summary>
-        public int? SendRecvTimeoutSeconds { get; set; }
+        public int? SendRecvTimeoutInSeconds { get; set; }
     }
 }

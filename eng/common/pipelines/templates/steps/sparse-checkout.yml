@@ -8,13 +8,13 @@ parameters:
       - Name: $(Build.Repository.Name)
         Commitish: $(Build.SourceVersion)
         WorkingDirectory: $(System.DefaultWorkingDirectory)
-  - name: SkipDefaultCheckout
+  - name: SkipCheckoutNone
     type: boolean
     default: false
 
 steps:
-  - ${{ if not(parameters.SkipDefaultCheckout) }}:
-    - checkout: none
+  - ${{ if not(parameters.SkipCheckoutNone) }}:
+      - checkout: none
 
   - task: PowerShell@2
     displayName: 'Sparse checkout repositories'

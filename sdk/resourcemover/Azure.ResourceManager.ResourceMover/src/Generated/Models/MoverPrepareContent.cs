@@ -20,16 +20,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="moverResources"/> is null. </exception>
         public MoverPrepareContent(IEnumerable<ResourceIdentifier> moverResources)
         {
-            if (moverResources == null)
-            {
-                throw new ArgumentNullException(nameof(moverResources));
-            }
+            Argument.AssertNotNull(moverResources, nameof(moverResources));
 
             MoverResources = moverResources.ToList();
         }
 
         /// <summary> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </summary>
-        public bool? IsValidateOnly { get; set; }
+        public bool? ValidateOnly { get; set; }
         /// <summary> Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property. </summary>
         public IList<ResourceIdentifier> MoverResources { get; }
         /// <summary> Defines the move resource input type. </summary>

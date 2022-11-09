@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private const string DefaultFormat = "solr";
 
-        [CodeGenMember("etag")]
+        [CodeGenMember("ETag")]
         private string _etag;
 
         // TODO: Replace constructor and read-only properties when https://github.com/Azure/autorest.csharp/issues/554 is fixed.

@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("http");
                 writer.WriteObjectValue(Http);
             }
+            if (Optional.IsDefined(Tcp))
+            {
+                writer.WritePropertyName("tcp");
+                writer.WriteObjectValue(Tcp);
+            }
             writer.WriteEndObject();
         }
 
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<QueueScaleRule> azureQueue = default;
             Optional<CustomScaleRule> custom = default;
             Optional<HttpScaleRule> http = default;
+            Optional<TcpScaleRule> tcp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -81,8 +87,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                     http = HttpScaleRule.DeserializeHttpScaleRule(property.Value);
                     continue;
                 }
+                if (property.NameEquals("tcp"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tcp = TcpScaleRule.DeserializeTcpScaleRule(property.Value);
+                    continue;
+                }
             }
-            return new ContainerAppScaleRule(name.Value, azureQueue.Value, custom.Value, http.Value);
+            return new ContainerAppScaleRule(name.Value, azureQueue.Value, custom.Value, http.Value, tcp.Value);
         }
     }
 }

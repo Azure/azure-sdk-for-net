@@ -31,13 +31,13 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Training document name.
         /// </summary>
-        [CodeGenMember("documentName")]
+        [CodeGenMember("DocumentName")]
         public string Name { get; }
 
         /// <summary>
         /// The number of pages the document has.
         /// </summary>
-        [CodeGenMember("pages")]
+        [CodeGenMember("Pages")]
         public int PageCount { get; }
 
         /// <summary>

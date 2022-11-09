@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static VolumeGroupList DeserializeVolumeGroupList(JsonElement element)
         {
-            Optional<IReadOnlyList<NetAppVolumeGroupData>> value = default;
+            Optional<IReadOnlyList<NetAppVolumeGroupResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +25,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetAppVolumeGroupData> array = new List<NetAppVolumeGroupData>();
+                    List<NetAppVolumeGroupResult> array = new List<NetAppVolumeGroupResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeGroupData.DeserializeNetAppVolumeGroupData(item));
+                        array.Add(NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult(item));
                     }
                     value = array;
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
     public class SqlVmGroupTests : SqlVirtualMachineManagementTestBase
     {
         public SqlVmGroupTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -84,10 +84,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             Assert.AreEqual(value, sqlVmGroupFromGet.Data.Tags[key]);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "sqlvmtestrg", AzureLocation.WestUS);
             StorageAccountResource storageAccount = await CreateStorageAccountAsync(rg);
             var sqlVmGroupCollection = rg.GetSqlVmGroups();

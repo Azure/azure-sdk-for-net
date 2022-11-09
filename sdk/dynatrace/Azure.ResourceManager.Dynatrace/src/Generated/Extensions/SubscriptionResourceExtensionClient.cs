@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Dynatrace
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _monitorResourceMonitorsClientDiagnostics;
-        private MonitorsRestOperations _monitorResourceMonitorsRestClient;
+        private ClientDiagnostics _dynatraceMonitorMonitorsClientDiagnostics;
+        private MonitorsRestOperations _dynatraceMonitorMonitorsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Dynatrace
         {
         }
 
-        private ClientDiagnostics MonitorResourceMonitorsClientDiagnostics => _monitorResourceMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dynatrace", MonitorResource.ResourceType.Namespace, Diagnostics);
-        private MonitorsRestOperations MonitorResourceMonitorsRestClient => _monitorResourceMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorResource.ResourceType));
+        private ClientDiagnostics DynatraceMonitorMonitorsClientDiagnostics => _dynatraceMonitorMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceMonitorResource.ResourceType.Namespace, Diagnostics);
+        private MonitorsRestOperations DynatraceMonitorMonitorsRestClient => _dynatraceMonitorMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DynatraceMonitorResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_ListBySubscriptionId
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorResource> GetMonitorResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DynatraceMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DynatraceMonitorResource> GetDynatraceMonitorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MonitorResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DynatraceMonitorResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = MonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorResources");
+                using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDynatraceMonitors");
                 scope.Start();
                 try
                 {
-                    var response = await MonitorResourceMonitorsRestClient.ListBySubscriptionIdAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DynatraceMonitorMonitorsRestClient.ListBySubscriptionIdAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Dynatrace
                     throw;
                 }
             }
-            async Task<Page<MonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DynatraceMonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = MonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorResources");
+                using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDynatraceMonitors");
                 scope.Start();
                 try
                 {
-                    var response = await MonitorResourceMonitorsRestClient.ListBySubscriptionIdNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DynatraceMonitorMonitorsRestClient.ListBySubscriptionIdNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_ListBySubscriptionId
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorResource> GetMonitorResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DynatraceMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DynatraceMonitorResource> GetDynatraceMonitors(CancellationToken cancellationToken = default)
         {
-            Page<MonitorResource> FirstPageFunc(int? pageSizeHint)
+            Page<DynatraceMonitorResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = MonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorResources");
+                using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDynatraceMonitors");
                 scope.Start();
                 try
                 {
-                    var response = MonitorResourceMonitorsRestClient.ListBySubscriptionId(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DynatraceMonitorMonitorsRestClient.ListBySubscriptionId(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Dynatrace
                     throw;
                 }
             }
-            Page<MonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DynatraceMonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = MonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorResources");
+                using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDynatraceMonitors");
                 scope.Start();
                 try
                 {
-                    var response = MonitorResourceMonitorsRestClient.ListBySubscriptionIdNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DynatraceMonitorMonitorsRestClient.ListBySubscriptionIdNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

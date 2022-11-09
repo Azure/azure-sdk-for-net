@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties of a Site Recovery Manager (SRM) addon. </summary>
-    public partial class AddonSrmProperties : AddonProperties
+    public partial class AddonSrmProperties : AvsPrivateCloudAddonProperties
     {
         /// <summary> Initializes a new instance of AddonSrmProperties. </summary>
         public AddonSrmProperties()

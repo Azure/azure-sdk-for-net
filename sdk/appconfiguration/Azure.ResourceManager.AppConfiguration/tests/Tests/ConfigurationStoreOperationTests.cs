@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         private string ConfigurationStoreName { get; set; }
 
         public ConfigurationStoreOperationTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -67,9 +67,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
-        public async Task AddTagTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AddTagTest(bool useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             await ConfigStore.AddTagAsync("key1", "value1");
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(ConfigurationStoreName);
             KeyValuePair<string, string> tag = configurationStore.Data.Tags.FirstOrDefault();
@@ -78,9 +80,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.IsTrue("value1".Equals(tag.Value));
         }
 
-        [Test]
-        public async Task SetTagTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTagTest(bool useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             Dictionary<string, string> tags = new Dictionary<string, string> { { "key1", "Value1" }, { "key2", "vaule2" } };
             await ConfigStore.SetTagsAsync(tags);
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(ConfigurationStoreName);
@@ -88,9 +92,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.IsTrue(configurationStore.Data.Tags.Count == 2);
         }
 
-        [Test]
-        public async Task RemoveTagTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RemoveTagTest(bool useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             Dictionary<string, string> tags = new Dictionary<string, string> { { "key1", "Value1" }, { "key2", "vaule2" } };
             await ConfigStore.SetTagsAsync(tags);
             await ConfigStore.RemoveTagAsync("key1");

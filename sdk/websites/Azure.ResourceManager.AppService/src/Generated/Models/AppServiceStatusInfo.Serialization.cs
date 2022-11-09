@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static AppServiceStatusInfo DeserializeAppServiceStatusInfo(JsonElement element)
         {
             Optional<string> message = default;
-            Optional<InsightStatus> statusId = default;
+            Optional<DetectorInsightStatus> statusId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    statusId = property.Value.GetString().ToInsightStatus();
+                    statusId = property.Value.GetString().ToDetectorInsightStatus();
                     continue;
                 }
             }

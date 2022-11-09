@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.NetApp.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string _10MinutelyValue = "_10minutely";
+        private const string TenMinutelyValue = "_10minutely";
         private const string HourlyValue = "hourly";
         private const string DailyValue = "daily";
 
         /// <summary> _10minutely. </summary>
-        public static NetAppReplicationSchedule _10Minutely { get; } = new NetAppReplicationSchedule(_10MinutelyValue);
+        public static NetAppReplicationSchedule TenMinutely { get; } = new NetAppReplicationSchedule(TenMinutelyValue);
         /// <summary> hourly. </summary>
         public static NetAppReplicationSchedule Hourly { get; } = new NetAppReplicationSchedule(HourlyValue);
         /// <summary> daily. </summary>

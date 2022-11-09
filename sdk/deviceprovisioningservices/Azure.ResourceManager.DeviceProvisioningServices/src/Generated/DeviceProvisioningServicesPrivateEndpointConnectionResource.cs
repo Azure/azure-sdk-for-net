@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// A Class representing a DeviceProvisioningServicesPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetDeviceProvisioningServicesPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProvisioningServiceDescriptionResource" /> using the GetDeviceProvisioningServicesPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource" /> using the GetDeviceProvisioningServicesPrivateEndpointConnection method.
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionResource : ArmResource
     {

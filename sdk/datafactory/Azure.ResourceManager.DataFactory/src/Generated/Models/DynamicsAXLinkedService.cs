@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,26 +27,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="servicePrincipalId"/>, <paramref name="servicePrincipalKey"/>, <paramref name="tenant"/> or <paramref name="aadResourceId"/> is null. </exception>
         public DynamicsAXLinkedService(BinaryData uri, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData aadResourceId)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (servicePrincipalId == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalId));
-            }
-            if (servicePrincipalKey == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalKey));
-            }
-            if (tenant == null)
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
-            if (aadResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(aadResourceId));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
+            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
+            Argument.AssertNotNull(tenant, nameof(tenant));
+            Argument.AssertNotNull(aadResourceId, nameof(aadResourceId));
 
             Uri = uri;
             ServicePrincipalId = servicePrincipalId;

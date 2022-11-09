@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of FilteringOperations. </summary>
         public FilteringOperations()
         {
-            Overlays = new ChangeTrackingList<OverlayBasicProperties>();
+            Overlays = new ChangeTrackingList<MediaOverlayBase>();
         }
 
         /// <summary> Initializes a new instance of FilteringOperations. </summary>
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="crop"> The parameters for the rectangular window with which to crop the input video. </param>
         /// <param name="overlays">
         /// The properties of overlays to be applied to the input video. These could be audio, image or video overlays.
-        /// Please note <see cref="OverlayBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MediaOverlayBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioOverlay"/> and <see cref="VideoOverlay"/>.
         /// </param>
-        internal FilteringOperations(DeinterlaceSettings deinterlace, RotationSetting? rotation, RectangularWindowProperties crop, IList<OverlayBasicProperties> overlays)
+        internal FilteringOperations(DeinterlaceSettings deinterlace, RotationSetting? rotation, RectangularWindow crop, IList<MediaOverlayBase> overlays)
         {
             Deinterlace = deinterlace;
             Rotation = rotation;
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The rotation, if any, to be applied to the input video, before it is encoded. Default is Auto. </summary>
         public RotationSetting? Rotation { get; set; }
         /// <summary> The parameters for the rectangular window with which to crop the input video. </summary>
-        public RectangularWindowProperties Crop { get; set; }
+        public RectangularWindow Crop { get; set; }
         /// <summary>
         /// The properties of overlays to be applied to the input video. These could be audio, image or video overlays.
-        /// Please note <see cref="OverlayBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MediaOverlayBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioOverlay"/> and <see cref="VideoOverlay"/>.
         /// </summary>
-        public IList<OverlayBasicProperties> Overlays { get; }
+        public IList<MediaOverlayBase> Overlays { get; }
     }
 }

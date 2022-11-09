@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetFilterListResult>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaAssetFilterListResult>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetFilterListResult value = default;
+                        MediaAssetFilterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetFilterListResult.DeserializeAssetFilterListResult(document.RootElement);
+                        value = MediaAssetFilterListResult.DeserializeMediaAssetFilterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetFilterListResult> List(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
+        public Response<MediaAssetFilterListResult> List(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetFilterListResult value = default;
+                        MediaAssetFilterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetFilterListResult.DeserializeAssetFilterListResult(document.RootElement);
+                        value = MediaAssetFilterListResult.DeserializeMediaAssetFilterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetFilterData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaAssetFilterData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -169,13 +169,13 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetFilterData value = default;
+                        MediaAssetFilterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetFilterData.DeserializeAssetFilterData(document.RootElement);
+                        value = MediaAssetFilterData.DeserializeMediaAssetFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssetFilterData)null, message.Response);
+                    return Response.FromValue((MediaAssetFilterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetFilterData> Get(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, CancellationToken cancellationToken = default)
+        public Response<MediaAssetFilterData> Get(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,19 +204,19 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetFilterData value = default;
+                        MediaAssetFilterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetFilterData.DeserializeAssetFilterData(document.RootElement);
+                        value = MediaAssetFilterData.DeserializeMediaAssetFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssetFilterData)null, message.Response);
+                    return Response.FromValue((MediaAssetFilterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, MediaAssetFilterData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetFilterData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaAssetFilterData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, MediaAssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.Media
                 case 200:
                 case 201:
                     {
-                        AssetFilterData value = default;
+                        MediaAssetFilterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetFilterData.DeserializeAssetFilterData(document.RootElement);
+                        value = MediaAssetFilterData.DeserializeMediaAssetFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetFilterData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data, CancellationToken cancellationToken = default)
+        public Response<MediaAssetFilterData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, MediaAssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -306,9 +306,9 @@ namespace Azure.ResourceManager.Media
                 case 200:
                 case 201:
                     {
-                        AssetFilterData value = default;
+                        MediaAssetFilterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetFilterData.DeserializeAssetFilterData(document.RootElement);
+                        value = MediaAssetFilterData.DeserializeMediaAssetFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, MediaAssetFilterData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetFilterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaAssetFilterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, MediaAssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -451,9 +451,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetFilterData value = default;
+                        MediaAssetFilterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetFilterData.DeserializeAssetFilterData(document.RootElement);
+                        value = MediaAssetFilterData.DeserializeMediaAssetFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetFilterData> Update(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data, CancellationToken cancellationToken = default)
+        public Response<MediaAssetFilterData> Update(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, MediaAssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -486,9 +486,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetFilterData value = default;
+                        MediaAssetFilterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetFilterData.DeserializeAssetFilterData(document.RootElement);
+                        value = MediaAssetFilterData.DeserializeMediaAssetFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetFilterListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaAssetFilterListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -533,9 +533,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetFilterListResult value = default;
+                        MediaAssetFilterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetFilterListResult.DeserializeAssetFilterListResult(document.RootElement);
+                        value = MediaAssetFilterListResult.DeserializeMediaAssetFilterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetFilterListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
+        public Response<MediaAssetFilterListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -566,9 +566,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetFilterListResult value = default;
+                        MediaAssetFilterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetFilterListResult.DeserializeAssetFilterListResult(document.RootElement);
+                        value = MediaAssetFilterListResult.DeserializeMediaAssetFilterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

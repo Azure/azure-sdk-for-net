@@ -30,13 +30,18 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static BlobNfsTarget DeserializeBlobNfsTarget(JsonElement element)
         {
-            Optional<string> target = default;
+            Optional<ResourceIdentifier> target = default;
             Optional<string> usageModel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("target"))
                 {
-                    target = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    target = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("usageModel"))

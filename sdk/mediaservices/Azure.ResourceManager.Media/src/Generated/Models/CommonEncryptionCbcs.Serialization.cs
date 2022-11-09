@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("drm");
                 writer.WriteObjectValue(Drm);
             }
+            if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
+            {
+                writer.WritePropertyName("clearKeyEncryptionConfiguration");
+                writer.WriteObjectValue(ClearKeyEncryptionConfiguration);
+            }
             writer.WriteEndObject();
         }
 
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
             Optional<CbcsDrmConfiguration> drm = default;
+            Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"))
@@ -97,8 +103,18 @@ namespace Azure.ResourceManager.Media.Models
                     drm = CbcsDrmConfiguration.DeserializeCbcsDrmConfiguration(property.Value);
                     continue;
                 }
+                if (property.NameEquals("clearKeyEncryptionConfiguration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value);
+                    continue;
+                }
             }
-            return new CommonEncryptionCbcs(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value);
+            return new CommonEncryptionCbcs(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value);
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DetectorInfo> metadata = default;
-            Optional<IList<DiagnosticInfo>> dataset = default;
+            Optional<IList<DiagnosticDataset>> dataset = default;
             Optional<AppServiceStatusInfo> status = default;
             Optional<IList<DataProviderMetadata>> dataProvidersMetadata = default;
             Optional<QueryUtterancesResults> suggestedUtterances = default;
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DiagnosticInfo> array = new List<DiagnosticInfo>();
+                            List<DiagnosticDataset> array = new List<DiagnosticDataset>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiagnosticInfo.DeserializeDiagnosticInfo(item));
+                                array.Add(DiagnosticDataset.DeserializeDiagnosticDataset(item));
                             }
                             dataset = array;
                             continue;

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority));
+            return new UnknownFirewallPolicyRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority));
         }
     }
 }

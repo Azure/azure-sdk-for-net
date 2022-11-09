@@ -2,6 +2,25 @@
 
 ## 1.3.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.3 (2022-09-12)
+
+### Other Changes
+
+- Updated dependency version of `System.Security.Cryptography` to mitigate [CVE-2022-34716](https://github.com/advisories/GHSA-2m65-m22p-9wjw).
+
+## 1.2.2 (2022-09-06)
+
+### Other Changes
+
+- Updating the `Azure.Storage.Blobs` package to 12.13.1 to mitigate warnings for [CVE-2022-30187](https://github.com/advisories/GHSA-64x4-9hc6-r2h6).  Note that no vulnerability exists, as the feature under advisement is not used by the `Azure.Extensions.AspNetCore.DataProtection.Blobs` package.
 
 ## 1.2.1 (2021-05-14)
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Amqp;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -1031,6 +1032,36 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 SimulateNetworkFailure(client);
                 Assert.IsTrue(receiver.IsClosed);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task OpenSessionIsNotClosedWhenAcceptNextSessionTimesOut(bool enableCrossEntityTransactions)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                var options = new ServiceBusClientOptions
+                {
+                    EnableCrossEntityTransactions = enableCrossEntityTransactions,
+                    RetryOptions = new ServiceBusRetryOptions
+                    {
+                        TryTimeout = TimeSpan.FromSeconds(10),
+                        MaxRetries = 0
+                    }
+                };
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                await using var sender = client.CreateSender(scope.QueueName);
+
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
+
+                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+                await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await client.AcceptNextSessionAsync(scope.QueueName));
+
+                // the receive link should not have been closed due to the other accept call timing out
+                var message = await receiver.ReceiveMessageAsync();
+                Assert.IsNotNull(message);
             }
         }
     }

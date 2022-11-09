@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of AdminCredentials. </summary>
         /// <param name="nsxtUsername"> NSX-T Manager username. </param>
         /// <param name="nsxtPassword"> NSX-T Manager password. </param>
-        /// <param name="vcenterUsername"> vCenter admin username. </param>
-        /// <param name="vcenterPassword"> vCenter admin password. </param>
-        internal AdminCredentials(string nsxtUsername, string nsxtPassword, string vcenterUsername, string vcenterPassword)
+        /// <param name="vCenterUsername"> vCenter admin username. </param>
+        /// <param name="vCenterPassword"> vCenter admin password. </param>
+        internal AdminCredentials(string nsxtUsername, string nsxtPassword, string vCenterUsername, string vCenterPassword)
         {
             NsxtUsername = nsxtUsername;
             NsxtPassword = nsxtPassword;
-            VcenterUsername = vcenterUsername;
-            VcenterPassword = vcenterPassword;
+            VCenterUsername = vCenterUsername;
+            VCenterPassword = vCenterPassword;
         }
 
         /// <summary> NSX-T Manager username. </summary>
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> NSX-T Manager password. </summary>
         public string NsxtPassword { get; }
         /// <summary> vCenter admin username. </summary>
-        public string VcenterUsername { get; }
+        public string VCenterUsername { get; }
         /// <summary> vCenter admin password. </summary>
-        public string VcenterPassword { get; }
+        public string VCenterPassword { get; }
     }
 }

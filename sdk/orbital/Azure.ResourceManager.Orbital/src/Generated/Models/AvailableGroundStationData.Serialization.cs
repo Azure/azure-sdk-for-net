@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Orbital
             Optional<float> longitudeDegrees = default;
             Optional<float> latitudeDegrees = default;
             Optional<float> altitudeMeters = default;
-            Optional<ReleaseMode> releaseMode = default;
+            Optional<GroundStationReleaseMode> releaseMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Orbital
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            releaseMode = new ReleaseMode(property0.Value.GetString());
+                            releaseMode = new GroundStationReleaseMode(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -189,6 +189,24 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
+        /// <inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, string, string, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
+            ServiceBusReceivedMessage message,
+            Dictionary<string, object> propertiesToModify,
+            string deadLetterReason,
+            string deadLetterErrorDescription = default,
+            CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.DeadLetterMessageAsync(
+                message,
+                propertiesToModify,
+                deadLetterReason,
+                deadLetterErrorDescription,
+                cancellationToken)
+            .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
+
         /// <inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
@@ -213,7 +231,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public virtual void ReleaseSession() =>
             // manager will be null if instance created using the public constructor which is exposed for testing purposes
-            _manager?.CancelSession();
+            // This will be awaited when closing the receiver.
+            _ = _manager?.CancelSessionAsync();
 
         ///<inheritdoc cref="ServiceBusSessionReceiver.RenewSessionLockAsync(CancellationToken)"/>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static VirtualMachinesList DeserializeVirtualMachinesList(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualMachineData>> value = default;
+            Optional<IReadOnlyList<AvsPrivateCloudClusterVirtualMachineData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineData> array = new List<VirtualMachineData>();
+                    List<AvsPrivateCloudClusterVirtualMachineData> array = new List<AvsPrivateCloudClusterVirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineData.DeserializeVirtualMachineData(item));
+                        array.Add(AvsPrivateCloudClusterVirtualMachineData.DeserializeAvsPrivateCloudClusterVirtualMachineData(item));
                     }
                     value = array;
                     continue;

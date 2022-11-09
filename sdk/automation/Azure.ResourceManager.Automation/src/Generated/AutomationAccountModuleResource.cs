@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         private readonly ObjectDataTypesRestOperations _objectDataTypesRestClient;
         private readonly ClientDiagnostics _fieldsClientDiagnostics;
         private readonly FieldsRestOperations _fieldsRestClient;
-        private readonly ModuleData _data;
+        private readonly AutomationModuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AutomationAccountModuleResource"/> class for mocking. </summary>
         protected AutomationAccountModuleResource()
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Initializes a new instance of the <see cref = "AutomationAccountModuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutomationAccountModuleResource(ArmClient client, ModuleData data) : this(client, data.Id)
+        internal AutomationAccountModuleResource(ArmClient client, AutomationModuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ModuleData Data
+        public virtual AutomationModuleData Data
         {
             get
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityName"/> is null. </exception>
-        public virtual async Task<Response<Activity>> GetActivityAsync(string activityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationActivity>> GetActivityAsync(string activityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityName, nameof(activityName));
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityName"/> is null. </exception>
-        public virtual Response<Activity> GetActivity(string activityName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationActivity> GetActivity(string activityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityName, nameof(activityName));
 
@@ -312,10 +312,10 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: Activity_ListByModule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Activity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Activity> GetActivitiesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomationActivity" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationActivity> GetActivitiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Activity>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AutomationActivity>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
                 scope.Start();
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Automation
                     throw;
                 }
             }
-            async Task<Page<Activity>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AutomationActivity>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
                 scope.Start();
@@ -354,10 +354,10 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: Activity_ListByModule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Activity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Activity> GetActivities(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationActivity" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationActivity> GetActivities(CancellationToken cancellationToken = default)
         {
-            Page<Activity> FirstPageFunc(int? pageSizeHint)
+            Page<AutomationActivity> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
                 scope.Start();
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Automation
                     throw;
                 }
             }
-            Page<Activity> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AutomationActivity> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
                 scope.Start();
@@ -399,14 +399,14 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TypeField> GetFieldsByModuleAndTypeObjectDataTypesAsync(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationModuleField> GetFieldsByModuleAndTypeAsync(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            async Task<Page<TypeField>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AutomationModuleField>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndTypeObjectDataTypes");
+                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndType");
                 scope.Start();
                 try
                 {
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> A collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TypeField> GetFieldsByModuleAndTypeObjectDataTypes(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationModuleField> GetFieldsByModuleAndType(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Page<TypeField> FirstPageFunc(int? pageSizeHint)
+            Page<AutomationModuleField> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndTypeObjectDataTypes");
+                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndType");
                 scope.Start();
                 try
                 {
@@ -463,12 +463,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TypeField> GetFieldsByTypeAsync(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationModuleField> GetFieldsByTypeAsync(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            async Task<Page<TypeField>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AutomationModuleField>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _fieldsClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByType");
                 scope.Start();
@@ -495,12 +495,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> A collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TypeField> GetFieldsByType(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationModuleField> GetFieldsByType(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Page<TypeField> FirstPageFunc(int? pageSizeHint)
+            Page<AutomationModuleField> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _fieldsClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByType");
                 scope.Start();
@@ -536,11 +536,26 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new AutomationAccountModulePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -567,11 +582,26 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new AutomationAccountModulePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -596,12 +626,23 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new AutomationAccountModulePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -626,12 +667,23 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new AutomationAccountModulePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -656,11 +708,26 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new AutomationAccountModulePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -685,11 +752,26 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new AutomationAccountModulePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
+                }
             }
             catch (Exception e)
             {

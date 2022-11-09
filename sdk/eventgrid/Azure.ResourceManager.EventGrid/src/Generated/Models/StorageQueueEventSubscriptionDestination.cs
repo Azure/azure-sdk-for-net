@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Information about the storage queue destination for an event subscription. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="resourceId"> The Azure Resource ID of the storage account that contains the queue that is the destination of an event subscription. </param>
         /// <param name="queueName"> The name of the Storage queue under a storage account that is the destination of an event subscription. </param>
         /// <param name="queueMessageTimeToLiveInSeconds"> Storage queue message time to live in seconds. </param>
-        internal StorageQueueEventSubscriptionDestination(EndpointType endpointType, string resourceId, string queueName, long? queueMessageTimeToLiveInSeconds) : base(endpointType)
+        internal StorageQueueEventSubscriptionDestination(EndpointType endpointType, ResourceIdentifier resourceId, string queueName, long? queueMessageTimeToLiveInSeconds) : base(endpointType)
         {
             ResourceId = resourceId;
             QueueName = queueName;
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The Azure Resource ID of the storage account that contains the queue that is the destination of an event subscription. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The name of the Storage queue under a storage account that is the destination of an event subscription. </summary>
         public string QueueName { get; set; }
         /// <summary> Storage queue message time to live in seconds. </summary>

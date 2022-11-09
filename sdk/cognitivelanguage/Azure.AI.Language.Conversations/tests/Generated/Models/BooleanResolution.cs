@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations
         internal BooleanResolution(bool value)
         {
             Value = value;
-            ResolutionKind = ResolutionKind.Boolean;
+            ResolutionKind = ResolutionKind.BooleanResolution;
         }
 
         /// <summary> Initializes a new instance of BooleanResolution. </summary>

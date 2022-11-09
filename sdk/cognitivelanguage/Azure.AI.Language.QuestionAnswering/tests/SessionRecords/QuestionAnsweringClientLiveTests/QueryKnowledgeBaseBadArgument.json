@@ -1,19 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-10-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:query-knowledgebases?projectName=testQA\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "16",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-98d05d13baea014ea80ddb16a0afab3d-0cae10f5f1314b4b-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
-          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "6e80fd0251906dd88e927ea0699afd63",
+        "traceparent": "00-d5b6eca242fa60c3247bcb8687a207e6-10cefbffcc6bd60f-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "719739708ccf68d11fee77ad3108ee7a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,35 +18,33 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "1a018b6d-9191-47d8-8c14-92cca875bc5b",
+        "apim-request-id": "e3d0a049-2a8b-4919-bf6b-455a612bf7bc",
         "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 28 Oct 2021 21:15:39 GMT",
+        "Date": "Thu, 22 Sep 2022 00:25:26 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "4"
+        "x-envoy-upstream-service-time": "5"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022error\u0022: {\n",
-        "    \u0022code\u0022: \u0022InvalidArgument\u0022,\n",
-        "    \u0022message\u0022: \u0022Invalid input. See details.\u0022,\n",
-        "    \u0022details\u0022: [\n",
-        "      {\n",
-        "        \u0022code\u0022: \u0022ValidationFailure\u0022,\n",
-        "        \u0022message\u0022: \u0022Provide a valid Question or QnAId field.\u0022,\n",
-        "        \u0022target\u0022: \u0022Question\u0022\n",
-        "      }\n",
-        "    ]\n",
-        "  }\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidArgument",
+          "message": "Invalid input. See details.",
+          "details": [
+            {
+              "code": "ValidationFailure",
+              "message": "Provide a valid Question or QnAId field.",
+              "target": "Question"
+            }
+          ]
+        }
+      }
     }
   ],
   "Variables": {
-    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "QUESTIONANSWERING_KEY": "Sanitized",
-    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "RandomSeed": "951567211"
+    "QUESTIONANSWERING_PROJECT": "testQA",
+    "RandomSeed": "827447807"
   }
 }

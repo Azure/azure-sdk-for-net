@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static EventSubscriptionFullUri DeserializeEventSubscriptionFullUri(JsonElement element)
         {
-            Optional<Uri> endpointUrl = default;
+            Optional<Uri> endpointUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointUrl"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endpointUrl = null;
+                        endpointUri = null;
                         continue;
                     }
-                    endpointUrl = new Uri(property.Value.GetString());
+                    endpointUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new EventSubscriptionFullUri(endpointUrl.Value);
+            return new EventSubscriptionFullUri(endpointUri.Value);
         }
     }
 }

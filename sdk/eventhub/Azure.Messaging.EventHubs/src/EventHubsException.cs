@@ -50,10 +50,10 @@ namespace Azure.Messaging.EventHubs
             {
                 if (string.IsNullOrEmpty(EventHubName))
                 {
-                    return base.Message;
+                    return string.Format(CultureInfo.InvariantCulture, "{0}.  {1}", base.Message, Resources.TroubleshootingGuideLink);
                 }
 
-                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, EventHubName);
+                return string.Format(CultureInfo.InvariantCulture, "{0} ({1}).  {2}", base.Message, EventHubName, Resources.TroubleshootingGuideLink);
             }
         }
 

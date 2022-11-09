@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="capability"> Ground Station Capability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableGroundStationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableGroundStationResource> GetAllAsync(CapabilityParameter capability, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AvailableGroundStationResource> GetAllAsync(GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
             async Task<Page<AvailableGroundStationResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="capability"> Ground Station Capability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableGroundStationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableGroundStationResource> GetAll(CapabilityParameter capability, CancellationToken cancellationToken = default)
+        public virtual Pageable<AvailableGroundStationResource> GetAll(GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
             Page<AvailableGroundStationResource> FirstPageFunc(int? pageSizeHint)
             {

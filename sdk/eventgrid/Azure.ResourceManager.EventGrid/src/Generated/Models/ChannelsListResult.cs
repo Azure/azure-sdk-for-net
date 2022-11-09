@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of ChannelsListResult. </summary>
         internal ChannelsListResult()
         {
-            Value = new ChangeTrackingList<ChannelData>();
+            Value = new ChangeTrackingList<PartnerNamespaceChannelData>();
         }
 
         /// <summary> Initializes a new instance of ChannelsListResult. </summary>
         /// <param name="value"> A collection of Channels. </param>
         /// <param name="nextLink"> A link for the next page of channels. </param>
-        internal ChannelsListResult(IReadOnlyList<ChannelData> value, string nextLink)
+        internal ChannelsListResult(IReadOnlyList<PartnerNamespaceChannelData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A collection of Channels. </summary>
-        public IReadOnlyList<ChannelData> Value { get; }
+        public IReadOnlyList<PartnerNamespaceChannelData> Value { get; }
         /// <summary> A link for the next page of channels. </summary>
         public string NextLink { get; }
     }

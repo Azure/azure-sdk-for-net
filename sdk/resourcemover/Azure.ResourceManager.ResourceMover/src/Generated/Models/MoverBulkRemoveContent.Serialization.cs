@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsValidateOnly))
+            if (Optional.IsDefined(ValidateOnly))
             {
                 writer.WritePropertyName("validateOnly");
-                writer.WriteBooleanValue(IsValidateOnly.Value);
+                writer.WriteBooleanValue(ValidateOnly.Value);
             }
             if (Optional.IsCollectionDefined(MoverResources))
             {

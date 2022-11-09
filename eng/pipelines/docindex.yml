@@ -14,8 +14,8 @@ jobs:
       # Checkout the eng folder from the SDK repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:
-          SkipDefaultCheckout: true
-      
+          SkipCheckoutNone: true
+
       # Sync docs repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:

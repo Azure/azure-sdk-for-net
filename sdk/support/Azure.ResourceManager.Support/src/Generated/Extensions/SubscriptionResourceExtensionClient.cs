@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Support
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _supportTicketDetailSupportTicketsClientDiagnostics;
-        private SupportTicketsRestOperations _supportTicketDetailSupportTicketsRestClient;
+        private ClientDiagnostics _supportTicketClientDiagnostics;
+        private SupportTicketsRestOperations _supportTicketRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Support
         {
         }
 
-        private ClientDiagnostics SupportTicketDetailSupportTicketsClientDiagnostics => _supportTicketDetailSupportTicketsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketDetailResource.ResourceType.Namespace, Diagnostics);
-        private SupportTicketsRestOperations SupportTicketDetailSupportTicketsRestClient => _supportTicketDetailSupportTicketsRestClient ??= new SupportTicketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SupportTicketDetailResource.ResourceType));
+        private ClientDiagnostics SupportTicketClientDiagnostics => _supportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketResource.ResourceType.Namespace, Diagnostics);
+        private SupportTicketsRestOperations SupportTicketRestClient => _supportTicketRestClient ??= new SupportTicketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SupportTicketResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Support
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SupportTicketDetailResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SupportTicketDetailResources and their operations over a SupportTicketDetailResource. </returns>
-        public virtual SupportTicketDetailCollection GetSupportTicketDetails()
+        /// <summary> Gets a collection of SupportTicketResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SupportTicketResources and their operations over a SupportTicketResource. </returns>
+        public virtual SupportTicketCollection GetSupportTickets()
         {
-            return GetCachedClient(Client => new SupportTicketDetailCollection(Client, Id));
+            return GetCachedClient(Client => new SupportTicketCollection(Client, Id));
         }
 
         /// <summary>
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.Support
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability
         /// Operation Id: SupportTickets_CheckNameAvailability
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilitySupportTicketAsync(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SupportTicketDetailSupportTicketsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilitySupportTicket");
+            using var scope = SupportTicketClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSupportTicketNameAvailability");
             scope.Start();
             try
             {
-                var response = await SupportTicketDetailSupportTicketsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, input, cancellationToken).ConfigureAwait(false);
+                var response = await SupportTicketRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -78,15 +78,15 @@ namespace Azure.ResourceManager.Support
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability
         /// Operation Id: SupportTickets_CheckNameAvailability
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityOutput> CheckNameAvailabilitySupportTicket(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public virtual Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SupportTicketDetailSupportTicketsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilitySupportTicket");
+            using var scope = SupportTicketClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSupportTicketNameAvailability");
             scope.Start();
             try
             {
-                var response = SupportTicketDetailSupportTicketsRestClient.CheckNameAvailability(Id.SubscriptionId, input, cancellationToken);
+                var response = SupportTicketRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

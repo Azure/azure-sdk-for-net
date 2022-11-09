@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static RemediationFilters DeserializeRemediationFilters(JsonElement element)
         {
-            Optional<IList<string>> locations = default;
+            Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locations"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;

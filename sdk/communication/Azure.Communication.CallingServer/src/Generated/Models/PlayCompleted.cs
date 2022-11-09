@@ -16,25 +16,31 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of PlayCompleted. </summary>
-        /// <param name="operationContext"> Operation context. </param>
-        /// <param name="resultInfo"></param>
-        /// <param name="eventType"></param>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
+        /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal PlayCompleted(string operationContext, ResultInformation resultInfo, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
+        internal PlayCompleted(string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             OperationContext = operationContext;
-            ResultInfo = resultInfo;
-            EventType = eventType;
+            ResultInformation = resultInformation;
+            Version = version;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            PublicEventType = publicEventType;
         }
 
-        /// <summary> Operation context. </summary>
+        /// <summary> Gets the operation context. </summary>
         public string OperationContext { get; }
-        /// <summary> Gets the result info. </summary>
-        public ResultInformation ResultInfo { get; }
+        /// <summary> Gets the result information. </summary>
+        public ResultInformation ResultInformation { get; }
+        /// <summary> Used to determine the version of the event. </summary>
+        public string Version { get; }
+        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
+        public string PublicEventType { get; }
     }
 }

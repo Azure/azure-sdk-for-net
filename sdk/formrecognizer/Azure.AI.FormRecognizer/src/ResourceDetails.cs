@@ -13,20 +13,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
-        internal ResourceDetails(int documentModelCount, int documentModelLimit)
+        internal ResourceDetails(int customDocumentModelCount, int customDocumentModelLimit)
         {
-            DocumentModelCount = documentModelCount;
-            DocumentModelLimit = documentModelLimit;
+            CustomDocumentModelCount = customDocumentModelCount;
+            CustomDocumentModelLimit = customDocumentModelLimit;
         }
 
         /// <summary>
         /// Number of custom models in the current resource.
         /// </summary>
-        public int DocumentModelCount { get; }
+        public int CustomDocumentModelCount { get; }
 
         /// <summary>
         /// Maximum number of custom models supported in the current resource.
         /// </summary>
-        public int DocumentModelLimit { get; }
+        public int CustomDocumentModelLimit { get; }
     }
 }

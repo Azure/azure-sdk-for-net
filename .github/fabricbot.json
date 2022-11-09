@@ -885,6 +885,15 @@
           ]
         },
         {
+          "label": "DevCenter",
+          "pathFilter": [
+            "sdk/devcenter/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
           "label": "Digital Twins",
           "pathFilter": [
             "sdk/digitaltwins/"
@@ -933,6 +942,15 @@
           "label": "KeyVault",
           "pathFilter": [
             "sdk/keyvault/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Load Test Service",
+          "pathFilter": [
+            "sdk/loadtestservice/"
           ],
           "exclude": [
             ""
@@ -1065,6 +1083,13 @@
           "label": "Communication - Resource Manager",
           "pathFilter": [
             "/sdk/communication/Azure.ResourceManager.Communication/"
+          ]
+        },
+        {
+          "label": "Mixed Reality",
+          "pathFilter": [
+            "/sdk/mixedreality/",
+            "/sdk/objectanchors/"
           ]
         }
       ],
@@ -1362,7 +1387,8 @@
             "Automation"
           ],
           "mentionees": [
-            "jaspkaur28"
+            "jaspkaur28",
+            "omairabdullah"
           ]
         },
         {
@@ -1882,6 +1908,17 @@
         {
           "labels": [
             "Service Attention",
+            "DevCenter"
+          ],
+          "mentionees": [
+            "sebrenna",
+            "mharlan", 
+            "chrissmiller"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
             "DevOps"
           ],
           "mentionees": [
@@ -2103,6 +2140,17 @@
         {
           "labels": [
             "Service Attention",
+            "Load Test Service"
+          ],
+          "mentionees": [
+            "abranj1219",
+            "ninallam",
+            "NiveditJain"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
             "Logic App"
           ],
           "mentionees": [
@@ -2198,6 +2246,16 @@
           ],
           "mentionees": [
             "shijojoy"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Mixed Reality"
+          ],
+          "mentionees": [
+            "crtreasu",
+            "rgarcia"
           ]
         },
         {
@@ -2473,7 +2531,8 @@
             "Recovery Services Backup"
           ],
           "mentionees": [
-            "pvrk"
+            "pvrk",
+            "Daya-Patil"
           ]
         },
         {
@@ -2736,7 +2795,7 @@
           ],
           "mentionees": [
             "wonner",
-            "zesluo"
+            "yanjungao718"
           ]
         },
         {

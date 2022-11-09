@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of PolicyGroupSummary. </summary>
         /// <param name="policyGroupName"> Policy group name. </param>
         /// <param name="results"> Compliance summary for the policy definition group. </param>
-        internal PolicyGroupSummary(string policyGroupName, SummaryResults results)
+        internal PolicyGroupSummary(string policyGroupName, PolicySummaryResults results)
         {
             PolicyGroupName = policyGroupName;
             Results = results;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Policy group name. </summary>
         public string PolicyGroupName { get; }
         /// <summary> Compliance summary for the policy definition group. </summary>
-        public SummaryResults Results { get; }
+        public PolicySummaryResults Results { get; }
     }
 }

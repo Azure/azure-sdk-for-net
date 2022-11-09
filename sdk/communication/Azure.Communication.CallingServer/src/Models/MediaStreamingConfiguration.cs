@@ -9,8 +9,8 @@ namespace Azure.Communication.CallingServer
     public class MediaStreamingConfiguration
     {
         /// <summary> Initializes a new instance of MediaStreamingConfiguration. </summary>
-        public MediaStreamingConfiguration(Uri transportUrl, MediaStreamingTransportType transportType,
-            MediaStreamingContentType contentType, MediaStreamingAudioChannelType audioChannelType)
+        public MediaStreamingConfiguration(Uri transportUrl, MediaStreamingTransport transportType,
+            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
         {
             TransportUrl = transportUrl;
             TransportType = transportType;
@@ -21,10 +21,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> Transport URL for media streaming. </summary>
         public Uri TransportUrl { get; }
         /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
-        public MediaStreamingTransportType TransportType { get; }
+        public MediaStreamingTransport TransportType { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
-        public MediaStreamingContentType ContentType { get; }
+        public MediaStreamingContent ContentType { get; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
-        public MediaStreamingAudioChannelType AudioChannelType { get; }
+        public MediaStreamingAudioChannel AudioChannelType { get; }
     }
 }

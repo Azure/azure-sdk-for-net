@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         }
 
         /// <summary> Public network access for the DigitalTwinsInstance. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DigitalTwinsPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

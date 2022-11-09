@@ -24,14 +24,12 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         private const string EventGridSchemaValue = "EventGridSchema";
         private const string CustomInputSchemaValue = "CustomInputSchema";
-        private const string CloudEventSchemaV10Value = "CloudEventSchemaV1_0";
+        private const string CloudEventSchemaV1_0Value = "CloudEventSchemaV1_0";
 
         /// <summary> EventGridSchema. </summary>
         public static EventDeliverySchema EventGridSchema { get; } = new EventDeliverySchema(EventGridSchemaValue);
         /// <summary> CustomInputSchema. </summary>
         public static EventDeliverySchema CustomInputSchema { get; } = new EventDeliverySchema(CustomInputSchemaValue);
-        /// <summary> CloudEventSchemaV1_0. </summary>
-        public static EventDeliverySchema CloudEventSchemaV10 { get; } = new EventDeliverySchema(CloudEventSchemaV10Value);
         /// <summary> Determines if two <see cref="EventDeliverySchema"/> values are the same. </summary>
         public static bool operator ==(EventDeliverySchema left, EventDeliverySchema right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventDeliverySchema"/> values are not the same. </summary>

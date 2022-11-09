@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>
         internal AvailableDataBoxEdgeSku()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             ApiVersions = new ChangeTrackingList<string>();
-            LocationInfo = new ChangeTrackingList<SkuLocationInfo>();
-            Costs = new ChangeTrackingList<SkuCost>();
-            ShipmentTypes = new ChangeTrackingList<ShipmentType>();
-            Capabilities = new ChangeTrackingList<SkuCapability>();
+            LocationInfo = new ChangeTrackingList<DataBoxEdgeSkuLocationInfo>();
+            Costs = new ChangeTrackingList<DataBoxEdgeSkuCost>();
+            ShipmentTypes = new ChangeTrackingList<DataBoxEdgeShipmentType>();
+            Capabilities = new ChangeTrackingList<DataBoxEdgeSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="availability"> Links to the next set of results. </param>
         /// <param name="shipmentTypes"> List of Shipment Types supported by this SKU. </param>
         /// <param name="capabilities"> The capability info of the SKU. </param>
-        internal AvailableDataBoxEdgeSku(string resourceType, DataBoxEdgeSkuName? name, string kind, DataBoxEdgeSkuTier? tier, string size, string family, IReadOnlyList<string> locations, IReadOnlyList<string> apiVersions, IReadOnlyList<SkuLocationInfo> locationInfo, IReadOnlyList<SkuCost> costs, SkuSignupOption? signupOption, SkuVersion? version, SkuAvailability? availability, IReadOnlyList<ShipmentType> shipmentTypes, IReadOnlyList<SkuCapability> capabilities)
+        internal AvailableDataBoxEdgeSku(string resourceType, DataBoxEdgeSkuName? name, string kind, DataBoxEdgeSkuTier? tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> apiVersions, IReadOnlyList<DataBoxEdgeSkuLocationInfo> locationInfo, IReadOnlyList<DataBoxEdgeSkuCost> costs, DataBoxEdgeSkuSignupOption? signupOption, DataBoxEdgeSkuVersion? version, DataBoxEdgeSkuAvailability? availability, IReadOnlyList<DataBoxEdgeShipmentType> shipmentTypes, IReadOnlyList<DataBoxEdgeSkuCapability> capabilities)
         {
             ResourceType = resourceType;
             Name = name;
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The Sku family. </summary>
         public string Family { get; }
         /// <summary> Availability of the Sku for the region. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> The API versions in which Sku is available. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> Availability of the Sku for the location/zone/site. </summary>
-        public IReadOnlyList<SkuLocationInfo> LocationInfo { get; }
+        public IReadOnlyList<DataBoxEdgeSkuLocationInfo> LocationInfo { get; }
         /// <summary> The pricing info of the Sku. </summary>
-        public IReadOnlyList<SkuCost> Costs { get; }
+        public IReadOnlyList<DataBoxEdgeSkuCost> Costs { get; }
         /// <summary> Sku can be signed up by customer or not. </summary>
-        public SkuSignupOption? SignupOption { get; }
+        public DataBoxEdgeSkuSignupOption? SignupOption { get; }
         /// <summary> Availability of the Sku as preview/stable. </summary>
-        public SkuVersion? Version { get; }
+        public DataBoxEdgeSkuVersion? Version { get; }
         /// <summary> Links to the next set of results. </summary>
-        public SkuAvailability? Availability { get; }
+        public DataBoxEdgeSkuAvailability? Availability { get; }
         /// <summary> List of Shipment Types supported by this SKU. </summary>
-        public IReadOnlyList<ShipmentType> ShipmentTypes { get; }
+        public IReadOnlyList<DataBoxEdgeShipmentType> ShipmentTypes { get; }
         /// <summary> The capability info of the SKU. </summary>
-        public IReadOnlyList<SkuCapability> Capabilities { get; }
+        public IReadOnlyList<DataBoxEdgeSkuCapability> Capabilities { get; }
     }
 }

@@ -54,6 +54,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateBlobClient("oci-artifact");
 
+            await UploadManifestPrerequisites(client);
+
             // Act
             var manifest = CreateManifest();
             var uploadResult = await client.UploadManifestAsync(manifest);
@@ -64,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -75,6 +77,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
+
+            await UploadManifestPrerequisites(client);
 
             // Act
             string payload = "" +
@@ -106,7 +110,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -133,7 +137,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             var artifact = metadataClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -186,7 +190,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             var artifact = metadataClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -199,7 +203,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadResultValue2 = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -259,15 +263,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 digest = uploadResult.Value.Digest;
             }
 
-            // Enable download code once Test proxy SSL issue is resolved [https://github.com/Azure/azure-sdk-tools/issues/2982]
             // Assert
-            //var downloadResult = await client.DownloadBlobAsync(digest);
-            //Assert.AreEqual(digest, downloadResult.Value.Digest);
-            //Assert.AreEqual(streamLength, downloadResult.Value.Content.Length);
+            var downloadResult = await client.DownloadBlobAsync(digest);
+            Assert.AreEqual(digest, downloadResult.Value.Digest);
+            Assert.AreEqual(streamLength, downloadResult.Value.Content.Length);
 
             //// Clean up
-            //await client.DeleteBlobAsync(digest);
-            //downloadResult.Value.Dispose();
+            await client.DeleteBlobAsync(digest);
+            downloadResult.Value.Dispose();
         }
     }
 }

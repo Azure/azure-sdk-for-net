@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of IotDpsSkuDefinitionListResult. </summary>
         internal IotDpsSkuDefinitionListResult()
         {
-            Value = new ChangeTrackingList<IotDpsSkuDefinition>();
+            Value = new ChangeTrackingList<DeviceProvisioningServicesSkuDefinition>();
         }
 
         /// <summary> Initializes a new instance of IotDpsSkuDefinitionListResult. </summary>
         /// <param name="value"> The list of SKUs. </param>
         /// <param name="nextLink"> The next link. </param>
-        internal IotDpsSkuDefinitionListResult(IReadOnlyList<IotDpsSkuDefinition> value, string nextLink)
+        internal IotDpsSkuDefinitionListResult(IReadOnlyList<DeviceProvisioningServicesSkuDefinition> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of SKUs. </summary>
-        public IReadOnlyList<IotDpsSkuDefinition> Value { get; }
+        public IReadOnlyList<DeviceProvisioningServicesSkuDefinition> Value { get; }
         /// <summary> The next link. </summary>
         public string NextLink { get; }
     }

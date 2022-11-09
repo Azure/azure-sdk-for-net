@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Purview
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AccountResources and their operations over a AccountResource. </returns>
-        public virtual AccountCollection GetAccounts()
+        /// <summary> Gets a collection of PurviewAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PurviewAccountResources and their operations over a PurviewAccountResource. </returns>
+        public virtual PurviewAccountCollection GetPurviewAccounts()
         {
-            return GetCachedClient(Client => new AccountCollection(Client, Id));
+            return GetCachedClient(Client => new PurviewAccountCollection(Client, Id));
         }
     }
 }

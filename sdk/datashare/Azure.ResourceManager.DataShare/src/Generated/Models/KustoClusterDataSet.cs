@@ -13,17 +13,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A kusto cluster data set. </summary>
-    public partial class KustoClusterDataSet : DataSetData
+    public partial class KustoClusterDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of KustoClusterDataSet. </summary>
         /// <param name="kustoClusterResourceId"> Resource id of the kusto cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kustoClusterResourceId"/> is null. </exception>
-        public KustoClusterDataSet(string kustoClusterResourceId)
+        public KustoClusterDataSet(ResourceIdentifier kustoClusterResourceId)
         {
-            if (kustoClusterResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(kustoClusterResourceId));
-            }
+            Argument.AssertNotNull(kustoClusterResourceId, nameof(kustoClusterResourceId));
 
             KustoClusterResourceId = kustoClusterResourceId;
             Kind = DataSetKind.KustoCluster;
@@ -39,7 +36,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="kustoClusterResourceId"> Resource id of the kusto cluster. </param>
         /// <param name="location"> Location of the kusto cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the kusto cluster data set. </param>
-        internal KustoClusterDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string dataSetId, string kustoClusterResourceId, AzureLocation? location, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
+        internal KustoClusterDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, ResourceIdentifier kustoClusterResourceId, AzureLocation? location, DataShareProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
         {
             DataSetId = dataSetId;
             KustoClusterResourceId = kustoClusterResourceId;
@@ -49,12 +46,12 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> Resource id of the kusto cluster. </summary>
-        public string KustoClusterResourceId { get; set; }
+        public ResourceIdentifier KustoClusterResourceId { get; set; }
         /// <summary> Location of the kusto cluster. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Provisioning state of the kusto cluster data set. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataShareProvisioningState? ProvisioningState { get; }
     }
 }

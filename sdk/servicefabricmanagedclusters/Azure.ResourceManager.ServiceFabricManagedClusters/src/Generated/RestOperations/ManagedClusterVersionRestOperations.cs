@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01-preview";
+            _apiVersion = apiVersion ?? "2022-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedClusterCodeVersionResultData>> GetAsync(string subscriptionId, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceFabricManagedClusterVersion>> GetAsync(string subscriptionId, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
@@ -76,13 +76,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        ManagedClusterCodeVersionResultData value = default;
+                        ServiceFabricManagedClusterVersion value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedClusterCodeVersionResultData.DeserializeManagedClusterCodeVersionResultData(document.RootElement);
+                        value = ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ManagedClusterCodeVersionResultData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedClusterCodeVersionResultData> Get(string subscriptionId, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
+        public Response<ServiceFabricManagedClusterVersion> Get(string subscriptionId, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
@@ -106,13 +104,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        ManagedClusterCodeVersionResultData value = default;
+                        ServiceFabricManagedClusterVersion value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedClusterCodeVersionResultData.DeserializeManagedClusterCodeVersionResultData(document.RootElement);
+                        value = ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ManagedClusterCodeVersionResultData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -148,7 +144,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedClusterCodeVersionResultData>> GetByEnvironmentAsync(string subscriptionId, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceFabricManagedClusterVersion>> GetByEnvironmentAsync(string subscriptionId, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
@@ -159,13 +155,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        ManagedClusterCodeVersionResultData value = default;
+                        ServiceFabricManagedClusterVersion value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedClusterCodeVersionResultData.DeserializeManagedClusterCodeVersionResultData(document.RootElement);
+                        value = ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ManagedClusterCodeVersionResultData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +173,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedClusterCodeVersionResultData> GetByEnvironment(string subscriptionId, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        public Response<ServiceFabricManagedClusterVersion> GetByEnvironment(string subscriptionId, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
@@ -190,13 +184,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        ManagedClusterCodeVersionResultData value = default;
+                        ServiceFabricManagedClusterVersion value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedClusterCodeVersionResultData.DeserializeManagedClusterCodeVersionResultData(document.RootElement);
+                        value = ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ManagedClusterCodeVersionResultData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -227,7 +219,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<ManagedClusterCodeVersionResultData>>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ServiceFabricManagedClusterVersion>>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -237,12 +229,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        IReadOnlyList<ManagedClusterCodeVersionResultData> value = default;
+                        IReadOnlyList<ServiceFabricManagedClusterVersion> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<ManagedClusterCodeVersionResultData> array = new List<ManagedClusterCodeVersionResultData>();
+                        List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ManagedClusterCodeVersionResultData.DeserializeManagedClusterCodeVersionResultData(item));
+                            array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -258,7 +250,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<ManagedClusterCodeVersionResultData>> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ServiceFabricManagedClusterVersion>> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -268,12 +260,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        IReadOnlyList<ManagedClusterCodeVersionResultData> value = default;
+                        IReadOnlyList<ServiceFabricManagedClusterVersion> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<ManagedClusterCodeVersionResultData> array = new List<ManagedClusterCodeVersionResultData>();
+                        List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ManagedClusterCodeVersionResultData.DeserializeManagedClusterCodeVersionResultData(item));
+                            array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -311,7 +303,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<ManagedClusterCodeVersionResultData>>> ListByEnvironmentAsync(string subscriptionId, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ServiceFabricManagedClusterVersion>>> ListByEnvironmentAsync(string subscriptionId, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -321,12 +313,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        IReadOnlyList<ManagedClusterCodeVersionResultData> value = default;
+                        IReadOnlyList<ServiceFabricManagedClusterVersion> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<ManagedClusterCodeVersionResultData> array = new List<ManagedClusterCodeVersionResultData>();
+                        List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ManagedClusterCodeVersionResultData.DeserializeManagedClusterCodeVersionResultData(item));
+                            array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -343,7 +335,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<ManagedClusterCodeVersionResultData>> ListByEnvironment(string subscriptionId, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ServiceFabricManagedClusterVersion>> ListByEnvironment(string subscriptionId, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -353,12 +345,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        IReadOnlyList<ManagedClusterCodeVersionResultData> value = default;
+                        IReadOnlyList<ServiceFabricManagedClusterVersion> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<ManagedClusterCodeVersionResultData> array = new List<ManagedClusterCodeVersionResultData>();
+                        List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ManagedClusterCodeVersionResultData.DeserializeManagedClusterCodeVersionResultData(item));
+                            array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

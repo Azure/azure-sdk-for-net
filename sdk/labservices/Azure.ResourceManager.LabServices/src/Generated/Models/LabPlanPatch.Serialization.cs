@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(LinkedLmsInstance))
             {
                 writer.WritePropertyName("linkedLmsInstance");
-                writer.WriteStringValue(LinkedLmsInstance);
+                writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

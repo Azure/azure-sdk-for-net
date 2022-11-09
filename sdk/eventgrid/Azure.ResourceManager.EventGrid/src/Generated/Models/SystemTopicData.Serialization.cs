@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -54,17 +55,17 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static SystemTopicData DeserializeSystemTopicData(JsonElement element)
         {
-            Optional<IdentityInfo> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<string> source = default;
+            Optional<EventGridResourceProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> source = default;
             Optional<string> topicType = default;
-            Optional<string> metricResourceId = default;
+            Optional<Guid> metricResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = IdentityInfo.DeserializeIdentityInfo(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -138,12 +139,17 @@ namespace Azure.ResourceManager.EventGrid
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ResourceProvisioningState(property0.Value.GetString());
+                            provisioningState = new EventGridResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("source"))
                         {
-                            source = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            source = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("topicType"))
@@ -153,14 +159,19 @@ namespace Azure.ResourceManager.EventGrid
                         }
                         if (property0.NameEquals("metricResourceId"))
                         {
-                            metricResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            metricResourceId = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SystemTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), source.Value, topicType.Value, metricResourceId.Value);
+            return new SystemTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), source.Value, topicType.Value, Optional.ToNullable(metricResourceId));
         }
     }
 }

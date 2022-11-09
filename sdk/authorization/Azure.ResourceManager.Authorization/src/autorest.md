@@ -17,19 +17,19 @@ skip-csproj: true
 rename-mapping:
   RoleAssignment.properties.delegatedManagedIdentityResourceId: -|arm-id
   DenyAssignment.properties.doNotApplyToChildScopes: IsAppliedToChildScopes
-  RoleAssignmentSchedule.properties.linkedRoleEligibilityScheduleId: -|uuid
+  RoleAssignmentSchedule.properties.linkedRoleEligibilityScheduleId: -|arm-id
   RoleAssignmentSchedule.properties.roleAssignmentScheduleRequestId: -|arm-id
-  RoleAssignmentScheduleInstance.properties.linkedRoleEligibilityScheduleId: -|uuid
-  RoleAssignmentScheduleInstance.properties.linkedRoleEligibilityScheduleInstanceId: -|uuid
+  RoleAssignmentScheduleInstance.properties.linkedRoleEligibilityScheduleId: -|arm-id
+  RoleAssignmentScheduleInstance.properties.linkedRoleEligibilityScheduleInstanceId: -|arm-id
   RoleAssignmentScheduleInstance.properties.originRoleAssignmentId: -|arm-id
   RoleAssignmentScheduleInstance.properties.roleAssignmentScheduleId: -|arm-id
-  RoleAssignmentScheduleRequest.properties.linkedRoleEligibilityScheduleId: -|uuid
-  RoleAssignmentScheduleRequest.properties.targetRoleAssignmentScheduleId: -|uuid
-  RoleAssignmentScheduleRequest.properties.targetRoleAssignmentScheduleInstanceId: -|uuid
+  RoleAssignmentScheduleRequest.properties.linkedRoleEligibilityScheduleId: -|arm-id
+  RoleAssignmentScheduleRequest.properties.targetRoleAssignmentScheduleId: -|arm-id
+  RoleAssignmentScheduleRequest.properties.targetRoleAssignmentScheduleInstanceId: -|arm-id
   RoleEligibilitySchedule.properties.roleEligibilityScheduleRequestId: -|arm-id
   RoleEligibilityScheduleInstance.properties.roleEligibilityScheduleId: -|arm-id
-  RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleId: -|uuid
-  RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleInstanceId: -|uuid
+  RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleId: -|arm-id
+  RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleInstanceId: -|arm-id
   RoleManagementPolicyApprovalRule.setting: Settings
   RoleManagementPolicyEnablementRule.enabledRules: EnablementRules
   RoleManagementPolicyNotificationRule.notificationType: NotificationDeliveryType

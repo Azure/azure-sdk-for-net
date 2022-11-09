@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -16,18 +16,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
         /// <param name="sourceRegion"> Gets or sets the source region. </param>
         /// <param name="targetRegion"> Gets or sets the target region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/> or <paramref name="targetRegion"/> is null. </exception>
-        public MoverResourceSetProperties(string sourceRegion, string targetRegion)
+        public MoverResourceSetProperties(AzureLocation sourceRegion, AzureLocation targetRegion)
         {
-            if (sourceRegion == null)
-            {
-                throw new ArgumentNullException(nameof(sourceRegion));
-            }
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
-
             SourceRegion = sourceRegion;
             TargetRegion = targetRegion;
         }
@@ -37,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="targetRegion"> Gets or sets the target region. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the move collection errors. </param>
-        internal MoverResourceSetProperties(string sourceRegion, string targetRegion, MoverProvisioningState? provisioningState, MoveCollectionPropertiesErrors errors)
+        internal MoverResourceSetProperties(AzureLocation sourceRegion, AzureLocation targetRegion, MoverProvisioningState? provisioningState, MoveCollectionPropertiesErrors errors)
         {
             SourceRegion = sourceRegion;
             TargetRegion = targetRegion;
@@ -46,9 +36,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         }
 
         /// <summary> Gets or sets the source region. </summary>
-        public string SourceRegion { get; set; }
+        public AzureLocation SourceRegion { get; set; }
         /// <summary> Gets or sets the target region. </summary>
-        public string TargetRegion { get; set; }
+        public AzureLocation TargetRegion { get; set; }
         /// <summary> Defines the provisioning states. </summary>
         public MoverProvisioningState? ProvisioningState { get; }
         /// <summary> Defines the move collection errors. </summary>

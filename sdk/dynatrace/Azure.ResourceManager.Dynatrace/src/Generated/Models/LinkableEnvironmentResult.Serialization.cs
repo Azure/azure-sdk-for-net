@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             Optional<string> environmentId = default;
             Optional<string> environmentName = default;
-            Optional<PlanData> planData = default;
+            Optional<DynatraceBillingPlanInfo> planData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("environmentId"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    planData = PlanData.DeserializePlanData(property.Value);
+                    planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value);
                     continue;
                 }
             }

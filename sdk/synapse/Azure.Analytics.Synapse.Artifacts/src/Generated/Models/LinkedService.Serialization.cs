@@ -71,6 +71,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AmazonRdsForSqlServer": return AmazonRdsForSqlServerLinkedService.DeserializeAmazonRdsForSqlServerLinkedService(element);
                     case "AmazonRedshift": return AmazonRedshiftLinkedService.DeserializeAmazonRedshiftLinkedService(element);
                     case "AmazonS3": return AmazonS3LinkedService.DeserializeAmazonS3LinkedService(element);
+                    case "AppFigures": return AppFiguresLinkedService.DeserializeAppFiguresLinkedService(element);
+                    case "Asana": return AsanaLinkedService.DeserializeAsanaLinkedService(element);
                     case "AzureBatch": return AzureBatchLinkedService.DeserializeAzureBatchLinkedService(element);
                     case "AzureBlobFS": return AzureBlobFSLinkedService.DeserializeAzureBlobFSLinkedService(element);
                     case "AzureBlobStorage": return AzureBlobStorageLinkedService.DeserializeAzureBlobStorageLinkedService(element);
@@ -92,6 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AzureSqlDatabase": return AzureSqlDatabaseLinkedService.DeserializeAzureSqlDatabaseLinkedService(element);
                     case "AzureSqlMI": return AzureSqlMILinkedService.DeserializeAzureSqlMILinkedService(element);
                     case "AzureStorage": return AzureStorageLinkedService.DeserializeAzureStorageLinkedService(element);
+                    case "AzureSynapseArtifacts": return AzureSynapseArtifactsLinkedService.DeserializeAzureSynapseArtifactsLinkedService(element);
                     case "AzureTableStorage": return AzureTableStorageLinkedService.DeserializeAzureTableStorageLinkedService(element);
                     case "Cassandra": return CassandraLinkedService.DeserializeCassandraLinkedService(element);
                     case "CommonDataServiceForApps": return CommonDataServiceForAppsLinkedService.DeserializeCommonDataServiceForAppsLinkedService(element);
@@ -100,6 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "CosmosDbMongoDbApi": return CosmosDbMongoDbApiLinkedService.DeserializeCosmosDbMongoDbApiLinkedService(element);
                     case "Couchbase": return CouchbaseLinkedService.DeserializeCouchbaseLinkedService(element);
                     case "CustomDataSource": return CustomDataSourceLinkedService.DeserializeCustomDataSourceLinkedService(element);
+                    case "Dataworld": return DataworldLinkedService.DeserializeDataworldLinkedService(element);
                     case "Db2": return Db2LinkedService.DeserializeDb2LinkedService(element);
                     case "Drill": return DrillLinkedService.DeserializeDrillLinkedService(element);
                     case "Dynamics": return DynamicsLinkedService.DeserializeDynamicsLinkedService(element);
@@ -111,6 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "GoogleAdWords": return GoogleAdWordsLinkedService.DeserializeGoogleAdWordsLinkedService(element);
                     case "GoogleBigQuery": return GoogleBigQueryLinkedService.DeserializeGoogleBigQueryLinkedService(element);
                     case "GoogleCloudStorage": return GoogleCloudStorageLinkedService.DeserializeGoogleCloudStorageLinkedService(element);
+                    case "GoogleSheets": return GoogleSheetsLinkedService.DeserializeGoogleSheetsLinkedService(element);
                     case "Greenplum": return GreenplumLinkedService.DeserializeGreenplumLinkedService(element);
                     case "HBase": return HBaseLinkedService.DeserializeHBaseLinkedService(element);
                     case "HDInsight": return HDInsightLinkedService.DeserializeHDInsightLinkedService(element);
@@ -151,6 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapCloudForCustomer": return SapCloudForCustomerLinkedService.DeserializeSapCloudForCustomerLinkedService(element);
                     case "SapEcc": return SapEccLinkedService.DeserializeSapEccLinkedService(element);
                     case "SapHana": return SapHanaLinkedService.DeserializeSapHanaLinkedService(element);
+                    case "SapOdp": return SapOdpLinkedService.DeserializeSapOdpLinkedService(element);
                     case "SapOpenHub": return SapOpenHubLinkedService.DeserializeSapOpenHubLinkedService(element);
                     case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element);
                     case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element);
@@ -165,6 +171,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Sybase": return SybaseLinkedService.DeserializeSybaseLinkedService(element);
                     case "TeamDesk": return TeamDeskLinkedService.DeserializeTeamDeskLinkedService(element);
                     case "Teradata": return TeradataLinkedService.DeserializeTeradataLinkedService(element);
+                    case "Twilio": return TwilioLinkedService.DeserializeTwilioLinkedService(element);
                     case "Vertica": return VerticaLinkedService.DeserializeVerticaLinkedService(element);
                     case "Web": return WebLinkedService.DeserializeWebLinkedService(element);
                     case "Xero": return XeroLinkedService.DeserializeXeroLinkedService(element);

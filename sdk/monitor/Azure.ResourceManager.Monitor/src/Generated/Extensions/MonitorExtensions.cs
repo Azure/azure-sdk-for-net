@@ -342,31 +342,29 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// List the Log Search rules within a subscription group.
+        /// Retrieve a scheduled query rule definitions in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
         /// Operation Id: ScheduledQueryRules_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogSearchRuleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LogSearchRuleResource> GetLogSearchRulesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLogSearchRulesAsync(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetScheduledQueryRulesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List the Log Search rules within a subscription group.
+        /// Retrieve a scheduled query rule definitions in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
         /// Operation Id: ScheduledQueryRules_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogSearchRuleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LogSearchRuleResource> GetLogSearchRules(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLogSearchRules(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetScheduledQueryRules(cancellationToken);
         }
 
         /// <summary>
@@ -642,17 +640,17 @@ namespace Azure.ResourceManager.Monitor
             return resourceGroupResource.GetMetricAlerts().Get(ruleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LogSearchRuleResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ScheduledQueryRuleResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of LogSearchRuleResources and their operations over a LogSearchRuleResource. </returns>
-        public static LogSearchRuleCollection GetLogSearchRules(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
+        public static ScheduledQueryRuleCollection GetScheduledQueryRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetLogSearchRules();
+            return GetExtensionClient(resourceGroupResource).GetScheduledQueryRules();
         }
 
         /// <summary>
-        /// Gets an Log Search rule
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
+        /// Retrieve an scheduled query rule definition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
         /// Operation Id: ScheduledQueryRules_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -661,14 +659,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LogSearchRuleResource>> GetLogSearchRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScheduledQueryRuleResource>> GetScheduledQueryRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLogSearchRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetScheduledQueryRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an Log Search rule
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
+        /// Retrieve an scheduled query rule definition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
         /// Operation Id: ScheduledQueryRules_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -677,9 +675,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LogSearchRuleResource> GetLogSearchRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        public static Response<ScheduledQueryRuleResource> GetScheduledQueryRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLogSearchRules().Get(ruleName, cancellationToken);
+            return resourceGroupResource.GetScheduledQueryRules().Get(ruleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>
@@ -963,36 +961,12 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Gets a collection of DiagnosticSettingResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
-        public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmResource armResource)
-        {
-            return GetExtensionClient(armResource).GetDiagnosticSettings();
-        }
-
-        /// <summary> Gets a collection of DiagnosticSettingResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
         public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmClient client, ResourceIdentifier scope)
         {
             return GetExtensionClient(client, scope).GetDiagnosticSettings();
-        }
-
-        /// <summary>
-        /// Gets the active diagnostic settings for the specified resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// Operation Id: DiagnosticSettings_Get
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="name"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetDiagnosticSettings().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1010,22 +984,6 @@ namespace Azure.ResourceManager.Monitor
         public static async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             return await client.GetDiagnosticSettings(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the active diagnostic settings for the specified resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// Operation Id: DiagnosticSettings_Get
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="name"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DiagnosticSettingResource> GetDiagnosticSetting(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetDiagnosticSettings().Get(name, cancellationToken);
         }
 
         /// <summary>
@@ -1273,20 +1231,20 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region LogSearchRuleResource
+        #region ScheduledQueryRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="LogSearchRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogSearchRuleResource.CreateResourceIdentifier" /> to create a <see cref="LogSearchRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScheduledQueryRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduledQueryRuleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledQueryRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogSearchRuleResource" /> object. </returns>
-        public static LogSearchRuleResource GetLogSearchRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScheduledQueryRuleResource" /> object. </returns>
+        public static ScheduledQueryRuleResource GetScheduledQueryRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LogSearchRuleResource.ValidateResourceId(id);
-                return new LogSearchRuleResource(client, id);
+                ScheduledQueryRuleResource.ValidateResourceId(id);
+                return new ScheduledQueryRuleResource(client, id);
             }
             );
         }

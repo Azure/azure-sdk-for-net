@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -13,19 +14,16 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class MarkDevicesShippedContent
     {
         /// <summary> Initializes a new instance of MarkDevicesShippedContent. </summary>
-        /// <param name="deliverToDcPackageDetails"> Delivery package details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deliverToDcPackageDetails"/> is null. </exception>
-        public MarkDevicesShippedContent(PackageCarrierInfo deliverToDcPackageDetails)
+        /// <param name="deliverToDataCenterPackageDetails"> Delivery package details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deliverToDataCenterPackageDetails"/> is null. </exception>
+        public MarkDevicesShippedContent(PackageCarrierInfo deliverToDataCenterPackageDetails)
         {
-            if (deliverToDcPackageDetails == null)
-            {
-                throw new ArgumentNullException(nameof(deliverToDcPackageDetails));
-            }
+            Argument.AssertNotNull(deliverToDataCenterPackageDetails, nameof(deliverToDataCenterPackageDetails));
 
-            DeliverToDcPackageDetails = deliverToDcPackageDetails;
+            DeliverToDataCenterPackageDetails = deliverToDataCenterPackageDetails;
         }
 
         /// <summary> Delivery package details. </summary>
-        public PackageCarrierInfo DeliverToDcPackageDetails { get; }
+        public PackageCarrierInfo DeliverToDataCenterPackageDetails { get; }
     }
 }

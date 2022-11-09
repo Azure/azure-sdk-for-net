@@ -13,19 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _spacecraftClientDiagnostics;
-        private SpacecraftsRestOperations _spacecraftRestClient;
-        private ClientDiagnostics _contactProfileClientDiagnostics;
-        private ContactProfilesRestOperations _contactProfileRestClient;
-        private ClientDiagnostics _operationsResultsClientDiagnostics;
-        private OperationsResultsRestOperations _operationsResultsRestClient;
+        private ClientDiagnostics _orbitalSpacecraftSpacecraftsClientDiagnostics;
+        private SpacecraftsRestOperations _orbitalSpacecraftSpacecraftsRestClient;
+        private ClientDiagnostics _orbitalContactProfileContactProfilesClientDiagnostics;
+        private ContactProfilesRestOperations _orbitalContactProfileContactProfilesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,12 +36,10 @@ namespace Azure.ResourceManager.Orbital
         {
         }
 
-        private ClientDiagnostics SpacecraftClientDiagnostics => _spacecraftClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Orbital", SpacecraftResource.ResourceType.Namespace, Diagnostics);
-        private SpacecraftsRestOperations SpacecraftRestClient => _spacecraftRestClient ??= new SpacecraftsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SpacecraftResource.ResourceType));
-        private ClientDiagnostics ContactProfileClientDiagnostics => _contactProfileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Orbital", ContactProfileResource.ResourceType.Namespace, Diagnostics);
-        private ContactProfilesRestOperations ContactProfileRestClient => _contactProfileRestClient ??= new ContactProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContactProfileResource.ResourceType));
-        private ClientDiagnostics OperationsResultsClientDiagnostics => _operationsResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Orbital", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationsResultsRestOperations OperationsResultsRestClient => _operationsResultsRestClient ??= new OperationsResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics OrbitalSpacecraftSpacecraftsClientDiagnostics => _orbitalSpacecraftSpacecraftsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Orbital", OrbitalSpacecraftResource.ResourceType.Namespace, Diagnostics);
+        private SpacecraftsRestOperations OrbitalSpacecraftSpacecraftsRestClient => _orbitalSpacecraftSpacecraftsRestClient ??= new SpacecraftsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OrbitalSpacecraftResource.ResourceType));
+        private ClientDiagnostics OrbitalContactProfileContactProfilesClientDiagnostics => _orbitalContactProfileContactProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Orbital", OrbitalContactProfileResource.ResourceType.Namespace, Diagnostics);
+        private ContactProfilesRestOperations OrbitalContactProfileContactProfilesRestClient => _orbitalContactProfileContactProfilesRestClient ??= new ContactProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OrbitalContactProfileResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -66,17 +61,17 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SpacecraftResource> GetSpacecraftsAsync(string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OrbitalSpacecraftResource> GetOrbitalSpacecraftsAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SpacecraftResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OrbitalSpacecraftResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SpacecraftClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpacecrafts");
+                using var scope = OrbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts");
                 scope.Start();
                 try
                 {
-                    var response = await SpacecraftRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await OrbitalSpacecraftSpacecraftsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -84,14 +79,14 @@ namespace Azure.ResourceManager.Orbital
                     throw;
                 }
             }
-            async Task<Page<SpacecraftResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<OrbitalSpacecraftResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SpacecraftClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpacecrafts");
+                using var scope = OrbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts");
                 scope.Start();
                 try
                 {
-                    var response = await SpacecraftRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await OrbitalSpacecraftSpacecraftsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -109,17 +104,17 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SpacecraftResource> GetSpacecrafts(string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OrbitalSpacecraftResource> GetOrbitalSpacecrafts(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<SpacecraftResource> FirstPageFunc(int? pageSizeHint)
+            Page<OrbitalSpacecraftResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SpacecraftClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpacecrafts");
+                using var scope = OrbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts");
                 scope.Start();
                 try
                 {
-                    var response = SpacecraftRestClient.ListBySubscription(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = OrbitalSpacecraftSpacecraftsRestClient.ListBySubscription(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -127,14 +122,14 @@ namespace Azure.ResourceManager.Orbital
                     throw;
                 }
             }
-            Page<SpacecraftResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<OrbitalSpacecraftResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SpacecraftClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpacecrafts");
+                using var scope = OrbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts");
                 scope.Start();
                 try
                 {
-                    var response = SpacecraftRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = OrbitalSpacecraftSpacecraftsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -152,17 +147,17 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContactProfileResource> GetContactProfilesAsync(string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OrbitalContactProfileResource> GetOrbitalContactProfilesAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContactProfileResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OrbitalContactProfileResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ContactProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContactProfiles");
+                using var scope = OrbitalContactProfileContactProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalContactProfiles");
                 scope.Start();
                 try
                 {
-                    var response = await ContactProfileRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await OrbitalContactProfileContactProfilesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -170,14 +165,14 @@ namespace Azure.ResourceManager.Orbital
                     throw;
                 }
             }
-            async Task<Page<ContactProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<OrbitalContactProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ContactProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContactProfiles");
+                using var scope = OrbitalContactProfileContactProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalContactProfiles");
                 scope.Start();
                 try
                 {
-                    var response = await ContactProfileRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await OrbitalContactProfileContactProfilesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -195,17 +190,17 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContactProfileResource> GetContactProfiles(string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OrbitalContactProfileResource> GetOrbitalContactProfiles(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ContactProfileResource> FirstPageFunc(int? pageSizeHint)
+            Page<OrbitalContactProfileResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ContactProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContactProfiles");
+                using var scope = OrbitalContactProfileContactProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalContactProfiles");
                 scope.Start();
                 try
                 {
-                    var response = ContactProfileRestClient.ListBySubscription(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = OrbitalContactProfileContactProfilesRestClient.ListBySubscription(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -213,14 +208,14 @@ namespace Azure.ResourceManager.Orbital
                     throw;
                 }
             }
-            Page<ContactProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<OrbitalContactProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ContactProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContactProfiles");
+                using var scope = OrbitalContactProfileContactProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalContactProfiles");
                 scope.Start();
                 try
                 {
-                    var response = ContactProfileRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = OrbitalContactProfileContactProfilesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,62 +224,6 @@ namespace Azure.ResourceManager.Orbital
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Returns operation results.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/locations/{location}/operationResults/{operationId}
-        /// Operation Id: OperationsResults_Get
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationResult>> GetOperationsResultAsync(WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationsResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationsResult");
-            scope.Start();
-            try
-            {
-                var response = await OperationsResultsRestClient.GetAsync(Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation<OperationResult>(new OperationResultOperationSource(), OperationsResultsClientDiagnostics, Pipeline, OperationsResultsRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns operation results.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/locations/{location}/operationResults/{operationId}
-        /// Operation Id: OperationsResults_Get
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationResult> GetOperationsResult(WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationsResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationsResult");
-            scope.Start();
-            try
-            {
-                var response = OperationsResultsRestClient.Get(Id.SubscriptionId, location, operationId, cancellationToken);
-                var operation = new OrbitalArmOperation<OperationResult>(new OperationResultOperationSource(), OperationsResultsClientDiagnostics, Pipeline, OperationsResultsRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

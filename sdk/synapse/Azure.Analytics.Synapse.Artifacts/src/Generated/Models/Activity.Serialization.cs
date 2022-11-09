@@ -80,6 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
                     case "ExecuteSSISPackage": return ExecuteSsisPackageActivity.DeserializeExecuteSsisPackageActivity(element);
                     case "Execution": return ExecutionActivity.DeserializeExecutionActivity(element);
+                    case "Fail": return FailActivity.DeserializeFailActivity(element);
                     case "Filter": return FilterActivity.DeserializeFilterActivity(element);
                     case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
                     case "GetMetadata": return GetMetadataActivity.DeserializeGetMetadataActivity(element);

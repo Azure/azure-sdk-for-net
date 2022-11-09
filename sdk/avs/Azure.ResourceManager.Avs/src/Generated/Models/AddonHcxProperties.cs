@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties of an HCX addon. </summary>
-    public partial class AddonHcxProperties : AddonProperties
+    public partial class AddonHcxProperties : AvsPrivateCloudAddonProperties
     {
         /// <summary> Initializes a new instance of AddonHcxProperties. </summary>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/> is null. </exception>
         public AddonHcxProperties(string offer)
         {
-            if (offer == null)
-            {
-                throw new ArgumentNullException(nameof(offer));
-            }
+            Argument.AssertNotNull(offer, nameof(offer));
 
             Offer = offer;
             AddonType = AddonType.HCX;

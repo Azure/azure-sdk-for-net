@@ -27,6 +27,10 @@
     <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
+    
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="SharedSource\Azure.Core" />
+  </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.Transactions" />

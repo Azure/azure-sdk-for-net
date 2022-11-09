@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.StorageSync
             Optional<SystemData> systemData = default;
             Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
             Optional<int> storageSyncServiceStatus = default;
-            Optional<string> storageSyncServiceUid = default;
+            Optional<Guid> storageSyncServiceUid = default;
             Optional<string> provisioningState = default;
             Optional<string> lastWorkflowId = default;
             Optional<string> lastOperationName = default;
@@ -135,7 +136,12 @@ namespace Azure.ResourceManager.StorageSync
                         }
                         if (property0.NameEquals("storageSyncServiceUid"))
                         {
-                            storageSyncServiceUid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageSyncServiceUid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -172,7 +178,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), storageSyncServiceUid.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
+            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }

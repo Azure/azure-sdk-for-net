@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.NetApp
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> poolId = default;
+            Optional<Guid> poolId = default;
             long size = default;
             NetAppFileServiceLevel serviceLevel = default;
             Optional<string> provisioningState = default;
@@ -150,7 +151,12 @@ namespace Azure.ResourceManager.NetApp
                     {
                         if (property0.NameEquals("poolId"))
                         {
-                            poolId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            poolId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("size"))
@@ -222,7 +228,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new CapacityPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), poolId.Value, size, serviceLevel, provisioningState.Value, Optional.ToNullable(totalThroughputMibps), Optional.ToNullable(utilizedThroughputMibps), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), Optional.ToNullable(encryptionType));
+            return new CapacityPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(poolId), size, serviceLevel, provisioningState.Value, Optional.ToNullable(totalThroughputMibps), Optional.ToNullable(utilizedThroughputMibps), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), Optional.ToNullable(encryptionType));
         }
     }
 }

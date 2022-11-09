@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CustomDomainHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion));
+            return new UnknownCustomDomainHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion));
         }
     }
 }

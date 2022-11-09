@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
             writer.WritePropertyName("endTimeUtc");
-            writer.WriteStringValue(EndTimeUtc, "O");
+            writer.WriteStringValue(EndOn, "O");
             writer.WriteEndObject();
         }
     }
