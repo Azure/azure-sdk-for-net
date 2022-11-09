@@ -49,6 +49,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             EventHubTestMultipleDispatchJobs.MessagesCount = 0;
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            _eventWait.Dispose();
+            _channel.Dispose();
+        }
+
         private readonly JsonSerializerSettings jsonSettingThrowOnError = new JsonSerializerSettings
         {
             MissingMemberHandling = MissingMemberHandling.Error,
