@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownSecurityCenterCloudOffering : IUtf8JsonSerializable
+    internal partial class UnknownCloudOffering : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownSecurityCenterCloudOffering DeserializeUnknownSecurityCenterCloudOffering(JsonElement element)
+        internal static UnknownCloudOffering DeserializeUnknownCloudOffering(JsonElement element)
         {
-            OfferingType offeringType = default;
+            OfferingType offeringType = "Unknown";
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UnknownSecurityCenterCloudOffering(offeringType, description.Value);
+            return new UnknownCloudOffering(offeringType, description.Value);
         }
     }
 }

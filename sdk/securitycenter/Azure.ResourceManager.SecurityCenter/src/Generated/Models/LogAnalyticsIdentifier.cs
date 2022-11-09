@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class LogAnalyticsIdentifier : SecurityAlertResourceIdentifier
     {
         /// <summary> Initializes a new instance of LogAnalyticsIdentifier. </summary>
-        internal LogAnalyticsIdentifier()
+        public LogAnalyticsIdentifier()
         {
             ResourceIdentifierType = ResourceIdentifierType.LogAnalytics;
         }

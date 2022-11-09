@@ -9,12 +9,14 @@ csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
 require: https://github.com/Azure/azure-rest-api-specs/blob/f7386016ed8edfdc59d00003c1298afa6966842c/specification/security/resource-manager/readme.md
-use: C:\Users\mingzhehuang\workspaces\archerzz\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+keep-orphaned-models:
+  - ExternalSecuritySolutionKind
 
 rename-mapping:
   OnPremiseResourceDetails.vmuuid: VmUuid|uuid
@@ -380,4 +382,45 @@ directive:
   - remove-operation: InformationProtectionPolicies_Get
   - remove-operation: Tasks_UpdateSubscriptionLevelTaskState
   - remove-operation: Tasks_UpdateResourceGroupLevelTaskState
+  - from: externalSecuritySolutions.json
+    where: $.definitions['ExternalSecuritySolutionKind']
+    transform: >
+        $ = {
+          "type": "string",
+          "description": "The kind of the external solution",
+          "enum": [
+            "CEF",
+            "ATA",
+            "AAD"
+          ],
+          "x-ms-enum": {
+            "name": "ExternalSecuritySolutionKind",
+            "modelAsString": true,
+            "values": [
+              {
+                "value": "CEF"
+              },
+              {
+                "value": "ATA"
+              },
+              {
+                "value": "AAD"
+              }
+            ]
+          }
+        };
+  - from: externalSecuritySolutions.json
+    where: $.definitions['ExternalSecuritySolution']
+    transform: >
+        $.properties['kind'] = {
+          "$ref": "#/definitions/ExternalSecuritySolutionKind"
+        };
+        $.allOf = [
+          {
+            "$ref": "../../../common/v1/types.json#/definitions/Resource"
+          },
+          {
+            "$ref": "../../../common/v1/types.json#/definitions/Location"
+          }
+        ]
 ```

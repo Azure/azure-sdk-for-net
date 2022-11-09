@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownAwsOrganizationalInfo : IUtf8JsonSerializable
+    internal partial class UnknownGcpOrganizationalData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownAwsOrganizationalInfo DeserializeUnknownAwsOrganizationalInfo(JsonElement element)
+        internal static UnknownGcpOrganizationalData DeserializeUnknownGcpOrganizationalData(JsonElement element)
         {
-            OrganizationMembershipType organizationMembershipType = default;
+            OrganizationMembershipType organizationMembershipType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("organizationMembershipType"))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UnknownAwsOrganizationalInfo(organizationMembershipType);
+            return new UnknownGcpOrganizationalData(organizationMembershipType);
         }
     }
 }

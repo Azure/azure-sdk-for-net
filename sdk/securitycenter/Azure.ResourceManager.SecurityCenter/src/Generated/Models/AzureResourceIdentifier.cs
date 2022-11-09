@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class AzureResourceIdentifier : SecurityAlertResourceIdentifier
     {
         /// <summary> Initializes a new instance of AzureResourceIdentifier. </summary>
-        internal AzureResourceIdentifier()
+        public AzureResourceIdentifier()
         {
             ResourceIdentifierType = ResourceIdentifierType.AzureResource;
         }

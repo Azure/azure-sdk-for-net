@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownSecurityCenterResourceDetails : IUtf8JsonSerializable
+    internal partial class UnknownResourceDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownSecurityCenterResourceDetails DeserializeUnknownSecurityCenterResourceDetails(JsonElement element)
+        internal static UnknownResourceDetails DeserializeUnknownResourceDetails(JsonElement element)
         {
-            Source source = default;
+            Source source = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UnknownSecurityCenterResourceDetails(source);
+            return new UnknownResourceDetails(source);
         }
     }
 }

@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The UnknownSecurityAlertResourceIdentifier. </summary>
-    internal partial class UnknownSecurityAlertResourceIdentifier : SecurityAlertResourceIdentifier
+    /// <summary> The UnknownAlertResourceIdentifier. </summary>
+    internal partial class UnknownAlertResourceIdentifier : SecurityAlertResourceIdentifier
     {
-        /// <summary> Initializes a new instance of UnknownSecurityAlertResourceIdentifier. </summary>
+        /// <summary> Initializes a new instance of UnknownAlertResourceIdentifier. </summary>
         /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
-        internal UnknownSecurityAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType) : base(resourceIdentifierType)
+        internal UnknownAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType) : base(resourceIdentifierType)
         {
             ResourceIdentifierType = resourceIdentifierType;
         }

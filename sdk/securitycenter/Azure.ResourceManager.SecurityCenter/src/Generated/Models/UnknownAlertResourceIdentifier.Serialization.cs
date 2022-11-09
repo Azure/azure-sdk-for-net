@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownSecurityAlertResourceIdentifier : IUtf8JsonSerializable
+    internal partial class UnknownAlertResourceIdentifier : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownSecurityAlertResourceIdentifier DeserializeUnknownSecurityAlertResourceIdentifier(JsonElement element)
+        internal static UnknownAlertResourceIdentifier DeserializeUnknownAlertResourceIdentifier(JsonElement element)
         {
-            ResourceIdentifierType type = default;
+            ResourceIdentifierType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UnknownSecurityAlertResourceIdentifier(type);
+            return new UnknownAlertResourceIdentifier(type);
         }
     }
 }

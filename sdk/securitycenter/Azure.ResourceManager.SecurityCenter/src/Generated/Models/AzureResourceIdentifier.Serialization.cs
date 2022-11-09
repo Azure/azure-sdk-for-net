@@ -10,8 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AzureResourceIdentifier
+    public partial class AzureResourceIdentifier : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(ResourceIdentifierType.ToString());
+            writer.WriteEndObject();
+        }
+
         internal static AzureResourceIdentifier DeserializeAzureResourceIdentifier(JsonElement element)
         {
             Optional<ResourceIdentifier> azureResourceId = default;

@@ -11,11 +11,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ExternalSecuritySolution : IUtf8JsonSerializable
+    public partial class CefExternalSecuritySolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
+            }
             if (Kind != null)
             {
                 writer.WritePropertyName("kind");
@@ -28,17 +33,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static ExternalSecuritySolution DeserializeExternalSecuritySolution(JsonElement element)
+        internal static CefExternalSecuritySolution DeserializeCefExternalSecuritySolution(JsonElement element)
         {
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "AAD": return AadExternalSecuritySolution.DeserializeAadExternalSecuritySolution(element);
-                    case "ATA": return AtaExternalSecuritySolution.DeserializeAtaExternalSecuritySolution(element);
-                    case "CEF": return CefExternalSecuritySolution.DeserializeCefExternalSecuritySolution(element);
-                }
-            }
+            Optional<CefSolutionProperties> properties = default;
             ExternalSecuritySolutionKind? kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -47,6 +44,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = CefSolutionProperties.DeserializeCefSolutionProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kind"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location));
+            return new CefExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location), properties.Value);
         }
     }
 }

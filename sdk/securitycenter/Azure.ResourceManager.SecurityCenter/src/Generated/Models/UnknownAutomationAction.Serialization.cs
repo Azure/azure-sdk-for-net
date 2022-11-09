@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownSecurityAutomationAction : IUtf8JsonSerializable
+    internal partial class UnknownAutomationAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownSecurityAutomationAction DeserializeUnknownSecurityAutomationAction(JsonElement element)
+        internal static UnknownAutomationAction DeserializeUnknownAutomationAction(JsonElement element)
         {
-            ActionType actionType = default;
+            ActionType actionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UnknownSecurityAutomationAction(actionType);
+            return new UnknownAutomationAction(actionType);
         }
     }
 }

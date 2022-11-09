@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownSecuritySubAssessmentAdditionalInfo : IUtf8JsonSerializable
+    internal partial class UnknownAdditionalData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownSecuritySubAssessmentAdditionalInfo DeserializeUnknownSecuritySubAssessmentAdditionalInfo(JsonElement element)
+        internal static UnknownAdditionalData DeserializeUnknownAdditionalData(JsonElement element)
         {
-            AssessedResourceType assessedResourceType = default;
+            AssessedResourceType assessedResourceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assessedResourceType"))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UnknownSecuritySubAssessmentAdditionalInfo(assessedResourceType);
+            return new UnknownAdditionalData(assessedResourceType);
         }
     }
 }
