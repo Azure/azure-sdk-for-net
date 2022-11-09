@@ -64,5 +64,3 @@ namespace Azure.Communication.CallAutomation
         public override string ToString() => _value;
     }
 }
- }
-}

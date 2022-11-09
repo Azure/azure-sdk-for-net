@@ -22,6 +22,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Operation context. </summary>
         public string? OperationContext { get; internal set; }
         /// <summary> Gets the result info. </summary>
-        public ResultInformation? ResultInformation { get; internal set; }
+        public CallingOperationResultDetails? CallingOperationResultDetails { get; internal set; }
     }
 }

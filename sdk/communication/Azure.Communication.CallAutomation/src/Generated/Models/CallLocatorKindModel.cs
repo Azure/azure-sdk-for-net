@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The call locator kind. </summary>
-    public readonly partial struct CallLocatorKindModel : IEquatable<CallLocatorKindModel>
+    internal readonly partial struct CallLocatorKindModel : IEquatable<CallLocatorKindModel>
     {
         private readonly string _value;
 

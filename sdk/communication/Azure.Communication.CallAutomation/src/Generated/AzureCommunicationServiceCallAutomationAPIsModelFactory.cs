@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class AzureCommunicationCallAutomationModelFactory
+    public static partial class AzureCommunicationServiceCallAutomationAPIsModelFactory
     {
         /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
@@ -33,6 +33,16 @@ namespace Azure.Communication.CallAutomation
         public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null)
         {
             return new RecordingStateResult(recordingId, recordingState);
+        }
+
+        /// <summary> Initializes a new instance of CallingOperationResultDetails. </summary>
+        /// <param name="code"> The result code associated with the operation. </param>
+        /// <param name="subcode"> The subcode that further classifies the result. </param>
+        /// <param name="message"> The message is a detail explanation of subcode. </param>
+        /// <returns> A new <see cref="CallAutomation.CallingOperationResultDetails"/> instance for mocking. </returns>
+        public static CallingOperationResultDetails CallingOperationResultDetails(int code = default, int subcode = default, string message = null)
+        {
+            return new CallingOperationResultDetails(code, subcode, message);
         }
     }
 }

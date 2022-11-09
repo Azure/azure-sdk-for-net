@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("CallLocator")]
-    internal partial class CallLocatorInternal
+    [CodeGenModel("CallLocatorKind")]
+    internal readonly partial struct CallLocatorKindModel
     {
     }
 }

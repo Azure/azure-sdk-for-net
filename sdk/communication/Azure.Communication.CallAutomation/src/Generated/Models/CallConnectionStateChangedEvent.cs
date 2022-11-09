@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The call connection state changed event. </summary>
-    internal partial class CallConnectionStateChangedEvent
+    public readonly partial struct CallConnectionStateChangedEvent
     {
         /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
+        /// <param name="callLocator"> The server call locator. </param>
+        /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="callConnectionState"> The call connection state. </param>
-        internal CallConnectionStateChangedEvent(CallConnectionState callConnectionState)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="callConnectionId"/> is null. </exception>
+        internal CallConnectionStateChangedEvent(CallLocatorModel callLocator, string callConnectionId, CallConnectionState callConnectionState)
         {
+            Argument.AssertNotNull(callLocator, nameof(callLocator));
+            Argument.AssertNotNull(callConnectionId, nameof(callConnectionId));
+
+            CallLocator = callLocator;
+            CallConnectionId = callConnectionId;
             CallConnectionState = callConnectionState;
         }
 

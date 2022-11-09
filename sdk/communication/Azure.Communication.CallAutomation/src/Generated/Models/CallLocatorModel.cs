@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The locator used for joining or taking action on a call. </summary>
-    public partial class CallLocatorModel
+    internal partial class CallLocatorModel
     {
         /// <summary> Initializes a new instance of CallLocatorModel. </summary>
         public CallLocatorModel()
