@@ -28,7 +28,7 @@ function DownloadNugetPackage($package, $version, $destination) {
     # If it is empty then the property is not overridden.
     $customPackageSource = Get-Variable -Name 'PackageSourceOverride' -ValueOnly -ErrorAction 'Ignore'
     # Download package from nuget, if no package found in nuget, then search devops public feeds if set.
-    Write-Host "Downloading $package with version $version..."
+    LogDebug "Downloading $package with version $version..."
     if ($customPackageSource) {
         nuget install -FallbackSource $customPackageSource $package -Version $version -DirectDownload -DependencyVersion Ignore -OutputDirectory $destination
     }
@@ -42,41 +42,42 @@ function Fetch-NamespacesFromNupkg ($package, $version) {
     if (!(Test-Path $tempLocation)) {
         New-Item -ItemType Directory -Path $tempLocation -Force | Out-Null
     }
-    Write-Host "Downloading nupkg package $package with version $version to $tempLocation ...."
+    LogDebug "Downloading nupkg package $package with version $version to $tempLocation ...."
     DownloadNugetPackage -package $package -version $version -destination $tempLocation | Out-Null
     $packageFolder = "$package.$version"
     if ($LASTEXITCODE -ne 0 -or !$(Test-Path $tempLocation/$packageFolder)) {
-        Write-Host "Did not download the package correctly. Skipping..."
+        LogDebug "Did not download the package correctly. Skipping..."
         return @()
     }
-    Write-Host "Searching for dll file..."
+    LogDebug "Searching for dll file..."
     $dllFiles = @()
     $dllFileName = ""
     if (Test-Path "$tempLocation/$packageFolder/lib/netstandard2.0/"){
         $dllFiles = @(Get-ChildItem "$tempLocation/$packageFolder/lib/netstandard2.0/*" -Filter '*.dll' -Recurse)
     }
     if (!$dllFiles) {
-        Write-Warning "Can't find any dll file from $tempLocation/$packageFolder with target netstandard2.0."
+        LogWarning "Can't find any dll file from $tempLocation/$packageFolder with target netstandard2.0."
         $dllFiles = Get-ChildItem "$tempLocation/$packageFolder/lib/*" -Filter '*.dll' -Recurse
         if (!$dllFiles) {
-            Write-Error "Can't find any dll file from $tempLocation/$packageFolder."
+            LogError "Can't find any dll file from $tempLocation/$packageFolder."
             return @()
         }
     }
     elseif ($dllFiles.Count -gt 1) {
-        Write-Warning "There are multiple dll files in target netstandard2.0. "
+        LogWarning "There are multiple dll files in target netstandard2.0. "
         if (Test-Path "$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll") {
-            Write-Host "Use the dll file $package.dll"
+            LogDebug "Use the dll file $package.dll"
             $dllFileName = "$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll"
         }
     }
     if (!$dllFileName) {
+        $dllFiles = $dllFiles | Get-Unique | Sort-Object
         $dllFileName = $dllFiles[0].FullName
     }
-    Write-Host "Dll file found: $dllFileName"
+    LogDebug "Dll file found: $dllFileName"
     $namespaces = Get-NamespacesFromDll $dllFileName
     if (!$namespaces) {
-        Write-Error "Can't find namespaces from dll file $dllFileName." -ErrorAction Continue
+        LogError "Can't find namespaces from dll file $dllFileName." -ErrorAction Continue
         return @()
     }
     return $namespaces
@@ -94,7 +95,7 @@ function Get-dotnet-OnboardedDocsMsPackages($DocRepoLocation) {
         foreach ($spec in $onboardingSpec) {
             $packageInfo = $spec -split ","
             if (!$packageInfo -or ($packageInfo.Count -lt 2)) {
-                Write-Error "Please check the package info in csv file $file. Please have at least one package and follow the format {name index, package name, version(optional)}" -ErrorAction Continue
+                LogError "Please check the package info in csv file $file. Please have at least one package and follow the format {name index, package name, version(optional)}" -ErrorAction Continue
                 return $null
             }
             $packageName = $packageInfo[1].Trim() -replace "\[.*\](.*)", '$1'
@@ -136,10 +137,10 @@ function Get-dotnet-DocsMsTocData($packageMetadata, $docRepoLocation, $PackageSo
     $children = @($children | Sort-Object -Unique)
     if (!$children) {
         if ($packageMetadata.VersionPreview) {
-            Write-Host "Did not find the package namespaces for $($packageMetadata.Package):$($packageMetadata.VersionPreview)"
+            LogDebug "Did not find the package namespaces for $($packageMetadata.Package):$($packageMetadata.VersionPreview)"
         }
         if ($packageMetadata.VersionGA) {
-            Write-Host "Did not find the package namespaces for $($packageMetadata.Package):$($packageMetadata.VersionGA)"
+            LogDebug "Did not find the package namespaces for $($packageMetadata.Package):$($packageMetadata.VersionGA)"
         }
     }
     $output = [PSCustomObject]@{
