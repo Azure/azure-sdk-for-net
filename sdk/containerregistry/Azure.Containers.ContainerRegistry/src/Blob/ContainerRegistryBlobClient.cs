@@ -374,7 +374,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         private async Task<ChunkedUploadResult> UploadInChunks(string location, Stream stream, int chunkSize, bool async = true, CancellationToken cancellationToken = default)
         {
-			// TODO: don't allocate a large buffer unless we need it.  How will we know?
+            // TODO: don't allocate a large buffer unless we need it.  How will we know?
             byte[] buffer = new byte[chunkSize];
             using SHA256 sha256 = SHA256.Create();
 
@@ -390,10 +390,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             while (bytesRead > 0)
             {
+                var contentRange = GetContentRange(chunkCount * chunkSize, bytesRead);
                 location = uploadChunkResult?.Headers.Location ?? location;
-
-                // TODO: do we need range allocation?  Unroll this for perf.
-                HttpRange range = new HttpRange(chunkCount * chunkSize, bytesRead);
 
                 // Incrementally compute hash for digest.
                 sha256.TransformBlock(buffer, 0, bytesRead, buffer, 0);
@@ -401,18 +399,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 using (Stream chunk = new MemoryStream(buffer, 0, bytesRead))
                 {
                     uploadChunkResult = async ?
-                        await _blobRestClient.UploadChunkAsync(location, chunk, GetContentRangeString(range), bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false) :
-                        _blobRestClient.UploadChunk(location, chunk, GetContentRangeString(range), bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken);
+                        await _blobRestClient.UploadChunkAsync(location, chunk, contentRange, bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false) :
+                        _blobRestClient.UploadChunk(location, chunk, contentRange, bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken);
                 }
 
                 blobLength += bytesRead;
+                chunkCount++;
 
                 // Read next chunk into buffer
                 bytesRead = async ?
                     await stream.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
                     stream.Read(buffer, 0, chunkSize);
-
-                chunkCount++;
             }
 
             // Complete hash computation.
@@ -426,17 +423,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// upload request. This converts range to the format used by this API,
         /// <see href="https://docs.docker.com/registry/spec/api/#patch-blob-upload"/> for details.
         /// </summary>
-        /// <param name="range">The range indicating the size of a chunk.</param>
-        /// <returns>A string formatted to suit the Content-Range header.</returns>
-        private static string GetContentRangeString(HttpRange range)
+        /// <param name="offset">The offset of the chunk in the blob stream.</param>
+        /// <param name="length">The length of the chunk.</param>
+        /// <returns>A string describing the chunk range in the non-standard Content-Range header format.</returns>
+        private static string GetContentRange(int offset, int length)
         {
-            var endRange = "";
-            if (range.Length.HasValue && range.Length != 0)
-            {
-                endRange = (range.Offset + range.Length.Value - 1).ToString(CultureInfo.InvariantCulture);
-            }
-
-            return FormattableString.Invariant($"{range.Offset}-{endRange}");
+            var endRange = (offset + length - 1).ToString(CultureInfo.InvariantCulture);
+            return FormattableString.Invariant($"{offset}-{endRange}");
         }
 
         /// <summary>
