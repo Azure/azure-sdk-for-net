@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         public ConfigurationProfileVersionTests(bool async) : base(async) { }
         /*
          things to test:
-            - can create second version
             - can get version
             - can get all versions
             - can make assignment with new version
@@ -48,6 +47,25 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             // assert
             AssertValues(version2, version2Name);
             AssertValues(version3, version3Name);
+        }
+
+        [TestCase]
+        public async Task CanGetConfigurationProfileVersion()
+        {
+            // arrange
+            string versionName = "2";
+            string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
+
+            // act
+            var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
+            var profileCollection = rg.GetConfigurationProfiles();
+            var profile = await CreateConfigurationProfile(profileCollection, profileName);
+            var versionCollection = profile.GetConfigurationProfileVersions();
+            await CreateConfigurationProfileVersion(versionCollection, versionName);
+            var version = await profile.GetConfigurationProfileVersionAsync(versionName);
+
+            // assert
+            AssertValues(version, versionName);
         }
     }
 }
