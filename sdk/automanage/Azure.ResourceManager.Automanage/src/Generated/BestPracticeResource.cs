@@ -87,43 +87,6 @@ namespace Azure.ResourceManager.Automanage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of BestPracticeVersionResources in the BestPractice. </summary>
-        /// <returns> An object representing collection of BestPracticeVersionResources and their operations over a BestPracticeVersionResource. </returns>
-        public virtual BestPracticeVersionCollection GetBestPracticeVersions()
-        {
-            return GetCachedClient(Client => new BestPracticeVersionCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get information about a Automanage best practice version
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}/versions/{versionName}
-        /// Operation Id: BestPracticesVersions_Get
-        /// </summary>
-        /// <param name="versionName"> The Automanage best practice version name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BestPracticeVersionResource>> GetBestPracticeVersionAsync(string versionName, CancellationToken cancellationToken = default)
-        {
-            return await GetBestPracticeVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get information about a Automanage best practice version
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}/versions/{versionName}
-        /// Operation Id: BestPracticesVersions_Get
-        /// </summary>
-        /// <param name="versionName"> The Automanage best practice version name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BestPracticeVersionResource> GetBestPracticeVersion(string versionName, CancellationToken cancellationToken = default)
-        {
-            return GetBestPracticeVersions().Get(versionName, cancellationToken);
-        }
-
         /// <summary>
         /// Get information about a Automanage best practice
         /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}
