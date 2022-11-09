@@ -1,14 +1,10 @@
 # Release History
 
-## 5.9.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.8.1 (2022-11-09)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed issue where custom `MessagingProvider` could be replaced by the library `MessagingProvider`.
 
 ## 5.8.0 (2022-10-11)
 
