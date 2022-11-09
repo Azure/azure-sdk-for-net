@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -23,7 +24,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "SecurityAlert": return SecurityAlertTimelineItem.DeserializeSecurityAlertTimelineItem(element);
                 }
             }
-            return UnknownEntityTimelineItem.DeserializeUnknownEntityTimelineItem(element);
+            EntityTimelineKind kind = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"))
+                {
+                    kind = new EntityTimelineKind(property.Value.GetString());
+                    continue;
+                }
+            }
+            return new UnknownEntityTimelineItem(kind);
         }
     }
 }
