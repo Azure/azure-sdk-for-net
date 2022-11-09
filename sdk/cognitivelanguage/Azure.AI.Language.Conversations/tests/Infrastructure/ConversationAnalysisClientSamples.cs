@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
+using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {

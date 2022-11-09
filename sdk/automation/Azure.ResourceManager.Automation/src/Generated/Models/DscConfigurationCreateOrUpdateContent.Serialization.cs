@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogVerbose))
+            if (Optional.IsDefined(IsLogVerboseEnabled))
             {
                 writer.WritePropertyName("logVerbose");
-                writer.WriteBooleanValue(LogVerbose.Value);
+                writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
-            if (Optional.IsDefined(LogProgress))
+            if (Optional.IsDefined(IsLogProgressEnabled))
             {
                 writer.WritePropertyName("logProgress");
-                writer.WriteBooleanValue(LogProgress.Value);
+                writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
             writer.WritePropertyName("source");
             writer.WriteObjectValue(Source);

@@ -36,4 +36,4 @@ KeyVaultRoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAs
 ```
 
 <!-- LINKS -->
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure

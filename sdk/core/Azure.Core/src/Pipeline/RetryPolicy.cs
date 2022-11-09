@@ -70,6 +70,7 @@ namespace Azure.Core.Pipeline
             List<Exception>? exceptions = null;
             while (true)
             {
+                Exception? lastException = null;
                 var before = Stopwatch.GetTimestamp();
                 if (async)
                 {
@@ -89,10 +90,6 @@ namespace Azure.Core.Pipeline
                     {
                         ProcessNext(message, pipeline);
                     }
-
-                    // This request didn't result in an exception, so reset the LastException property
-                    // in case it was set on a previous attempt.
-                    message.LastException = null;
                 }
                 catch (Exception ex)
                 {
@@ -103,7 +100,7 @@ namespace Azure.Core.Pipeline
 
                     exceptions.Add(ex);
 
-                    message.LastException = ex;
+                    lastException = ex;
                 }
 
                 if (async)
@@ -123,9 +120,9 @@ namespace Azure.Core.Pipeline
                 // We only invoke ShouldRetry for errors. If a user needs full control they can either override HttpPipelinePolicy directly
                 // or modify the ResponseClassifier.
 
-                if (message.LastException != null || (message.HasResponse && message.Response.IsError))
+                if (lastException != null || (message.HasResponse && message.Response.IsError))
                 {
-                    shouldRetry = async ? await ShouldRetryAsync(message).ConfigureAwait(false) : ShouldRetry(message);
+                    shouldRetry = async ? await ShouldRetryAsync(message, lastException).ConfigureAwait(false) : ShouldRetry(message, lastException);
                 }
 
                 if (shouldRetry)
@@ -154,12 +151,12 @@ namespace Azure.Core.Pipeline
                     continue;
                 }
 
-                if (message.LastException != null)
+                if (lastException != null)
                 {
                     // Rethrow a singular exception
                     if (exceptions!.Count == 1)
                     {
-                        ExceptionDispatchInfo.Capture(message.LastException).Throw();
+                        ExceptionDispatchInfo.Capture(lastException).Throw();
                     }
 
                     throw new AggregateException(
@@ -189,8 +186,9 @@ namespace Azure.Core.Pipeline
         /// This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
+        /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
         /// <returns>Whether or not to retry.</returns>
-        protected internal virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
+        protected internal virtual bool ShouldRetry(HttpMessage message, Exception? exception) => ShouldRetryInternal(message, exception);
 
         /// <summary>
         /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
@@ -198,16 +196,17 @@ namespace Azure.Core.Pipeline
         /// This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
+        /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
         /// <returns>Whether or not to retry.</returns>
-        protected internal virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message) => new(ShouldRetryInternal(message));
+        protected internal virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception? exception) => new(ShouldRetryInternal(message, exception));
 
-        private bool ShouldRetryInternal(HttpMessage message)
+        private bool ShouldRetryInternal(HttpMessage message, Exception? exception)
         {
             if (message.RetryNumber < _maxRetries)
             {
-                if (message.LastException != null)
+                if (exception != null)
                 {
-                    return message.ResponseClassifier.IsRetriable(message, message.LastException);
+                    return message.ResponseClassifier.IsRetriable(message, exception);
                 }
 
                 // Response.IsError is true if we get here
