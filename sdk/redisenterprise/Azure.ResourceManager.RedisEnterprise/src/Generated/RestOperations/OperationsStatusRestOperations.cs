@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary> Gets the status of operation. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The region the operation is in. </param>
-        /// <param name="operationId"> The operation&apos;s unique identifier. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary> Gets the status of operation. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The region the operation is in. </param>
-        /// <param name="operationId"> The operation&apos;s unique identifier. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
