@@ -27,12 +27,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Properties);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
-#endif
-            }
+                writer.WriteObjectValue(Properties);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
