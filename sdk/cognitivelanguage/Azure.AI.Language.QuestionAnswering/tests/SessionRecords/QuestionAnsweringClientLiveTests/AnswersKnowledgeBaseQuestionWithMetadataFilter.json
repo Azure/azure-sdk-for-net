@@ -1,19 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-10-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:query-knowledgebases?projectName=testQA\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "238",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c4542a9dd26cc440b9980c724106cc07-d492b452d6d53c40-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
-          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "57f43829fd48c12ef9cf12455da1c15d",
+        "traceparent": "00-1031acac6c744bf63dd36d7ae25e98a1-88247f31cf9f5793-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "11d35777e7afa22e99af49d553154828",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -37,59 +34,65 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "391d3359-59b4-43c5-94cd-e0b863b0d7e7",
-        "Content-Length": "1143",
+        "apim-request-id": "afa74c0c-e887-495e-8622-d6513e9cdb8d",
+        "Content-Length": "1481",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=1",
-        "Date": "Thu, 28 Oct 2021 21:15:38 GMT",
+        "Date": "Thu, 22 Sep 2022 00:25:21 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "171"
+        "x-envoy-upstream-service-time": "170"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022answers\u0022: [\n",
-        "    {\n",
-        "      \u0022questions\u0022: [\n",
-        "        \u0022Check the battery level\u0022\n",
-        "      ],\n",
-        "      \u0022answer\u0022: \u0022**Check the battery level**\\n\\nYou can check the battery level from the lock screen or the desktop:\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.6544,\n",
-        "      \u0022id\u0022: 133,\n",
-        "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
-        "      \u0022metadata\u0022: {\n",
-        "        \u0022explicitlytaggedheading\u0022: \u0022check the battery level\u0022\n",
-        "      },\n",
-        "      \u0022dialog\u0022: {\n",
-        "        \u0022isContextOnly\u0022: false,\n",
-        "        \u0022prompts\u0022: []\n",
-        "      }\n",
-        "    },\n",
-        "    {\n",
-        "      \u0022questions\u0022: [\n",
-        "        \u0022Make your battery last\u0022\n",
-        "      ],\n",
-        "      \u0022answer\u0022: \u0022**Make your battery last**\\n\\nFor info on how to care for your battery and power supply, conserve power, and make your Surface battery last longer, see [Surface battery and power](http://www.microsoft.com/surface/support/hardware-and-drivers/battery-and-power) on Surface.com.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.42950000000000005,\n",
-        "      \u0022id\u0022: 136,\n",
-        "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
-        "      \u0022metadata\u0022: {\n",
-        "        \u0022explicitlytaggedheading\u0022: \u0022make your battery last\u0022\n",
-        "      },\n",
-        "      \u0022dialog\u0022: {\n",
-        "        \u0022isContextOnly\u0022: false,\n",
-        "        \u0022prompts\u0022: []\n",
-        "      }\n",
-        "    }\n",
-        "  ]\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "answers": [
+          {
+            "questions": [
+              "Check the battery level"
+            ],
+            "answer": "**Check the battery level**\n\nYou can check the battery level from the lock screen or on the desktop. Lock screen\n\nWhen you wake your Surface Book, the battery status appears in the lower-right corner of the lock screen. \u272A",
+            "confidenceScore": 0.9004000000000001,
+            "id": 24,
+            "source": "surface-book-user-guide-EN.pdf",
+            "metadata": {
+              "system_metadata_qna_edited_manually": "true",
+              "explicitlytaggedheading": "check the battery level"
+            },
+            "dialog": {
+              "isContextOnly": false,
+              "prompts": [
+                {
+                  "displayOrder": 0,
+                  "qnaId": 25,
+                  "displayText": "Desktop taskbar"
+                }
+              ]
+            }
+          },
+          {
+            "questions": [
+              "Making your battery last"
+            ],
+            "answer": "**Making your battery last**\n\nTo learn ways to conserve power and make your battery last longer, see [Surface battery and power](https://www.microsoft.com/surface/support/hardware-and-drivers/battery-and-power-pro) on Surface.com.",
+            "confidenceScore": 0.39399999999999996,
+            "id": 26,
+            "source": "surface-book-user-guide-EN.pdf",
+            "metadata": {
+              "system_metadata_qna_edited_manually": "true",
+              "explicitlytaggedheading": "make your battery last"
+            },
+            "dialog": {
+              "isContextOnly": false,
+              "prompts": []
+            }
+          }
+        ]
+      }
     }
   ],
   "Variables": {
-    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "QUESTIONANSWERING_KEY": "Sanitized",
-    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "RandomSeed": "716375360"
+    "QUESTIONANSWERING_PROJECT": "testQA",
+    "RandomSeed": "1456353512"
   }
 }

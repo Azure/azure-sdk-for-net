@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridCompute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string machineName, MachineData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string machineName, HybridComputeMachineData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MachineData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string machineName, MachineData data, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridComputeMachineData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string machineName, HybridComputeMachineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        MachineData value = default;
+                        HybridComputeMachineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MachineData.DeserializeMachineData(document.RootElement);
+                        value = HybridComputeMachineData.DeserializeHybridComputeMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MachineData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string machineName, MachineData data, CancellationToken cancellationToken = default)
+        public Response<HybridComputeMachineData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string machineName, HybridComputeMachineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        MachineData value = default;
+                        HybridComputeMachineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MachineData.DeserializeMachineData(document.RootElement);
+                        value = HybridComputeMachineData.DeserializeHybridComputeMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string machineName, MachinePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string machineName, HybridComputeMachinePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MachineData>> UpdateAsync(string subscriptionId, string resourceGroupName, string machineName, MachinePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridComputeMachineData>> UpdateAsync(string subscriptionId, string resourceGroupName, string machineName, HybridComputeMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        MachineData value = default;
+                        HybridComputeMachineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MachineData.DeserializeMachineData(document.RootElement);
+                        value = HybridComputeMachineData.DeserializeHybridComputeMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MachineData> Update(string subscriptionId, string resourceGroupName, string machineName, MachinePatch patch, CancellationToken cancellationToken = default)
+        public Response<HybridComputeMachineData> Update(string subscriptionId, string resourceGroupName, string machineName, HybridComputeMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -199,9 +199,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        MachineData value = default;
+                        HybridComputeMachineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MachineData.DeserializeMachineData(document.RootElement);
+                        value = HybridComputeMachineData.DeserializeHybridComputeMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MachineData>> GetAsync(string subscriptionId, string resourceGroupName, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridComputeMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -323,13 +323,13 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        MachineData value = default;
+                        HybridComputeMachineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MachineData.DeserializeMachineData(document.RootElement);
+                        value = HybridComputeMachineData.DeserializeHybridComputeMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MachineData)null, message.Response);
+                    return Response.FromValue((HybridComputeMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MachineData> Get(string subscriptionId, string resourceGroupName, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public Response<HybridComputeMachineData> Get(string subscriptionId, string resourceGroupName, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -355,13 +355,13 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        MachineData value = default;
+                        HybridComputeMachineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MachineData.DeserializeMachineData(document.RootElement);
+                        value = HybridComputeMachineData.DeserializeHybridComputeMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MachineData)null, message.Response);
+                    return Response.FromValue((HybridComputeMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

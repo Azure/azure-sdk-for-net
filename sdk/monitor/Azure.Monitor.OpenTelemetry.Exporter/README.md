@@ -66,6 +66,14 @@ Exporter does not use authentication.
 
 ## Key concepts
 
+Some key concepts for .NET include:
+
+- [Overview of .NET distributed tracing](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing): 
+  Distributed tracing is a diagnostic technique that helps engineers localize failures and performance issues within applications, especially those that may be distributed across multiple machines or processes. 
+
+- [Overview of Logging in .NET](https://learn.microsoft.com/dotnet/core/extensions/logging): 
+  .NET supports a logging API that works with a variety of built-in and third-party logging providers.
+
 Some key concepts for Azure Monitor include:
 
 - [IP Addresses used by Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/app/ip-addresses#outgoing-ports):

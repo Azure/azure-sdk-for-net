@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         {
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Volume;
+            ResolutionKind = ResolutionKind.VolumeResolution;
         }
 
         /// <summary> Initializes a new instance of VolumeResolution. </summary>

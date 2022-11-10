@@ -1,19 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-10-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:query-knowledgebases?projectName=testQA\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "55",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b8a4f0107b23ec4db0e6da4b569e6720-2dd997060ac98640-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
-          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "455ddb64e9c242dac648c94fc8744c58",
+        "traceparent": "00-4aff6e4ec63f4af615371d5a96a0867a-20865f4b86e041dc-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "92aefd495a332a4e0db38a335f30c3af",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,43 +18,42 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c9f76629-685e-46cb-8860-cb1db66e128f",
-        "Content-Length": "663",
+        "apim-request-id": "ea048a89-58de-4ef6-b5f0-11698b0da5cc",
+        "Content-Length": "674",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=1",
-        "Date": "Thu, 28 Oct 2021 20:05:22 GMT",
+        "Date": "Thu, 22 Sep 2022 01:01:17 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "604"
+        "x-envoy-upstream-service-time": "318"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022answers\u0022: [\n",
-        "    {\n",
-        "      \u0022questions\u0022: [\n",
-        "        \u0022Make your battery last\u0022\n",
-        "      ],\n",
-        "      \u0022answer\u0022: \u0022**Make your battery last**\\n\\nFor info on how to care for your battery and power supply, conserve power, and make your Surface battery last longer, see [Surface battery and power](http://www.microsoft.com/surface/support/hardware-and-drivers/battery-and-power) on Surface.com.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.9079,\n",
-        "      \u0022id\u0022: 136,\n",
-        "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
-        "      \u0022metadata\u0022: {\n",
-        "        \u0022explicitlytaggedheading\u0022: \u0022make your battery last\u0022\n",
-        "      },\n",
-        "      \u0022dialog\u0022: {\n",
-        "        \u0022isContextOnly\u0022: false,\n",
-        "        \u0022prompts\u0022: []\n",
-        "      }\n",
-        "    }\n",
-        "  ]\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "answers": [
+          {
+            "questions": [
+              "Making your battery last"
+            ],
+            "answer": "**Making your battery last**\n\nTo learn ways to conserve power and make your battery last longer, see [Surface battery and power](https://www.microsoft.com/surface/support/hardware-and-drivers/battery-and-power-pro) on Surface.com.",
+            "confidenceScore": 0.7506,
+            "id": 26,
+            "source": "surface-book-user-guide-EN.pdf",
+            "metadata": {
+              "system_metadata_qna_edited_manually": "true",
+              "explicitlytaggedheading": "make your battery last"
+            },
+            "dialog": {
+              "isContextOnly": false,
+              "prompts": []
+            }
+          }
+        ]
+      }
     }
   ],
   "Variables": {
-    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "QUESTIONANSWERING_KEY": "Sanitized",
-    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "RandomSeed": "44747108"
+    "QUESTIONANSWERING_PROJECT": "testQA",
+    "RandomSeed": "764902027"
   }
 }

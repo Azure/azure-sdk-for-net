@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of RequestApprovalsList. </summary>
         internal RequestApprovalsList()
         {
-            Value = new ChangeTrackingList<RequestApprovalResourceData>();
+            Value = new ChangeTrackingList<MarketplaceApprovalRequestData>();
         }
 
         /// <summary> Initializes a new instance of RequestApprovalsList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
-        internal RequestApprovalsList(IReadOnlyList<RequestApprovalResourceData> value, string nextLink)
+        internal RequestApprovalsList(IReadOnlyList<MarketplaceApprovalRequestData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<RequestApprovalResourceData> Value { get; }
+        public IReadOnlyList<MarketplaceApprovalRequestData> Value { get; }
         /// <summary> URL to get the next set of notifications list results if there are any. </summary>
         public string NextLink { get; }
     }

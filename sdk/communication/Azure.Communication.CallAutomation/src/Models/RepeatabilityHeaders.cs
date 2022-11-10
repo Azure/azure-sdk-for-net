@@ -11,22 +11,50 @@ namespace Azure.Communication.CallAutomation
     public class RepeatabilityHeaders
     {
         /// <summary>
-        /// Repeatabiity Request Id.
+        /// The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.
         /// </summary>
-        public Guid? RepeatabilityRequestId { get; set; }
+        public Guid RepeatabilityRequestId { get; private set;  }
 
         /// <summary>
-        /// Repeatability First Sent.
+        /// The value should be the date and time at which the request was first created.
         /// </summary>
-        public string RepeatabilityFirstSent { get; set; }
+        public DateTimeOffset RepeatabilityFirstSent { get; private set; }
 
         /// <summary>
-        /// Function that checks the validility of the repeatability header set.
+        /// Let SDK provide repeatability headers. This is also the default behaviour if repeatability header is not provided. If you would like to exlucde repeataiblity headers in the request, pass the NULL value for RepeatabilityHeaders class.
         /// </summary>
-        public Boolean IsValidRepeatabilityHeaders() {
-            if ((RepeatabilityRequestId == null || RepeatabilityRequestId.Equals(Guid.Empty)) && String.IsNullOrEmpty(RepeatabilityFirstSent)) return true;
-            if (RepeatabilityRequestId != null && !RepeatabilityRequestId.Equals(Guid.Empty) && !String.IsNullOrEmpty(RepeatabilityFirstSent)) return true;
-            return false;
+        public RepeatabilityHeaders()
+        {
+            RepeatabilityRequestId = default;
+            RepeatabilityFirstSent = default;
+        }
+
+        /// <summary>
+        /// If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same RepeatabilityHeaders and get back an appropriate response without the server executing the request multiple times.
+        /// </summary>
+        /// <param name="repeatabilityRequestId"> The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> The value should be the date and time at which the request was first created.</param>
+        public RepeatabilityHeaders(Guid repeatabilityRequestId, DateTimeOffset repeatabilityFirstSent) {
+            RepeatabilityRequestId = repeatabilityRequestId;
+            RepeatabilityFirstSent = repeatabilityFirstSent;
+        }
+
+        /// <summary>
+        /// Function that returns RepeatabilityFirstSent in string format using the IMF-fixdate form of HTTP-date.
+        /// </summary>
+        /// <returns></returns>
+        internal string GetRepeatabilityFirstSentString()
+        {
+            return RepeatabilityFirstSent.ToString("R");
+        }
+
+        internal void GenerateIfRepeatabilityHeadersNotProvided()
+        {
+            if (RepeatabilityRequestId == default && RepeatabilityFirstSent == default)
+            {
+                RepeatabilityRequestId = Guid.NewGuid();
+                RepeatabilityFirstSent = DateTimeOffset.Now;
+            }
         }
     }
 }

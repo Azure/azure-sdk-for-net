@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='restoreTimestampInUtc'>
             /// The timestamp when the restorable resources existed.
             /// </param>
-            public static IEnumerable<GremlinDatabaseRestoreResource> List(this IRestorableGremlinResourcesOperations operations, string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string))
+            public static IEnumerable<RestorableGremlinResourcesGetResult> List(this IRestorableGremlinResourcesOperations operations, string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string))
             {
                 return operations.ListAsync(location, instanceId, restoreLocation, restoreTimestampInUtc).GetAwaiter().GetResult();
             }
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<GremlinDatabaseRestoreResource>> ListAsync(this IRestorableGremlinResourcesOperations operations, string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<RestorableGremlinResourcesGetResult>> ListAsync(this IRestorableGremlinResourcesOperations operations, string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, instanceId, restoreLocation, restoreTimestampInUtc, null, cancellationToken).ConfigureAwait(false))
                 {

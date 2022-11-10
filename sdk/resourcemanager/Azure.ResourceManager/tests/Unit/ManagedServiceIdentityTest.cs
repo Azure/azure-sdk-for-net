@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Tests
         public JsonProperty DeserializerHelper(string filename)
         {
             var json = File.ReadAllText(Path.Combine(TestAssetPath, filename));
-            JsonDocument document = JsonDocument.Parse(json);
-            JsonElement rootElement = document.RootElement;
+            using JsonDocument document = JsonDocument.Parse(json);
+            JsonElement rootElement = document.RootElement.Clone();
             return rootElement.EnumerateObject().First();
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Tests
         public void TestDeserializerValidOuterExtraField()
         {
             var json = File.ReadAllText(Path.Combine(TestAssetPath, "SystemAndUserAssignedOuterExtraField.json"));
-            JsonDocument document = JsonDocument.Parse(json);
+            using JsonDocument document = JsonDocument.Parse(json);
             JsonElement rootElement = document.RootElement;
             var identityJsonProperty = rootElement.EnumerateObject().ElementAt(1);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value);

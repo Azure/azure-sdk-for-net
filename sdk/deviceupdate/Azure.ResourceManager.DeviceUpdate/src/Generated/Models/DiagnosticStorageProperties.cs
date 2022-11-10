@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public DiagnosticStorageProperties(AuthenticationType authenticationType, string resourceId)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             AuthenticationType = authenticationType;
             ResourceId = resourceId;

@@ -7,7 +7,7 @@ using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 {
     internal class CallAutomationClientLiveTestsBase : RecordedTestBase<CallAutomationClientTestEnvironment>
     {

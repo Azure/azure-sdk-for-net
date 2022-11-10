@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceId, string assessmentName, ExpandEnum? expand)
+        internal HttpMessage CreateGetRequest(string resourceId, string assessmentName, SecurityAssessmentODataExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityAssessmentResponseData>> GetAsync(string resourceId, string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAssessmentData>> GetAsync(string resourceId, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
@@ -142,13 +142,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecurityAssessmentResponseData value = default;
+                        SecurityAssessmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecurityAssessmentResponseData.DeserializeSecurityAssessmentResponseData(document.RootElement);
+                        value = SecurityAssessmentData.DeserializeSecurityAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityAssessmentResponseData)null, message.Response);
+                    return Response.FromValue((SecurityAssessmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityAssessmentResponseData> Get(string resourceId, string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public Response<SecurityAssessmentData> Get(string resourceId, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
@@ -172,19 +172,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecurityAssessmentResponseData value = default;
+                        SecurityAssessmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecurityAssessmentResponseData.DeserializeSecurityAssessmentResponseData(document.RootElement);
+                        value = SecurityAssessmentData.DeserializeSecurityAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityAssessmentResponseData)null, message.Response);
+                    return Response.FromValue((SecurityAssessmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceId, string assessmentName, SecurityAssessmentResponseCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceId, string assessmentName, SecurityAssessmentCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="assessmentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityAssessmentResponseData>> CreateOrUpdateAsync(string resourceId, string assessmentName, SecurityAssessmentResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAssessmentData>> CreateOrUpdateAsync(string resourceId, string assessmentName, SecurityAssessmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                 case 201:
                     {
-                        SecurityAssessmentResponseData value = default;
+                        SecurityAssessmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecurityAssessmentResponseData.DeserializeSecurityAssessmentResponseData(document.RootElement);
+                        value = SecurityAssessmentData.DeserializeSecurityAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="assessmentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityAssessmentResponseData> CreateOrUpdate(string resourceId, string assessmentName, SecurityAssessmentResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<SecurityAssessmentData> CreateOrUpdate(string resourceId, string assessmentName, SecurityAssessmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
@@ -256,9 +256,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                 case 201:
                     {
-                        SecurityAssessmentResponseData value = default;
+                        SecurityAssessmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecurityAssessmentResponseData.DeserializeSecurityAssessmentResponseData(document.RootElement);
+                        value = SecurityAssessmentData.DeserializeSecurityAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

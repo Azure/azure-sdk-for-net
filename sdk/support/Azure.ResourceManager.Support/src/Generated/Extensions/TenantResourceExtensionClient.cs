@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Support
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ServiceResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
-        public virtual ServiceCollection GetServices()
+        /// <summary> Gets a collection of SupportAzureServiceResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of SupportAzureServiceResources and their operations over a SupportAzureServiceResource. </returns>
+        public virtual SupportAzureServiceCollection GetSupportAzureServices()
         {
-            return GetCachedClient(Client => new ServiceCollection(Client, Id));
+            return GetCachedClient(Client => new SupportAzureServiceCollection(Client, Id));
         }
     }
 }

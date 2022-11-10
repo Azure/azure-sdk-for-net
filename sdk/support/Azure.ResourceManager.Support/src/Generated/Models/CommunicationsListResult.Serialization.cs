@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support.Models
     {
         internal static CommunicationsListResult DeserializeCommunicationsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<CommunicationDetailData>> value = default;
+            Optional<IReadOnlyList<SupportTicketCommunicationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Support.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CommunicationDetailData> array = new List<CommunicationDetailData>();
+                    List<SupportTicketCommunicationData> array = new List<SupportTicketCommunicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationDetailData.DeserializeCommunicationDetailData(item));
+                        array.Add(SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(item));
                     }
                     value = array;
                     continue;

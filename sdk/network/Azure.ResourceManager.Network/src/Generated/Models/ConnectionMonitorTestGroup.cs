@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,22 +23,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testConfigurations"/>, <paramref name="sources"/> or <paramref name="destinations"/> is null. </exception>
         public ConnectionMonitorTestGroup(string name, IEnumerable<string> testConfigurations, IEnumerable<string> sources, IEnumerable<string> destinations)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (testConfigurations == null)
-            {
-                throw new ArgumentNullException(nameof(testConfigurations));
-            }
-            if (sources == null)
-            {
-                throw new ArgumentNullException(nameof(sources));
-            }
-            if (destinations == null)
-            {
-                throw new ArgumentNullException(nameof(destinations));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(testConfigurations, nameof(testConfigurations));
+            Argument.AssertNotNull(sources, nameof(sources));
+            Argument.AssertNotNull(destinations, nameof(destinations));
 
             Name = name;
             TestConfigurations = testConfigurations.ToList();

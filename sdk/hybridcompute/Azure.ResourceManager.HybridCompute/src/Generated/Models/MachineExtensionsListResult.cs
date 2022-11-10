@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of MachineExtensionsListResult. </summary>
         internal MachineExtensionsListResult()
         {
-            Value = new ChangeTrackingList<MachineExtensionData>();
+            Value = new ChangeTrackingList<HybridComputeMachineExtensionData>();
         }
 
         /// <summary> Initializes a new instance of MachineExtensionsListResult. </summary>
         /// <param name="value"> The list of extensions. </param>
         /// <param name="nextLink"> The uri to fetch the next page of machine extensions. Call ListNext() with this to fetch the next page of extensions. </param>
-        internal MachineExtensionsListResult(IReadOnlyList<MachineExtensionData> value, string nextLink)
+        internal MachineExtensionsListResult(IReadOnlyList<HybridComputeMachineExtensionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of extensions. </summary>
-        public IReadOnlyList<MachineExtensionData> Value { get; }
+        public IReadOnlyList<HybridComputeMachineExtensionData> Value { get; }
         /// <summary> The uri to fetch the next page of machine extensions. Call ListNext() with this to fetch the next page of extensions. </summary>
         public string NextLink { get; }
     }

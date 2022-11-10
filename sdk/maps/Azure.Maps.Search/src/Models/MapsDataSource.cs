@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    /// <summary> Optional section. Reference ids for use with the [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. </summary>
+    /// <summary> Optional section. Reference ids for use with the <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon">Get Search Polygon</see> API. </summary>
     [CodeGenModel("DataSource")]
     public partial class MapsDataSource
     {

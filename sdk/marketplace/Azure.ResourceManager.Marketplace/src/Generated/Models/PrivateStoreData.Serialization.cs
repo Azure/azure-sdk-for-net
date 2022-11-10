@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.Marketplace
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<Availability> availability = default;
-            Optional<string> privateStoreId = default;
+            Optional<PrivateStoreAvailability> availability = default;
+            Optional<Guid> privateStoreId = default;
             Optional<ETag> eTag = default;
             Optional<string> privateStoreName = default;
             Optional<Guid> tenantId = default;
             Optional<bool> isGov = default;
-            Optional<IReadOnlyList<string>> collectionIds = default;
+            Optional<IReadOnlyList<Guid>> collectionIds = default;
             Optional<IDictionary<string, string>> branding = default;
-            Optional<IList<Recipient>> recipients = default;
+            Optional<IList<NotificationRecipient>> recipients = default;
             Optional<bool> sendToAllMarketplaceAdmins = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -139,12 +139,17 @@ namespace Azure.ResourceManager.Marketplace
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availability = new Availability(property0.Value.GetString());
+                            availability = new PrivateStoreAvailability(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateStoreId"))
                         {
-                            privateStoreId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateStoreId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("eTag"))
@@ -189,10 +194,10 @@ namespace Azure.ResourceManager.Marketplace
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<Guid> array = new List<Guid>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(item.GetGuid());
                             }
                             collectionIds = array;
                             continue;
@@ -228,10 +233,10 @@ namespace Azure.ResourceManager.Marketplace
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    List<Recipient> array = new List<Recipient>();
+                                    List<NotificationRecipient> array = new List<NotificationRecipient>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(Recipient.DeserializeRecipient(item));
+                                        array.Add(NotificationRecipient.DeserializeNotificationRecipient(item));
                                     }
                                     recipients = array;
                                     continue;
@@ -253,7 +258,7 @@ namespace Azure.ResourceManager.Marketplace
                     continue;
                 }
             }
-            return new PrivateStoreData(id, name, type, systemData.Value, Optional.ToNullable(availability), privateStoreId.Value, Optional.ToNullable(eTag), privateStoreName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isGov), Optional.ToList(collectionIds), Optional.ToDictionary(branding), Optional.ToList(recipients), Optional.ToNullable(sendToAllMarketplaceAdmins));
+            return new PrivateStoreData(id, name, type, systemData.Value, Optional.ToNullable(availability), Optional.ToNullable(privateStoreId), Optional.ToNullable(eTag), privateStoreName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isGov), Optional.ToList(collectionIds), Optional.ToDictionary(branding), Optional.ToList(recipients), Optional.ToNullable(sendToAllMarketplaceAdmins));
         }
     }
 }

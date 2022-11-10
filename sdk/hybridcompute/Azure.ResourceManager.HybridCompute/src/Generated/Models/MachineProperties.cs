@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
         /// <param name="mssqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
-        internal MachineProperties(LocationData locationData, AgentConfiguration agentConfiguration, ServiceStatuses serviceStatuses, CloudMetadata cloudMetadata, OSProfile osProfile, string provisioningState, StatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, string vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, string vmUuid, string osSku, string domainName, string adFqdn, string dnsFqdn, string privateLinkScopeResourceId, string parentClusterResourceId, string mssqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties)
+        internal MachineProperties(LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, CloudMetadata cloudMetadata, OSProfile osProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, string vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, string vmUuid, string osSku, string domainName, string adFqdn, string dnsFqdn, string privateLinkScopeResourceId, string parentClusterResourceId, string mssqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties)
         {
             LocationData = locationData;
             AgentConfiguration = agentConfiguration;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </summary>
         public AgentConfiguration AgentConfiguration { get; }
         /// <summary> Statuses of dependent services that are reported back to ARM. </summary>
-        public ServiceStatuses ServiceStatuses { get; set; }
+        public HybridComputeServiceStatuses ServiceStatuses { get; set; }
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
         internal CloudMetadata CloudMetadata { get; set; }
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The status of the hybrid machine agent. </summary>
-        public StatusType? Status { get; }
+        public HybridComputeStatusType? Status { get; }
         /// <summary> The time of the last status change. </summary>
         public DateTimeOffset? LastStatusChange { get; }
         /// <summary> Details about the error state. </summary>

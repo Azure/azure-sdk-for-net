@@ -49,7 +49,36 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The key of the bound resource. </summary>
         public string Key { get; set; }
-        /// <summary> Binding parameters of the Binding resource. </summary>
+        /// <summary>
+        /// Binding parameters of the Binding resource
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> BindingParameters { get; }
         /// <summary> The generated Spring Boot property file for this binding. The secret will be deducted. </summary>
         public string GeneratedProperties { get; }

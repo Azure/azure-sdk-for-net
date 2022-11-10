@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
-        internal MachineExtensionInstanceViewStatus(string code, StatusLevelType? level, string displayStatus, string message, DateTimeOffset? time)
+        internal MachineExtensionInstanceViewStatus(string code, HybridComputeStatusLevelType? level, string displayStatus, string message, DateTimeOffset? time)
         {
             Code = code;
             Level = level;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> The status code. </summary>
         public string Code { get; set; }
         /// <summary> The level code. </summary>
-        public StatusLevelType? Level { get; set; }
+        public HybridComputeStatusLevelType? Level { get; set; }
         /// <summary> The short localizable label for the status. </summary>
         public string DisplayStatus { get; set; }
         /// <summary> The detailed status message, including for alerts and error messages. </summary>

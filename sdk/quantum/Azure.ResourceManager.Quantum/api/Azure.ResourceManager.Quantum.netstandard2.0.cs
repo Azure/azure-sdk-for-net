@@ -1,0 +1,234 @@
+namespace Azure.ResourceManager.Quantum
+{
+    public static partial class QuantumExtensions
+    {
+        public static Azure.Response<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult> CheckNameAvailabilityWorkspace(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityWorkspaceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Quantum.Models.ProviderDescription> GetOfferings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Quantum.Models.ProviderDescription> GetOfferingsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> GetQuantumWorkspace(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>> GetQuantumWorkspaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Quantum.QuantumWorkspaceResource GetQuantumWorkspaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Quantum.QuantumWorkspaceCollection GetQuantumWorkspaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> GetQuantumWorkspaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> GetQuantumWorkspacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class QuantumWorkspaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>, System.Collections.IEnumerable
+    {
+        protected QuantumWorkspaceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string workspaceName, Azure.ResourceManager.Quantum.QuantumWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string workspaceName, Azure.ResourceManager.Quantum.QuantumWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> Get(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>> GetAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class QuantumWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public QuantumWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public System.Uri EndpointUri { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Quantum.Models.Provider> Providers { get { throw null; } }
+        public Azure.ResourceManager.Quantum.Models.ProvisioningStatus? ProvisioningState { get { throw null; } }
+        public string StorageAccount { get { throw null; } set { } }
+        public Azure.ResourceManager.Quantum.Models.UsableStatus? Usable { get { throw null; } }
+    }
+    public partial class QuantumWorkspaceResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected QuantumWorkspaceResource() { }
+        public virtual Azure.ResourceManager.Quantum.QuantumWorkspaceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> Update(Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>> UpdateAsync(Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Quantum.Models
+{
+    public partial class CheckNameAvailabilityContent
+    {
+        public CheckNameAvailabilityContent() { }
+        public string Name { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
+    }
+    public partial class CheckNameAvailabilityResult
+    {
+        internal CheckNameAvailabilityResult() { }
+        public string Message { get { throw null; } }
+        public bool? NameAvailable { get { throw null; } }
+        public string Reason { get { throw null; } }
+    }
+    public partial class PricingDetail
+    {
+        internal PricingDetail() { }
+        public string Id { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    public partial class PricingDimension
+    {
+        internal PricingDimension() { }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    public partial class Provider
+    {
+        public Provider() { }
+        public string ApplicationName { get { throw null; } set { } }
+        public System.Uri InstanceUri { get { throw null; } set { } }
+        public string ProviderId { get { throw null; } set { } }
+        public string ProviderSku { get { throw null; } set { } }
+        public Azure.ResourceManager.Quantum.Models.Status? ProvisioningState { get { throw null; } set { } }
+        public string ResourceUsageId { get { throw null; } set { } }
+    }
+    public partial class ProviderDescription
+    {
+        internal ProviderDescription() { }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.Quantum.Models.ProviderProperties Properties { get { throw null; } }
+    }
+    public partial class ProviderProperties
+    {
+        internal ProviderProperties() { }
+        public Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad Aad { get { throw null; } }
+        public string Company { get { throw null; } }
+        public string DefaultEndpoint { get { throw null; } }
+        public string Description { get { throw null; } }
+        public Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication ManagedApplication { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.PricingDimension> PricingDimensions { get { throw null; } }
+        public string ProviderType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.QuotaDimension> QuotaDimensions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.SkuDescription> Skus { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.TargetDescription> Targets { get { throw null; } }
+    }
+    public partial class ProviderPropertiesAad
+    {
+        internal ProviderPropertiesAad() { }
+        public string ApplicationId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
+    }
+    public partial class ProviderPropertiesManagedApplication
+    {
+        internal ProviderPropertiesManagedApplication() { }
+        public string OfferId { get { throw null; } }
+        public string PublisherId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProvisioningStatus : System.IEquatable<Azure.ResourceManager.Quantum.Models.ProvisioningStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProvisioningStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Quantum.Models.ProvisioningStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.ProvisioningStatus ProviderDeleting { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.ProvisioningStatus ProviderLaunching { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.ProvisioningStatus ProviderProvisioning { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.ProvisioningStatus ProviderUpdating { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.ProvisioningStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Quantum.Models.ProvisioningStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Quantum.Models.ProvisioningStatus left, Azure.ResourceManager.Quantum.Models.ProvisioningStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quantum.Models.ProvisioningStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Quantum.Models.ProvisioningStatus left, Azure.ResourceManager.Quantum.Models.ProvisioningStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class QuantumWorkspacePatch
+    {
+        public QuantumWorkspacePatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class QuotaDimension
+    {
+        internal QuotaDimension() { }
+        public string Description { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Period { get { throw null; } }
+        public float? Quota { get { throw null; } }
+        public string Scope { get { throw null; } }
+        public string Unit { get { throw null; } }
+        public string UnitPlural { get { throw null; } }
+    }
+    public partial class SkuDescription
+    {
+        internal SkuDescription() { }
+        public bool? AutoAdd { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.PricingDetail> PricingDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.QuotaDimension> QuotaDimensions { get { throw null; } }
+        public System.Uri RestrictedAccessUri { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Targets { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.Quantum.Models.Status>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Status(string value) { throw null; }
+        public static Azure.ResourceManager.Quantum.Models.Status Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.Status Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.Status Failed { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.Status Launching { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.Status Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.Status Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Quantum.Models.Status other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Quantum.Models.Status left, Azure.ResourceManager.Quantum.Models.Status right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quantum.Models.Status (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Quantum.Models.Status left, Azure.ResourceManager.Quantum.Models.Status right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class TargetDescription
+    {
+        internal TargetDescription() { }
+        public System.Collections.Generic.IReadOnlyList<string> AcceptedContentEncodings { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> AcceptedDataFormats { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UsableStatus : System.IEquatable<Azure.ResourceManager.Quantum.Models.UsableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UsableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Quantum.Models.UsableStatus No { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.UsableStatus Partial { get { throw null; } }
+        public static Azure.ResourceManager.Quantum.Models.UsableStatus Yes { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Quantum.Models.UsableStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Quantum.Models.UsableStatus left, Azure.ResourceManager.Quantum.Models.UsableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quantum.Models.UsableStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Quantum.Models.UsableStatus left, Azure.ResourceManager.Quantum.Models.UsableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+}

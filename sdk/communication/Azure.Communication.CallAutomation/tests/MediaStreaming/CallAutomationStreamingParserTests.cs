@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
+using Azure.Communication.CallAutomation.Models.MediaStreaming;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -13,12 +15,13 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         public void ParseMetadata_Test()
         {
             string metadataJson = "{"
+                + "\"kind\": \"AudioMetadata\","
+                + "\"audioMetadata\": {"
                 + "\"subscriptionId\": \"subscriptionId\","
-                + "\"format\": {"
                 + "\"encoding\": \"encodingType\","
                 + "\"sampleRate\": 8,"
                 + "\"channels\": 2,"
-                + "\"length\": 100.1"
+                + "\"length\": 640"
                 + "}"
                 + "}";
 
@@ -30,13 +33,16 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         public void ParseAudio_Test()
         {
             string audioJson = "{"
+                + "\"kind\": \"AudioData\","
+                + "\"audioData\": {"
                 + "\"data\": \"AQIDBAU=\","      // [1, 2, 3, 4, 5]
                 + "\"timestamp\": \"2022-08-23T11:48:05Z\","
-                + "\"participantId\": \"participantId\","
-                + "\"isSilence\": false"
+                + "\"participantRawId\": \"participantId\","
+                + "\"silent\": false"
+                + "}"
                 + "}";
 
-            MediaStreamingAudio streamingAudio = (MediaStreamingAudio) MediaStreamingPackageParser.Parse(audioJson);
+            MediaStreamingAudioData streamingAudio = (MediaStreamingAudioData) MediaStreamingPackageParser.Parse(audioJson);
             ValidateAudioData(streamingAudio);
         }
 
@@ -44,28 +50,32 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         public void ParseBinaryData()
         {
             JObject jsonData = new JObject();
-            jsonData["data"] = "AQIDBAU=";
-            jsonData["timestamp"] = "2022-08-23T11:48:05Z";
-            jsonData["participantId"] = "participantId";
-            jsonData["isSilence"] = false;
+            jsonData["kind"] = "AudioData";
+            jsonData["audioData"] = new JObject();
+            jsonData["audioData"]["data"] = "AQIDBAU=";
+            jsonData["audioData"]["timestamp"] = "2022-08-23T11:48:05Z";
+            jsonData["audioData"]["participantRawId"] = "participantId";
+            jsonData["audioData"]["silent"] = false;
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
-            MediaStreamingAudio streamingAudio = (MediaStreamingAudio)MediaStreamingPackageParser.Parse(binaryData);
+            MediaStreamingAudioData streamingAudio = (MediaStreamingAudioData)MediaStreamingPackageParser.Parse(binaryData);
             ValidateAudioData(streamingAudio);
         }
 
         [Test]
         public void ParseAudioEventsWithBynaryArray()
         {
-            JObject jsonAudio = new JObject();
-            jsonAudio["data"] = "AQIDBAU=";
-            jsonAudio["timestamp"] = "2022-08-23T11:48:05Z";
-            jsonAudio["participantId"] = "participantId";
-            jsonAudio["isSilence"] = false;
+            JObject jsonData = new JObject();
+            jsonData["kind"] = "AudioData";
+            jsonData["audioData"] = new JObject();
+            jsonData["audioData"]["data"] = "AQIDBAU=";
+            jsonData["audioData"]["timestamp"] = "2022-08-23T11:48:05Z";
+            jsonData["audioData"]["participantRawId"] = "participantId";
+            jsonData["audioData"]["silent"] = false;
 
-            byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonAudio.ToString());
-            MediaStreamingAudio parsedPackage = (MediaStreamingAudio) MediaStreamingPackageParser.Parse(receivedBytes);
+            byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
+            MediaStreamingAudioData parsedPackage = (MediaStreamingAudioData) MediaStreamingPackageParser.Parse(receivedBytes);
 
             Assert.NotNull(parsedPackage);
             ValidateAudioData(parsedPackage);
@@ -75,23 +85,16 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         {
             Assert.IsNotNull(streamingMetadata);
             Assert.AreEqual("subscriptionId", streamingMetadata.MediaSubscriptionId);
-
-            ValidateFormat(streamingMetadata.Format);
+            Assert.AreEqual("encodingType", streamingMetadata.Encoding);
+            Assert.AreEqual(8, streamingMetadata.SampleRate);
+            Assert.AreEqual(2, streamingMetadata.Channels);
+            Assert.AreEqual(640, streamingMetadata.Length);
         }
 
-        private static void ValidateFormat(MediaStreamingFormat streamingFormat)
-        {
-            Assert.IsNotNull(streamingFormat);
-            Assert.AreEqual("encodingType", streamingFormat.Encoding);
-            Assert.AreEqual(8, streamingFormat.SampleRate);
-            Assert.AreEqual(2, streamingFormat.Channels);
-            Assert.AreEqual(100.1, streamingFormat.Length);
-        }
-
-        private static void ValidateAudioData(MediaStreamingAudio streamingAudio)
+        private static void ValidateAudioData(MediaStreamingAudioData streamingAudio)
         {
             Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual(5, streamingAudio.Data.Length);
+            Assert.AreEqual("AQIDBAU=", streamingAudio.Data);
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
             Assert.AreEqual("participantId", streamingAudio.Participant.RawId);

@@ -9,7 +9,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The add participants succeeded event internal.
     /// </summary>
-    [CodeGenModel("AddParticipantsSucceededEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("AddParticipantsSucceeded", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     internal partial class AddParticipantsSucceededInternal
     {
     }

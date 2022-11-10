@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,24 +18,19 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(CustomKeysAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeysAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomKeysAcquisitionUriTemplate.AbsoluteUri);
+                writer.WriteStringValue(CustomKeysAcquisitionUriTemplate);
             }
             writer.WriteEndObject();
         }
 
         internal static ClearKeyEncryptionConfiguration DeserializeClearKeyEncryptionConfiguration(JsonElement element)
         {
-            Optional<Uri> customKeysAcquisitionUriTemplate = default;
+            Optional<string> customKeysAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customKeysAcquisitionUrlTemplate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        customKeysAcquisitionUriTemplate = null;
-                        continue;
-                    }
-                    customKeysAcquisitionUriTemplate = new Uri(property.Value.GetString());
+                    customKeysAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
             }

@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal RedisOperationStatus(string status) : base(status)
         {
-            if (status == null)
-            {
-                throw new ArgumentNullException(nameof(status));
-            }
+            Argument.AssertNotNull(status, nameof(status));
 
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -44,7 +41,36 @@ namespace Azure.ResourceManager.Redis.Models
             Properties = properties;
         }
 
-        /// <summary> Additional properties from RP, only when operation is successful. </summary>
+        /// <summary>
+        /// Additional properties from RP, only when operation is successful
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IReadOnlyDictionary<string, BinaryData> Properties { get; }
     }
 }

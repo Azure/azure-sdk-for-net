@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterDefinition"/> is null. </exception>
         public HDInsightClusterProperties(HDInsightClusterDefinition clusterDefinition)
         {
-            if (clusterDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(clusterDefinition));
-            }
+            Argument.AssertNotNull(clusterDefinition, nameof(clusterDefinition));
 
             ClusterDefinition = clusterDefinition;
             Errors = new ChangeTrackingList<ResponseError>();

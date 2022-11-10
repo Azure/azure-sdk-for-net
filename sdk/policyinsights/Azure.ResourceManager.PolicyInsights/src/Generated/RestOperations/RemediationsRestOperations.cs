@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListDeploymentsAtResourceRequest(string resourceId, string remediationName, QueryOptions queryOptions)
+        internal HttpMessage CreateListDeploymentsAtResourceRequest(string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
             uri.AppendPath(remediationName, true);
             uri.AppendPath("/listDeployments", false);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Gets all deployments for a remediation at resource scope. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemediationDeploymentsListResult>> ListDeploymentsAtResourceAsync(string resourceId, string remediationName, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RemediationDeploymentsListResult>> ListDeploymentsAtResourceAsync(string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var message = CreateListDeploymentsAtResourceRequest(resourceId, remediationName, queryOptions);
+            using var message = CreateListDeploymentsAtResourceRequest(resourceId, remediationName, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -91,16 +91,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Gets all deployments for a remediation at resource scope. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemediationDeploymentsListResult> ListDeploymentsAtResource(string resourceId, string remediationName, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<RemediationDeploymentsListResult> ListDeploymentsAtResource(string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var message = CreateListDeploymentsAtResourceRequest(resourceId, remediationName, queryOptions);
+            using var message = CreateListDeploymentsAtResourceRequest(resourceId, remediationName, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemediationData>> CancelAtResourceAsync(string resourceId, string remediationName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyRemediationData>> CancelAtResourceAsync(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        RemediationData value = default;
+                        PolicyRemediationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemediationData.DeserializeRemediationData(document.RootElement);
+                        value = PolicyRemediationData.DeserializePolicyRemediationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemediationData> CancelAtResource(string resourceId, string remediationName, CancellationToken cancellationToken = default)
+        public Response<PolicyRemediationData> CancelAtResource(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -179,9 +179,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        RemediationData value = default;
+                        PolicyRemediationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemediationData.DeserializeRemediationData(document.RootElement);
+                        value = PolicyRemediationData.DeserializePolicyRemediationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListForResourceRequest(string resourceId, QueryOptions queryOptions)
+        internal HttpMessage CreateListForResourceRequest(string resourceId, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -199,13 +199,13 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations", false);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -216,14 +216,14 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Gets all remediations for a resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<RemediationListResult>> ListForResourceAsync(string resourceId, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RemediationListResult>> ListForResourceAsync(string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListForResourceRequest(resourceId, queryOptions);
+            using var message = CreateListForResourceRequest(resourceId, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -241,14 +241,14 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Gets all remediations for a resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<RemediationListResult> ListForResource(string resourceId, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<RemediationListResult> ListForResource(string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListForResourceRequest(resourceId, queryOptions);
+            using var message = CreateListForResourceRequest(resourceId, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateAtResourceRequest(string resourceId, string remediationName, RemediationData data)
+        internal HttpMessage CreateCreateOrUpdateAtResourceRequest(string resourceId, string remediationName, PolicyRemediationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="remediationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemediationData>> CreateOrUpdateAtResourceAsync(string resourceId, string remediationName, RemediationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyRemediationData>> CreateOrUpdateAtResourceAsync(string resourceId, string remediationName, PolicyRemediationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -306,9 +306,9 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                 case 201:
                     {
-                        RemediationData value = default;
+                        PolicyRemediationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemediationData.DeserializeRemediationData(document.RootElement);
+                        value = PolicyRemediationData.DeserializePolicyRemediationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="remediationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemediationData> CreateOrUpdateAtResource(string resourceId, string remediationName, RemediationData data, CancellationToken cancellationToken = default)
+        public Response<PolicyRemediationData> CreateOrUpdateAtResource(string resourceId, string remediationName, PolicyRemediationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                 case 201:
                     {
-                        RemediationData value = default;
+                        PolicyRemediationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemediationData.DeserializeRemediationData(document.RootElement);
+                        value = PolicyRemediationData.DeserializePolicyRemediationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemediationData>> GetAtResourceAsync(string resourceId, string remediationName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyRemediationData>> GetAtResourceAsync(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -381,13 +381,13 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        RemediationData value = default;
+                        PolicyRemediationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemediationData.DeserializeRemediationData(document.RootElement);
+                        value = PolicyRemediationData.DeserializePolicyRemediationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RemediationData)null, message.Response);
+                    return Response.FromValue((PolicyRemediationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemediationData> GetAtResource(string resourceId, string remediationName, CancellationToken cancellationToken = default)
+        public Response<PolicyRemediationData> GetAtResource(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -410,13 +410,13 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        RemediationData value = default;
+                        PolicyRemediationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemediationData.DeserializeRemediationData(document.RootElement);
+                        value = PolicyRemediationData.DeserializePolicyRemediationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RemediationData)null, message.Response);
+                    return Response.FromValue((PolicyRemediationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemediationData>> DeleteAtResourceAsync(string resourceId, string remediationName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyRemediationData>> DeleteAtResourceAsync(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -457,13 +457,13 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        RemediationData value = default;
+                        PolicyRemediationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemediationData.DeserializeRemediationData(document.RootElement);
+                        value = PolicyRemediationData.DeserializePolicyRemediationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((RemediationData)null, message.Response);
+                    return Response.FromValue((PolicyRemediationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemediationData> DeleteAtResource(string resourceId, string remediationName, CancellationToken cancellationToken = default)
+        public Response<PolicyRemediationData> DeleteAtResource(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -486,19 +486,19 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        RemediationData value = default;
+                        PolicyRemediationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemediationData.DeserializeRemediationData(document.RootElement);
+                        value = PolicyRemediationData.DeserializePolicyRemediationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((RemediationData)null, message.Response);
+                    return Response.FromValue((PolicyRemediationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListDeploymentsAtResourceNextPageRequest(string nextLink, string resourceId, string remediationName, QueryOptions queryOptions)
+        internal HttpMessage CreateListDeploymentsAtResourceNextPageRequest(string nextLink, string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -516,17 +516,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemediationDeploymentsListResult>> ListDeploymentsAtResourceNextPageAsync(string nextLink, string resourceId, string remediationName, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RemediationDeploymentsListResult>> ListDeploymentsAtResourceNextPageAsync(string nextLink, string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var message = CreateListDeploymentsAtResourceNextPageRequest(nextLink, resourceId, remediationName, queryOptions);
+            using var message = CreateListDeploymentsAtResourceNextPageRequest(nextLink, resourceId, remediationName, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -546,17 +546,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceId"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemediationDeploymentsListResult> ListDeploymentsAtResourceNextPage(string nextLink, string resourceId, string remediationName, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<RemediationDeploymentsListResult> ListDeploymentsAtResourceNextPage(string nextLink, string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var message = CreateListDeploymentsAtResourceNextPageRequest(nextLink, resourceId, remediationName, queryOptions);
+            using var message = CreateListDeploymentsAtResourceNextPageRequest(nextLink, resourceId, remediationName, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListForResourceNextPageRequest(string nextLink, string resourceId, QueryOptions queryOptions)
+        internal HttpMessage CreateListForResourceNextPageRequest(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -589,15 +589,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Gets all remediations for a resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<RemediationListResult>> ListForResourceNextPageAsync(string nextLink, string resourceId, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RemediationListResult>> ListForResourceNextPageAsync(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListForResourceNextPageRequest(nextLink, resourceId, queryOptions);
+            using var message = CreateListForResourceNextPageRequest(nextLink, resourceId, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -616,15 +616,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Gets all remediations for a resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public Response<RemediationListResult> ListForResourceNextPage(string nextLink, string resourceId, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<RemediationListResult> ListForResourceNextPage(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListForResourceNextPageRequest(nextLink, resourceId, queryOptions);
+            using var message = CreateListForResourceNextPageRequest(nextLink, resourceId, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

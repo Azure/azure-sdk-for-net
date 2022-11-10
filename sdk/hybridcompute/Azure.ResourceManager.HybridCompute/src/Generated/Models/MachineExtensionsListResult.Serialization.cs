@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static MachineExtensionsListResult DeserializeMachineExtensionsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MachineExtensionData>> value = default;
+            Optional<IReadOnlyList<HybridComputeMachineExtensionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MachineExtensionData> array = new List<MachineExtensionData>();
+                    List<HybridComputeMachineExtensionData> array = new List<HybridComputeMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineExtensionData.DeserializeMachineExtensionData(item));
+                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item));
                     }
                     value = array;
                     continue;

@@ -1489,7 +1489,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         public RulesEngineRule(string name, int priority, Azure.ResourceManager.FrontDoor.Models.RulesEngineAction action) { }
         public Azure.ResourceManager.FrontDoor.Models.RulesEngineAction Action { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchCondition> MatchConditions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchCondition> MatchConditions { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior? MatchProcessingBehavior { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int Priority { get { throw null; } set { } }

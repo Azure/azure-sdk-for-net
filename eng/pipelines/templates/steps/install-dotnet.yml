@@ -6,7 +6,7 @@ parameters:
 steps:
   - task: MSBuild@1
     displayName: Install DevOps Logger
-    condition: eq(${{ parameters.Container }}, false)
+    condition: and(succeeded(), eq(${{ parameters.Container }}, false))
     inputs:
       solution: eng/InstallDevopsLogger.proj
       msbuildArguments: /p:WorkFolder="$(Agent.WorkFolder)" /p:BuildDirectory="$(Agent.BuildDirectory)"

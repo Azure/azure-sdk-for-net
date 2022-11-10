@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public DetectionRequest(string source, DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
+            Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
             StartTime = startTime;

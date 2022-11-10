@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridCompute
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _machineClientDiagnostics;
-        private MachinesRestOperations _machineRestClient;
+        private ClientDiagnostics _hybridComputeMachineMachinesClientDiagnostics;
+        private MachinesRestOperations _hybridComputeMachineMachinesRestClient;
         private ClientDiagnostics _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics;
         private PrivateLinkScopesRestOperations _hybridComputePrivateLinkScopePrivateLinkScopesRestClient;
 
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.HybridCompute
         {
         }
 
-        private ClientDiagnostics MachineClientDiagnostics => _machineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", MachineResource.ResourceType.Namespace, Diagnostics);
-        private MachinesRestOperations MachineRestClient => _machineRestClient ??= new MachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MachineResource.ResourceType));
+        private ClientDiagnostics HybridComputeMachineMachinesClientDiagnostics => _hybridComputeMachineMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
+        private MachinesRestOperations HybridComputeMachineMachinesRestClient => _hybridComputeMachineMachinesRestClient ??= new MachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeMachineResource.ResourceType));
         private ClientDiagnostics HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics => _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
         private PrivateLinkScopesRestOperations HybridComputePrivateLinkScopePrivateLinkScopesRestClient => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient ??= new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputePrivateLinkScopeResource.ResourceType));
 
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// Operation Id: Machines_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineResource> GetMachinesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeMachineResource> GetHybridComputeMachinesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HybridComputeMachineResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = MachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachines");
+                using var scope = HybridComputeMachineMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputeMachines");
                 scope.Start();
                 try
                 {
-                    var response = await MachineRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await HybridComputeMachineMachinesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.HybridCompute
                     throw;
                 }
             }
-            async Task<Page<MachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HybridComputeMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = MachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachines");
+                using var scope = HybridComputeMachineMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputeMachines");
                 scope.Start();
                 try
                 {
-                    var response = await MachineRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await HybridComputeMachineMachinesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -96,17 +96,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// Operation Id: Machines_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineResource> GetMachines(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeMachineResource> GetHybridComputeMachines(CancellationToken cancellationToken = default)
         {
-            Page<MachineResource> FirstPageFunc(int? pageSizeHint)
+            Page<HybridComputeMachineResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = MachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachines");
+                using var scope = HybridComputeMachineMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputeMachines");
                 scope.Start();
                 try
                 {
-                    var response = MachineRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = HybridComputeMachineMachinesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.HybridCompute
                     throw;
                 }
             }
-            Page<MachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HybridComputeMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = MachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachines");
+                using var scope = HybridComputeMachineMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputeMachines");
                 scope.Start();
                 try
                 {
-                    var response = MachineRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = HybridComputeMachineMachinesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

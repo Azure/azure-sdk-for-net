@@ -202,6 +202,9 @@ rename-mapping:
   ScaleAction: MonitorScaleAction
   ScaleDirection: MonitorScaleDirection
   ScaleType: MonitorScaleType
+  ScaleCapacity.minimum: -|integer
+  ScaleCapacity.maximum: -|integer
+  ScaleCapacity.default: -|integer
   ScaleCapacity: MonitorScaleCapacity
   ReceiverStatus: MonitorReceiverStatus
   EnableRequest: ActionGroupEnableContent
@@ -211,8 +214,8 @@ rename-mapping:
   LogSearchRuleResource.properties.autoMitigate: IsAutoMitigateEnabled
   ScaleRule: AutoscaleRule
   ScaleRuleMetricDimension: AutoscaleRuleMetricDimension
-  TestNotificationDetailsResponse.completedTime: -|datetime
-  TestNotificationDetailsResponse.createdTime: -|datetime
+  TestNotificationDetailsResponse.completedTime: -|date-time
+  TestNotificationDetailsResponse.createdTime: -|date-time
   HttpRequestInfo: EventDataHttpRequestInfo
   HttpRequestInfo.clientIpAddress: -|ip-address
   MetricAlertAction.actionGroupId: -|arm-id
@@ -244,62 +247,82 @@ directive:
   # fixing the format since rename-mapping has bugs on this
   - from: swagger-document
     where: $.definitions.ActionDetail.properties.SendTime
-    transform: $["format"] = "date-time";
+    transform: $['format'] = 'date-time';
   # nullable issue resolution
   - from: swagger-document
     where: $.definitions.ActivityLogAlert.properties.actions
-    transform: $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   - from: swagger-document
     where: $.definitions.MetricAlertProperties.properties.criteria
-    transform: $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   - from: swagger-document
     where: $.definitions.MetricTrigger.properties.dimensions
-    transform: $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   - from: swagger-document
     where: $.definitions.AutoscaleSetting.properties.notifications
-    transform: $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   - from: swagger-document
     where: $.definitions.LogProfileProperties.properties.storageAccountId
-    transform: $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   - from: swagger-document
     where: $.definitions.LogProfileProperties.properties.serviceBusRuleId
-    transform: $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   - from: swagger-document
     where: $.definitions.AutoscaleSetting.properties.predictiveAutoscalePolicy
-    transform: $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   # duplicate schema resolution
   - from: activityLogAlerts_API.json
     where: $.definitions.AzureResource
-    transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
+    transform: $['x-ms-client-name'] = 'ActivityLogAlertsResource'
   - from: activityLogAlerts_API.json
     where: $.definitions.ActionGroup
-    transform: $["x-ms-client-name"] = "ActivityLogAlertActionGroup"
+    transform: $['x-ms-client-name'] = 'ActivityLogAlertActionGroup'
   - from: activityLogAlerts_API.json
     where: $.definitions.ErrorResponse
-    transform: $["x-ms-client-name"] = "ActivityLogAlertErrorResponse"
+    transform: $['x-ms-client-name'] = 'ActivityLogAlertErrorResponse'
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource
-    transform: $["x-ms-client-name"] = "ScheduledQueryRuleResource"
+    transform: $['x-ms-client-name'] = 'ScheduledQueryRuleResource'
   - from: autoscale_API.json
     where: $.definitions.Resource
-    transform: $["x-ms-client-name"] = "AutoScaleResource"
+    transform: $['x-ms-client-name'] = 'AutoScaleResource'
   - from: types.json
     where: $.definitions.Resource
-    transform: $["x-ms-client-name"] = "CommonResource"
+    transform: $['x-ms-client-name'] = 'CommonResource'
   - from: types.json
     where: $.definitions.ProxyResource
-    transform: $["x-ms-client-name"] = "CommonProxyResource"
+    transform: $['x-ms-client-name'] = 'CommonProxyResource'
   # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
   - from: swagger-document
     where: $.definitions.ErrorResponseCommon.properties
     transform: >
-      $["target"] = {
-        "readOnly": true,
-        "type": "string"
+      $['target'] = {
+        'readOnly': true,
+        'type': 'string'
       }
   # remove unnecessary property for resources in action groups
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource.properties
     transform: >
-      $["kind"] = undefined;
+      $['kind'] = undefined;
+  # The value of days are DayOfWeek
+  - from: autoscale_API.json
+    where: $.definitions
+    transform: >
+      $.RecurrentSchedule.properties.days.items = {
+              'type': 'string',
+              'enum': [
+                  'Sunday',
+                  'Monday',
+                  'Tuesday',
+                  'Wednesday',
+                  'Thursday',
+                  'Friday',
+                  'Saturday'
+                ],
+              'x-ms-enum': {
+                  'name': 'MonitorDayOfWeek',
+                  'modelAsString': true
+                }
+            };
 ```

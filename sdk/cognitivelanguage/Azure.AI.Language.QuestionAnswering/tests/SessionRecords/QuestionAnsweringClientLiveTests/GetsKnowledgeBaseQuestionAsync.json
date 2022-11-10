@@ -1,63 +1,65 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-10-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:query-knowledgebases?projectName=testQA\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "13",
+        "Content-Length": "12",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f6abcd01ea7e6843ab0d5fcbbc6de733-06d9f9f60ff05543-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
-          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "f347cb56d22a45f7a622db442ef3e84b",
+        "traceparent": "00-479b5887dd15d92007c192cd579023ff-62573efa59feeffc-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "52c7b81ab4a179753624dca4ecca0176",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "qnaId": 133
+        "qnaId": 24
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "89de2340-8be0-45c5-ad1f-26394a23d55d",
-        "Content-Length": "485",
+        "apim-request-id": "5f71efc9-cb37-4cd0-9077-0ef6bc6d15db",
+        "Content-Length": "800",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=1",
-        "Date": "Thu, 28 Oct 2021 21:26:26 GMT",
+        "Date": "Thu, 22 Sep 2022 00:25:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "971"
+        "x-envoy-upstream-service-time": "56"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022answers\u0022: [\n",
-        "    {\n",
-        "      \u0022questions\u0022: [\n",
-        "        \u0022Check the battery level\u0022\n",
-        "      ],\n",
-        "      \u0022answer\u0022: \u0022**Check the battery level**\\n\\nYou can check the battery level from the lock screen or the desktop:\u0022,\n",
-        "      \u0022confidenceScore\u0022: 1.0,\n",
-        "      \u0022id\u0022: 133,\n",
-        "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
-        "      \u0022metadata\u0022: {\n",
-        "        \u0022explicitlytaggedheading\u0022: \u0022check the battery level\u0022\n",
-        "      },\n",
-        "      \u0022dialog\u0022: {\n",
-        "        \u0022isContextOnly\u0022: false,\n",
-        "        \u0022prompts\u0022: []\n",
-        "      }\n",
-        "    }\n",
-        "  ]\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "answers": [
+          {
+            "questions": [
+              "Check the battery level"
+            ],
+            "answer": "**Check the battery level**\n\nYou can check the battery level from the lock screen or on the desktop. Lock screen\n\nWhen you wake your Surface Book, the battery status appears in the lower-right corner of the lock screen. \u272A",
+            "confidenceScore": 1.0,
+            "id": 24,
+            "source": "surface-book-user-guide-EN.pdf",
+            "metadata": {
+              "system_metadata_qna_edited_manually": "true",
+              "explicitlytaggedheading": "check the battery level"
+            },
+            "dialog": {
+              "isContextOnly": false,
+              "prompts": [
+                {
+                  "displayOrder": 0,
+                  "qnaId": 25,
+                  "displayText": "Desktop taskbar"
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   ],
   "Variables": {
-    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "QUESTIONANSWERING_KEY": "Sanitized",
-    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "RandomSeed": "2107017080"
+    "QUESTIONANSWERING_PROJECT": "testQA",
+    "RandomSeed": "938877854"
   }
 }
