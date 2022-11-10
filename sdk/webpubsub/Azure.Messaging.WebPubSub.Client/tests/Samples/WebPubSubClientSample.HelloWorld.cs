@@ -115,7 +115,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
 #endregion
         }
 
-        private ValueTask FetchClientAccessTokenFromServerAsync(CancellationToken token)
+        private ValueTask<Uri> FetchClientAccessTokenFromServerAsync(CancellationToken token)
         {
             return default;
         }
