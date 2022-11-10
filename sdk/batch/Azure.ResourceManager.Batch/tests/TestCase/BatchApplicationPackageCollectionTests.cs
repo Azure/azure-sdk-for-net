@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Batch.Tests.Helpers;
 using NUnit.Framework;
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         public BatchApplicationPackageCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
+            BodyKeySanitizers.Add(new BodyKeySanitizer("https://fakeaccount.blob.core.windows.net") { JsonPath = "properties.storageUrl" });
         }
 
         private async Task<BatchApplicationPackageCollection> GetApplicationCollectionAsync()
