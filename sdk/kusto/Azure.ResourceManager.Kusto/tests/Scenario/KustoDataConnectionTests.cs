@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 DataFormat = KustoIotHubDataFormat.Csv,
                 IotHubResourceId = TE.IotHubId,
                 SharedAccessPolicyName = "registryRead",
-                TableName = TE.ScriptContentTableName
+                TableName = TE.TableName
             };
 
             Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateIotHubDataConnectionAsync(
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 DataFormat = KustoEventHubDataFormat.Csv,
                 EventHubResourceId = TE.EventHubId,
                 ManagedIdentityResourceId = TE.UserAssignedIdentityId,
-                TableName = TE.ScriptContentTableName
+                TableName = TE.TableName
             };
 
             Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateEventHubDataConnectionAsync(
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 EventHubResourceId = TE.EventHubId,
                 ManagedIdentityResourceId = TE.UserAssignedIdentityId,
                 StorageAccountResourceId = TE.StorageAccountId,
-                TableName = TE.ScriptContentTableName
+                TableName = TE.TableName
             };
 
             Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateEventGridDataConnectionAsync(

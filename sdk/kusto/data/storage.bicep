@@ -59,5 +59,3 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
 }
 
 output SCRIPT_URI string = 'https://${storageAccountName}.blob.core.windows.net/${containerName}/${blobName}'
-output SCRIPT_URI_TABLE_NAME string = tableName
-

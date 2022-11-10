@@ -25,5 +25,5 @@ $applicationOId = az ad sp show --id $appId --query "id" --output tsv
     -ResourceGroupName  'sdkRg' `
     -Location 'eastus2' `
     -DeleteAfterHours 24 `
-    -ArmTemplateParameters @{ 'id' = [string](Get-Random -Minimum 1000 -Maximum 9999); 'app_id' = $appId; 'app_oid' = $applicationOId } `
+    -ArmTemplateParameters @{ 'id' = [string](Get-Random -Minimum 1000 -Maximum 9999); 'app_id' = $appId } `
     -OutFile

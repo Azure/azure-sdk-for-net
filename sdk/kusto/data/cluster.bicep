@@ -39,7 +39,7 @@ resource cluster 'Microsoft.Kusto/clusters@2022-07-07' = {
         resource script 'scripts' = {
             name: scriptName
             properties: {
-                scriptContent: '.create table ${tableName} ( Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32 )'
+                scriptContent: '.create table ${tableName} (Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32)'
             }
         }
     }
@@ -47,12 +47,12 @@ resource cluster 'Microsoft.Kusto/clusters@2022-07-07' = {
 
 output CLUSTER_NAME string = clusterName
 output DATABASE_NAME string = databaseName
-output SCRIPT_CONTENT_TABLE_NAME string = tableName
+output TABLE_NAME string = tableName
 
-var followerClusterName = 'sdkFollowerCluster${id}'
+var followingClusterName = 'sdkFollowingCluster${id}'
 
 resource followerCluster 'Microsoft.Kusto/clusters@2022-07-07' = {
-    name: followerClusterName
+    name: followingClusterName
     location: location
     sku: {
         name: 'Standard_D13_v2'
@@ -63,4 +63,4 @@ resource followerCluster 'Microsoft.Kusto/clusters@2022-07-07' = {
     }
 }
 
-output FOLLOWER_CLUSTER_NAME string = followerClusterName
+output FOLLOWING_CLUSTER_NAME string = followingClusterName
