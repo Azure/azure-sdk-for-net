@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         protected SubscriptionResource DefaultSubscription { get; private set; }
         protected StorageTestBase(bool isAsync) : base(isAsync)
         {
+            Assert.Ignore("Ignore storage tests until the API version 2022-09-01 is available.");
         }
 
         public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
