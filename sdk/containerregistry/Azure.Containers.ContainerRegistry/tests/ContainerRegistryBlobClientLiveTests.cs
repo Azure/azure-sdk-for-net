@@ -118,6 +118,50 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        public async Task CanUploadManifestFromNonSeekableStream()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact");
+
+            await UploadManifestPrerequisites(client);
+
+            // Act
+            string payload = "" +
+                "{" +
+                    "\"schemaVersion\":2," +
+                    "\"config\":" +
+                    "{" +
+                        "\"mediaType\":\"application/vnd.acme.rocket.config\"," +
+                        "\"size\":171," +
+                        "\"digest\":\"sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8\"" +
+                    "}," +
+                    "\"layers\":" +
+                    "[" +
+                        "{" +
+                            "\"mediaType\":\"application/vnd.oci.image.layer.v1.tar\"," +
+                            "\"size\":28," +
+                            "\"digest\":\"sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed\"" +
+                        "}" +
+                    "]" +
+                "}";
+
+            using Stream manifest = new NonSeekableMemoryStream(Encoding.ASCII.GetBytes(payload));
+
+            var uploadResult = await client.UploadManifestAsync(manifest);
+            string digest = uploadResult.Value.Digest;
+
+            // Assert
+            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
+            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            Assert.AreEqual(digest, downloadResultValue.Digest);
+            ValidateManifest((OciManifest)downloadResultValue.Manifest);
+
+            // Clean up
+            await client.DeleteManifestAsync(digest);
+        }
+
+        [RecordedTest]
         public async Task CanUploadOciManifestWithTag()
         {
             // Arrange
@@ -319,6 +363,32 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using (var stream = new MemoryStream(data))
             {
                 digest = OciBlobDescriptor.ComputeDigest(stream);
+                uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
+            }
+
+            // Assert
+            Assert.AreEqual(digest, uploadResult.Digest);
+            Assert.AreEqual(blobSize, uploadResult.Size);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
+        }
+
+        [RecordedTest]
+        public async Task CanUploadBlobFromNonSeekableStream()
+        {
+            // Arrange
+            var client = CreateBlobClient("blob-non-seekable");
+
+            int blobSize = 1024;
+            int chunkSize = 1024 / 4; // Four equal-sized chunks
+
+            var data = GetRandomBuffer(blobSize);
+            UploadBlobResult uploadResult = default;
+            string digest = OciBlobDescriptor.ComputeDigest(new MemoryStream(data));
+
+            using (var stream = new NonSeekableMemoryStream(data))
+            {
                 uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
             }
 

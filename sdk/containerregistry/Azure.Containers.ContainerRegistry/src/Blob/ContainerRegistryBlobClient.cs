@@ -328,6 +328,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(result.Digest, result.Location, null, cancellationToken);
 
+                if (!ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest))
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(completeUploadResult,
+                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
+                }
+
                 return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.Size), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
@@ -361,6 +367,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(result.Digest, result.Location, null, cancellationToken).ConfigureAwait(false);
+
+                if (!ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest))
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(completeUploadResult,
+                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
+                }
 
                 return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.Size), completeUploadResult.GetRawResponse());
             }
