@@ -304,6 +304,13 @@
 # ServiceLabel: %Data Migration %Service Attention
 /sdk/datamigration/Microsoft.Azure.Management.DataMigration/            @rgreenMSFT
 
+
+# ServiceLabel: %DevCenter %Service Attention
+#/<NotInRepo>/                                  @sebrenna @mharlan @chrissmiller
+
+# PRLabel: %DevCenter
+/sdk/devcenter/                                 @sebrenna @mharlan @chrissmiller @shivangireja 
+
 # ServiceLabel: %Devtestlab %Service Attention
 /sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs/            @Tanmayeekamath
 

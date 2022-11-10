@@ -9,7 +9,7 @@ using Polly;
 
 namespace Azure.Core.Samples
 {
-    // #region Snippet:PollyPolicy
+    #region Snippet:PollyPolicy
     internal class PollyPolicy : HttpPipelinePolicy
     {
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -43,7 +43,7 @@ namespace Azure.Core.Samples
         // async version omitted for brevity
     }
 #endif
-        // #endregion
+        #endregion
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {

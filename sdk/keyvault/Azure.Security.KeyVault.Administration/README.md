@@ -21,80 +21,35 @@ dotnet add package Azure.Security.KeyVault.Administration
 
 * An [Azure subscription][azure_sub].
 * An existing Azure Key Vault. If you need to create an Azure Key Vault, you can use the [Azure CLI][azure_cli].
+* Authorization to an existing Azure Key Vault using either [RBAC][rbac_guide] (recommended) or [access control][access_policy].
 
-See the final two steps in the next section for details on creating the Key Vault with the Azure CLI.
+To create a Managed HSM resource, run the following CLI command:
+
+```PowerShell
+az keyvault create --hsm-name <your-key-vault-name> --resource-group <your-resource-group-name> --administrators <your-user-object-id> --location <your-azure-location>
+```
+
+To get `<your-user-object-id>` you can run the following CLI command:
+
+```PowerShell
+az ad user show --id <your-user-principal> --query id
+```
 
 ### Authenticate the client
 
-In order to control permissions to the Key Vault service, you'll need to create an instance of the [KeyVaultAccessControlClient][rbac_client] class.
-You need a **Managed HSM URL**, which you may see as "DNS Name" in the portal,  and **client secret credentials (client id, client secret, tenant id)**
-to instantiate a client object.
+In order to interact with the Azure Key Vault service, you'll need to create an instance of the client classes below. You need a **vault url**, which you may see as "DNS Name" in the portal,
+and credentials to instantiate a client object.
 
-Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with
-[Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
-or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
+The examples shown below use a [`DefaultAzureCredential`][DefaultAzureCredential], which is appropriate for most scenarios including local development and production environments.
+Additionally, we recommend using a managed identity for authentication in production environments.
+You can find more information on different ways of authenticating and their corresponding credential types in the [Azure Identity][azure_identity] documentation.
+
+To use the `DefaultAzureCredential` provider shown below,
+or other credential providers provided with the Azure SDK, you must first install the Azure.Identity package:
 
 ```dotnetcli
 dotnet add package Azure.Identity
 ```
-
-#### Create/Get credentials
-
-Use the [Azure CLI][azure_cli] snippet below to create/get client secret credentials.
-
-* Create a service principal and configure its access to Azure resources:
-
-    ```PowerShell
-    az ad sp create-for-rbac -n <your-application-name> --skip-assignment
-    ```
-
-    Output:
-
-    ```json
-    {
-        "appId": "generated-app-ID",
-        "displayName": "some-app-name",
-        "name": "http://some-app-name",
-        "password": "random-password",
-        "tenant": "tenant-ID"
-    }
-    ```
-
-* Take note of the service principal objectId
-
-    ```PowerShell
-    az ad sp show --id <appId> --query objectId
-    ```
-
-    Output:
-
-    ```PowerShell
-    "<your-service-principal-object-id>"
-    ```
-
-* Use the returned credentials above to set  **AZURE_CLIENT_ID** (appId), **AZURE_CLIENT_SECRET** (password), and **AZURE_TENANT_ID** (tenant)
-environment variables. The following example shows a way to do this in Powershell:
-
-    ```PowerShell
-    $Env:AZURE_CLIENT_ID="generated-app-ID"
-    $Env:AZURE_CLIENT_SECRET="random-password"
-    $Env:AZURE_TENANT_ID="tenant-ID"
-    ```
-
-* Create the Managed HSM and grant the above mentioned service principal authorization to perform administrative operations on the Managed HSM
-(replace `<your-resource-group-name>` and `<your-managed-hsm-name>` with your own, unique names and `<your-service-principal-object-id>` with the value from above):
-
-    ```PowerShell
-    az keyvault create --hsm-name <your-managed-hsm-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
-    ```
-
-  This service principal is automatically added to the "Managed HSM Administrators" [built-in role][built_in_roles].
-
-* Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
-
-    ```PowerShell
-    az keyvault show --hsm-name <your-managed-hsm-name> --query properties.hsmUri --output tsv
-    ```
 
 #### Activate your managed HSM
 
@@ -140,7 +95,8 @@ Please read [best practices][best_practices] for properly securing your managed 
 
 #### Create KeyVaultAccessControlClient
 
-Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET**, and **AZURE_TENANT_ID** environment variables, replace **managedHsmUrl** with the output of `az keyvault show` in the example below to create the [KeyVaultAccessControlClient][rbac_client]
+Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultAccessControlClient][rbac_client].
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:HelloCreateKeyVaultAccessControlClient
 KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
@@ -148,11 +104,20 @@ KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(man
 
 #### Create KeyVaultBackupClient
 
-Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-hsm-url**
-with the above returned URI, you can create the [KeyVaultBackupClient][backup_client]:
+Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultBackupClient][backup_client].
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:HelloCreateKeyVaultBackupClient
 KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
+```
+
+#### Create KeyVaultSettingClient
+
+Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultSettingsClient][settings_client].
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
+
+```C# Snippet:KeyVaultSettingsClient_Create
+KeyVaultSettingsClient client = new KeyVaultSettingsClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -294,17 +259,20 @@ or contact opencode@microsoft.com with any
 additional questions or comments.
 
 <!-- LINKS -->
-[access_control]: https://docs.microsoft.com/azure/key-vault/managed-hsm/access-control
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[access_control]: https://learn.microsoft.com/azure/key-vault/managed-hsm/access-control
+[access_policy]: https://learn.microsoft.com/azure/key-vault/general/assign-access-policy
+[rbac_guide]: https://learn.microsoft.com/azure/key-vault/general/rbac-guide
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
-[best_practices]: https://docs.microsoft.com/azure/key-vault/managed-hsm/best-practices
-[built_in_roles]: https://docs.microsoft.com/azure/key-vault/managed-hsm/built-in-roles
+[best_practices]: https://learn.microsoft.com/azure/key-vault/managed-hsm/best-practices
+[built_in_roles]: https://learn.microsoft.com/azure/key-vault/managed-hsm/built-in-roles
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [rbac_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultAccessControlClient.cs
 [backup_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultBackupClient.cs
-[managedhsm_docs]: https://docs.microsoft.com/azure/key-vault/managed-hsm/
-[keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
+[settings_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultSettingsClient.cs
+[managedhsm_docs]: https://learn.microsoft.com/azure/key-vault/managed-hsm/
+[keyvault_rest]: https://learn.microsoft.com/rest/api/keyvault/
 [admin_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Security.KeyVault.Administration
 [admin_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples
 [admin_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src
