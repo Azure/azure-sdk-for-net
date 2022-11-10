@@ -67,6 +67,7 @@ namespace Azure.Core.TestFramework
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
+                WorkingDirectory = TestEnvironment.RepositoryRoot,
                 EnvironmentVariables =
                 {
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",

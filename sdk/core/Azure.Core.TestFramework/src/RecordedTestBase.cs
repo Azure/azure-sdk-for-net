@@ -245,7 +245,7 @@ namespace Azure.Core.TestFramework
 
             string fileName = $"{name}{version}{async}.json";
 
-            var repoRoot = GetRepoRoot();
+            var repoRoot = TestEnvironment.RepositoryRoot;
 
             // this needs to be updated to purely relative to repo root
             var result = Path.Combine(
@@ -255,64 +255,21 @@ namespace Azure.Core.TestFramework
             return Regex.Replace(result.Replace(repoRoot, String.Empty), @"^[\\/]*", string.Empty);
         }
 
-        private class DirectoryEvaluation
-        {
-            public bool IsRoot;
-            public bool IsGitRoot;
-            public bool AssetsJsonPresent;
-        }
-
-        private DirectoryEvaluation EvaluateDirectory(string directoryPath)
-        {
-            var assetsJsonLocation = Path.Combine(directoryPath, AssetsJson);
-            var gitLocation = Path.Combine(directoryPath, ".git");
-
-            return new DirectoryEvaluation()
-            {
-                AssetsJsonPresent = File.Exists(assetsJsonLocation),
-                IsGitRoot = Directory.Exists(gitLocation),
-                IsRoot = new DirectoryInfo(directoryPath).Parent == null
-            };
-        }
-
-        public string GetRepoRoot()
-        {
-            var path = GetSessionFileDirectory();
-
-            while (true)
-            {
-                var evaluation = EvaluateDirectory(path);
-
-                if (evaluation.IsGitRoot)
-                {
-                    return path;
-                }
-                else if (evaluation.IsRoot)
-                {
-                    // talk to JoshLove about what exception should actually be thrown here when this isn't a proto
-                    throw new Exception("Search for assets.json failed. Reached system root without finding one.");
-                }
-
-                path = Path.GetDirectoryName(path);
-            }
-        }
-
         public string GetAssetsJson(string testFile)
         {
             var path = GetSessionFileDirectory();
 
             while (true)
             {
-                var evaluation = EvaluateDirectory(path);
+                var assetsJsonPresent = File.Exists(Path.Combine(path, "assets.json"));
+                var isGitRoot = Directory.Exists(Path.Combine(path, ".git"));
 
-                if (evaluation.AssetsJsonPresent)
+                if (assetsJsonPresent)
                 {
                     return Path.Combine(path, AssetsJson);
                 }
-                else if (evaluation.IsGitRoot || evaluation.IsRoot)
+                else if (isGitRoot)
                 {
-                    // talk to JoshLove about what exception should actually be thrown here when this isn't a proto
-                    // and how to make this optional
                     return null;
                 }
 
