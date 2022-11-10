@@ -28,37 +28,40 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var clusterPrincipalAssignmentCollection = Cluster.GetKustoClusterPrincipalAssignments();
 
-            var clusterPrincipalAssignmentName = TestEnvironment.GenerateAssetName("sdkClusterPrincipalAssignment");
+            var clusterPrincipalAssignmentName = GenerateAssetName("sdkClusterPrincipalAssignment");
 
             var clusterPrincipalAssignmentDataCreate = new KustoClusterPrincipalAssignmentData
             {
-                PrincipalId = Guid.Parse(TestEnvironment.ClientId),
-                Role = KustoClusterPrincipalRole.AllDatabasesViewer,
+                PrincipalId = TE.UserAssignedIdentityPrincipalId,
+                Role = KustoClusterPrincipalRole.AllDatabasesAdmin,
                 PrincipalType = KustoPrincipalAssignmentType.App
             };
 
             var clusterPrincipalAssignmentDataUpdate = new KustoClusterPrincipalAssignmentData
             {
-                PrincipalId = Guid.Parse(TestEnvironment.ClientId),
-                Role = KustoClusterPrincipalRole.AllDatabasesAdmin,
-                PrincipalType = KustoPrincipalAssignmentType.App
+                PrincipalId = TE.UserAssignedIdentityPrincipalId,
+                Role = KustoClusterPrincipalRole.AllDatabasesViewer,
+                PrincipalType = KustoPrincipalAssignmentType.App,
+                TenantId = Guid.Parse(TE.TenantId)
             };
 
             Task<ArmOperation<KustoClusterPrincipalAssignmentResource>> CreateOrUpdateClusterPrincipalAssignmentAsync(
                 string clusterPrincipalAssignmentName,
-                KustoClusterPrincipalAssignmentData clusterPrincipalAssignmentData, bool create) =>
-                clusterPrincipalAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed,
-                    clusterPrincipalAssignmentName, clusterPrincipalAssignmentData);
+                KustoClusterPrincipalAssignmentData clusterPrincipalAssignmentData
+            ) => clusterPrincipalAssignmentCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed, clusterPrincipalAssignmentName, clusterPrincipalAssignmentData
+            );
 
             await CollectionTests(
-                clusterPrincipalAssignmentName, clusterPrincipalAssignmentDataCreate,
+                clusterPrincipalAssignmentName,
+                GetFullClusterChildResourceName(clusterPrincipalAssignmentName),
+                clusterPrincipalAssignmentDataCreate,
                 clusterPrincipalAssignmentDataUpdate,
                 CreateOrUpdateClusterPrincipalAssignmentAsync,
                 clusterPrincipalAssignmentCollection.GetAsync,
                 clusterPrincipalAssignmentCollection.GetAllAsync,
                 clusterPrincipalAssignmentCollection.ExistsAsync,
-                ValidatePrincipalAssignment,
-                clusterChild: true
+                ValidatePrincipalAssignment
             );
 
             await DeletionTest(
@@ -66,22 +69,25 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 clusterPrincipalAssignmentCollection.GetAsync,
                 clusterPrincipalAssignmentCollection.ExistsAsync
             );
-
-            /*
-             * TODO:
-             * add cluster resource principal tests
-             */
         }
 
-        private void ValidatePrincipalAssignment(KustoClusterPrincipalAssignmentResource clusterPrincipalAssignment,
-            string clusterPrincipalAssignmentName,
-            KustoClusterPrincipalAssignmentData clusterPrincipalAssignmentData)
+        private static void ValidatePrincipalAssignment(
+            string expectedFullClusterPrincipalAssignmentName,
+            KustoClusterPrincipalAssignmentData expectedClusterPrincipalAssignmentData,
+            KustoClusterPrincipalAssignmentData actualClusterPrincipalAssignmentData
+        )
         {
-            Assert.AreEqual(clusterPrincipalAssignmentName, clusterPrincipalAssignment.Data.Name);
-            Assert.AreEqual(clusterPrincipalAssignmentData.PrincipalId, clusterPrincipalAssignment.Data.PrincipalId);
-            Assert.AreEqual(clusterPrincipalAssignmentData.Role, clusterPrincipalAssignment.Data.Role);
-            Assert.AreEqual(clusterPrincipalAssignmentData.PrincipalType,
-                clusterPrincipalAssignment.Data.PrincipalType);
+            Assert.AreEqual(expectedFullClusterPrincipalAssignmentName, actualClusterPrincipalAssignmentData.Name);
+            Assert.AreEqual(
+                expectedClusterPrincipalAssignmentData.PrincipalId, actualClusterPrincipalAssignmentData.PrincipalId
+            );
+            Assert.AreEqual(
+                expectedClusterPrincipalAssignmentData.PrincipalType, actualClusterPrincipalAssignmentData.PrincipalType
+            );
+            Assert.AreEqual(expectedClusterPrincipalAssignmentData.Role, actualClusterPrincipalAssignmentData.Role);
+            Assert.AreEqual(
+                expectedClusterPrincipalAssignmentData.TenantId, actualClusterPrincipalAssignmentData.TenantId
+            );
         }
     }
 }

@@ -11,26 +11,20 @@ namespace Azure.ResourceManager.Kusto.Tests
     {
         public string Id => GetRecordedVariable("ID");
 
-        public string ClusterName => GetRecordedVariable("KUSTO_CLUSTER_NAME");
-        public string DatabaseName => GetRecordedVariable("KUSTO_DATABASE_NAME");
-        public string FollowerClusterName => GetRecordedVariable("KUSTO_FOLLOWER_CLUSTER_NAME");
+        public string ClusterName => GetRecordedVariable("CLUSTER_NAME");
+        public string DatabaseName => GetRecordedVariable("DATABASE_NAME");
+        public string ScriptContentTableName => GetRecordedVariable("SCRIPT_CONTENT_TABLE_NAME");
+        public string FollowingClusterName => GetRecordedVariable("FOLLOWING_CLUSTER_NAME");
 
         public ResourceIdentifier UserAssignedIdentityId => new(GetRecordedVariable("USER_ASSIGNED_IDENTITY_ID"));
-        public Uri KeyVaultUri => new(GetRecordedVariable("KEY_VAULT_URI"));
-        public string KeyName => GetRecordedVariable("KEY_NAME");
-        public string KeyVersion => GetRecordedVariable("KEY_VERSION");
+        public Guid UserAssignedIdentityPrincipalId => Guid.Parse(GetRecordedVariable("USER_ASSIGNED_IDENTITY_PRINCIPAL_ID"));
 
+        public string ScriptSasToken => GetRecordedVariable("STORAGE_ACCOUNT_SAS_TOKEN");
         public ResourceIdentifier StorageAccountId => new(GetRecordedVariable("STORAGE_ACCOUNT_ID"));
         public Uri ScriptUri => new(GetRecordedVariable("SCRIPT_URI"));
-        public string ScriptSasToken => GetRecordedVariable("SCRIPT_SAS_TOKEN");
+        public string ScriptUriTableName => GetRecordedVariable("SCRIPT_URI_TABLE_NAME");
 
         public ResourceIdentifier EventHubId => new(GetRecordedVariable("EVENT_HUB_ID"));
         public ResourceIdentifier IotHubId => new(GetRecordedVariable("IOT_HUB_ID"));
-        public string PrivateEndpointName => GetRecordedVariable("PRIVATE_ENDPOINT_NAME");
-
-        public string GenerateAssetName(string prefix)
-        {
-            return prefix + Id;
-        }
     }
 }

@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -15,12 +16,12 @@ namespace Azure.ResourceManager.Kusto.Tests
 {
     public class KustoManagementTestBase : ManagementRecordedTestBase<KustoManagementTestEnvironment>
     {
-        protected ArmClient Client { get; set; }
-        protected AzureLocation Location { get; set; }
-        protected SubscriptionResource Subscription { get; set; }
-        protected ResourceGroupResource ResourceGroup { get; set; }
-        protected KustoClusterResource Cluster { get; set; }
-        protected KustoDatabaseResource Database { get; set; }
+        protected KustoManagementTestEnvironment TE => TestEnvironment;
+        private ArmClient Client { get; set; }
+        private SubscriptionResource Subscription { get; set; }
+        protected ResourceGroupResource ResourceGroup { get; private set; }
+        protected KustoClusterResource Cluster { get; private set; }
+        protected KustoDatabaseResource Database { get; private set; }
 
         protected KustoManagementTestBase(bool isAsync, RecordedTestMode mode)
             : base(isAsync, mode)
@@ -36,78 +37,96 @@ namespace Azure.ResourceManager.Kusto.Tests
         {
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
-            Location = TestEnvironment.Location;
 
-            ResourceGroup = (await Subscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup)).Value;
+            ResourceGroup = (await Subscription.GetResourceGroupAsync(TE.ResourceGroup)).Value;
 
             if (cluster || database)
             {
-                Cluster = (await ResourceGroup.GetKustoClusterAsync(TestEnvironment.ClusterName)).Value;
+                Cluster = (await ResourceGroup.GetKustoClusterAsync(TE.ClusterName)).Value;
             }
 
             if (database)
             {
-                Database = (await Cluster.GetKustoDatabaseAsync(TestEnvironment.DatabaseName)).Value;
+                Database = (await Cluster.GetKustoDatabaseAsync(TE.DatabaseName)).Value;
             }
         }
 
         // Testing Methods
-        protected delegate Task<ArmOperation<T>> CreateOrUpdateAsync<T, TS>(string resourceName, TS resourceData,
-            bool create);
+        protected delegate Task<ArmOperation<T>> CreateOrUpdateAsync<T, in TS>(
+            string resourceName, TS resourceData
+        );
 
-        protected delegate Task<Response<T>> GetAsync<T>(string resourceName,
-            CancellationToken cancellationToken = default);
+        protected delegate Task<Response<T>> GetAsync<T>(
+            string resourceName, CancellationToken cancellationToken = default
+        );
 
-        protected delegate AsyncPageable<T> GetAllAsync<T>(CancellationToken cancellationToken = default);
+        protected delegate IAsyncEnumerable<T> GetAllAsync<out T>(
+            CancellationToken cancellationToken = default
+        );
 
-        protected delegate Task<Response<bool>> ExistsAsync(string resourceName,
-            CancellationToken cancellationToken = default);
+        protected delegate Task<Response<bool>> ExistsAsync(
+            string resourceName, CancellationToken cancellationToken = default
+        );
 
-        protected delegate void Validate<T, TS>(T resource, string resourceName, TS resourceData);
+        protected delegate void Validate<in TS>(
+            string expectedFullResourceName, TS expectedResourceData, TS actualResourceData
+        );
 
-        protected async Task CollectionTests<T, TS>(
-            string resourceName,
-            TS resourceDataCreate, TS resourceDataUpdate,
+        private static object GetResourceData(object resource)
+        {
+            return resource.GetType().GetProperty("Data")?.GetValue(resource, null);
+        }
+
+        private static string GetResourceName(object resource)
+        {
+            return ((ResourceData)GetResourceData(resource)).Name;
+        }
+
+        protected static async Task CollectionTests<T, TS>(
+            string expectedResourceName,
+            string expectedFullResourceName,
+            TS resourceDataCreate,
+            TS resourceDataUpdate,
             CreateOrUpdateAsync<T, TS> createOrUpdateAsync,
             GetAsync<T> getAsync,
             GetAllAsync<T> getAllAsync,
             ExistsAsync existsAsync,
-            Validate<T, TS> validate,
-            bool clusterChild = false,
-            bool databaseChild = false
+            Validate<TS> validate
         )
+            where T : ArmResource
         {
             T resource;
 
-            var fullResourceName = resourceName;
-            if (databaseChild)
-                fullResourceName = $"{TestEnvironment.ClusterName}/{TestEnvironment.DatabaseName}/{resourceName}";
-            else if (clusterChild)
-                fullResourceName = $"{TestEnvironment.ClusterName}/{TestEnvironment.DatabaseName}/{resourceName}";
-
-            if (resourceDataCreate is not null)
+            if (createOrUpdateAsync is not null && resourceDataCreate is not null)
             {
-                resource = (await createOrUpdateAsync(resourceName, resourceDataCreate, true)).Value;
-                // validate(resource, fullResourceName, resourceDataCreate);
+                resource = (await createOrUpdateAsync(expectedResourceName, resourceDataCreate)).Value;
+                validate(
+                    expectedResourceName, resourceDataCreate, (TS)GetResourceData(resource)
+                );
             }
 
-            if (resourceDataUpdate is not null)
+            if (createOrUpdateAsync is not null && resourceDataUpdate is not null)
             {
-                resource = (await createOrUpdateAsync(resourceName, resourceDataUpdate, false)).Value;
-                // validate(resource, fullResourceName, resourceDataUpdate);
+                resource = (await createOrUpdateAsync(expectedResourceName, resourceDataUpdate)).Value;
+                validate(
+                    expectedResourceName, resourceDataUpdate, (TS)GetResourceData(resource)
+                );
             }
 
-            resource = (await getAsync(resourceName)).Value;
-            // validate(resource, fullResourceName, resourceDataUpdate);
+            resource = (await getAsync(expectedResourceName)).Value;
+            validate(
+                expectedResourceName, resourceDataUpdate, (TS)GetResourceData(resource)
+            );
 
-            var resources = await getAllAsync().ToListAsync();
-            // Assert.AreEqual(1, resources.Count);
-            // validate(resources[0], fullResourceName, resourceDataUpdate);
+            resource = await getAllAsync().FirstOrDefaultAsync(r => expectedFullResourceName == GetResourceName(r));
+            validate(
+                expectedFullResourceName, resourceDataUpdate, (TS)GetResourceData(resource)
+            );
 
-            var exists = (await existsAsync(resourceName)).Value;
-            // Assert.IsTrue(exists);
+            var exists = (await existsAsync(expectedResourceName)).Value;
+            Assert.IsTrue(exists);
             exists = (await existsAsync(new Guid().ToString())).Value;
-            // Assert.IsFalse(exists);
+            Assert.IsFalse(exists);
         }
 
         protected static async Task DeletionTest<T>(
@@ -126,6 +145,39 @@ namespace Azure.ResourceManager.Kusto.Tests
 
             var exists = await existsAsync(resourceName);
             Assert.IsFalse(exists);
+        }
+
+        // Utility Methods
+        protected string GenerateAssetName(string prefix)
+        {
+            return prefix + TE.Id;
+        }
+
+        protected string GetFullClusterChildResourceName(string resourceName, string clusterName = null)
+        {
+            return $"{clusterName ?? TE.ClusterName}/{resourceName}";
+        }
+
+        protected string GetFullDatabaseChildResourceName(string resourceName, string clusterName = null,
+            string databaseName = null)
+        {
+            return GetFullClusterChildResourceName(
+                $"{databaseName ?? TE.DatabaseName}/{resourceName}", clusterName
+            );
+        }
+
+        protected static void AssertEquality<T>(T expected, T actual, Action<T, T> assertEquals)
+        {
+            if (expected is null)
+            {
+                Assert.IsNull(actual);
+            }
+            else
+            {
+                Assert.IsNotNull(actual);
+
+                assertEquals(expected, actual);
+            }
         }
     }
 }

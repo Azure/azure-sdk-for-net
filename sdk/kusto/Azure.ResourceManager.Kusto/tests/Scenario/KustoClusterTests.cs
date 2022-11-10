@@ -14,12 +14,18 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoClusterTests : KustoManagementTestBase
     {
-        private readonly KustoSku _sku1 = new(KustoSkuName.StandardD13V2, 2, KustoSkuTier.Standard);
-        private readonly KustoSku _sku2 = new(KustoSkuName.StandardD14V2, 2, KustoSkuTier.Standard);
+        private readonly KustoSku _sku1 = new(KustoSkuName.StandardD13V2, 2, KustoSkuTier.Basic);
+        private readonly KustoSku _sku2 = new(KustoSkuName.StandardD14V2, 3, KustoSkuTier.Standard);
 
         public KustoClusterTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
         {
+        }
+
+        [SetUp]
+        protected async Task SetUp()
+        {
+            await BaseSetUp();
         }
 
         [TestCase]
@@ -28,36 +34,42 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var clusterCollection = ResourceGroup.GetKustoClusters();
 
-            var clusterName = TestEnvironment.GenerateAssetName("sdkCluster") + "2";
+            var clusterName = GenerateAssetName("sdkCluster") + "2";
 
-            var clusterIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
-            clusterIdentity.UserAssignedIdentities[TestEnvironment.UserAssignedIdentityId] = new UserAssignedIdentity();
-
-            var clusterDataCreate = new KustoClusterData(Location, _sku1) { Identity = clusterIdentity };
-
-            var clusterDataUpdate = new KustoClusterData(Location, _sku2)
+            var clusterDataCreate = new KustoClusterData(TE.Location, _sku1)
             {
-                Identity = clusterIdentity,
-                TrustedExternalTenants = { new KustoClusterTrustedExternalTenant(TestEnvironment.TenantId) },
-                OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 100),
-                IsDiskEncryptionEnabled = true,
-                IsStreamingIngestEnabled = true,
-                PublicIPType = "DualStack",
-                KeyVaultProperties = new KustoKeyVaultProperties(
-                    TestEnvironment.KeyName,
-                    TestEnvironment.KeyVersion,
-                    TestEnvironment.KeyVaultUri,
-                    default
-                )
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
 
-            async Task<ArmOperation<KustoClusterResource>> CreateOrUpdateClusterAsync(string clusterName,
-                KustoClusterData clusterData, bool create)
-                => await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
+            var clusterDataUpdate = new KustoClusterData(TE.Location, _sku2)
+            {
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned)
+                {
+                    UserAssignedIdentities = { [TE.UserAssignedIdentityId] = new UserAssignedIdentity() }
+                },
+                IsDiskEncryptionEnabled = true,
+                IsStreamingIngestEnabled = true,
+                OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 100),
+                PublicIPType = "DualStack",
+                TrustedExternalTenants = { new KustoClusterTrustedExternalTenant(TE.TenantId) },
+                // TODO
+                // KeyVaultProperties = new KustoKeyVaultProperties(
+                //     TE.KeyName,
+                //     TE.KeyVersion,
+                //     TE.KeyVaultUri,
+                //     default
+                // )
+            };
+
+            async Task<ArmOperation<KustoClusterResource>> CreateOrUpdateClusterAsync(
+                string clusterName, KustoClusterData clusterData
+            ) => await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
 
             await CollectionTests(
                 clusterName,
-                clusterDataCreate, clusterDataUpdate,
+                clusterName,
+                clusterDataCreate,
+                clusterDataUpdate,
                 CreateOrUpdateClusterAsync,
                 clusterCollection.GetAsync,
                 clusterCollection.GetAllAsync,
@@ -65,6 +77,13 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 ValidateCluster
             );
 
+            await ClusterResourceTests(clusterCollection, clusterName);
+
+            await DeletionTest(clusterName, clusterCollection.GetAsync, clusterCollection.ExistsAsync);
+        }
+
+        private static async Task ClusterResourceTests(KustoClusterCollection clusterCollection, string clusterName)
+        {
             var cluster = (await clusterCollection.GetAsync(clusterName)).Value;
 
             await cluster.StopAsync(WaitUntil.Completed);
@@ -74,75 +93,103 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             await cluster.StartAsync(WaitUntil.Completed);
             cluster = await clusterCollection.GetAsync(clusterName);
             Assert.AreEqual(KustoClusterState.Running, cluster.Data.State);
-
-            await DeletionTest(clusterName, clusterCollection.GetAsync, clusterCollection.ExistsAsync);
         }
 
         private void ValidateCluster(
-            KustoClusterResource cluster,
-            string clusterName,
-            KustoClusterData clusterData
+            string expectedFullClusterName, KustoClusterData expectedClusterData, KustoClusterData actualClusterData
         )
         {
-            Assert.IsNotNull(cluster);
-            Assert.IsNotNull(cluster.Data);
-            Assert.AreEqual(clusterName, cluster.Data.Name);
-            AssertSkuEquality(clusterData.Sku, cluster.Data.Sku);
-            AssertIdentityEquality(clusterData.Identity, cluster.Data.Identity);
-            Assert.AreEqual(KustoClusterState.Running, cluster.Data.State);
-            AssertExternalTenantsEquality(
-                clusterData.TrustedExternalTenants ?? new List<KustoClusterTrustedExternalTenant>(),
-                cluster.Data.TrustedExternalTenants);
-            AssertOptimizedAutoscaleEquality(clusterData.OptimizedAutoscale, cluster.Data.OptimizedAutoscale);
-            Assert.AreEqual(clusterData.IsDiskEncryptionEnabled ?? false, cluster.Data.IsDiskEncryptionEnabled);
-            Assert.AreEqual(clusterData.IsStreamingIngestEnabled ?? false, cluster.Data.IsStreamingIngestEnabled);
-            AssertKeyVaultPropertiesEquality(clusterData.KeyVaultProperties, cluster.Data.KeyVaultProperties);
-            Assert.AreEqual(clusterData.PublicIPType ?? KustoClusterPublicIPType.IPv4, cluster.Data.PublicIPType);
-        }
-
-        private void AssertIdentityEquality(ManagedServiceIdentity identity1, ManagedServiceIdentity identity2)
-        {
-            Assert.IsNotNull(identity2?.PrincipalId);
-            Assert.AreEqual(Guid.Parse(TestEnvironment.TenantId), identity2.TenantId);
-            CollectionAssert.AreEqual(
-                identity1?.UserAssignedIdentities?.Keys.Select(resourceId => resourceId.ToString()).ToList(),
-                identity2.UserAssignedIdentities?.Keys.Select(resourceId => resourceId.ToString()).ToList()
+            Assert.AreEqual(
+                expectedClusterData.IsDiskEncryptionEnabled ?? false, actualClusterData.IsDiskEncryptionEnabled
             );
-            Assert.AreEqual(identity1?.ManagedServiceIdentityType, identity2.ManagedServiceIdentityType);
+            Assert.AreEqual(
+                expectedClusterData.IsStreamingIngestEnabled ?? false, actualClusterData.IsStreamingIngestEnabled
+            );
+            Assert.AreEqual(expectedFullClusterName, actualClusterData.Name);
+            Assert.IsEmpty(actualClusterData.PrivateEndpointConnections);
+            Assert.AreEqual(
+                expectedClusterData.PublicIPType ?? KustoClusterPublicIPType.IPv4, actualClusterData.PublicIPType
+            );
+            Assert.AreEqual(KustoClusterState.Running, actualClusterData.State);
+            Assert.IsNull(actualClusterData.VirtualClusterGraduationProperties);
+
+            AssertEquality(expectedClusterData.Identity, actualClusterData.Identity, IdentityEquals);
+            AssertEquality(
+                expectedClusterData.OptimizedAutoscale, actualClusterData.OptimizedAutoscale,
+                AssertOptimizedAutoscaleEquals
+            );
+            AssertEquality(expectedClusterData.Sku, actualClusterData.Sku, AssertSkuEquals);
+            AssertEquality(
+                expectedClusterData.TrustedExternalTenants, actualClusterData.TrustedExternalTenants,
+                AssertTrustedExternalTenantsEquals
+            );
         }
 
-        private void AssertSkuEquality(KustoSku sku1, KustoSku sku2)
+        private void IdentityEquals(ManagedServiceIdentity expected, ManagedServiceIdentity actual)
         {
-            Assert.AreEqual(sku1?.Name, sku2?.Name);
-            Assert.AreEqual(sku1?.Capacity, sku2?.Capacity);
-            Assert.AreEqual(sku1?.Tier, sku2?.Tier);
-        }
+            var systemAssigned = new List<ManagedServiceIdentityType>
+            {
+                ManagedServiceIdentityType.SystemAssigned, ManagedServiceIdentityType.SystemAssignedUserAssigned
+            }.Contains(expected.ManagedServiceIdentityType);
 
-        private void AssertExternalTenantsEquality(IList<KustoClusterTrustedExternalTenant> trustedExternalTenants1,
-            IList<KustoClusterTrustedExternalTenant> trustedExternalTenants2)
-        {
-            Assert.AreEqual(trustedExternalTenants1?.Count, trustedExternalTenants2?.Count);
+            if (systemAssigned)
+            {
+                Assert.IsNotNull(actual.PrincipalId);
+            }
+            else
+            {
+                Assert.IsNull(actual.PrincipalId);
+            }
+
+            Assert.AreEqual(Guid.Parse(TE.TenantId), actual.TenantId);
+            Assert.AreEqual(expected.ManagedServiceIdentityType, actual.ManagedServiceIdentityType);
+
             CollectionAssert.AreEqual(
-                trustedExternalTenants1?.Select(trustedExternalTenant => trustedExternalTenant?.Value).ToList(),
-                trustedExternalTenants2?.Select(trustedExternalTenant => trustedExternalTenant?.Value).ToList());
+                expected.UserAssignedIdentities.Keys.Select(rId => rId.ToString()).ToList(),
+                actual.UserAssignedIdentities.Keys.Select(rId => rId.ToString()).ToList()
+            );
+            CollectionAssert.AllItemsAreNotNull(
+                actual.UserAssignedIdentities.Values.Select(identity => identity.ClientId)
+            );
+            CollectionAssert.AllItemsAreNotNull(
+                actual.UserAssignedIdentities.Values.Select(identity => identity.PrincipalId)
+            );
         }
 
-        private void AssertOptimizedAutoscaleEquality(OptimizedAutoscale optimizedAutoscale1,
-            OptimizedAutoscale optimizedAutoscale2)
+        private static void AssertOptimizedAutoscaleEquals(OptimizedAutoscale expected, OptimizedAutoscale actual)
         {
-            Assert.AreEqual(optimizedAutoscale1?.Version, optimizedAutoscale2?.Version);
-            Assert.AreEqual(optimizedAutoscale1?.Minimum, optimizedAutoscale2?.Minimum);
-            Assert.AreEqual(optimizedAutoscale1?.Maximum, optimizedAutoscale2?.Maximum);
-            Assert.AreEqual(optimizedAutoscale1?.IsEnabled, optimizedAutoscale2?.IsEnabled);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Minimum, actual.Minimum);
+            Assert.AreEqual(expected.Maximum, actual.Maximum);
+            Assert.AreEqual(expected.IsEnabled, actual.IsEnabled);
         }
 
-        private void AssertKeyVaultPropertiesEquality(KustoKeyVaultProperties keyVaultProperties1,
-            KustoKeyVaultProperties keyVaultProperties2)
+        private static void AssertSkuEquals(KustoSku expected, KustoSku actual)
         {
-            Assert.AreEqual(keyVaultProperties1?.KeyName, keyVaultProperties2?.KeyName);
-            Assert.AreEqual(keyVaultProperties1?.KeyVersion, keyVaultProperties2?.KeyVersion);
-            Assert.AreEqual(keyVaultProperties1?.KeyVaultUri, keyVaultProperties2?.KeyVaultUri);
-            Assert.AreEqual(keyVaultProperties1?.UserIdentity, keyVaultProperties2?.UserIdentity);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.Capacity, actual.Capacity);
+            Assert.AreEqual(expected.Tier, actual.Tier);
         }
+
+        private static void AssertTrustedExternalTenantsEquals(
+            IList<KustoClusterTrustedExternalTenant> expected, IList<KustoClusterTrustedExternalTenant> actual
+        )
+        {
+            Assert.AreEqual(expected.Count, actual.Count);
+            CollectionAssert.AreEqual(
+                expected.Select(trustedExternalTenant => trustedExternalTenant.Value).ToList(),
+                actual.Select(trustedExternalTenant => trustedExternalTenant.Value).ToList()
+            );
+        }
+
+        // private static void AssertKeyVaultPropertiesEquals(
+        //     KustoKeyVaultProperties keyVaultProperties1, KustoKeyVaultProperties keyVaultProperties2
+        // )
+        // {
+        //     Assert.AreEqual(keyVaultProperties1.KeyName, keyVaultProperties2.KeyName);
+        //     Assert.AreEqual(keyVaultProperties1.KeyVersion, keyVaultProperties2.KeyVersion);
+        //     Assert.AreEqual(keyVaultProperties1.KeyVaultUri, keyVaultProperties2.KeyVaultUri);
+        //     Assert.AreEqual(keyVaultProperties1.UserIdentity, keyVaultProperties2.UserIdentity);
+        // }
     }
 }

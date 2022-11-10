@@ -2,7 +2,7 @@ Import-Module Az.Kusto
 
 az login
 
-$RootDirectory = (get-item $PSScriptRoot).parent.parent.parent.parent.parent
+$RootDirectory = (get-item $PSScriptRoot).parent.parent
 $TestResourcesDirectory = Join-Path -Path $RootDirectory -ChildPath eng\common\TestResources
 
 $subscriptionId = az account list --query "[?name=='Kusto_Dev_Kusto_Ilay_04_Test'].id" --output tsv
@@ -25,5 +25,5 @@ $applicationOId = az ad sp show --id $appId --query "id" --output tsv
     -ResourceGroupName  'sdkRg' `
     -Location 'eastus2' `
     -DeleteAfterHours 24 `
-    -ArmTemplateParameters @{ 'id' = [string](Get-Random -Minimum 1000 -Maximum 9999) } `
+    -ArmTemplateParameters @{ 'id' = [string](Get-Random -Minimum 1000 -Maximum 9999); 'app_id' = $appId; 'app_oid' = $applicationOId } `
     -OutFile

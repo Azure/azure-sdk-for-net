@@ -17,6 +17,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
     name: 'sdkSubnet${id}'
     properties: {
         addressPrefix: '10.0.0.0/24'
+        privateLinkServiceNetworkPolicies: 'Disabled'
     }
 }
 
@@ -28,6 +29,8 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2021-05-01' = {
         subnet: {
             id: subnet.id
         }
+        manualPrivateLinkServiceConnections:[
+        ]
         privateLinkServiceConnections: [
             {
                 name: privateEndpointName

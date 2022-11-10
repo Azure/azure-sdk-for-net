@@ -27,40 +27,36 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var managedPrivateEndpointCollection = Cluster.GetKustoManagedPrivateEndpoints();
 
-            var managedPrivateEndpointName = TestEnvironment.GenerateAssetName("sdkManagedPrivateEndpoint");
+            var managedPrivateEndpointName = GenerateAssetName("sdkManagedPrivateEndpoint");
 
             var managedPrivateEndpointDataCreate = new KustoManagedPrivateEndpointData
             {
-                PrivateLinkResourceId =
-                    new ResourceIdentifier(
-                        $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22"),
+                PrivateLinkResourceId = TE.EventHubId.Parent,
                 GroupId = "namespace",
-                RequestMessage = "Please Approve Kusto"
+                RequestMessage = "Please Approve"
             };
 
             var managedPrivateEndpointDataUpdate = new KustoManagedPrivateEndpointData
             {
-                PrivateLinkResourceId =
-                    new ResourceIdentifier(
-                        $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22"),
-                GroupId = "namespace",
-                RequestMessage = "Please Approve Kusto"
+                PrivateLinkResourceId = TE.EventHubId.Parent, GroupId = "namespace", RequestMessage = "Thank You"
             };
 
             Task<ArmOperation<KustoManagedPrivateEndpointResource>> CreateOrUpdateManagedPrivateEndpointAsync(
-                string managedPrivateEndpointName, KustoManagedPrivateEndpointData managedPrivateEndpointData,
-                bool create) =>
-                managedPrivateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, managedPrivateEndpointName,
-                    managedPrivateEndpointData);
+                string managedPrivateEndpointName, KustoManagedPrivateEndpointData managedPrivateEndpointData
+            ) => managedPrivateEndpointCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed, managedPrivateEndpointName, managedPrivateEndpointData
+            );
 
             await CollectionTests(
-                managedPrivateEndpointName, managedPrivateEndpointDataCreate, managedPrivateEndpointDataUpdate,
+                managedPrivateEndpointName,
+                GetFullClusterChildResourceName(managedPrivateEndpointName),
+                managedPrivateEndpointDataCreate,
+                managedPrivateEndpointDataUpdate,
                 CreateOrUpdateManagedPrivateEndpointAsync,
                 managedPrivateEndpointCollection.GetAsync,
                 managedPrivateEndpointCollection.GetAllAsync,
                 managedPrivateEndpointCollection.ExistsAsync,
-                VerifyManagedPrivateEndpoints,
-                clusterChild: true
+                VerifyManagedPrivateEndpoints
             );
 
             await DeletionTest(
@@ -70,14 +66,20 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             );
         }
 
-        private void VerifyManagedPrivateEndpoints(KustoManagedPrivateEndpointResource managedPrivateEndpoint,
-            string managedPrivateEndpointName, KustoManagedPrivateEndpointData managedPrivateEndpointData)
+        private void VerifyManagedPrivateEndpoints(
+            string expectedFullManagedPrivateEndpointName,
+            KustoManagedPrivateEndpointData expectedManagedPrivateEndpointData,
+            KustoManagedPrivateEndpointData actualManagedPrivateEndpointData)
         {
-            Assert.AreEqual(managedPrivateEndpointName, managedPrivateEndpoint.Data.Name);
-            Assert.AreEqual(managedPrivateEndpointData.PrivateLinkResourceId,
-                managedPrivateEndpoint.Data.PrivateLinkResourceId);
-            Assert.AreEqual(managedPrivateEndpointData.GroupId, managedPrivateEndpoint.Data.GroupId);
-            Assert.AreEqual(managedPrivateEndpointData.RequestMessage, managedPrivateEndpoint.Data.RequestMessage);
+            Assert.AreEqual(expectedManagedPrivateEndpointData.GroupId, actualManagedPrivateEndpointData.GroupId);
+            Assert.AreEqual(expectedFullManagedPrivateEndpointName, actualManagedPrivateEndpointData.Name);
+            Assert.AreEqual(
+                expectedManagedPrivateEndpointData.PrivateLinkResourceId,
+                actualManagedPrivateEndpointData.PrivateLinkResourceId
+            );
+            Assert.AreEqual(
+                expectedManagedPrivateEndpointData.RequestMessage, actualManagedPrivateEndpointData.RequestMessage
+            );
         }
     }
 }

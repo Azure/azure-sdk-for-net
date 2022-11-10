@@ -1,21 +1,27 @@
 param id string
 param location string
 
+var eventHubNamespaceName = 'sdkEventHubNamespace${id}'
+var eventHubName = 'sdkEventHub${id}'
+
 resource eventHubNamespace 'Microsoft.EventHub/namespaces@2021-11-01' = {
-    name: 'sdkEventHubNamespace${id}'
+    name: eventHubNamespaceName
     location: location
     sku: {
         name: 'Standard'
     }
+
+    resource eventHub 'eventhubs' = {
+        name: eventHubName
+    }
 }
 
-resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
-    parent: eventHubNamespace
-    name: 'sdkEventHub${id}'
-}
+output EVENT_HUB_ID string = eventHubNamespace::eventHub.id
+
+var iotHubName = 'sdkIotHub${id}'
 
 resource iotHub 'Microsoft.Devices/IotHubs@2021-07-02' = {
-    name: 'sdkIotHub${id}'
+    name: iotHubName
     location: location
     sku: {
         name: 'S1'
@@ -23,5 +29,4 @@ resource iotHub 'Microsoft.Devices/IotHubs@2021-07-02' = {
     }
 }
 
-output EVENT_HUB_ID string = eventHub.id
 output IOT_HUB_ID string = iotHub.id

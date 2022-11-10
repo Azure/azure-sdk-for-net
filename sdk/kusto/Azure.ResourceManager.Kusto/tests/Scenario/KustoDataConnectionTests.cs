@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Kusto.Models;
@@ -24,46 +23,47 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task EventHubDataConnectionTests()
+        public async Task IotHubDataConnectionTests()
         {
             var dataConnectionCollection = Database.GetKustoDataConnections();
 
-            var eventHubDataConnectionName = TestEnvironment.GenerateAssetName("sdkEventHubDataConnection");
+            var iotHubDataConnectionName = GenerateAssetName("sdkIotHubDataConnection");
 
-            var eventHubDataConnectionDataCreate = new KustoEventHubDataConnection
+            var iotHubDataConnectionDataCreate = new KustoIotHubDataConnection
             {
-                Location = Location, EventHubResourceId = TestEnvironment.EventHubId, ConsumerGroup = "$Default"
+                ConsumerGroup = "$Default", IotHubResourceId = TE.IotHubId, SharedAccessPolicyName = "registryRead"
             };
 
-            var eventHubDataConnectionDataUpdate = new KustoEventHubDataConnection
+            var iotHubDataConnectionDataUpdate = new KustoIotHubDataConnection
             {
-                Location = Location,
-                EventHubResourceId = TestEnvironment.EventHubId,
                 ConsumerGroup = "$Default",
-                DataFormat = KustoEventHubDataFormat.Csv,
                 DatabaseRouting = KustoDatabaseRouting.Multi,
-                ManagedIdentityResourceId = Cluster.Id
+                DataFormat = KustoIotHubDataFormat.Csv,
+                IotHubResourceId = TE.IotHubId,
+                SharedAccessPolicyName = "registryRead",
+                TableName = TE.ScriptContentTableName
             };
 
-            Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateEventHubDataConnectionAsync(
-                string eventHubDataConnectionName, KustoEventHubDataConnection eventHubDataConnectionData,
-                bool create) =>
-                dataConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubDataConnectionName,
-                    eventHubDataConnectionData);
+            Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateIotHubDataConnectionAsync(
+                string iotHubDataConnectionName, KustoIotHubDataConnection iotHubDataConnectionData
+            ) => dataConnectionCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed, iotHubDataConnectionName, iotHubDataConnectionData
+            );
 
             await CollectionTests(
-                eventHubDataConnectionName,
-                eventHubDataConnectionDataCreate, eventHubDataConnectionDataUpdate,
-                CreateOrUpdateEventHubDataConnectionAsync,
+                iotHubDataConnectionName,
+                GetFullDatabaseChildResourceName(iotHubDataConnectionName),
+                iotHubDataConnectionDataCreate,
+                iotHubDataConnectionDataUpdate,
+                CreateOrUpdateIotHubDataConnectionAsync,
                 dataConnectionCollection.GetAsync,
                 dataConnectionCollection.GetAllAsync,
                 dataConnectionCollection.ExistsAsync,
-                ValidateEventHubDataConnection,
-                databaseChild: true
+                ValidateIotHubDataConnection
             );
 
             await DeletionTest(
-                eventHubDataConnectionName,
+                iotHubDataConnectionName,
                 dataConnectionCollection.GetAsync,
                 dataConnectionCollection.ExistsAsync
             );
@@ -71,48 +71,47 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task IotHubDataConnectionTests()
+        public async Task EventHubDataConnectionTests()
         {
             var dataConnectionCollection = Database.GetKustoDataConnections();
 
-            var iotHubDataConnectionName = TestEnvironment.GenerateAssetName("sdkIotHubDataConnection");
+            var eventHubDataConnectionName = GenerateAssetName("sdkEventHubDataConnection");
 
-            var iotHubDataConnectionDataCreate = new KustoIotHubDataConnection
+            var eventHubDataConnectionDataCreate = new KustoEventHubDataConnection
             {
-                Location = Location,
-                IotHubResourceId = TestEnvironment.IotHubId,
-                SharedAccessPolicyName = "registryRead",
-                ConsumerGroup = "$Default"
+                ConsumerGroup = "$Default", EventHubResourceId = TE.EventHubId
             };
 
-            var iotHubDataConnectionDataUpdate = new KustoIotHubDataConnection
+            var eventHubDataConnectionDataUpdate = new KustoEventHubDataConnection
             {
-                Location = Location,
-                IotHubResourceId = TestEnvironment.IotHubId,
-                SharedAccessPolicyName = "registryRead",
                 ConsumerGroup = "$Default",
-                DataFormat = KustoIotHubDataFormat.Csv,
-                DatabaseRouting = KustoDatabaseRouting.Multi
+                DatabaseRouting = KustoDatabaseRouting.Multi,
+                DataFormat = KustoEventHubDataFormat.Csv,
+                EventHubResourceId = TE.EventHubId,
+                ManagedIdentityResourceId = TE.UserAssignedIdentityId,
+                TableName = TE.ScriptContentTableName
             };
 
-            Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateIotHubDataConnectionAsync(
-                string iotHubDataConnectionName, KustoIotHubDataConnection iotHubDataConnectionData, bool create) =>
-                dataConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, iotHubDataConnectionName,
-                    iotHubDataConnectionData);
+            Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateEventHubDataConnectionAsync(
+                string eventHubDataConnectionName, KustoEventHubDataConnection eventHubDataConnectionData
+            ) => dataConnectionCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed, eventHubDataConnectionName, eventHubDataConnectionData
+            );
 
             await CollectionTests(
-                iotHubDataConnectionName,
-                iotHubDataConnectionDataCreate, iotHubDataConnectionDataUpdate,
-                CreateOrUpdateIotHubDataConnectionAsync,
+                eventHubDataConnectionName,
+                GetFullDatabaseChildResourceName(eventHubDataConnectionName),
+                eventHubDataConnectionDataCreate,
+                eventHubDataConnectionDataUpdate,
+                CreateOrUpdateEventHubDataConnectionAsync,
                 dataConnectionCollection.GetAsync,
                 dataConnectionCollection.GetAllAsync,
                 dataConnectionCollection.ExistsAsync,
-                ValidateIotHubDataConnection,
-                databaseChild: true
+                ValidateEventHubDataConnection
             );
 
             await DeletionTest(
-                iotHubDataConnectionName,
+                eventHubDataConnectionName,
                 dataConnectionCollection.GetAsync,
                 dataConnectionCollection.ExistsAsync
             );
@@ -124,43 +123,42 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var dataConnectionCollection = Database.GetKustoDataConnections();
 
-            var eventGridDataConnectionName = TestEnvironment.GenerateAssetName("sdkEventGridDataConnection");
+            var eventGridDataConnectionName = GenerateAssetName("sdkEventGridDataConnection");
 
             var eventGridDataConnectionDataCreate = new KustoEventGridDataConnection()
             {
-                Location = Location,
-                StorageAccountResourceId = TestEnvironment.StorageAccountId,
-                EventHubResourceId = TestEnvironment.EventHubId,
                 ConsumerGroup = "$Default",
-                TableName = "MyTest"
+                EventHubResourceId = TE.EventHubId,
+                StorageAccountResourceId = TE.StorageAccountId
             };
 
             var eventGridDataConnectionDataUpdate = new KustoEventGridDataConnection()
             {
-                Location = Location,
-                StorageAccountResourceId = TestEnvironment.StorageAccountId,
-                EventHubResourceId = TestEnvironment.EventHubId,
                 ConsumerGroup = "$Default",
-                TableName = "MyTest",
+                DatabaseRouting = KustoDatabaseRouting.Multi,
                 DataFormat = KustoEventGridDataFormat.Csv,
-                DatabaseRouting = KustoDatabaseRouting.Multi
+                EventHubResourceId = TE.EventHubId,
+                ManagedIdentityResourceId = TE.UserAssignedIdentityId,
+                StorageAccountResourceId = TE.StorageAccountId,
+                TableName = TE.ScriptContentTableName
             };
 
             Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateEventGridDataConnectionAsync(
-                string eventGridDataConnectionName, KustoEventGridDataConnection eventGridDataConnectionData,
-                bool create) =>
-                dataConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventGridDataConnectionName,
-                    eventGridDataConnectionData);
+                string eventGridDataConnectionName, KustoEventGridDataConnection eventGridDataConnectionData
+            ) => dataConnectionCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed, eventGridDataConnectionName, eventGridDataConnectionData
+            );
 
             await CollectionTests(
                 eventGridDataConnectionName,
-                eventGridDataConnectionDataCreate, eventGridDataConnectionDataUpdate,
+                GetFullDatabaseChildResourceName(eventGridDataConnectionName),
+                eventGridDataConnectionDataCreate,
+                eventGridDataConnectionDataUpdate,
                 CreateOrUpdateEventGridDataConnectionAsync,
                 dataConnectionCollection.GetAsync,
                 dataConnectionCollection.GetAllAsync,
                 dataConnectionCollection.ExistsAsync,
-                ValidateEventGridDataConnection,
-                databaseChild: true
+                ValidateEventGridDataConnection
             );
 
             await DeletionTest(
@@ -170,62 +168,94 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             );
         }
 
-        private void ValidateEventHubDataConnection(KustoDataConnectionResource eventHubDataConnection,
-            string eventHubDataConnectionName,
-            KustoEventHubDataConnection eventHubDataConnectionData)
-        {
-            Assert.AreEqual(eventHubDataConnectionName, eventHubDataConnection.Data.Name);
-            Assert.AreEqual(eventHubDataConnectionData.EventHubResourceId,
-                ((KustoEventHubDataConnection)eventHubDataConnection.Data).EventHubResourceId);
-            Assert.AreEqual(eventHubDataConnectionData.ConsumerGroup,
-                ((KustoEventHubDataConnection)eventHubDataConnection.Data).ConsumerGroup);
-            Assert.AreEqual(eventHubDataConnectionData.DataFormat ?? string.Empty,
-                ((KustoEventHubDataConnection)eventHubDataConnection.Data).DataFormat);
-            Assert.AreEqual(eventHubDataConnectionData.DatabaseRouting ?? KustoDatabaseRouting.Single,
-                ((KustoEventHubDataConnection)eventHubDataConnection.Data).DatabaseRouting);
-            Assert.AreEqual(eventHubDataConnectionData.ManagedIdentityResourceId,
-                ((KustoEventHubDataConnection)eventHubDataConnection.Data).ManagedIdentityResourceId);
-        }
-
-        private void ValidateIotHubDataConnection(KustoDataConnectionResource iotHubDataConnection,
+        private static void ValidateIotHubDataConnection(
             string iotHubDataConnectionName,
-            KustoIotHubDataConnection iotHubDataConnectionData)
+            KustoIotHubDataConnection expectedIotHubDataConnectionData,
+            KustoIotHubDataConnection actualIotHubDataConnectionData
+        )
         {
-            Assert.AreEqual(iotHubDataConnectionName, iotHubDataConnection.Data.Name);
-            Assert.AreEqual(iotHubDataConnectionData.IotHubResourceId,
-                ((KustoIotHubDataConnection)iotHubDataConnection.Data).IotHubResourceId);
-            Assert.AreEqual(iotHubDataConnectionData.ConsumerGroup,
-                ((KustoIotHubDataConnection)iotHubDataConnection.Data).ConsumerGroup);
-            Assert.AreEqual(iotHubDataConnectionData.DataFormat ?? string.Empty,
-                ((KustoIotHubDataConnection)iotHubDataConnection.Data).DataFormat);
-            Assert.AreEqual(iotHubDataConnectionData.DatabaseRouting ?? KustoDatabaseRouting.Single,
-                ((KustoIotHubDataConnection)iotHubDataConnection.Data).DatabaseRouting);
+            Assert.AreEqual(
+                expectedIotHubDataConnectionData.ConsumerGroup, actualIotHubDataConnectionData.ConsumerGroup
+            );
+            Assert.AreEqual(
+                expectedIotHubDataConnectionData.DatabaseRouting ?? KustoDatabaseRouting.Single,
+                actualIotHubDataConnectionData.DatabaseRouting
+            );
+            Assert.AreEqual(
+                expectedIotHubDataConnectionData.DataFormat ?? string.Empty,
+                actualIotHubDataConnectionData.DataFormat
+            );
+            Assert.AreEqual(
+                expectedIotHubDataConnectionData.IotHubResourceId, actualIotHubDataConnectionData.IotHubResourceId
+            );
+            Assert.AreEqual(iotHubDataConnectionName, actualIotHubDataConnectionData.Name);
+            Assert.AreEqual(expectedIotHubDataConnectionData.TableName, actualIotHubDataConnectionData.TableName);
         }
 
-        private void ValidateEventGridDataConnection(KustoDataConnectionResource eventGridDataConnection,
-            string eventGridDataConnectionName,
-            KustoEventGridDataConnection eventGridDataConnectionData)
+        private static void ValidateEventHubDataConnection(
+            string eventHubDataConnectionName,
+            KustoEventHubDataConnection expectedEventHubDataConnectionData,
+            KustoEventHubDataConnection actualEventHubDataConnectionData
+        )
         {
-            Assert.AreEqual(eventGridDataConnectionName, eventGridDataConnection.Data.Name);
-            Assert.AreEqual(eventGridDataConnectionData.EventHubResourceId,
-                ((KustoEventGridDataConnection)eventGridDataConnection.Data).EventHubResourceId);
-            Assert.AreEqual(eventGridDataConnectionData.ConsumerGroup,
-                ((KustoEventGridDataConnection)eventGridDataConnection.Data).ConsumerGroup);
-            Assert.AreEqual(eventGridDataConnectionData.DataFormat ?? string.Empty,
-                ((KustoEventGridDataConnection)eventGridDataConnection.Data).DataFormat);
-            Assert.AreEqual(eventGridDataConnectionData.StorageAccountResourceId,
-                ((KustoEventGridDataConnection)eventGridDataConnection.Data).StorageAccountResourceId);
-            Assert.AreEqual(eventGridDataConnectionData.TableName,
-                ((KustoEventGridDataConnection)eventGridDataConnection.Data).TableName);
-            Assert.AreEqual(eventGridDataConnectionData.DatabaseRouting ?? KustoDatabaseRouting.Single,
-                ((KustoEventGridDataConnection)eventGridDataConnection.Data).DatabaseRouting);
-            Assert.AreEqual(eventGridDataConnectionData.ManagedIdentityResourceId,
-                ((KustoEventGridDataConnection)eventGridDataConnection.Data).ManagedIdentityResourceId);
-            Guid? managedIdentityObjectId = eventGridDataConnectionData.ManagedIdentityResourceId is null
-                ? null
-                : Guid.Parse("a4f74545-0569-49ab-a902-f712fcf2f9e0");
-            Assert.AreEqual(managedIdentityObjectId,
-                ((KustoEventGridDataConnection)eventGridDataConnection.Data).ManagedIdentityObjectId);
+            Assert.AreEqual(
+                expectedEventHubDataConnectionData.ConsumerGroup,
+                actualEventHubDataConnectionData.ConsumerGroup
+            );
+            Assert.AreEqual(
+                expectedEventHubDataConnectionData.DatabaseRouting ?? KustoDatabaseRouting.Single,
+                actualEventHubDataConnectionData.DatabaseRouting
+            );
+            Assert.AreEqual(
+                expectedEventHubDataConnectionData.DataFormat ?? string.Empty,
+                actualEventHubDataConnectionData.DataFormat
+            );
+            Assert.AreEqual(
+                expectedEventHubDataConnectionData.EventHubResourceId,
+                actualEventHubDataConnectionData.EventHubResourceId
+            );
+            Assert.AreEqual(
+                expectedEventHubDataConnectionData.ManagedIdentityResourceId,
+                actualEventHubDataConnectionData.ManagedIdentityResourceId
+            );
+            Assert.AreEqual(eventHubDataConnectionName, actualEventHubDataConnectionData.Name);
+            Assert.AreEqual(expectedEventHubDataConnectionData.TableName, actualEventHubDataConnectionData.TableName);
+        }
+
+        private void ValidateEventGridDataConnection(
+            string eventGridDataConnectionName,
+            KustoEventGridDataConnection expectedEventGridDataConnectionData,
+            KustoEventGridDataConnection actualEventGridDataConnectionData
+        )
+        {
+            Assert.AreEqual(
+                expectedEventGridDataConnectionData.ConsumerGroup, actualEventGridDataConnectionData.ConsumerGroup
+            );
+            Assert.AreEqual(
+                expectedEventGridDataConnectionData.DatabaseRouting ?? KustoDatabaseRouting.Single,
+                actualEventGridDataConnectionData.DatabaseRouting
+            );
+            Assert.AreEqual(
+                expectedEventGridDataConnectionData.DataFormat ?? string.Empty,
+                actualEventGridDataConnectionData.DataFormat
+            );
+            Assert.AreEqual(
+                expectedEventGridDataConnectionData.EventHubResourceId,
+                actualEventGridDataConnectionData.EventHubResourceId
+            );
+            Assert.AreEqual(
+                expectedEventGridDataConnectionData.ManagedIdentityResourceId,
+                actualEventGridDataConnectionData.ManagedIdentityResourceId
+            );
+            Assert.AreEqual(
+                GetFullDatabaseChildResourceName(eventGridDataConnectionName),
+                actualEventGridDataConnectionData.Name
+            );
+            Assert.AreEqual(
+                expectedEventGridDataConnectionData.StorageAccountResourceId,
+                actualEventGridDataConnectionData.StorageAccountResourceId
+            );
+            Assert.AreEqual(expectedEventGridDataConnectionData.TableName, actualEventGridDataConnectionData.TableName);
         }
     }
 }
