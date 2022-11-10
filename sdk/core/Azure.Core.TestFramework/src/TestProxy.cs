@@ -62,12 +62,11 @@ namespace Azure.Core.TestFramework
         {
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
-                proxyPath)
+                $"{proxyPath} --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                WorkingDirectory = TestEnvironment.RepositoryRoot,
                 EnvironmentVariables =
                 {
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
