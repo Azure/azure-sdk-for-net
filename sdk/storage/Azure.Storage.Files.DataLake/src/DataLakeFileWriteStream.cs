@@ -27,7 +27,7 @@ namespace Azure.Storage.Files.DataLake
                 position,
                 bufferSize,
                 progressHandler,
-                validationOptions: validationOptions
+                transferValidation: validationOptions
                 )
         {
             ValidateBufferSize(bufferSize);

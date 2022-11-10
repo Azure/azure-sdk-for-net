@@ -1,14 +1,17 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2022-11-07)
 
-### Features Added
+### Features
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added new custom enum type `NodeCommunicationMode`.
+  - This property determines how a pool communicates with the Batch service.
+  - Possible values: Default, Classic, Simplified.
+- Added properties `CurrentNodeCommunicationMode` and `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `BatchAccountPoolData`.
 
 ### Other Changes
+
+- Updated descriptions of Certificate related apis to indicate that the apis will be deprecated by Feb 2024.
 
 ## 1.0.0 (2022-09-19)
 

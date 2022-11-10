@@ -1,0 +1,533 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8de289cae1508c4faece71c6e153f3ae-abbe906a3daa9f45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "08b358b194276bccc7184f9823831ece",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 12 Oct 2022 03:12:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4f81f54d-16c8-4544-a363-1942d229ce39",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "4f81f54d-16c8-4544-a363-1942d229ce39",
+        "x-ms-routing-request-id": "KOREASOUTH:20221012T031238Z:4f81f54d-16c8-4544-a363-1942d229ce39"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-cf8fa12a58ae064aa11d51ed12c3ba18-c50ef962d2a64f4a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0b63cf266dbccd6d5a2ba92c316a3307",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 12 Oct 2022 03:12:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "caa217be-babb-4ede-ab86-7c8bd8873b6a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "caa217be-babb-4ede-ab86-7c8bd8873b6a",
+        "x-ms-routing-request-id": "KOREASOUTH:20221012T031239Z:caa217be-babb-4ede-ab86-7c8bd8873b6a"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ResourceGraph/resources?api-version=2021-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "110",
+        "Content-Type": "application/json",
+        "traceparent": "00-0f0028b2888d1a45b8f772bcb0caf085-fa3cf48332c9564a-00",
+        "User-Agent": "azsdk-net-ResourceManager.ResourceGraph/1.0.0-alpha.20221012.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e3748fbacdc4fa36d83c343c690f1ee6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "managementGroups": [
+          "91f5d6bc-f464-8343-5e53-3c3e3f99e5c4"
+        ],
+        "query": "project id, tags, properties | limit 2"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "11824",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 12 Oct 2022 03:12:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "67054477-1110-4fdd-82ec-fed50a22db03",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-ratelimit-remaining-tenant-resource-requests": "14",
+        "x-ms-request-id": "67054477-1110-4fdd-82ec-fed50a22db03",
+        "x-ms-routing-request-id": "KOREASOUTH:20221012T031239Z:67054477-1110-4fdd-82ec-fed50a22db03",
+        "x-ms-user-quota-remaining": "14",
+        "x-ms-user-quota-resets-after": "00:00:05"
+      },
+      "ResponseBody": {
+        "totalRecords": 2,
+        "count": 2,
+        "data": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-eastus",
+            "tags": {},
+            "properties": {
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "principalId": "7912661d-c88e-4a77-a379-0e048f26ca7c",
+              "clientId": "9601e85e-5ef0-4b72-ae34-adce6248fe56"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245",
+            "tags": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "resourceGuid": "d7a4c2d9-6c39-4342-bdb1-7d03ed68d0ac",
+              "defaultSecurityRules": [
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "VirtualNetwork",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefix": "VirtualNetwork",
+                    "destinationPortRange": "*",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 65000,
+                    "direction": "Inbound",
+                    "description": "Allow inbound traffic from all VMs in VNET",
+                    "access": "Allow"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/defaultSecurityRules/AllowVnetInBound",
+                  "name": "AllowVnetInBound",
+                  "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefix": "AzureLoadBalancer",
+                    "destinationPortRange": "*",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 65001,
+                    "direction": "Inbound",
+                    "description": "Allow inbound traffic from azure load balancer",
+                    "access": "Allow"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+                  "name": "AllowAzureLoadBalancerInBound",
+                  "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefix": "*",
+                    "destinationPortRange": "*",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 65500,
+                    "direction": "Inbound",
+                    "description": "Deny all inbound traffic",
+                    "access": "Deny"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/defaultSecurityRules/DenyAllInBound",
+                  "name": "DenyAllInBound",
+                  "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "VirtualNetwork",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefix": "VirtualNetwork",
+                    "destinationPortRange": "*",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 65000,
+                    "direction": "Outbound",
+                    "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                    "access": "Allow"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/defaultSecurityRules/AllowVnetOutBound",
+                  "name": "AllowVnetOutBound",
+                  "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "Internet",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefix": "*",
+                    "destinationPortRange": "*",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 65001,
+                    "direction": "Outbound",
+                    "description": "Allow outbound traffic from all VMs to Internet",
+                    "access": "Allow"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/defaultSecurityRules/AllowInternetOutBound",
+                  "name": "AllowInternetOutBound",
+                  "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefix": "*",
+                    "destinationPortRange": "*",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 65500,
+                    "direction": "Outbound",
+                    "description": "Deny all outbound traffic",
+                    "access": "Deny"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/defaultSecurityRules/DenyAllOutBound",
+                  "name": "DenyAllOutBound",
+                  "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                }
+              ],
+              "securityRules": [
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "Tcp",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [
+                      "23",
+                      "135",
+                      "445",
+                      "5985",
+                      "5986"
+                    ],
+                    "sourceAddressPrefix": "Internet",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 107,
+                    "direction": "Inbound",
+                    "description": "DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy",
+                    "access": "Deny"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/securityRules/NRMS-Rule-107",
+                  "name": "NRMS-Rule-107",
+                  "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [
+                      "119",
+                      "137",
+                      "138",
+                      "139",
+                      "161",
+                      "162",
+                      "389",
+                      "636",
+                      "2049",
+                      "2301",
+                      "2381",
+                      "3268",
+                      "5800",
+                      "5900"
+                    ],
+                    "sourceAddressPrefix": "Internet",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 109,
+                    "direction": "Inbound",
+                    "description": "DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy",
+                    "access": "Deny"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/securityRules/NRMS-Rule-109",
+                  "name": "NRMS-Rule-109",
+                  "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [
+                      "1433",
+                      "1434",
+                      "3306",
+                      "4333",
+                      "5432",
+                      "6379",
+                      "7000",
+                      "7001",
+                      "7199",
+                      "9042",
+                      "9160",
+                      "9300",
+                      "16379",
+                      "26379",
+                      "27017"
+                    ],
+                    "sourceAddressPrefix": "Internet",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 105,
+                    "direction": "Inbound",
+                    "description": "DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy",
+                    "access": "Deny"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/securityRules/NRMS-Rule-105",
+                  "name": "NRMS-Rule-105",
+                  "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefix": "CorpNetSaw",
+                    "destinationPortRange": "*",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 104,
+                    "direction": "Inbound",
+                    "description": "Created by Azure Core Security managed policy, rule can be deleted but do not change source ips, please see aka.ms/cainsgpolicy",
+                    "access": "Allow"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/securityRules/NRMS-Rule-104",
+                  "name": "NRMS-Rule-104",
+                  "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "Tcp",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [
+                      "22",
+                      "3389"
+                    ],
+                    "sourceAddressPrefix": "Internet",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 106,
+                    "direction": "Inbound",
+                    "description": "DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy",
+                    "access": "Deny"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/securityRules/NRMS-Rule-106",
+                  "name": "NRMS-Rule-106",
+                  "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefix": "CorpNetPublic",
+                    "destinationPortRange": "*",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 103,
+                    "direction": "Inbound",
+                    "description": "Created by Azure Core Security managed policy, rule can be deleted but do not change source ips, please see aka.ms/cainsgpolicy",
+                    "access": "Allow"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/securityRules/NRMS-Rule-103",
+                  "name": "NRMS-Rule-103",
+                  "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "Tcp",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefix": "VirtualNetwork",
+                    "destinationPortRange": "443",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 101,
+                    "direction": "Inbound",
+                    "description": "Created by Azure Core Security managed policy, placeholder you can delete, please see aka.ms/cainsgpolicy",
+                    "access": "Allow"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/securityRules/NRMS-Rule-101",
+                  "name": "NRMS-Rule-101",
+                  "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                },
+                {
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "destinationAddressPrefixes": [],
+                    "protocol": "*",
+                    "destinationAddressPrefix": "*",
+                    "sourceAddressPrefixes": [],
+                    "destinationPortRanges": [
+                      "13",
+                      "17",
+                      "19",
+                      "53",
+                      "69",
+                      "111",
+                      "123",
+                      "512",
+                      "514",
+                      "593",
+                      "873",
+                      "1900",
+                      "5353",
+                      "11211"
+                    ],
+                    "sourceAddressPrefix": "Internet",
+                    "sourcePortRanges": [],
+                    "sourcePortRange": "*",
+                    "priority": 108,
+                    "direction": "Inbound",
+                    "description": "DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy",
+                    "access": "Deny"
+                  },
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/networkSecurityGroups/nsg1245/securityRules/NRMS-Rule-108",
+                  "name": "NRMS-Rule-108",
+                  "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                  "etag": "W/\u00228c23ad1b-d071-4232-9912-5c17ced1d19d\u0022"
+                }
+              ],
+              "subnets": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG-0000/providers/Microsoft.Network/virtualNetworks/vnet0000/subnets/subnet1"
+                }
+              ]
+            }
+          }
+        ],
+        "facets": [],
+        "resultTruncated": "false"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "154870908",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

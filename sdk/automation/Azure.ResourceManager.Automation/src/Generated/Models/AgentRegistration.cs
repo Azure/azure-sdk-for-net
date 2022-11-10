@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the agent registration information type. </summary>
@@ -20,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="endpoint"> Gets or sets the dsc server endpoint. </param>
         /// <param name="keys"> Gets or sets the agent registration keys. </param>
         /// <param name="id"> Gets or sets the id. </param>
-        internal AgentRegistration(string dscMetaConfiguration, string endpoint, AgentRegistrationKeys keys, string id)
+        internal AgentRegistration(string dscMetaConfiguration, Uri endpoint, AgentRegistrationKeys keys, ResourceIdentifier id)
         {
             DscMetaConfiguration = dscMetaConfiguration;
             Endpoint = endpoint;
@@ -31,10 +34,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the dsc meta configuration. </summary>
         public string DscMetaConfiguration { get; }
         /// <summary> Gets or sets the dsc server endpoint. </summary>
-        public string Endpoint { get; }
+        public Uri Endpoint { get; }
         /// <summary> Gets or sets the agent registration keys. </summary>
         public AgentRegistrationKeys Keys { get; }
         /// <summary> Gets or sets the id. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

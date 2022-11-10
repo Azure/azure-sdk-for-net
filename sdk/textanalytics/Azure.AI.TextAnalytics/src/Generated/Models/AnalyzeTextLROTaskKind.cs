@@ -28,9 +28,11 @@ namespace Azure.AI.TextAnalytics.Models
         private const string KeyPhraseExtractionValue = "KeyPhraseExtraction";
         private const string EntityLinkingValue = "EntityLinking";
         private const string HealthcareValue = "Healthcare";
+        private const string ExtractiveSummarizationValue = "ExtractiveSummarization";
         private const string CustomEntityRecognitionValue = "CustomEntityRecognition";
         private const string CustomSingleLabelClassificationValue = "CustomSingleLabelClassification";
         private const string CustomMultiLabelClassificationValue = "CustomMultiLabelClassification";
+        private const string AbstractiveSummarizationValue = "AbstractiveSummarization";
 
         /// <summary> SentimentAnalysis. </summary>
         public static AnalyzeTextLROTaskKind SentimentAnalysis { get; } = new AnalyzeTextLROTaskKind(SentimentAnalysisValue);
@@ -44,12 +46,16 @@ namespace Azure.AI.TextAnalytics.Models
         public static AnalyzeTextLROTaskKind EntityLinking { get; } = new AnalyzeTextLROTaskKind(EntityLinkingValue);
         /// <summary> Healthcare. </summary>
         public static AnalyzeTextLROTaskKind Healthcare { get; } = new AnalyzeTextLROTaskKind(HealthcareValue);
+        /// <summary> ExtractiveSummarization. </summary>
+        public static AnalyzeTextLROTaskKind ExtractiveSummarization { get; } = new AnalyzeTextLROTaskKind(ExtractiveSummarizationValue);
         /// <summary> CustomEntityRecognition. </summary>
         public static AnalyzeTextLROTaskKind CustomEntityRecognition { get; } = new AnalyzeTextLROTaskKind(CustomEntityRecognitionValue);
         /// <summary> CustomSingleLabelClassification. </summary>
         public static AnalyzeTextLROTaskKind CustomSingleLabelClassification { get; } = new AnalyzeTextLROTaskKind(CustomSingleLabelClassificationValue);
         /// <summary> CustomMultiLabelClassification. </summary>
         public static AnalyzeTextLROTaskKind CustomMultiLabelClassification { get; } = new AnalyzeTextLROTaskKind(CustomMultiLabelClassificationValue);
+        /// <summary> AbstractiveSummarization. </summary>
+        public static AnalyzeTextLROTaskKind AbstractiveSummarization { get; } = new AnalyzeTextLROTaskKind(AbstractiveSummarizationValue);
         /// <summary> Determines if two <see cref="AnalyzeTextLROTaskKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextLROTaskKind left, AnalyzeTextLROTaskKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextLROTaskKind"/> values are not the same. </summary>

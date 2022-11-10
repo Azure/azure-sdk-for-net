@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SettingsList DeserializeSettingsList(JsonElement element)
         {
-            Optional<IReadOnlyList<SettingData>> value = default;
+            Optional<IReadOnlyList<SecuritySettingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SettingData> array = new List<SettingData>();
+                    List<SecuritySettingData> array = new List<SecuritySettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SettingData.DeserializeSettingData(item));
+                        array.Add(SecuritySettingData.DeserializeSecuritySettingData(item));
                     }
                     value = array;
                     continue;

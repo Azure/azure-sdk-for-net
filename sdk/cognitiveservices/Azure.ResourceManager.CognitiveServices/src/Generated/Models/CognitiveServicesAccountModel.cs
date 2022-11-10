@@ -24,12 +24,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="format"> Deployment model format. </param>
         /// <param name="name"> Deployment model name. </param>
         /// <param name="version"> Deployment model version. </param>
+        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="baseModel"> Base Model Identifier. </param>
         /// <param name="maxCapacity"> The max capacity. </param>
         /// <param name="capabilities"> The capabilities. </param>
         /// <param name="deprecation"> Cognitive Services account ModelDeprecationInfo. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        internal CognitiveServicesAccountModel(string format, string name, string version, CognitiveServicesAccountDeploymentModel baseModel, int? maxCapacity, IDictionary<string, string> capabilities, ServiceAccountModelDeprecationInfo deprecation, SystemData systemData) : base(format, name, version)
+        internal CognitiveServicesAccountModel(string format, string name, string version, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, int? maxCapacity, IDictionary<string, string> capabilities, ServiceAccountModelDeprecationInfo deprecation, SystemData systemData) : base(format, name, version, callRateLimit)
         {
             BaseModel = baseModel;
             MaxCapacity = maxCapacity;

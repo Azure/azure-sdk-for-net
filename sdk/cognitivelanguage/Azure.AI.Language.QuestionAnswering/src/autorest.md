@@ -59,15 +59,6 @@ directive:
     $["summary"] = "Add Active Learning feedback";
 
 # Define HTTP 200 responses for LROs to document result model.
-- where-operation: QuestionAnsweringProjects_DeleteProject
-  transform: |
-    $.responses["200"] = {
-      description: "Project delete job status.",
-      schema: {
-        "$ref": "#/definitions/JobState"
-      }
-    };
-
 - where-operation: QuestionAnsweringProjects_DeployProject
   transform: |
     $.responses["200"] = {
@@ -121,5 +112,22 @@ directive:
     $["externalDocs"] = {
         url: "https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/" + operationId
     };
+
+```
+
+### C# customizations
+
+``` yaml
+directive:
+# Remove explicit paging parameters until Azure/azure-sdk-for-net#29342 is resolved.
+- from: questionanswering-authoring.json
+  where: $.paths.*[?(@["x-ms-pageable"])]
+  transform: |
+    var paramRefs = [
+        "common.json#/parameters/TopParameter",
+        "common.json#/parameters/SkipParameter",
+        "common.json#/parameters/MaxPageSizeParameter"
+    ];
+    $.parameters = $.parameters.filter(param => !paramRefs.includes(param["$ref"]));
 
 ```

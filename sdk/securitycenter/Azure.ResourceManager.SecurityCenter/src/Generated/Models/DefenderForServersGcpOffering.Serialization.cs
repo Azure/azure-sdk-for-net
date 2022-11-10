@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("arcAutoProvisioning");
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
-            if (Optional.IsDefined(VaAutoProvisioning))
+            if (Optional.IsDefined(VulnerabilityAssessmentAutoProvisioning))
             {
                 writer.WritePropertyName("vaAutoProvisioning");
-                writer.WriteObjectValue(VaAutoProvisioning);
+                writer.WriteObjectValue(VulnerabilityAssessmentAutoProvisioning);
             }
             if (Optional.IsDefined(MdeAutoProvisioning))
             {
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersGcpOffering DeserializeDefenderForServersGcpOffering(JsonElement element)
         {
-            Optional<DefenderForServersGcpOfferingDefenderForServers> defenderForServers = default;
+            Optional<GcpDefenderForServersInfo> defenderForServers = default;
             Optional<DefenderForServersGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<DefenderForServersGcpOfferingVaAutoProvisioning> vaAutoProvisioning = default;
+            Optional<DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
             Optional<DefenderForServersGcpOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
             Optional<DefenderForServersGcpOfferingSubPlan> subPlan = default;
             OfferingType offeringType = default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defenderForServers = DefenderForServersGcpOfferingDefenderForServers.DeserializeDefenderForServersGcpOfferingDefenderForServers(property.Value);
+                    defenderForServers = GcpDefenderForServersInfo.DeserializeGcpDefenderForServersInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("arcAutoProvisioning"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vaAutoProvisioning = DefenderForServersGcpOfferingVaAutoProvisioning.DeserializeDefenderForServersGcpOfferingVaAutoProvisioning(property.Value);
+                    vaAutoProvisioning = DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mdeAutoProvisioning"))

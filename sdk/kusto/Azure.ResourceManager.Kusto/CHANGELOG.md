@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (2020-10-23)
+## 1.1.0 (2020-11-10)
 
 ### Features Added
 
@@ -9,17 +9,16 @@
 - Follower name override/prefix – ability to define either different name for Read-Only-Following DB, or define prefix name for all DBs (in case of full cluster following scenario).
 - Enhancing Follower GET-related APIs to improve demonstration of follower-leader linage in Azure portal.
 
-### Breaking Changes
-
-None
-
-### Bugs Fixed
-
-None
-
 ### Other Changes
 
 - New API has the following new SKUs: Standard_L8s_v3, Standard_L16s_v3, Standard_L8as_v3, Standard_L16as_v3, Standard_E16s_v5+4TB_PS, Standard_E2d_v4, Standard_E4d_v4, Standard_E8d_v4, Standard_E16d_v4, Standard_E2d_v5, Standard_E4d_v5, Standard_E8d_v5, Standard_E16d_v5.
+
+## 1.0.1 (2022-10-09)
+
+### Bugs Fixed
+
+- Added `KustoDatabasePrincipalAssignmentData.DatabasePrincipalId` to replace the old property `KustoDatabasePrincipalAssignmentData.PrincipalId` to fix the issue https://github.com/Azure/azure-sdk-for-net/issues/32331.
+- Added `KustoClusterPrincipalAssignmentData.ClusterPrincipalId` to replace the old property `KustoDatabasePrincipalAssignmentData.PrincipalId` to fix the issue https://github.com/Azure/azure-sdk-for-net/issues/32331.
 
 ## 1.0.0 (2022-09-19)
 

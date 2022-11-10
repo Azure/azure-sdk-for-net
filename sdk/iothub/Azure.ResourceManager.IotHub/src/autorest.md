@@ -9,7 +9,6 @@ csharp: true
 library-name: IotHub
 namespace: Azure.ResourceManager.IotHub
 require: https://github.com/Azure/azure-rest-api-specs/blob/0f9df940977c680c39938c8b8bd5baf893737ed0/specification/iothub/resource-manager/readme.md
-tag: package-2021-07-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

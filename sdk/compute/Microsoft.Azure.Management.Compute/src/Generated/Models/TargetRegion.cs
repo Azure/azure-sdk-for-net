@@ -38,12 +38,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// to be used to store the image. This property is not updatable.
         /// Possible values include: 'Standard_LRS', 'Standard_ZRS',
         /// 'Premium_LRS'</param>
-        public TargetRegion(string name, int? regionalReplicaCount = default(int?), string storageAccountType = default(string), EncryptionImages encryption = default(EncryptionImages))
+        /// <param name="excludeFromLatest">Contains the flag setting to hide
+        /// an image when users specify version='latest'</param>
+        public TargetRegion(string name, int? regionalReplicaCount = default(int?), string storageAccountType = default(string), EncryptionImages encryption = default(EncryptionImages), bool? excludeFromLatest = default(bool?))
         {
             Name = name;
             RegionalReplicaCount = regionalReplicaCount;
             StorageAccountType = storageAccountType;
             Encryption = encryption;
+            ExcludeFromLatest = excludeFromLatest;
             CustomInit();
         }
 
@@ -77,6 +80,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "encryption")]
         public EncryptionImages Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets contains the flag setting to hide an image when users
+        /// specify version='latest'
+        /// </summary>
+        [JsonProperty(PropertyName = "excludeFromLatest")]
+        public bool? ExcludeFromLatest { get; set; }
 
         /// <summary>
         /// Validate the object.

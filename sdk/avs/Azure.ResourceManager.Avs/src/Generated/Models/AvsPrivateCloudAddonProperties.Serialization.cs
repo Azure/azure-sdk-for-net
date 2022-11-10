@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element);
                     case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element);
                     case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element);
                     case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element);

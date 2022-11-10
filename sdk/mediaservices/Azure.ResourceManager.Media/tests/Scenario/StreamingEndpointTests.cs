@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private StreamingEndpointCollection streamingEndpointCollection => _mediaService.GetStreamingEndpoints();
 
-        public StreamingEndpointTests(bool isAsync) : base(isAsync)
+        public StreamingEndpointTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

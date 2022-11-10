@@ -1,5 +1,31 @@
 # Release History
 
+## 1.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+* Update OpenTelemetry dependencies ([#32345](https://github.com/Azure/azure-sdk-for-net/pull/32345))
+  - OpenTelemetry v1.4.0-beta.3
+
+## 1.0.0-beta.5 (2022-11-08)
+
+### Features Added
+
+* Add support for exporting Histogram Min and Max ([#32072](https://github.com/Azure/azure-sdk-for-net/pull/32072))
+* Add support for exporting UpDownCounter and ObservableUpDownCounter ([#32170](https://github.com/Azure/azure-sdk-for-net/pull/32170))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies ([#32047](https://github.com/Azure/azure-sdk-for-net/pull/32047))
+  - OpenTelemetry v1.4.0-beta.2
+* Debugging Output now includes Telemetry sent from storage. ([#32172](https://github.com/Azure/azure-sdk-for-net/pull/32172))
+
 ## 1.0.0-beta.4 (2022-10-07)
 
 ### Features Added

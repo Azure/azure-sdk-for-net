@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of JitNetworkAccessPolicyInitiatePort. </summary>
         /// <param name="number"></param>
-        /// <param name="endTimeUtc"> The time to close the request in UTC. </param>
-        public JitNetworkAccessPolicyInitiatePort(int number, DateTimeOffset endTimeUtc)
+        /// <param name="endOn"> The time to close the request in UTC. </param>
+        public JitNetworkAccessPolicyInitiatePort(int number, DateTimeOffset endOn)
         {
             Number = number;
-            EndTimeUtc = endTimeUtc;
+            EndOn = endOn;
         }
 
         /// <summary> Gets the number. </summary>
@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </summary>
         public string AllowedSourceAddressPrefix { get; set; }
         /// <summary> The time to close the request in UTC. </summary>
-        public DateTimeOffset EndTimeUtc { get; }
+        public DateTimeOffset EndOn { get; }
     }
 }

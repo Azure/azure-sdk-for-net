@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Automation
 
         private readonly ClientDiagnostics _automationAccountPython2PackagePython2PackageClientDiagnostics;
         private readonly Python2PackageRestOperations _automationAccountPython2PackagePython2PackageRestClient;
-        private readonly ModuleData _data;
+        private readonly AutomationModuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AutomationAccountPython2PackageResource"/> class for mocking. </summary>
         protected AutomationAccountPython2PackageResource()
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Initializes a new instance of the <see cref = "AutomationAccountPython2PackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutomationAccountPython2PackageResource(ArmClient client, ModuleData data) : this(client, data.Id)
+        internal AutomationAccountPython2PackageResource(ArmClient client, AutomationModuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ModuleData Data
+        public virtual AutomationModuleData Data
         {
             get
             {

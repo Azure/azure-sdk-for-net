@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -23,18 +24,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/>, <paramref name="content"/> or <paramref name="title"/> is null. </exception>
         internal ActivityTimelineItem(string queryId, DateTimeOffset bucketStartTimeUTC, DateTimeOffset bucketEndTimeUTC, DateTimeOffset firstActivityTimeUTC, DateTimeOffset lastActivityTimeUTC, string content, string title)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-            if (title == null)
-            {
-                throw new ArgumentNullException(nameof(title));
-            }
+            Argument.AssertNotNull(queryId, nameof(queryId));
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(title, nameof(title));
 
             QueryId = queryId;
             BucketStartTimeUTC = bucketStartTimeUTC;

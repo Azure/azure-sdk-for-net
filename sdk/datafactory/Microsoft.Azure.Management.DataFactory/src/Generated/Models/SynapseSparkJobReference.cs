@@ -30,8 +30,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the SynapseSparkJobReference class.
         /// </summary>
-        /// <param name="referenceName">Reference spark job name.</param>
-        public SynapseSparkJobReference(string referenceName)
+        /// <param name="referenceName">Reference spark job name. Expression
+        /// with resultType string.</param>
+        public SynapseSparkJobReference(object referenceName)
         {
             ReferenceName = referenceName;
             CustomInit();
@@ -50,10 +51,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reference spark job name.
+        /// Gets or sets reference spark job name. Expression with resultType
+        /// string.
         /// </summary>
         [JsonProperty(PropertyName = "referenceName")]
-        public string ReferenceName { get; set; }
+        public object ReferenceName { get; set; }
 
         /// <summary>
         /// Synapse spark job reference type.
