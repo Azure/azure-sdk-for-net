@@ -63,76 +63,76 @@ public class Program
 
         await Task.Delay(1);
 
-        // try
-        // {
-        //     var testScenario = StringToTestScenario(opts.Test);
-        //     var testScenarioName = testScenario.ToString();
-        //     metrics.Client.Context.GlobalProperties["TestName"] = testScenarioName;
-        //     var queueName = string.Empty;
+        try
+        {
+            var testScenario = StringToTestScenario(opts.Test);
+            var testScenarioName = testScenario.ToString();
+            metrics.Client.Context.GlobalProperties["TestName"] = testScenarioName;
+            var queueName = string.Empty;
 
-        //     metrics.Client.TrackEvent("Starting a test run.");
+            metrics.Client.TrackEvent("Starting a test run.");
 
-        //     TestScenario testRun;
+            TestScenario testScenarioInstance = null;
 
-        //     switch (testScenario)
-        //     {
-        //         case TestScenarioName.SendReceiveTest:
-        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSendReceiveTestQ, out queueName);
-        //             testRun = new SendReceiveTest(testParameters, metrics, opts.Role);
-        //             break;
-        //         case TestScenarioName.SendReceiveBatchesTest:
-        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSendReceiveBatchesTestQ, out queueName);
-        //             testRun = new SendReceiveBatchesTest(testParameters, metrics, opts.Role);
-        //             break;
-        //         case TestScenarioName.SessionSendReceiveTest:
-        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSessionSendReceiveTestQ, out queueName);
-        //             testRun = new SendReceiveTest(testParameters, metrics, opts.Role);
-        //             break;
-        //         case TestScenarioName.SendProcessTest:
-        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSendProcessTestQ, out queueName);
-        //             testRun = new SendReceiveTest(testParameters, metrics, opts.Role);
-        //             break;
-        //         case TestScenarioName.SessionSendProcessTest:
-        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSessionSendProcessTestQ, out queueName);
-        //             testRun = new SendReceiveTest(testParameters, metrics, opts.Role);
-        //             break;
-        //     }
+            switch (testScenario)
+            {
+                case TestScenarioName.SendReceiveTest:
+                    environment.TryGetValue(EnvironmentVariables.ServiceBusSendReceiveTestQ, out queueName);
+                    testScenarioInstance = new SendReceiveTest(testParameters, metrics, opts.Role);
+                    break;
 
-        //     var run = testRun.RunTestAsync(cancellationSource.Token).ConfigureAwait(false);
+                case TestScenarioName.SendReceiveBatchesTest:
+                    environment.TryGetValue(EnvironmentVariables.ServiceBusSendReceiveBatchesTestQ, out queueName);
+                    testScenarioInstance = new SendReceiveBatchesTest(testParameters, metrics, opts.Role);
+                    break;
 
-        //     while (running.Status == TaskStatus.Running)
-        //     {
-        //         metrics.UpdateEnvironmentStatistics();
+                case TestScenarioName.SessionSendReceiveTest:
+                    environment.TryGetValue(EnvironmentVariables.ServiceBusSessionSendReceiveTestQ, out queueName);
+                    testScenarioInstance = new SendReceiveTest(testParameters, metrics, opts.Role);
+                    break;
 
-        //         await Task.Delay(TimeSpan.FromMinutes(5), cancellationSource.Token).ConfigureAwait(false);
-        //     }
+                case TestScenarioName.SendProcessTest:
+                    environment.TryGetValue(EnvironmentVariables.ServiceBusSendProcessTestQ, out queueName);
+                    testScenarioInstance = new SendReceiveTest(testParameters, metrics, opts.Role);
+                    break;
 
-        //     await tasksWaiting.ConfigureAwait(false);
-        //     // Wait for all tests scenarios to finish before returning.
+                case TestScenarioName.SessionSendProcessTest:
+                    environment.TryGetValue(EnvironmentVariables.ServiceBusSessionSendProcessTestQ, out queueName);
+                    testScenarioInstance = new SendReceiveTest(testParameters, metrics, opts.Role);
+                    break;
+            }
 
-        //     metrics.Client.TrackEvent("Test run is ending.");
-        // }
-        // catch (TaskCanceledException)
-        // {
-        //     // Run is complete
-        // }
-        // catch (Exception ex) when
-        //     (ex is OutOfMemoryException
-        //     || ex is StackOverflowException
-        //     || ex is ThreadAbortException)
-        // {
-        //     throw;
-        // }
-        // catch (Exception ex)
-        // {
-        //     metrics.Client.TrackException(ex);
-        // }
-        // finally
-        // {
-        //     testParameters.Dispose();
-        //     metrics.Client.Flush();
-        //     await Task.Delay(60000).ConfigureAwait(false);
-        // }
+            var testRun = testScenarioInstance.RunTestAsync(cancellationSource.Token);
+
+            while (testRun.Status == TaskStatus.Running)
+            {
+                metrics.UpdateEnvironmentStatistics();
+                await Task.Delay(TimeSpan.FromMinutes(5), cancellationSource.Token).ConfigureAwait(false);
+            }
+
+            metrics.Client.TrackEvent("Test run is ending.");
+        }
+        catch (TaskCanceledException)
+        {
+            // Run is complete
+        }
+        catch (Exception ex) when
+            (ex is OutOfMemoryException
+            || ex is StackOverflowException
+            || ex is ThreadAbortException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            metrics.Client.TrackException(ex);
+        }
+        finally
+        {
+            testParameters.Dispose();
+            metrics.Client.Flush();
+            await Task.Delay(60000).ConfigureAwait(false);
+        }
     }
 
     /// <summary>
