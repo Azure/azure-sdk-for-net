@@ -38,7 +38,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       $defaultDll = Get-ChildItem "$dllFolder/Release/netstandard2.0/*" -Filter "$pkgName.dll" -Recurse
       if ($defaultDll -and (Test-Path $defaultDll)) {
         Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
-        $namespaces = @(Get-NamepspacesFromDll $defaultDll.FullName)
+        $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
       }
     }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
@@ -405,11 +405,17 @@ function EnsureCustomSource($package) {
   }
 
   Write-Host "Checking custom package source for $($package.Name)"
-  $existingVersions = Find-Package `
-    -Name $package.Name `
-    -Source CustomPackageSource `
-    -AllVersions `
-    -AllowPrereleaseVersions
+  try {
+    $existingVersions = Find-Package `
+      -Name $package.Name `
+      -Source CustomPackageSource `
+      -AllVersions `
+      -AllowPrereleaseVersions
+  }
+  catch {
+    Write-Error $_ -ErrorAction Continue
+    return $package
+  }
   
   # Matches package version against output: 
   # "Azure.Security.KeyVault.Secrets 4.3.0-alpha.20210915.3"
