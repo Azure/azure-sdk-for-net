@@ -302,7 +302,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanUploadBlobWithUnevenChunks()
+        public async Task CanUploadBlobInUnequalChunks()
         {
             // Arrange
             var client = CreateBlobClient("chunked-blob-uneven");

@@ -149,19 +149,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                Stream manifestStream = SerializeManifest(manifest);
-                string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
-                string tagOrDigest = options.Tag ?? manifestDigest;
-
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
-
-                if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
-                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
-                }
-
-                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+                using Stream stream = SerializeManifest(manifest);
+                return UploadManifestInternalAsync(stream, options, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -187,23 +176,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using MemoryStream stream = BufferStreamAsync(manifestStream, false).EnsureCompleted();
-                string digest = null;
-
-                string tagOrDigest = options.Tag ?? (digest = OciBlobDescriptor.ComputeDigest(stream));
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
-
-                bool valid = digest != null ?
-                    ValidateDigest(digest, response.Headers.DockerContentDigest) :
-                    ValidateDigest(stream, response.Headers.DockerContentDigest);
-
-                if (!valid)
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
-                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
-                }
-
-                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+                using Stream stream = CopyStreamAsync(manifestStream, false).EnsureCompleted();
+                return UploadManifestInternalAsync(stream, options, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -229,19 +203,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                Stream manifestStream = SerializeManifest(manifest);
-                string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
-                string tagOrDigest = options.Tag ?? manifestDigest;
-
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
-
-                if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
-                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
-                }
-
-                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+                using Stream stream = SerializeManifest(manifest);
+                return await UploadManifestInternalAsync(stream, options, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -267,23 +230,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using MemoryStream stream = await BufferStreamAsync(manifestStream, true).ConfigureAwait(false);
-                string digest = null;
-
-                string tagOrDigest = options.Tag ?? (digest = OciBlobDescriptor.ComputeDigest(stream));
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
-
-                bool valid = digest != null ?
-                    ValidateDigest(digest, response.Headers.DockerContentDigest) :
-                    ValidateDigest(stream, response.Headers.DockerContentDigest);
-
-                if (!valid)
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
-                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
-                }
-
-                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+                using Stream stream = await CopyStreamAsync(manifestStream, true).ConfigureAwait(false);
+                return await UploadManifestInternalAsync(stream, options, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -292,28 +240,49 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
+        private async Task<Response<UploadManifestResult>> UploadManifestInternalAsync(Stream stream, UploadManifestOptions options, bool async, CancellationToken cancellationToken)
+        {
+            Debug.Assert(stream is MemoryStream, "Should only be called on internally allocated, seekable streams.");
+
+            string digest = OciBlobDescriptor.ComputeDigest(stream);
+            string tagOrDigest = options.Tag ?? digest;
+
+            ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = async ?
+                // TODO: media type should be configurable to support non-OCI types.
+                await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false) :
+                _restClient.CreateManifest(_repositoryName, tagOrDigest, stream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+
+            if (!ValidateDigest(digest, response.Headers.DockerContentDigest))
+            {
+                throw _clientDiagnostics.CreateRequestFailedException(response,
+                    new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
+            }
+
+            return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+        }
+
         /// <summary>
         /// Make a copy of the manifest stream so we can seek around it when computing its digest.
         /// </summary>
         /// <param name="stream">The stream to copy.</param>
         /// <param name="async">Whether the method was called from an async method.</param>
         /// <returns></returns>
-        private static async Task<MemoryStream> BufferStreamAsync(Stream stream, bool async)
+        private static async Task<MemoryStream> CopyStreamAsync(Stream stream, bool async)
         {
-            MemoryStream memoryStream = new();
+            MemoryStream copy = new();
 
             if (async)
             {
-                await stream.CopyToAsync(memoryStream).ConfigureAwait(false);
+                await stream.CopyToAsync(copy).ConfigureAwait(false);
             }
             else
             {
-                stream.CopyTo(memoryStream);
+                stream.CopyTo(copy);
             }
 
-            memoryStream.Position = 0;
+            copy.Position = 0;
 
-            return memoryStream;
+            return copy;
         }
 
         private static Stream SerializeManifest(OciManifest manifest)
@@ -354,7 +323,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
-                var result = UploadInChunks(startUploadResult.Headers.Location, stream, maxChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+                var result = UploadInChunksInternal(startUploadResult.Headers.Location, stream, maxChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(result.Digest, result.Location, null, cancellationToken);
@@ -388,7 +357,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-                var result = await UploadInChunks(startUploadResult.Headers.Location, stream, maxChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var result = await UploadInChunksInternal(startUploadResult.Headers.Location, stream, maxChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(result.Digest, result.Location, null, cancellationToken).ConfigureAwait(false);
@@ -402,7 +371,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
-        private async Task<ChunkedUploadResult> UploadInChunks(string location, Stream stream, int chunkSize, bool async = true, CancellationToken cancellationToken = default)
+        private async Task<ChunkedUploadResult> UploadInChunksInternal(string location, Stream stream, int chunkSize, bool async = true, CancellationToken cancellationToken = default)
         {
             // TODO: don't allocate a large buffer unless we need it.  How will we know?
             byte[] buffer = new byte[chunkSize];
@@ -550,8 +519,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             // According to https://docs.docker.com/registry/spec/api/#content-digests, compliant
             // registry implementations use sha256.
-
-            Debug.Assert(content is MemoryStream, "Should only be called on internally allocated, seekable streams.");
 
             string contentDigest = OciBlobDescriptor.ComputeDigest(content);
             content.Position = 0;
