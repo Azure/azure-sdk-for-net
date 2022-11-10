@@ -22,6 +22,9 @@ param (
     [string] $ServiceDirectory,
 
     [Parameter()]
+    [string] $TestResourcesDirectory,
+
+    [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $TestApplicationId,
 
@@ -351,6 +354,14 @@ try {
     # Enumerate test resources to deploy. Fail if none found.
     $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
     $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
+    if ($TestResourcesDirectory) {
+        $root = $TestResourcesDirectory | Resolve-Path
+        # Add an explicit check below in case ErrorActionPreference is overridden and Resolve-Path doesn't stop execution
+        if (!$root) {
+            throw "TestResourcesDirectory '$TestResourcesDirectory' does not exist."
+        }
+        Write-Verbose "Overriding test resources search directory to '$root'"
+    }
     $templateFiles = @()
 
     "$ResourceType-resources.json", "$ResourceType-resources.bicep" | ForEach-Object {
@@ -809,7 +820,13 @@ group that will be created.
 .PARAMETER ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
 specified - in which to discover ARM templates named 'test-resources.json' and
-Bicep templates named 'test-resources.bicep'. This can also be an absolute path
+Bicep templates named 'test-resources.bicep'. This can be an absolute path
+or specify parent directories. ServiceDirectory is also used for resource and
+environment variable naming.
+
+.PARAMETER TestResourcesDirectory
+An override directory in which to discover ARM templates named 'test-resources.json' and
+Bicep templates named 'test-resources.bicep'. This can be an absolute path
 or specify parent directories.
 
 .PARAMETER TestApplicationId
